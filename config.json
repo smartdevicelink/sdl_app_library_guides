@@ -136,6 +136,7 @@
         },
         {
             "name": "Developer Tools",
+            "platforms": ["iOS"],
             "navigation": [
                 {
                     "name": "Configuring SDL Logging"
