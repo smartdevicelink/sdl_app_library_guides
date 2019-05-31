@@ -1,0 +1,163 @@
+{
+    "Authors": [
+        "Alexander Muller",
+        "Timur Pulathaneli",
+        "Joel Fischer",
+        "Nicole Yarroch"
+    ],
+    "languages": [
+        "en"
+    ],
+    "navigation": [
+        {
+            "name": "Getting Started",
+            "navigation": [
+                {
+                    "name": "Installation"
+                },
+                {
+                    "name": "SDK Configuration"
+                },
+                {
+                    "name": "Integration Basics"
+                },
+                {
+                    "name": "Connecting to an Infotainment System"
+                },
+                {
+                    "name": "Adding the Lock Screen"
+                },
+                {
+                    "name": "Adapting to the Head Unit Language"
+                },
+                {
+                    "name": "Understanding Permissions"
+                },
+                {
+                    "name": "Example Apps"
+                }
+            ]
+        },
+        {
+            "name": "Displaying a User Interface",
+            "navigation": [
+                {
+                    "name": "Adaptive Interface Capabilities"
+                },
+                {
+                    "name": "Main Screen Templates"
+                },
+                {
+                    "name": "Text Images and Buttons"
+                },
+                {
+                    "name": "Subscribing to System Buttons"
+                },
+                {
+                    "name": "Main Menu"
+                },
+                {
+                    "name": "Global Voice Commands"
+                },
+                {
+                    "name": "Popup Menus and Keyboards"
+                },
+                {
+                    "name": "Alerts"
+                },
+                {
+                    "name": "Media Clock"
+                }
+            ]
+        },
+        {
+            "name": "Other SDL Features",
+            "navigation": [
+                {
+                    "name": "Batch Sending RPCs"
+                },
+                {
+                    "name": "Retrieving Vehicle Data"
+                },
+                {
+                    "name": "Remote Control Vehicle Features"
+                },
+                {
+                    "name": "Creating an App Service"
+                },
+                {
+                    "name": "Using App Services"
+                },
+                {
+                    "name": "Calling a Phone Number"
+                },
+                {
+                    "name": "Setting the Built-in Nav System Destination"
+                },
+                {
+                    "name": "Getting In-Car Microphone Audio"
+                },
+                {
+                    "name": "Uploading Files"
+                },
+                {
+                    "name": "Uploading Images"
+                },
+                {
+                    "name": "Playing Audio Indications"
+                },
+                {
+                    "name": "Creating an OEM Cloud App Store"
+                }
+            ]
+        },
+        {
+            "name": "Video Streaming for Navigation Apps",
+            "navigation": [
+                {
+                    "name": "Introduction"
+                },
+                {
+                    "name": "Video Streaming"
+                },
+                {
+                    "name": "Audio Streaming"
+                },
+                {
+                    "name": "Touch Input"
+                },
+                {
+                    "name": "Supporting Haptic Input"
+                },
+                {
+                    "name": "Displaying Turn Directions"
+                }
+            ]
+        },
+        {
+            "name": "Developer Tools",
+            "navigation": [
+                {
+                    "name": "Configuring SDL Logging"
+                },
+                {
+                    "name": "Relay App"
+                },
+                {
+                    "name": "RPC Builder App"
+                }
+            ]
+        },
+        {
+            "name": "Migrating to Newer SDL iOS Versions",
+            "navigation": [
+                {
+                    "name": "Updating to v4.3+"
+                },
+                {
+                    "name": "Updating to v5.0+"
+                }
+            ]
+        }
+    ]
+}
