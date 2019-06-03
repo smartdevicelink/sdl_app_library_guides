@@ -136,16 +136,17 @@
         },
         {
             "name": "Developer Tools",
-            "platforms": ["iOS"],
             "navigation": [
                 {
                     "name": "Configuring SDL Logging"
                 },
                 {
-                    "name": "Relay App"
+                    "name": "Relay App",
+                    "platforms": ["iOS"]
                 },
                 {
-                    "name": "RPC Builder App"
+                    "name": "RPC Builder App",
+                    "platforms": ["iOS"]
                 }
             ]
         },
