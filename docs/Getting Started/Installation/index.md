@@ -44,9 +44,9 @@ Tagged to our releases is a dynamic framework file that can be drag-and-dropped 
 You cannot submit your app to the app store with the framework as is. You MUST strip the simulator part of the framework first. Use a script such as Carthage's to accomplish this.
 !!!
 
-@!
+!@
 
-!@[android]
+@![android]
 Each [SDL Android](https://github.com/smartdevicelink/sdl_java_suite) library release is published to JCenter. By adding a few lines in their app's gradle script, developers can compile with the latest SDL Android release.
 
 To gain access to the JCenter repository, make sure your app's `build.gradle` file includes the following:
@@ -86,9 +86,9 @@ dependencies {
     implementation 'com.smartdevicelink:sdl_android:4.+'
 }
 ```
-@!
+!@
 
-!@[javaSE]
+@![javaSE]
 Each [SDL JavaSE](https://github.com/smartdevicelink/sdl_java_suite) library release is published to JCenter. By adding a few lines in their app's gradle script, developers can compile with the latest SDL JavaSE release.
 
 To gain access to the JCenter repository, make sure your app's `build.gradle` file includes the following:
@@ -129,9 +129,9 @@ dependencies {
     implementation 'com.smartdevicelink:sdl_java_se:4.+'
 }
 ```
-@!
+!@
 
-!@[javaEE]
+@![javaEE]
 Each SDL JavaEE library release is published to [Github](https://github.com/smartdevicelink/sdl_java_suite). By building and importing the library JAR file to the project, developers can compile with the latest SDL JavaEE release. In this guide we exclusively use IntelliJ to compile and build the project.
 
 ### Building The JavaEE Library JAR    
@@ -166,4 +166,4 @@ from within the JavaEE directory and a JAR should be generated in the build/libs
 !!! NOTE
 Glassfish 5.0.0 only works on JDK 8 and lower.
 !!!
-@!
+!@
