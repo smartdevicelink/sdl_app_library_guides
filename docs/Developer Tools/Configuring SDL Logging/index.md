@@ -1,4 +1,5 @@
 # Configuring SDL Logging
+@![iOS]
 SDL iOS v5.0 includes a powerful new built-in logging framework designed to make debugging easier. It provides many of the features common to other 3rd party logging frameworks for iOS and can be used by your own app as well. We recommend that your app's integration with SDL provide logging using this framework rather than any other 3rd party framework your app may be using or `NSLog`. This will consolidate all SDL related logs in a common format and to common destinations.
 
 SDL will configure its logging into a production-friendly configuration by default. If you wish to use a debug or a custom configuration, then you will have to specify this yourself. `SDLConfiguration` allows you to pass a `SDLLogConfiguration` with custom values. A few of these values will be covered in this section, the others are in their own sections below.
@@ -152,3 +153,12 @@ SDLLog.d("This is a debug log")
 SDLLog.w("This is a warning log")
 SDLLog.e("This is an error log")
 ```
+!@
+
+@![android]
+`// TODO`
+!@
+
+@![javaSE,javaEE]
+`// TODO`
+!@
