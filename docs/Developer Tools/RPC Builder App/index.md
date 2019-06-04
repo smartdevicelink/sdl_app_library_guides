@@ -1,3 +1,4 @@
+@![iOS]
 # RPC Builder
 
 ## Introduction
@@ -131,3 +132,4 @@ If you see a bug, feel free to [post an issue](https://github.com/smartdevicelin
 
 ### Want to Help?
 If you want to help add more features, please [file a pull request](https://github.com/smartdevicelink/rpc_builder_app_ios/compare).
+!@[iOS]
