@@ -1,8 +1,9 @@
 ## Main Screen Templates
-Each car manufacturer supports a set of templates for the user interface. These templates determine the position and size of the text, images, and buttons on the screen. A list of supported templates is sent in `SDLManager.systemCapabilityManager.displayCapabilities.templatesAvailable`.
+Each car manufacturer supports a set of user interface templates. These templates determine the position and size of the text, images, and buttons on the screen. Once the app has connected successfully with a SDL enabled accessory, a list of supported templates is available in `SDLManager.systemCapabilityManager.displayCapabilities.templatesAvailable`.
 
-To change a template at any time, send a `SDLSetDisplayLayout` RPC to the SDL Core. If you want to ensure that the new template is used, wait for a response from the SDL Core before sending any more user interface RPCs.
+To change a template at any time, send a `SetDisplayLayout` RPC to core.
 
+@![iOS]
 ##### Objective-C
 ```objc
 SDLSetDisplayLayout* display = [[SDLSetDisplayLayout alloc] initWithPredefinedLayout:SDLPredefinedLayoutGraphicWithText];
@@ -22,18 +23,28 @@ sdlManager.send(request: display) { (request, response, error) in
     }
 }
 ```
+!@
+
+@![android, javaSE, javaEE]
+`// TODO: Android / Java content`
+!@
 
 ### Available Templates
 There are fifteen standard templates to choose from, however some head units may only support a subset of these templates. Please check `SystemCapabilityManager` for the supported templates. The following examples show how templates will appear on the [Generic HMI](https://github.com/smartdevicelink/generic_hmi) and [Ford's SYNC 3 HMI](https://developer.ford.com). 
 
-##### Media - with and without progress bar
+##### Media
 ###### Generic HMI
-![Media](assets/generic_Media.png)
+![Media](assets/GenericHMI/Generic_Default_Media.png)
 
 ###### Ford HMI
-![Media - with progress bar](assets/ford_MediaWithProgressBar.png)
+![Media](assets/SYNC3HMI/SYNC3_Default_Media.jpg)
 
-![Media - without progress bar](assets/ford_MediaWithoutProgressBar.png)
+##### Media with Progress Bar
+###### Generic HMI
+![Media - with progress bar](assets/GenericHMI/Generic_Default_Media.png)
+
+###### Ford HMI
+![Media - with progress bar](assets/SYNC3HMI/SYNC3_media.jpg)
 
 ##### Non-Media - with and without soft buttons
 ###### Generic HMI
