@@ -100,6 +100,10 @@ NotificationCenter.default.addObserver(self, selector: #selector(systemCapabilit
 ```
 !@
 
+@![android, javaSE, javaEE]
+`// TODO: Android / Java content`
+!@
+
 ## Image Specifics
 ### Image File Type
 Images may be formatted as PNG, JPEG, or BMP. Check the `RegisterAppInterfaceResponse.displayCapability` properties to find out what image formats the head unit supports.
