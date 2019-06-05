@@ -1,5 +1,4 @@
 # Creating an App Service
-@![iOS]
 App services is a powerful feature enabling both a new kind of vehicle-to-app communication and app-to-app communication via SDL.
 
 App services are used to publish navigation, weather and media data (such as temperature, navigation waypoints, or the current playlist name). This data can then be used by both the vehicle head unit and, if the publisher of the app service desires, other SDL apps.  
@@ -11,7 +10,6 @@ An SDL app can also subscribe to a published app service. Once subscribed, the a
 Currently, there is no high-level API support for publishing an app service, so you will have to use raw RPCs for all app service related APIs.
 
 Using an app service is covered [in another guide](Other SDL Features/Using App Services).
-!@
 
 ## App Service Types
 Apps are able to declare that they provide an app service by publishing an app service manifest. Three types of app services are currently available, and more will be made available over time. The currently available types are: Media, Navigation, and Weather. An app may publish multiple services (one each for different service types), if desired.
@@ -20,7 +18,7 @@ Apps are able to declare that they provide an app service by publishing an app s
 Publishing a service is a several step process. First, create your app service manifest. Second, publish your app service using your manifest. Third, publish your service data using `OnAppServiceData`. Fourth, respond to `GetAppServiceData` requests. Fifth, you should support RPCs related to your service. Last, optionally, you can support URI based app actions.
 
 ### 1. Creating an App Service Manifest
-The first step to publishing an app service is to create an @![iOS]`SDLAppServiceManifest`!@ @![android, javaSE, javaEE] `AppServiceManifest`!@ object. There is a set of generic parameters you will need to fill out as well as service type specific parameters based on the app service type you are creating.
+The first step to publishing an app service is to create an AppServiceManifest object. There is a set of generic parameters you will need to fill out as well as service type specific parameters based on the app service type you are creating.
 
 @![iOS]
 
@@ -114,7 +112,7 @@ manifest.setNavigationServiceManifest(navigationManifest);
 !@
 
 #### Creating a Weather Service Manifest
-You will need to create a weather service manifest if you want to publish a weather service. You will declare the types of data your service provides in its @![iOS]`SDLWeatherServiceData`!@ @![android, javaSE, javaEE]!@ `WeatherServiceData`.
+You will need to create a weather service manifest if you want to publish a weather service. You will declare the types of data your service provides in its `WeatherServiceData`.
 
 @![iOS]
 
@@ -133,6 +131,7 @@ manifest.weatherServiceManifest = weatherManifest
 !@
 
 @![android, javaSE, javaEE]
+
 ##### Java
 ```java
 WeatherServiceManifest weatherManifest = new WeatherServiceManifest();
@@ -198,14 +197,14 @@ sdlManager.sendRPC(publishServiceRequest);
 Once you have your publish app service response, you will need to store the information provided in its `appServiceRecord` property. You will need the information later when you want to update your service's data.
 
 #### Watching for App Record Updates
-As noted in the introduction to this guide, one service for each type may become the "active" service. If your service is the active service, your @![iOS]`SDLAppServiceRecord`!@ @![andorid, javaSE, javaEE] `AppServiceRecord` !@ parameter `serviceActive` will be updated to note that you are now the active service.
+As noted in the introduction to this guide, one service for each type may become the "active" service. If your service is the active service, your `AppServiceRecord` parameter `serviceActive` will be updated to note that you are now the active service.
 
 @![iOS]
 
 After the initial app record is passed to you in the `SDLPublishAppServiceResponse`, you will need to be notified of changes in order to observe whether or not you have become the active service. To do so, you will have to observe the new `SDLSystemCapabilityTypeAppServices` using `GetSystemCapability` and `OnSystemCapability`.
 !@
 
-@![andorid, javaSE, javaEE]
+@![android, javaSE, javaEE]
 
 After the initial app record is passed to you in the `PublishAppServiceResponse`, you will need to be notified of changes in order to observe whether or not you have become the active service. To do so, you will have to observe the new `SystemCapabilityType.APP_SERVICES` using `GetSystemCapability` and `OnSystemCapabilityUpdated`.
 !@
@@ -218,7 +217,9 @@ For more information, see the [Using App Services guide](Other SDL Features/Usin
 After your service is published, it's time to update your service data. First, you must send an `onAppServiceData` RPC notification with your updated service data. RPC notifications are different than RPC requests in that they will not receive a response from the connected head unit, and must use a different `SDLManager` method call to send.
 !@
 
-@![andorid, javaSE, javaEE] `// TODO update this section when Android implements SDLManager`
+@![andorid, javaSE, javaEE] 
+
+`// TODO update this section when Android implements SDLManager`
 
 After your service is published, it's time to update your service data. First, you must send an `onAppServiceData` RPC notification with your updated service data. RPC notifications are different than RPC requests in that they will not receive a response from the connected head unit.
 !@
@@ -473,7 +474,7 @@ sdlManager.getFileManager().uploadFile(weatherImage, new CompletionListener() { 
 ### 4. Handling App Service Subscribers
 If you choose to make your app service available to other apps, you will have to handle requests to get your app service data when a consumer requests it directly.
 
-Handling app service subscribers is a two step process. First, you must register for notifications from the subscriber. Then, when you get a request, you will either have to send a response to the subscriber with the app service data or if you have no data to send, send a reponse with a relevant failure result code.
+Handling app service subscribers is a two step process. First, you must register for notifications from the subscriber. Then, when you get a request, you will either have to send a response to the subscriber with the app service data or if you have no data to send, send a response with a relevant failure result code.
 
 #### Registering for Notifications
 First, you will need to register for the notification of a `GetAppServiceDataRequest` being received by your application.
