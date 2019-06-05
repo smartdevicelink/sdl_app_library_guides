@@ -77,6 +77,7 @@ manifest.mediaServiceManifest = mediaManifest
 !@
 
 @![android, javaSE, javaEE]
+
 ##### Java
 ```java
 MediaServiceManifest mediaManifest = new MediaServiceManifest();
@@ -217,7 +218,7 @@ For more information, see the [Using App Services guide](Other SDL Features/Usin
 After your service is published, it's time to update your service data. First, you must send an `onAppServiceData` RPC notification with your updated service data. RPC notifications are different than RPC requests in that they will not receive a response from the connected head unit, and must use a different `SDLManager` method call to send.
 !@
 
-@![andorid, javaSE, javaEE] 
+@![andorid, javaSE, javaEE]
 
 `// TODO update this section when Android implements SDLManager`
 
@@ -344,6 +345,7 @@ sdlManager.fileManager.upload(file: artwork) { [weak self] (success, bytesAvaila
 !@
 
 @![android, javaSE, javaEE]
+
 ##### Java
 ```java
 final SdlArtwork navInstructionArt = new SdlArtwork("turn", FileType.GRAPHIC_PNG, R.drawable.turn, true);
