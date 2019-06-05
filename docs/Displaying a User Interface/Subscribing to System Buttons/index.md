@@ -19,10 +19,17 @@ There is no way to customize a subscribe button's image or text.
 ## Audio-Related Buttons
 The play/pause, seek left, seek right, tune up, and tune down subscribe buttons can only be used in the `MEDIA` template. Depending on the manufacturer of the head unit, the subscribe button might also show up as a soft button in the media template. For example, the SYNC 3 HMI will add the ok, seek right, and seek left soft buttons to the media template when you subscribe to those buttons. You will automatically be assigned the media template if you set your app's configuration `appType` to `MEDIA`.
 
+@![iOS]
 !!! NOTE
 Before iOS library v6.1 and SDL Core 5.0, `Ok` and `PlayPause` were combined into `Ok`. Subscribing to `Ok` will, in v6.1, also subscribe you to `PlayPause`. This means that for the time being, *you should not simultaneously subscribe to `Ok` and `PlayPause`*. In a future major version, this will change. For now, only subscribe to either `Ok` or `PlayPause` and the library will do the right thing based on the version of Core to which you are subscribed.
 !!!
+!@
 
+@![android, javaSE, javaEE]
+`// TODO: Android / Java content`
+!@
+
+@![iOS]
 ##### Objective-C
 ```objc
 SDLSubscribeButton *subscribeButton = [[SDLSubscribeButton alloc] initWithButtonName:SDLButtonNamePlayPause handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
@@ -44,4 +51,4 @@ sdlManager.send(request: subscribeButton) { (request, response, error) in
     <#subscribe button sent successfully#>
 }
 ```
-
+!@
