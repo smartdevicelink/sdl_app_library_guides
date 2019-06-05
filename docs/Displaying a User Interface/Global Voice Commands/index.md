@@ -29,7 +29,7 @@ self.sdlManager.screenManager.voiceCommands = [voiceCommand]
 ```
 !@
 
-@![android, javaSE, javaEE]
+@![android]
 `// TODO: Android / Java content`
 !@
 
