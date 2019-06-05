@@ -83,7 +83,8 @@
                     "name": "Remote Control Vehicle Features"
                 },
                 {
-                    "name": "Creating an App Service"
+                    "name": "Creating an App Service",
+                    "platforms": ["iOS","Android", "javaSE", "javaEE"]
                 },
                 {
                     "name": "Using App Services"
@@ -142,11 +143,9 @@
                 },
                 {
                     "name": "Relay App",
-                    "platforms": ["iOS"]
                 },
                 {
                     "name": "RPC Builder App",
-                    "platforms": ["iOS"]
                 }
             ]
         },

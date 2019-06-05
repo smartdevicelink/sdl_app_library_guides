@@ -1,6 +1,5 @@
 # Creating an App Service
-
-@![iOS]
+@[!iOS]
 App services is a powerful feature enabling both a new kind of vehicle-to-app communication and app-to-app communication via SDL.
 
 App services are used to publish navigation, weather and media data (such as temperature, navigation waypoints, or the current playlist name). This data can then be used by both the vehicle head unit and, if the publisher of the app service desires, other SDL apps.  
@@ -21,7 +20,7 @@ Apps are able to declare that they provide an app service by publishing an app s
 Publishing a service is a several step process. First, create your app service manifest. Second, publish your app service using your manifest. Third, publish your service data using `OnAppServiceData`. Fourth, respond to `GetAppServiceData` requests. Fifth, you should support RPCs related to your service. Last, optionally, you can support URI based app actions.
 
 ### 1. Creating an App Service Manifest
-The first step to publishing an app service is to create an `AppServiceManifest` object. There is a set of generic parameters you will need to fill out as well as service type specific parameters based on the app service type you are creating.
+The first step to publishing an app service is to create an @![iOS]`SDLAppServiceManifest`!@ @![android, javaSE, javaEE] `AppServiceManifest`!@ object. There is a set of generic parameters you will need to fill out as well as service type specific parameters based on the app service type you are creating.
 
 @![iOS]
 
@@ -47,7 +46,7 @@ manifest.mediaServiceManifest = <#Code#> // Covered below
 ```
 !@
 
-@![android]
+@![android, javaSE, javaEE]
 
 ##### Java
 ```java
