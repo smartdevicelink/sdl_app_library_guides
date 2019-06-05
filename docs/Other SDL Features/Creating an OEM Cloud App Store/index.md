@@ -1,5 +1,14 @@
 # Creating an OEM Cloud App Store
+
+@![iOS]
+
 A new feature of SDL Core v5.1 and SDL iOS v6.2 allows OEMs to offer an app store that lets users browse and install remote cloud apps. If the cloud app requires users to login with their credentials, the app store can use an authentication token to automatically login users after their first session.
+!@
+
+@![android, javaSE, javaEE]
+
+A new feature of SDL 5.1 and SDL Java Suite 4.8 allows OEMs to offer an app store that lets users browse and install remote cloud apps. If the cloud app requires users to login with their credentials, the app store can use an authentication token to automatically login users after their first session.
+!@
 
 !!! note
 An OEM app store can be a mobile app or a cloud app.
@@ -28,6 +37,7 @@ Only trusted app stores are allowed to set or get `CloudAppProperties` for other
 ### Setting Cloud App Properties
 App stores can set properties for a cloud app by sending a `SetCloudAppProperties` request to Core to store them in the local policy table. For example, in this piece of code, the app store can set the `authToken` to associate a user with a cloud app after the user logs in to the app by using the app store:
 
+@![iOS]
 ##### Objective-C
 ```objc
 SDLCloudAppProperties *properties = [[SDLCloudAppProperties alloc] initWithAppID:<#app id#>];
@@ -58,9 +68,33 @@ sdlManager.send(request: setCloud) { (req, res, err) in
     <#Use the response#>
 }
 ```
+!@
+
+@![android, javaSE, javaEE]
+
+##### Java
+```java
+CloudAppProperties cloudAppProperties = new CloudAppProperties("<appId>");
+cloudAppProperties.setAuthToken("<auth token>");
+SetCloudAppProperties setCloudAppProperties = new SetCloudAppProperties(cloudAppProperties);
+setCloudAppProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        if (response.getSuccess()) {
+            Log.i("SdlService", "Request was successful.");
+        } else {
+            Log.i("SdlService", "Request was rejected.");
+        }
+    }
+});
+sdlManager.sendRPC(setCloudAppProperties);
+```
+@!
 
 ### Getting Cloud App Properties
 To retrieve cloud properties for a specific cloud app from local policy table, app stores can send `GetCloudAppProperties` and specify the `appId` for that cloud app as in this example:
+
+@![iOS]
 
 ##### Objective-C
 ```objc
@@ -87,6 +121,28 @@ sdlManager.send(request: getCloud) { (req, res, err) in
     <#Use the response#>
 }
 ```
+!@
+
+@![android, javaSE, javaEE]
+##### Java
+```java
+GetCloudAppProperties getCloudAppProperties = new GetCloudAppProperties("<appId>");
+getCloudAppProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        if (response.getSuccess()) {
+            Log.i("SdlService", "Request was successful.");
+            GetCloudAppPropertiesResponse getCloudAppPropertiesResponse = (GetCloudAppPropertiesResponse) response;
+            CloudAppProperties cloudAppProperties = getCloudAppPropertiesResponse.getCloudAppProperties();
+            // Use cloudAppProperties
+        } else {
+            Log.i("SdlService", "Request was rejected.");
+        }
+    }
+});
+sdlManager.sendRPC(getCloudAppProperties);
+```
+!@
 
 #### Getting the Cloud App Icon
 Cloud app developers don't need to add any code to download the app icon. The cloud app icon will be automatically downloaded from the url provided by the policy table and sent to Core to be later displayed on the HMI.
@@ -95,6 +151,7 @@ Cloud app developers don't need to add any code to download the app icon. The cl
 When users install cloud apps from an OEM's app store, they may be asked to login to that cloud app using the app store. After logging in, app store can save the `authToken` in the local policy table to be used later by the cloud app for user authentication. 
 A cloud app can retrieve its `authToken` from local policy table after starting the RPC service. The `authToken` can be used later by the app to authenticate the user:
 
+@![iOS]
 ##### Objective-C
 ```objc
 NSString *authToken = self.sdlManager.authToken;
@@ -104,6 +161,14 @@ NSString *authToken = self.sdlManager.authToken;
 ```swift
 let authToken = sdlManager.authToken
 ```
+!@
+
+@![android, javaSE, javaEE]
+##### Java
+```java
+String authToken = sdlManager.getAuthToken();
+```
+!@
 
 ## Getting CloudAppVehicleID (Optional)
 The `CloudAppVehicleID` is an optional parameter used by cloud apps to identify a head unit. The content of `CloudAppVehicleID` is up to the OEM's implementation. Possible values could be the VIN or a hashed VIN. 
