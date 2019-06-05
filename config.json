@@ -57,8 +57,7 @@
                     "name": "Main Menu"
                 },
                 {
-                    "name": "Global Voice Commands",
-                    "platforms":["iOS","Android", "javaSE", "javaEE"]
+                    "name": "Global Voice Commands"
                 },
                 {
                     "name": "Popup Menus and Keyboards"
