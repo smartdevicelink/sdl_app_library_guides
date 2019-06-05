@@ -44,7 +44,7 @@ manifest.mediaServiceManifest = <#Code#> // Covered below
 ```
 !@
 
-@![android, javaSE, javaEE]
+@![android]
 
 ##### Java
 ```java
