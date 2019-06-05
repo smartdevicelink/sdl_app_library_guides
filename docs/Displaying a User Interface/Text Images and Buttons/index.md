@@ -2,7 +2,7 @@
 This guide covers presenting text and images on the screen as well as creating, showing, and responding to custom buttons you create.
 
 ## Template Fields
-The `SDLScreenManager` is a manager for easily creating and sending text, images and soft buttons for your SDL app. To update the UI, simply give the manager the new UI data and sandwich the update between the manager's  `beginUpdates` and ` endUpdatesWithCompletionHandler:` methods.
+The `ScreenManager` is a manager for easily creating and sending text, images and soft buttons for your SDL app. To update the UI, simply give the manager the new UI data and sandwich the update between the manager's  `beginUpdates` and ` endUpdatesWithCompletionHandler:` methods.
 
 | SDLScreenManager Parameter Name | Description |
 |:--------------------------------------------|:--------------|
@@ -20,6 +20,7 @@ The `SDLScreenManager` is a manager for easily creating and sending text, images
 | textField3Type | The type of data provided in `textField3` |
 | textField4Type | The type of data provided in `textField4` |
 
+@![iOS]
 ##### Objective-C
 ```objc
 [self.sdlManager.screenManager beginUpdates];
@@ -59,10 +60,16 @@ sdlManager.screenManager.endUpdates { (error) in
     }
 }
 ```
+!@
+
+@![android, javaSE, javaEE]
+`// TODO: Android / Java content`
+!@
 
 ### Removing Text and Images
 After you have displayed text and graphics onto the screen, you may want to remove those from being displayed. In order to do so, you only need to set the screen manager property to `nil`.
 
+@![iOS]
 ##### Objective-C
 ```objc
 self.sdlManager.screenManager.textField1 = nil;
@@ -76,13 +83,19 @@ sdlManager.screenManager.textField1 = nil
 sdlManager.screenManager.textField2 = nil
 sdlManager.screenManager.primaryGraphic = nil
 ```
+!@
+
+@![android, javaSE, javaEE]
+`// TODO: Android / Java content`
+!@
 
 ## Soft Button Objects
-To create a soft button using the `SDLScreenManager`, you only need to create a custom name for the button and provide the text for the button's label and/or an image for the button's icon. If your button cycles between different states (e.g. a button used to set the repeat state of a song playlist can have three states: repeat-off, repeat-one, and repeat-all) you can upload all the states on initialization. 
+To create a soft button using the `ScreenManager`, you only need to create a custom name for the button and provide the text for the button's label and/or an image for the button's icon. If your button cycles between different states (e.g. a button used to set the repeat state of a song playlist can have three states: repeat-off, repeat-one, and repeat-all) you can upload all the states on initialization. 
 
 ### Updating the Soft Button State
-When the soft button state needs to be updated, simply tell the `SDLSoftButtonObject` to transition to the next state. If your button states do not cycle in a predictable order, you can also tell the soft button the state to transition to by passing the `stateName` of the new soft button state.
+When the soft button state needs to be updated, simply tell the `SoftButtonObject` to transition to the next state. If your button states do not cycle in a predictable order, you can also tell the soft button the state to transition to by passing the `stateName` of the new soft button state.
 
+@![iOS]
 ##### Objective-C
 ```objc
 SDLSoftButtonState *softButtonState1 = [[SDLSoftButtonState alloc] initWithStateName:@"<#Soft Button State Name#>" text:@"<#Button Label Text#>" artwork:<#SDLArtwork#>];
@@ -112,14 +125,29 @@ sdlManager.screenManager.softButtonObjects = [softButtonObject]
 let retrievedSoftButtonObject = sdlManager.screenManager.softButtonObjectNamed("<#Soft Button Object Name#>")
 retrievedSoftButtonObject?.transitionToNextState()
 ```
+!@
+
+@![android, javaSE, javaEE]
+`// TODO: Android / Java content`
+!@
+
 ### Deleting Soft Buttons
-To delete soft buttons, simply pass the `SDLScreenManager` an empty array of soft buttons.
+To delete soft buttons, simply pass the `ScreenManager` an empty array of soft buttons.
 
 ## Template Images
-As of SDL iOS library v6.1, when connected to a remote system running SDL Core 5.0+, you may be able to use template images. A template image works [very much like it does on iOS](https://developer.apple.com/documentation/uikit/uiimage/1624153-imagewithrenderingmode) and in fact, it uses the same API as iOS. Any `SDLArtwork` created with a `UIImage` that has a `renderingMode` of `alwaysTemplate` will be templated via SDL as well. These images must be PNGs with a transparent background and only one color for the icon. Therefore, this kind of image is only good for images like icons, not for images like album artwork, or anything requiring a specific color.
+When connected to a remote system running SDL Core 5.0+, you may be able to use template images. 
+
+@![iOS]
+A template image works [very much like it does on iOS](https://developer.apple.com/documentation/uikit/uiimage/1624153-imagewithrenderingmode) and in fact, it uses the same API as iOS. Any `SDLArtwork` created with a `UIImage` that has a `renderingMode` of `alwaysTemplate` will be templated via SDL as well. These images must be PNGs with a transparent background and only one color for the icon. Therefore, this kind of image is only good for images like icons, not for images like album artwork, or anything requiring a specific color.
+!@
+
+@![android, javaSE, javaEE]
+`// TODO: Android / Java content`
+!@
 
 Soft buttons, menu icons, and primary / secondary graphics can be templated. It's a good idea to template images so that any head unit, no matter their background color, can display your images with a color scheme that fits. For example, if a head unit is in "Night" mode with a dark theme (see [Template Coloring in the Integration Basics section](Getting Started/Integration Basics) for more details on how to customize theme colors), then your images will be displayed as white. In the "Day" theme, the image will automatically change to black.
 
+@![iOS]
 ##### Objective-C
 ```objc
 UIImage *image = [[UIImage imageNamed:<#String#>] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -131,6 +159,11 @@ SDLArtwork *artwork = [SDLArtwork artworkWithImage:image asImageFormat:SDLArtwor
 let image = UIImage(named: <#T##String#>)?.withRenderingMode(.alwaysTemplate)
 let artwork = SDLArtwork(image: image, persistent: true, as: .PNG)
 ```
+!@
+
+@![android, javaSE, javaEE]
+`// TODO: Android / Java content`
+!@
 
 ##### Template Images on Dark Background
 ![Template Images Dark](assets/template-images-dark.png)
@@ -139,10 +172,11 @@ let artwork = SDLArtwork(image: image, persistent: true, as: .PNG)
 ![Template Images Light](assets/template-images-light.png)
 
 ## Static Icons
-Static icons are pre-existing images on the remote system that you may reference and use in your own application. Static icons are fully supported by the screen manager via an `SDLArtwork` initializer.
+Static icons are pre-existing images on the remote system that you may reference and use in your own application. Static icons are fully supported by the screen manager via an `Artwork` initializer.
 
 Static icons can be used in primary and secondary graphic fields, soft button image fields, and menu icon fields.
 
+@![iOS]
 ##### Objective-C
 ```objc
 SDLArtwork *staticIconArt = [[SDLArtwork alloc] initWithStaticIcon:SDLStaticIconNameAlbum];;
@@ -158,6 +192,11 @@ let softButtonState1 = SDLSoftButtonState(stateName: "<#Soft Button State Name#>
 
 // Set the state into an `SDLSoftButtonObject` and then set the screen manager array of soft buttons
 ```
+!@
+
+@![android, javaSE, javaEE]
+`// TODO: Android / Java content`
+!@
 
 ## Using RPCs
-If you don't want to use the screen manager, you can use raw RPC requests using the `Show` RPC.
+If you don't want to use the screen manager, you can just send raw `Show` RPC requests to core.
