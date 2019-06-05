@@ -9,7 +9,7 @@ We recommend creating global voice commands for common actions such as the actio
 
 You simply must create and set `VoiceCommand` objects to the `voiceCommands` array on the screen manager.
 
-@![iOS]
+@![javaSE]
 ##### Objective-C
 ```objc
 // Create the voice command
@@ -29,7 +29,7 @@ self.sdlManager.screenManager.voiceCommands = [voiceCommand]
 ```
 !@
 
-@![android]
+@![javaSE, javaEE]
 `// TODO: Android / Java content`
 !@
 
