@@ -2,11 +2,15 @@
 ## Designing for Different Head Units
 Since each car manufacturer has different user interface style guidelines, the number of lines of text, soft and hard buttons, and images supported will vary between different types of head units. When the app first connects to the SDL Core, a `RegisterAppInterface` RPC will be sent by the SDL Core containing the `displayCapability`, `buttonCapabilites`, etc., properties. You can use this information to determine how to lay out the user interface. 
 
-You may access these properties on the `SDLManager.systemCapabilityManager` instance as of SDL iOS library 6.0. More advanced capabilities, such as the `SDLRemoteControlCapability` must be updated through the `systemCapabilityManager`.
+@![iOS]
+You may access these properties on the `SDLManager.systemCapabilityManager` instance as of SDL iOS library 6.0. If using previous versions of the library,  you can find most of the `SystemCapabilityManager` properties in the `SDLRegisterAppInterfaceResponse` object. You will have to manually extract the desired capability from the `SDLManager.registerResponse` property. 
+!@
+
+@![android, javaSE, javaEE]
+`// TODO: Android / Java content`
+!@
 
 ## System Capability Manager Properties
-The `SystemCapabilityManager` is a new feature available as of version 6.0. If using previous versions of the library,  you can find most of the `SystemCapabilityManager` properties in the `SDLRegisterAppInterfaceResponse` object. You will have to manually extract the desired capability from the `SDLManager.registerResponse` property. 
-
 | Parameters  |  Description | Notes |
 | ------------- | ------------- |------------- |
 | displayCapabilities | Information about the Sync display. This includes information about available templates, whether or not graphics are supported, and a list of all text fields and the max number of characters allowed in each text field. | Check SDLDisplayCapabilities.h for more information |
@@ -40,6 +44,7 @@ The `RegisterAppInterface` response contains information about the display type,
 ### System Capabilities
 Most head units provide features that your app can use: making and receiving phone calls, an embedded navigation system, video and audio streaming, as well as supporting app services. To find out if the head unit supports a feature as well as more information about the feature, use the `SystemCapabilityManager` to query the head unit for the desired capability. Querying for capabilities is only availble on head units supporting v.4.5 or greater; if connecting to older head units, the query will return `nil` even if the head unit may support the capabilty.
 
+@![iOS]
 ##### Objective-C
 ```objc
 [sdlManager.systemCapabilityManager updateCapabilityType:SDLSystemCapabilityTypeVideoStreaming completionHandler:^(NSError * _Nullable error, SDLSystemCapabilityManager * _Nonnull systemCapabilityManager) {
@@ -59,10 +64,16 @@ sdlManager.systemCapabilityManager.updateCapabilityType(.videoStreaming) { (erro
     <#Use the video streaming capability#>
 }
 ```
+!@
+
+@![android, javaSE, javaEE]
+`// TODO: Android / Java content`
+!@
 
 #### Subscribing to Updates to System Capabilities
 In addition getting the current system capbilities it is also possible to register to get updates when the head unit capabilities change. To get these notifications you must register for the `SDLDidReceiveSystemCapabilityUpdatedNotification` notification. This feature is only availble on head units supporting v.5.2 or greater.
 
+@![iOS]
 ##### Objective-C
 ```objc
 [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(systemCapabilityUpdatedNotification:) name:SDLDidReceiveSystemCapabilityUpdatedNotification object:nil];
@@ -87,7 +98,7 @@ NotificationCenter.default.addObserver(self, selector: #selector(systemCapabilit
     <#Use the system capability#>
 }
 ```
-
+!@
 
 ## Image Specifics
 ### Image File Type
