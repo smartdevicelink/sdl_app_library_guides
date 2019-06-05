@@ -1,4 +1,6 @@
 # Creating an App Service
+
+@![android]
 App services is a powerful feature enabling both a new kind of vehicle-to-app communication and app-to-app communication via SDL.
 
 App services are used to publish navigation, weather and media data (such as temperature, navigation waypoints, or the current playlist name). This data can then be used by both the vehicle head unit and, if the publisher of the app service desires, other SDL apps.  
@@ -10,6 +12,7 @@ An SDL app can also subscribe to a published app service. Once subscribed, the a
 Currently, there is no high-level API support for publishing an app service, so you will have to use raw RPCs for all app service related APIs.
 
 Using an app service is covered [in another guide](Other SDL Features/Using App Services).
+!@
 
 ## App Service Types
 Apps are able to declare that they provide an app service by publishing an app service manifest. Three types of app services are currently available, and more will be made available over time. The currently available types are: Media, Navigation, and Weather. An app may publish multiple services (one each for different service types), if desired.
