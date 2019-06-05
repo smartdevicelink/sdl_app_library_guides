@@ -83,8 +83,7 @@
                     "name": "Remote Control Vehicle Features"
                 },
                 {
-                    "name": "Creating an App Service",
-                    "platforms": ["iOS","Android", "javaSE", "javaEE"]
+                    "name": "Creating an App Service"
                 },
                 {
                     "name": "Using App Services"
