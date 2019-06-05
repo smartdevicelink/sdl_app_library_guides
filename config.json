@@ -142,11 +142,9 @@
                 },
                 {
                     "name": "Relay App"
-                    "platforms": ["Android"]
                 },
                 {
                     "name": "RPC Builder App"
-                    "platforms": ["Android"]
                 }
             ]
         },
