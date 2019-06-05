@@ -1,5 +1,5 @@
 # Global Voice Commands
-Voice commands are global commands available anywhere on the head unit to users of your app. If your app has left the HMI state of `NONE` because the user has interacted with your app, they may speak the commands you have setup and trigger actions in your app. How these commands are triggered (and whether they are supported at all) will depend on the type of head unit you connect to, but you don't have to worry about those intricacies when setting up your global commands. 
+Voice commands are global commands available anywhere on the head unit to users of your app. If your app has left the HMI state of `NONE` because the user has interacted with your app, they may speak the commands you have setup and trigger actions in your app. How these commands are triggered (and whether they are supported at all) will depend on the type of head unit you connect to. The great thing is that you don't have to worry about those intricacies when setting up your global commands.
 
 You have the ability to create voice command shortcuts to your [Main Menu](Displaying a User Interface/Main Menu) cells which we highly recommended that you implement. Global voice commands should be created for functions that you wish to make available as voice commands that are **not** available as menu cells.
 
