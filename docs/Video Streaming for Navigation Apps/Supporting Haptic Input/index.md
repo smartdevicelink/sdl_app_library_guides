@@ -1,4 +1,4 @@
-!@[iOS,android]
+@![iOS,android]
 # Supporting Haptic Input
 SDL now supports "haptic" input: input from something other than a touch screen. This could include trackpads, click-wheels, etc. These kinds of inputs work by knowing which areas on the screen are touchable and focusing / highlighting on those areas when the user moves the trackpad or click wheel. When the user selects within a rectangle, the center of that area will be "touched".
 
@@ -7,7 +7,7 @@ Currently, there are no RPCs for knowing which rect is highlighted, so your UI w
 !!!
 !@
 
-@[iOS,android]
+@![iOS,android]
 You will also need to implement touch input support (Mobile Navigation/Touch Input) in order to receive touches of the rects.!@ @![iOS] You must support the automatic focusable item manager in order to receive a touched view back in the `SDLTouchManagerDelegate` in addition to the `CGPoint`!@.
 
 @![iOS]
