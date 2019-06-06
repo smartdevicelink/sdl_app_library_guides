@@ -162,20 +162,20 @@
                     "platforms": ["iOS"]
                 },
                 {
-                    "name": "Updating to v4.4",
-                    "platforms": ["Android, javaEE, javaSE"]
+                    "name": "Updating to 4.4",
+                    "platforms": ["Android,javaEE,javaSE"]
                 },
                 {
                     "name": "Updating to 4.5",
-                    "platforms": ["Android, javaEE, javaSE"]
+                    "platforms": ["Android,javaEE,javaSE"]
                 },
                 {
                     "name": "Updating to 4.6",
-                    "platforms": ["Android, javaEE, javaSE"]
+                    "platforms": ["Android,javaEE,javaSE"]
                 },
                 {
                     "name": "Updating to 4.7",
-                    "platforms": ["Android, javaEE, javaSE"]
+                    "platforms": ["Android,javaEE,javaSE"]
                 }
             ]
         }
