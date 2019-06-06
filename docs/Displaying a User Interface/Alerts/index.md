@@ -9,14 +9,15 @@ The alert will persist on the screen until the timeout has elapsed, or the user 
 Depending the platform, an alert can have up to three lines of text, a progress indicator (e.g. a spinning wheel or hourglass), and up to four soft buttons.
 
 ###### Ford HMI
-![Ford Alert without Soft Buttons](assets/Ford_AlertWithNoSoftButtons.png)
+![SYNC 3 Alert without Soft Buttons](assets/Ford_AlertWithNoSoftButtons.png)
 
 ###### Ford HMI
-![Ford Alert with Soft Buttons](assets/Ford_AlertWithSoftButtons.png)
+![SYNC 3 Alert with Soft Buttons](assets/Ford_AlertWithSoftButtons.png)
 
 ## Alert TTS
 The alert can also be formatted to speak a prompt when the alert appears on the screen. Do this by setting the `ttsChunks` parameter. To play the alert tone before the text-to-speech is spoken, set `playTone` to `true`.
 
+@![iOS]
 ##### Objective-C
 ```objc
 SDLAlert *alert = [[SDLAlert alloc] initWithAlertText1:@"<#Line 1#>" alertText2:@"<#Line 2#>" alertText3:@"<#Line 3#>"];
@@ -98,3 +99,9 @@ sdlManager.send(request: alert) { (request, response, error) in
     }
 }
 ```
+!@
+
+@![android, javaSE, javaEE]
+`// TODO: Android / Java content`
+!@
+
