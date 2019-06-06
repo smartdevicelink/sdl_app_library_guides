@@ -120,7 +120,7 @@ public void sendHapticData() {
 Each SendHapticData rpc should contain the entirety of all clickable areas to be accessed via haptic controls.
 !@
 
-@![javeSE, javeEE]
+@![javaSE,javaEE]
 !!! NOTE
 This feature is only available on Android apps. Currently, JavaSE (embedded) and JavaEE (cloud) apps don't support that.
 !!!
