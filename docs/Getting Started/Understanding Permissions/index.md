@@ -1,3 +1,4 @@
+@![iOS]
 # Understanding Permissions
 While creating your SDL app, remember that just because your app is connected to a head unit it does not mean that the app has permission to send any RPCs you want. If your app does not have the required permissions, requests will be rejected. There are three important things to remember in regards to permissions:
 
@@ -173,3 +174,9 @@ func systemContext(_ oldContext: SDLSystemContext?, didChangeToContext newContex
     <#code#>
 }
 ```
+!@
+
+@![android, javaSE, javaEE]
+`// TODO Anroid guides on this section are very different from the iOS guide. Should it be aligned better?`
+`// TODO: Android / Java content`
+!@
