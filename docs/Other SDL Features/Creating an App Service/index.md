@@ -18,7 +18,7 @@ Apps are able to declare that they provide an app service by publishing an app s
 Publishing a service is a several step process. First, create your app service manifest. Second, publish your app service using your manifest. Third, publish your service data using `OnAppServiceData`. Fourth, respond to `GetAppServiceData` requests. Fifth, you should support RPCs related to your service. Last, optionally, you can support URI based app actions.
 
 ### 1. Creating an App Service Manifest
-The first step to publishing an app service is to create an AppServiceManifest object. There is a set of generic parameters you will need to fill out as well as service type specific parameters based on the app service type you are creating.
+The first step to publishing an app service is to create an @![iOS]`SDLAppServiceManifest`!@ @![android, javaSE, javaEE]`AppServiceManifest`!@ object. There is a set of generic parameters you will need to fill out as well as service type specific parameters based on the app service type you are creating.
 
 @![iOS]
 
@@ -113,7 +113,7 @@ manifest.setNavigationServiceManifest(navigationManifest);
 !@
 
 #### Creating a Weather Service Manifest
-You will need to create a weather service manifest if you want to publish a weather service. You will declare the types of data your service provides in its `WeatherServiceData`.
+You will need to create a weather service manifest if you want to publish a weather service. You will declare the types of data your service provides in its @![iOS]`SDLWeatherServiceData`!@      @![android, javaSE, javaEE] `WeatherServiceData` !@.
 
 @![iOS]
 
@@ -198,7 +198,7 @@ sdlManager.sendRPC(publishServiceRequest);
 Once you have your publish app service response, you will need to store the information provided in its `appServiceRecord` property. You will need the information later when you want to update your service's data.
 
 #### Watching for App Record Updates
-As noted in the introduction to this guide, one service for each type may become the "active" service. If your service is the active service, your `AppServiceRecord` parameter `serviceActive` will be updated to note that you are now the active service.
+As noted in the introduction to this guide, one service for each type may become the "active" service. If your service is the active service, your @![iOS]`SDLAppServiceRecord`!@ @![android, javaEE, javaSE]`AppServiceRecord`!@ parameter `serviceActive` will be updated to note that you are now the active service.
 
 @![iOS]
 
