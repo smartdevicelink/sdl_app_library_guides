@@ -87,5 +87,8 @@ To present a keyboard (such as for searching for navigation destinations), you s
 
 @![javaEE, javaSE]
 
-!!! IMPORTANT This feature is only available on Android apps. Currently, JavaSE (embedded) and JavaEE (cloud) apps don't support that. !!!
+!!! NOTE
+This feature is only available on Android apps. Currently, JavaSE (embedded) and JavaEE (cloud) apps don't support that.
+!!!
+
 !@
