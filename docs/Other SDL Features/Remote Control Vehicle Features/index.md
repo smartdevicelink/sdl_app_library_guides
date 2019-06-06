@@ -132,7 +132,26 @@ sdlManager.systemCapabilityManager.updateCapabilityType(.remoteControl) { (error
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+```java
+// First you can check to see if the capability is supported on the module
+if (sdlManager.getSystemCapabilityManager().isCapabilitySupported(SystemCapabilityType.REMOTE_CONTROL)){
+    // Since the module does support this capability we can query it for more information
+    sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.REMOTE_CONTROL, new OnSystemCapabilityListener(){
+
+        @Override
+        public void onCapabilityRetrieved(Object capability){
+            RemoteControlCapabilities remoteControlCapabilities = (RemoteControlCapabilities) capability;
+            // Now it is possible to get details on how this capability 
+            // is supported using the remoteControlCapabilities object
+        }
+
+        @Override
+        public void onError(String info){
+            Log.i(TAG, "Capability could not be retrieved: "+ info);
+        }
+    });
+}
+```
 !@
 
 ### Getting Data
@@ -161,7 +180,20 @@ sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+```java
+GetInteriorVehicleData interiorVehicleData = new GetInteriorVehicleData();
+interiorVehicleData.setModuleType(ModuleType.RADIO);
+interiorVehicleData.setSubscribe(true);
+interiorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        GetInteriorVehicleData getResponse = (GetInteriorVehicleData) response;
+        //This can now be used to retrieve data
+    }
+});
+
+sdlManager.sendRPC(interiorVehicleData);
+```
 !@
 
 ### Setting Data
@@ -189,7 +221,32 @@ sdlManager.send(setInteriorVehicleData)
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+```java
+Temperature temp = new Temperature();
+temp.setUnit(TemperatureUnit.FAHRENHEIT);
+temp.setValue((float) 74.1);
+
+ClimateControlData climateControlData = new ClimateControlData();
+climateControlData.setAcEnable(true);
+climateControlData.setAcMaxEnable(true);
+climateControlData.setAutoModeEnable(false);
+climateControlData.setCirculateAirEnable(true);
+climateControlData.setCurrentTemperature(temp);
+climateControlData.setDefrostZone(DefrostZone.FRONT);
+climateControlData.setDualModeEnable(true);
+climateControlData.setFanSpeed(2);
+climateControlData.setVentilationMode(VentilationMode.BOTH);
+climateControlData.setDesiredTemperature(temp);
+
+ModuleData moduleData = new ModuleData();
+moduleData.setModuleType(ModuleType.CLIMATE);
+moduleData.setClimateControlData(climateControlData);
+
+SetInteriorVehicleData setInteriorVehicleData = new SetInteriorVehicleData();
+setInteriorVehicleData.setModuleData(moduleData);
+
+sdlManager.sendRPC(setInteriorVehicleData);
+```
 !@
 
 It is likely that you will not need to set all the data as it is in the example. If there are settings you don't wish to modify you can skip setting them.
@@ -216,7 +273,14 @@ sdlManager.send(buttonPress)
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+```java
+ButtonPress buttonPress = new ButtonPress();
+buttonPress.setModuleType(ModuleType.RADIO);
+buttonPress.setButtonName(ButtonName.EJECT);
+buttonPress.setButtonPressMode(ButtonPressMode.SHORT);
+
+sdlManager.sendRPC(buttonPress);
+```
 !@
 
 ### Subscribing to changes
@@ -267,5 +331,20 @@ sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+```java
+sdlManager.addOnRPCNotificationListener(FunctionID.ON_INTERIOR_VEHICLE_DATA, new OnRPCNotificationListener() {
+    @Override
+    public void onNotified(RPCNotification notification) {
+        OnInteriorVehicleData onInteriorVehicleData = (OnInteriorVehicleData) notification;
+        //Perform action based on notification
+    }
+});
+
+//Then send the GetInteriorVehicleData with subscription set to true
+GetInteriorVehicleData interiorVehicleData = new GetInteriorVehicleData();
+interiorVehicleData.setModuleType(ModuleType.RADIO);
+interiorVehicleData.setSubscribe(true);
+
+sdlManager.sendRPC(interiorVehicleData);
+```
 !@
