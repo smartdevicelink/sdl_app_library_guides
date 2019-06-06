@@ -1,19 +1,14 @@
-# Remote Control
-
+# Remote Control Vehicle Features
 Remote Control provides a framework to allow apps to control certain safe modules within a vehicle.
 
 !!! Note
-Not all vehicles have this functionality. Even if they support remote control, you will likely need to request permission from the vehicle manufacturer to use it. 
+Not all head units support this feature. If using this feature in your app you will most likely need to request permission from the vehicle manufacturer. 
 !!!
 
 ## Why is this helpful?
-
 Consider the following scenarios:
-
 - A radio application wants to use the in-vehicle radio tuner. It needs the functionality to select the radio band (AM/FM/XM/HD/DAB), tune the radio frequency or change the radio station, as well as obtain general radio information for decision making.
-
 - A climate control application needs to turn on the AC, control the air circulation mode, change the fan speed and set the desired cabin temperature.
-
 - A user profile application wants to remember users' favorite settings and apply it later automatically when the users get into the same/another vehicle.
 
 Currently, the Remote Control feature supports these modules:
@@ -79,7 +74,7 @@ The following table lists what control items are in each control module.
 
 Remote Control can also allow mobile applications to send simulated button press events for the following common buttons in the vehicle.
 
-The system shall list all available buttons for Remote Control in the `RemoteControlCapabilities`. The capability object will have a List of `ButtonCapabilities` that can be obtained using `.buttonCapabilities`.
+The system will list all available buttons for Remote Control in the `RemoteControlCapabilities`. The capability object will have a list of `ButtonCapabilities` that can be obtained using `.buttonCapabilities`.
 
 | RC Module | Control Button |
 | ------------ | ------------ |
@@ -103,19 +98,12 @@ The system shall list all available buttons for Remote Control in the `RemoteCon
 |             | REPEAT |
 
 ## Integration
+For Remote Control to work, the head unit must support SDL Core Version 4.4 or newer. Also your app's `appHMIType` must be set to `REMOTE_CONTROL`.
 
-!!! NOTE
-For Remote Control to work, the head unit must support SDL Core Version 4.4 or newer. Also your app's appHMIType should be set to `REMOTE_CONTROL`.
-!!!
+### Checking Permissions
+Prior to using any Remote Control RPCs, you must check that the head unit has the Remote Control capability. As you will encounter head units that do *not* support it, this check is important. To check for this capability, use the following call:
 
-### System Capability
-
-!!! MUST 
-Prior to using any Remote Control RPCs, you must check that the head unit has the Remote Control capability. As you may encounter head units that do *not* support it, this check is important.
-!!!
-
-To check for this capability, use the following call:
-
+@![iOS]
 ##### Objective-C
 ```objc
 [self.sdlManager.systemCapabilityManager updateCapabilityType:SDLSystemCapabilityTypeRemoteControl completionHandler:^(NSError * _Nullable error, SDLSystemCapabilityManager * _Nonnull systemCapabilityManager) {
@@ -141,11 +129,16 @@ sdlManager.systemCapabilityManager.updateCapabilityType(.remoteControl) { (error
     <#Code#>
 }
 ```
+!@
+
+@![android, javaSE, javaEE]
+`// TODO: Android / Java content`
+!@
 
 ### Getting Data
-
 It is possible to retrieve current data relating to these Remote Control modules. The data could be used to store the settings prior to setting them, saving user preferences, etc. Following the check on the system's capability to support Remote Control, we can actually retrieve the data. The following is an example of getting data about the `RADIO` module. It also subscribes to updates to radio data, which will be discussed later on in this guide.
 
+@![iOS]
 ##### Objective-C
 ```objc
 SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData alloc] initAndSubscribeToModuleType:SDLModuleTypeRadio];
@@ -165,11 +158,16 @@ sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
     <#Code#>
 }
 ```
+!@
+
+@![android, javaSE, javaEE]
+`// TODO: Android / Java content`
+!@
 
 ### Setting Data
-
 Of course, the ability to set these modules is the point of Remote Control. Setting data is similar to getting it. Below is an example of setting `ClimateControlData`.
 
+@![iOS]
 ##### Objective-C
 ```objc
 SDLTemperature *temperature = [[SDLTemperature alloc] initWithUnit:SDLTemperatureUnitFahrenheit value:74.1];
@@ -188,15 +186,18 @@ let setInteriorVehicleData = SDLSetInteriorVehicleData(moduleData: moduleData)
 
 sdlManager.send(setInteriorVehicleData)
 ```
+!@
 
-It is likely that you will not need to set all the data as it is in the example, so if there are settings you don't wish to modify, then you don't have to. 
+@![android, javaSE, javaEE]
+`// TODO: Android / Java content`
+!@
+
+It is likely that you will not need to set all the data as it is in the example. If there are settings you don't wish to modify you can skip setting them.
 
 ### Button Presses
+Another unique feature of Remote Control is the ability to send simulated button presses to the associated modules, imitating a button press on the hardware itself. Simply specify the module, the button, and the type of press you would like:
 
-Another unique feature of Remote Control is the ability to send simulated button presses to the associated modules, imitating a button press on the hardware itself.
-
-Simply specify the module, the button, and the type of press you would like:
-
+![iOS]
 ##### Objective-C
 ```objc
 SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameEject moduleType:SDLModuleTypeRadio];
@@ -212,15 +213,20 @@ buttonPress.buttonPressMode = .short
 
 sdlManager.send(buttonPress)
 ```
+!@
+
+@![android, javaSE, javaEE]
+`// TODO: Android / Java content`
+!@
 
 ### Subscribing to changes
+It is also possible to subscribe to changes in data associated with supported modules. To do so, during your `GET` request for data, simply set `subscribe` to `true`. To unsubscribe, send the request again with the boolean set to `subscribe` to `false`. The response to a subscription will come in a form of a notification. You can receive this notification by adding a notification listener for `OnInteriorVehicleData`.
 
-It is also possible to subscribe to changes in data associated with supported modules.
+!!! NOTE
+The notification listener should be added before sending the `GetInteriorVehicleData` request.
+!!!
 
-To do so, during your `GET` request for data, simply add in `.subscribe = @YES`. To unsubscribe, send the request again with the boolean set to `.subscribe = @NO`.
-
-The response to a subscription will come in a form of a notification. You can receive this notification by adding a notification listener for `OnInteriorVehicleData`.
-
+@![iOS]
 ##### Objective-C
 ```objc
 [NSNotificationCenter.defaultCenter addObserverForName:SDLDidReceiveInteriorVehicleDataNotification object:nil queue:NSOperationQueue.mainQueue usingBlock:^(NSNotification * _Nonnull note) {
@@ -258,7 +264,8 @@ sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
     <#Code#>
 }
 ```
+!@
 
-!!! NOTE
-The notification listener should be added before sending the `GetInteriorVehicleData` request.
-!!!
+@![android, javaSE, javaEE]
+`// TODO: Android / Java content`
+!@
