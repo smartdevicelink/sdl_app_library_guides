@@ -1,9 +1,12 @@
 # Uploading Files
 In almost all cases, graphics are uploaded using the `ScreenManager`. You can find out about setting images in templates, soft buttons, and menus in the [Text Images and Buttons](Displaying a User Interface/Text Images and Buttons) guide. Other situations, such as `PerformInteraction`s, VR help lists, and turn by turn directions, are not currently covered by the `ScreenManager`. To upload an image, see the [Uploading Images](Other SDL Features/Uploading Images) guide.
 
-## Uploading an mp3 Using SDLFileManager
-The `SDLFileManager` uploads files and keeps track of all the uploaded files names during a session. To send data with the `SDLFileManager`, you need to create either a `SDLFile` or `SDLArtwork` object. `SDLFile` objects are created with a local `NSURL` or `NSData`; `SDLArtwork` uses a `UIImage`.
+## Uploading an mp3 Using the File Manager
+@![iOS]
+The `FileManager` uploads files and keeps track of all the uploaded files names during a session. To send data with the file manager you need to create either a @![iOS]`SDLFile`!@ @![android, javaSE, javaEE]`SdlFile`!@ or @![iOS]`SDLArtwork`!@ @![android, javaSE, javaEE]`SdlArtwork`!@ object. @![iOS]`SDLFile` objects are created with a local `NSURL` or `NSData`; `SDLArtwork` uses a `UIImage`.!@
+!@
 
+@![iOS]
 ##### Objective-C
 ```objc
 NSData *mp3Data = <#Get the File Data#>;
@@ -25,10 +28,16 @@ sdlManager.fileManager.upload(file: file) { (success, bytesAvailable, error) in
     <#File Upload Successful#>
 }
 ```
+!@
 
-## Batch File Uploads
-If you want to upload a group of files, you can use the `SDLFileManager`'s batch upload methods. Once all of the uploads have completed you will be notified if any of the uploads failed. If desired, you can also track the progress of each file in the group.
+@![android, javaSE, javaEE]
+`// TODO: Android / Java content`
+!@
 
+## Batching File Uploads
+If you want to upload a group of files, you can use the @![iOS]`SDLFileManager`'s!@ @![android, javaSE, javaEE]`FileManager`!@ batch upload methods. Once all of the uploads have completed you will be notified if any of the uploads failed. If desired, you can also track the progress of each file in the group.
+
+@![iOS]
 ##### Objective-C
 ```objc
 SDLFile *file1 = [SDLFile fileWithData:<#Data#> name:<#File name to be referenced later#> fileExtension:<#File Extension#>];
@@ -60,10 +69,41 @@ sdlManager.fileManager.upload(files: [file1, file2], progressHandler: { (fileNam
     // The error's userInfo parameter is of type [fileName: error message]
 }
 ```
+!@
+
+@![android, javaSE, javaEE]
+The first step in uploading files to the connected module is creating an instance of `SdlFile`. There are a few different constructors that can be used based on the source of the file. The following can be used to instantiate `SdlFile`:
+
+##### Resource ID
+```java
+new SdlFile(@NonNull String fileName, @NonNull FileType fileType, int id, boolean persistentFile)
+```
+##### URI
+```java
+new SdlFile(@NonNull String fileName, @NonNull FileType fileType, Uri uri, boolean persistentFile)
+```
+
+##### Byte Array
+```java
+new SdlFile(@NonNull String fileName, @NonNull FileType fileType, byte[] data, boolean persistentFile)
+```
+
+To upload more than one file simply create a `List<SdlFile>` object, add your files, and then call:
+
+```java
+sdlManager.getFileManager().uploadFiles(sdlFileList, new MultipleFileCompletionListener() {
+    @Override
+    public void onComplete(Map<String, String> errors) {
+                            
+    }
+});
+```
+!@
 
 ## File Persistance
-`SDLFile` and its subclass `SDLArtwork` support uploading persistant files, i.e. files that are not deleted when the car turns off. Persistance should be used for files that will be used every time the user opens the app. If the file is only displayed for short time the file should not be persistant because it will take up unnecessary space on the head unit. You can check the persistence via:
+@![iOS]`SDLFile`!@ @![android, javaSE, javaEE]`SdlFile`!@ and its subclass @![iOS]`SDLArtwork`!@ @![android, javaSE, javaEE]`SdlArtwork`!@ support uploading persistant files, i.e. files that are not deleted when the car turns off. Persistance should be used for files that will be used every time the user opens the app. If the file is only displayed for short time the file should not be persistant because it will take up unnecessary space on the head unit. You can check the persistence via:
 
+@![iOS]
 ##### Objective-C
 ```objc
 if (file.isPersistent) {
@@ -77,14 +117,20 @@ if file.isPersistent {
     <#File was initialized as persistent#>
 }
 ```
+!@
+
+@![android, javaSE, javaEE]
+`// TODO: Android / Java content`
+!@
 
 !!! NOTE
-Be aware that persistance will not work if space on the head unit is limited. `SDLFileManager` will always handle uploading images if they are non-existent.
+Be aware that persistance will not work if space on the head unit is limited. @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE]`FileManager`!@ will always handle uploading images if they are non-existent.
 !!!
 
 ## Overwriting Stored Files
-If a file being uploaded has the same name as an already uploaded file, the new file will be ignored. To override this setting, set the `SDLFile`’s `overwrite` property to true.
+If a file being uploaded has the same name as an already uploaded file, the new file will be ignored. To override this setting, set the @![iOS]`SDLFile`’s!@ @![android, javaSE, javaEE]`SdlFile`!@ `overwrite` property to true.
 
+@![iOS]
 ##### Objective-C
 ```objc
 file.overwrite = YES;
@@ -94,10 +140,16 @@ file.overwrite = YES;
 ```swift
 file.overwrite = true
 ```
+!@
+
+@![android, javaSE, javaEE]
+`// TODO: Android / Java content`
+!@
 
 ## Checking the Amount of File Storage
-To find the amount of file storage left for your app on the head unit, use the `SDLFileManager`’s `bytesAvailable` property.
+To find the amount of file storage left for your app on the head unit, use the @![iOS]`SDLFileManager`’s!@ @![android, javaSE, javaEE]`FileManager`'s!@ `bytesAvailable` property.
 
+@![iOS]
 ##### Objective-C
 ```objc
 NSUInteger bytesAvailable = self.sdlManager.fileManager.bytesAvailable;
@@ -107,10 +159,16 @@ NSUInteger bytesAvailable = self.sdlManager.fileManager.bytesAvailable;
 ```swift
 let bytesAvailable = sdlManager.fileManager.bytesAvailable
 ```
+!@
+
+@![android, javaSE, javaEE]
+`// TODO: Android / Java content`
+!@
 
 ## Checking if a File Has Already Been Uploaded
-You can check out if an image has already been uploaded to the head unit via the `SDLFileManager`'s `remoteFileNames` property.
+You can check out if an image has already been uploaded to the head unit via the @![iOS]`SDLFileManager`'s!@ @![android, javaSE, javaEE]`FileManager`'s!@ `remoteFileNames` property.
 
+@![iOS]
 ##### Objective-C
 ```objc
 BOOL isFileOnHeadUnit = [self.sdlManager.fileManager.remoteFileNames containsObject:@"<#Name#>"];
@@ -126,10 +184,16 @@ if let fileIsOnHeadUnit = sdlManager.fileManager.remoteFileNames.contains("<#Nam
     }
 }
 ```
+!@
+
+@![android, javaSE, javaEE]
+`// TODO: Android / Java content`
+!@
 
 ## Deleting Stored Files
 Use the file manager’s delete request to delete a file associated with a file name.
 
+@![iOS]
 ##### Objective-C
 ```objc
 [self.sdlManager.fileManager deleteRemoteFileWithName:@"<#Save As Name#>" completionHandler:^(BOOL success, NSUInteger bytesAvailable, NSError *error) {
@@ -147,8 +211,19 @@ sdlManager.fileManager.delete(fileName: "<#Save As Name#>") { (success, bytesAva
     }
 }
 ```
+!@
+
+@![android, javaSE, javaEE]
+sdlManager.getFileManager().deleteRemoteFileWithName("testFile", new CompletionListener() {
+	@Override
+	public void onComplete(boolean success) {
+				
+	}
+});
+!@
 
 ## Batch Deleting Files
+@![iOS]
 ##### Objective-C
 ```objc
 [self.sdlManager.fileManager deleteRemoteFileWithNames:@[@"<#Save As Name#>", @"<#Save As Name 2#>"] completionHandler:^(NSError *error) {
@@ -166,4 +241,15 @@ sdlManager.fileManager.delete(fileNames: ["<#Save As Name#>", "<#Save as Name 2#
     }
 }
 ```
+!@
 
+@![android, javaSE, javaEE]
+```java
+sdlManager.getFileManager().deleteRemoteFilesWithNames(remoteFiles, new MultipleFileCompletionListener() {
+	@Override
+	public void onComplete(Map<String, String> errors) {
+				
+	}
+});
+```
+!@
