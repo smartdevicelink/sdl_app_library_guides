@@ -115,8 +115,7 @@
             "name": "Video Streaming for Navigation Apps",
             "navigation": [
                 {
-                    "name": "Introduction",
-                    "platforms": ["iOS, Android"]
+                    "name": "Introduction"
                 },
                 {
                     "name": "Video Streaming"
