@@ -285,7 +285,7 @@ sdlManager.sendRPC(buttonPress);
 !@
 
 ### Subscribing to changes
-It is also possible to subscribe to changes in data associated with supported modules. To do so, during your `GET` request for data, simply set `subscribe` to `true`. To unsubscribe, send the request again with the boolean set to `subscribe` to `false`. The response to a subscription will come in a form of a notification. You can receive this notification by adding a notification listener for `OnInteriorVehicleData`.
+It is also possible to subscribe to changes in data associated with supported modules. To do so, during your `GET` request for data, simply set `subscribe` to `true`. To unsubscribe, send the request again with `subscribe` set to `false`. The response to a subscription will come in a form of a notification. You can receive this notification by adding a notification listener for `OnInteriorVehicleData`.
 
 !!! NOTE
 The notification listener should be added before sending the `GetInteriorVehicleData` request.
