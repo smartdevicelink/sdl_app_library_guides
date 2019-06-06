@@ -163,19 +163,19 @@
                 },
                 {
                     "name": "Updating to 4.4",
-                    "platforms": ["Android,JavaEE,JavaSE"]
+                    "platforms": ["Android"]
                 },
                 {
                     "name": "Updating to 4.5",
-                    "platforms": ["Android,JavaEE,JavaSE"]
+                    "platforms": ["Android"]
                 },
                 {
                     "name": "Updating to 4.6",
-                    "platforms": ["Android,JavaEE,JavaSE"]
+                    "platforms": ["Android"]
                 },
                 {
                     "name": "Updating to 4.7",
-                    "platforms": ["Android,JavaEE,JavaSE"]
+                    "platforms": ["Android"]
                 }
             ]
         }
