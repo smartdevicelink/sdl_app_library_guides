@@ -1,7 +1,7 @@
 # Retrieving Vehicle Data
-Use the `SDLGetVehicleData` RPC call to get vehicle data. The HMI level must be `FULL`, `LIMITED`, or `BACKGROUND` in order to get data.
+Use the `GetVehicleData` RPC call to get vehicle data. The HMI level must be `FULL`, `LIMITED`, or `BACKGROUND` in order to get data.
 
-Each vehicle manufacturer decides which data it will expose and to whom they will expose it. Please check the response to find out which data you will have access to in your head unit. Additionally, be aware the the driver / user may have the ability to disable vehicle data through the settings menu of their infotainment head unit.
+Each vehicle manufacturer decides which data it will expose and to whom they will expose it. Please check the response from core to find out which data you will have access to in your head unit. Additionally, be aware the the driver / user may have the ability to disable vehicle data through the settings menu of their head unit.
 
 !!! note
 You may only ask for vehicle data that is available to your `appName` & `appId` combination. These will be specified by each OEM separately. See [Understanding Permissions](Getting Started/Understanding Permissions) for more details.
@@ -41,8 +41,9 @@ You may only ask for vehicle data that is available to your `appName` & `appId` 
 | Wiper Status | wiperStatus | The status of the wipers: off, automatic off, off moving, manual interaction off, manual interaction on, manual low, manual high, manual flick, wash, automatic low, automatic high, courtesy wipe, automatic adjust, stalled, no data exists |
 
 ## One-Time Vehicle Data Retrieval
-Using `SDLGetVehicleData`, we can ask for vehicle data a single time, if needed. 
+Using @![iOS]`SDLGetVehicleData`!@ @![android, javaSE, javaEE]`SdlGetVehicleData`!@, we can ask for vehicle data a single time, if needed. 
 
+@![iOS]
 ##### Objective-C
 ```objc
 SDLGetVehicleData *getVehicleData = [[SDLGetVehicleData alloc] init];
@@ -96,12 +97,18 @@ sdlManager.send(getVehicleData) { (request, response, error) in
     guard let prndl = response.prndl else { return }
 }
 ```
+!@
+
+@![android, javaSE, javaEE]
+`// TODO: Android / Java content`
+!@
 
 ## Subscribing to Vehicle Data
 Subscribing to vehicle data allows you to get notified whenever we have new data available. This data should not be relied upon being received in a consistent manner. New vehicle data is available roughly every second.
 
 **First**, register to observe the `SDLDidReceiveVehicleDataNotification` notification: 
 
+@![iOS]
 ##### Objective-C
 ```objc
 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(vehicleDataAvailable:) name:SDLDidReceiveVehicleDataNotification object:nil];
@@ -111,9 +118,15 @@ Subscribing to vehicle data allows you to get notified whenever we have new data
 ```swift
 NotificationCenter.default.addObserver(self, selector: #selector(vehicleDataAvailable(_:)), name: .SDLDidReceiveVehicleData, object: nil)
 ```
+!@
+
+@![android, javaSE, javaEE]
+`// TODO: Android / Java content`
+!@
 
 Then send the Subscribe Vehicle Data Request:
 
+@![iOS]
 ##### Objective-C
 ```objc
 SDLSubscribeVehicleData *subscribeVehicleData = [[SDLSubscribeVehicleData alloc] init];
@@ -184,9 +197,15 @@ sdlManager.send(request: subscribeVehicleData) { (request, response, error) in
     // Successfully subscribed
 }
 ```
+!@
+
+@![android, javaSE, javaEE]
+`// TODO: Android / Java content`
+!@
 
 Finally, react to the notification when Vehicle Data is received:
 
+@![iOS]
 ##### Objective-C
 ``` objc
 - (void)vehicleDataAvailable:(SDLRPCNotificationNotification *)notification {
@@ -210,10 +229,16 @@ func vehicleDataAvailable(_ notification: SDLRPCNotificationNotification) {
     let prndl = onVehicleData.prndl
 }
 ```
+!@
+
+@![android, javaSE, javaEE]
+`// TODO: Android / Java content`
+!@
 
 ## Unsubscribing from Vehicle Data
 Sometimes you may not always need all of the vehicle data you are listening to. We suggest that you only are subscribing when the vehicle data is needed. To stop listening to specific vehicle data items, utilize `SDLUnsubscribeVehicleData`.
 
+@![iOS]
 ##### Objective-C
 ```objc
 SDLUnsubscribeVehicleData *unsubscribeVehicleData = [[SDLUnsubscribeVehicleData alloc] init];
@@ -282,3 +307,8 @@ sdlManager.send(request: unsubscribeVehicleData) { (request, response, error) in
     // Successfully unsubscribed
 }
 ```
+!@
+
+@![android, javaSE, javaEE]
+`// TODO: Android / Java content`
+!@
