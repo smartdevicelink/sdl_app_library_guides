@@ -32,7 +32,7 @@ sdlManager.send(request: display) { (request, response, error) in
 ### Available Templates
 There are fifteen standard templates to choose from, however some head units may only support a subset of these templates. Please check `SystemCapabilityManager` for the supported templates. The following examples show how templates will appear on the [Generic HMI](https://github.com/smartdevicelink/generic_hmi) and [Ford's SYNC 3 HMI](https://developer.ford.com). 
 
-##### Media
+#### Media
 ###### Generic HMI
 ![Generic - Media without progress bar](assets/GenericHMI/Generic_Default_Media.png)
 
@@ -76,7 +76,7 @@ There are fifteen standard templates to choose from, however some head units may
 
 ##### Graphic with Tiles
 ###### Generic HMI
-Currently not implemented
+![Currently not implemented]()
 
 ###### Ford HMI
 ![SYNC 3 - Graphic with Tiles](assets/SYNC3HMI/SYNC3_graphic_with_tiles.jpg)
