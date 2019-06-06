@@ -7,6 +7,7 @@ Not all head units support this feature. If using this feature in your app you w
 
 ## Why is this helpful?
 Consider the following scenarios:
+
 - A radio application wants to use the in-vehicle radio tuner. It needs the functionality to select the radio band (AM/FM/XM/HD/DAB), tune the radio frequency or change the radio station, as well as obtain general radio information for decision making.
 - A climate control application needs to turn on the AC, control the air circulation mode, change the fan speed and set the desired cabin temperature.
 - A user profile application wants to remember users' favorite settings and apply it later automatically when the users get into the same/another vehicle.
@@ -254,7 +255,7 @@ It is likely that you will not need to set all the data as it is in the example.
 ### Button Presses
 Another unique feature of Remote Control is the ability to send simulated button presses to the associated modules, imitating a button press on the hardware itself. Simply specify the module, the button, and the type of press you would like:
 
-![iOS]
+@![iOS]
 ##### Objective-C
 ```objc
 SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameEject moduleType:SDLModuleTypeRadio];
