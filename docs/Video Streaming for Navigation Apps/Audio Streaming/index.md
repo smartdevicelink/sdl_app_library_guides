@@ -1,5 +1,6 @@
 # Audio Streaming
-@![android, iOS]
+@![android,iOS]
+
 Navigation apps are allowed to stream raw audio to be played by the head unit. The audio received this way is played immediately, and the current audio source will be attenuated. The raw audio has to be played with the following parameters:
 
 * **Format**: PCM
@@ -9,14 +10,17 @@ Navigation apps are allowed to stream raw audio to be played by the head unit. T
 !@
 
 @![iOS]
+
 In order to stream audio from a SDL app, we focus on the `SDLStreamingMediaManager` class. A reference to this class is available from an `SDLProxy` property `streamingMediaManager`.
 @!
 
 @![android]
+
 You can now also push `mp3` files using the `AudioStreamingManager`, which is accessed through the `SdlManager`.
 !@
 
 @![iOS]
+
 ## Audio Stream Lifecycle
 Like the lifecycle of the video stream, the lifecycle of the audio stream is maintained by the SDL library. When you recieve the `SDLAudioStreamDidStartNotification`, you can begin streaming audio.
 
@@ -153,7 +157,9 @@ sdlManager.getAudioStreamManager().stopAudioStream(new CompletionListener() {
 !@
 
 @![javaSE, javaEE]
+
 !!! NOTE
 This feature is only available on Android apps. Currently, JavaSE (embedded) and JavaEE (cloud) apps don't support that.
+
 !!!
 !@
