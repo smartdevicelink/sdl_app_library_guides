@@ -8,11 +8,11 @@ The alert will persist on the screen until the timeout has elapsed, or the user 
 ## Alert UI
 Depending the platform, an alert can have up to three lines of text, a progress indicator (e.g. a spinning wheel or hourglass), and up to four soft buttons.
 
-###### Ford HMI
-![SYNC 3 - Alert without Soft Buttons](assets/Ford_AlertWithNoSoftButtons.png)
+###### Generic HMI
+![Generic - Alert](assets/Generic_alert.png)
 
 ###### Ford HMI
-![SYNC 3 - Alert with Soft Buttons](assets/Ford_AlertWithSoftButtons.png)
+![SYNC 3 - Alert](assets/SYNC3_alert.jpg)
 
 ## Alert TTS
 The alert can also be formatted to speak a prompt when the alert appears on the screen. Do this by setting the `ttsChunks` parameter. To play the alert tone before the text-to-speech is spoken, set `playTone` to `true`.
