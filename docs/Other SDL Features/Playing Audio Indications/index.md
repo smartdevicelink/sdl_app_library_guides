@@ -1,12 +1,12 @@
 # Playing Audio Indications
-As of @![iOS]SDL v6.1!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@, you can pass an uploaded audio file's name to `TTSChunk`, allowing any API that takes a `TTSChunk` to pass and play your audio file. This can be used, for example, to play a distinctive audio chime or indication unique to your application, letting the user know that something has occurred. A sports app, for example, could use this to notify the user of a score update alongside an `Alert` request.
+As of SDL v.@![iOS]6.1!@ @![android, javaSE, javaEE]4.7!@, you can pass an uploaded audio file's name to `TTSChunk`, allowing any API that takes a `TTSChunk` to pass and play your audio file. This can be used, for example, to play a distinctive audio chime or indication unique to your application, letting the user know that something has occurred. A sports app for example, could use this to notify the user of a score update alongside an `Alert` request.
 
 !!! NOTE
 Only SDL systems v.5.0+ support this feature. 
 !!!
 
 ## Uploading the Audio File
-The first step is to make sure the audio file is available on the remote system. To do this you use the @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@.
+The first step is to make sure the audio file is available on the remote system. To do this you use the @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE]`FileManager`!@.
 
 @![iOS]
 ##### Objective-C
