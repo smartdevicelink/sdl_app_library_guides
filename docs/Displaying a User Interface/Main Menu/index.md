@@ -3,10 +3,11 @@ You have two different options when creating menus. One is to simply add items t
 
 Every template has a main menu button. The position of this button varies between templates and can not be removed from the template. Items can be added to the menu at the root level or to a submenu.
 
-###### Generic HMI
+#### Templates
+##### Generic HMI
 ![Generic - Menu Appearance](assets/Generic_menu_dark.png)
 
-###### Ford HMI
+##### Ford HMI
 ![SYNC 3 - Menu Appearance](assets/SYNC3_menu.jpg)
 
 ## Adding Menu Items
