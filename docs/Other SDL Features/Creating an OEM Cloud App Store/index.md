@@ -1,13 +1,5 @@
 # Creating an OEM Cloud App Store
-
-@![iOS]
-
-A new feature of SDL Core v5.1 and SDL iOS v6.2 allows OEMs to offer an app store that lets users browse and install remote cloud apps. If the cloud app requires users to login with their credentials, the app store can use an authentication token to automatically login users after their first session.
-!@
-
-@![android, javaSE, javaEE]
-
-A new feature of SDL 5.1 and SDL Java Suite 4.8 allows OEMs to offer an app store that lets users browse and install remote cloud apps. If the cloud app requires users to login with their credentials, the app store can use an authentication token to automatically login users after their first session.
+A new feature of SDL Core v5.1 and SDL @![iOS]iOS v6.2!@ @![android,javaSE,javaEE]Java Suite 4.8!@ allows OEMs to offer an app store that lets users browse and install remote cloud apps. If the cloud app requires users to login with their credentials, the app store can use an authentication token to automatically login users after their first session.
 !@
 
 !!! note
@@ -70,8 +62,7 @@ sdlManager.send(request: setCloud) { (req, res, err) in
 ```
 !@
 
-@![android, javaSE, javaEE]
-
+@![android,javaSE,javaEE]
 ##### Java
 ```java
 CloudAppProperties cloudAppProperties = new CloudAppProperties("<appId>");
@@ -95,7 +86,6 @@ sdlManager.sendRPC(setCloudAppProperties);
 To retrieve cloud properties for a specific cloud app from local policy table, app stores can send `GetCloudAppProperties` and specify the `appId` for that cloud app as in this example:
 
 @![iOS]
-
 ##### Objective-C
 ```objc
 SDLGetCloudAppProperties *getCloud = [[SDLGetCloudAppProperties alloc] initWithAppID:<#app id#>];
@@ -123,7 +113,7 @@ sdlManager.send(request: getCloud) { (req, res, err) in
 ```
 !@
 
-@![android, javaSE, javaEE]
+@![android,javaSE,javaEE]
 ##### Java
 ```java
 GetCloudAppProperties getCloudAppProperties = new GetCloudAppProperties("<appId>");
@@ -163,7 +153,7 @@ let authToken = sdlManager.authToken
 ```
 !@
 
-@![android, javaSE, javaEE]
+@![android,javaSE,javaEE]
 ##### Java
 ```java
 String authToken = sdlManager.getAuthToken();
