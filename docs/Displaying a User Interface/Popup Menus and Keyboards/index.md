@@ -87,19 +87,23 @@ When you preload a cell, you **do not** need to maintain a reference to it. If y
 !!!
 
 #### Creating a Choice Set
-@![iOS]
-In order to present a menu, you must bundle together a bunch of `SDLChoiceCell`s into an `SDLChoiceSet`.
+In order to present a menu, you must bundle together a bunch of @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`ChoiceCell`!@s into an @![iOS]`SDLChoiceSet`!@ @![android, javaSE, javaEE]`ChoiceSet`!@.
 
 !!! IMPORTANT
-If the `SDLChoiceSet` contains an invalid set of `SDLChoiceCell`s, the initializer will return `nil`. This can happen, for example, if you have duplicate title text or if some, but not all choices have voice commands.
+If the @![iOS]`SDLChoiceSet`!@ @![android, javaSE, javaEE]`ChoiceSet`!@ contains an invalid set of @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`ChoiceCell`!@s, the initializer will return @![iOS]`nil`!@ @![android, javaSE, javaEE]`null`!@. This can happen, for example, if you have duplicate title text or if some, but not all choices have voice commands.
 !!!
 
 Some notes on various parameters (full documentation is available as API documentation on this website):
 
 - Title: This is the title of the menu when presented
-- Delegate: You must implement this delegate to receive callbacks based on the user's interaction with the menu
-- Layout: You may present your menu as a set of tiles (like a `UICollectionView`) or a list (like a `UITableView`). If you are using tiles, it's recommended to use artworks on each item.
+@![iOS]- Delegate: You must implement this delegate to receive callbacks based on the user's interaction with the menu
+!@
+@![android, javaSE, javaEE]
+- Listeners: `// TODO: Android / Java content`
+!@
+- Layout: You may present your menu as a set of tiles (like a @![iOS]`UICollectionView`!@ @![android, javaSE, javaEE]`GridView`!@) or a list (like a @![iOS]`UITableView`!@ @![android, javaSE, javaEE]`ListView`!@). If you are using tiles, it's recommended to use artworks on each item.
 
+@![iOS]
 ##### Objective-C
 ```objc
 SDLChoiceSet *choiceSet = [[SDLChoiceSet alloc] initWithTitle:<#(nonnull NSString *)#> delegate:<#(nonnull id<SDLChoiceSetDelegate>)#> layout:<#(SDLChoiceSetLayout)#> timeout:<#(NSTimeInterval)#> initialPromptString:<#(nullable NSString *)#> timeoutPromptString:<#(nullable NSString *)#> helpPromptString:<#(nullable NSString *)#> vrHelpList:<#(nullable NSArray<SDLVRHelpItem *> *)#> choices:<#(nonnull NSArray<SDLChoiceCell *> *)#>];
@@ -115,8 +119,8 @@ let choiceSet = SDLChoiceSet(title: <#T##String#>, delegate: <#T##SDLChoiceSetDe
 `// TODO: Android / Java content`
 !@
 
-#### Implementing the Choice Set Delegate
 @![iOS]
+#### Implementing the Choice Set Delegate
 In order to present a menu, you must implement `SDLChoiceSetDelegate` in order to receive the user's input. When a choice is selected, you will be passed the `cell` that was selected, the manner in which it was selected (voice or text), and the index of the cell in the `SDLChoiceSet` that was passed.
 
 ##### Objective-C
@@ -147,17 +151,12 @@ extension <#Class Name#>: SDLChoiceSetDelegate {
 !@
 
 @![android, javaSE, javaEE]
+#### Implementing the Choice Set Listeners
 `// TODO: Android / Java content`
 !@
 
 #### Presenting the Menu with a Mode
-@![iOS]
-Finally, you will present the menu. When you do so, you must choose a `mode` to present it in. If you have no `vrCommands` on the `SDLChoiceCell` you should choose `SDLInteractionModeManualOnly`. If `vrCommands` are available, you may choose `SDLInteractionModeVoiceRecognitionOnly` or `SDLInteractionModeBoth`.
-!@ 
-
-@![android, javaSE, javaEE]
-`// TODO: Android / Java content`
-!@
+Finally, you will present the menu. When you do so, you must choose a `mode` to present it in. If you have no `vrCommands` on the choice cell you should choose `.manualOnly`. If `vrCommands` are available, you may choose `.voiceRecognitionOnly` or `.both`.
 
 You may want to choose this based on the trigger source leading to the menu being presented. For example, if the menu was presented via the user touching the screen, you may want to use a `mode` of `.manualOnly` or `.both`, but if the menu was presented via the user speaking a voice command, you may want to use a `mode` of `.voiceRecognitionOnly` or `.both`.
 
@@ -171,11 +170,11 @@ It may seem that the answer is to always use `.both`. However, remember that you
 
 ##### Menu - Manual Only
 ###### Ford HMI
-![SYNC 3 Menu - Manual Only](assets/SYNC3_popup_menu_row.jpg)
+![SYNC 3 - Menu - Manual Only](assets/SYNC3_popup_menu_row.jpg)
 
 ##### Menu - Voice Only
 ###### Ford HMI
-![SYNC 3 Menu - Voice Only](assets/SYNC3_popup_menu_voice_recognition.jpg)
+![SYNC 3 - Menu - Voice Only](assets/SYNC3_popup_menu_voice_recognition.jpg)
 
 @![iOS]
 ##### Objective-C
@@ -235,13 +234,7 @@ sdlManager.screenManager.deleteChoices(<#T##choices: [SDLChoiceCell]##[SDLChoice
 !@
 
 ## Presenting a Keyboard
-@![iOS]
-Presenting a keyboard or a searchable menu requires you to additionally implement the `SDLKeyboardDelegate`. Note that the `initialText` in the keyboard case often acts as "placeholder text" *not* as true initial text.
-!@
-
-@![android, javaSE, javaEE]
-`// TODO: Android / Java content`
-!@
+Presenting a keyboard or a searchable menu requires you to additionally implement the @![iOS]`SDLKeyboardDelegate`!@ @![android, javaSE, javaEE]`KeyboardListener`!@. Note that the `initialText` in the keyboard case often acts as "placeholder text" *not* as true initial text.
 
 !!! NOTE
 Keyboards are unavailable for use in many countries when the driver is distracted. This is often when the vehicle is moving above a certain speed, such as 5 miles per hour.
@@ -249,7 +242,7 @@ Keyboards are unavailable for use in many countries when the driver is distracte
 
 ##### Keyboard Search
 ###### Ford HMI
-![SYNC 3 Keyboard Search](assets/SYNC3_keyboard_search.jpg)
+![SYNC 3 - Keyboard Search](assets/SYNC3_keyboard_search.jpg)
 
 @![iOS]
 ##### Objective-C
@@ -361,9 +354,5 @@ extension <#Class Name#>: SDLKeyboardDelegate {
 
 ## Using RPCs
 @![iOS]
-If you don't want to use the `SDLScreenManager`, you can do this manually using the `SDLChoice`, `SDLCreateInteractionChoiceSet`, and `SDLPerformInteraction` RPC requests. You will need to create `SDLChoice`s, bundle them into `SDLCreateInteractionChoiceSet`s, and then present those choice sets via `SDLPerformInteraction`. As this is no longer a recommended course of action, we will leave it to you to figure out how to manually do it.
+If you don't want to use the @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@, you can do this manually using the `Choice`, `CreateInteractionChoiceSet`, and `PerformInteraction` RPC requests. You will need to create `Choice`s, bundle them into `CreateInteractionChoiceSet`s, and then present those choice sets via a `PerformInteraction` request. As this is no longer a recommended course of action, we will leave it to you to figure out how to manually do it.
 @!
-
-@![android, javaSE, javaEE]
-`// TODO: Android / Java content`
-!@
