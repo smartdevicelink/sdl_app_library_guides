@@ -86,25 +86,25 @@ There are fifteen standard templates to choose from, however some head units may
 
 #### Graphic with Tiles
 ###### Generic HMI
-Template currently not supported.
+####### Template currently not supported.
 ###### Ford HMI
 ![SYNC 3 - Graphic with Tiles](assets/SYNC3HMI/SYNC3_graphic_with_tiles.jpg)
 
 #### Tiles with Graphic
 ###### Generic HMI
-Template currently not supported.
+####### Template currently not supported.
 ###### Ford HMI
 ![SYNC 3 - Tiles with Graphic](assets/SYNC3HMI/SYNC3_tiles_with_graphic.jpg)
 
 #### Graphic with Text and Soft Buttons 
 ###### Generic HMI
-Template currently not supported.
+####### Template currently not supported.
 ###### Ford HMI
 ![SYNC 3 - Graphic with Text and Soft Buttons](assets/SYNC3HMI/SYNC3_graphic_with_text_and_soft_buttons.jpg)
 
 #### Text and Soft Buttons with Graphic 
 ###### Generic HMI
-Template currently not supported.
+####### Template currently not supported.
 ###### Ford HMI
 ![SYNC 3 Text and Softbuttons with Graphic](assets/SYNC3HMI/SYNC3_text_and_soft_buttons_with_graphic.jpg)
 
