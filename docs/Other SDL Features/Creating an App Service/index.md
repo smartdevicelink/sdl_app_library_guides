@@ -18,7 +18,7 @@ Apps are able to declare that they provide an app service by publishing an app s
 Publishing a service is a several step process. First, create your app service manifest. Second, publish your app service using your manifest. Third, publish your service data using `OnAppServiceData`. Fourth, respond to `GetAppServiceData` requests. Fifth, you should support RPCs related to your service. Last, optionally, you can support URI based app actions.
 
 ### 1. Creating an App Service Manifest
-The first step to publishing an app service is to create an @![iOS]`SDLAppServiceManifest`!@ @![android, javaSE, javaEE]`AppServiceManifest`!@ object. There is a set of generic parameters you will need to fill out as well as service type specific parameters based on the app service type you are creating.
+The first step to publishing an app service is to create an @![iOS]`SDLAppServiceManifest`!@ @![android,javaSE,javaEE]`AppServiceManifest`!@ object. There is a set of generic parameters you will need to fill out as well as service type specific parameters based on the app service type you are creating.
 
 @![iOS]
 
@@ -44,7 +44,7 @@ manifest.mediaServiceManifest = <#Code#> // Covered below
 ```
 !@
 
-@![android]
+@![android,javaSE,javaEE]
 
 ##### Java
 ```java
@@ -76,7 +76,7 @@ manifest.mediaServiceManifest = mediaManifest
 ```
 !@
 
-@![android, javaSE, javaEE]
+@![android,javaSE,javaEE]
 
 ##### Java
 ```java
@@ -103,7 +103,7 @@ manifest.navigationServiceManifest = navigationManifest
 ```
 !@
 
-@![android, javaSE, javaEE]
+@![android,javaSE,javaEE]
 ##### Java
 ```java
 NavigationServiceManifest navigationManifest = new NavigationServiceManifest();
@@ -113,12 +113,11 @@ manifest.setNavigationServiceManifest(navigationManifest);
 !@
 
 #### Creating a Weather Service Manifest
-You will need to create a weather service manifest if you want to publish a weather service. You will declare the types of data your service provides in its @![iOS]`SDLWeatherServiceData`!@      @![android, javaSE, javaEE] `WeatherServiceData` !@.
+You will need to create a weather service manifest if you want to publish a weather service. You will declare the types of data your service provides in its @![iOS]`SDLWeatherServiceData`!@ @![android,javaSE,javaEE] `WeatherServiceData` !@.
 
 @![iOS]
 
 ##### Objective-C
-
 ```objc
 SDLWeatherServiceManifest *weatherManifest = [[SDLWeatherServiceManifest alloc] initWithCurrentForecastSupported:YES maxMultidayForecastAmount:10 maxHourlyForecastAmount:24 maxMinutelyForecastAmount:60 weatherForLocationSupported:YES];
 manifest.weatherServiceManifest = weatherManifest;
@@ -131,7 +130,7 @@ manifest.weatherServiceManifest = weatherManifest
 ```
 !@
 
-@![android, javaSE, javaEE]
+@![android,javaSE,javaEE]
 
 ##### Java
 ```java
@@ -174,7 +173,7 @@ sdlManager.send(request: publishServiceRequest) { (req, res, err) in
 ```
 !@
 
-@![android, javaSE, javaEE]
+@![android,javaSE,javaEE]
 
 ##### Java
 ```java
@@ -198,46 +197,23 @@ sdlManager.sendRPC(publishServiceRequest);
 Once you have your publish app service response, you will need to store the information provided in its `appServiceRecord` property. You will need the information later when you want to update your service's data.
 
 #### Watching for App Record Updates
-As noted in the introduction to this guide, one service for each type may become the "active" service. If your service is the active service, your @![iOS]`SDLAppServiceRecord`!@ @![android, javaEE, javaSE]`AppServiceRecord`!@ parameter `serviceActive` will be updated to note that you are now the active service.
+As noted in the introduction to this guide, one service for each type may become the "active" service. If your service is the active service, your @![iOS]`SDLAppServiceRecord`!@ @![android,javaEE,javaSE]`AppServiceRecord`!@ parameter `serviceActive` will be updated to note that you are now the active service.
 
-@![iOS]
-
-After the initial app record is passed to you in the `SDLPublishAppServiceResponse`, you will need to be notified of changes in order to observe whether or not you have become the active service. To do so, you will have to observe the new `SDLSystemCapabilityTypeAppServices` using `GetSystemCapability` and `OnSystemCapability`.
-!@
-
-@![android, javaSE, javaEE]
-
-After the initial app record is passed to you in the `PublishAppServiceResponse`, you will need to be notified of changes in order to observe whether or not you have become the active service. To do so, you will have to observe the new `SystemCapabilityType.APP_SERVICES` using `GetSystemCapability` and `OnSystemCapabilityUpdated`.
+After the initial app record is passed to you in the @![iOS]`SDLPublishAppServiceResponse`!@ @![android,javaSE,javaEE] `PublishAppServiceResponse`!@, you will need to be notified of changes in order to observe whether or not you have become the active service. To do so, you will have to observe the new @![iOS]`SDLSystemCapabilityTypeAppServices`!@ @![android,javaSE,javaEE]`SystemCapabilityType.APP_SERVICES`!@ using `GetSystemCapability` and @![iOS]`OnSystemCapability`!@ @![android,javaSE,javaEE] `OnSystemCapabilityUpdated` !@.
 !@
 
 For more information, see the [Using App Services guide](Other SDL Features/Using App Services) and see the "Getting and Subscribing to Services" section.
 
 ### 3. Update Your Service's Data
-@![iOS]
-
 After your service is published, it's time to update your service data. First, you must send an `onAppServiceData` RPC notification with your updated service data. RPC notifications are different than RPC requests in that they will not receive a response from the connected head unit, and must use a different `SDLManager` method call to send.
-!@
-
-@![andorid, javaSE, javaEE]
-
-`// TODO update this section when Android implements SDLManager`
-
-After your service is published, it's time to update your service data. First, you must send an `onAppServiceData` RPC notification with your updated service data. RPC notifications are different than RPC requests in that they will not receive a response from the connected head unit.
 !@
 
 !!! NOTE
 You should only update your service's data when you are the active service; service consumers will only be able to see your data when you are the active service.
 !!!
 
-@![iOS]
-
-First, you will have to create an `SDLMediaServiceData`, `SDLNavigationServiceData` or `SDLWeatherServiceData` object with your service's data. Then, add that service-specific data object to an `SDLAppServiceData` object. Finally, create an `SDLOnAppServiceData` notification, append your `SDLAppServiceData` object, and send it.
-!@
-
-@![android, javaSE, javaEE]
-
-First, you will have to create an `MediaServiceData`, `NavigationServiceData` or `WeatherServiceData` object with your service's data. Then, add that service-specific data object to an `AppServiceData` object. Finally, create an `OnAppServiceData` notification, append your `AppServiceData` object, and send it.
-!@
+First, you will have to create an @![iOS]`SDLMediaServiceData`!@ @![android,javaSE,javaEE]`MediaServiceData`!@, @![iOS]`SDLNavigationServiceData`!@ @![android,javaSE,javaEE]`NavigationServiceData`!@ or @![iOS]`SDLWeatherServiceData`!@ @![android,javaSE,javaEE]
+`WeatherServiceData`!@ object with your service's data. Then, add that service-specific data object to an @[iOS]`SDLAppServiceData`!@ @![android,javaSE,javaEE]`AppServiceData`!@ object. Finally, create an @![iOS]`SDLOnAppServiceData`!@ @![android,javaSE,javaEE]`OnAppServiceData`!@ notification, append your @![iOS]`SDLAppServiceData`!@ @![android,javaEE,javaSE]`AppServiceData` object, and send it.
 
 #### Media Service Data
 @![iOS]
@@ -261,7 +237,7 @@ sdlManager.sendRPC(onAppData)
 ```
 !@
 
-@![android, javaSE, javaEE]
+@![android,javaSE,javaEE]
 
 ##### Java
 ```java
@@ -344,7 +320,7 @@ sdlManager.fileManager.upload(file: artwork) { [weak self] (success, bytesAvaila
 ```
 !@
 
-@![android, javaSE, javaEE]
+@![android,javaSE,javaEE]
 
 ##### Java
 ```java
@@ -384,6 +360,7 @@ sdlManager.getFileManager().uploadFile(navInstructionArt, new CompletionListener
 });
 ```
 !@
+
 #### Weather Service Data
 @![iOS]
 
@@ -437,7 +414,7 @@ private func updateWeatherService(shouldUseImage: Bool) {
 ```
 !@
 
-@![android. javaSE, javaEE]
+@![android.javaSE,javaEE]
 
 ##### Java
 ```java
@@ -494,7 +471,7 @@ NotificationCenter.default.addObserver(self, selector: #selector(appServiceDataR
 ```
 !@
 
-@![android , javaSE, javaEE]
+@![android,javaSE,javaEE]
 
 ##### Java
 ```java
@@ -546,7 +523,7 @@ Second, you need to respond to the notification when you receive it with your ap
 ```
 !@
 
-@![android , javaSE, javaEE]
+@![android,javaSE,javaEE]
 ##### Java
 ```java
 // Get App Service Data Request Listener
@@ -566,8 +543,8 @@ sdlManager.addOnRPCRequestListener(FunctionID.GET_APP_SERVICE_DATA, new OnRPCReq
     }
 });
 ```
-
 !@
+
 ## Supporting Service RPCs and Actions
 
 ### 5. Service RPCs
@@ -734,7 +711,7 @@ NotificationCenter.default.addObserver(self, selector: #selector(performAppServi
 ```
 !@
 
-@![android, javaSE, javaEE]
+@![android,javaSE,javaEE]
 ##### Java
 ```java
 // Perform App Services Interaction Request Listener
