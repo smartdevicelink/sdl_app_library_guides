@@ -143,7 +143,7 @@ A cloud app can retrieve its `authToken` from local policy table after starting 
 @![iOS]
 ##### Objective-C
 ```objc
-NSString *authToken = self.sdlManager.authToken; 
+NSString *authToken = self.sdlManager.authToken;
 ```
 
 ##### Swift
