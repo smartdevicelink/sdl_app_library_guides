@@ -1,20 +1,16 @@
 # Calling a Phone Number
 @![iOS]
-Dialing a Phone Number allows you to send a phone number to dial on the user's phone. Regardless of platform (Android or iOS), you must be sure that a device is connected via Bluetooth (even if using iOS/USB) for this RPC to work. If it is not connected, you will receive a REJECTED `resultCode`.
-!@
-
-@![android, javaSE, javaEE]
-Dialing a Phone Number allows you to send a phone number to dial on the user's phone. Regardless of platform, you must be sure that a device is connected via Bluetooth for this RPC to work. If it is not connected, you will receive a REJECTED `Result`.
-!@
+Dialing a Phone Number allows you to send a phone number to dial on the user's phone. Regardless of platform (Android or iOS), you must be sure that a device is connected via Bluetooth (even if using USB) for this RPC to work. If it is not connected, you will receive a REJECTED @![iOS]`resultCode`!@ @![android, javaSE, javaEE] `Result`!@.
 
 !!! note
 DialNumber is an RPC that is usually restricted by OEMs. As a result, the OEM you are connecting to may limit app functionality if not approved for usage.
 !!!
 
 ## Detecting if DialNumber is Available
-@![iOS]
-`DialNumber` is a newer RPC, so there is a possibility that not all head units will support it. To see if `DialNumber` is supported, you may look at `SDLManager`'s `systemCapabilityManager.hmiCapabilities.phoneCall` property after the ready handler is called. 
 
+`DialNumber` is a newer RPC, so there is a possibility that not all head units will support it. To see if `DialNumber` is supported, you may look at !@[iOS]`SDLManager`'s `systemCapabilityManager.hmiCapabilities.phoneCall` property after the ready handler is called !@ @![android, javaSE, javaEE] the `HMICapabilities` that can be retrieved using `SystemCapabilityManager`.!@.
+
+@![iOS]
 ##### Objective-C
 ```objc
 BOOL isPhoneCallSupported = NO;
@@ -50,8 +46,6 @@ sdlManager.start { (success, error) in
 !@
 
 @![android, javaSE, javaEE]
-`DialNumber` is a newer RPC, so there is a possibility that not all head units will support it. To see if `DialNumber` is supported, you may look at the `HMICapabilities` that can be retrieved using `SystemCapabilityManager`.
-
 ```java
 HMICapabilities hmiCapabilities = (HMICapabilities) sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.HMI);
 if(hmiCapabilities.isPhoneCallAvailable()){
