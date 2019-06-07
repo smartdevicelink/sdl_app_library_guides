@@ -7,8 +7,7 @@ DialNumber is an RPC that is usually restricted by OEMs. As a result, the OEM yo
 
 ## Detecting if DialNumber is Available
 
-`DialNumber` is a newer RPC, so there is a possibility that not all head units will support it. To see if `DialNumber` is supported, you may look at
-@![iOS]`SDLManager`'s `systemCapabilityManager.hmiCapabilities.phoneCall` property after the ready handler is called !@ @![android, javaSE, javaEE] the `HMICapabilities` that can be retrieved using `SystemCapabilityManager`.!@.
+`DialNumber` is a newer RPC, so there is a possibility that not all head units will support it. To see if `DialNumber` is supported, you may look at @![iOS]`SDLManager`'s `systemCapabilityManager.hmiCapabilities.phoneCall` property after the ready handler is called !@ @![android,javaSE,javaEE] the `HMICapabilities` that can be retrieved using `SystemCapabilityManager`.!@.
 
 @![iOS]
 ##### Objective-C
@@ -34,7 +33,7 @@ var isPhoneCallSupported = false
 
 sdlManager.start { (success, error) in
     if !success {
-        print("SDL errored starting up: \(error.debugDescription)")
+        print("SDL encountered an error starting up: \(error.debugDescription)")
         return
     }
 
