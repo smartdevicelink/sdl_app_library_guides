@@ -49,15 +49,15 @@ sdlManager.sendRPC(setDisplayLayoutRequest);
 There are fifteen standard templates to choose from, however some head units may only support a subset of these templates. Please check the `SystemCapabilityManager` for the supported templates. The following examples show how templates will appear on the [Generic HMI](https://github.com/smartdevicelink/generic_hmi) and [Ford's SYNC 3 HMI](https://developer.ford.com). 
 
 #### Media
-###### Generic HMI
+##### Generic HMI
 ![Generic - Media without progress bar](assets/GenericHMI/Generic_Default_Media.png)
-###### Ford HMI
+##### Ford HMI
 ![SYNC 3 - Media without progress bar](assets/SYNC3HMI/SYNC3_Default_Media.jpg)
 
 #### Media (with a Progress Bar)
-###### Generic HMI
+##### Generic HMI
 ![Generic - Media with progress bar](assets/GenericHMI/Generic_media_dark.png)
-###### Ford HMI
+##### Ford HMI
 ![SYNC 3 - Media with progress bar](assets/SYNC3HMI/SYNC3_media.jpg)
 
 #### Non-Media
@@ -91,8 +91,8 @@ There are fifteen standard templates to choose from, however some head units may
 ![SYNC 3 - Graphic with Tiles](assets/SYNC3HMI/SYNC3_graphic_with_tiles.jpg)
 
 #### Tiles with Graphic
-###### Generic HMI
-####### Template currently not supported.
+##### Generic HMI
+###### Template currently not supported.
 ###### Ford HMI
 ![SYNC 3 - Tiles with Graphic](assets/SYNC3HMI/SYNC3_tiles_with_graphic.jpg)
 
