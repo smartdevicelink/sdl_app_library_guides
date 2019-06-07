@@ -1,6 +1,5 @@
 # Calling a Phone Number
-@![iOS]
-Dialing a Phone Number allows you to send a phone number to dial on the user's phone. Regardless of platform (Android or iOS), you must be sure that a device is connected via Bluetooth (even if using USB) for this RPC to work. If it is not connected, you will receive a REJECTED @![iOS]`resultCode`!@ @![android, javaSE, javaEE] `Result`!@.
+Dialing a Phone Number allows you to send a phone number to dial on the user's phone. Regardless of platform (Android or iOS), you must be sure that a device is connected via Bluetooth (even if using USB) for this RPC to work. If not connected to Bluetooth, you will receive a REJECTED @![iOS]`resultCode`!@ @![android,javaSE,javaEE] `Result`!@.
 
 !!! note
 DialNumber is an RPC that is usually restricted by OEMs. As a result, the OEM you are connecting to may limit app functionality if not approved for usage.
@@ -17,7 +16,7 @@ BOOL isPhoneCallSupported = NO;
 
 [self.sdlManager startWithReadyHandler:^(BOOL success, NSError * _Nullable error) {
     if (!success) {
-        NSLog(@"SDL errored starting up: %@", error);
+        NSLog(@"SDL encountered an error starting up: %@", error);
         return;
     }
 
@@ -81,7 +80,7 @@ dialNumber.number = @"1238675309";
 	    } else if ([resultCode isEqualToEnum:SDLResultDisallowed]) {
 	        NSLog(@"Your app is not allowed to use DialNumber");
 	    } else { 	
-	    	NSLog(@"Some unknown error has occured!");
+	    	NSLog(@"Some unknown error has occurred!");
 	    }
 	    return;
     }
@@ -109,7 +108,7 @@ sdlManager.send(request: dialNumber) { (request, response, error) in
         } else if response.resultCode == .disallowed {
             print("Your app is not allowed to use DialNumber")
         } else {
-            print("Some unknown error has occured!")
+            print("Some unknown error has occurred!")
         }
         return
     }
