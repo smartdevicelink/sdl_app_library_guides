@@ -79,7 +79,7 @@ setCloudAppProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
 });
 sdlManager.sendRPC(setCloudAppProperties);
 ```
-@!
+!@
 
 ### Getting Cloud App Properties
 To retrieve cloud properties for a specific cloud app from local policy table, app stores can send `GetCloudAppProperties` and specify the `appId` for that cloud app as in this example:
