@@ -1,19 +1,16 @@
 # Adaptive Interface Capabilities
 ## Designing for Different Head Units
-Since each car manufacturer has different user interface style guidelines, the number of lines of text, soft and hard buttons, and images supported will vary between different types of head units. When the app first connects to the SDL Core, a `RegisterAppInterface` RPC will be sent by the SDL Core containing the `displayCapability`, `buttonCapabilites`, and other properties. You can use this information to determine how to layout the user interface. 
+}
+Since each car manufacturer has different user interface style guidelines, the number of lines of text, soft and hard buttons, and images supported will vary between different types of head units. When the app first connects to the SDL Core, a `RegisterAppInterface` RPC will be sent by Core with the `displayCapabilities`, `buttonCapabilities`, `speechCapabilities` and other properties. You should use this information to create the user interface. 
 
 @![iOS]
-You may access these properties on the `SDLManager.systemCapabilityManager` instance as of SDL iOS library 6.0. If using previous versions of the library,  you can find most of the `SystemCapabilityManager` properties in the `SDLRegisterAppInterfaceResponse` object. You will have to manually extract the desired capability from the `SDLManager.registerResponse` property. 
-!@
-
-@![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+You may access these properties on the @![iOS]`SDLManager.systemCapabilityManager`!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ instance as of SDL v.6.0. If using previous versions of the library,  you can find most of the `SystemCapabilityManager` properties in the `SDLRegisterAppInterfaceResponse` object. You will have to manually extract the desired capability from the `SDLManager.registerResponse` property. 
 !@
 
 ## System Capability Manager Properties
 | Parameters  |  Description | Notes |
 | ------------- | ------------- |------------- |
-| displayCapabilities | Information about the Sync display. This includes information about available templates, whether or not graphics are supported, and a list of all text fields and the max number of characters allowed in each text field. | Check @![iOS]SDLDisplayCapabilities.h!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ for more information |
+| displayCapabilities | Information about the Sync display. This includes information about available templates, whether or not graphics are supported, and a list of all text fields and the max number of characters allowed in each text field. | Check @![iOS]SDLDisplayCapabilities.h!@ @![android, javaSE, javaEE]`DisplayCapabilities.java`!@ for more information |
 | buttonCapabilities | A list of available buttons and whether the buttons support long, short and up-down presses. | Check @![iOS]SDLButtonCapabilities.h!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ for more information |
 | softButtonCapabilities | A list of available soft buttons and whether the button support images. Also information about whether the button supports long, short and up-down presses. | Check @![iOS]SDLSoftButtonCapabilities.h!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ for more information |
 | presetBankCapabilities | If returned, the platform supports custom on-screen presets. | Check @![iOS]SDLPresetBankCapabilities.h!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ for more information |
