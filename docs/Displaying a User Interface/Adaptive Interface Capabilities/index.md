@@ -3,9 +3,7 @@
 }
 Since each car manufacturer has different user interface style guidelines, the number of lines of text, soft and hard buttons, and images supported will vary between different types of head units. When the app first connects to the SDL Core, a `RegisterAppInterface` RPC will be sent by Core with the `displayCapabilities`, `buttonCapabilities`, `speechCapabilities` and other properties. You should use this information to create the user interface. 
 
-@![iOS]
-You may access these properties on the @![iOS]`SDLManager.systemCapabilityManager`!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ instance as of SDL v.6.0. If using previous versions of the library,  you can find most of the `SystemCapabilityManager` properties in the `SDLRegisterAppInterfaceResponse` object. You will have to manually extract the desired capability from the `SDLManager.registerResponse` property. 
-!@
+You may access these properties on the @![iOS]`SDLManager.systemCapabilityManager`!@ @![android, javaSE, javaEE]`SdlManager.systemCapabilityManager`!@ instance as of SDL v.@![iOS]6.0!@ @![android, javaSE, javaEE]4.4!@. If using previous versions of the library,  you can find most of the `SystemCapabilityManager` properties in the @![iOS]`SDLRegisterAppInterfaceResponse`!@ @![android, javaSE, javaEE]`RegisterAppInterfaceResponse`!@ object. You will have to manually extract the desired capability from the @![iOS]`SDLManager.registerResponse`!@ @![android, javaSE, javaEE]`SdlManager.registerAppInterfaceResponse`!@ property. 
 
 ## System Capability Manager Properties
 | Parameters  |  Description | Notes |
@@ -32,12 +30,12 @@ The `RegisterAppInterface` response contains information about the display type,
 
 | Parameters  |  Description | Notes |
 | ------------- | ------------- |------------- |
-| syncMsgVersion | Specifies the version number of the SDL V4 interface. This is used by both the application and SDL to declare what interface version each is using. | Check @![iOS]SDLSyncMsgVersion.h!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ for more information |
-| language | The currently active voice-recognition and text-to-speech language on Sync. | Check @![iOS]SDLLanguage.h!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ for more information |
-| vehicleType | The make, model, year, and the trim of the vehicle. | Check @![iOS]SDLVehicleType.h!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ for more information |
-| supportedDiagModes | Specifies the white-list of supported diagnostic modes (0x00-0xFF) capable for DiagnosticMessage requests. If a mode outside this list is requested, it will be rejected. | Check @![iOS]SDLDiagnosticMessage.h!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ for more information |
-| sdlVersion | The SmartDeviceLink version | String |
-| systemSoftwareVersion | The software version of the system that implements the SmartDeviceLink core | String |
+| @![iOS]syncMsgVersion!@ @![android, javaSE, javaEE]sdlMsgVersion!@ | Specifies the version number of the SmartDeviceLink protocol that is supported by the mobile application. | Check @![iOS]SDLSyncMsgVersion.h!@ @![android, javaSE, javaEE]SdlMsgVersion.java!@ for more information |
+| language | The currently active VR+TTS language on the module. | Check @![iOS]SDLLanguage.h!@ @![android, javaSE, javaEE]Language.java!@ for more information |
+| vehicleType | The make, model, year, and the trim of the vehicle. | Check @![iOS]SDLVehicleType.h!@ @![android, javaSE, javaEE]VehicleType.java!@ for more information |
+| supportedDiagModes | Specifies the white-list of supported diagnostic modes (0x00-0xFF) capable for DiagnosticMessage requests. If a mode outside this list is requested, it will be rejected. | Check @![iOS]SDLDiagnosticMessage.h!@ @![android, javaSE, javaEE]DiagnosticMessage.java!@ for more information |
+| sdlVersion | The SmartDeviceLink version. | String |
+| systemSoftwareVersion | The software version of the system that implements the SmartDeviceLink core. | String |
 
 ### System Capabilities
 Most head units provide features that your app can use: making and receiving phone calls, an embedded navigation system, video and audio streaming, as well as supporting app services. To find out if the head unit supports a feature as well as more information about the feature, use the @![iOS]`SDLSystemCapabilityManager`!@ @![android, javaSE, javaEE]`SystemCapabilityManager`!@ to query the head unit for the desired capability. Querying for capabilities is only availble on head units supporting v.4.5 or greater; if connecting to older head units, the query will return `nil` even if the head unit may support the capabilty.
@@ -65,16 +63,23 @@ sdlManager.systemCapabilityManager.updateCapabilityType(.videoStreaming) { (erro
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+```java
+sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.APP_SERVICES, new OnSystemCapabilityListener() {
+    @Override
+    public void onCapabilityRetrieved(Object capability) {
+        AppServicesCapabilities servicesCapabilities = (AppServicesCapabilities) capability;
+    }
+
+    @Override
+    public void onError(String info) {
+        <# Handle Error #>
+    }
+});
+```
 !@
 
 #### Subscribing to Updates to System Capabilities
-@![iOS]
-In addition getting the current system capbilities it is also possible to register to get updates when the head unit capabilities change. To get these notifications you must register for the `SDLDidReceiveSystemCapabilityUpdatedNotification` notification. This feature is only availble on head units supporting v.5.2 or greater.
-!@
-
-@![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+In addition getting the current system capbilities it is also possible to register to get updates when the head unit capabilities change. @![iOS]To get these notifications you must register for the `SDLDidReceiveSystemCapabilityUpdatedNotification` notification.!@ @![android, javaSE, javaEE]Since this information must be queried from Core we you must implement the `OnSystemCapabilityListener`.!@ This feature is only availble on head units supporting v.5.2 or greater.
 !@
 
 @![iOS]
@@ -105,23 +110,34 @@ NotificationCenter.default.addObserver(self, selector: #selector(systemCapabilit
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+```java
+sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapabilityType.APP_SERVICES, new OnSystemCapabilityListener() {
+    @Override
+    public void onCapabilityRetrieved(Object capability) {
+        AppServicesCapabilities servicesCapabilities = (AppServicesCapabilities) capability;
+    }
+
+    @Override
+    public void onError(String info) {
+        <# Handle Error #>
+    }
+});
 !@
 
 ## Image Specifics
 ### Image File Type
-Images may be formatted as PNG, JPEG, or BMP. Check the `RegisterAppInterfaceResponse.displayCapability` properties to find out what image formats the head unit supports.
+Images may be formatted as PNG, JPEG, or BMP. Check the @![iOS]`SDLManager.registerResponse.displayCapabilities`!@ @![android, javaSE, javaEE]`SdlManager.registerAppInterfaceResponse.displayCapabilities`!@ properties to find out what image formats the head unit supports.
 
 ### Image Sizes
-If an image is uploaded that is larger than the supported size, that image will be scaled down to accommodate. All image sizes are available from the `SDLManager`'s `registerResponse` property once in the completion handler for `startWithReadyHandler`.
+If an image is uploaded that is larger than the supported size, that image will be scaled down by Core to accommodate. All image sizes are available from the @![iOS]`SDLManager.registerResponse.displayCapabilities.imageFields`!@ @![android, javaSE, javaEE]`SdlManager.registerAppInterfaceResponse.displayCapabilities.imageFields`!@ property once the manager has started successfully.
 
 | ImageName | Used in RPC | Details | Height | Width | Type |
 |:--------------|:----------------|:--------|:---------|:-------|:-------|
-softButtonImage		 | Show 					  | Will be shown on softbuttons on the base screen														  | 70px         | 70px   | png, jpg, bmp
-choiceImage 		 | CreateInteractionChoiceSet | Will be shown in the manual part of an performInteraction either big (ICON_ONLY) or small (LIST_ONLY) | 70px         | 70px   | png, jpg, bmp
-choiceSecondaryImage | CreateInteractionChoiceSet | Will be shown on the right side of an entry in (LIST_ONLY) performInteraction						  | 35px 		 | 35px   | png, jpg, bmp
-vrHelpItem			 | SetGlobalProperties		  | Will be shown during voice interaction 																  | 35px 		 | 35px   | png, jpg, bmp
-menuIcon			 | SetGlobalProperties		  | Will be shown on the “More…” button 																  | 35px 		 | 35px   | png, jpg, bmp
-cmdIcon				 | AddCommand				  | Will be shown for commands in the "More…" menu 														  | 35px 		 | 35px   | png, jpg, bmp
-appIcon 			 | SetAppIcon				  | Will be shown as Icon in the "Mobile Apps" menu 													  | 70px 		 | 70px   | png, jpg, bmp
-graphic 			 | Show 					  | Will be shown on the basescreen as cover art 														  | 185px 		 | 185px  | png, jpg, bmp
+softButtonImage		 | Show 					  | Image shown on softbuttons on the base screen														  | 70px         | 70px   | png, jpg, bmp
+choiceImage 		 | CreateInteractionChoiceSet | Image shown in the manual part of an performInteraction either big (ICON_ONLY) or small (LIST_ONLY) | 70px         | 70px   | png, jpg, bmp
+choiceSecondaryImage | CreateInteractionChoiceSet | Image shown on the right side of an entry in (LIST_ONLY) performInteraction						  | 35px 		 | 35px   | png, jpg, bmp
+vrHelpItem			 | SetGlobalProperties		  | Image shown during voice interaction 																  | 35px 		 | 35px   | png, jpg, bmp
+menuIcon			 | SetGlobalProperties		  | Image shown on the “More…” button 																  | 35px 		 | 35px   | png, jpg, bmp
+cmdIcon				 | AddCommand				  | Image shown for commands in the "More…" menu 														  | 35px 		 | 35px   | png, jpg, bmp
+appIcon 			 | SetAppIcon				  | Image shown as Icon in the "Mobile Apps" menu 													  | 70px 		 | 70px   | png, jpg, bmp
+graphic 			 | Show 					  | Image shown on the basescreen as cover art 														  | 185px 		 | 185px  | png, jpg, bmp
