@@ -2,7 +2,7 @@
 Each head unit manufacturer supports a set of user interface templates. These templates determine the position and size of the text, images, and buttons on the screen. Once the app has connected successfully with an SDL enabled head unit, a list of supported templates is available on @![iOS]`SDLManager.systemCapabilityManager.displayCapabilities.templatesAvailable`!@ @![android, javaSE, javaEE]`SdlManager.systemCapabilityManager.displayCapabilities.templatesAvailable`!@.
 
 ### Change the Template
-To change a template at any time, send a `SetDisplayLayout` RPC to core.
+To change a template at any time, send a `SetDisplayLayout` RPC to Core.
 
 @![iOS]
 ##### Objective-C
