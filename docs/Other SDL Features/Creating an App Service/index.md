@@ -411,7 +411,7 @@ private func updateWeatherService(shouldUseImage: Bool) {
 ```
 !@
 
-@![android.javaSE,javaEE]
+@![android,javaSE,javaEE]
 
 ##### Java
 ```java
