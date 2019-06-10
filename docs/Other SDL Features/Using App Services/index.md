@@ -312,7 +312,7 @@ sdlManager.send(request: getServiceData) { (req, res, err) in
 ```
 !@
 
-@![android.javaSE,javaEE]
+@![android,javaSE,javaEE]
 ##### Java
 ```java
 ButtonPress buttonPress = new ButtonPress();
