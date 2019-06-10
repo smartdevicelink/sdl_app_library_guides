@@ -71,7 +71,13 @@ sdlManager.systemCapabilityManager.updateCapabilityType(.videoStreaming) { (erro
 !@
 
 #### Subscribing to Updates to System Capabilities
+@![iOS]
 In addition getting the current system capbilities it is also possible to register to get updates when the head unit capabilities change. To get these notifications you must register for the `SDLDidReceiveSystemCapabilityUpdatedNotification` notification. This feature is only availble on head units supporting v.5.2 or greater.
+!@
+
+@![android, javaSE, javaEE]
+`// TODO: Android / Java content`
+!@
 
 @![iOS]
 ##### Objective-C
