@@ -152,7 +152,7 @@
         },
         {
             "name": "Migrating to Newer SDL Versions",
-            "platforms": ["android,","iOS"],
+            "platforms": ["Android","iOS"],
             "navigation": [
                 {
                     "name": "Updating to v4.3+",
