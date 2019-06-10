@@ -10,7 +10,7 @@ You may access these properties on the @![iOS]`SDLManager.systemCapabilityManage
 ## System Capability Manager Properties
 | Parameters  |  Description | Notes |
 | ------------- | ------------- |------------- |
-| displayCapabilities | Information about the Sync display. This includes information about available templates, whether or not graphics are supported, and a list of all text fields and the max number of characters allowed in each text field. | Check @![iOS]SDLDisplayCapabilities.h!@ @![android, javaSE, javaEE]`DisplayCapabilities.java`!@ for more information |
+| displayCapabilities | Information about the Sync display. This includes information about available templates, whether or not graphics are supported, and a list of all text fields and the max number of characters allowed in each text field. | Check @![iOS]SDLDisplayCapabilities.h!@ @![android, javaSE, javaEE]DisplayCapabilities.java!@ for more information |
 | buttonCapabilities | A list of available buttons and whether the buttons support long, short and up-down presses. | Check @![iOS]SDLButtonCapabilities.h!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ for more information |
 | softButtonCapabilities | A list of available soft buttons and whether the button support images. Also information about whether the button supports long, short and up-down presses. | Check @![iOS]SDLSoftButtonCapabilities.h!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ for more information |
 | presetBankCapabilities | If returned, the platform supports custom on-screen presets. | Check @![iOS]SDLPresetBankCapabilities.h!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ for more information |
