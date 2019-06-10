@@ -1,9 +1,8 @@
 # Adaptive Interface Capabilities
 ## Designing for Different Head Units
-}
 Since each car manufacturer has different user interface style guidelines, the number of lines of text, soft and hard buttons, and images supported will vary between different types of head units. When the app first connects to the SDL Core, a `RegisterAppInterface` RPC will be sent by Core with the `displayCapabilities`, `buttonCapabilities`, `speechCapabilities` and other properties. You should use this information to create the user interface. 
 
-You may access these properties on the @![iOS]`SDLManager.systemCapabilityManager`!@ @![android, javaSE, javaEE]`SdlManager.systemCapabilityManager`!@ instance as of SDL v.@![iOS]6.0!@ @![android, javaSE, javaEE]4.4!@. If using previous versions of the library,  you can find most of the `SystemCapabilityManager` properties in the @![iOS]`SDLRegisterAppInterfaceResponse`!@ @![android, javaSE, javaEE]`RegisterAppInterfaceResponse`!@ object. You will have to manually extract the desired capability from the @![iOS]`SDLManager.registerResponse`!@ @![android, javaSE, javaEE]`SdlManager.registerAppInterfaceResponse`!@ property. 
+You may access these properties on the @![iOS]`SDLManager.systemCapabilityManager`!@ @![android, javaSE, javaEE]`SdlManager.systemCapabilityManager`!@ instance as of SDL v.@![iOS]6.0!@@![android, javaSE, javaEE]4.4!@. If using previous versions of the library,  you can find most of the `SystemCapabilityManager` properties in the @![iOS]`SDLRegisterAppInterfaceResponse`!@ @![android, javaSE, javaEE]`RegisterAppInterfaceResponse`!@ object. You will have to manually extract the desired capability from the @![iOS]`SDLManager.registerResponse`!@ @![android, javaSE, javaEE]`SdlManager.registerAppInterfaceResponse`!@ property. 
 
 ## System Capability Manager Properties
 | Parameters  |  Description | Notes |
