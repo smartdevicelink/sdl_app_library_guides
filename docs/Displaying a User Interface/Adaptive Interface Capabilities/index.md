@@ -13,7 +13,7 @@ You may access these properties on the @![iOS]`SDLManager.systemCapabilityManage
 | @![iOS]presetBankCapabilities!@ @![android, javaSE, javaEE]SystemCapabilityType.PRESET_BANK!@ | If returned, the platform supports custom on-screen presets. | Check @![iOS]SDLPresetBankCapabilities.h!@ @![android, javaSE, javaEE]PresetBankCapabilities.java!@ for more information |
 | @![iOS]hmiZoneCapabilities!@ @![android, javaSE, javaEE]SystemCapabilityType.HMI_ZONE!@ | Specifies HMI Zones in the vehicle. There may be a HMI available for back seat passengers as well as front seat passengers. | Check @![iOS]SDLHMIZoneCapabilities.h!@ @![android, javaSE, javaEE]HmiZoneCapabilities.java!@ for more information |
 | @![iOS]speechCapabilities!@ @![android, javaSE, javaEE]SystemCapabilityType.SPEECH!@ | Contains information about TTS capabilities on the SDL platform. Platforms may support text, SAPI phonemes, LH PLUS phonemes, pre-recorded speech, and silence. | Check @![iOS]SDLSpeechCapabilities.h!@ @![android, javaSE, javaEE]SpeechCapabilities.java!@ for more information | 
-| prerecordedSpeechCapabilities | @![iOS]A list of pre-recorded sounds you can use in your app. Sounds may include a help, initial, listen, positive, or a negative jingle.!@ @![android, javaSE, javaEE]currently only available on the SDL_iOS library!@ | Check SDLPrerecordedSpeech.h for more information |
+| prerecordedSpeechCapabilities | @![iOS]A list of pre-recorded sounds you can use in your app. Sounds may include a help, initial, listen, positive, or a negative jingle.!@ @![android, javaSE, javaEE]Currently only available in the SDL_iOS library!@ | @![iOS]Check SDLPrerecordedSpeech.h!@ @![android, javaSE, javaEE]currently only available in the SDL_iOS library!@ for more information |
 | @![iOS]vrCapability!@ @![android, javaSE, javaEE]SystemCapabilityType.VOICE_RECOGNITION!@ | The voice-recognition capabilities of the connected SDL platform. The platform may be able to recognize spoken text in the current language. | Check @![iOS]SDLVRCapabilities.h!@ @![android, javaSE, javaEE]VrCapabilities.java!@ for more information |
 | @![iOS]audioPassThruCapabilities!@ @![android, javaSE, javaEE]SystemCapabilityType.AUDIO_PASSTHROUGH!@ | Describes the sampling rate, bits per sample, and audio types available. | Check @![iOS]SDLAudioPassThruCapabilities.h!@ @![android, javaSE, javaEE]AudioPassThruCapabilities.java!@ for more information|
 | @![iOS]pcmStreamCapabilities!@ @![android, javaSE, javaEE]SystemCapabilityType.PCM_STREAMING!@ | Describes different audio type configurations for the audio PCM stream service, e.g. {8kHz,8-bit,PCM}. | Check @![iOS]SDLAudioPassThruCapabilities.h!@ @![android, javaSE, javaEE]AudioPassThruCapabilities.java!@ for more information|
@@ -25,7 +25,7 @@ You may access these properties on the @![iOS]`SDLManager.systemCapabilityManage
 | @![iOS]remoteControlCapability!@ @![android, javaSE, javaEE]SystemCapabilityType.REMOTE_CONTROL!@ | Describes the abilities of an app to control built-in aspects of the IVI system. | Check @![iOS]SDLRemoteControlCapabilities.h!@ @![android, javaSE, javaEE]RemoteControlCapabilities.java!@ for more information |
 
 ### The Register App Interface RPC
-The `RegisterAppInterface` response contains information about the display type, the type of images supported, the number of text fields supported, the HMI display language, and a lot of other useful properties. The table below has a list of properties beyond those available on the system capability manager returned by the `RegisterAppInterface` response. Each property is optional, so you may not get information for all the parameters in the following table.
+The `RegisterAppInterface` response contains information about the display type, the type of images supported, the number of text fields supported, the HMI display language, and a lot of other useful properties. The table below has a list of properties beyond those available on the system capability manager returned by the `RegisterAppInterface` response. Each property is optional, so you may not get data for all the parameters in the following table.
 
 | Parameters  |  Description | Notes |
 | ------------- | ------------- |------------- |
@@ -120,14 +120,15 @@ sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapa
         <# Handle Error #>
     }
 });
+```
 !@
 
 ## Image Specifics
 ### Image File Type
-Images may be formatted as PNG, JPEG, or BMP. Check the @![iOS]`SDLManager.registerResponse.displayCapabilities`!@ @![android, javaSE, javaEE]`SdlManager.registerAppInterfaceResponse.displayCapabilities`!@ properties to find out what image formats the head unit supports.
+Images may be formatted as PNG, JPEG, or BMP. Each @![iOS]`SDLManager.registerResponse.displayCapabilities.imageFields`!@ @![android, javaSE, javaEE]`SdlManager.registerAppInterfaceResponse.displayCapabilities.imageFields`!@ property will have a list of `imageTypeSupported`.
 
 ### Image Sizes
-If an image is uploaded that is larger than the supported size, that image will be scaled down by Core to accommodate. All image sizes are available from the @![iOS]`SDLManager.registerResponse.displayCapabilities.imageFields`!@ @![android, javaSE, javaEE]`SdlManager.registerAppInterfaceResponse.displayCapabilities.imageFields`!@ property once the manager has started successfully.
+If an image is uploaded that is larger than the supported size, that image will be scaled down by Core. All image sizes are available from the @![iOS]`SDLManager.registerResponse.displayCapabilities.imageFields`!@ @![android, javaSE, javaEE]`SdlManager.registerAppInterfaceResponse.displayCapabilities.imageFields`!@ property once the manager has started successfully.
 
 | ImageName | Used in RPC | Details | Height | Width | Type |
 |:--------------|:----------------|:--------|:---------|:-------|:-------|
