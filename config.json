@@ -152,6 +152,7 @@
         },
         {
             "name": "Migrating to Newer SDL Versions",
+            "platforms": ["Android,","iOS"],
             "navigation": [
                 {
                     "name": "Updating to v4.3+",
@@ -162,20 +163,20 @@
                     "platforms": ["iOS"]
                 },
                 {
-                    "name": "Updating to 4.4",
-                    "platforms": ["Android","JavaSE","JavaEE"]
+                    "name": "Updating to v4.4",
+                    "platforms": ["Android"]
                 },
                 {
-                    "name": "Updating to 4.5",
-                    "platforms": ["Android","JavaSE","JavaEE"]
+                    "name": "Updating to v4.5",
+                    "platforms": ["Android"]
                 },
                 {
-                    "name": "Updating to 4.6",
-                    "platforms": ["Android","JavaSE","JavaEE"]
+                    "name": "Updating to v4.6",
+                    "platforms": ["Android"]
                 },
                 {
-                    "name": "Updating to 4.7",
-                    "platforms": ["Android","JavaSE","JavaEE"]
+                    "name": "Updating to v4.7",
+                    "platforms": ["Android"]
                 }
             ]
         }
