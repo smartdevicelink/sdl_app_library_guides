@@ -1,6 +1,6 @@
 # Adaptive Interface Capabilities
 ## Designing for Different Head Units
-Since each car manufacturer has different user interface style guidelines, the number of lines of text, soft and hard buttons, and images supported will vary between different types of head units. When the app first connects to the SDL Core, a `RegisterAppInterface` RPC will be sent by the SDL Core containing the `displayCapability`, `buttonCapabilites`, etc., properties. You can use this information to determine how to lay out the user interface. 
+Since each car manufacturer has different user interface style guidelines, the number of lines of text, soft and hard buttons, and images supported will vary between different types of head units. When the app first connects to the SDL Core, a `RegisterAppInterface` RPC will be sent by the SDL Core containing the `displayCapability`, `buttonCapabilites`, and other properties. You can use this information to determine how to layout the user interface. 
 
 @![iOS]
 You may access these properties on the `SDLManager.systemCapabilityManager` instance as of SDL iOS library 6.0. If using previous versions of the library,  you can find most of the `SystemCapabilityManager` properties in the `SDLRegisterAppInterfaceResponse` object. You will have to manually extract the desired capability from the `SDLManager.registerResponse` property. 
