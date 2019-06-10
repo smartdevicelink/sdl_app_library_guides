@@ -211,7 +211,7 @@ You should only update your service's data when you are the active service; serv
 !!!
 
 First, you will have to create an @![iOS]`SDLMediaServiceData`!@ @![android,javaSE,javaEE]`MediaServiceData`!@, @![iOS]`SDLNavigationServiceData`!@ @![android,javaSE,javaEE]`NavigationServiceData`!@ or @![iOS]`SDLWeatherServiceData`!@ @![android,javaSE,javaEE]
-`WeatherServiceData`!@ object with your service's data. Then, add that service-specific data object to an @[iOS]`SDLAppServiceData`!@ @![android,javaSE,javaEE]`AppServiceData`!@ object. Finally, create an @![iOS]`SDLOnAppServiceData`!@ @![android,javaSE,javaEE]`OnAppServiceData`!@ notification, append your @![iOS]`SDLAppServiceData`!@ @![android,javaEE,javaSE]`AppServiceData`!@ object, and send it.
+`WeatherServiceData`!@ object with your service's data. Then, add that service-specific data object to an @![iOS]`SDLAppServiceData`!@ @![android,javaSE,javaEE]`AppServiceData`!@ object. Finally, create an @![iOS]`SDLOnAppServiceData`!@ @![android,javaSE,javaEE]`OnAppServiceData`!@ notification, append your @![iOS]`SDLAppServiceData`!@ @![android,javaEE,javaSE]`AppServiceData`!@ object, and send it.
 
 #### Media Service Data
 @![iOS]
