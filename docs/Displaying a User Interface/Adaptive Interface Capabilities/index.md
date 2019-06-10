@@ -13,36 +13,36 @@ You may access these properties on the `SDLManager.systemCapabilityManager` inst
 ## System Capability Manager Properties
 | Parameters  |  Description | Notes |
 | ------------- | ------------- |------------- |
-| displayCapabilities | Information about the Sync display. This includes information about available templates, whether or not graphics are supported, and a list of all text fields and the max number of characters allowed in each text field. | Check SDLDisplayCapabilities.h for more information |
-| buttonCapabilities | A list of available buttons and whether the buttons support long, short and up-down presses. | Check SDLButtonCapabilities.h for more information |
-| softButtonCapabilities | A list of available soft buttons and whether the button support images. Also information about whether the button supports long, short and up-down presses. | Check SDLSoftButtonCapabilities.h for more information |
-| presetBankCapabilities | If returned, the platform supports custom on-screen presets. | Check SDLPresetBankCapabilities.h for more information |
-| hmiZoneCapabilities | Specifies HMI Zones in the vehicle. There may be a HMI available for back seat passengers as well as front seat passengers. | Check SDLHMIZoneCapabilities.h for more information |
-| speechCapabilities | Contains information about TTS capabilities on the SDL platform. Platforms may support text, SAPI phonemes, LH PLUS phonemes, pre-recorded speech, and silence. | Check SDLSpeechCapabilities.h for more information |
-| prerecordedSpeechCapabilities | A list of pre-recorded sounds you can use in your app. Sounds may include a help, initial, listen, positive, or a negative jingle. | Check SDLPrerecordedSpeech.h for more information |
-| vrCapability | The voice-recognition capabilities of the connected SDL platform. The platform may be able to recognize spoken text in the current language. | Check SDLVRCapabilities.h for more information |
-| audioPassThruCapabilities | Describes the sampling rate, bits per sample, and audio types available. | Check SDLAudioPassThruCapabilities.h for more information|
-| hmiCapabilities | Returns whether or not the app can support built-in navigation and phone calls. | Check SDLHMICapabilities.h for more information |
-| appServicesCapabilities | Describes the capabilities of app services including what service types are supported and the current state of services | Check SDLAppServicesCapabilities.h for more information |
-| navigationCapability | Describes the built-in vehicle navigation system's APIs | Check SDLNavigationCapability.h for more information |
-| phoneCapability | Describes the built-in phone calling capabilities of the IVI system. | Check SDLPhoneCapability.h for more information |
-| videoStreamingCapability | Describes the abilities of the head unit to video stream projection applications | Check SDLVideoStreamingCapability.h for more information |
-| remoteControlCapability | Describes the abilities of an app to control built-in aspects of the IVI system | Check SDLRemoteControlCapability.h for more information |
+| displayCapabilities | Information about the Sync display. This includes information about available templates, whether or not graphics are supported, and a list of all text fields and the max number of characters allowed in each text field. | Check @![iOS]SDLDisplayCapabilities.h!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ for more information |
+| buttonCapabilities | A list of available buttons and whether the buttons support long, short and up-down presses. | Check @![iOS]SDLButtonCapabilities.h@! @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ for more information |
+| softButtonCapabilities | A list of available soft buttons and whether the button support images. Also information about whether the button supports long, short and up-down presses. | Check @![iOS]SDLSoftButtonCapabilities.h!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ for more information |
+| presetBankCapabilities | If returned, the platform supports custom on-screen presets. | Check @![iOS]SDLPresetBankCapabilities.h!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ for more information |
+| hmiZoneCapabilities | Specifies HMI Zones in the vehicle. There may be a HMI available for back seat passengers as well as front seat passengers. | Check @![iOS]SDLHMIZoneCapabilities.h!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ for more information |
+| speechCapabilities | Contains information about TTS capabilities on the SDL platform. Platforms may support text, SAPI phonemes, LH PLUS phonemes, pre-recorded speech, and silence. | Check @![iOS]SDLSpeechCapabilities.h!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ for more information |
+| prerecordedSpeechCapabilities | A list of pre-recorded sounds you can use in your app. Sounds may include a help, initial, listen, positive, or a negative jingle. | Check @![iOS]SDLPrerecordedSpeech.h!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ for more information |
+| vrCapability | The voice-recognition capabilities of the connected SDL platform. The platform may be able to recognize spoken text in the current language. | Check @![iOS]SDLVRCapabilities.h!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ for more information |
+| audioPassThruCapabilities | Describes the sampling rate, bits per sample, and audio types available. | Check @![iOS]SDLAudioPassThruCapabilities.h!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ for more information|
+| hmiCapabilities | Returns whether or not the app can support built-in navigation and phone calls. | Check @![iOS]SDLHMICapabilities.h!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ for more information |
+| appServicesCapabilities | Describes the capabilities of app services including what service types are supported and the current state of services | Check @![iOS]SDLAppServicesCapabilities.h!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ for more information |
+| navigationCapability | Describes the built-in vehicle navigation system's APIs | Check @![iOS]SDLNavigationCapability.h!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ for more information |
+| phoneCapability | Describes the built-in phone calling capabilities of the IVI system. | Check @![iOS]SDLPhoneCapability.h!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ for more information |
+| videoStreamingCapability | Describes the abilities of the head unit to video stream projection applications | Check @![iOS]SDLVideoStreamingCapability.h!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ for more information |
+| remoteControlCapability | Describes the abilities of an app to control built-in aspects of the IVI system | Check @![iOS]SDLRemoteControlCapability.h!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ for more information |
 
 ### The Register App Interface RPC
-The `RegisterAppInterface` response contains information about the display type, the type of images supported, the number of text fields supported, the HMI display language, and a lot of other useful properties. The table below has a list of properties beyond those available on the `SystemCapabilityManager` returned by the `RegisterAppInterface` response. Each property is optional, so you may not get information for all the parameters in the table.
+The `RegisterAppInterface` response contains information about the display type, the type of images supported, the number of text fields supported, the HMI display language, and a lot of other useful properties. The table below has a list of properties beyond those available on the system capability manager returned by the `RegisterAppInterface` response. Each property is optional, so you may not get information for all the parameters in the following table.
 
 | Parameters  |  Description | Notes |
 | ------------- | ------------- |------------- |
-| syncMsgVersion | Specifies the version number of the SDL V4 interface. This is used by both the application and SDL to declare what interface version each is using. | Check SDLSyncMsgVersion.h for more information |
-| language | The currently active voice-recognition and text-to-speech language on Sync. | Check SDLLanguage.h for more information |
-| vehicleType | The make, model, year, and the trim of the vehicle. | Check SDLVehicleType.h for more information |
-| supportedDiagModes | Specifies the white-list of supported diagnostic modes (0x00-0xFF) capable for DiagnosticMessage requests. If a mode outside this list is requested, it will be rejected. | Check SDLDiagnosticMessage.h for more information |
+| syncMsgVersion | Specifies the version number of the SDL V4 interface. This is used by both the application and SDL to declare what interface version each is using. | Check @![iOS]SDLSyncMsgVersion.h!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ for more information |
+| language | The currently active voice-recognition and text-to-speech language on Sync. | Check @![iOS]SDLLanguage.h!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ for more information |
+| vehicleType | The make, model, year, and the trim of the vehicle. | Check @![iOS]SDLVehicleType.h!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ for more information |
+| supportedDiagModes | Specifies the white-list of supported diagnostic modes (0x00-0xFF) capable for DiagnosticMessage requests. If a mode outside this list is requested, it will be rejected. | Check @![iOS]SDLDiagnosticMessage.h!@ @![android, javaSE, javaEE]`// TODO: Android / Java content`!@ for more information |
 | sdlVersion | The SmartDeviceLink version | String |
 | systemSoftwareVersion | The software version of the system that implements the SmartDeviceLink core | String |
 
 ### System Capabilities
-Most head units provide features that your app can use: making and receiving phone calls, an embedded navigation system, video and audio streaming, as well as supporting app services. To find out if the head unit supports a feature as well as more information about the feature, use the `SystemCapabilityManager` to query the head unit for the desired capability. Querying for capabilities is only availble on head units supporting v.4.5 or greater; if connecting to older head units, the query will return `nil` even if the head unit may support the capabilty.
+Most head units provide features that your app can use: making and receiving phone calls, an embedded navigation system, video and audio streaming, as well as supporting app services. To find out if the head unit supports a feature as well as more information about the feature, use the @![iOS]`SDLSystemCapabilityManager`!@ @![android, javaSE, javaEE]`SystemCapabilityManager`!@ to query the head unit for the desired capability. Querying for capabilities is only availble on head units supporting v.4.5 or greater; if connecting to older head units, the query will return `nil` even if the head unit may support the capabilty.
 
 @![iOS]
 ##### Objective-C
