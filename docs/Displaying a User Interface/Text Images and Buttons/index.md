@@ -197,11 +197,11 @@ let artwork = SDLArtwork(image: image, persistent: true, as: .PNG)
 `// TODO: Android / Java content`
 !@
 
-##### Template Images on Dark Background
-![Template Images Dark](assets/template-images-dark.png)
+##### Templated Images on Dark Background
+![Template Images Dark](assets/Generic_template_media_dark.png)
 
-##### Template Images on Light Background
-![Template Images Light](assets/template-images-light.png)
+##### Templated Images on Light Background
+![Template Images Light](assets/Generic_template_media_light.png)
 
 ## Static Icons
 Static icons are pre-existing images on the remote system that you may reference and use in your own application. Static icons are fully supported by the screen manager via an `Artwork` initializer.
