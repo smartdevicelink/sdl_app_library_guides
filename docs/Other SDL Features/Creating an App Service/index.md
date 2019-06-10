@@ -199,21 +199,19 @@ Once you have your publish app service response, you will need to store the info
 #### Watching for App Record Updates
 As noted in the introduction to this guide, one service for each type may become the "active" service. If your service is the active service, your @![iOS]`SDLAppServiceRecord`!@ @![android,javaEE,javaSE]`AppServiceRecord`!@ parameter `serviceActive` will be updated to note that you are now the active service.
 
-After the initial app record is passed to you in the @![iOS]`SDLPublishAppServiceResponse`!@ @![android,javaSE,javaEE] `PublishAppServiceResponse`!@, you will need to be notified of changes in order to observe whether or not you have become the active service. To do so, you will have to observe the new @![iOS]`SDLSystemCapabilityTypeAppServices`!@ @![android,javaSE,javaEE]`SystemCapabilityType.APP_SERVICES`!@ using `GetSystemCapability` and @![iOS]`OnSystemCapability`!@ @![android,javaSE,javaEE] `OnSystemCapabilityUpdated` !@.
-!@
+After the initial app record is passed to you in the @![iOS]`SDLPublishAppServiceResponse`!@ @![android,javaSE,javaEE] `PublishAppServiceResponse`!@, you will need to be notified of changes in order to observe whether or not you have become the active service. To do so, you will have to observe the new @![iOS]`SDLSystemCapabilityTypeAppServices`!@ @![android,javaSE,javaEE]`SystemCapabilityType.APP_SERVICES`!@ using `GetSystemCapability` and @![iOS]`OnSystemCapability`!@ @![android,javaSE,javaEE] `OnSystemCapabilityUpdated`!@.
 
 For more information, see the [Using App Services guide](Other SDL Features/Using App Services) and see the "Getting and Subscribing to Services" section.
 
 ### 3. Update Your Service's Data
 After your service is published, it's time to update your service data. First, you must send an `onAppServiceData` RPC notification with your updated service data. RPC notifications are different than RPC requests in that they will not receive a response from the connected head unit, and must use a different `SDLManager` method call to send.
-!@
 
 !!! NOTE
 You should only update your service's data when you are the active service; service consumers will only be able to see your data when you are the active service.
 !!!
 
 First, you will have to create an @![iOS]`SDLMediaServiceData`!@ @![android,javaSE,javaEE]`MediaServiceData`!@, @![iOS]`SDLNavigationServiceData`!@ @![android,javaSE,javaEE]`NavigationServiceData`!@ or @![iOS]`SDLWeatherServiceData`!@ @![android,javaSE,javaEE]
-`WeatherServiceData`!@ object with your service's data. Then, add that service-specific data object to an @[iOS]`SDLAppServiceData`!@ @![android,javaSE,javaEE]`AppServiceData`!@ object. Finally, create an @![iOS]`SDLOnAppServiceData`!@ @![android,javaSE,javaEE]`OnAppServiceData`!@ notification, append your @![iOS]`SDLAppServiceData`!@ @![android,javaEE,javaSE]`AppServiceData` object, and send it.
+`WeatherServiceData`!@ object with your service's data. Then, add that service-specific data object to an @[iOS]`SDLAppServiceData`!@ @![android,javaSE,javaEE]`AppServiceData`!@ object. Finally, create an @![iOS]`SDLOnAppServiceData`!@ @![android,javaSE,javaEE]`OnAppServiceData`!@ notification, append your @![iOS]`SDLAppServiceData`!@ @![android,javaEE,javaSE]`AppServiceData`!@ object, and send it.
 
 #### Media Service Data
 @![iOS]
@@ -265,7 +263,6 @@ onAppData.setServiceData(appData);
 sdlManager.sendRPC(onAppData);
 ```
 !@
-
 
 #### Navigation Service Data
 @![iOS]
@@ -613,7 +610,7 @@ NotificationCenter.default.addObserver(self, selector: #selector(buttonPressRequ
 ```
 !@
 
-@![android, javaSE, javaEE]
+@![android,javaSE,javaEE]
 ##### Java
 ```java
 AppServiceManifest manifest = new AppServiceManifest(AppServiceType.MEDIA.toString());
