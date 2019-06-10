@@ -44,7 +44,7 @@ sdlManager.start { (success, error) in
 ```
 !@
 
-@![android, javaSE, javaEE]
+@![android,javaSE,javaEE]
 ```java
 HMICapabilities hmiCapabilities = (HMICapabilities) sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.HMI);
 if(hmiCapabilities.isPhoneCallAvailable()){
