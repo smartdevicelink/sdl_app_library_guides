@@ -2,7 +2,8 @@
 This guide covers presenting text and images on the screen as well as creating, showing, and responding to custom buttons you create.
 
 ## Template Fields
-The `ScreenManager` is a manager for easily creating and sending text, images and soft buttons for your SDL app. To update the UI, simply give the manager the new UI data and sandwich the update between the manager's  `beginUpdates` and ` endUpdatesWithCompletionHandler:` methods.
+The `ScreenManager` is a manager for easily creating text, images and soft buttons for your SDL app. To update the UI, simply give the manager the new UI data and sandwich the update between the manager's @![iOS]`beginUpdates`!@ @![android, javaSE, javaEE]`beginTransaction()`!@ and @![iOS]`endUpdatesWithCompletionHandler:`!@ @![android, javaSE, javaEE]`commit()`!@
+ methods.
 
 | SDLScreenManager Parameter Name | Description |
 |:--------------------------------------------|:--------------|
@@ -63,7 +64,19 @@ sdlManager.screenManager.endUpdates { (error) in
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+```java
+sdlManager.getScreenManager().beginTransaction();
+sdlManager.getScreenManager().setTextField1("Hello, this is MainField1.");
+sdlManager.getScreenManager().setTextField2("Hello, this is MainField2.");
+sdlManager.getScreenManager().setTextField3("Hello, this is MainField3.");
+sdlManager.getScreenManager().setTextField4("Hello, this is MainField4.");
+sdlManager.getScreenManager().commit(new CompletionListener() {
+	@Override
+	public void onComplete(boolean success) {
+		Log.i(TAG, "ScreenManager update complete: " + success);
+	}
+});
+```
 !@
 
 ### Removing Text and Images
@@ -129,6 +142,25 @@ retrievedSoftButtonObject?.transitionToNextState()
 
 @![android, javaSE, javaEE]
 `// TODO: Android / Java content`
+```java
+SoftButtonState softButtonState = new SoftButtonState("state1", "cancel", new SdlArtwork("cancel.jpeg", FileType.GRAPHIC_JPEG, R.drawable.cancel, true));
+SoftButtonObject softButtonObject = new SoftButtonObject("object", Collections.singletonList(softButtonState), softButtonState.getName(), null);
+sdlManager.getScreenManager().setSoftButtonObjects(Collections.singletonList(softButtonObject));
+```
+
+```java
+softButtonObject.setOnEventListener(new SoftButtonObject.OnEventListener() {
+    @Override
+    public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
+        Log.i(TAG, "OnButtonPress: ");
+    }
+
+    @Override
+    public void onEvent(SoftButtonObject softButtonObject, OnButtonEvent onButtonEvent) {
+        Log.i(TAG, "OnButtonEvent: ");
+    }
+});
+```
 !@
 
 ### Deleting Soft Buttons
