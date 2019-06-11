@@ -155,10 +155,6 @@ SDLLog.e("This is an error log")
 ```
 !@
 
-@![android]
-`// TODO`
-!@
-
-@![javaSE,javaEE]
-`// TODO`
+@![android,javaSE,javaEE]
+`// TODO Add Logging Information`
 !@
