@@ -23,6 +23,10 @@ The play/pause, seek left, seek right, tune up, and tune down subscribe buttons 
 Before SDL v.@![iOS]6.1!@@![android, javaSE, javaEE]4.7!@ and SDL Core v.5.0, `Ok` and `PlayPause` were combined into `Ok`. Subscribing to `Ok` will, in v.@![iOS]6.1!@@![android, javaSE, javaEE]4.7!@, also subscribe you to `PlayPause`. This means that for the time being, *you should not simultaneously subscribe to `Ok` and `PlayPause`*. In a future major version, this will change. For now, only subscribe to either `Ok` or `PlayPause` and the library will execute the right action based on the version of Core to which you are connected.
 !!!
 
+### HMI for Audio-Related Subscribe Buttons
+In the screenshot below, the play, seek left and seek right icons are subscribe buttons.
+![Generic - Media Template with subscribe buttons](assets/Generic_template_media_light.png)
+
 @![iOS]
 ##### Objective-C
 ```objc
