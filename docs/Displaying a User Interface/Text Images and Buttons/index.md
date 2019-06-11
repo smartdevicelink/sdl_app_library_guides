@@ -2,8 +2,7 @@
 This guide covers presenting text and images on the screen as well as creating, showing, and responding to custom buttons you create.
 
 ## Template Fields
-The @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@ is a manager for easily creating text, images and soft buttons for your SDL app. To update the UI, simply give the manager the new UI data and sandwich the update between the manager's @![iOS]`beginUpdates`!@ @![android, javaSE, javaEE]`beginTransaction()`!@ and @![iOS]`endUpdatesWithCompletionHandler:`!@ @![android, javaSE, javaEE]`commit()`!@
- methods.
+The @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@ is a manager for easily creating text, images and soft buttons for your SDL app. To update the UI, simply give the manager the new UI data and sandwich the update between the manager's @![iOS]`beginUpdates`!@ @![android, javaSE, javaEE]`beginTransaction()`!@ and @![iOS]`endUpdatesWithCompletionHandler:`!@ @![android, javaSE, javaEE]`commit()`!@ methods.
 
 | SDLScreenManager Parameter Name | Description |
 |:--------------------------------------------|:--------------|
@@ -170,12 +169,14 @@ softButtonObject.setOnEventListener(new SoftButtonObject.OnEventListener() {
 ### Deleting Soft Buttons
 To delete soft buttons, simply pass the screen manager an empty array of soft buttons.
 
-## Template Images
+## Templating Images
 When connected to a remote system running SDL Core 5.0+, you may be able to use template images. Templated images are tinted by Core so the image is visible regardless of whether your user has set the head unit to day or night mode. For example, if a head unit is in night mode with a dark theme (see [Template Coloring in the Integration Basics section](Getting Started/Integration Basics) for more details on how to customize theme colors), then your templated images will be displayed as white. In the day theme, the image will automatically change to black.
 
-@![iOS]Soft buttons, menu icons, and primary / secondary graphics can all be templated. ![iOS]A template image works [very much like it does on iOS](https://developer.apple.com/documentation/uikit/uiimage/1624153-imagewithrenderingmode) and in fact, it uses the same API as iOS. Any `SDLArtwork` created with a `UIImage` that has a `renderingMode` of `alwaysTemplate` will be templated via SDL as well.!@ Images that you wish to template must be PNGs with a transparent background and only one color for the icon. Therefore, templating is only useful for things like icons, not for images like album artwork or images that must be rendered in a specific color. 
+Soft buttons, menu icons, and primary / secondary graphics can all be templated. @![iOS]A template image works [very much like it does on iOS](https://developer.apple.com/documentation/uikit/uiimage/1624153-imagewithrenderingmode) and in fact, it uses the same API as iOS. Any `SDLArtwork` created with a `UIImage` that has a `renderingMode` of `alwaysTemplate` will be templated via SDL as well.!@ Images that you wish to template must be PNGs with a transparent background and only one color for the icon. Therefore, templating is only useful for things like icons and not for images that must be rendered in a specific color. 
 
 #### Templated Images Example
+In the screenshots below, the shuffle and repeat icons have been templated. In night mode, the icons are tinted white and in day mode the icons are tinted black.
+
 ##### Night Mode
 ![Generic - Template Images Dark Mode](assets/Generic_template_media_dark.png)
 
