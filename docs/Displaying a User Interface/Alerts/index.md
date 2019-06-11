@@ -9,15 +9,16 @@ The alert will persist on the screen until the timeout has elapsed, or the user 
 Depending the platform, an alert can have up to three lines of text, a progress indicator (e.g. a spinning wheel or hourglass), and up to four soft buttons.
 
 ### Alert HMI
-#### Generic HMI
+##### Generic HMI
 ![Generic - Alert](assets/Generic_alert.png)
 
-#### Ford HMI
+##### Ford HMI
 ![SYNC 3 - Alert](assets/SYNC3_alert.jpg)
 
-## Alert TTS
+## Alert Text-To-Speech
 The alert can also be formatted to speak a prompt when the alert appears on the screen. Do this by setting the `ttsChunks` parameter. To play the alert tone before the text-to-speech is spoken, set `playTone` to `true`.
 
+## Create an Alert
 @![iOS]
 ##### Objective-C
 ```objc
