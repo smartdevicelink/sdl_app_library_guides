@@ -1,5 +1,5 @@
 # Creating an OEM Cloud App Store
-A new feature of SDL Core v5.1 and library v.@![iOS]6.2!@@![android,javaSE,javaEE]4.8!@ allows OEMs to offer an app store that lets users browse and install remote cloud apps. If the cloud app requires users to login with their credentials, the app store can use an authentication token to automatically login users after their first session.
+A new feature of SDL Core v5.1 and library v.@![iOS]6.2!@ @![android,javaSE,javaEE]4.8!@ allows OEMs to offer an app store that lets users browse and install remote cloud apps. If the cloud app requires users to login with their credentials, the app store can use an authentication token to automatically login users after their first session.
 
 !!! note
 An OEM app store can be a mobile app or a cloud app.
