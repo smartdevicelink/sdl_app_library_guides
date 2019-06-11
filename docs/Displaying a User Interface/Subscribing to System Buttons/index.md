@@ -24,7 +24,7 @@ Before SDL v.@![iOS]6.1!@@![android, javaSE, javaEE]4.7!@ and SDL Core v.5.0, `O
 !!!
 
 ### HMI for Audio-Related Subscribe Buttons
-In the screenshot below, the play, seek left and seek right icons are subscribe buttons.
+In the screenshot below, the pause, seek left and seek right icons are subscribe buttons.
 ![Generic - Media Template with subscribe buttons](assets/Generic_template_media_light.png)
 
 @![iOS]
