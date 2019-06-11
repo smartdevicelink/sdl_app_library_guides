@@ -189,6 +189,7 @@ manager.screenManager.present(<#T##choiceSet: SDLChoiceSet##SDLChoiceSet#>, mode
 ### Presenting a Searchable Menu
 In addition to presenting a standard menu, you can also present a "searchable" menu, that is, a menu with a keyboard input box at the top. For more information on implementing the keyboard portion of this menu, see *Presenting a Keyboard* below.
 
+##### Menu with Search
 ###### Ford HMI
 ![SYNC 3 - Menu with Search Interaction Layout](assets/SYNC3_popup_menu_with_search.jpg)
 
