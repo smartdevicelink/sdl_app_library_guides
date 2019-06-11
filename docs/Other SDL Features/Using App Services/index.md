@@ -183,11 +183,6 @@ if (appServices!= null && appServices.size() > 0) {
 ```
 !@
 
-@![iOS]
-#### Using the System Capability Manager
-In the current release, while the system capability manager supports getting the app services capability, it does not support automatically updating itself when the app services change. It must currently be polled through the `updateCapabilityType:completionHandler:` method. Therefore, until the `SystemCapabilityManager` is updated with support for auto-updating, we currently recommend using the raw `SDLGetSystemCapability` RPC and subscribing.
-!@
-
 ### 2. Getting and Subscribing to a Service Type's Data
 Once you have information about all of the services available, you may want to view or subscribe to a service type's data. To do so, you will use the `GetAppServiceData` RPC.
 
