@@ -62,7 +62,6 @@ sdlManager.send(request: setCloud) { (req, res, err) in
 !@
 
 @![android,javaSE,javaEE]
-##### Java
 ```java
 CloudAppProperties cloudAppProperties = new CloudAppProperties("<appId>");
 cloudAppProperties.setAuthToken("<auth token>");
@@ -113,7 +112,6 @@ sdlManager.send(request: getCloud) { (req, res, err) in
 !@
 
 @![android,javaSE,javaEE]
-##### Java
 ```java
 GetCloudAppProperties getCloudAppProperties = new GetCloudAppProperties("<appId>");
 getCloudAppProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
@@ -153,7 +151,6 @@ let authToken = sdlManager.authToken
 !@
 
 @![android,javaSE,javaEE]
-##### Java
 ```java
 String authToken = sdlManager.getAuthToken();
 ```
