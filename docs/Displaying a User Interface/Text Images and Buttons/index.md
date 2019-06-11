@@ -79,7 +79,7 @@ sdlManager.getScreenManager().commit(new CompletionListener() {
 !@
 
 ### Removing Text and Images
-After you have displayed text and graphics onto the screen, you may want to remove those from being displayed. In order to do so, you only need to set the screen manager property to `nil`.
+After you have displayed text and graphics onto the screen, you may want to remove those from being displayed. In order to do so, you only need to set the screen manager property to @![iOS]`nil`!@ @![android, javaSE, javaEE]`null`!@.
 
 @![iOS]
 ##### Objective-C
