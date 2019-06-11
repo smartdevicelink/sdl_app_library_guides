@@ -17,10 +17,10 @@ There is no way to customize a subscribe button's image or text.
 !!!
 
 ## Audio-Related Buttons
-The play/pause, seek left, seek right, tune up, and tune down subscribe buttons can only be used in the `MEDIA` template. Depending on the manufacturer of the head unit, the subscribe button might also show up as a soft button in the media template. For example, the SYNC 3 HMI will add the ok, seek right, and seek left soft buttons to the media template when you subscribe to those buttons. You will automatically be assigned the media template if you set your app's configuration `appType` to `MEDIA`.
+The play/pause, seek left, seek right, tune up, and tune down subscribe buttons can only be used in the `MEDIA` template. Depending on the manufacturer of the head unit, the subscribe button might also show up as a soft button in the media template. For example, the SYNC 3 HMI will add the ok, seek right, and seek left soft buttons to the media template when you subscribe to those buttons. You will automatically be assigned the media template if you set your app's `appType` to `MEDIA`.
 
 !!! NOTE
-Before SDL v.@![iOS]6.1!@ @![android, javaSE, javaEE]4.7!@ and SDL Core v.5.0, `Ok` and `PlayPause` were combined into `Ok`. Subscribing to `Ok` will, in v6.1, also subscribe you to `PlayPause`. This means that for the time being, *you should not simultaneously subscribe to `Ok` and `PlayPause`*. In a future major version, this will change. For now, only subscribe to either `Ok` or `PlayPause` and the library will do the right thing based on the version of Core to which you are subscribed.
+Before SDL v.@![iOS]6.1!@@![android, javaSE, javaEE]4.7!@ and SDL Core v.5.0, `Ok` and `PlayPause` were combined into `Ok`. Subscribing to `Ok` will, in v.@![iOS]6.1!@@![android, javaSE, javaEE]4.7!@, also subscribe you to `PlayPause`. This means that for the time being, *you should not simultaneously subscribe to `Ok` and `PlayPause`*. In a future major version, this will change. For now, only subscribe to either `Ok` or `PlayPause` and the library will execute the right action based on the version of Core to which you are connected.
 !!!
 
 @![iOS]
@@ -48,7 +48,6 @@ sdlManager.send(request: subscribeButton) { (request, response, error) in
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content` -> `NEED TO HANDLE PLAY/PAUSE`
 ```java
 sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_EVENT, new OnRPCNotificationListener() {
     @Override
@@ -56,6 +55,8 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_EVENT, new OnRPCNot
         OnButtonPress onButtonPressNotification = (OnButtonPress) notification;
         switch (onButtonPressNotification.getButtonName()) {
             case OK:
+                break;
+            case PLAY_PAUSE:
                 break;
             case SEEKLEFT:
                 break;
@@ -76,6 +77,8 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
         switch (onButtonPressNotification.getButtonName()) {
             case OK:
                 break;
+            case PLAY_PAUSE:
+                break;
             case SEEKLEFT:
                 break;
             case SEEKRIGHT:
@@ -89,7 +92,7 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
 });
 
 SubscribeButton subscribeButtonRequest = new SubscribeButton();
-subscribeButtonRequest.setButtonName(ButtonName.SEEKRIGHT);
+subscribeButtonRequest.setButtonName(ButtonName.OK);
 sdlManager.sendRPC(subscribeButtonRequest);
 ```
 !@
