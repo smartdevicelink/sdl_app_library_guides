@@ -162,11 +162,11 @@ It may seem that the answer is to always use `both`. However, remember that you 
 | VR only           | Interactions occur only through text-to-speech and voice recognition |
 | Both              | Interactions can occur both manually or through VR |
 
-##### Menu - Manual Only
+##### Menu - Manual Only Mode
 ###### Ford HMI
 ![SYNC 3 - Menu - Manual Only](assets/SYNC3_popup_menu_row.jpg)
 
-##### Menu - Voice Only
+##### Menu - Voice Only Mode
 ###### Ford HMI
 ![SYNC 3 - Menu - Voice Only](assets/SYNC3_popup_menu_voice_recognition.jpg)
 
