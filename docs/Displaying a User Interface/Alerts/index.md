@@ -119,7 +119,7 @@ alert.setDuration(5000);
 // Not all head units support the progress indicator
 alert.setProgressIndicator(true);
 
-//Text to speech
+// Text-to-speech
 alert.setTtsChunks(TTS_list); // TTS_list populated elsewhere
 
 // Special tone played before the tts is spoken
