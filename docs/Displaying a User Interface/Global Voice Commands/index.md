@@ -34,4 +34,4 @@ self.sdlManager.screenManager.voiceCommands = [voiceCommand]
 !@
 
 ## Using RPCs
-If you wish to do this without the aid of the screen manager, you can create @[iOS]`SDLAddCommand`!@ @![android, javaSE, javaEE]`AddCommand`!@ objects without the `menuParams` parameter to create global voice commands.
+If you wish to do this without the aid of the screen manager, you can create @![iOS]`SDLAddCommand`!@ @![android, javaSE, javaEE]`AddCommand`!@ objects without the `menuParams` parameter to create global voice commands.
