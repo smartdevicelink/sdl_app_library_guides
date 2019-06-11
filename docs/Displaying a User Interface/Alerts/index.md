@@ -1,5 +1,5 @@
 # Alerts
-An alert is a pop-up window with some lines of text and optional soft buttons. When an alert is activated, it will abort any SDL operation that is in-progress, except the already-in-progress alert. If an alert is issued while another alert is still in progress, the newest alert will simply be ignored.
+An alert is a pop-up window that can show a short message with optional buttons. When an alert is activated, it will abort any SDL operation that is in-progress, except the already-in-progress alert. If an alert is issued while another alert is still in progress, the newest alert will simply be ignored.
 
 !!! NOTE
 The alert will persist on the screen until the timeout has elapsed, or the user dismisses the alert by selecting a button. There is no way to dismiss the alert programmatically other than to set the timeout length.
@@ -8,10 +8,11 @@ The alert will persist on the screen until the timeout has elapsed, or the user 
 ## Alert UI
 Depending the platform, an alert can have up to three lines of text, a progress indicator (e.g. a spinning wheel or hourglass), and up to four soft buttons.
 
-###### Generic HMI
+### Alert HMI
+#### Generic HMI
 ![Generic - Alert](assets/Generic_alert.png)
 
-###### Ford HMI
+#### Ford HMI
 ![SYNC 3 - Alert](assets/SYNC3_alert.jpg)
 
 ## Alert TTS
