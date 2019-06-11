@@ -9,10 +9,10 @@ The alert will persist on the screen until the timeout has elapsed, or the user 
 Depending the platform, an alert can have up to three lines of text, a progress indicator (e.g. a spinning wheel or hourglass), and up to four soft buttons.
 
 ### Alert HMI
-##### Generic HMI
+###### Generic HMI
 ![Generic - Alert](assets/Generic_alert.png)
 
-##### Ford HMI
+###### Ford HMI
 ![SYNC 3 - Alert](assets/SYNC3_alert.jpg)
 
 ## Alert Text-To-Speech
