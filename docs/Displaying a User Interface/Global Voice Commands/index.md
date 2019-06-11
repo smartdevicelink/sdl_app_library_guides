@@ -7,7 +7,7 @@ You have the ability to create voice command shortcuts to your [Main Menu](Displ
 We recommend creating global voice commands for common actions such as the actions performed by your [Soft Buttons](Displaying a User Interface/Text Images and Buttons).
 !!!
 
-You simply create and set @[iOS]`SDLVoiceCommand`!@ @![android, javaSE, javaEE]`VoiceCommand`!@ objects to the `voiceCommands` array on the screen manager.
+You simply create and set @![iOS]`SDLVoiceCommand`!@ @![android, javaSE, javaEE]`VoiceCommand`!@ objects to the `voiceCommands` array on the screen manager.
 
 @![javaSE]
 ##### Objective-C
