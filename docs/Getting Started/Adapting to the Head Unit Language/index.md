@@ -1,13 +1,13 @@
 # Adapting to the Head Unit Language
-@![iOS]
 Since a head unit can support multiple languages, you may want to add support for more than one language to your SDL app. The SDL library allows you to check which language is currently be used by the head unit. If desired, the app's name and the app's text-to-speech (TTS) name can be customized to reflect the head unit's current language. If your app name is not part of the current lexicon, you should tell the VR system how a native speaker will pronounce your app name by setting the TTS name using [phonemes](https://en.wikipedia.org/wiki/Phoneme) from either the Microsoft SAPI phoneme set or from the LHPLUS phoneme set.
 
 ## Setting the Default Language
-The initial configuration of the `SDLManager` requires a default language when setting the `SDLLifecycleConfiguration`. If not set, the SDL library uses American English (*EN_US*) as the default language. The connection will fail if the head unit does not support the `language` set in the `SDLLifecycleConfiguration`. The `RegisterAppInterfaceResponse` RPC will return `INVALID_DATA` as the reason for rejecting the request.
+The initial configuration of the @![iOS]`SDLManager`!@@![android,javaSE,javaEE]`SdlManager`!@ requires a default language when setting the @![iOS]`SDLLifecycleConfiguration`!@@![android,javaSE,javaEE]`Builder`!@. If not set, the SDL library uses American English (*EN_US*) as the default language. The connection will fail if the head unit does not support the `language` set in the @![iOS]`SDLLifecycleConfiguration`!@@![android,javaSE,javaEE]`Builder`!@. @![iOS]The `RegisterAppInterfaceResponse` RPC will return `INVALID_DATA` as the reason for rejecting the request!@ @![android,javaSE,javaEE] `//TODO Android to add what happens in case of unsupported language`!@.
 
 ### What if My App Does Not Support the Head Unit Language?
-If your app does not support the current head unit language, you should decide on a default language to use in your app. All text should be created using this default language. Unfortunately, your VR commands will probably not work as the VR system will not recogize your users' pronunciation.
+If your app does not support the current head unit language, you should decide on a default language to use in your app. All text should be created using this default language. Unfortunately, your VR commands will probably not work as the VR system will not recognize your users' pronunciation.
 
+@![iOS]
 ### Checking the Current Head Unit Language
 After starting the `SDLManager` you can check the `registerResponse` property for the head unit's `language` and `hmiDisplayLanguage`. The `language` property gives you the current VR system language; `hmiDisplayLanguage` the current display text language.
 
@@ -70,9 +70,8 @@ func managerShouldUpdateLifecycle(toLanguage language: SDLLanguage) -> SDLLifecy
 ```
 !@
 
-@![android. javaSE, javaEE]
+@![android,javaSE,javaEE]
 
-`//TODO The closest thing I could find to this section in Android is "Handling a Language Change", should Android align this closer or should this section be placed here or should this sections be iOS and Android specific`
 # Handling a Language Change
 
 When a user changes the language on a head unit, an `OnLanguageChange` notification will be sent from Core. Then your app will disconnect. In order for your app to automatically reconnect to the head unit, there are a few changes to make in the following files:
@@ -125,7 +124,6 @@ public void onSdlEnabled(Context context, Intent intent) {
 ## SDL Service
 
 We want to tell our local SDL Broadcast Receiver to restart the service when an `OnLanguageChange` notification is received from Core . To do so, add a notification listener as follows:
-
 
 ```java
 sdlManager.addOnRPCNotificationListener(FunctionID.ON_LANGUAGE_CHANGE, new OnRPCNotificationListener() {
