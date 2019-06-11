@@ -5,13 +5,11 @@ Voice commands are global commands available anywhere on the head unit to users 
 The head unit manufacturer will determine how these voice commands are triggered and some head units will not support voice commands.
 !!!
 
-You have the ability to create voice command shortcuts to your [Main Menu](Displaying a User Interface/Main Menu) cells which we highly recommended you implement. Global voice commands should be created for functions that you wish to make available as voice commands that are **not** available as menu cells.
-
-We recommend creating global voice commands for common actions such as the actions performed by your [Soft Buttons](Displaying a User Interface/Text Images and Buttons).
+You have the ability to create voice command shortcuts to your [Main Menu](Displaying a User Interface/Main Menu) cells which we highly recommended that you implement. Global voice commands should be created for functions that you wish to make available as voice commands that are **not** available as menu cells. We recommend creating global voice commands for common actions such as the actions performed by your [Soft Buttons](Displaying a User Interface/Text Images and Buttons).
 
 You simply create and set @![iOS]`SDLVoiceCommand`!@ @![android, javaSE, javaEE]`SdlVoiceCommand`!@ objects to the `voiceCommands` array on the screen manager.
 
-@![javaSE]
+@![iOS]
 ##### Objective-C
 ```objc
 // Create the voice command
@@ -31,7 +29,7 @@ self.sdlManager.screenManager.voiceCommands = [voiceCommand]
 ```
 !@
 
-@![javaSE, javaEE]
+@![android, javaSE, javaEE]
 `// TODO: Android / Java content`
 !@
 
