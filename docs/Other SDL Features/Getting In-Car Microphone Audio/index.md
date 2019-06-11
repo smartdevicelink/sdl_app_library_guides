@@ -122,11 +122,11 @@ Audio Capture can be ended in 4 ways:
 
 2. Audio Pass Thru was closed due to user pressing "Cancel".
 
-    If the Audio Pass Thru was displayed, and the user pressed the "Cancel" button, you will receive a @![iOS]`resultCode`!@ @![android,javaSE,javaEE]`Result!`@! of `ABORTED`. You should expect to ignore this Audio Pass Thru.
+    If the Audio Pass Thru was displayed, and the user pressed the "Cancel" button, you will receive a @![iOS]`resultCode`!@ @![android,javaSE,javaEE]`Result!`!@ of `ABORTED`. You should expect to ignore this Audio Pass Thru.
 
 3. Audio Pass Thru was closed due to user pressing "Done".
 
-    If the Audio Pass Thru was displayed, and the user pressed the "Done" button, you will receive a @![iOS]`resultCode`!@ @![android,javaSE,javaEE]`Result!`@! of `SUCCESS`. You should expect to handle this Audio Pass Thru as though it was successful.
+    If the Audio Pass Thru was displayed, and the user pressed the "Done" button, you will receive a @![iOS]`resultCode`!@ @![android,javaSE,javaEE]`Result!`!@ of `SUCCESS`. You should expect to handle this Audio Pass Thru as though it was successful.
 
 4. Audio Pass Thru was ended due to the developer ending the request.
 
@@ -153,10 +153,10 @@ sdlManager.sendRPC(endAPT);
 ```
 !@
 
-You will receive a @![iOS]`resultCode`!@ @![android,javaSE,javaEE]`Result!`@! of `SUCCESS`, and should expect to handle this audio pass thru as though it was successful.
+You will receive a @![iOS]`resultCode`!@ @![android,javaSE,javaEE]`Result!`!@ of `SUCCESS`, and should expect to handle this audio pass thru as though it was successful.
 
 ## Handling the Response
-To process the response that we received from an ended audio capture, we @![iOS]use the `withResponseHandler` property in `SDLManager`'s `send(_ :)` function!@ @![android,javaSE,javaEE] monitor the PerformAudioPassThruResponse by adding a listener to the PerformAudioPassThru RPC before sending it. If the response has a successful Result, all of the audio data for the passthrough has been received and is ready for processing!@.
+To process the response that we received from an ended audio capture, we @![iOS]use the `withResponseHandler` property in `SDLManager`'s `send(_ :)` function!@ @![android,javaSE,javaEE] monitor the PerformAudioPassThruResponse by adding a listener to the PerformAudioPassThru RPC before sending it. If the response has a successful Result, all of the audio data for the passthrough has been received and is ready for processing !@.
 
 @![iOS]
 ##### Objective-C
