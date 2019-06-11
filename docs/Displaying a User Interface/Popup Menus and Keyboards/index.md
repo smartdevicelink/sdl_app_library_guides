@@ -15,13 +15,7 @@ Presenting a popup menu is similiar to presenting a modal view to request input 
 | Present Keyboard           | A keyboard shows up immediately in the HMI |
 
 ### Creating Cells
-@![iOS]
-An `SDLChoiceCell` is similar to a `UITableViewCell` without the ability to arrange your own UI. We provide several properties on the `SDLChoiceCell` to set your data, but the layout itself is determined by the manufacturer of the head unit.
-!@
-
-@![android, javaSE, javaEE]
-`// TODO: Android / Java content`
-!@
+An @!@[iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`SdlChoiceCell`!@ is similar to a @[iOS]`UITableViewCell`!@ @![android, javaSE, javaEE]`RecyclerView`!@ without the ability to configure your own UI. We provide several properties on the !@[iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`SdlChoiceCell`!@ to set your data, but the layout itself is determined by the manufacturer of the head unit.
 
 !!! IMPORTANT
 On many systems, including VR commands will be *exponentially* slower than not including them. However, including them is necessary for a user to be able to respond to your prompt with their voice.
@@ -46,7 +40,7 @@ let cell = SDLChoiceCell(text: <#T##String#>, secondaryText: <#T##String?#>, ter
 !@
 
 ### Preloading Cells
-If you know the content you will show in the popup menu long before the menu is shown to the user, you can "preload" those cells in order to speed up the popup menu presentation at a later time. Once you preload a cell, you can reuse it in multiple popup menus without having to send the cell content to the head unit again. 
+If you know the content you will show in the popup menu long before the menu is shown to the user, you can "preload" those cells in order to speed up the popup menu presentation at a later time. Once you preload a cell, you can reuse it in multiple popup menus without having to send the cell content to Core again. 
 
 @![iOS]
 ##### Objective-C
@@ -73,24 +67,24 @@ To show a popup menu to the user, you must present the menu. If some or all of t
 
 ##### Menu - List
 ###### Ford HMI
-![SYNC 3 List Only Interaction Layout](assets/SYNC3_popup_menu_row.jpg)
+![SYNC 3 - List Only Interaction Layout](assets/SYNC3_popup_menu_row.jpg)
 
 ###### Generic HMI
-![Generic List Only Interaction Layout](assets/Generic_popup_menu_row.png)
+![Generic - List Only Interaction Layout](assets/Generic_popup_menu_row.png)
 
 ##### Menu - Icon
 ###### Ford HMI
-![SYNC 3 Icon Only Interaction Layout](assets/SYNC3_popup_menu_tiles.jpg)
+![SYNC 3 - Icon Only Interaction Layout](assets/SYNC3_popup_menu_tiles.jpg)
 
 !!! NOTE
 When you preload a cell, you **do not** need to maintain a reference to it. If you reuse a cell with the same properties that has already been preloaded (or previously presented), the cell will automatically be reused.
 !!!
 
 #### Creating a Choice Set
-In order to present a menu, you must bundle together a bunch of @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`ChoiceCell`!@s into an @![iOS]`SDLChoiceSet`!@ @![android, javaSE, javaEE]`ChoiceSet`!@.
+In order to present a menu, you must bundle together a bunch of @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`SdlChoiceCell`!@s into an @![iOS]`SDLChoiceSet`!@ @![android, javaSE, javaEE]`SdlChoiceSet`!@.
 
 !!! IMPORTANT
-If the @![iOS]`SDLChoiceSet`!@ @![android, javaSE, javaEE]`ChoiceSet`!@ contains an invalid set of @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`ChoiceCell`!@s, the initializer will return @![iOS]`nil`!@ @![android, javaSE, javaEE]`null`!@. This can happen, for example, if you have duplicate title text or if some, but not all choices have voice commands.
+If the @![iOS]`SDLChoiceSet`!@ @![android, javaSE, javaEE]`SdlChoiceSet`!@ contains an invalid set of @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`SdlChoiceCell`!@s, the initializer will return @![iOS]`nil`!@ @![android, javaSE, javaEE]`null`!@. This can happen, for example, if you have duplicate title text or if some, but not all choices have voice commands.
 !!!
 
 Some notes on various parameters (full documentation is available as API documentation on this website):
@@ -156,11 +150,11 @@ extension <#Class Name#>: SDLChoiceSetDelegate {
 !@
 
 #### Presenting the Menu with a Mode
-Finally, you will present the menu. When you do so, you must choose a `mode` to present it in. If you have no `vrCommands` on the choice cell you should choose `.manualOnly`. If `vrCommands` are available, you may choose `.voiceRecognitionOnly` or `.both`.
+Finally, you will present the menu. When you do so, you must choose a `mode` to present it in. If you have no `vrCommands` on the choice cell you should choose `manualOnly`. If `vrCommands` are available, you may choose `voiceRecognitionOnly` or `both`.
 
-You may want to choose this based on the trigger source leading to the menu being presented. For example, if the menu was presented via the user touching the screen, you may want to use a `mode` of `.manualOnly` or `.both`, but if the menu was presented via the user speaking a voice command, you may want to use a `mode` of `.voiceRecognitionOnly` or `.both`.
+You may want to choose this based on the trigger source leading to the menu being presented. For example, if the menu was presented via the user touching the screen, you may want to use a `mode` of `manualOnly` or `both`, but if the menu was presented via the user speaking a voice command, you may want to use a `mode` of `voiceRecognitionOnly` or `both`.
 
-It may seem that the answer is to always use `.both`. However, remember that you must provide `vrCommand`s on all cells to use `.both`, which is exponentially slower than not providing `vrCommand`s (this is especially relevant for large menus, but less important for smaller ones). Also, some head units may not provide a good user experience for `.both`.
+It may seem that the answer is to always use `both`. However, remember that you must provide `vrCommand`s on all cells to use `both`, which is exponentially slower than not providing `vrCommand`s (this is especially relevant for large menus, but less important for smaller ones). Also, some head units may not provide a good user experience for `both`.
 
 | Interaction Mode  | Description |
 | ----------------- | ----------- |
@@ -353,6 +347,4 @@ extension <#Class Name#>: SDLKeyboardDelegate {
 !@
 
 ## Using RPCs
-@![iOS]
 If you don't want to use the @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@, you can do this manually using the `Choice`, `CreateInteractionChoiceSet`, and `PerformInteraction` RPC requests. You will need to create `Choice`s, bundle them into `CreateInteractionChoiceSet`s, and then present those choice sets via a `PerformInteraction` request. As this is no longer a recommended course of action, we will leave it to you to figure out how to manually do it.
-@!
