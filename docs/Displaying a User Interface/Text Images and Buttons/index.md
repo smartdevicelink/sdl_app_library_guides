@@ -144,7 +144,6 @@ retrievedSoftButtonObject?.transitionToNextState()
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
 ```java
 SoftButtonState softButtonState = new SoftButtonState("state1", "cancel", new SdlArtwork("cancel.jpeg", FileType.GRAPHIC_JPEG, R.drawable.cancel, true));
 SoftButtonObject softButtonObject = new SoftButtonObject("object", Collections.singletonList(softButtonState), softButtonState.getName(), null);
