@@ -4,7 +4,7 @@ The media clock is used by media apps to present the current timing information 
 The media clock constists of three parts: the progress bar, a current position label and a remaining time label. In addition you may want to update the play/pause button icon to reflect the current state of the audio. 
 
 !!! NOTE
-Ensure your app has an app type of media and you are using the media template before implementing this feature.
+Ensure your app has an `appType` of media and you are using the media template before implementing this feature.
 !!!
 
 ###### Generic HMI
@@ -14,7 +14,7 @@ Ensure your app has an app type of media and you are using the media template be
 ![SYNC 3 - Media Clock](assets/ford_mediaclock.png)
 
 ## Counting Up
-In order to count up using the timer, you will need to set a start time that is less than the end time. The "bottom end" of the media clock will always start at `0:00` and the "top end" will be the end time you specified. The start time can be set to any position between 0 and the end time. For example, if you are starting a song at `0:30` and it ends at `4:13`, the media clock timer progress bar will start at the `0:30` position and start incrementing up automatically every second until it reaches `4:13`. The current position label will start counting upwards from `0:30` and the remaining time label will start counting down from `3:43`. When the end is reached, the current time label will read `4:13`, the remaining time label will read `0:00` and the progress bar will stop moving.
+In order to count up using the timer, you will need to set a start time that is less than the end time. The "bottom end" of the media clock will always start at `0:00` and the "top end" will be the end time you specified. The start time can be set to any position between 0 and the end time. For example, if you are starting a song at `0:30` and it ends at `4:13` the media clock timer progress bar will start at the `0:30` position and start incrementing up automatically every second until it reaches `4:13`. The current position label will start counting upwards from `0:30` and the remaining time label will start counting down from `3:43`. When the end is reached, the current time label will read `4:13`, the remaining time label will read `0:00` and the progress bar will stop moving.
 
 The play / pause indicator parameter is used to update the play / pause button to your desired button type. This is explained below in the section "Updating the Audio Indicator"
 
@@ -33,7 +33,10 @@ sdlManager.send(mediaClock)
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+```java
+SetMediaClockTimer mediaClock = new SetMediaClockTimer().countUpFromStartTimeInterval(30, 253, AudioStreamingIndicator.PAUSE);
+sdlManager.sendRPC(mediaClock);
+```
 !@
 
 ## Counting Down
@@ -48,13 +51,16 @@ SDLSetMediaClockTimer *mediaClock = [SDLSetMediaClockTimer countDownFromStartTim
 
 ##### Swift
 ```swift
-let mediaTimer = SDLSetMediaClockTimer.countDown(from: 600, to: 0, playPauseIndicator: .pause)
+let mediaClock = SDLSetMediaClockTimer.countDown(from: 600, to: 0, playPauseIndicator: .pause)
 sdlManager.send(mediaClock)
 ```
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+```java
+SetMediaClockTimer mediaClock = new SetMediaClockTimer().countDownFromStartTimeInterval(600, 0, AudioStreamingIndicator.PAUSE);
+sdlManager.sendRPC(mediaClock);
+```
 !@
 
 ## Pausing & Resuming
@@ -95,7 +101,20 @@ sdlManager.send(mediaClock)
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+```java
+SetMediaClockTimer mediaClock = new SetMediaClockTimer().pauseWithPlayPauseIndicator(AudioStreamingIndicator.PLAY);
+sdlManager.sendRPC(mediaClock);
+```
+
+```java
+SetMediaClockTimer mediaClock = new SetMediaClockTimer().resumeWithPlayPauseIndicator(AudioStreamingIndicator.PAUSE);
+sdlManager.sendRPC(mediaClock);
+```
+
+```java
+SetMediaClockTimer mediaClock = new SetMediaClockTimer().updatePauseWithNewStartTimeInterval(60, 240, AudioStreamingIndicator.PLAY);
+sdlManager.sendRPC(mediaClock);
+```
 !@
 
 ## Clearing the Timer
@@ -116,10 +135,13 @@ sdlManager.send(mediaClock)
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+```java
+SetMediaClockTimer mediaClock = new SetMediaClockTimer().clearWithPlayPauseIndicator(AudioStreamingIndicator.PLAY);
+sdlManager.sendRPC(mediaClock);
+```
 !@
 
 ## Updating the Audio Indicator
-The audio indicator is, essentially, the play / pause button. As of SDL v@![iOS]6.1!@ @![android, javaSE, javaEE]4.7!@, when connected to an SDL v5.0+ head unit, you can tell the system what icon to display on the play / pause button to correspond with how your app works. For example, if audio is currently playing you can update the the play/pause button to show the pause icon. On older head units, the audio indicator shows an icon with both the play and pause indicators and the icon can not be updated. 
+The audio indicator is, essentially, the play / pause button. As of library v.@![iOS]6.1!@ @![android, javaSE, javaEE]4.7!@, when connected to an SDL v5.0+ head unit, you can tell the system what icon to display on the play / pause button to correspond with how your app works. For example, if audio is currently playing you can update the the play/pause button to show the pause icon. On older head units, the audio indicator shows an icon with both the play and pause indicators and the icon can not be updated. 
 
 For example, a radio app will probably want two button states: play and stop. A music app, in contrast, will probably want a play and pause button. If you don't send any audio indicator information, a play / pause button will be displayed.
