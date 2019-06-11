@@ -39,6 +39,7 @@ There is a setter in the `SdlManager.Builder` that allows you to set a `LockScre
 In order to to use these features, create a `LockScreenConfig` object and set it using `SdlManager.Builder` before you build `SdlManager`.
 !@
 
+@![iOS]
 ##### Objective-C
 ```objc
 SDLLockScreenConfiguration *lockScreenConfiguration = [SDLLockScreenConfiguration enabledConfiguration];
@@ -48,6 +49,7 @@ SDLLockScreenConfiguration *lockScreenConfiguration = [SDLLockScreenConfiguratio
 ```swift
 let lockScreenConfiguration = SDLLockScreenConfiguration.enabled()
 ```
+!@
 
 @![android]
 `TODO Add code example`
