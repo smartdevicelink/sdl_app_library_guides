@@ -1,14 +1,16 @@
 # Main Menu
 You have two different options when creating menus. One is to simply add items to the default menu available in every template. The other is to create a custom menu that pops up when needed. You can find more information about these popups in the [Popup Menus and Keyboards](Displaying a User Interface/Popup Menus and Keyboards) section.
 
-Every template has a main menu button. The position of this button varies between templates and can not be removed from the template.
-
 #### Menu Templates
 ##### Generic HMI
 ![Generic - Menu Appearance](assets/Generic_menu_dark.png)
 
 ##### Ford HMI
 ![SYNC 3 - Menu Appearance](assets/SYNC3_menu.jpg)
+
+!!! NOTE
+Every template has a main menu button. The position of this button varies between templates and cannot be removed from the template.
+!!!
 
 ## Adding Menu Items
 The best way to create and update your menu is to the use the Screen Manager API. The screen manager contains two menu related properties: `menu`, and `voiceCommands`. Setting an array of @![iOS]`SDLMenuCell`!@ @![android, javaSE, javaEE]`SdlMenuCell`!@s into the `menu` property will automatically set and update your menu and submenus, while setting an array of @![iOS]`SDLVoiceCommand`!@ @![android, javaSE, javaEE]`SdlVoiceCommand`!@s into the `voiceCommands` property allows you to use "hidden" menu items that only contain voice recognition data. The user can then use the IVI system's voice engine to activate this command even though it will not be displayed within the main menu.
