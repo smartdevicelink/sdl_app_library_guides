@@ -1,5 +1,5 @@
 # In-Car Microphone Audio
-Capturing in-car audio allows developers to interact with users by requesting raw audio data provided to them from the car's microphones. In order to gather the raw audio from the vehicle, we must leverage the @![iOS][`SDLPerformAudioPassThru`](https://smartdevicelink.com/en/docs/iOS/master/Classes/SDLPerformAudioPassThru/)!@ ![android,javaSE,javaEE]`PerformAudioPassThru` !@ RPC.
+Capturing in-car audio allows developers to interact with users by requesting raw audio data provided to them from the car's microphones. In order to gather the raw audio from the vehicle, we must leverage the @![iOS][`SDLPerformAudioPassThru`](https://smartdevicelink.com/en/docs/iOS/master/Classes/SDLPerformAudioPassThru/)!@ @![android,javaSE,javaEE]`PerformAudioPassThru` !@ RPC.
 
 !!! NOTE
 PerformAudioPassThru does not support automatic speech cancellation detection, so if this feature is desired, it is up to the developer to implement. The user may press an OK or Cancel button, the dialog may timeout, or you may close the dialog with @![iOS]`SDLEndAudioPassThru`!@ @![android,javaSE,javaEE] `EndAudioPassThru`!@.
@@ -118,7 +118,7 @@ Audio Capture can be ended in 4 ways:
 
 1. Audio Pass Thru has timed out.
 
-    If the Audio Pass Thru has proceeded longer than the requested timeout duration, Core will end this request with a @![iOS]`resultCode`!@ @![android,javaSE,javaEE]`Result!`@! of `SUCCESS`. You should expect to handle this Audio Pass Thru as though it was successful.
+    If the Audio Pass Thru has proceeded longer than the requested timeout duration, Core will end this request with a @![iOS]`resultCode`!@ @![android,javaSE,javaEE]`Result`!@ of `SUCCESS`. You should expect to handle this Audio Pass Thru as though it was successful.
 
 2. Audio Pass Thru was closed due to user pressing "Cancel".
 
