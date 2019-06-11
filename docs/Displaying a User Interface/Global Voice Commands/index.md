@@ -7,7 +7,9 @@ The head unit manufacturer will determine how these voice commands are triggered
 
 You have the ability to create voice command shortcuts to your [Main Menu](Displaying a User Interface/Main Menu) cells which we highly recommended that you implement. Global voice commands should be created for functions that you wish to make available as voice commands that are **not** available as menu cells. We recommend creating global voice commands for common actions such as the actions performed by your [Soft Buttons](Displaying a User Interface/Text Images and Buttons).
 
-You simply create and set @![iOS]`SDLVoiceCommand`!@ @![android, javaSE, javaEE]`SdlVoiceCommand`!@ objects to the `voiceCommands` array on the screen manager.
+
+## Creating Voice Commands
+To create voice commands, you simply create and set @![iOS]`SDLVoiceCommand`!@ @![android, javaSE, javaEE]`SdlVoiceCommand`!@ objects to the `voiceCommands` array on the screen manager.
 
 @![iOS]
 ##### Objective-C
