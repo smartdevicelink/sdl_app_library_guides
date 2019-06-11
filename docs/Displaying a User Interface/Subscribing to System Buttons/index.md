@@ -4,7 +4,7 @@ Subscribe buttons are used to detect changes to hard buttons located in the car'
 | Button  | Template | Button Type |
 | ------------- | ------------- | ------------- |
 | Play / Pause | media template only | soft button and hard button |
-| Ok | any template | soft button and hard button |
+| Ok | media template only | soft button and hard button |
 | Seek left | media template only | soft button and hard button |
 | Seek right | media template only | soft button and hard button |
 | Tune up | media template only | hard button |
