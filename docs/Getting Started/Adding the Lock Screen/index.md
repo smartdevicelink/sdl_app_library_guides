@@ -143,4 +143,5 @@ lockScreenConfiguration.enableAutomaticLockScreen = NO;
 ```swift
 let lockScreenConfiguration = SDLLockScreenConfiguration.enabledConfiguration()
 lockScreenConfiguration.enableAutomaticLockScreen = false
+```
 !@
