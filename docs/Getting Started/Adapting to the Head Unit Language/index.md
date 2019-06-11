@@ -72,14 +72,14 @@ func managerShouldUpdateLifecycle(toLanguage language: SDLLanguage) -> SDLLifecy
 
 @![android,javaSE,javaEE]
 
-# Handling a Language Change
+## Handling a Language Change
 
 When a user changes the language on a head unit, an `OnLanguageChange` notification will be sent from Core. Then your app will disconnect. In order for your app to automatically reconnect to the head unit, there are a few changes to make in the following files:
 
 * Local SDL Broadcast Receiver
 * Local SDL Service
 
-## SDL Broadcast Receiver
+### SDL Broadcast Receiver
 
 When the SDL Service's connection to core is closed, we want to tell our local SDL Broadcast Receiver to restart the SDL Service. To do this, first add a public String in your app's local SDL Broadcast Receiver class that can be included as an extra in a broadcast intent.
 
@@ -121,7 +121,7 @@ public void onSdlEnabled(Context context, Intent intent) {
 }
 ```
 
-## SDL Service
+### SDL Service
 
 We want to tell our local SDL Broadcast Receiver to restart the service when an `OnLanguageChange` notification is received from Core . To do so, add a notification listener as follows:
 
