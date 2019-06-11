@@ -12,7 +12,7 @@ Subscribe buttons are used to detect changes to hard buttons located in the car'
 | Preset 0-9 | any template | hard button |
 | Search | any template | hard button |
 
-### HMI Subscribe Buttons
+### Subscribe Buttons HMI
 In the screenshot below, the pause, seek left and seek right icons are subscribe buttons.
 ![Generic - Media Template with subscribe buttons](assets/Generic_template_media_light.png)
 
