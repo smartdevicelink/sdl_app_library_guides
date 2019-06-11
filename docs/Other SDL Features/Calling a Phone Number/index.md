@@ -1,5 +1,5 @@
 # Calling a Phone Number
-Dialing a Phone Number allows you to send a phone number to dial on the user's phone. Regardless of platform (Android or iOS), you must be sure that a device is connected via Bluetooth (even if using USB) for this RPC to work. If not connected to Bluetooth, you will receive a REJECTED @![iOS]`resultCode`!@ @![android,javaSE,javaEE] `Result`!@.
+The `DialNumber` RPC allows you make a phone call via the user's phone. Regardless of platform (Android or iOS), you must be sure that a device is connected via Bluetooth (even if using USB) for this RPC to work. If the phone is not connected via Bluetooth, you will receive a result of `REJECTED` from Core.
 
 !!! note
 DialNumber is an RPC that is usually restricted by OEMs. As a result, the OEM you are connecting to may limit app functionality if not approved for usage.
@@ -7,7 +7,7 @@ DialNumber is an RPC that is usually restricted by OEMs. As a result, the OEM yo
 
 ## Detecting if DialNumber is Available
 
-`DialNumber` is a newer RPC, so there is a possibility that not all head units will support it. To see if `DialNumber` is supported, you may look at @![iOS]`SDLManager`'s `systemCapabilityManager.hmiCapabilities.phoneCall` property after the ready handler is called !@ @![android,javaSE,javaEE] the `HMICapabilities` that can be retrieved using `SystemCapabilityManager`!@.
+`DialNumber` is a newer RPC, so there is a possibility that not all head units will support it. To find out if `DialNumber` is supported by the head unit, check the system capability manager's @![iOS]`hmiCapabilities.phoneCall`!@ @![android,javaSE,javaEE]`getCapability(SystemCapabilityType.PHONE_CALL)`!@ property after the manager has been started successfully.
 
 @![iOS]
 ##### Objective-C
