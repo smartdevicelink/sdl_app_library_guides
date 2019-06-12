@@ -1,8 +1,8 @@
 # Touch Input
-Navigation applications have support for touch events, including both single and multitouch events. This includes interactions such as panning and pinch. A developer may use the included @![iOS]`SDLTouchManager`!@@![android]`TODO android does not use touch manager so add proper information here`!@ class, or yourself by listening to the @![iOS]`SDLDidReceiveTouchEventNotification`!@@![android]`TODO Add proper detail here for the event listener`!@ notification.
+Navigation applications have support for touch events, including both single and multitouch events. This includes interactions such as panning and pinch. A developer may use the included @![iOS]`SDLTouchManager`!@ class, or yourself by listening to the @![iOS]`SDLDidReceiveTouchEventNotification`!@ notification.
 
 @![android]
-`// TODO - See indx.md for example and add inLINE android tags to align the section.`
+`// TODO - See index.md. Android to add inLine tags to reference proper class and notification listener.`
 !@
 
 !!! NOTE
