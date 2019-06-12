@@ -12,7 +12,7 @@ Consider the following scenarios:
 - A climate control application needs to turn on the AC, control the air circulation mode, change the fan speed and set the desired cabin temperature.
 - A user profile application wants to remember users' favorite settings and apply it later automatically when the users get into the same/another vehicle.
 
-## Remote Control Modules
+### Remote Control Modules
 Currently, the remote control feature supports these modules:
 
 | Remote Control Modules |
@@ -73,7 +73,7 @@ The following table lists what control items are in each control module.
 |                 | Distance Unit | MILES, KILOMETERS | Get/Set/Notification | Distance Unit used in the HMI (for maps/tracking distances) |
 |                 | Temperature Unit | FAHRENHEIT, CELSIUS | Get/Set/Notification | Temperature Unit used in the HMI (for temperature measuring systems) |
 
-## Remote Control Button Presses
+### Remote Control Button Presses
 The remote control framework also allows mobile applications to send simulated button press events for the following common buttons in the vehicle.
 
 | RC Module | Control Button |
