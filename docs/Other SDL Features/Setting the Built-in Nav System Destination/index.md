@@ -1,16 +1,16 @@
 # Setting the Built-in Navigation Destination
-Setting a Navigation Destination allows you to send a GPS location, prompting the user to navigate to that location using their embedded navigation. When using the `SendLocation` RPC, you will not receive a callback about how the user interacted with this location, only if it was successfully sent to Core and received. It will be handled by Core from that point on using the embedded navigation system.
+The `SendLocation` RPC gives you the ability to send a GPS location to the embedded navigation app on the head unit. When the request is sent, the user will be prompted to navigate to that location using the embedded navigation app. 
 
-!!! note
-The send location feature is only supported for the embedded navigation application; it does not work with mobile navigation apps at this time.
+When using the `SendLocation` RPC, you will not have access to any information about how the user interacted with this location, only if the request was successfully sent to Core. The request will be handled by Core from that point on using the embedded navigation system.
+
+!!! NOTE
+The send location feature is only supported for the embedded navigation app; it does not work with mobile navigation apps at this time.
 !!!
 
 ## Detecting if SendLocation is Available
-`SendLocation` is a newer RPC, so there is a possibility that not all head units will support it, especially if you are connected to a head unit that does not have an embedded navigation. @![iOS]To check if `SendLocation` is supported, you may look at the `SDLManager`'s `systemCapabilityManager` property after the ready handler is called. Or, you may use `SDLManager`'s `permissionManager` property to ask for the permission status of `SendLocation`.!@ @![android, javaSE, javaEE] To see if `SendLocation` is supported, you may look at `HmiCapabilities` that can be retrieved using `SystemCapabilityManager`. !@
+`SendLocation` is a newer RPC, so there is a possibility that not all head units will support the request. To check if `SendLocation` is supported, you may look at the @![iOS]`SDLManager`!@ @![android, javaSE, javaEE]`SdlManager`!@'s `systemCapabilityManager` property after the ready handler is called. Or, you may use @![iOS]`SDLManager`!@ @![android, javaSE, javaEE]`SdlManager`!@'s `permissionManager` property to ask for the permission status of `SendLocation`.
 
-!!! note
-`SendLocation` is an RPC that is usually restricted by OEMs. As a result, the OEM you are connecting to may limit app functionality if you are not approved to use it.
-!!!
+`SendLocation` is an RPC that is usually restricted by OEMs. As a result, the head unit you are connecting to may limit app functionality if you do not have permission to use the request.
 
 @![iOS]
 ##### Objective-C
@@ -60,7 +60,7 @@ if (hmiCapabilities.isNavigationAvailable()) {
 !@
 
 ## Using Send Location
-To use `SendLocation`, you must at least include the longitude and latitude of the location.
+To use the `SendLocation` request, you must, at minimum, include the longitude and latitude of the location.
 
 @![iOS]
 ##### Objective-C
@@ -156,9 +156,9 @@ sdlManager.sendRPC(sendLocation);
 ```
 !@
 
-## Determining the Result of SendLocation
+## Checking the Result of `SendLocation`
 `SendLocation` has 3 possible results that you should expect:
 
-1. SUCCESS - SendLocation was successfully sent.
-2. INVALID_DATA - The request you sent contains invalid data and was rejected.
-3. DISALLOWED - Your app does not have permission to use SendLocation.
+1. `SUCCESS` - `SendLocation` was successfully sent.
+2. `INVALID_DATA` - The request you sent contains invalid data and was rejected.
+3. `DISALLOWED` - Your app does not have permission to use `SendLocation`.
