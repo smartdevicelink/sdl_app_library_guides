@@ -2,7 +2,7 @@
 As of library v.@![iOS]6.1!@@![android, javaSE, javaEE]4.7!@ and SDL Core v.5.0+, you can pass an uploaded audio file's name to @![iOS]`SDLTTSChunk`!@@![android, javaSE, javaEE]`TTSChunk`!@, allowing any API that takes a text-to-speech parameter to pass and play your audio file. A sports app, for example, could play a distinctive audio chime to notify the user of a score update alongside an `Alert` request.
 
 ## Uploading the Audio File
-The first step is to make sure the audio file is available on the remote system. To upload the file use the @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE]`FileManager`!@.
+The first step is to make sure the audio file is available on the remote system. To upload the file use the @![iOS]`SDLFileManager`!@@![android, javaSE, javaEE]`FileManager`!@.
 
 @![iOS]
 ##### Objective-C
