@@ -1,10 +1,10 @@
 # Retrieving Vehicle Data
-You can use the `GetVehicleData` RPC request to get vehicle data. The HMI level must be `FULL`, `LIMITED`, or `BACKGROUND` in order to get data.
+You can use the `GetVehicleData` and `SubscribeVehicleData` RPC requests to get vehicle data.
 
-Each vehicle manufacturer decides which data it will expose and to whom they will expose it. Please check the response from Core to find out which data you will have permission to access. Additionally, be aware the the user may have the ability to disable vehicle data access through the settings menu of their head unit.
+Each vehicle manufacturer decides which data it will expose and to whom they will expose it. Please check the response from Core to find out which data you will have permission to access. Additionally, be aware the the user may have the ability to disable vehicle data access through the settings menu of their head unit. It may be possible to access vehicle data when the `hmiLevel` is `NONE` (i.e. the user has not opened your SDL app) but you will have to request this permission from the vehicle manufacturer.
 
-!!! note
-You may only ask for vehicle data that is available to your `appName` & `appId` combination. These will be specified by each OEM separately. See [Understanding Permissions](Getting Started/Understanding Permissions) for more details.
+!!! NOTE
+You will only have access to vehicle data that is allowed to your `appName` & `appId` combination. Permissions will be granted by each OEM separately. See [Understanding Permissions](Getting Started/Understanding Permissions) for more details.
 !!!
 
 | Vehicle Data | Parameter Name  |  Description |
@@ -41,7 +41,7 @@ You may only ask for vehicle data that is available to your `appName` & `appId` 
 | Wiper Status | wiperStatus | The status of the wipers: off, automatic off, off moving, manual interaction off, manual interaction on, manual low, manual high, manual flick, wash, automatic low, automatic high, courtesy wipe, automatic adjust, stalled, no data exists |
 
 ## One-Time Vehicle Data Retrieval
-The get vehicle data a single time, use the GetVehicleData RPC. 
+The get vehicle data a single time, use the `GetVehicleData` RPC. 
 
 @![iOS]
 ##### Objective-C
@@ -273,7 +273,7 @@ func vehicleDataAvailable(_ notification: SDLRPCNotificationNotification) {
 !@
 
 ## Unsubscribing from Vehicle Data
-We suggest that you only subscribe when the vehicle data is needed. To stop listening to specific vehicle data items, utilize the `UnsubscribeVehicleData` RPC.
+We suggest that you only subscribe when the vehicle data is needed. To stop listening to specific vehicle data items, use the `UnsubscribeVehicleData` RPC.
 
 @![iOS]
 ##### Objective-C
