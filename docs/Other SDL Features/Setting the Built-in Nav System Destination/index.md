@@ -7,10 +7,12 @@ When using the `SendLocation` RPC, you will not have access to any information a
 The send location feature is only supported for the embedded navigation app; it does not work with mobile navigation apps at this time.
 !!!
 
-## Detecting if SendLocation is Available
-`SendLocation` is a newer RPC, so there is a possibility that not all head units will support the request. To check if `SendLocation` is supported, you may look at the @![iOS]`SDLManager`!@ @![android, javaSE, javaEE]`SdlManager`!@'s `systemCapabilityManager` property after the ready handler is called. Or, you may use @![iOS]`SDLManager`!@ @![android, javaSE, javaEE]`SdlManager`!@'s `permissionManager` property to ask for the permission status of `SendLocation`.
+## Checking if SendLocation is Available
+Since `SendLocation` is a newer RPC, there is a possibility that not all head units will support this request. To check if the request is supported, you may look at the @![iOS]`SDLManager`!@ @![android, javaSE, javaEE]`SdlManager`!@'s `systemCapabilityManager` property after the manager has started successfully. Or, you may use @![iOS]`SDLManager`!@ @![android, javaSE, javaEE]`SdlManager`!@'s `permissionManager` property to ask for the permission status of `SendLocation`.
 
+!!! NOTE
 `SendLocation` is an RPC that is usually restricted by OEMs. As a result, the head unit you are connecting to may limit app functionality if you do not have permission to use the request.
+!!!
 
 @![iOS]
 ##### Objective-C
