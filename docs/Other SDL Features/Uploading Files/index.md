@@ -96,11 +96,13 @@ let isPersistent = file.isPersistent;
 !@
 
 @![android, javaSE, javaEE]
+```java
 Boolean isPersistent = file.isPersistent();
+```
 !@
 
 !!! NOTE
-Be aware that persistance will not work if space on the head unit is limited. @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE]`FileManager`!@ will always handle uploading images if they are non-existent.
+Be aware that persistance will not work if space on the head unit is limited. The @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE]`FileManager`!@ will always handle uploading images if they are non-existent.
 !!!
 
 @![iOS]
@@ -149,7 +151,9 @@ let fileIsOnHeadUnit = sdlManager.fileManager.remoteFileNames.contains("<#Name#>
 !@
 
 @![android, javaSE, javaEE]
+```java
 Boolean fileIsOnHeadUnit = sdlManager.getFileManager().getRemoteFileNames().contains("Name")
+```
 !@
 
 ## Deleting Stored Files
@@ -176,12 +180,14 @@ sdlManager.fileManager.delete(fileName: "<#Save As Name#>") { (success, bytesAva
 !@
 
 @![android, javaSE, javaEE]
+```java
 sdlManager.getFileManager().deleteRemoteFileWithName("testFile", new CompletionListener() {
 	@Override
 	public void onComplete(boolean success) {
 				
 	}
 });
+```
 !@
 
 ## Batch Deleting Files
