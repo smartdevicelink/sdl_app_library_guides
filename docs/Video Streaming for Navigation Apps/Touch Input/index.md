@@ -27,7 +27,7 @@ sdlManager.streamManager.touchManager.touchEventDelegate = self
 !@
 
 @![android]
-`// TODO - Add any more documentation to the description if needed and a code example Android might need there own header for this section since they do not use a TouchManager`
+`// TODO - Add any more documentation to the description if needed and a code example. Android might need there own header for this section since they do not use a TouchManager`
 !@
 
 @![iOS]
@@ -37,7 +37,7 @@ The view passed from the following callbacks are dependent on using the built-in
 !@
 
 @![android]
-`// TODO - See index.md Make sure the IMPORTANT block is necessary for android`
+`// TODO - See index.md. Make sure the IMPORTANT block is necessary for android`
 !@
 
 The following callbacks are provided:
@@ -85,7 +85,7 @@ Points that are provided via these callbacks are in the head unit's coordinate s
 !@
 
 @![android]
-`// TODO - See index.md Make sure the IMPORTANT block is necessary for android and if so add inLine tags for android specific notes`
+`// TODO - See index.md.  Make sure the IMPORTANT block is necessary for android and if so add inLine tags for android specific notes`
 !@
 
 ### Implementing onTouchEvent Yourself
