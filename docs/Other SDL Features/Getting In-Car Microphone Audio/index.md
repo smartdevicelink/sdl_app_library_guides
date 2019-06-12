@@ -59,6 +59,7 @@ sdlManager.sendRPC(performAPT);
 ### Gathering Audio Data
 SDL provides audio data as fast as it can gather it, and sends it to the developer in chunks. In order to retrieve this audio data, the developer must @![iOS]add a handler to the `SDLPerformAudioPassThru`.!@ @![android,javaSE,javaEE]observe the `OnAudioPassThru` notification.!@
 
+
 !!! NOTE
 This audio data is only the current chunk of audio data, so the developer must be in charge of managing previously retrieved audio data.
 !!!
