@@ -117,7 +117,7 @@ sdlManager.sendRPC(vdRequest);
 !@
 
 ## Subscribing to Vehicle Data
-Subscribing to vehicle data allows you to get notifications whenever new data is available. You should not rely upon getting this data in a consistent manner. New vehicle data is available roughly every second.
+Subscribing to vehicle data allows you to get notifications whenever new data is available. You should not rely upon getting this data in a consistent manner. New vehicle data is available roughly every second, but this is totally dependent on which head unit you are connected to.
 
 @![iOS]
 **First**, register to observe the `SDLDidReceiveVehicleDataNotification` notification: 
