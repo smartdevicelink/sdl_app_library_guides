@@ -2,10 +2,10 @@
 Capturing in-car audio allows developers to interact with users by requesting raw audio data provided to them from the car's microphones. In order to gather the raw audio from the vehicle, we must leverage the @![iOS][`SDLPerformAudioPassThru`](https://smartdevicelink.com/en/docs/iOS/master/Classes/SDLPerformAudioPassThru/)!@ @![android,javaSE,javaEE]`PerformAudioPassThru` !@ RPC.
 
 !!! NOTE
-PerformAudioPassThru does not support automatic speech cancellation detection, so if this feature is desired, it is up to the developer to implement. The user may press an OK or Cancel button, the dialog may timeout, or you may close the dialog with @![iOS]`SDLEndAudioPassThru`!@ @![android,javaSE,javaEE] `EndAudioPassThru`!@.
+PerformAudioPassThru does not support automatic speech cancellation detection, so if this feature is desired, it is up to the developer to implement. The user may press an OK or Cancel button, the dialog may timeout, or you may close the dialog with @![iOS]`SDLEndAudioPassThru`!@ @![android,javaSE,javaEE]`EndAudioPassThru`!@.
 !!!
 
-In order to know the currently supported audio capture capabilities of the connected head unit, please refer to the @![iOS]`SDLSystemCapabilityManager.audioPassThruCapabilities` [documentation](https://smartdevicelink.com/en/docs/iOS/master/Classes/SDLRegisterAppInterfaceResponse/)!@ @![android,javaSE,javaEE] `SystemCapabilityManager`. It can retrieve the `AudioPassThruCapabilities` that the head unit supports.
+In order to know the currently supported audio capture capabilities of the connected head unit, please refer to the @![iOS]`SDLSystemCapabilityManager.audioPassThruCapabilities` [documentation](https://smartdevicelink.com/en/docs/iOS/master/Classes/SDLRegisterAppInterfaceResponse/).!@ @![android,javaSE,javaEE] `SystemCapabilityManager`.!@ It can retrieve the `AudioPassThruCapabilities` that the head unit supports.
 
 @![android,javaSE,javaEE] `// TODO Android : add link to the documentation like iOS does above: Please see .md file for an example.`!@
 
@@ -57,7 +57,7 @@ sdlManager.sendRPC(performAPT);
 ![Ford Audio Pass Thru](assets/Ford_AudioPassThruPrompt.png)
 
 ### Gathering Audio Data
-@![iOS]SDL provides audio data as fast as it can gather it, and sends it to the developer in chunks. In order to retrieve this audio data, the developer must add a handler to the `SDLPerformAudioPassThru`.!@ @![android,javaSE,javaEE] Before starting audio capture, the app has to subscribe to AudioPassThru notification. SDL provides audio data as fast as it can gather it, and sends it to the developer in chunks. In order to retrieve this audio data, observe the OnAudioPassThru notification.!@
+SDL provides audio data as fast as it can gather it, and sends it to the developer in chunks. In order to retrieve this audio data, the developer must @![iOS]add a handler to the `SDLPerformAudioPassThru`.!@ @![android,javaSE,javaEE]observe the `OnAudioPassThru` notification.!@
 
 !!! NOTE
 This audio data is only the current chunk of audio data, so the developer must be in charge of managing previously retrieved audio data.
