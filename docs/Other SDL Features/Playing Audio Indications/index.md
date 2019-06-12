@@ -1,5 +1,5 @@
 # Playing Audio Indications
-As of library v.@![iOS]6.1!@ @![android, javaSE, javaEE]4.7!@ and SDL Core v.5.0+, you can pass an uploaded audio file's name to @![iOS]`SDLTTSChunk`!@ @![android, javaSE, javaEE]`TTSChunk`!@, allowing any API that takes a text-to-speech parameter to pass and play your audio file. For example, this can be used to play a distinctive audio chime that lets the user know that an action has occurred. A sports app could use this to notify the user of a score update alongside an `Alert` request.
+As of library v.@![iOS]6.1!@ @![android, javaSE, javaEE]4.7!@ and SDL Core v.5.0+, you can pass an uploaded audio file's name to @![iOS]`SDLTTSChunk`!@ @![android, javaSE, javaEE]`TTSChunk`!@, allowing any API that takes a text-to-speech parameter to pass and play your audio file. A sports app, for example, could play a distinctive audio chime to notify the user of a score update alongside an `Alert` request.
 
 ## Uploading the Audio File
 The first step is to make sure the audio file is available on the remote system. To upload the file use the @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE]`FileManager`!@.
@@ -37,7 +37,7 @@ sdlManager.getFileManager().uploadFile(audioFile, new CompletionListener() {
 For more information about uploading files, see the [Uploading Files guide](Other SDL Features/Uploading Files).
 
 ## Using the Audio File in an Alert
-Now that the file is uploaded to the remote system, it can be used in various APIs, such as `Speak`, `Alert`, `AlertManeuver`, and `PerformInteraction`. To use the audio file in an alert, you simply need to construct a @![iOS]`SDLTTSChunk`!@ @![android, javaSE, javaEE]`TTSChunk`!@ referring to the file's name.
+Now that the file is uploaded to the remote system, it can be used in various RPCs, such as `Speak`, `Alert`, and `AlertManeuver`. To use the audio file in an alert, you simply need to construct a @![iOS]`SDLTTSChunk`!@ @![android, javaSE, javaEE]`TTSChunk`!@ referring to the file's name.
 
 @![iOS]
 ##### Objective-C
