@@ -1,8 +1,8 @@
 # Uploading Files
-In almost all cases, graphics are uploaded using the `ScreenManager`. You can find out about setting images in templates, soft buttons, and menus in the [Text Images and Buttons](Displaying a User Interface/Text Images and Buttons) guide. Other situations, such as `PerformInteraction`s, VR help lists, and turn by turn directions, are not currently covered by the `ScreenManager`. To upload an image, see the [Uploading Images](Other SDL Features/Uploading Images) guide.
+In almost all cases, graphics are uploaded using the screen manager. You can find out about setting images in templates, soft buttons, and menus in the [Text Images and Buttons](Displaying a User Interface/Text Images and Buttons) guide. Other situations, such as VR help lists, and turn by turn directions, are not currently covered by the `ScreenManager`. To upload an image, see the [Uploading Images](Other SDL Features/Uploading Images) guide.
 
 ## Uploading an mp3 Using the File Manager
-The @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE]`SdlFileManager`!@ uploads files and keeps track of all the uploaded files names during a session. To send data with the file manager you need to create either a @![iOS]`SDLFile`!@ @![android, javaSE, javaEE]`SdlFile`!@ or @![iOS]`SDLArtwork`!@ @![android, javaSE, javaEE]`SdlArtwork`!@ object. @![iOS]`SDLFile` objects are created with a local `NSURL` or `NSData`; `SDLArtwork` uses a `UIImage`.!@
+The @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE]`FileManager`!@ uploads files and keeps track of all the uploaded files names during a session. To send data with the file manager you need to create either a @![iOS]`SDLFile`!@ @![android, javaSE, javaEE]`SdlFile`!@ or @![iOS]`SDLArtwork`!@ @![android, javaSE, javaEE]`SdlArtwork`!@ object. @![iOS]`SDLFile` objects are created with a local `NSURL` or `NSData`; `SDLArtwork` uses a `UIImage`.!@ @![android, javaSE, javaEE]Both `SdlFile`s and `SdlArtwork`s can be created with a `Uri`, `byte` array, or resource `id`.!@
 
 @![iOS]
 ##### Objective-C
@@ -70,24 +70,6 @@ sdlManager.fileManager.upload(files: [file1, file2], progressHandler: { (fileNam
 !@
 
 @![android, javaSE, javaEE]
-The first step in uploading files to the connected module is creating an instance of `SdlFile`. There are a few different constructors that can be used based on the source of the file. The following can be used to instantiate `SdlFile`:
-
-##### Resource ID
-```java
-new SdlFile(@NonNull String fileName, @NonNull FileType fileType, int id, boolean persistentFile)
-```
-##### URI
-```java
-new SdlFile(@NonNull String fileName, @NonNull FileType fileType, Uri uri, boolean persistentFile)
-```
-
-##### Byte Array
-```java
-new SdlFile(@NonNull String fileName, @NonNull FileType fileType, byte[] data, boolean persistentFile)
-```
-
-To upload more than one file simply create a `List<SdlFile>` object, add your files, and then call:
-
 ```java
 sdlManager.getFileManager().uploadFiles(sdlFileList, new MultipleFileCompletionListener() {
     @Override
@@ -104,31 +86,27 @@ sdlManager.getFileManager().uploadFiles(sdlFileList, new MultipleFileCompletionL
 @![iOS]
 ##### Objective-C
 ```objc
-if (file.isPersistent) {
-    <#File was initialized as persistent#>
-}
+BOOL isPersistent = file.isPersistent;
 ```
 
 ##### Swift
 ```swift
-if file.isPersistent {
-    <#File was initialized as persistent#>
-}
+let isPersistent = file.isPersistent;
 ```
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+Boolean isPersistent = file.isPersistent();
 !@
 
 !!! NOTE
 Be aware that persistance will not work if space on the head unit is limited. @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE]`FileManager`!@ will always handle uploading images if they are non-existent.
 !!!
 
-## Overwriting Stored Files
-If a file being uploaded has the same name as an already uploaded file, the new file will be ignored. To override this setting, set the @![iOS]`SDLFile`’s!@ @![android, javaSE, javaEE]`SdlFile`!@ `overwrite` property to true.
-
 @![iOS]
+## Overwriting Stored Files
+If a file being uploaded has the same name as an already uploaded file, the new file will be ignored. To override this setting, set the `SDLFile`'s `overwrite` property to true.
+
 ##### Objective-C
 ```objc
 file.overwrite = YES;
@@ -140,14 +118,10 @@ file.overwrite = true
 ```
 !@
 
-@![android, javaSE, javaEE]
-`// TODO: Android / Java content`
-!@
-
-## Checking the Amount of File Storage
-To find the amount of file storage left for your app on the head unit, use the @![iOS]`SDLFileManager`’s!@ @![android, javaSE, javaEE]`FileManager`'s!@ `bytesAvailable` property.
-
 @![iOS]
+## Checking the Amount of File Storage
+To find the amount of file storage left for your app on the head unit, use the `SDLFileManager`’s `bytesAvailable` property.
+
 ##### Objective-C
 ```objc
 NSUInteger bytesAvailable = self.sdlManager.fileManager.bytesAvailable;
@@ -157,10 +131,6 @@ NSUInteger bytesAvailable = self.sdlManager.fileManager.bytesAvailable;
 ```swift
 let bytesAvailable = sdlManager.fileManager.bytesAvailable
 ```
-!@
-
-@![android, javaSE, javaEE]
-`// TODO: Android / Java content`
 !@
 
 ## Checking if a File Has Already Been Uploaded
@@ -174,18 +144,12 @@ BOOL isFileOnHeadUnit = [self.sdlManager.fileManager.remoteFileNames containsObj
 
 ##### Swift
 ```swift
-if let fileIsOnHeadUnit = sdlManager.fileManager.remoteFileNames.contains("<#Name Uploaded As#>") {
-    if fileIsOnHeadUnit {
-        <#File exists#>
-    } else {
-        <#File does not exist#>
-    }
-}
+let fileIsOnHeadUnit = sdlManager.fileManager.remoteFileNames.contains("<#Name#>")
 ```
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+Boolean fileIsOnHeadUnit = sdlManager.getFileManager().getRemoteFileNames().contains("Name")
 !@
 
 ## Deleting Stored Files
