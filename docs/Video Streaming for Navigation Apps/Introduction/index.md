@@ -74,7 +74,7 @@ When compiling, you must make sure to include all possible OEM security managers
 ## Keyboard Input
 To present a keyboard (such as for searching for navigation destinations), you should use the `SDLScreenManager`'s keyboard presentation feature. For more information, see the [Popup Menus and Keyboards](Displaying a User Interface/Popup Menus and Keyboards) guide.
 !@
-"<# #>"
+
 @![android]
 `// TODO iOS has a section for presenting a keyboard, should android have this as well.`
 !@
