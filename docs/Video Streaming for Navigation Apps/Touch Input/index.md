@@ -1,17 +1,20 @@
 # Touch Input
-Navigation applications have support for touch events, including both single and multitouch events. This includes interactions such as panning and pinch. A developer may use the included @![iOS]`SDLTouchManager`!@ @![android,javaSE,javaEE]`Insert Property`!@ class, or yourself by listening to the @![iOS]`SDLDidReceiveTouchEventNotification`!@ @![android,javaSE,javaEE]`InsertNotificationProperty/Listener`!@ notification.
+Navigation applications have support for touch events, including both single and multitouch events. This includes interactions such as panning and pinch. A developer may use the included @![iOS]`SDLTouchManager`!@ @![android]`TODO android does not use touch manager so add proper information here`!@ class, or yourself by listening to the @![iOS]`SDLDidReceiveTouchEventNotification`!@ @![android]`TODO Add proper detail here for the event listener`!@ notification.
 
 @![android, javaSE, javaEE]
-`// TODO - See above and add inLINE android tags to align the section.
+`// TODO - See indx.md for example and add inLINE android tags to align the section.`
 !@
 
 !!! NOTE
 You must have a valid and approved `appId` in order to receive touch events.
 !!!
 
+@![iOS]
 ### Using SDLTouchManager
 `SDLTouchManager` has multiple callbacks that will ease the implementation of touch events. You can register for callbacks through the stream manager:
+!@
 
+@![iOS]
 ##### Objective-C
 ```objc
 self.sdlManager.streamManager.touchManager.touchEventDelegate = self
@@ -21,17 +24,20 @@ self.sdlManager.streamManager.touchManager.touchEventDelegate = self
 ```swift
 sdlManager.streamManager.touchManager.touchEventDelegate = self
 ```
-@![android, javaSE, javaEE]
-`// TODO - Add any more documentation to the description if needed and a code example`
 !@
 
+@![android]
+`// TODO - Add any more documentation to the description if needed and a code example Android might need there own header for this section since they do not use a TouchManager`
+!@
 
+@![iOS]
 !!! IMPORTANT
 The view passed from the following callbacks are dependent on using the built-in focusable item manager to send haptic rects. See [supporting haptic input](Video Streaming for Navigation Apps/Supporting Haptic Input) "Automatic Focusable Rects" for more information.
 !!!
+!@
 
-@![android, javaSE, javaEE]
-`// TODO - Make sure the IMPORTANT block is necessary for andorid if not wrap it in an iOS tag`
+@![android]
+`// TODO - See index.md Make sure the IMPORTANT block is necessary for android`
 !@
 
 The following callbacks are provided:
@@ -68,17 +74,23 @@ func touchManager(_ manager: SDLTouchManager, pinchCanceledAtCenter point: CGPoi
 ```
 !@
 
-@![android, javaSE, javaEE]
+@![android]
 `// TODO - Add any more documentation to the description if needed and a code example`
 !@
 
+@![iOS]
 !!! note
 Points that are provided via these callbacks are in the head unit's coordinate space. This is likely to correspond to your own streaming coordinate space. You can retrieve the head unit dimensions from `SDLStreamingMediaManager.screenSize`.
 !!!
+!@
+
+@![android, javaSE, javaEE]
+`// TODO - See index.md Make sure the IMPORTANT block is necessary for android and if so add inLine tags for android specific notes`
+!@
 
 ### Implementing onTouchEvent Yourself
 
-If apps want to have access to the raw touch data, the @![iOS]`SDLDidReceiveTouchEventNotification`!@ @![android,javaSE,javaEE] `Insert Property`!@ notification can be evaluated. This callback will be fired for every touch of the user and contains the following data:
+If apps want to have access to the raw touch data, the @![iOS]`SDLDidReceiveTouchEventNotification`!@  @![android]`TODO Add proper detail here for the event listener`!@ notification can be evaluated. This callback will be fired for every touch of the user and contains the following data:
 
 ##### Type
 Touch Type   | What does this mean?
