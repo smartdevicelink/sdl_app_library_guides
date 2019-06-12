@@ -6,7 +6,7 @@ Navigation apps are allowed to stream raw audio to be played by the head unit. T
 * **Number of Channels**: 1
 * **Bits Per Second (BPS)**: 16 bits per sample / 2 bytes per sample
 
-In order to stream audio from a SDL app, we focus on the @![iOS]`SDLStreamingMediaManager`!@ @![android]`AudioStreamingManager`!@ class. @![iOS]A reference to this class is available from an `SDLManager` property `streamManager`!@ @![android]The `AudioStreamingManager` object can we obtained from `SdlManager`s `getAudioStreamManager()`.
+In order to stream audio from a SDL app, we focus on the @![iOS]`SDLStreamingMediaManager`!@ @![android]`AudioStreamingManager`!@ class. @![iOS]A reference to this class is available from an `SDLManager` property `streamManager`!@ @![android]The `AudioStreamingManager` object can we obtained from `SdlManager`s `getAudioStreamManager()`!@.
 
 @![iOS]
 ## Audio Stream Lifecycle
@@ -55,7 +55,7 @@ public func audioStreamManager(_ audioManager: SDLAudioStreamManager, fileDidFin
 ```
 
 ### Manually Sending Data
-Once the audio stream is connected, data may be easily passed to the Head Unit. The function `sendAudioData:` provides us with whether or not the PCM Audio Data was successfully transferred to the Head Unit. If your app is in a state that it is unable to send audio data, this method will return a failure.
+Once the audio stream is connected, data may be easily passed to the Head Unit. The function `sendAudioData:` provides us with whether or not the PCM Audio Data was successfully transferred to the Head Unit. If your app is in a state that it is unable to send audio data, this method will return a failure. If successful playback will begin immediately.
 
 ##### Objective-C
 ```objective-c
@@ -80,10 +80,6 @@ if streamManager.sendAudioData(audioData) == false {
 !@
 
 @![android]
-!!! Note
-For streaming consistent audio, such as music, use a normal A2DP stream and not this method.
-!!!
-
 To stream audio, we call `sdlManager.getAudioStreamManager().start()` which will start the manager. When that callback returns successful, you call `sdlManager.getAudioStreamManager().startAudioStream()`. When the callback for that is successful, you can push the audio source using `sdlManager.getAudioStreamManager().pushAudioSource()`. Below is an example of playing an `mp3` file that we have in our resource directory:
 
 ```java
