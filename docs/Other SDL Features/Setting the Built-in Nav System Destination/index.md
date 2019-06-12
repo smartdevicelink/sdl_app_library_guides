@@ -1,5 +1,5 @@
 # Setting the Built-in Navigation Destination
-The `SendLocation` RPC gives you the ability to send a GPS location to the embedded navigation app on the head unit. When the request is sent, the user will be prompted to navigate to that location using the embedded navigation app. 
+The `SendLocation` RPC gives you the ability to send a GPS location to the embedded navigation app on the head unit. When the request is sent the user will be prompted to navigate to that location using the embedded navigation app. 
 
 When using the `SendLocation` RPC, you will not have access to any information about how the user interacted with this location, only if the request was successfully sent to Core. The request will be handled by Core from that point on using the embedded navigation system.
 
@@ -7,8 +7,8 @@ When using the `SendLocation` RPC, you will not have access to any information a
 The send location feature is only supported for the embedded navigation app; it does not work with mobile navigation apps at this time.
 !!!
 
-## Checking if SendLocation is Available
-Since `SendLocation` is a newer RPC, there is a possibility that not all head units will support this request. To check if the request is supported, you may look at the @![iOS]`SDLManager`!@ @![android, javaSE, javaEE]`SdlManager`!@'s `systemCapabilityManager` property after the manager has started successfully. Or, you may use @![iOS]`SDLManager`!@ @![android, javaSE, javaEE]`SdlManager`!@'s `permissionManager` property to ask for the permission status of `SendLocation`.
+## Checking if Send Location is Available
+Since `SendLocation` is a newer RPC, there is a possibility that not all head units will support this request. To check if the request is supported, you may look at the @![iOS]`SDLManager`!@ @![android, javaSE, javaEE]`SdlManager`!@'s `systemCapabilityManager` property after the manager has started successfully.
 
 !!! NOTE
 `SendLocation` is an RPC that is usually restricted by OEMs. As a result, the head unit you are connecting to may limit app functionality if you do not have permission to use the request.
@@ -120,7 +120,7 @@ sdlManager.send(request: sendLocation) { (request, response, error) in
 !@
 
 @![android, javaSE, javaEE]
-``java
+```java
 SendLocation sendLocation = new SendLocation();
 sendLocation.setLatitudeDegrees(42.877737);
 sendLocation.setLongitudeDegrees(-97.380967);
@@ -158,9 +158,9 @@ sdlManager.sendRPC(sendLocation);
 ```
 !@
 
-## Checking the Result of SendLocation
-`SendLocation` has 3 possible results that you should expect:
+## Checking the Result of Send Location
+The `SendLocation` response has 3 possible results that you should expect:
 
-1. `SUCCESS` - `SendLocation` was successfully sent.
-2. `INVALID_DATA` - The request you sent contains invalid data and was rejected.
+1. `SUCCESS` - Successfully sent.
+2. `INVALID_DATA` - The request contains invalid data and was rejected.
 3. `DISALLOWED` - Your app does not have permission to use `SendLocation`.
