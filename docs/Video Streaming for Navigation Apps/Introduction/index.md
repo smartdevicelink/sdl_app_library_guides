@@ -6,9 +6,9 @@ Mobile Navigation allows map partners to bring their applications into the car a
 * Navigation Apps can receive touch events from the video stream.
 
 @![android]
- !!! NOTE
- In order to use SDL's Mobile Navigation feature, the app must have a minimum requirement of Android 4.4 (SDK 19). This is due to using Android's provided video encoder.
- !!!
+!!! NOTE
+In order to use SDL's Mobile Navigation feature, the app must have a minimum requirement of Android 4.4 (SDK 19). This is due to using Android's provided video encoder.
+!!!
 !@
 
 ## Connecting an app
