@@ -156,7 +156,7 @@ sdlManager.sendRPC(sendLocation);
 ```
 !@
 
-## Checking the Result of `SendLocation`
+## Checking the Result of SendLocation
 `SendLocation` has 3 possible results that you should expect:
 
 1. `SUCCESS` - `SendLocation` was successfully sent.
