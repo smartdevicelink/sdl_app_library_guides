@@ -1,7 +1,5 @@
 # Retrieving Vehicle Data
-You can use the `GetVehicleData` and `SubscribeVehicleData` RPC requests to get vehicle data.
-
-Each vehicle manufacturer decides which data it will expose and to whom they will expose it. Please check the response from Core to find out which data you will have permission to access. Additionally, be aware the the user may have the ability to disable vehicle data access through the settings menu of their head unit. It may be possible to access vehicle data when the `hmiLevel` is `NONE` (i.e. the user has not opened your SDL app) but you will have to request this permission from the vehicle manufacturer.
+You can use the `GetVehicleData` and `SubscribeVehicleData` RPC requests to get vehicle data. Each vehicle manufacturer decides which data it will expose and to whom they will expose it. Please check the response from Core to find out which data you will have permission to access. Additionally, be aware the the user may have the ability to disable vehicle data access through the settings menu of their head unit. It may be possible to access vehicle data when the `hmiLevel` is `NONE` (i.e. the user has not opened your SDL app) but you will have to request this permission from the vehicle manufacturer.
 
 !!! NOTE
 You will only have access to vehicle data that is allowed to your `appName` & `appId` combination. Permissions will be granted by each OEM separately. See [Understanding Permissions](Getting Started/Understanding Permissions) for more details.
@@ -239,9 +237,9 @@ subscribeRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
     }
 }); 
 sdlManager.sendRPC(subscribeRequest);
+```
 
 **After that**, the `onNotified` method will be called when there is an update to the subscribed vehicle data.
-```
 !@
 
 @![iOS]
