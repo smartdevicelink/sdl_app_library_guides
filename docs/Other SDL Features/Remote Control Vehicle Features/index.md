@@ -17,7 +17,7 @@ Currently, the remote control feature supports these modules:
 
 | Remote Control Modules |
 | ---------            |
-| Climate              |
+@![iOS]| Climate              |!@
 | Radio                |
 | Seat                 |
 | Audio                |
