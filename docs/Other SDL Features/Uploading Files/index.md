@@ -9,9 +9,9 @@ The @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE]`FileManager`!@ uploads
 ##### Objective-C
 ```objc
 NSData *mp3Data = <#Get the File Data#>;
-SDLFile *file = [SDLFile fileWithData:mp3Data name:<#File name to be referenced later#> fileExtension:<#File Extension#>];
+SDLFile *audioFile = [SDLFile fileWithData:mp3Data name:<#File name to be referenced later#> fileExtension:<#File Extension#>];
 
-[self.sdlManager.fileManager uploadFile:file completionHandler:^(BOOL success, NSUInteger bytesAvailable, NSError * _Nullable error) {
+[self.sdlManager.fileManager uploadFile:audioFile completionHandler:^(BOOL success, NSUInteger bytesAvailable, NSError * _Nullable error) {
     if (error != nil) { return; }
     <#File Upload Successful#>
 }];]
@@ -20,9 +20,9 @@ SDLFile *file = [SDLFile fileWithData:mp3Data name:<#File name to be referenced 
 ##### Swift
 ```swift
 let mp3Data = <#Get MP3 Data#>
-let file = SDLFile(data: mp3Data, name: <#File name#> fileExtension: <#File Extension#>)
+let audioFile = SDLFile(data: mp3Data, name: <#File name#> fileExtension: <#File Extension#>)
 
-sdlManager.fileManager.upload(file: file) { (success, bytesAvailable, error) in
+sdlManager.fileManager.upload(file: audioFile) { (success, bytesAvailable, error) in
     guard error == nil else { return }
     <#File Upload Successful#>
 }
@@ -30,7 +30,11 @@ sdlManager.fileManager.upload(file: file) { (success, bytesAvailable, error) in
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+```java
+byte[] mp3Data = Get the file data;
+SdlFile audioFile = new SdlFile("File Name", FileType.AUDIO_MP3, mp3Data, true);
+sdlManager.sendRPC(audioFile);
+```
 !@
 
 ## Batching File Uploads
