@@ -132,7 +132,7 @@ Subscribing to vehicle data allows you to get notifications whenever new data is
 NotificationCenter.default.addObserver(self, selector: #selector(vehicleDataAvailable(_:)), name: .SDLDidReceiveVehicleData, object: nil)
 ```
 
-**Then**, send the `SubscribeVehicleData` request:
+**Second**, send the `SubscribeVehicleData` request:
 
 ##### Objective-C
 ```objc
@@ -204,46 +204,8 @@ sdlManager.send(request: subscribeVehicleData) { (request, response, error) in
     // Successfully subscribed
 }
 ```
-!@
 
-@![android, javaSE, javaEE]
-**First**, you should add a notification listener for the `OnVehicleData` notification: 
-
-```java
-sdlManager.addOnRPCNotificationListener(FunctionID.ON_VEHICLE_DATA, new OnRPCNotificationListener() {
-    @Override
-    public void onNotified(RPCNotification notification) {
-        OnVehicleData onVehicleDataNotification = (OnVehicleData) notification;
-        if (onVehicleDataNotification.getPrndl() != null) {
-            Log.i("SdlService", "PRNDL status was updated to: " + onVehicleDataNotification.getPrndl());
-        }
-    }
-});
-```
-
-**Then**, send the `SubscribeVehicleData` request:
-
-```java
-SubscribeVehicleData subscribeRequest = new SubscribeVehicleData();
-subscribeRequest.setPrndl(true);
-subscribeRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
-    @Override
-    public void onResponse(int correlationId, RPCResponse response) {
-        if(response.getSuccess()){
-            Log.i("SdlService", "Successfully subscribed to vehicle data.");
-        }else{
-            Log.i("SdlService", "Request to subscribe to vehicle data was rejected.");
-        }
-    }
-}); 
-sdlManager.sendRPC(subscribeRequest);
-```
-
-**After that**, the `onNotified` method will be called when there is an update to the subscribed vehicle data.
-!@
-
-@![iOS]
-**Finally**, react to the notification when vehicle data is received:
+**Third**, react to the notification when vehicle data is received:
 
 ##### Objective-C
 ``` objc
@@ -268,6 +230,42 @@ func vehicleDataAvailable(_ notification: SDLRPCNotificationNotification) {
     let prndl = onVehicleData.prndl
 }
 ```
+!@
+
+@![android, javaSE, javaEE]
+**First**, you should add a notification listener for the `OnVehicleData` notification: 
+
+```java
+sdlManager.addOnRPCNotificationListener(FunctionID.ON_VEHICLE_DATA, new OnRPCNotificationListener() {
+    @Override
+    public void onNotified(RPCNotification notification) {
+        OnVehicleData onVehicleDataNotification = (OnVehicleData) notification;
+        if (onVehicleDataNotification.getPrndl() != null) {
+            Log.i("SdlService", "PRNDL status was updated to: " + onVehicleDataNotification.getPrndl());
+        }
+    }
+});
+```
+
+**Second**, send the `SubscribeVehicleData` request:
+
+```java
+SubscribeVehicleData subscribeRequest = new SubscribeVehicleData();
+subscribeRequest.setPrndl(true);
+subscribeRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        if(response.getSuccess()){
+            Log.i("SdlService", "Successfully subscribed to vehicle data.");
+        }else{
+            Log.i("SdlService", "Request to subscribe to vehicle data was rejected.");
+        }
+    }
+}); 
+sdlManager.sendRPC(subscribeRequest);
+```
+
+**Third**, the `onNotified` method will be called when there is an update to the subscribed vehicle data.
 !@
 
 ## Unsubscribing from Vehicle Data
