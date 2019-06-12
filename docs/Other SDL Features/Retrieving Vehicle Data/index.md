@@ -1,7 +1,7 @@
 # Retrieving Vehicle Data
-Use the `GetVehicleData` RPC request to get vehicle data. The HMI level must be `FULL`, `LIMITED`, or `BACKGROUND` in order to get data.
+You can use the `GetVehicleData` RPC request to get vehicle data. The HMI level must be `FULL`, `LIMITED`, or `BACKGROUND` in order to get data.
 
-Each vehicle manufacturer decides which data it will expose and to whom they will expose it. Please check the response from core to find out which data you will have access to in your head unit. Additionally, be aware the the driver / user may have the ability to disable vehicle data through the settings menu of their head unit.
+Each vehicle manufacturer decides which data it will expose and to whom they will expose it. Please check the response from Core to find out which data you will have permission to access. Additionally, be aware the the user may have the ability to disable vehicle data access through the settings menu of their head unit.
 
 !!! note
 You may only ask for vehicle data that is available to your `appName` & `appId` combination. These will be specified by each OEM separately. See [Understanding Permissions](Getting Started/Understanding Permissions) for more details.
@@ -41,7 +41,7 @@ You may only ask for vehicle data that is available to your `appName` & `appId` 
 | Wiper Status | wiperStatus | The status of the wipers: off, automatic off, off moving, manual interaction off, manual interaction on, manual low, manual high, manual flick, wash, automatic low, automatic high, courtesy wipe, automatic adjust, stalled, no data exists |
 
 ## One-Time Vehicle Data Retrieval
-Using @![iOS]`SDLGetVehicleData`!@ @![android, javaSE, javaEE]`GetVehicleData`!@, we can ask for vehicle data a single time, if needed. 
+The get vehicle data a single time, use the GetVehicleData RPC. 
 
 @![iOS]
 ##### Objective-C
@@ -119,7 +119,7 @@ sdlManager.sendRPC(vdRequest);
 !@
 
 ## Subscribing to Vehicle Data
-Subscribing to vehicle data allows you to get notifications whenever there is new data available. You should not rely upon getting this data in a consistent manner. New vehicle data is available roughly every second.
+Subscribing to vehicle data allows you to get notifications whenever new data is available. You should not rely upon getting this data in a consistent manner. New vehicle data is available roughly every second.
 
 @![iOS]
 **First**, register to observe the `SDLDidReceiveVehicleDataNotification` notification: 
@@ -273,7 +273,7 @@ func vehicleDataAvailable(_ notification: SDLRPCNotificationNotification) {
 !@
 
 ## Unsubscribing from Vehicle Data
-Sometimes you may not always need all of the vehicle data you are listening to. We suggest that you only are subscribing when the vehicle data is needed. To stop listening to specific vehicle data items, utilize `UnsubscribeVehicleData`.
+We suggest that you only subscribe when the vehicle data is needed. To stop listening to specific vehicle data items, utilize the `UnsubscribeVehicleData` RPC.
 
 @![iOS]
 ##### Objective-C
