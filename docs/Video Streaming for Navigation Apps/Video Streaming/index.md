@@ -1,5 +1,4 @@
 # Video Streaming
-
 @![iOS]
 To stream video from a SDL app use the `SDLStreamingMediaManager` class. A reference to this class is available from the `SDLManager`. You can choose to create your own video streaming manager, or you can use the `CarWindow` API to easily stream video to the head unit.
 
@@ -89,11 +88,10 @@ if !streamManager.sendVideoData(imageBuffer) {
 !@
 
 @![android]
-
 In order to stream video from an SDL app, we only need to manage a few things. For the most part, the library will handle the majority of logic needed to perform video streaming.
 
 ## SDL Remote Display
-The `SdlRemoteDisplay` base class provides the easiest way to start streaming using SDL. The `SdlRemoteDisplay` is extended from Android's `Presentation` class with modifications to work with other aspects of the SDL Android library. 
+The `SdlRemoteDisplay` base class provides the easiest way to start streaming using SDL. The `SdlRemoteDisplay` is extended from Android's `Presentation` class with modifications to work with other aspects of the SDL Android library.
 
 !!! Note
 It is recommended that you extend this as a local class within the service that has the `SdlManager` instance.
@@ -168,12 +166,4 @@ onRPCNotificationListenerMap.put(FunctionID.ON_HMI_STATUS, new OnRPCNotification
 });
 builder.setRPCNotificationListeners(onRPCNotificationListenerMap);
 ```
-!@
-
-@![javaSE, javaEE]
-
-!!! NOTE
-This feature is only available on Android apps. Currently, JavaSE (embedded) and JavaEE (cloud) apps don't support that.
-!!!
-
 !@
