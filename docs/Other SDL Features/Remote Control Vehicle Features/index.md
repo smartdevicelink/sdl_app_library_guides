@@ -199,7 +199,7 @@ sdlManager.sendRPC(interiorVehicleData);
 !@
 
 ### Setting Data
-Of course, the ability to set these modules is the point of the remote control framework. Setting data is similar to getting it. Below is an example of setting `ClimateControlData`.
+Of course, the ability to set these modules is the point of the remote control framework. Setting data is similar to getting it. Below is an example of setting `ClimateControlData`. It is likely that you will not need to set all the data as in the code example. If there are settings you don't wish to modify you can skip setting them.
 
 @![iOS]
 ##### Objective-C
@@ -250,8 +250,6 @@ setInteriorVehicleData.setModuleData(moduleData);
 sdlManager.sendRPC(setInteriorVehicleData);
 ```
 !@
-
-It is likely that you will not need to set all the data as in the code example. If there are settings you don't wish to modify you can skip setting them.
 
 ### Button Presses
 Another unique feature of remote control is the ability to send simulated button presses to the associated modules, imitating a button press on the hardware itself. Simply specify the module, the button, and the type of press you would like.
