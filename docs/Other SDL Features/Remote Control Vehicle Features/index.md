@@ -98,12 +98,12 @@ The remote control framework also allows mobile applications to send simulated b
 |             | REPEAT |
 
 ## Integration
-For remote control to work, the head unit must support SDL Core v.4.4 or newer. Also your app's `appType` must be set to `REMOTE_CONTROL`.
+For remote control to work, the head unit must support SDL Core v.4.4 or newer. Also your app's @![iOS]`appType`!@ @![android, javaSE, javaEE]`appHMIType`!@ must be set to `REMOTE_CONTROL`.
 
 ### Checking Permissions
 Prior to using any remote control RPCs, you must check that the head unit has the remote control capability. As you will encounter head units that do *not* support it, this check is important. To check for this capability, use the following call:
 
-If you do have permission to use the remote control feature, the capability object will have a list of `ButtonCapabilities` that can be obtained via the `buttonCapabilities` property.
+If you do have permission to use the remote control feature, the capability object will have a list of @![iOS]`SDLButtonCapabilities`!@ @![android, javaSE, javaEE]`ButtonCapabilities`!@ that can be obtained via the `buttonCapabilities` property.
 
 @![iOS]
 ##### Objective-C
@@ -157,7 +157,7 @@ if (sdlManager.getSystemCapabilityManager().isCapabilitySupported(SystemCapabili
 !@
 
 ### Getting Data
-Once you know you have permission to use the remote control feature, you can retrieve the data. The following code is an example of how to get data from the `RADIO` module. The example also subscribes to updates to radio data, which will be discussed later on in this guide.
+Once you know you have permission to use the remote control feature, you can retrieve the data. The following code is an example of how to get data from the radio module. The example also subscribes to updates to radio data, which will be discussed later on in this guide.
 
 @![iOS]
 ##### Objective-C
@@ -199,7 +199,7 @@ sdlManager.sendRPC(interiorVehicleData);
 !@
 
 ### Setting Data
-Of course, the ability to set these modules is the point of the remote control framework. Setting data is similar to getting it. Below is an example of setting `ClimateControlData`. It is likely that you will not need to set all the data as in the code example. If there are settings you don't wish to modify you can skip setting them.
+Of course, the ability to set these modules is the point of the remote control framework. Setting data is similar to getting it. Below is an example of setting climate control data. It is likely that you will not need to set all the data as in the code example. If there are settings you don't wish to modify you can skip setting them.
 
 @![iOS]
 ##### Objective-C
@@ -287,7 +287,7 @@ sdlManager.sendRPC(buttonPress);
 It is also possible to subscribe to changes in data associated with supported modules. To do so, during your request for data, simply set `subscribe` to `true`. To unsubscribe, send the request again with `subscribe` set to `false`. The response to a subscription will come in a form of a notification. You can receive this notification by adding a notification listener for `OnInteriorVehicleData`.
 
 !!! NOTE
-The notification listener should be added before sending the `GetInteriorVehicleData` request.
+The notification listener should be added before sending the @![iOS]`SDLGetInteriorVehicleData`!@ @![android, javaSE, javaEE]`GetInteriorVehicleData`!@ request.
 !!!
 
 @![iOS]
