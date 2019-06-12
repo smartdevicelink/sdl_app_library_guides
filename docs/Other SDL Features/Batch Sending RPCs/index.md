@@ -8,13 +8,13 @@ Both methods have optional progress and completion handlers. Use the `progressHa
 Both methods have optional listeners that are specific to them, the `OnMultipleRequestListener`. This listener will provide more information than the normal `OnRPCResponseListener`.!@
 
 ## Sending Concurrent Requests
-When you send multiple RPCs concurrently, it will not wait for the response of the previous RPC before sending the next one. Therefore, there is no guarantee that responses will be returned in order, and you will not be able to use information sent in a previous RPC for a later RPC
+When you send multiple RPCs concurrently, it will not wait for the response of the previous RPC before sending the next one. Therefore, there is no guarantee that responses will be returned in order, and you will not be able to use information sent in a previous RPC for a later RPC.
 
 @![iOS]
 ##### Objective-C
 ```objc
-SDLSubscribeButton *subscribeButtonLeft = [[SDLSubscribeButton alloc] initWithName:@"SDLButtonNameSeekLeft"];
-SDLSubscribeButton *subscribeButtonRight = [[SDLSubscribeButton alloc] initWithName:@"SDLButtonNameSeekRight"];
+SDLSubscribeButton *subscribeButtonLeft = [[SDLSubscribeButton alloc] initWithName:SDLButtonNameSeekLeft];
+SDLSubscribeButton *subscribeButtonRight = [[SDLSubscribeButton alloc] initWithName:SDLButtonNameSeekRight];
 [self.sdlManager sendRequests:@[subscribeButtonLeft, subscribeButtonRight] progressHandler:^(__kindof SDLRPCRequest * _Nonnull request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error, float percentComplete) {
     NSLog(@"Command %@ sent %@, percent complete %f%%", request.name, response.resultCode == SDLResultSuccess ? @"successfully" : @"unsuccessfully", percentComplete * 100);
 } completionHandler:^(BOOL success) {
