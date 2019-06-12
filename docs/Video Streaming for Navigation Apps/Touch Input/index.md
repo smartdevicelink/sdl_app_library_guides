@@ -1,7 +1,7 @@
 # Touch Input
 Navigation applications have support for touch events, including both single and multitouch events. This includes interactions such as panning and pinch. A developer may use the included @![iOS]`SDLTouchManager`!@ @![android]`TODO android does not use touch manager so add proper information here`!@ class, or yourself by listening to the @![iOS]`SDLDidReceiveTouchEventNotification`!@ @![android]`TODO Add proper detail here for the event listener`!@ notification.
 
-@![android, javaSE, javaEE]
+@![android]
 `// TODO - See indx.md for example and add inLINE android tags to align the section.`
 !@
 
@@ -84,13 +84,13 @@ Points that are provided via these callbacks are in the head unit's coordinate s
 !!!
 !@
 
-@![android, javaSE, javaEE]
+@![android]
 `// TODO - See index.md Make sure the IMPORTANT block is necessary for android and if so add inLine tags for android specific notes`
 !@
 
 ### Implementing onTouchEvent Yourself
 
-If apps want to have access to the raw touch data, the @![iOS]`SDLDidReceiveTouchEventNotification`!@  @![android]`TODO Add proper detail here for the event listener`!@ notification can be evaluated. This callback will be fired for every touch of the user and contains the following data:
+If apps want to have access to the raw touch data, the @![iOS]`SDLDidReceiveTouchEventNotification`!@ @![android]`TODO Add proper detail here for the event listener`!@ notification can be evaluated. This callback will be fired for every touch of the user and contains the following data:
 
 ##### Type
 Touch Type   | What does this mean?
