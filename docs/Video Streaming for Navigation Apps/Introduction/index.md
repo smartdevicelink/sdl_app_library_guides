@@ -5,10 +5,10 @@ Mobile Navigation allows map partners to bring their applications into the car a
 * Navigation Apps can send audio via a binary stream. This will attenuate the current audio source and should be used for navigation commands.
 * Navigation Apps can receive touch events from the video stream.
 
-@![android]		
- !!! NOTE		
- In order to use SDL's Mobile Navigation feature, the app must have a minimum requirement of Android 4.4 (SDK 19). This is due to using Android's provided video encoder. 		
- !!!		
+@![android]
+ !!! NOTE
+ In order to use SDL's Mobile Navigation feature, the app must have a minimum requirement of Android 4.4 (SDK 19). This is due to using Android's provided video encoder.
+ !!!
 !@
 
 ## Connecting an app
