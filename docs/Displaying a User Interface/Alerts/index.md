@@ -25,7 +25,7 @@ The alert can also be formatted to speak a prompt when the alert appears on the 
 SDLAlert *alert = [[SDLAlert alloc] initWithAlertText1:@"<#Line 1#>" alertText2:@"<#Line 2#>" alertText3:@"<#Line 3#>"];
 
 // Maximum time alert appears before being dismissed
-// Timeouts are must be between 3-10 seconds
+// Timeouts must be between 3-10 seconds
 // Timeouts may not work when soft buttons are also used in the alert
 alert.duration = @5000;
 
@@ -67,7 +67,7 @@ alert.softButtons = @[okButton];
 let alert = SDLAlert(alertText1: "<#Line 1#>", alertText2: "<#Line 2#>", alertText3: "<#Line 3#>")
 
 // Maximum time alert appears before being dismissed
-// Timeouts are must be between 3-10 seconds
+// Timeouts must be between 3-10 seconds
 // Timeouts may not work when soft buttons are also used in the alert
 alert.duration = 5000
 
@@ -111,7 +111,7 @@ alert.setAlertText2("Alert Text 2");
 alert.setAlertText3("Alert Text 3");
 
 // Maximum time alert appears before being dismissed
-// Timeouts are must be between 3-10 seconds
+// Timeouts must be between 3-10 seconds
 // Timeouts may not work when soft buttons are also used in the alert
 alert.setDuration(5000);
 
