@@ -1,8 +1,8 @@
 # Uploading Files
-In almost all cases, you will not need to upload images because the screen manager handles uploading images for you. There are some situations, such as VR help lists and turn-by-turn directions, that are not currently covered by the `ScreenManager` so you will have manually upload the image yourself in those cases. For more information about uploading images, see the [Uploading Images](Other SDL Features/Uploading Images) guide.
+In almost all cases, you will not need to handle uploading images because the screen manager API will do that for you. There are some situations, such as VR help-lists and turn-by-turn directions, that are not currently covered by the screen manager so you will have manually upload the image yourself in those cases. For more information about uploading images, see the [Uploading Images](Other SDL Features/Uploading Images) guide.
 
 
-## Uploading an mp3 Using the File Manager
+## Uploading an MP3 Using the File Manager
 The @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE]`FileManager`!@ uploads files and keeps track of all the uploaded files names during a session. To send data with the file manager you need to create either a @![iOS]`SDLFile`!@ @![android, javaSE, javaEE]`SdlFile`!@ or @![iOS]`SDLArtwork`!@ @![android, javaSE, javaEE]`SdlArtwork`!@ object. @![iOS]`SDLFile` objects are created with a local `NSURL` or `NSData`; `SDLArtwork` uses a `UIImage`.!@ @![android, javaSE, javaEE]Both `SdlFile`s and `SdlArtwork`s can be created with a `Uri`, `byte` array, or resource `id`.!@
 
 @![iOS]
@@ -121,10 +121,10 @@ file.overwrite = true
 ```
 !@
 
-@![iOS]
-## Checking the Amount of File Storage
-To find the amount of file storage left for your app on the head unit, use the `SDLFileManager`’s `bytesAvailable` property.
+## Checking the Amount of File Storage Left
+To find the amount of file storage left for your app on the head unit, use the @![iOS]`SDLFileManager`’s `bytesAvailable` property!@ @![android, javaSE, javaEE]`ListFiles` RPC!@.
 
+@![iOS]
 ##### Objective-C
 ```objc
 NSUInteger bytesAvailable = self.sdlManager.fileManager.bytesAvailable;
@@ -133,6 +133,25 @@ NSUInteger bytesAvailable = self.sdlManager.fileManager.bytesAvailable;
 ##### Swift
 ```swift
 let bytesAvailable = sdlManager.fileManager.bytesAvailable
+```
+!@
+
+@![android, javaSE, javaEE]
+```java
+ListFiles listFiles = new ListFiles();
+listFiles.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        if(response.getSuccess()){
+            Integer spaceAvailable = ((ListFilesResponse) response).getSpaceAvailable();
+            Log.i("SdlService", "Space available on Core = " + spaceAvailable);
+        }else{
+            Log.i("SdlService", "Failed to request list of uploaded files.");
+        }
+    }
+});
+
+sdlManager.sendRPC(listFiles);
 ```
 !@
 
