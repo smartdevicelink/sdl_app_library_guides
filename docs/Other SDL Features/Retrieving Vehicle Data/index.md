@@ -132,7 +132,7 @@ Subscribing to vehicle data allows you to get notifications whenever new data is
 NotificationCenter.default.addObserver(self, selector: #selector(vehicleDataAvailable(_:)), name: .SDLDidReceiveVehicleData, object: nil)
 ```
 
-Then send the `SubscribeVehicleData` request:
+**Then**, send the `SubscribeVehicleData` request:
 
 ##### Objective-C
 ```objc
@@ -243,7 +243,7 @@ sdlManager.sendRPC(subscribeRequest);
 !@
 
 @![iOS]
-Finally, react to the notification when vehicle data is received:
+**Finally**, react to the notification when vehicle data is received:
 
 ##### Objective-C
 ``` objc
@@ -271,7 +271,7 @@ func vehicleDataAvailable(_ notification: SDLRPCNotificationNotification) {
 !@
 
 ## Unsubscribing from Vehicle Data
-We suggest that you only subscribe when the vehicle data is needed. To stop listening to specific vehicle data items, use the `UnsubscribeVehicleData` RPC.
+We suggest that you only subscribe to vehicle data as needed. To stop listening to specific vehicle data use the `UnsubscribeVehicleData` RPC.
 
 @![iOS]
 ##### Objective-C
