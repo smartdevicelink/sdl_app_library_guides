@@ -6,7 +6,7 @@ Navigation apps are allowed to stream raw audio to be played by the head unit. T
 * **Number of Channels**: 1
 * **Bits Per Second (BPS)**: 16 bits per sample / 2 bytes per sample
 
-In order to stream audio from a SDL app, we focus on the @![iOS]`SDLStreamingMediaManager`!@ @![android]`AudioStreamingManager`!@ class. @![iOS]A reference to this class is available from an `SDLManager` property `streamManager`!@ @![android]The `AudioStreamingManager` object can we obtained from `SdlManager`s `getAudioStreamManager()`!@.
+In order to stream audio from a SDL app, we focus on the @![iOS]`SDLStreamingMediaManager`!@@![android]`AudioStreamingManager`!@ class. @![iOS]A reference to this class is available from an `SDLManager` property `streamManager`!@@![android]The `AudioStreamingManager` object can we obtained from `SdlManager`s `getAudioStreamManager()`!@.
 
 @![iOS]
 ## Audio Stream Lifecycle
