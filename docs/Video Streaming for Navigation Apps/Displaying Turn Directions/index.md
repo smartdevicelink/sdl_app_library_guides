@@ -1,7 +1,7 @@
 # Displaying Turn Directions
 While your app is navigating the user, you will also want to send turn by turn directions. This is useful for if your app is in the background or if the user is in the middle of a phone call, and gives the system additional information about the next maneuver the user must make.
 
-To display a Turn by Turn direction, a combination of the @![iOS]`SDLShowConstantTBT`!@  @![android,javaSE,javaEE] `Add Property`!@ and @![iOS]`SDLAlertManeuver`!@  @![android,javaSE,javaEE] `Add Property`!@ RPCs must be used. The @![iOS]`SDLShowConstantTBT`!@  @![android,javaSE,javaEE] `Add Property`!@ RPC involves the data that will be shown on the head unit. The main properties of this object to set are `navigationText1`, `navigationText2`, and `turnIcon`. A best practice for navigation applications is to use the `navigationText1` as the direction to give (Turn Right) and `navigationText2` to provide the distance to that direction (3 mi). When an @![iOS]`SDLAlertManeuver`!@  @![android,javaSE,javaEE] `Add Property`!@ is sent, you may also include accompanying text that you would like the head unit to speak when an direction is displayed on screen (e.g. In 3 miles turn right.).
+To display a Turn by Turn direction, a combination of the @![iOS]`SDLShowConstantTBT`!@ @![android,javaSE,javaEE]`TODO Add Property`!@ and @![iOS]`SDLAlertManeuver`!@ @![android,javaSE,javaEE]`TODO Add Property`!@ RPCs must be used. The @![iOS]`SDLShowConstantTBT`!@ @![android,javaSE,javaEE]`TODO Add Property`!@ RPC involves the data that will be shown on the head unit. The main properties of this object to set are `navigationText1`, `navigationText2`, and `turnIcon`. A best practice for navigation applications is to use the `navigationText1` as the direction to give (Turn Right) and `navigationText2` to provide the distance to that direction (3 mi). When an @![iOS]`SDLAlertManeuver`!@ @![android,javaSE,javaEE]`TODO Add Property`!@ is sent, you may also include accompanying text that you would like the head unit to speak when an direction is displayed on screen (e.g. In 3 miles turn right.).
 
 !!! NOTE
 If the connected device has received a phone call in the vehicle, the Alert Maneuver is the only way for your app to inform the user of the next turn.
@@ -72,7 +72,7 @@ sdlManager.send(request: turnByTurn) { [weak self] (request, response, error) in
 Remember when sending a SDLImage, that the image must first be uploaded to the head unit with the FileManager.
 
 ## Clearing the Maneuver
-To clear a navigation direction from the screen, we send an @![iOS]`SDLShowConstantTBT`!@  @![android,javaSE,javaEE]`Add Property` @! with the `maneuverComplete` property as `YES`. This specific RPC does not require an accompanying @![iOS]`SDLAlertManeuver`!@ @![android,javaSE,javaEE] `Add Property`.
+To clear a navigation direction from the screen, we send an @![iOS]`SDLShowConstantTBT`!@ @![android,javaSE,javaEE]`TODO Add Property` @! with the `maneuverComplete` property as `YES`. This specific RPC does not require an accompanying @![iOS]`SDLAlertManeuver`!@ @![android,javaSE,javaEE]`TODO Add Property`.
 
 ##### Objective-C
 ```objc
