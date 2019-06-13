@@ -140,7 +140,7 @@ Sometimes things don't always go as planned, and so this section exists. If your
 
 In this guide we take you through the steps to get our sample project, Hello Sdl, running and connected to Sdl Core as well as showing up on the generic HMI.
 
-Make sure that you follow the steps in [Installation](Getting Started With JavaEE/Installation) and [Integration Basics](Getting Started With JavaEE/Integration Basics) sections to create a new JavaEE SDL project before continuing this section.
+Make sure that you follow the steps in [Installation](Getting Started/Installation) and [Integration Basics](Getting Started/Integration Basics) sections to create a new SDL project before continuing this section.
 
 !!! NOTE
 The [Hello Sdl JavaEE](https://github.com/smartdevicelink/sdl_java_suite/tree/master/hello_sdl_java_ee) project includes samples for `SdlService` and `Main` classes that can be copied to your project.
@@ -168,53 +168,60 @@ The app websocket endpoint should format the IP Address and port like so: `ws://
 #### Manticore
 If you are using Manticore, the app information can be easily set in the settings tab:
 
-![Main Screen](assets/manticore1.png)
+![Main Screen](assets/mainscreen.png)
 
 !!! NOTE
 Manticore needs to access you machine's IP address to be able to start a websocket connection with your cloud app. If you are hosting the cloud app on your local machine, you may need to do extra setup to make your machine publicly accessible. The other solution is to setup Core and HMI on your machine instead of using Manticore so Core can access your local IP address.
 !!!
 
-#### Sdl Core and Generic HMI
-If you are using Sdl Core and Generic HMI, you will have to add a policy table entry as the following one to the existing entries:
+#### Configuring a Local Instance of SDL Core and Generic HMI for Cloud App Testing
+If you are using SDL Core and Generic HMI, you will have to add a policy table entry (in `sdl_preloaded_pt.json`) for your app to the existing `app_policies` entries. The key for your policy table entry should be the same as your app ID.
 
 ```JSON
- "8678309": {
-     "keep_context": false,
-     "steal_focus": false,
-     "priority": "NONE",
-     "default_hmi": "NONE",
-     "groups": ["Base-4"],
-     "RequestType": [],
-     "RequestSubType": [],
-     "hybrid_app_preference": "CLOUD",
-     "endpoint": "ws://<ip address>:<port>",
-     "enabled": true,
-     "auth_token": "",
-     "cloud_transport_type": "WS",
-     "nicknames": ["Hello Sdl"]
- }
+"app_policies": {
+    "8678309": {
+        "keep_context": false,
+        "steal_focus": false,
+        "priority": "NONE",
+        "default_hmi": "NONE",
+        "groups": ["Base-4"],
+        "RequestType": [],
+        "RequestSubType": [],
+        "hybrid_app_preference": "CLOUD",
+        "endpoint": "ws://<ip address>:<port>",
+        "enabled": true,
+        "auth_token": "",
+        "cloud_transport_type": "WS",
+        "nicknames": ["Hello Sdl"]
+    }
+}
+ 
 ```
+
+!!! NOTE
+The `storage` folder in the same directory as the `sdl_preloaded_pt.json` file needs to be deleted before changes made to the `sdl_preloaded_pt.json` will take effect.
+!!!
 
 For more information about policy tables please visit [Policy Tables Guides](https://smartdevicelink.com/en/guides/sdl-server/api-reference-documentation/policy-table/overview).
 
 !!! NOTE
-Don't forget to replace `ws://<ip address>:<port>` with your own IP address and app port. The port that is used in Hello Sdl App is `5432`. It can be changed to a different port by modifying the number in `Main.java` class.
+Don't forget to modify `ws://<ip address>:<port>` with your own IP address and app number. To find and/or change the port configured in the Hello Sdl app, check the port variable in the `Main.java` class.
 !!!
 
-Following this, you should see an application appears on HMI as in the following screenshot:
+If the policy table configuration is correct, after you have connected at least once (the app has to download the app icon from the stored URL and send it to Core), you should see the app icon appear:
 
 ![HMI Apps](assets/hmi1.png)
 
 !!! NOTE
-Even though you see the app appears on HMI, you still cannot lunch the app at this point. You will have to run the Hello Sdl app from IntelliJ IDEA first as described next.
+Even though you see the app icon on the HMI, you will not be able launch the app until you have started an instance of your app.
 !!!
 
 ### Running the App
-After setting the app information in Sdl Core, you can run the project in IntelliJ IDEA. Hello Sdl should compile and launch on your your machine. After that, you can click on the Hello Sdl icon in the HMI.
+After you have successfully configured SDL Core's policy table, you can run an instance of app in the IntelliJ IDEA. Once the Hello Sdl app compiles and launches on your your machine, you can click on the Hello Sdl icon in the HMI.
 
 ![HMI Apps](assets/hmi2.png)
 
 This is the main screen of the Hello Sdl app. If you get to this point, the project is working.
 
-At this point Hello Sdl has been compiled and is running properly! Continue reading through our guides to learn about all of the RPCs (Remote Procedure Calls) that can be made with the library.
+At this point Hello Sdl has been successfully setup! Continue reading through our guides to learn how to build a SDL application.
 !@
