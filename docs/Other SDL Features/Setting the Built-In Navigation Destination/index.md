@@ -11,7 +11,7 @@ As of library v.@![iOS]6.2!@@![android, javaSE, javaEE]4.8!@ and SDL Core v.5.1,
 The `SendLocation` RPC is restricted by most vehicle manufacturers. As a result, the head unit you are connecting to will reject the request if you do not have the correct permissions. Please check the [Getting Started/Understanding Permissions](Getting Started/Understanding Permissions) section for more information on how to check permissions for an RPC.
 
 ## Checking if Head Unit Supports Send Location 
-Since is a possibility that some head units will **not** support the send location feature, you should check head unit support before attempting to send the request. 
+Since there is a possibility that some head units will not support the send location feature, you should check head unit support before attempting to send the request. You should also update your app's UI based on whether or not you can use `SendLocation`.
 
 If using library v.@![iOS]6.0!@@![android, javaSE, javaEE]4.4!@ and connecting to SDL Core v.4.5 or newer, you can use the @![iOS]`SDLSystemCapabilityManager`!@ @![android, javaSE, javaEE]`SystemCapabilityManager`!@ to check the navigation capability returned by Core as shown in the code sample below. 
 
