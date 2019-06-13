@@ -124,7 +124,8 @@
                     "name": "Audio Streaming"
                 },
                 {
-                    "name": "Touch Input"
+                    "name": "Touch Input",
+                    "platforms": ["iOS"]
                 },
                 {
                     "name": "Supporting Haptic Input"
