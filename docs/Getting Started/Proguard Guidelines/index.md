@@ -1,8 +1,8 @@
-## Proguard Guidelines
+# Proguard Guidelines
 
 SmartDeviceLink and its dependent libraries are open source and not intended to be obfuscated. When using Proguard in an app that integrates SmartDeviceLink, it is necessary to follow these guidelines.
 
-### Required Proguard Rules
+## Required Proguard Rules
 Apps that are code shrinking a release build with Proguard typically have a section resembling this snippet in their `build.gradle`:
 
 ```java

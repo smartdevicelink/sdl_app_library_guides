@@ -21,7 +21,6 @@ Security Flag   | Meaning
 `FLAG_MULTI_SECURITY_MED`     | Multiplexing security will be on at a normal level. Only trusted router services will be used. Trusted router list will be obtained from server. List will be refreshed every 7 days or during next connection session if an SDL enabled app has been installed or uninstalled.
 `FLAG_MULTI_SECURITY_HIGH`	| Multiplexing security will be very strict. Only trusted router services installed from trusted app stores will be used. Trusted router list will be obtained from server. List will be refreshed every 7 days or during next connection session if an SDL enabled app has been installed or uninstalled.
 
-
 ## Applying to the Trusted Router Service Database
 For an Android application to be added to the Trusted Router Service database, the application will need to be registered on the SDL Developer Portal and certified by the SDLC.  For more information on registration, please see [this guide](https://d83tozu1c8tt6.cloudfront.net/media/resources/SDL_Developer_Portal_Registration_Guide.pdf).  
 

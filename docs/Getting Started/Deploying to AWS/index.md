@@ -1,6 +1,6 @@
-## Deploying to AWS
+# Deploying to AWS
 
-### Deploying your JavaEE App on EC2
+## Deploying your JavaEE App on EC2
 
 When you want to run the project outside the IDE, take the war artifact and deploy it using a Payara server. Payara is built on top of Glassfish and is more well-maintained, and it also solves an issue with Glassfish on redeploying a JavaEE Websocket app where no connections can happen the second time. 
 
@@ -64,7 +64,7 @@ Run SDL Core and an HMI. If you're serving the HMI over nginx then nginx should 
 },
 ```
 
-### Limitations and Issues
+## Limitations and Issues
 
 [Follow the guidelines located here.](https://www.oracle.com/technetwork/java/restrictions-142267.html)
 
@@ -76,7 +76,7 @@ Memory usage increases with both redeployments and with many users connecting an
 
 When Payara or Glassfish is unable to handle the load, not only does your JavaEE app stop, but the server also stops.
 
-### Useful Information and Commands
+## Useful Information and Commands
 
 Unzipping a jar file: `unzip my_jar.jar`
     

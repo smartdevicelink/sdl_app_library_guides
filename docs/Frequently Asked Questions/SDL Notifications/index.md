@@ -1,4 +1,4 @@
-## What is SDL? 
+# What is SDL? 
 SmartDeviceLink (SDL) connects in-vehicle infotainment systems to smartphone apps. SDL allows automakers to provide highly integrated connected experiences and allows users to operate smartphone apps through the in-vehicle infotainment screen and, if equipped, voice recognition system.
 
 ## Why do you see SDL notifications?
