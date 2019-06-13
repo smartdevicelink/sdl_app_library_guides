@@ -81,7 +81,7 @@ lockScreenConfig.setBackgroundColor(resourceColor); // For example, R.color.blac
 ```
 !@
 
-#### Custom App Icon
+### Custom App Icon
 @![iOS]
 ##### Objective-C
 ```objc
