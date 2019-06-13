@@ -15,7 +15,7 @@ Since there is a possibility that some head units will not support the send loca
 
 If using library v.@![iOS]6.0!@@![android, javaSE, javaEE]4.4!@ and connecting to SDL Core v.4.5 or newer, you can use the @![iOS]`SDLSystemCapabilityManager`!@@![android, javaSE, javaEE]`SystemCapabilityManager`!@ to check the navigation capability returned by Core as shown in the code sample below. 
 
-If connecting to older versions of Core (or using older versions of the library), you will have to check the @![iOS]`SDLManager.registerResponse.hmiCapabilities.navigation`!@ @![android, javaSE, javaEE]`SdlManager.registerAppInterfaceResponse.hmiCapabilities.isNavigationAvailable`!@ after the SDL app has started successfully.
+If connecting to older versions of Core (or using older versions of the library), you will have to check the @![iOS]`SDLManager.registerResponse.hmiCapabilities.navigation`!@@![android,javaSE,javaEE]`SdlManager.registerAppInterfaceResponse.hmiCapabilities.isNavigationAvailable`!@ after the SDL app has started successfully to see if an embedded navigation system is available. If it is, then you can assume that `SendLocation` will work.
 
 @![iOS]
 ##### Objective-C
