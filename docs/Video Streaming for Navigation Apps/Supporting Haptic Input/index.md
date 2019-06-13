@@ -8,7 +8,7 @@ Currently, there are no RPCs for knowing which rect is highlighted, so your UI w
 !@
 
 @![iOS,android]
-You will also need to implement touch input support (Mobile Navigation/Touch Input) in order to receive touches of the rects.!@ @![iOS] You must support the automatic focusable item manager in order to receive a touched view back in the `SDLTouchManagerDelegate` in addition to the `CGPoint`!@.
+@![iOS,android]You will also need to implement [touch input support](Video Streaming for Navigation Apps/Touch Input) in order to receive touches of the rects.!@ @![iOS]You must support the automatic focusable item manager in order to receive a touched view back in the `SDLTouchManagerDelegate` in addition to the `CGPoint`.!@
 
 @![android]
 `// TODO Update description to be android friendly: Add appropriate link and listener information`
