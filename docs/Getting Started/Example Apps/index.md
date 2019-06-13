@@ -185,7 +185,7 @@ If you are using SDL Core and Generic HMI, you will have to add a policy table e
 The `storage` folder in the same directory as the `sdl_preloaded_pt.json` file needs to be deleted before changes made to the `sdl_preloaded_pt.json` will take effect.
 !!!
 
-For more information about policy tables please visit [Policy Tables Guides](https://smartdevicelink.com/en/guides/sdl-server/api-reference-documentation/policy-table/overview).
+For more information about policy tables please visit the [Policy Tables Guide](https://smartdevicelink.com/en/guides/sdl-server/api-reference-documentation/policy-table/overview).
 
 !!! NOTE
 Don't forget to modify `ws://<ip address>:<port>` with your own IP address and app number. To find and/or change the port configured in the Hello Sdl app, check the port variable in the `Main.java` class.
