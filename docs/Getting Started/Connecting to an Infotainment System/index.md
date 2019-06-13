@@ -1,4 +1,6 @@
 # Connecting to an Infotainment System
+
+@![iOS]
 To connect to an emulator, such as Manticore or a local Ubuntu SDL Core-based emulator, make sure to implement a TCP (`debug`) connection. The emulator and app should be on the same network (i.e. remember to set the correct IP address and port number in the `SDLLifecycleConfiguration`). The IP will most likely be the IP address of the operating system running the emulator. The port will most likely be `12345`.
 
 !!! IMPORTANT
@@ -19,3 +21,8 @@ If you are testing with a vehicle head unit or TDK and wish to see debug logs in
 !!! NOTE
 The same issues apply when connecting the relay app with a TDK or head unit as do when connecting to SDL Core. Please see the issues above, under the *Connect with an Emulator* heading.
 !!!
+!@
+
+@![android, javaSE, javaEE]
+`// TODO: Android / Java content`
+!@
