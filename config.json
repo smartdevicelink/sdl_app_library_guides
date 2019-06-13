@@ -45,16 +45,9 @@
                     "platforms": ["Android"]
                 },
                 {
-                    "name": "Hello Sdl Android",
+                    "name":"Proguard Guidelines",
                     "platforms": ["Android"]
-                },
-                {
-                    "name": "Hello Sdl JavaSE",
-                    "platforms": ["JavaSE"]
-                },
-                {
-                    "name": "Hello Sdl JavaEE",
-                    "platforms": ["JavaEE"]
+    
                 },
                 {
                     "name": "Deploying to AWS",
@@ -205,9 +198,17 @@
                 }
             ]
         },
-        {  
-            "name":"Proguard Guidelines",
-            "platforms": ["Android"]
-         }
+        {
+            "name": "Frequently Asked Questions",
+            "platforms": ["Android,JavaSE,JavaEE"],
+            "navigation": [
+                {
+                    "name": "SDL Notifications"
+                },
+                {
+                    "name": "Trusted Router Service"
+                }
+            ]
+        }
     ]
 }
