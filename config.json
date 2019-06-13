@@ -200,7 +200,7 @@
         },
         {
             "name": "Frequently Asked Questions",
-            "platforms": ["Android,JavaSE,JavaEE"],
+            "platforms": ["Android","JavaSE","JavaEE"],
             "navigation": [
                 {
                     "name": "SDL Notifications"
