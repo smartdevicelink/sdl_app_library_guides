@@ -2,7 +2,7 @@
 Navigation applications have support for touch events, including both single and multitouch events. This includes interactions such as panning and pinch. A developer may use the included `SDLTouchManager` class, or yourself by listening to the `SDLDidReceiveTouchEventNotification` notification.
 
 !!! NOTE
-You must have a valid and approved `appId` in order to recieve touch events.
+You must have a valid and approved `appId` in order to receive touch events.
 !!!
 
 ### Using SDLTouchManager
@@ -78,6 +78,7 @@ timeStamp    | Timestamp of the head unit time. Can be used to compare time pass
 coord        | X and Y coordinates in the head unit coordinate system. (0, 0) is the top left.
 
 #### Example
+
 ##### Objective-C
 ```objc
 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(touchEventAvailable:) name:SDLDidReceiveTouchEventNotification object:nil];
