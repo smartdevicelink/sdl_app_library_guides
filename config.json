@@ -19,16 +19,7 @@
                     "name": "SDK Configuration"
                 },
                 {
-                    "name": "Integration Basics iOS",
-                    "platforms": ["iOS"]
-                },
-                {
-                    "name": "Integration Basics Android",
-                    "platforms": ["android"]
-                },
-                {
-                    "name": "Integration Basics Java",
-                    "platforms": ["javaSE, javaEE"]
+                    "name": "Integration Basics"
                 },
                 {
                     "name": "Connecting to an Infotainment System"
