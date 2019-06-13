@@ -35,6 +35,30 @@
                 },
                 {
                     "name": "Example Apps"
+                },
+                {
+                    "name": "Using AOA Protocol",
+                    "platforms": ["Android"]
+                },
+                {
+                    "name": "Setting Security Level for Multiplexing",
+                    "platforms": ["Android"]
+                },
+                {
+                    "name": "Hello Sdl Android",
+                    "platforms": ["Android"]
+                },
+                {
+                    "name": "Hello Sdl JavaSE",
+                    "platforms": ["JavaSE"]
+                },
+                {
+                    "name": "Hello Sdl JavaEE",
+                    "platforms": ["JavaEE"]
+                },
+                {
+                    "name": "Deploying to AWS",
+                    "platforms": ["JavaEE"]
                 }
             ]
         },
@@ -180,6 +204,10 @@
                     "platforms": ["Android"]
                 }
             ]
-        }
+        },
+        {  
+            "name":"Proguard Guidelines",
+            "platforms": ["Android"]
+         }
     ]
 }
