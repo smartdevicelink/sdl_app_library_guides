@@ -1,5 +1,6 @@
 # SDK Configuration
 
+@![iOS]
 ## 1. Enable Background Capabilities
 Your application must be able to maintain a connection to the SDL Core even when it is in the background. This capability must be explicitly enabled for your application (available for iOS 5+). To enable the feature, select your application's build target, go to *Capabilities*, *Background Modes*, and select *External accessory communication mode*.
 
@@ -52,3 +53,8 @@ This is only required for USB and Bluetooth enabled head units. It is not necess
 An app id is required for production level apps. The app id gives your app special permissions to access vehicle data. If your app does not need to access vehicle data, a dummy app id (i.e. create a fake id like "1234") is sufficient during the development stage. However, you must get an app id before releasing the app to the public.
 
 To obtain an app id, sign up at [smartdevicelink.com](https://www.smartdevicelink.com).
+!@
+
+@![android, javaSE, javaEE]
+`// TODO: Move appropriate content from Integration Basics to this guide`
+!@
