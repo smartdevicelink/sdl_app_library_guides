@@ -55,7 +55,7 @@ let lockScreenConfiguration = SDLLockScreenConfiguration.enabled()
 `TODO Add code example`
 !@
 
-## Customizing the Provided Lock Screen
+## Customizing the Default Lock Screen
 If you would like to use the provided lock screen but would like to add your own appearance to it, we provide that as well. @![iOS]`SDLLockScreenConfiguration`!@ @![android]`LockScreenConfig`!@ allows you to customize the background color as well as your app's icon. If the app icon is not included, we will use the SDL logo.
 
 ![Custom Lock Screen](/assets/CustomLockScreen.png)
