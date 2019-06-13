@@ -62,7 +62,7 @@ if (hmiCapabilities.isNavigationAvailable()) {
 !@
 
 ## Using Send Location
-To use the `SendLocation` request, you must, at minimum, include the longitude and latitude of the location.
+To use the `SendLocation` request, you must at minimum include the longitude and latitude of the location.
 
 @![iOS]
 ##### Objective-C
