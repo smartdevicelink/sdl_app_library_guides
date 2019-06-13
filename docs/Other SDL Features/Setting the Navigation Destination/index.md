@@ -4,7 +4,7 @@ The `SendLocation` RPC gives you the ability to send a GPS location to the activ
 When using the `SendLocation` RPC, you will not have access to any information about how the user interacted with this location, only if the request was successfully sent. The request will be handled by Core from that point on using the active navigation system.
 
 ## Checking If Your App Has Permission to Use Send Location
-The `SendLocation` RPC is restricted by most vehicle manufacturers. As a result, the head unit you are connecting to will reject the request if you do not have the correct permissions. Please check the [Getting Started/Understanding Permissions](Getting Started/Understanding Permissions) section for more information on how to check permissions for an RPC.
+The `SendLocation` RPC is restricted by most vehicle manufacturers. As a result, the head unit you are connecting to will reject the request if you do not have the correct permissions. Please check the [Understanding Permissions](Getting Started/Understanding Permissions) section for more information on how to check permissions for an RPC.
 
 ## Checking if Head Unit Supports Send Location 
 Since there is a possibility that some head units will not support the send location feature, you should check head unit support before attempting to send the request. You should also update your app's UI based on whether or not you can use `SendLocation`.
