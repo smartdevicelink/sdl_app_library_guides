@@ -7,57 +7,46 @@ When using the `SendLocation` RPC, you will not have access to any information a
 As of library v.@![iOS]6.2!@@![android, javaSE, javaEE]4.8!@ and SDL Core v.5.1, the `SendLocation` RPC can be sent from one SDL app to another. Both SDL apps will have to implement the **App Services** API. Please refer to [Other SDL Features/Creating an App Service](Other SDL Features/Creating an App Service) and [Other SDL Features/Using an App Service](Other SDL Features/Using an App Service) for more information on how to implement this feature.
 !!!
 
-## Checking if Send Location is Available
-Since `SendLocation` is a newer RPC, there is a possibility that not all head units will support this request. To check if the request is supported, you may look at the @![iOS]`SDLManager`!@ @![android, javaSE, javaEE]`SdlManager`!@'s `systemCapabilityManager` property after the manager has started successfully.
+## Checking if App has Permission to Use Send Location
+The `SendLocation` RPC is restricted by most vehicle manufacturers. As a result, the head unit you are connecting to will reject the request if you do not have the correct permissions.
 
-!!! NOTE
-`SendLocation` is an RPC that is usually restricted by OEMs. As a result, the head unit you are connecting to may limit app functionality if you do not have permission to use the request.
-!!!
+## Checking if Head Unit Supports Send Location 
+Since is a possibility that some head units will **not** support the send location feature, you should check head unit support before attempting to send the request. 
+
+If connecting to SDL Core v.4.5 or newer and using library v.@![iOS]6.0!@@![android, javaSE, javaEE]4.4!@, you can use the @`SDLSystemCapabilityManager` to check the navigation capability returned by Core as shown in the code sample. 
+
+If connecting to older versions of Core (or using older versions of the library), you will have to check the @![iOS]`SDLManager.registerResponse.hmiCapabilities.navigation`!@ @![android, javaSE, javaEE]`SdlManager.registerAppInterfaceResponse.hmiCapabilities.isNavigationAvailable`!@ after the SDL app has started successfully.
 
 @![iOS]
 ##### Objective-C
 ```objc
-BOOL isNavigationSupported = NO;
-
-__weak typeof (self) weakSelf = self;
-[self.sdlManager startWithReadyHandler:^(BOOL success, NSError * _Nullable error) {
-    if (!success) {
-        NSLog(@"SDL errored starting up: %@", error);
-        return;
-    }
-
-    SDLHMICapabilities *hmiCapabilities = self.sdlManager.systemCapabilityManager.hmiCapabilities;
-    if (hmiCapabilities != nil) {
-        isNavigationSupported = hmiCapabilities.navigation.boolValue;
-    }
+[self.sdlManager.systemCapabilityManager updateCapabilityType:SDLSystemCapabilityTypeNavigation completionHandler:^(NSError * _Nullable error, SDLSystemCapabilityManager * _Nonnull systemCapabilityManager) {
+    BOOL isNavigationSupported = systemCapabilityManager.navigationCapability.sendLocationEnabled.boolValue;
 }];
 ```
 
 ##### Swift
 ```swift
-var isNavigationSupported = false
-
-sdlManager.start { (success, error) in
-    if !success {
-        print("SDL errored starting up: \(error.debugDescription)")
-        return
-    }
-
-    if let hmiCapabilities = self.sdlManager.systemCapabilityManager.hmiCapabilities, let navigationSupported = hmiCapabilities.navigation?.boolValue {
-        isNavigationSupported = navigationSupported
-    }
+sdlManager.systemCapabilityManager.updateCapabilityType(.navigation) { (error, systemCapabilityManager) in
+    let isNavigationSupported = systemCapabilityManager.navigationCapability?.sendLocationEnabled?.boolValue;
 }
 ```
 !@
 
 @![android, javaSE, javaEE]
 ```java
-HMICapabilities hmiCapabilities = (HMICapabilities) sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.HMI);
-if (hmiCapabilities.isNavigationAvailable()) {
-    // SendLocation supported
-} else {
-    // SendLocation is not supported
-}
+sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.NAVIGATION, new OnSystemCapabilityListener() {
+	@Override
+	public void onCapabilityRetrieved(Object capability) {
+		NavigationCapability navCapability = (NavigationCapability)capability;
+		Boolean isNavigationSupported = navCapability.getSendLocationEnabled();
+	}
+
+	@Override
+	public void onError(String info) {
+
+	}
+});
 ```
 !@
 
