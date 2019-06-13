@@ -195,10 +195,6 @@ If the policy table configuration is correct, after you have connected at least 
 
 ![HMI Apps](assets/hmi1.png)
 
-!!! NOTE
-Even though you see the app icon on the HMI, you will not be able launch the app until you have started an instance of your app.
-!!!
-
 #### Running the App
 After you have successfully configured SDL Core's policy table, you can run an instance of app in the IntelliJ IDEA. Once the Hello Sdl app compiles and launches on your your machine, you can click on the Hello Sdl icon in the HMI.
 
