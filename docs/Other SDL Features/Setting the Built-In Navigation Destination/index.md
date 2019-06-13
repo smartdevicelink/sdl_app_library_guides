@@ -4,7 +4,7 @@ The `SendLocation` RPC gives you the ability to send a GPS location to the embed
 When using the `SendLocation` RPC, you will not have access to any information about how the user interacted with this location, only if the request was successfully sent to Core. The request will be handled by Core from that point on using the embedded navigation system.
 
 !!! NOTE
-As of library v.@![iOS]6.2!@@![android, javaSE, javaEE]4.8!@ and SDL Core v.5.1, the `SendLocation` RPC can be sent from one SDL app to another. Both SDL apps will have to implement the **App Services** API. Please refer to [Other SDL Features/Creating an App Service](Other SDL Features/Creating an App Service) and [Other SDL Features/Using an App Service](Other SDL Features/Using an App Service) for more information on how to implement this feature.
+As of library v.@![iOS]6.2!@@![android, javaSE, javaEE]4.8!@ and SDL Core v.5.1, the `SendLocation` RPC can be sent from one SDL app to another. Both SDL apps will have to implement the **App Services** API. Please refer to [Other SDL Features/Creating an App Service](Other SDL Features/Creating an App Service) and [Other SDL Features/Using App Services](Other SDL Features/Using App Services) for more information on how to implement this feature.
 !!!
 
 ## Checking if App has Permission to Use Send Location
@@ -13,7 +13,7 @@ The `SendLocation` RPC is restricted by most vehicle manufacturers. As a result,
 ## Checking if Head Unit Supports Send Location 
 Since is a possibility that some head units will **not** support the send location feature, you should check head unit support before attempting to send the request. 
 
-If connecting to SDL Core v.4.5 or newer and using library v.@![iOS]6.0!@@![android, javaSE, javaEE]4.4!@, you can use the @`SDLSystemCapabilityManager` to check the navigation capability returned by Core as shown in the code sample. 
+If using library v.@![iOS]6.0!@@![android, javaSE, javaEE]4.4!@ and connecting to SDL Core v.4.5 or newer, you can use the @![iOS]`SDLSystemCapabilityManager`!@ @![android, javaSE, javaEE]`SystemCapabilityManager`!@ to check the navigation capability returned by Core as shown in the code sample below. 
 
 If connecting to older versions of Core (or using older versions of the library), you will have to check the @![iOS]`SDLManager.registerResponse.hmiCapabilities.navigation`!@ @![android, javaSE, javaEE]`SdlManager.registerAppInterfaceResponse.hmiCapabilities.isNavigationAvailable`!@ after the SDL app has started successfully.
 
