@@ -1,4 +1,4 @@
-## Integration Basics
+# Integration Basics
 ### How SDL Works
 SmartDeviceLink works by sending remote procedure calls (RPCs) back and forth between a smartphone application and the SDL Core. These RPCs allow you to build the user interface, detect button presses, play audio, and get vehicle data, among other things. You will use the SDL library to build your app on the SDL Core.
 
@@ -628,23 +628,25 @@ If the app is targeting Android P (API Level 28) or higher, the Android Manifest
 A SmartDeviceLink Android Service should be created to manage the lifecycle of the SDL session. The `SdlService` should build and start an instance of the `SdlManager` which will automatically connect with a headunit when available. This `SdlManager` will handle sending and receiving messages to and from SDL after connected.
 
 Create a new service and name it appropriately, for this guide we are going to call it `SdlService`. 
-@!
-!@[android]
+!@
+
+@![android]
 ```java
 public class SdlService extends Service {
     //...
 }
 ```
-@!
-!@[javaSE,javaEE]
+!@
+
+@![javaSE,javaEE]
 ```java
 public class SdlService {
     //...
 }
 ```
-@!
+!@
  
-!@[android]
+@![android]
 If you created the service using the Android Studio template then the service should have been added to your `AndroidManifest.xml` otherwise the service needs to be defined in the manifest:
 
 ```xml
@@ -705,18 +707,18 @@ public void onDestroy(){
 	}
 }
 ```
-@!
+!@
 
-!@[android,javaSE,javaEE]
+@![android,javaSE,javaEE]
 ### Implementing SDL Manager
 In order to correctly connect to an SDL enabled head unit developers need to implement methods for the proper creation and disposing of an `SdlManager` in our `SdlService`.
 
 !!! NOTE
 An instance of SdlManager cannot be reused after it is closed and properly disposed of. Instead, a new instance must be created. Only one instance of SdlManager should be in use at any given time.
 !!!
-@!
+!@
 
-!@[android]
+@![android]
 ```java
 public class SdlService extends Service {
 
@@ -773,8 +775,9 @@ The `onDestroy()` method from the `SdlManagerListener` is called whenever the ma
 !!! IMPORTANT
 The `sdlManager` must be shutdown properly in the `SdlService.onDestroy()` callback using the method `sdlManager.dispose()`.
 !!!
-@!
-!@[javaSE,javaEE]
+!@
+
+@![javaSE,javaEE]
 ```java
 public class SdlService {
 
@@ -827,7 +830,7 @@ public class SdlService {
 !!! IMPORTANT
 The `sdlManager` must be shutdown properly if this class is shutting down in the respective method using the method `sdlManager.dispose()`.
 !!!
-@!
+!@
 
 @![javaEE]
 ### Adding EJB and Websockets
