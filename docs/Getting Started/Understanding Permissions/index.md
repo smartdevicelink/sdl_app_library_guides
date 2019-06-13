@@ -89,13 +89,7 @@ builder.setRPCNotificationListeners(onRPCNotificationListenerMap);
 !@
 
 ## Permission Manager
-@![iOS]
-When your app first connects to the head unit, it will receive an `OnPermissionsChange` notification. This notification contains all RPCs the head unit supports and the `hmiLevel` permissions for each RPC. Use the `SDLManager`'s permission manager to check the current permission status of a specific RPC or group of RPCs. If desired, you may also subscribe to get notifications when the RPC(s) permission status changes.
-!@
-
-@![android,javaSE,javaEE]
 The PermissionManager allows developers to easily query whether specific RPCs are allowed or not. It also allows a listener to be added for a list of RPCs so that if there are changes in their permissions, the app will be notified.
-!@
 
 ### Checking Current Permissions of a Single RPC
 @![iOS]
