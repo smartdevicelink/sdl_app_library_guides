@@ -1,5 +1,5 @@
 # Setting the Navigation Destination
-The `SendLocation` RPC gives you the ability to send a GPS location to the embedded navigation app on the head unit. When the request is sent the user will be prompted to navigate to that location using the active navigation app. 
+The `SendLocation` RPC gives you the ability to send a GPS location to the active navigation app on the head unit.
 
 When using the `SendLocation` RPC, you will not have access to any information about how the user interacted with this location, only if the request was successfully sent. The request will be handled by Core from that point on using the active navigation system.
 
@@ -17,14 +17,23 @@ If connecting to older versions of Core (or using older versions of the library)
 ##### Objective-C
 ```objc
 [self.sdlManager.systemCapabilityManager updateCapabilityType:SDLSystemCapabilityTypeNavigation completionHandler:^(NSError * _Nullable error, SDLSystemCapabilityManager * _Nonnull systemCapabilityManager) {
-    BOOL isNavigationSupported = systemCapabilityManager.navigationCapability.sendLocationEnabled.boolValue;
+    if (error == nil) {
+        BOOL isNavigationSupported = systemCapabilityManager.navigationCapability.sendLocationEnabled.boolValue;
+    }
+    else {
+        BOOL isNavigationSupported = systemCapabilityManager.hmiCapabilities.navigation.boolValue;
+    }
 }];
 ```
 
 ##### Swift
 ```swift
 sdlManager.systemCapabilityManager.updateCapabilityType(.navigation) { (error, systemCapabilityManager) in
-    let isNavigationSupported = systemCapabilityManager.navigationCapability?.sendLocationEnabled?.boolValue;
+    if error == nil {
+        var isNavigationSupported = systemCapabilityManager.navigationCapability?.sendLocationEnabled?.boolValue ?? false;
+    } else {
+        var isNavigationSupported = systemCapabilityManager.hmiCapabilities?.navigation?.boolValue ?? false
+    }
 }
 ```
 !@
@@ -34,13 +43,14 @@ sdlManager.systemCapabilityManager.updateCapabilityType(.navigation) { (error, s
 sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.NAVIGATION, new OnSystemCapabilityListener() {
 	@Override
 	public void onCapabilityRetrieved(Object capability) {
-		NavigationCapability navCapability = (NavigationCapability)capability;
+		NavigationCapability navCapability = (NavigationCapability) capability;
 		Boolean isNavigationSupported = navCapability.getSendLocationEnabled();
 	}
 
 	@Override
 	public void onError(String info) {
-
+		HMICapabilities hmiCapabilities = (HMICapabilities) sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.HMI);
+		Boolean isNavigationSupported = hmiCapabilities.isNavigationAvailable();
 	}
 });
 ```
