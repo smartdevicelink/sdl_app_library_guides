@@ -102,7 +102,7 @@ lockScreenConfig.setAppIcon(appIconInt); // For example, R.drawable.lockscreen i
 ```
 !@
 
-## Using Your Own Lock Screen
+## Create Your Own Lock Screen
 If you would like to use your own lock screen instead of the provided SDL one, but still use the logic we provide, you can use a new initializer within @![iOS]`SDLLockScreenConfiguration`!@ @![android]`LockScreenConfig`!@:
 
 @![iOS]
