@@ -20,8 +20,15 @@ Be careful with sending user interface related RPCs in the `NONE` and `BACKGROUN
 To get more detailed information about the state of your SDL app check the current system context. The system context will let you know if a menu is open, a VR session is in progress, an alert is showing, or if the main screen is unobstructed. You can find more information about the system context below.
 
 ### Monitoring the HMI Level
+@![iOS]
 The easiest way to monitor the `hmiLevel` of your SDL app is through a required delegate callback of `SDLManagerDelegate`. The function `hmiLevel:didChangeToLevel:` is called every time your app's `hmiLevel` changes.
+!@
 
+@![android,javaSE,javaEE]
+Monitoring HMI Status is possible through an `OnHMIStatus` notification that you can subscribe to via the `SdlManager`'s `addOnRPCNotificationListener`.
+!@
+
+@![iOS]
 ##### Objective-C
 ```objc
 - (void)hmiLevel:(SDLHMILevel)oldLevel didChangeToLevel:(SDLHMILevel)newLevel {
@@ -63,11 +70,29 @@ func hmiLevel(_ oldLevel: SDLHMILevel, didChangeToLevel newLevel: SDLHMILevel) {
     }
 }
 ```
+!@
+
+@![android,javaSE,javaEE]
+```java
+Map<FunctionID, OnRPCNotificationListener> onRPCNotificationListenerMap = new HashMap<>();
+onRPCNotificationListenerMap.put(FunctionID.ON_HMI_STATUS, new OnRPCNotificationListener() {
+    @Override
+    public void onNotified(RPCNotification notification) {
+        OnHMIStatus onHMIStatus = (OnHMIStatus) notification;
+        if (onHMIStatus.getHmiLevel() == HMILevel.HMI_FULL && onHMIStatus.getFirstRun()){
+            // first time in HMI Full
+        }
+    }
+});
+builder.setRPCNotificationListeners(onRPCNotificationListenerMap);
+```
+!@
 
 ## Permission Manager
-When your app first connects to the head unit, it will receive an `OnPermissionsChange` notification. This notification contains all RPCs the head unit supports and the `hmiLevel` permissions for each RPC. Use the `SDLManager`'s permission manager to check the current permission status of a specific RPC or group of RPCs. If desired, you may also subscribe to get notifications when the RPC(s) permission status changes. 
+The PermissionManager allows developers to easily query whether specific RPCs are allowed or not. It also allows a listener to be added for a list of RPCs so that if there are changes in their permissions, the app will be notified.
 
 ### Checking Current Permissions of a Single RPC
+@![iOS]
 ##### Objective-C
 ```objc
 BOOL isAllowed = [self.sdlManager.permissionManager isRPCAllowed:<#RPC name#>];
@@ -77,8 +102,16 @@ BOOL isAllowed = [self.sdlManager.permissionManager isRPCAllowed:<#RPC name#>];
 ```swift
 let isAllowed = sdlManager.permissionManager.isRPCAllowed(<#RPC name#>)
 ```
+!@
+
+@![android,javaSE,javaEE]
+```java
+boolean allowed = sdlManager.getPermissionManager().isRPCAllowed(FunctionID.SHOW);
+```
+!@
 
 ### Checking Current Permissions of a Group of RPCs
+@![iOS]
 ##### Objective-C
 ```objc
 SDLPermissionGroupStatus groupPermissionStatus = [self.sdlManager.permissionManager groupStatusOfRPCs:@[<#RPC name#>, <#RPC name#>]];
@@ -90,8 +123,35 @@ NSDictionary *individualPermissionStatuses = [self.sdlManager.permissionManager 
 let groupPermissionStatus = sdlManager.permissionManager.groupStatus(ofRPCs:[<#RPC name#>, <#RPC name#>])
 let individualPermissionStatuses = sdlManager.permissionManager.status(ofRPCs:[<#RPC name#>, <#RPC name#>])
 ```
+!@
+
+@![android,javaSE,javaEE]
+```java
+List<PermissionElement> permissionElements = new ArrayList<>();
+permissionElements.add(new PermissionElement(FunctionID.SHOW, null));
+permissionElements.add(new PermissionElement(FunctionID.GET_VEHICLE_DATA, Arrays.asList(GetVehicleData.KEY_RPM, GetVehicleData.KEY_SPEED)));
+
+int groupStatus = sdlManager.getPermissionManager().getGroupStatusOfPermissions(permissionElements);
+
+switch (groupStatus) {
+    case PermissionManager.PERMISSION_GROUP_STATUS_ALLOWED:
+        // Every permission in the group is currently allowed
+        break;
+    case PermissionManager.PERMISSION_GROUP_STATUS_DISALLOWED:
+        // Every permission in the group is currently disallowed
+        break;
+    case PermissionManager.PERMISSION_GROUP_STATUS_MIXED:
+        // Some permissions in the group are allowed and some disallowed
+        break;
+    case PermissionManager.PERMISSION_GROUP_STATUS_UNKNOWN:
+        // The current status of the group is unknown
+        break;
+}
+```
+!@
 
 ### Observing Permissions
+@![iOS]
 If desired, you can set an observer for a group of permissions. The observer's handler will be called when the permissions for the group changes. If you want to be notified when the permission status of any of RPCs in the group change, set the `groupType` to `SDLPermissionGroupTypeAny`. If you only want to be notified when all of the RPCs in the group are allowed, set the `groupType` to `SDLPermissionGroupTypeAllAllowed`.
 
 ##### Objective-C
@@ -107,10 +167,16 @@ let observerId = sdlManager.permissionManager.addObserver(forRPCs: <#RPC name#>,
     <#RPC group status changed#>
 })
 ```
+!@
+
+@![android,javaSE,javaEE]
+`TODO Add description and Code Example`
+!@
 
 ### Stopping Observation of Permissions
 When you set up the observer, you will get an unique id back. Use this id to unsubscribe to the permissions at a later date.
 
+@![iOS]
 ##### Objective-C
 ```objc
 [self.sdlManager.permissionManager removeObserverForIdentifier:observerId];
@@ -120,6 +186,11 @@ When you set up the observer, you will get an unique id back. Use this id to uns
 ```swift
 sdlManager.permissionManager.removeObserver(forIdentifier: observerId)
 ```
+!@
+
+@![android,javaSE,javaEE]
+`TODO Add description and Code Example`
+!@
 
 ## Additional HMI State Information
 If you want more detail about the current state of your SDL app you can monitor the audio playback state as well as get notifications when something blocks the main screen of your app.
@@ -131,23 +202,34 @@ You will get these notifications when an alert pops up, when you start recording
 
 Audio Streaming State   | What does this mean?
 ------------------------|------------------------------------------------------------
-AUDIBLE     			| Any audio you are playing will be audible to the user. 
-ATTENUATED  			| Some kind of audio mixing is occuring between what you are playing, if anything, and some system level audio or navigation application audio.
+AUDIBLE     			| Any audio you are playing will be audible to the user
+ATTENUATED  			| Some kind of audio mixing is occurring between what you are playing, if anything, and some system level audio or navigation application audio.
 NOT_AUDIBLE 			| Your streaming audio is not audible. This could occur during a `VRSESSION` System Context.
 
+@![iOS]
 ##### Objective-C
 ```objc
 - (void)audioStreamingState:(nullable SDLAudioStreamingState)oldState didChangeToState:(SDLAudioStreamingState)newState {
     <#code#>
 }
 ```
-
 ##### Swift
 ```swift
 func audioStreamingState(_ oldState: SDLAudioStreamingState?, didChangeToState newState: SDLAudioStreamingState) {
     <#code#>
 }
 ```
+!@
+
+@![android,javaSE,javaEE]
+```java
+@Override
+public void onNotified(RPCNotification notification) {
+    OnHMIStatus status = (OnHMIStatus) notification;
+    AudioStreamingState streamingState = notification.getAudioStreamingState();
+}
+```
+!@
 
 ### System Context
 The System Context informs your app if there is potentially a blocking HMI component while your app is still visible. An example of this would be if your application is open and you display an alert. Your app will receive a system context of `ALERT` while it is presented on the screen, followed by `MAIN` when it is dismissed.
@@ -160,6 +242,7 @@ MENU     			   | A menu interaction is currently in-progress.
 HMI_OBSCURED    	   | The app's display HMI is being blocked by either a system or other app's overlay (another app's alert, for instance).
 ALERT 				   | An alert that you have sent is currently visible.
 
+@![iOS]
 ##### Objective-C
 ```objc
 - (void)systemContext:(nullable SDLSystemContext)oldContext didChangeToContext:(SDLSystemContext)newContext {
@@ -173,3 +256,14 @@ func systemContext(_ oldContext: SDLSystemContext?, didChangeToContext newContex
     <#code#>
 }
 ```
+!@
+
+@![android,javaSE,javaEE]
+```java
+@Override
+public void onNotified(RPCNotification notification) {
+    OnHMIStatus status = (OnHMIStatus) notification;
+    SystemContext systemContext = notification.getSystemContext();
+}
+```
+!@
