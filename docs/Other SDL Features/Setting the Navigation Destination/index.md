@@ -17,23 +17,29 @@ If connecting to older versions of Core (or using older versions of the library)
 ##### Objective-C
 ```objc
 [self.sdlManager.systemCapabilityManager updateCapabilityType:SDLSystemCapabilityTypeNavigation completionHandler:^(NSError * _Nullable error, SDLSystemCapabilityManager * _Nonnull systemCapabilityManager) {
+    BOOL isNavigationSupported = NO;
     if (error == nil) {
-        BOOL isNavigationSupported = systemCapabilityManager.navigationCapability.sendLocationEnabled.boolValue;
+        isNavigationSupported = systemCapabilityManager.navigationCapability.sendLocationEnabled.boolValue;
     }
     else {
-        BOOL isNavigationSupported = systemCapabilityManager.hmiCapabilities.navigation.boolValue;
+        isNavigationSupported = systemCapabilityManager.hmiCapabilities.navigation.boolValue;
     }
+
+    <#If navigation is supported, send the `SendLocation` RPC#>
 }];
 ```
 
 ##### Swift
 ```swift
 sdlManager.systemCapabilityManager.updateCapabilityType(.navigation) { (error, systemCapabilityManager) in
+    var isNavigationSupported = false
     if error == nil {
-        var isNavigationSupported = systemCapabilityManager.navigationCapability?.sendLocationEnabled?.boolValue ?? false;
+        isNavigationSupported = systemCapabilityManager.navigationCapability?.sendLocationEnabled?.boolValue ?? false;
     } else {
-        var isNavigationSupported = systemCapabilityManager.hmiCapabilities?.navigation?.boolValue ?? false
+        isNavigationSupported = systemCapabilityManager.hmiCapabilities?.navigation?.boolValue ?? false
     }
+
+    <#If navigation is supported, send the `SendLocation` RPC#>
 }
 ```
 !@
