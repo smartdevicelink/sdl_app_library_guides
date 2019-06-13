@@ -10,6 +10,7 @@ To see where the `SDLLockScreenConfiguration` is used, refer to the [Integration
 !@
 
 @![android]
+## Configure the Lock Screen Activity
 There is a manager called the `LockScreenManager` that is accessed through the `SdlManager` that handles much of the logic for you. If you have implemented the `SdlManager` and have defined the `SDLLockScreenActivity` in your manifest but have not defined any lock screen configuration, you are already have a working default configuration. This guide will go over specific configurations you are able to implement using the `LockScreenManager` functionality.
 
 You must declare the `SDLLockScreenActivity` in your manifest. To do so, simply add the following to your app's `AndroidManifest.xml` if you have not already done so:
@@ -27,16 +28,16 @@ This manifest entry must be added for the lock screen feature to work.
 ## Using the Provided Lock Screen
 Using the default lock screen is simple. Using the lock screen this way will automatically load an automaker's logo, if available, to show alongside your logo. If it is not, the default lock screen will show your logo alone.
 
+@![iOS]
 ![Generic Lock Screen](/assets/GenericLockScreen.png)
+!@
 
 @![iOS]
 To do this, instantiate a new `SDLLockScreenConfiguration`:
 !@
 
 @![android]
-There is a setter in the `SdlManager.Builder` that allows you to set a `LockScreenConfig` by calling `builder.setLockScreenConfig(lockScreenConfig)`. The following options are available to be configured with the`LockScreenConfig`.
-
-In order to to use these features, create a `LockScreenConfig` object and set it using `SdlManager.Builder` before you build `SdlManager`.
+If you have implemented the SdlManager and have defined the SDLLockScreenActivity in your manifest but have not defined any lock screen configuration, you are already have a working default configuration.
 !@
 
 @![iOS]
@@ -51,14 +52,12 @@ let lockScreenConfiguration = SDLLockScreenConfiguration.enabled()
 ```
 !@
 
-@![android]
-`TODO Add code example`
-!@
-
 ## Customizing the Default Lock Screen
 If you would like to use the provided lock screen but would like to add your own appearance to it, we provide that as well. @![iOS]`SDLLockScreenConfiguration`!@ @![android]`LockScreenConfig`!@ allows you to customize the background color as well as your app's icon. If the app icon is not included, we will use the SDL logo.
 
+@![iOS]
 ![Custom Lock Screen](/assets/CustomLockScreen.png)
+!@
 
 ### Custom Background Color
 @![iOS]
@@ -99,6 +98,15 @@ let lockScreenConfiguration = SDLLockScreenConfiguration.enabledConfiguration(wi
 @![android]
 ```java
 lockScreenConfig.setAppIcon(appIconInt); // For example, R.drawable.lockscreen icon
+```
+!@
+
+@![android]
+### Showing the Device Logo
+This sets whether or not to show the connected device's logo on the default lock screen. The logo will come from the connected hardware if set by the manufacturer. When using a Custom View, the custom layout will have to handle the logic to display the device logo or not. The default setting is false, but some OEM partners may require it.
+In your `LockScreenConfig` object, you can set the boolean of whether or not you want the device logo shown, if available:
+```java
+lockScreenConfig.showDeviceLogo(true);
 ```
 !@
 
