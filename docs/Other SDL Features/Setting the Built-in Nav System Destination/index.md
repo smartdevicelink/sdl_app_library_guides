@@ -4,7 +4,7 @@ The `SendLocation` RPC gives you the ability to send a GPS location to the embed
 When using the `SendLocation` RPC, you will not have access to any information about how the user interacted with this location, only if the request was successfully sent to Core. The request will be handled by Core from that point on using the embedded navigation system.
 
 !!! NOTE
-The send location feature is only supported for the embedded navigation app; it does not work with mobile navigation apps at this time.
+As of library v.@![iOS]6.2!@@![android, javaSE, javaEE]4.8!@ and SDL Core v.5.1, the `SendLocation` RPC can be sent from one SDL app to another. Both SDL apps will have to implement the **App Services** API. Please refer to [Other SDL Features/Creating an App Service](Other SDL Features/Creating an App Service) and [Other SDL Features/Using an App Service](Other SDL Features/Using an App Service) for more information on how to implement this feature.
 !!!
 
 ## Checking if Send Location is Available
