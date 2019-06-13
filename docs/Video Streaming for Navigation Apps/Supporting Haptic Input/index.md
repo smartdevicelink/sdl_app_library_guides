@@ -5,7 +5,7 @@ SDL now supports "haptic" input: input from something other than a touch screen.
 Currently, there are no RPCs for knowing which rect is highlighted, so your UI will have to remain static, without scrolling.
 !!!
 
-You will also need to implement [touch input support](Video Streaming for Navigation Apps/Touch Input) in order to receive touches of the rects. 
+You will also need to implement [touch input support](Video Streaming for Navigation Apps/Touch Input) in order to receive touches of the rects.
 @![iOS]You must support the automatic focusable item manager in order to receive a touched view back in the `SDLTouchManagerDelegate` in addition to the `CGPoint`. !@
 
 ## Automatic Focusable Rects
