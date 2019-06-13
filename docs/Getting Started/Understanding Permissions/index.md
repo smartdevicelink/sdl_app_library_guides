@@ -182,7 +182,7 @@ let observerId = sdlManager.permissionManager.addObserver(forRPCs: <#RPC name#>,
 ### Stopping Observation of Permissions
 When you set up the observer, you will get an unique id back. Use this id to unsubscribe to the permissions at a later date.
 
-!@[iOS]
+@![iOS]
 ##### Objective-C
 ```objc
 [self.sdlManager.permissionManager removeObserverForIdentifier:observerId];
