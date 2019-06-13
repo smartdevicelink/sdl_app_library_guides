@@ -51,7 +51,7 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.NAVIG
 !@
 
 ## Using Send Location
-To use the `SendLocation` request, you must, at minimum, include the longitude and latitude of the location.
+To use the `SendLocation` request, you must at minimum include the longitude and latitude of the location.
 
 @![iOS]
 ##### Objective-C
