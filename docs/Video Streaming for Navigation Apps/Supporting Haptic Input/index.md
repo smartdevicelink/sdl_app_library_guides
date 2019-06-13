@@ -10,6 +10,10 @@ Currently, there are no RPCs for knowing which rect is highlighted, so your UI w
 @![iOS,android]
 You will also need to implement touch input support (Mobile Navigation/Touch Input) in order to receive touches of the rects.!@ @![iOS] You must support the automatic focusable item manager in order to receive a touched view back in the `SDLTouchManagerDelegate` in addition to the `CGPoint`!@.
 
+@![android]
+`// TODO Update description to be android friendly: Add appropriate link and listener information`
+!@
+
 @![iOS]
 ## Automatic Focusable Rects
 SDL has support for automatically detecting focusable rects within your UI and sending that data to the head unit. You will still need to tell SDL when your UI changes so that it can re-scan and detect the rects to be sent.
@@ -118,10 +122,4 @@ public void sendHapticData() {
 ```
 
 Each SendHapticData rpc should contain the entirety of all clickable areas to be accessed via haptic controls.
-!@
-
-@![javaSE,javaEE]
-!!! NOTE
-This feature is only available on Android apps. Currently, JavaSE (embedded) and JavaEE (cloud) apps don't support that.
-!!!
 !@
