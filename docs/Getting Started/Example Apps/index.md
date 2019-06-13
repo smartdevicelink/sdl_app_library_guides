@@ -17,16 +17,13 @@ To connect the example app to production or debug hardware, make sure you are on
 !@
 
 @![android]
-### Introduction
-
 In this guide we take you through the steps to get our sample project, Hello Sdl Android, running and connected to Sdl Core as well as showing up on the generic HMI.
 
 First, make sure you download or clone the latest release from [GitHub](https://github.com/smartdevicelink/sdl_android). It is a package within the SDL Android library.
 
 Open the project in [Android Studio](https://developer.android.com/studio/index.html). We will exclusively use Android Studio as it is the current supported platform for Android development.
 
-### Getting Started
-
+## Getting Started
 If you are not using a Ford TDK for development, we will assume that you have [SDL Core](https://github.com/smartdevicelink/sdl_core) (We recommend Ubuntu 16.04) and an [HMI](https://github.com/smartdevicelink/generic_hmi) set up prior to this point. Most people getting started with this tutorial will not have a Ford TDK, so sample outputs will be using Sdl Core and our Generic HMI.
 
 If you don't want to set up a virtual machine for testing, we offer [Manticore](https://smartdevicelink.com/resources/manticore/), which is a free service that allows you to test your apps via TCP/IP in the cloud.
@@ -35,8 +32,7 @@ If you don't want to set up a virtual machine for testing, we offer [Manticore](
 Sdl Core and an HMI or Manticore are needed to run Hello Sdl Android and to ensure that it connects
 !!!
 
-#### Build Flavors
-
+### Build Flavors
 Hello Sdl Android has been built with different **build flavors**.
 
 To access the Build Variant menu to choose your flavor, click on the menu ```Build``` then ```Select Build Variant```. A small window will appear on the bottom left of your IDE window that allows you to choose a flavor.
@@ -51,10 +47,9 @@ Versions Include:
 
 We will mainly be dealing with `multi` (if using a TDK) or `tcp` (if connecting to SDL Core via a virtual machine or your localhost, or to Manticore)
 
-### Transports
+## Transports
 
-#### Configure for TCP
-
+### Configure for TCP
 If you aren't using a TDK or head unit, you can connect to SDL core via a virtual machine or to your localhost. To do this we will use the flavor ```tcpDebug```.
 
 For TCP to work, you will have to know the IP address of your machine that is running Sdl Core. If you don't know what it is, running ```ifconfig``` in a linux terminal will usually let you see it for the interface you are connected with to your network. We have to modify the IP address in Hello Sdl Android to let it know where your instance of Sdl Core is running.
@@ -73,16 +68,13 @@ In the top of this file, locate the variable declaration for ```DEV_MACHINE_IP_A
 if you do not change the target IP address, the application will not connect to Sdl Core or show up on the HMI
 !!!
 
-#### Configure for Bluetooth
-
+### Configure for Bluetooth
 Right out of the box, all you need to do to run bluetooth is to select the ```multi_sec_offDebug``` (Multiplexing) build flavor.
 
-#### Configure for USB (AOA)
-
+### Configure for USB (AOA)
 To connect to an SDL Core instance or TDK via USB transport, select the ```multi_sec_offDebug ``` (Multiplexing) build flavor. There is more information for USB transport under [Getting Started - Using AOA Protocol](Getting Started/Using AOA Protocol).
 
-### Building the Project
-
+## Building the Project
 For TCP, you may use the built-in Android emulator or an Android phone on the same network as Sdl Core. For Bluetooth, you will need an Android phone that is paired to a TDK or head unit via Bluetooth.
 
 !!! MUST
@@ -117,18 +109,15 @@ At this point Hello Sdl Android has been compiled and is running properly! Conti
 RPCs (Remote Procedure Calls) that can be made with the library.
 
 ### Troubleshooting
-
 Sometimes things don't always go as planned, and so this section exists. If your app compiles and does NOT show up on the HMI, there are a few things to check out.
 
 #### TCP
-
 1. Make sure that you have changed the IP in ```SdlService.java``` to match the machine running Sdl Core. Being on the same network is also important.
 2. If you are sure that the IP is correct and it is still not showing up, make sure the Build Flavor that is running is ```tcpDebug```.
 3. If the two above dont work, make sure there is no firewall blocking the incoming port ```12345``` on the machine or VM running SDL Core. In the same breath, make sure your firewall allows that outgoing port.
 4. There are different network configurations needed for different virtualization software (virtualbox, vmware, etc). Make sure yours is set up correctly. Or use [Manticore](https://smartdevicelink.com/resources/manticore/).
 
 #### Bluetooth
-
 1. Make sure the build flavor ```multi_sec_offDebug ``` is selected.
 2. Ensure your phone is properly paired with the TDK
 3. Make sure Bluetooth is turned on - on Both the TDK and your phone
@@ -136,8 +125,6 @@ Sometimes things don't always go as planned, and so this section exists. If your
 !@
 
 @![javaEE, javaSE]
-### Introduction
-
 In this guide we take you through the steps to get our sample project, Hello Sdl, running and connected to Sdl Core as well as showing up on the generic HMI.
 
 Make sure that you follow the steps in [Installation](Getting Started/Installation) and [Integration Basics](Getting Started/Integration Basics) sections to create a new SDL project before continuing this section.
@@ -146,26 +133,14 @@ Make sure that you follow the steps in [Installation](Getting Started/Installati
 The [Hello Sdl JavaEE](https://github.com/smartdevicelink/sdl_java_suite/tree/master/hello_sdl_java_ee) project includes samples for `SdlService` and `Main` classes that can be copied to your project.
 !!!
 
-### Getting Started
-
+## Getting Started
 We assume that you have [SDL Core](https://github.com/smartdevicelink/sdl_core) (We recommend Ubuntu 16.04) and an [HMI](https://github.com/smartdevicelink/generic_hmi) set up prior to this point. Most people getting started with this tutorial will be using Sdl Core and our Generic HMI. If you don't want to set up a virtual machine for testing, we offer [Manticore](https://smartdevicelink.com/resources/manticore/), which is a free service that allows you to test your apps in the cloud.
 
 !!! NOTE
 Sdl Core and an HMI or Manticore are needed to run Hello Sdl and to ensure that it connects.
 !!!
 
-### Configuring Core 
-
-To let Sdl Core connect to your app, first you will have to know the IP address of the machine that is running the Hello Sdl app. If you don't know what it is, running ```ifconfig``` in the terminal will usually let you see it for the interface you are connected with to your network. 
-
-After getting the IP address, you will have to set the app ID, app websocket endpoint, and app nicknames in Core's policy table. This will let Core know the location of your app's instance. 
-
-!!! NOTE
-The app websocket endpoint should format the IP Address and port like so: `ws://<ip address>:<port>/`.
-!!!
-
-
-#### Manticore
+### Configuring Manticore
 If you are using Manticore, the app information can be easily set in the settings tab:
 
 ![Main Screen](assets/mainscreen.png)
@@ -174,7 +149,15 @@ If you are using Manticore, the app information can be easily set in the setting
 Manticore needs to access you machine's IP address to be able to start a websocket connection with your cloud app. If you are hosting the cloud app on your local machine, you may need to do extra setup to make your machine publicly accessible. The other solution is to setup Core and HMI on your machine instead of using Manticore so Core can access your local IP address.
 !!!
 
-#### Configuring a Local Instance of SDL Core and Generic HMI for Cloud App Testing
+### Configuring a Local Instance of SDL Core
+To let Sdl Core connect to your app, first you will have to know the IP address of the machine that is running the Hello Sdl app. If you don't know what it is, running ```ifconfig``` in the terminal will usually let you see it for the interface you are connected with to your network. 
+
+After getting the IP address, you will have to set the app ID, app websocket endpoint, and app nicknames in Core's policy table. This will let Core know the location of your app's instance. 
+
+!!! NOTE
+The app websocket endpoint should format the IP Address and port like so: `ws://<ip address>:<port>/`.
+!!!
+
 If you are using SDL Core and Generic HMI, you will have to add a policy table entry (in `sdl_preloaded_pt.json`) for your app to the existing `app_policies` entries. The key for your policy table entry should be the same as your app ID.
 
 ```JSON
@@ -216,7 +199,7 @@ If the policy table configuration is correct, after you have connected at least 
 Even though you see the app icon on the HMI, you will not be able launch the app until you have started an instance of your app.
 !!!
 
-### Running the App
+#### Running the App
 After you have successfully configured SDL Core's policy table, you can run an instance of app in the IntelliJ IDEA. Once the Hello Sdl app compiles and launches on your your machine, you can click on the Hello Sdl icon in the HMI.
 
 ![HMI Apps](assets/hmi2.png)
