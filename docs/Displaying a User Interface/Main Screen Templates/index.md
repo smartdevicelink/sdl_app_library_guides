@@ -1,8 +1,10 @@
 ## Main Screen Templates
-Each car manufacturer supports a set of templates for the user interface. These templates determine the position and size of the text, images, and buttons on the screen. A list of supported templates is sent in `SDLManager.systemCapabilityManager.displayCapabilities.templatesAvailable`.
+Each head unit manufacturer supports a set of user interface templates. These templates determine the position and size of the text, images, and buttons on the screen. Once the app has connected successfully with an SDL enabled head unit, a list of supported templates is available on @![iOS]`SDLManager.systemCapabilityManager.displayCapabilities.templatesAvailable`!@ @![android, javaSE, javaEE]`SdlManager.systemCapabilityManager.displayCapabilities.templatesAvailable`!@.
 
-To change a template at any time, send a `SDLSetDisplayLayout` RPC to the SDL Core. If you want to ensure that the new template is used, wait for a response from the SDL Core before sending any more user interface RPCs.
+### Change the Template
+To change a template at any time, send a `SetDisplayLayout` RPC to Core.
 
+@![iOS]
 ##### Objective-C
 ```objc
 SDLSetDisplayLayout* display = [[SDLSetDisplayLayout alloc] initWithPredefinedLayout:SDLPredefinedLayoutGraphicWithText];
@@ -22,82 +24,123 @@ sdlManager.send(request: display) { (request, response, error) in
     }
 }
 ```
+!@
+
+@![android, javaSE, javaEE]
+```java
+SetDisplayLayout setDisplayLayoutRequest = new SetDisplayLayout();
+setDisplayLayoutRequest.setDisplayLayout(PredefinedLayout.GRAPHIC_WITH_TEXT.toString());
+setDisplayLayoutRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        if (((SetDisplayLayoutResponse) response).getSuccess()) {
+            Log.i("SdlService", "Display layout set successfully.");
+            // Proceed with more user interface RPCs
+        } else {
+            Log.i("SdlService", "Display layout request rejected.");
+        }
+    }
+});
+
+sdlManager.sendRPC(setDisplayLayoutRequest);
+```
+!@
 
 ### Available Templates
-There are fifteen standard templates to choose from, however some head units may only support a subset of these templates. Please check `SystemCapabilityManager` for the supported templates. The following examples show how templates will appear on the [Generic HMI](https://github.com/smartdevicelink/generic_hmi) and [Ford's SYNC 3 HMI](https://developer.ford.com). 
+There are fifteen standard templates to choose from, however some head units may only support a subset of these templates. The following examples show how templates will appear on the [Generic HMI](https://github.com/smartdevicelink/generic_hmi) and [Ford's SYNC 3 HMI](https://developer.ford.com). 
 
-##### Media - with and without progress bar
-###### Generic HMI
-![Media](assets/generic_Media.png)
+#### Media
+##### Generic HMI
+![Generic - Media without progress bar](assets/GenericHMI/Generic_Default_Media.png)
+##### Ford HMI
+![SYNC 3 - Media without progress bar](assets/SYNC3HMI/SYNC3_Default_Media.jpg)
 
-###### Ford HMI
-![Media - with progress bar](assets/ford_MediaWithProgressBar.png)
+#### Media (with a Progress Bar)
+##### Generic HMI
+![Generic - Media with progress bar](assets/GenericHMI/Generic_media_dark.png)
+##### Ford HMI
+![SYNC 3 - Media with progress bar](assets/SYNC3HMI/SYNC3_media.jpg)
 
-![Media - without progress bar](assets/ford_MediaWithoutProgressBar.png)
+#### Non-Media
+##### Generic HMI
+![Generic - Non-Media](assets/GenericHMI/Generic_non_media.png)
+##### Ford HMI
+![SYNC 3 - Non-Media](assets/SYNC3HMI/SYNC3_non_media.jpg)
 
-##### Non-Media - with and without soft buttons
-###### Generic HMI
-![Non-Media](assets/generic_NonMedia.png)
+#### Graphic with Text
+##### Generic HMI
+![Generic - Graphic with Text](assets/GenericHMI/Generic_graphic_with_text.png)
+##### Ford HMI
+![SYNC 3 - Graphic with Text](assets/SYNC3HMI/SYNC3_graphic_with_text.jpg)
 
-###### Ford HMI
-![Non-Media - with soft buttons](assets/ford_NonMediaWithSoftButtons.png)
+#### Text with Graphic
+##### Generic HMI
+![Generic - Text with Graphic](assets/GenericHMI/Generic_text_with_graphic.png)
+##### Ford HMI
+![SYNC 3 - Text with Graphic](assets/SYNC3HMI/SYNC3_text_with_graphic.jpg)
 
-![Non-Media - without soft buttons](assets/ford_NonMediaWithoutSoftButtons.png)
+#### Tiles Only
+##### Generic HMI
+![Generic - Tiles Only](assets/GenericHMI/Generic_tiles_only.png)
+##### Ford HMI
+![SYNC 3 - Tiles Only](assets/SYNC3HMI/SYNC3_tiles_only.jpg)
 
-##### GRAPHIC_WITH_TEXT
-###### Ford HMI
-![Graphic with Text](assets/ford_GraphicWithText.png)
+#### Graphic with Tiles
+##### Generic HMI
+Template currently not supported.
+##### Ford HMI
+![SYNC 3 - Graphic with Tiles](assets/SYNC3HMI/SYNC3_graphic_with_tiles.jpg)
 
-##### TEXT_WITH_GRAPHIC
-###### Ford HMI
-![Text with Graphic](assets/ford_TextWithGraphic.png)
+#### Tiles with Graphic
+##### Generic HMI
+Template currently not supported.
+##### Ford HMI
+![SYNC 3 - Tiles with Graphic](assets/SYNC3HMI/SYNC3_tiles_with_graphic.jpg)
 
-##### TILES_ONLY
-###### Ford HMI
-![Tiles Only](assets/ford_TilesOnly.png)
+#### Graphic with Text and Soft Buttons 
+##### Generic HMI
+Template currently not supported.
+##### Ford HMI
+![SYNC 3 - Graphic with Text and Soft Buttons](assets/SYNC3HMI/SYNC3_graphic_with_text_and_soft_buttons.jpg)
 
-##### GRAPHIC_WITH_TILES
-###### Ford HMI
-![Graphic with Tiles](assets/ford_GraphicWithTiles.png)
+#### Text and Soft Buttons with Graphic 
+##### Generic HMI
+Template currently not supported.
+##### Ford HMI
+![SYNC 3 Text and Softbuttons with Graphic](assets/SYNC3HMI/SYNC3_text_and_soft_buttons_with_graphic.jpg)
 
-##### TILES_WITH_GRAPHIC
-###### Ford HMI
-![Tiles with Graphic](assets/ford_TilesWithGraphic.png)
+#### Graphic with Text Buttons
+##### Generic HMI
+![Generic - Graphic with Text Buttons](assets/GenericHMI/Generic_graphic_with_text_buttons.png)
+##### Ford HMI
+![SYNC 3 - Graphic with Text Buttons](assets/SYNC3HMI/SYNC3_graphic_with_text_buttons.jpg)
 
-##### GRAPHIC_WITH_TEXT_AND_SOFTBUTTONS
-###### Ford HMI
-![Graphic with Text and Softbuttons](assets/ford_GraphicWithTextAndSoftButtons.png)
+#### Double Graphic with Soft Buttons
+##### Generic HMI
+![Generic - Double Graphic with Softbuttons](assets/GenericHMI/Generic_double_graphic_with_soft_buttons.png)
+##### Ford HMI
+![SYNC 3 - Double Graphic with Softbuttons](assets/SYNC3HMI/SYNC3_double_graphic_with_soft_buttons.jpg)
 
-##### TEXT_AND_SOFTBUTTONS_WITH_GRAPHIC
-###### Ford HMI
-![Text and Softbuttons with Graphic](assets/ford_TextAndSoftButtonsWithGraphic.png)
+#### Text Buttons with Graphic
+##### Generic HMI
+![Generic - Text Buttons with Graphic](assets/GenericHMI/Generic_text_buttons_with_graphic.png)
+##### Ford HMI
+![SYNC 3 - Text Buttons with Graphic](assets/SYNC3HMI/SYNC3_text_buttons_with_graphic.jpg)
 
-##### GRAPHIC_WITH_TEXTBUTTONS
-###### Ford HMI
-![Graphic with Textbuttons](assets/ford_GraphicWithTextButtons.png)
+#### Text Buttons Only
+##### Generic HMI
+![Generic - Text Buttons Only](assets/GenericHMI/Generic_text_buttons_only.png)
+##### Ford HMI
+![SYNC 3 - Text Buttons Only](assets/SYNC3HMI/SYNC3_text_buttons_only.jpg)
 
-##### DOUBLE_GRAPHIC_SOFTBUTTONS
-###### Ford HMI
-![Double Graphic and Softbuttons](assets/ford_DoubleGraphicSoftButtons.png)
+#### Large Graphic with Soft Buttons
+##### Generic HMI
+![Generic - Large Graphic with Softbuttons](assets/GenericHMI/Generic_large_graphic_with_soft_buttons.png)
+##### Ford HMI
+![SYNC 3 - Large Graphic with Softbuttons](assets/SYNC3HMI/SYNC3_large_graphic_with_soft_buttons.jpg)
 
-##### TEXTBUTTONS_WITH_GRAPHIC
-###### Ford HMI
-![Textbuttons with Graphic](assets/ford_TextButtonsWithGraphic.png)
-
-##### TEXTBUTTONS_ONLY
-###### Ford HMI
-![Textbuttons Only](assets/ford_TextButtonsOnly.png)
-
-##### LARGE_GRAPHIC_WITH_SOFTBUTTONS
-###### Generic HMI
-![Large Graphic with Softbuttons](assets/generic_LargeGraphicWithSoftButtons.png)
-
-###### Ford HMI
-![Large Graphic with Softbuttons](assets/ford_LargeGraphicWithSoftButtons.png)
-
-##### LARGE_GRAPHIC_ONLY
-###### Generic HMI
-![Large Graphic Only](assets/generic_LargeGraphicOnly.png)
-
-###### Ford HMI
-![Large Graphic Only](assets/ford_LargeGraphicOnly.png)
+#### Large Graphic Only
+##### Generic HMI
+![Generic - Large Graphic Only](assets/GenericHMI/Generic_large_graphic_only.png)
+##### Ford HMI
+![SYNC 3 - Large Graphic Only](assets/SYNC3HMI/SYNC3_large_graphic_only.jpg)
