@@ -1,4 +1,4 @@
-# Setting the Built-In Navigation Destination
+# Setting the Navigation Destination
 The `SendLocation` RPC gives you the ability to send a GPS location to the embedded navigation app on the head unit. When the request is sent the user will be prompted to navigate to that location using the embedded navigation app. 
 
 When using the `SendLocation` RPC, you will not have access to any information about how the user interacted with this location, only if the request was successfully sent to Core. The request will be handled by Core from that point on using the embedded navigation system.
