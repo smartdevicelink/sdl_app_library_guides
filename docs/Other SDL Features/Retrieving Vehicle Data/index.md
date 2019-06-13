@@ -269,7 +269,7 @@ sdlManager.sendRPC(subscribeRequest);
 !@
 
 ## Unsubscribing from Vehicle Data
-We suggest that you only subscribe to vehicle data as needed. To stop listening to specific vehicle data use the @![iOS]`SDLUnsubscribeVehicleData`!@ @![android, javase, javaee]`UnsubscribeVehicleData`!@ RPC.
+We suggest that you only subscribe to vehicle data as needed. To stop listening to specific vehicle data use the @![iOS]`SDLUnsubscribeVehicleData`!@@![android, javase, javaee]`UnsubscribeVehicleData`!@ RPC.
 
 @![iOS]
 ##### Objective-C
