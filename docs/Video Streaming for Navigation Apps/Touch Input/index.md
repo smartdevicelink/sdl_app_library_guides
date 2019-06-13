@@ -8,8 +8,6 @@ You must have a valid and approved `appId` in order to receive touch events.
 ### Using SDLTouchManager
 `SDLTouchManager` has multiple callbacks that will ease the implementation of touch events. You can register for callbacks through the stream manager:
 
-
-@![iOS]
 ##### Objective-C
 ```objc
 self.sdlManager.streamManager.touchManager.touchEventDelegate = self
@@ -19,8 +17,6 @@ self.sdlManager.streamManager.touchManager.touchEventDelegate = self
 ```swift
 sdlManager.streamManager.touchManager.touchEventDelegate = self
 ```
-!@
-
 
 !!! IMPORTANT
 The view passed from the following callbacks are dependent on using the built-in focusable item manager to send haptic rects. See [supporting haptic input](Video Streaming for Navigation Apps/Supporting Haptic Input) "Automatic Focusable Rects" for more information.
