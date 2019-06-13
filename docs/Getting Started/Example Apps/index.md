@@ -195,7 +195,7 @@ If you are using Sdl Core and Generic HMI, you will have to add a policy table e
  }
 ```
 
- Fore more information about policy tables please visit [Plicy Tables Guides](https://smartdevicelink.com/en/guides/sdl-server/api-reference-documentation/policy-table/overview).
+For more information about policy tables please visit [Policy Tables Guides](https://smartdevicelink.com/en/guides/sdl-server/api-reference-documentation/policy-table/overview).
 
 !!! NOTE
 Don't forget to replace `ws://<ip address>:<port>` with your own IP address and app port. The port that is used in Hello Sdl App is `5432`. It can be changed to a different port by modifying the number in `Main.java` class.
