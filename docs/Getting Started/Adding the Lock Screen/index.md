@@ -99,8 +99,12 @@ lockScreenConfig.setAppIcon(appIconInt); // For example, R.drawable.lockscreen i
 ```
 !@
 
-@![android]
 ### Showing the OEM Logo
+@![iOS]
+The default lock screen handles retrieving and setting the OEM logo from head units that support this feature. Currently this feature can not be disabled on the default lock screen.
+!@
+
+@![android]
 This sets whether or not to show the connected device's logo on the default lock screen. The logo will come from the connected hardware if set by the manufacturer. When using a Custom View, the custom layout will have to handle the logic to display the device logo or not. The default setting is false, but some OEM partners may require it.
 In your `LockScreenConfig` object, you can set the boolean of whether or not you want the device logo shown, if available:
 ```java
