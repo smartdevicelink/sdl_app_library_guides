@@ -158,7 +158,7 @@ Sdl Core and an HMI or Manticore are needed to run Hello Sdl and to ensure that 
 
 To let Sdl Core connect to your app, first you will have to know the IP address of the machine that is running the Hello Sdl app. If you don't know what it is, running ```ifconfig``` in the terminal will usually let you see it for the interface you are connected with to your network. 
 
-After getting the IP address, you will have to set App ID, App Websocket Endpoint, and App Nicknames in Sdl Core to let it know where your instance of Hello Sdl is running. 
+After getting the IP address, you will have to set the app ID, app websocket endpoint, and app nicknames in Core's policy table. This will let Core know the location of your app's instance. 
 
 !!! NOTE
 The App Websocket Endpoint contains the IP Address and port as the following: `ws://<ip address>:<port>/`.
