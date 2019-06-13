@@ -1,11 +1,7 @@
 # Setting the Navigation Destination
-The `SendLocation` RPC gives you the ability to send a GPS location to the embedded navigation app on the head unit. When the request is sent the user will be prompted to navigate to that location using the embedded navigation app. 
+The `SendLocation` RPC gives you the ability to send a GPS location to the embedded navigation app on the head unit. When the request is sent the user will be prompted to navigate to that location using the active navigation app. 
 
-When using the `SendLocation` RPC, you will not have access to any information about how the user interacted with this location, only if the request was successfully sent to Core. The request will be handled by Core from that point on using the embedded navigation system.
-
-!!! NOTE
-As of library v.@![iOS]6.2!@@![android, javaSE, javaEE]4.8!@ and SDL Core v.5.1, the `SendLocation` RPC can be sent from one SDL app to another. Both SDL apps will have to implement the App Services API. Please refer to [Other SDL Features/Creating an App Service](Other SDL Features/Creating an App Service) and [Other SDL Features/Using App Services](Other SDL Features/Using App Services) for more information on how to implement this feature.
-!!!
+When using the `SendLocation` RPC, you will not have access to any information about how the user interacted with this location, only if the request was successfully sent. The request will be handled by Core from that point on using the active navigation system.
 
 ## Checking if App has Permission to Use Send Location
 The `SendLocation` RPC is restricted by most vehicle manufacturers. As a result, the head unit you are connecting to will reject the request if you do not have the correct permissions. Please check the [Getting Started/Understanding Permissions](Getting Started/Understanding Permissions) section for more information on how to check permissions for an RPC.
