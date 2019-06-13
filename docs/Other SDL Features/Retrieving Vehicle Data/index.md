@@ -39,7 +39,7 @@ You will only have access to vehicle data that is allowed to your `appName` & `a
 | Wiper Status | wiperStatus | The status of the wipers: off, automatic off, off moving, manual interaction off, manual interaction on, manual low, manual high, manual flick, wash, automatic low, automatic high, courtesy wipe, automatic adjust, stalled, no data exists |
 
 ## One-Time Vehicle Data Retrieval
-To get vehicle data a single time, use the @![iOS]`SDLGetVehicleData`!@ @![android, javaSE, javaEE]`GetVehicleData`!@ RPC. 
+To get vehicle data a single time, use the @![iOS]`SDLGetVehicleData`!@@![android, javaSE, javaEE]`GetVehicleData`!@ RPC. 
 
 @![iOS]
 ##### Objective-C
