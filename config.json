@@ -92,7 +92,7 @@
                     "name": "Calling a Phone Number"
                 },
                 {
-                    "name": "Setting the Built-in Nav System Destination"
+                    "name": "Setting the Navigation Destination"
                 },
                 {
                     "name": "Getting In-Car Microphone Audio"
@@ -113,6 +113,7 @@
         },
         {
             "name": "Video Streaming for Navigation Apps",
+            "platforms": ["iOS","Android"],
             "navigation": [
                 {
                     "name": "Introduction"
@@ -124,7 +125,8 @@
                     "name": "Audio Streaming"
                 },
                 {
-                    "name": "Touch Input"
+                    "name": "Touch Input",
+                    "platforms": ["iOS"]
                 },
                 {
                     "name": "Supporting Haptic Input"
@@ -151,13 +153,32 @@
             ]
         },
         {
-            "name": "Migrating to Newer SDL iOS Versions",
+            "name": "Migrating to Newer SDL Versions",
+            "platforms": ["Android","iOS"],
             "navigation": [
                 {
-                    "name": "Updating to v4.3+"
+                    "name": "Updating to v4.3+",
+                    "platforms": ["iOS"]
                 },
                 {
-                    "name": "Updating to v5.0+"
+                    "name": "Updating to v5.0+",
+                    "platforms": ["iOS"]
+                },
+                {
+                    "name": "Updating to v4.4",
+                    "platforms": ["Android"]
+                },
+                {
+                    "name": "Updating to v4.5",
+                    "platforms": ["Android"]
+                },
+                {
+                    "name": "Updating to v4.6",
+                    "platforms": ["Android"]
+                },
+                {
+                    "name": "Updating to v4.7",
+                    "platforms": ["Android"]
                 }
             ]
         }

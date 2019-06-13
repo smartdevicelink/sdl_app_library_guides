@@ -1,10 +1,8 @@
 # Retrieving Vehicle Data
-Use the `SDLGetVehicleData` RPC call to get vehicle data. The HMI level must be `FULL`, `LIMITED`, or `BACKGROUND` in order to get data.
+You can use the @![iOS]`SDLGetVehicleData` and `SDLSubscribeVehicleData`!@@![android, javase, javaee]`GetVehicleData` and `SubscribeVehicleData`!@ RPC requests to get vehicle data. Each vehicle manufacturer decides which data it will expose and to whom they will expose it. Please check the response from Core to find out which data you will have permission to access. Additionally, be aware that the user may have the ability to disable vehicle data access through the settings menu of their head unit. It may be possible to access vehicle data when the `hmiLevel` is `NONE` (i.e. the user has not opened your SDL app) but you will have to request this permission from the vehicle manufacturer.
 
-Each vehicle manufacturer decides which data it will expose and to whom they will expose it. Please check the response to find out which data you will have access to in your head unit. Additionally, be aware the the driver / user may have the ability to disable vehicle data through the settings menu of their infotainment head unit.
-
-!!! note
-You may only ask for vehicle data that is available to your `appName` & `appId` combination. These will be specified by each OEM separately. See [Understanding Permissions](Getting Started/Understanding Permissions) for more details.
+!!! NOTE
+You will only have access to vehicle data that is allowed to your `appName` & `appId` combination. Permissions will be granted by each OEM separately. See [Understanding Permissions](Getting Started/Understanding Permissions) for more details.
 !!!
 
 | Vehicle Data | Parameter Name  |  Description |
@@ -41,8 +39,9 @@ You may only ask for vehicle data that is available to your `appName` & `appId` 
 | Wiper Status | wiperStatus | The status of the wipers: off, automatic off, off moving, manual interaction off, manual interaction on, manual low, manual high, manual flick, wash, automatic low, automatic high, courtesy wipe, automatic adjust, stalled, no data exists |
 
 ## One-Time Vehicle Data Retrieval
-Using `SDLGetVehicleData`, we can ask for vehicle data a single time, if needed. 
+To get vehicle data a single time, use the @![iOS]`SDLGetVehicleData`!@@![android, javaSE, javaEE]`GetVehicleData`!@ RPC. 
 
+@![iOS]
 ##### Objective-C
 ```objc
 SDLGetVehicleData *getVehicleData = [[SDLGetVehicleData alloc] init];
@@ -96,10 +95,31 @@ sdlManager.send(getVehicleData) { (request, response, error) in
     guard let prndl = response.prndl else { return }
 }
 ```
+!@
+
+@![android, javaSE, javaEE]
+```java
+GetVehicleData vdRequest = new GetVehicleData();
+vdRequest.setPrndl(true);
+vdRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
+	@Override
+	public void onResponse(int correlationId, RPCResponse response) {
+		if(response.getSuccess()){
+			PRNDL prndl = ((GetVehicleDataResponse) response).getPrndl();
+			Log.i("SdlService", "PRNDL status: " + prndl.toString());
+		}else{
+			Log.i("SdlService", "GetVehicleData was rejected.");
+		}
+	}
+});
+sdlManager.sendRPC(vdRequest);
+```
+!@
 
 ## Subscribing to Vehicle Data
-Subscribing to vehicle data allows you to get notified whenever we have new data available. This data should not be relied upon being received in a consistent manner. New vehicle data is available roughly every second.
+Subscribing to vehicle data allows you to get notifications whenever new data is available. You should not rely upon getting this data in a consistent manner. New vehicle data is available roughly every second, but this is totally dependent on which head unit you are connected to.
 
+@![iOS]
 **First**, register to observe the `SDLDidReceiveVehicleDataNotification` notification: 
 
 ##### Objective-C
@@ -112,7 +132,7 @@ Subscribing to vehicle data allows you to get notified whenever we have new data
 NotificationCenter.default.addObserver(self, selector: #selector(vehicleDataAvailable(_:)), name: .SDLDidReceiveVehicleData, object: nil)
 ```
 
-Then send the Subscribe Vehicle Data Request:
+**Second**, send the `SubscribeVehicleData` request:
 
 ##### Objective-C
 ```objc
@@ -185,7 +205,7 @@ sdlManager.send(request: subscribeVehicleData) { (request, response, error) in
 }
 ```
 
-Finally, react to the notification when Vehicle Data is received:
+**Third**, react to the notification when vehicle data is received:
 
 ##### Objective-C
 ``` objc
@@ -210,10 +230,48 @@ func vehicleDataAvailable(_ notification: SDLRPCNotificationNotification) {
     let prndl = onVehicleData.prndl
 }
 ```
+!@
+
+@![android, javaSE, javaEE]
+**First**, you should add a notification listener for the `OnVehicleData` notification: 
+
+```java
+sdlManager.addOnRPCNotificationListener(FunctionID.ON_VEHICLE_DATA, new OnRPCNotificationListener() {
+    @Override
+    public void onNotified(RPCNotification notification) {
+        OnVehicleData onVehicleDataNotification = (OnVehicleData) notification;
+        if (onVehicleDataNotification.getPrndl() != null) {
+            Log.i("SdlService", "PRNDL status was updated to: " + onVehicleDataNotification.getPrndl());
+        }
+    }
+});
+```
+
+**Second**, send the `SubscribeVehicleData` request:
+
+```java
+SubscribeVehicleData subscribeRequest = new SubscribeVehicleData();
+subscribeRequest.setPrndl(true);
+subscribeRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        if(response.getSuccess()){
+            Log.i("SdlService", "Successfully subscribed to vehicle data.");
+        }else{
+            Log.i("SdlService", "Request to subscribe to vehicle data was rejected.");
+        }
+    }
+}); 
+sdlManager.sendRPC(subscribeRequest);
+```
+
+**Third**, the `onNotified` method will be called when there is an update to the subscribed vehicle data.
+!@
 
 ## Unsubscribing from Vehicle Data
-Sometimes you may not always need all of the vehicle data you are listening to. We suggest that you only are subscribing when the vehicle data is needed. To stop listening to specific vehicle data items, utilize `SDLUnsubscribeVehicleData`.
+We suggest that you only subscribe to vehicle data as needed. To stop listening to specific vehicle data use the @![iOS]`SDLUnsubscribeVehicleData`!@@![android, javase, javaee]`UnsubscribeVehicleData`!@ RPC.
 
+@![iOS]
 ##### Objective-C
 ```objc
 SDLUnsubscribeVehicleData *unsubscribeVehicleData = [[SDLUnsubscribeVehicleData alloc] init];
@@ -282,3 +340,22 @@ sdlManager.send(request: unsubscribeVehicleData) { (request, response, error) in
     // Successfully unsubscribed
 }
 ```
+!@
+
+@![android, javaSE, javaEE]
+```java
+UnsubscribeVehicleData unsubscribeRequest = new UnsubscribeVehicleData();
+unsubscribeRequest.setPrndl(true); // unsubscribe to PRNDL data
+unsubscribeRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        if(response.getSuccess()){
+            Log.i("SdlService", "Successfully unsubscribed to vehicle data.");
+        }else{
+            Log.i("SdlService", "Request to unsubscribe to vehicle data was rejected.");
+        }
+    }
+});
+sdlManager.sendRPC(unsubscribeRequest);
+```
+!@
