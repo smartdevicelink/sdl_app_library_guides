@@ -25,7 +25,8 @@
                     "name": "Connecting to an Infotainment System"
                 },
                 {
-                    "name": "Adding the Lock Screen"
+                    "name": "Adding the Lock Screen",
+                    "platforms": ["iOS", "Android"]
                 },
                 {
                     "name": "Adapting to the Head Unit Language"
