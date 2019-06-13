@@ -580,19 +580,17 @@ You should now be able to connect to a head unit or emulator. From here, [learn 
 !@
 
 @![android]
-## Getting Started
 In this guide, we exclusively use Android Studio. We are going to set-up a bare-bones application so you get started using SDL.
 
-!!! IMPORTANT
+!!! NOTE
 The SDL Mobile library supports [Android 2.2.x (API Level 8)](https://developer.android.com/about/versions/android-2.2.html) or higher.
 !!!
 !@
 
 @![javaSE,javaEE]
-## Getting Started
 In this guide, we exclusively use IntelliJ. We are going to set-up a bare-bones application so you get started using SDL.
 
-!!! IMPORTANT
+!!! NOTE
 The SDL Java library supports Java 7 and above.
 !!!
 !@
@@ -616,7 +614,7 @@ In the AndroidManifest for our sample project we need to ensure we have the foll
 </manifest>
 ```
 
-!!! IMPORTANT
+!!! NOTE
 If the app is targeting Android P (API Level 28) or higher, the Android Manifest file should also have the following permission to allow the app to start a foreground service:
 
 ```xml
@@ -625,7 +623,7 @@ If the app is targeting Android P (API Level 28) or higher, the Android Manifest
 !!!
 !@
 
-!@[android,javaSE,javaEE]
+@![android,javaSE,javaEE]
 ## SmartDeviceLink Service
 A SmartDeviceLink Android Service should be created to manage the lifecycle of the SDL session. The `SdlService` should build and start an instance of the `SdlManager` which will automatically connect with a headunit when available. This `SdlManager` will handle sending and receiving messages to and from SDL after connected.
 
