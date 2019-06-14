@@ -26,7 +26,7 @@ To get information on all services published on the system, as well as on change
 }
 
 - (void)setupAppServicesCapability {
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(systemCapabilityDidUpdate:) name:SDLDidReceiveSystemCapabilityUpdatedNotification object:nil];
+    [self.sdlManager subscribeToRPC:SDLDidReceiveSystemCapabilityUpdatedNotification withObserver:self selector:@selector(systemCapabilityDidUpdate:)];
 
     SDLGetSystemCapability *getAppServices = [[SDLGetSystemCapability alloc] initWithType:SDLSystemCapabilityTypeAppServices subscribe:YES];
     [self.sdlManager sendRequest:getAppServices withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
