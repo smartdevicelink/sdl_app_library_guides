@@ -53,6 +53,10 @@
                 {
                     "name": "Deploying to AWS",
                     "platforms": ["JavaEE"]
+                },
+                {
+                    "name": "React Native",
+                    "platforms": ["iOS"]
                 }
             ]
         },
