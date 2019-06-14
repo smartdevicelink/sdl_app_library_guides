@@ -7,7 +7,7 @@ You simply create @![iOS]an `SDLScrollableMessage`!@@![android,javaSE,javaEE]a `
 The message will persist on the screen until the timeout has elapsed or the user dismisses the message by selecting a soft button or cancelling (if the head unit provides cancel UI).
 !!!
 
-##  Scrollable Message UI
+## Scrollable Message UI
 ![Scrollable Message](assets/ScrollableMessage.png)
 
 ## Creating the Scrollable Message
