@@ -33,7 +33,7 @@ There are four different ways to install the SDL SDK in your project: Accio, Coc
 
         open <#Your Project Name#>.xcworkspace
 
-### Accio
+### Accio Installation
 You can install this library using [Accio](https://github.com/JamitLabs/Accio), which is based on SwiftPM syntax. Please follow the steps on the Accio README linked above to initialize Accio into your application. Once installed and initialized into your Xcode project, the root directory should contain a Package.swift file.
 
 1\. Open the Package.swift file.

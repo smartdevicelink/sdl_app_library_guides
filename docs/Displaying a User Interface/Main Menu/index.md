@@ -9,7 +9,7 @@ You have two different options when creating menus. One is to simply add items t
 ![SYNC 3 - Menu Appearance](assets/SYNC3_menu.jpg)
 
 !!! NOTE
-Every template has a main menu button. The position of this button varies between templates and cannot be removed from the template. Some templates on some head unit UIs may not display the main menu button if you have no menu items (such as the navigation map view).
+Every template has a main menu button. The position of this button varies between templates and cannot be removed from the template. Some OEMs may format certain templates to not display the main menu button if you have no menu items (such as the navigation map view).
 !!!
 
 ## Adding Menu Items

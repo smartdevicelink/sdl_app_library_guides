@@ -115,10 +115,10 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.APP_S
 ```
 !@
 
-### Subscribing to Updates to System Capabilities
-In addition getting the current system capbilities it is also possible to register to get updates when the head unit capabilities change. @![iOS]To get these notifications you must register using a `subscribeToCapabilityType:` method.!@@![android, javaSE, javaEE]Since this information must be queried from Core you must implement the `OnSystemCapabilityListener`.!@ This feature is only available on head units supporting v.5.2 or greater.
+### Subscribing to System Capability Updates
+In addition getting the current system capabilities, it is also possible to register to get updates when the head unit capabilities change. @![iOS]To get these notifications you must register using a `subscribeToCapabilityType:` method.!@@![android, javaSE, javaEE]Since this information must be queried from Core you must implement the `OnSystemCapabilityListener`.!@ This feature is only available on head units supporting v.5.1 or greater.
 
-#### Checking if the Connected System Supports Subscriptions
+#### Checking if the Head Unit Supports Subscriptions
 @![iOS]
 ##### Objective-C
 ```objc
@@ -146,7 +146,7 @@ let supportsSubscriptions = sdlManager.systemCapabilityManager.supportsSubscript
 - (void)navigationCapabilitySelectorCallback:(SDLSystemCapability *)capability {
     SDLNavigationCapability *navCapability = capability.navigationCapability;
 
-    // Use the capability
+    <#Use the capability#>
 }
 
 // Subscribing to a capability via a block callback
@@ -164,7 +164,7 @@ sdlManager.systemCapabilityManager.subscribe(toCapabilityType: .navigation, with
 @objc private func navigationCapabilitySelectorCallback(_ capability: SDLSystemCapability) {
     let navCapability = capability.navigationCapability;
 
-    // Use the capability
+    <#Use the capability#>
 }
 
 // Subscribing to a capability via a block callback
