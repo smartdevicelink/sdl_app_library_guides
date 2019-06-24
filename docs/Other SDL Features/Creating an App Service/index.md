@@ -471,11 +471,15 @@ First, you will need to register for the notification of a `GetAppServiceDataReq
 
 ##### Swift
 ```swift
+// sdl_ios v6.3+
 sdlManager.subscribe(to: SDLDidReceiveGetAppServiceDataRequest) { (message) in
     guard let getAppServiceRequest = message as? SDLGetAppServiceData else { return }
 
     <#Use the request#>
 }
+
+// Pre sdl_ios v6.3
+NotificationCenter.default.addObserver(self, selector: #selector(appServiceDataRequestReceived(_:)), name: SDLDidReceiveGetAppServiceDataRequest, object: nil)
 ```
 !@
 
