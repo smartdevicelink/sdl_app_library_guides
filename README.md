@@ -4,9 +4,9 @@ The iOS and Java Suite (Android, JavaEE, and JavaSE) guides are located on the [
 ## Overview
 Since both the iOS and Java Suite guides provide almost the same instructions and information, the content of each section should be written as generically as possible. This allows the the guides to be written once for all platforms with little modification needed. If a guide is specific to one platform or has content specific to one platform, like code snippets, the content should be separated out using custom platform tags.
 
-Guide documents are formatted using a custom SDL markdown format. All guides get created as directories inside this repository. Each directory gets a link in the left-hand sidebar on [smartdevicelink.com](https://smartdevicelink.com). Guides do not currently support multiple pages or sub-directories
+Guide documents are formatted using a custom SDL markdown format. All guides get created as directories inside this repository. Each directory gets a link in the left-hand sidebar on [smartdevicelink.com](https://smartdevicelink.com). Guides do not currently support multiple pages or sub-directories.
 
-Learn how to use SDL markdown (aka DocDown) at the [spec page](https://github.com/smartdevicelink/sdl_markdown_spec).
+Learn how to use SDL flavored markdown (aka DocDown) at the [spec page](https://github.com/smartdevicelink/sdl_markdown_spec).
 
 ## Custom SDL Markdown Tags
 Basic markdown tags will act [as expected](https://github.com/smartdevicelink/sdl_markdown_spec#basic-markdown-syntax), including headings, bold, italics, and tables. In addition, there are [SDL specific custom extensions](https://github.com/smartdevicelink/sdl_markdown_spec#basic-markdown-syntax) for inline notes and relative links to assets.
@@ -16,12 +16,12 @@ This repository has additional markdown customizations to permit content to be i
 
 #### Valid Tags
 
-| Platform         | Tag                    |
-| ---------------- | ---------------------- |
-| iOS              | @![iOS] ------ !@      |
-| Android          | @![android] -- !@      |
-| JavaEE           | @![javaEE] --- !@      |
-| JavaSE           | @![javaSE] --- !@      |
+| Platform         | Tag               |
+| ---------------- | ----------------- |
+| iOS              | @![iOS] ------ !@ |
+| Android          | @![android] -- !@ |
+| JavaEE           | @![javaEE] --- !@ |
+| JavaSE           | @![javaSE] --- !@ |
 
 #### How to Use Inline Tags
 Inline tags allow you to create content that is only rendered for the specified platforms within a guide that is available on multiple platforms. For example, if you have a guide available on Android, JavaSE, and JavaEE but not on iOS (see below How to Use Configuration Tags for how to configure guide availability), then you can use inline tags to render some content for Android that won't be rendered for JavaSE or JavaEE, or visa versa.
@@ -31,13 +31,13 @@ Inline tags allow you to create content that is only rendered for the specified 
     
     ## Code Example
     @![android]
-    This is Android specific instructions that only applies to the Android platform.
+    This is an Android specific instruction that only applies to the Android platform.
     
     ```java
     (Android code snippet)
     ``` !@
     
-    This is JavaSE and JavaEE specific instructions that only applies to the Java platform.
+    This is a JavaSE and JavaEE specific instruction that only applies to the Java platform.
     @![javaSE,javaEE]
     ```java
     (Java code snippet)
