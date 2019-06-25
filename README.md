@@ -1,16 +1,18 @@
 # SDL App Library Guide Content
-iOS and Java Suite (Android, JavaEE, and JavaSE) guide content for the [SDL Developer Portal](https://smartdevicelink.com/en/guides/iOS/getting-started/installation/).
+The iOS and Java Suite (Android, JavaEE, and JavaSE) guides are located on the [SDL Developer Portal](https://smartdevicelink.com/en/guides/iOS/getting-started/installation/).
 
 ## Overview
-Documents in this guide are created in a custom SDL markdown format. All guides get created as directories inside this repository. Each directory gets a link in the left-hand sidebar on [smartdevicelink.com](https://smartdevicelink.com). Guides do not currently support multiple pages or sub-directories. Guides specific to one platform or with content specific to one platform will use custom tags to denote this content.
+Since both the iOS and Java Suite guides provide almost the same instructions and information, the content of each section should be written as generically as possible. This allows the the guides to be written once for all platforms with little modification needed. If a guide is specific to one platform or has content specific to one platform, like code snippets, the content should be separated out using custom platform tags.
+
+Guide documents are formatted using a custom SDL markdown format. All guides get created as directories inside this repository. Each directory gets a link in the left-hand sidebar on [smartdevicelink.com](https://smartdevicelink.com). Guides do not currently support multiple pages or sub-directories
 
 Learn how to use SDL markdown (aka DocDown) at the [spec page](https://github.com/smartdevicelink/sdl_markdown_spec).
 
 ## Custom SDL Markdown Tags
-Basic markdown tags will [as expected](https://github.com/smartdevicelink/sdl_markdown_spec#basic-markdown-syntax) including headings, bold, italics, and tables. However, there are [custom extensions](https://github.com/smartdevicelink/sdl_markdown_spec#basic-markdown-syntax) for inline notes and relative links to assets.
+Basic markdown tags will act [as expected](https://github.com/smartdevicelink/sdl_markdown_spec#basic-markdown-syntax), including headings, bold, italics, and tables. In addition, there are [SDL specific custom extensions](https://github.com/smartdevicelink/sdl_markdown_spec#basic-markdown-syntax) for inline notes and relative links to assets.
 
 ### Specifying Platforms
-This repository has additional customizations to permit content to be included or excluded from one of the several platforms of documentation that this repository builds. This can be done inline within a guide in order to, for example, display one code snippet for iOS and another for Java-family platforms. This can also be done within the configuration file in order to allow a guide such as deploying a Java Web app to AWS to only build for the JavaEE platform.
+This repository has additional markdown customizations to permit content to be included or excluded from a platform. This can be done inline within a guide in order to, for example, display one code snippet for iOS and another for Java-family platforms. This can also be done within the configuration file in order to allow a guide, such as a guide demoing how to deploy a Java Web app to AWS, to only build for the JavaEE platform.
 
 #### Valid Tags
 
@@ -29,19 +31,20 @@ Inline tags allow you to create content that is only rendered for the specified 
     
     ## Code Example
     @![android]
-    This is Android specific instructions that only applies to the Android > platform specifically.
+    This is Android specific instructions that only applies to the Android platform.
     
     ```java
     (Android code snippet)
     ``` !@
     
+    This is JavaSE and JavaEE specific instructions that only applies to the Java platform.
     @![javaSE,javaEE]
     ```java
     (Java code snippet)
     ``` !@
     
 #### How to Use Configuration Tags
-Configuration tags allow to you create guides that are only available for the specified platforms.
+Configuration tags allow to you create guides that are only available for the specified platforms. If no platforms are included for a section, the section will be generated for all possible configured platforms. 
 
     {
       "name": "Hello Sdl Android",
