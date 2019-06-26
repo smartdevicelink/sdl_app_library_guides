@@ -31,7 +31,7 @@ SDLChoiceCell *fullCell = [[SDLChoiceCell alloc] initWithText:<#(nonnull NSStrin
 ##### Swift
 ```swift
 let cell = SDLChoiceCell(text: <#String#>)
-let cell = SDLChoiceCell(text: <#String#>, secondaryText: <#String?#>, tertiaryText: <#String?#>, voiceCommands: <#[String]?#>, artwork: <#SDLArtwork?#>, secondaryArtwork: <#SDLArtwork?#>)
+let fullCell = SDLChoiceCell(text: <#String#>, secondaryText: <#String?#>, tertiaryText: <#String?#>, voiceCommands: <#[String]?#>, artwork: <#SDLArtwork?#>, secondaryArtwork: <#SDLArtwork?#>)
 ```
 !@
 
