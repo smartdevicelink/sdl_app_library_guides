@@ -69,26 +69,27 @@ To use the `SendLocation` request, you must at minimum include the longitude and
 ##### Objective-C
 ```objc
 SDLSendLocation *sendLocation = [[SDLSendLocation alloc] initWithLongitude:-97.380967 latitude:42.877737 locationName:@"The Center" locationDescription:@"Center of the United States" address:@[@"900 Whiting Dr", @"Yankton, SD 57078"] phoneNumber:nil image:nil];
+
 [self.sdlManager sendRequest:sendLocation withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if (error || ![response isKindOfClass:SDLSendLocationResponse.class]) {
-        NSLog(@"Encountered Error sending SendLocation: %@", error);
+        <#Encountered error sending SendLocation#>
         return;
     }
-    
+
     SDLSendLocationResponse *sendLocation = (SDLSendLocationResponse *)response;
-    SDLResult *resultCode = sendLocation.resultCode;
+    SDLResult resultCode = sendLocation.resultCode;
     if (![resultCode isEqualToEnum:SDLResultSuccess]) {
         if ([resultCode isEqualToEnum:SDLResultInvalidData]) {
-            NSLog(@"SendLocation was rejected. The request contained invalid data.");
+            <#SendLocation was rejected. The request contained invalid data.#>
         } else if ([resultCode isEqualToEnum:SDLResultDisallowed]) {
-            NSLog(@"Your app is not allowed to use SendLocation");
+            <#Your app is not allowed to use SendLocation#>
         } else {
-            NSLog(@"Some unknown error has occured!");
+            <#Some unknown error has occured#>
         }
         return;
     }
-    
-    // Successfully sent!
+
+    <#SendLocation successfully sent#>
 }];
 ```
 
@@ -97,25 +98,24 @@ SDLSendLocation *sendLocation = [[SDLSendLocation alloc] initWithLongitude:-97.3
 let sendLocation = SDLSendLocation(longitude: -97.380967, latitude: 42.877737, locationName: "The Center", locationDescription: "Center of the United States", address: ["900 Whiting Dr", "Yankton, SD 57078"], phoneNumber: nil, image: nil)
 
 sdlManager.send(request: sendLocation) { (request, response, error) in
-    guard let response = response as? SDLSendLocationResponse else { return }
-    
-    if let error = error {
-        print("Encountered Error sending SendLocation: \(error)")
+    guard let response = response as? SDLSendLocationResponse, error == nil else {
+        <#Encountered error sending SendLocation#>
         return
     }
-    
-    if response.resultCode != .success {
-        if response.resultCode == .invalidData {
-            print("SendLocation was rejected. The request contained invalid data.")
-        } else if response.resultCode == .disallowed {
-            print("Your app is not allowed to use SendLocation")
-        } else {
-            print("Some unknown error has occured!")
+
+    guard response.resultCode == .success else {
+        switch response.resultCode {
+        case .invalidData:
+            <#SendLocation was rejected. The request contained invalid data.#>
+        case .disallowed:
+            <#Your app is not allowed to use SendLocation#>
+        default:
+            <#Some unknown error has occured#>
         }
         return
     }
-    
-    // Successfully sent!
+
+    <#SendLocation successfully sent#>
 }
 ```
 !@
