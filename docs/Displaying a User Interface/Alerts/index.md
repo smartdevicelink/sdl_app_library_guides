@@ -18,9 +18,6 @@ If no soft buttons are added to an alert some OEMs will add a default  button.
 ###### Generic HMI
 ![Generic - Alert](assets/Generic_alert.png)
 
-###### Ford HMI
-![SYNC 3 - Alert](assets/SYNC3_alert.jpg)
-
 @![iOS]
 ####  Objective-C
 ```objc
@@ -42,10 +39,6 @@ let alert = SDLAlert(alertText1: "<#Line 1#>", alertText2: "<#Line 2#>", alertTe
 #### Alert HMI
 ###### Generic HMI
 ![Generic - Alert](assets/Generic_alert_buttons.png)
-
-###### Ford HMI
-![SYNC 3 - Alert](assets/SYNC3_alert.jpg)
-
 
 @![iOS]
 #### Objective-C
@@ -122,7 +115,7 @@ alert.softButtons = softButtons;
 An optional timeout can be added that will dimiss the alert when the duration is over.  Typical timeouts are between 3 and 5 seconds. If omitted a default of 5 second is used.
 #### Objective-C
 ```objc
-alert.duration = @4000;
+alert.duration = @(4000);
 ```
 
 ##### Swift
