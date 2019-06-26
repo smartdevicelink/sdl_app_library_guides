@@ -23,7 +23,7 @@ self.sdlManager.screenManager.voiceCommands = @[voiceCommand];
 ##### Swift
 ```swift
 // Create the voice command
-let voiceCommand = SDLVoiceCommand(voiceCommands: <#T##[String]#>) {
+let voiceCommand = SDLVoiceCommand(voiceCommands: <#[String]#>) {
     <#code#>
 }
 

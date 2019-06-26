@@ -65,12 +65,12 @@ self.sdlManager.screenManager.menu = @[submenuCell];
 ##### Swift
 ```swift
 // Create the inner menu cell
-let cell = SDLMenuCell(title: <#T##String#>, icon: <#T##SDLArtwork?#>, voiceCommands: <#T##[String]?#>) { (triggerSource: SDLTriggerSource) in
+let cell = SDLMenuCell(title: <#String#>, icon: <#SDLArtwork?#>, voiceCommands: <#[String]?#>) { (triggerSource: SDLTriggerSource) in
     // Menu item was selected, check the `triggerSource` to know if the user used touch or voice to activate it
     <#code#>
 }
 
-let submenuCell = SDLMenuCell(title: <#T##String#>, icon: <#SDLArtwork#>, subCells:<#T##[SDLMenuCell]#>)
+let submenuCell = SDLMenuCell(title: <#String#>, icon: <#SDLArtwork#>, subCells:<#[SDLMenuCell]#>)
 self.sdlManager.screenManager.menu = @[submenuCell]
 ```
 !@
