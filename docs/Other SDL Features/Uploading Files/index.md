@@ -9,22 +9,22 @@ The @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE]`FileManager`!@ uploads
 ##### Objective-C
 ```objc
 NSData *mp3Data = <#Get the File Data#>;
-SDLFile *audioFile = [SDLFile fileWithData:mp3Data name:<#File name to be referenced later#> fileExtension:<#File Extension#>];
+SDLFile *audioFile = [SDLFile fileWithData:mp3Data name:<#File name#> fileExtension:<#File Extension#>];
 
 [self.sdlManager.fileManager uploadFile:audioFile completionHandler:^(BOOL success, NSUInteger bytesAvailable, NSError * _Nullable error) {
     if (error != nil) { return; }
-    <#File Upload Successful#>
+    <#File upload successful#>
 }];]
 ```
 
 ##### Swift
 ```swift
 let mp3Data = <#Get MP3 Data#>
-let audioFile = SDLFile(data: mp3Data, name: <#File name#> fileExtension: <#File Extension#>)
+let audioFile = SDLFile(data: mp3Data, name: <#File name#>, fileExtension: <#File Extension#>)
 
 sdlManager.fileManager.upload(file: audioFile) { (success, bytesAvailable, error) in
     guard error == nil else { return }
-    <#File Upload Successful#>
+    <#File upload successful#>
 }
 ```
 !@
@@ -47,13 +47,11 @@ SDLFile *file1 = [SDLFile fileWithData:<#Data#> name:<#File name to be reference
 SDLFile *file2 = [SDLFile fileWithData:<#Data#> name:<#File name to be referenced later#> fileExtension:<#File Extension#>];
 
 [self.sdlManager.fileManager uploadFiles:@[file1, file2] progressHandler:^BOOL(NSString * _Nonnull fileName, float uploadPercentage, NSError * _Nullable error) {
-    // A single file has finished uploading. Use this to check for individual errors, to use an file as soon as its uploaded, or to check the progress of the upload
-    // The upload percentage is calculated as the total file size of all attempted file uploads (regardless of the successfulness of the upload) divided by the sum of the data in all the files
-    // Return YES to continue sending files. Return NO to cancel any files that have not yet been sent.
+    <#Called as each upload completes#>
+    // Return true to continue sending files. Return false to cancel any files that have not yet been sent.
+    return YES;
 } completionHandler:^(NSArray<NSString *> * _Nonnull fileNames, NSError * _Nullable error) {
-    // All files have completed uploading.
-    // If all files were uploaded successfully, the error will be nil
-    // The error's userInfo parameter is of type [fileName: error message]
+    <#Called when all uploads complete#>
 }];
 ```
 
@@ -63,13 +61,11 @@ let file1 = SDLFile(data: <#File Data#>, name: <#File name#> fileExtension: <#Fi
 let file2 = SDLFile(data: <#File Data#>, name: <#File name#> fileExtension: <#File Extension#>)
 
 sdlManager.fileManager.upload(files: [file1, file2], progressHandler: { (fileName, uploadPercentage, error) -> Bool in
-    // A single file has finished uploading. Use this to check for individual errors, to use an file as soon as its uploaded, or to check the progress of the upload
-    // The upload percentage is calculated as the total file size of all attempted file uploads (regardless of the successfulness of the upload) divided by the sum of the data in all the files
+    <#Called as each upload completes#>
     // Return true to continue sending files. Return false to cancel any files that have not yet been sent.
+    return true
 }) { (fileNames, error) in
-    // All files have completed uploading.
-    // If all files were uploaded successfully, the error will be nil
-    // The error's userInfo parameter is of type [fileName: error message]
+    <#Called when all uploads complete#>
 }
 ```
 !@
@@ -165,18 +161,18 @@ You can check out if an image has already been uploaded to the head unit via the
 @![iOS]
 ##### Objective-C
 ```objc
-BOOL isFileOnHeadUnit = [self.sdlManager.fileManager.remoteFileNames containsObject:@"<#Name#>"];
+BOOL isFileOnHeadUnit = [self.sdlManager.fileManager.remoteFileNames containsObject:<#Name Uploaded As#>];
 ```
 
 ##### Swift
 ```swift
-let fileIsOnHeadUnit = sdlManager.fileManager.remoteFileNames.contains("<#Name#>")
+let isFileOnHeadUnit = sdlManager.fileManager.remoteFileNames.contains(<#Name Uploaded As#>)
 ```
 !@
 
 @![android, javaSE, javaEE]
 ```java
-Boolean fileIsOnHeadUnit = sdlManager.getFileManager().getRemoteFileNames().contains("Name")
+Boolean fileIsOnHeadUnit = sdlManager.getFileManager().getRemoteFileNames().contains("Name Uploaded As")
 ```
 !@
 
@@ -186,7 +182,7 @@ Use the file manager’s delete request to delete a file associated with a file 
 @![iOS]
 ##### Objective-C
 ```objc
-[self.sdlManager.fileManager deleteRemoteFileWithName:@"<#Save As Name#>" completionHandler:^(BOOL success, NSUInteger bytesAvailable, NSError *error) {
+[self.sdlManager.fileManager deleteRemoteFileWithName:@"<#Name Uploaded As#>" completionHandler:^(BOOL success, NSUInteger bytesAvailable, NSError *error) {
     if (success) {
         <#Image was deleted successfully#>
     }
@@ -195,7 +191,7 @@ Use the file manager’s delete request to delete a file associated with a file 
 
 ##### Swift
 ```swift
-sdlManager.fileManager.delete(fileName: "<#Save As Name#>") { (success, bytesAvailable, error) in
+sdlManager.fileManager.delete(fileName: "<#Name Uploaded As#>") { (success, bytesAvailable, error) in
     if success {
         <#Image was deleted successfully#>
     }
@@ -205,7 +201,7 @@ sdlManager.fileManager.delete(fileName: "<#Save As Name#>") { (success, bytesAva
 
 @![android, javaSE, javaEE]
 ```java
-sdlManager.getFileManager().deleteRemoteFileWithName("testFile", new CompletionListener() {
+sdlManager.getFileManager().deleteRemoteFileWithName("Name Uploaded As", new CompletionListener() {
 	@Override
 	public void onComplete(boolean success) {
 				
@@ -218,7 +214,7 @@ sdlManager.getFileManager().deleteRemoteFileWithName("testFile", new CompletionL
 @![iOS]
 ##### Objective-C
 ```objc
-[self.sdlManager.fileManager deleteRemoteFileWithNames:@[@"<#Save As Name#>", @"<#Save As Name 2#>"] completionHandler:^(NSError *error) {
+[self.sdlManager.fileManager deleteRemoteFileWithNames:@[@"<#Name Uploaded As#>", @"<#Name Uploaded As 2#>"] completionHandler:^(NSError *error) {
     if (error == nil) {
         <#Images were deleted successfully#>
     }
@@ -227,7 +223,7 @@ sdlManager.getFileManager().deleteRemoteFileWithName("testFile", new CompletionL
 
 ##### Swift
 ```swift
-sdlManager.fileManager.delete(fileNames: ["<#Save As Name#>", "<#Save as Name 2#>"]) { (error) in
+sdlManager.fileManager.delete(fileNames: ["<#Name Uploaded As#>", "<#Name Uploaded As 2#>"]) { (error) in
     if (error == nil) {
         <#Images were deleted successfully#>
     }
