@@ -16,7 +16,7 @@ BOOL isPhoneCallSupported = NO;
 
 [self.sdlManager startWithReadyHandler:^(BOOL success, NSError * _Nullable error) {
     if (!success) {
-        NSLog(@"SDL encountered an error starting up: %@", error);
+        <#Error starting up#>
         return;
     }
 
@@ -33,7 +33,7 @@ var isPhoneCallSupported = false
 
 sdlManager.start { (success, error) in
     if !success {
-        print("SDL encountered an error starting up: \(error.debugDescription)")
+        <#Error starting up#>
         return
     }
 
@@ -46,10 +46,10 @@ sdlManager.start { (success, error) in
 
 @![android,javaSE,javaEE]
 ```java
-HMICapabilities hmiCapabilities = (HMICapabilities) sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.HMI);
-if(hmiCapabilities.isPhoneCallAvailable()){
+HMICapabilities hmiCapabilities = (HMICapabilities)sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.HMI);
+if (hmiCapabilities.isPhoneCallAvailable()) {
     // DialNumber supported
-}else{
+} else {
     // DialNumber is not supported
 }
 ```
@@ -57,18 +57,17 @@ if(hmiCapabilities.isPhoneCallAvailable()){
 
 ## Sending a DialNumber Request
 !!! note
-For DialNumber, all characters are stripped except for `0`-`9`, `*`, `#`, `,`, `;`, and `+`
+`DialNumber` strips all characters except for `0`-`9`, `*`, `#`, `,`, `;`, and `+`
 !!!
 
 @![iOS]
 ##### Objective-C
 ```objc
-SDLDialNumber *dialNumber = [[SDLDialNumber alloc] init];
-dialNumber.number = @"1238675309";
+SDLDialNumber *dialNumber = [[SDLDialNumber alloc] initWithNumber: @"1238675309"];
 
 [self.sdlManager sendRequest:dialNumber withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if (error != nil || ![response isKindOfClass:SDLDialNumberResponse.class]) {
-        NSLog(@"Encountered Error sending DialNumber: %@", error);
+        <#Encountered error sending DialNumber#>
         return;
     }
 
@@ -76,44 +75,42 @@ dialNumber.number = @"1238675309";
     SDLResult *resultCode = dialNumber.resultCode;
     if (![resultCode isEqualToEnum:SDLResultSuccess]) {
 		if ([resultCode isEqualToEnum:SDLResultRejected]) {
-	        NSLog(@"DialNumber was rejected. Either the call was sent and cancelled or there is no device connected");
+	        <#DialNumber was rejected. Either the call was sent and cancelled or there is no device connected#>
 	    } else if ([resultCode isEqualToEnum:SDLResultDisallowed]) {
-	        NSLog(@"Your app is not allowed to use DialNumber");
+	        <#Your app is not allowed to use DialNumber#>
 	    } else { 	
-	    	NSLog(@"Some unknown error has occurred!");
+	    	<#Some unknown error has occurred#>
 	    }
 	    return;
     }
 
-	// Successfully sent!
+	<#DialNumber successfully sent#>
 }];
 ```
 
 ##### Swift
 ```swift
-let dialNumber = SDLDialNumber()
-dialNumber.number = "1238675309"
+let dialNumber = SDLDialNumber(number: "1238675309")
 
 sdlManager.send(request: dialNumber) { (request, response, error) in
-    guard let response = response as? SDLDialNumberResponse else { return }
-    
-    if let error = error {
-        print("Encountered Error sending DialNumber: \(error)")
+    guard let response = response as? SDLDialNumberResponse, error == nil else {
+        <#Encountered error sending DialNumber#>
         return
     }
-    
-    if response.resultCode != .success {
-        if response.resultCode == .rejected {
-            print("DialNumber was rejected. Either the call was sent and cancelled or there is no device connected")
-        } else if response.resultCode == .disallowed {
-            print("Your app is not allowed to use DialNumber")
-        } else {
-            print("Some unknown error has occurred!")
+
+    guard response.resultCode == .success else {
+        switch response.resultCode {
+        case .rejected:
+            <#DialNumber was rejected. Either the call was sent and cancelled or there is no device connected#>
+        case .disallowed:
+            <#Your app is not allowed to use DialNumber#>
+        default:
+            <#Some unknown error has occurred#>
         }
         return
     }
-    
-    // Successfully sent!
+
+    <#DialNumber successfully sent#>
 }
 ```
 !@
