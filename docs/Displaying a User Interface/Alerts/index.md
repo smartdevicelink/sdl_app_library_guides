@@ -9,9 +9,9 @@ The alert will persist on the screen until the timeout has elapsed, or the user 
 Depending the platform, an alert can have up to three lines of text, a progress indicator (e.g. a spinning wheel or hourglass), and up to four soft buttons.
 
 ## Create an Alert
-### Alert No Soft Buttons
+### Alert With No Soft Buttons
 !!! NOTE
-If no soft buttons are added to an alert some OEMs will add a default  button.
+If no soft buttons are added to an alert some OEMs may add a default button.
 !!!
 
 #### Alert HMI
