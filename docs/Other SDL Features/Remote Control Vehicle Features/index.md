@@ -214,7 +214,7 @@ SDLSetInteriorVehicleData *setInteriorVehicleData = [[SDLSetInteriorVehicleData 
 ##### Swift
 ```swift
 let temperature = SDLTemperature(unit: .fahrenheit, value: 74.1)
-let climateControlData = SDLClimateControlData(fanSpeed: 2, desiredTemperature: temperature, acEnable: true, circulateAirEnable: false, autoModeEnable: false, defrostZone: nil, dualModeEnable: false, acMaxEnable: false, ventilationMode: .lower, heatedSteeringWheelEnable: true, heatedWindshieldEnable: true, heatedRearWindowEnable: true, heatedMirrorsEnable: false)
+let climateControlData = SDLClimateControlData(fanSpeed: 2 as NSNumber, desiredTemperature: temperature, acEnable: true as NSNumber, circulateAirEnable: false as NSNumber, autoModeEnable: false as NSNumber, defrostZone: nil, dualModeEnable: false as NSNumber, acMaxEnable: false as NSNumber, ventilationMode: .lower, heatedSteeringWheelEnable: true as NSNumber, heatedWindshieldEnable: true as NSNumber, heatedRearWindowEnable: true as NSNumber, heatedMirrorsEnable: false as NSNumber)
 let moduleData = SDLModuleData(climateControlData: climateControlData)
 let setInteriorVehicleData = SDLSetInteriorVehicleData(moduleData: moduleData)
 
