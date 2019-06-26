@@ -16,7 +16,7 @@ If no soft buttons are added to an alert some OEMs will add a default  button.
 
 #### Alert HMI
 ###### Generic HMI
-![Generic - Alert](assets/Generic_alert.jpg)
+![Generic - Alert](assets/Generic_alert.png)
 
 ###### Ford HMI
 ![SYNC 3 - Alert](assets/SYNC3_alert.jpg)
@@ -115,7 +115,7 @@ alert.softButtons = softButtons;
 ` TODO - code example `
 !@
 
-### Additonal Alert Paramaters
+## Additonal Alert Paramaters
 @![iOS]
 
 ### Timeouts
