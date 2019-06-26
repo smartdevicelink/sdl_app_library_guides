@@ -1,23 +1,22 @@
 # Supporting Haptic Input
-SDL now supports "haptic" input: input from something other than a touch screen. This could include trackpads, click-wheels, etc. These kinds of inputs work by knowing which areas on the screen are touchable and focusing / highlighting on those areas when the user moves the trackpad or click wheel. When the user selects within a rectangle, the center of that area will be "touched".
+SDL now supports "haptic" input: input from something other than a touch screen. This could include trackpads, click-wheels, etc. These kinds of inputs work by knowing which views on the screen are touchable and focusing / highlighting on those areas when the user moves the trackpad or click wheel. When the user selects within a view, the center of that area will be "touched".
 
 !!! NOTE
-Currently, there are no RPCs for knowing which rect is highlighted, so your UI will have to remain static, without scrolling.
+Currently, there are no RPCs for knowing which view is highlighted, so your UI will have to remain static (i.e. you should not create a scrolling menu in your SDL app).
 !!!
 
-You will also need to implement [touch input support](Video Streaming for Navigation Apps/Touch Input) in order to receive touches of the rects.
-@![iOS]You must support the automatic focusable item manager in order to receive a touched view back in the `SDLTouchManagerDelegate` in addition to the `CGPoint`.
+You will also need to implement [touch input support](Video Streaming for Navigation Apps/Touch Input) in order to receive touches on the views. @![iOS]In addition, you must support the automatic focusable item manager in order to receive a touched `UIView` in the `SDLTouchManagerDelegate` in addition to the `CGPoint`.
 !@
 
 ## Automatic Focusable Rects
-SDL has support for automatically detecting focusable rects within your UI and sending that data to the head unit. You will still need to tell SDL when your UI changes so that it can re-scan and detect the rects to be sent.
+SDL has support for automatically detecting focusable views within your UI and sending that data to the head unit. You will still need to tell SDL when your UI changes so that it can re-scan and detect the views to be sent.
 
 @![iOS]
 !!! IMPORTANT
-This is only supported on iOS 9 devices and above. If you want to support this on iOS 8, see "Manual Focusable Rects" below.
+This is only supported on iOS 9 devices and above. If you want to support this feature on iOS 8, see "Manual Focusable Rects" below.
 !!!
 
-In order to use the automatic focusable item locator, you must set the `UIWindow` of your streaming content on `SDLStreamingMediaConfiguration.window`. So long as the device is on iOS 9+ and the window is set, the focusable item locator will start running. Whenever your app updates, you will need to send a notification:
+In order to use the automatic focusable item locator, you must set the `UIWindow` of your streaming content on `SDLStreamingMediaConfiguration.window`. So long as the device is on iOS 9+ and the window is set, the focusable item locator will start running. Whenever your app UI updates, you will need to send a notification:
 
 ##### Objective-C
 ```objc
@@ -32,7 +31,6 @@ NotificationCenter.default.post(name: SDLDidUpdateProjectionView, object: nil)
 !!! NOTE
 SDL can only automatically detect `UIButton`s and anything else that responds `true` to `canBecomeFocused`. This means that custom `UIView` objects will *not* be found. You must send these objects manually, see "Manual Focusable Rects".
 !!!
-
 !@
 
 @![android]
@@ -82,7 +80,7 @@ SDLSendHapticData *hapticData = [[SDLSendHapticData alloc] initWithHapticRectDat
 
 ##### Swift
 ```swift
-guard let viewRect = SDLRectange(cgRect: view.bounds) else { return }
+guard let viewRect = SDLRectangle(cgRect: view.bounds) else { return }
 let hapticRect = SDLHapticRect(id: 1, rect: viewRect)
 let hapticData = SDLSendHapticData(hapticRectData: [hapticRect])
 
