@@ -22,30 +22,27 @@ Before uploading images to a head unit you should first check if the head unit s
 __weak typeof (self) weakSelf = self;
 [self.sdlManager startWithReadyHandler:^(BOOL success, NSError * _Nullable error) {
     if (!success) {
-        NSLog(@"SDL encountered an error starting up: %@", error);
+        <#Manager errored while starting up#>
         return;
-    }
+}
 
     SDLDisplayCapabilities *displayCapabilities = weakSelf.sdlManager.systemCapabilityManager.displayCapabilities;
-    BOOL areGraphicsSupported = NO;
-    if (displayCapabilities != nil) {
-        areGraphicsSupported = displayCapabilities.graphicSupported.boolValue;
-    }
+    BOOL graphicsSupported = (displayCapabilities != nil) ? displayCapabilities.graphicSupported.boolValue : NO;
 }];
 ```
 
 ##### Swift
 ```swift
 sdlManager.start { [weak self] (success, error) in
-    if !success {
-        print("SDL encountered an error starting up: \(error.debugDescription)")
+    guard let self = self else { return }
+
+    guard success else {
+        <#Manager errored while starting up#>
         return
     }
-    
-    var areGraphicsSupported = false
-    if let displayCapabilities = self?.sdlManager.systemCapabilityManager?.displayCapabilities {
-        areGraphicsSupported = displayCapabilities.graphicSupported.boolValue
-    }
+
+    let displayCapabilities = self.sdlManager.systemCapabilityManager.displayCapabilities
+    let graphicsSupported = displayCapabilities != nil ? displayCapabilities?.graphicSupported.boolValue : false
 }
 ```
 !@
@@ -85,13 +82,13 @@ if (!image) {
     return;
 }
 
-SDLArtwork* artwork = [SDLArtwork artworkWithImage:image asImageFormat:<#SDLArtworkImageFormat#>];
+SDLArtwork* artwork = [[SDLArtwork alloc] initWithImage:image persistent:<#BOOL#> asImageFormat:<#SDLArtworkImageFormat#>];
 
 [self.sdlManager.fileManager uploadArtwork:artwork completionHandler:^(BOOL success, NSString * _Nonnull artworkName, NSUInteger bytesAvailable, NSError * _Nullable error) {
     if (error != nil) { return; }
     <#Image Upload Successful#>
     // To send the image as part of a show request, create a SDLImage object using the artworkName
-    SDLImage *image = [[SDLImage alloc] initWithName:artworkName];
+    SDLImage *image = [[SDLImage alloc] initWithName:artworkName isTemplate:<#BOOL#>];
 }];
 ```
 
@@ -107,36 +104,30 @@ sdlManager.fileManager.upload(artwork: artwork) { (success, artworkName, bytesAv
     guard error == nil else { return }
     <#Image Upload Successful#>
     // To send the image as part of a show request, create a SDLImage object using the artworkName
-    let graphic = SDLImage(name: artworkName)
+    let graphic = SDLImage(name: artworkName, isTemplate: <#Bool#>)
 }
 ```
 !@
 
 @![android,javaSE,javaEE]
 #### Creation
-
 The first step in uploading files to the connected module is creating an instance of `SdlFile`. There are a few different constructors that can be used based on the source of the file. The following can be used to instantiate `SdlFile`:
 
 ##### A resource ID
-
 ```java
 new SdlFile(@NonNull String fileName, @NonNull FileType fileType, int id, boolean persistentFile)
 ```
 ##### A URI
-
 ```java
 new SdlFile(@NonNull String fileName, @NonNull FileType fileType, Uri uri, boolean persistentFile)
 ```
 
 ##### A byte array
-
 ```java
 new SdlFile(@NonNull String fileName, @NonNull FileType fileType, byte[] data, boolean persistentFile)
 ```
 
-
 ### Uploading a File
-
 Uploading a file with the `FileManager` is a simple process. With an instantiated `SdlManager`,
 you can simply call:
 
