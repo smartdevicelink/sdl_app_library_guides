@@ -162,7 +162,7 @@ To process the response that we received from an ended audio capture, we @![iOS]
 @![iOS]
 ##### Objective-C
 ```objc
-[self.sdlManager sendRequest:performAudioPassThru withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+[self.sdlManager sendRequest:audioPassThru withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if (error || ![response isKindOfClass:SDLPerformAudioPassThruResponse.class]) {
         NSLog(@"Encountered Error sending Perform Audio Pass Thru: %@", error);
         return;
@@ -180,7 +180,7 @@ To process the response that we received from an ended audio capture, we @![iOS]
 
 ##### Swift
 ```swift
-sdlManager.send(request: performAudioPassThru) { (request, response, error) in
+sdlManager.send(request: audioPassThru) { (request, response, error) in
     guard let response = response else { return }
 
     guard response.resultCode == .success else {
