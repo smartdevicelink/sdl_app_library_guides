@@ -263,7 +263,7 @@ lifecycleConfiguration.additionalAppTypes = @[SDLAppHMITypeInformation];
 ##### Swift
 
 ```swift
-lifecycleConfiguration.additionalAppTypes = [SDLAppHMITypeInformation];
+lifecycleConfiguration.additionalAppTypes = [.information];
 ```
 
 ### 5. Template Coloring
