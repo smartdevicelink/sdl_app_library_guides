@@ -30,8 +30,8 @@ SDLChoiceCell *fullCell = [[SDLChoiceCell alloc] initWithText:<#(nonnull NSStrin
 
 ##### Swift
 ```swift
-let cell = SDLChoiceCell(text: <#T##String#>)
-let cell = SDLChoiceCell(text: <#T##String#>, secondaryText: <#T##String?#>, tertiaryText: <#T##String?#>, voiceCommands: <#T##[String]?#>, artwork: <#T##SDLArtwork?#>, secondaryArtwork: <#T##SDLArtwork?#>)
+let cell = SDLChoiceCell(text: <#String#>)
+let cell = SDLChoiceCell(text: <#String#>, secondaryText: <#String?#>, tertiaryText: <#String?#>, voiceCommands: <#[String]?#>, artwork: <#SDLArtwork?#>, secondaryArtwork: <#SDLArtwork?#>)
 ```
 !@
 
@@ -52,7 +52,7 @@ If you know the content you will show in the popup menu long before the menu is 
 
 ##### Swift
 ```swift
-sdlManager.screenManager.preloadChoices(<#T##choices: [SDLChoiceCell]##[SDLChoiceCell]#>) { (error) in
+sdlManager.screenManager.preloadChoices(<#choices: [SDLChoiceCell]#>) { (error) in
     <#code#>
 }
 ```
@@ -105,7 +105,7 @@ SDLChoiceSet *choiceSet = [[SDLChoiceSet alloc] initWithTitle:<#(nonnull NSStrin
 
 ##### Swift
 ```swift
-let choiceSet = SDLChoiceSet(title: <#T##String#>, delegate: <#T##SDLChoiceSetDelegate#>, layout: <#T##SDLChoiceSetLayout#>, timeout: <#T##TimeInterval#>, initialPromptString: <#T##String?#>, timeoutPromptString: <#T##String?#>, helpPromptString: <#T##String?#>, vrHelpList: <#T##[SDLVRHelpItem]?#>, choices: <#T##[SDLChoiceCell]#>)
+let choiceSet = SDLChoiceSet(title: <#String#>, delegate: <#SDLChoiceSetDelegate#>, layout: <#SDLChoiceSetLayout#>, timeout: <#TimeInterval#>, initialPromptString: <#String?#>, timeoutPromptString: <#String?#>, helpPromptString: <#String?#>, vrHelpList: <#[SDLVRHelpItem]?#>, choices: <#[SDLChoiceCell]#>)
 ```
 !@
 
@@ -178,7 +178,7 @@ It may seem that the answer is to always use `both`. However, remember that you 
 
 ##### Swift
 ```swift
-manager.screenManager.present(<#T##choiceSet: SDLChoiceSet##SDLChoiceSet#>, mode: <#T##SDLInteractionMode#>)
+manager.screenManager.present(<#choiceSet: SDLChoiceSet#>, mode: <#SDLInteractionMode#>)
 ```
 !@
 
@@ -201,7 +201,7 @@ In addition to presenting a standard menu, you can also present a "searchable" m
 
 ##### Swift
 ```swift
-sdlManager.screenManager.presentSearchableChoiceSet(<#T##choiceSet: SDLChoiceSet##SDLChoiceSet#>, mode: <#T##SDLInteractionMode#>, with: <#T##SDLKeyboardDelegate#>)
+sdlManager.screenManager.presentSearchableChoiceSet(<#choiceSet: SDLChoiceSet#>, mode: <#SDLInteractionMode#>, with: <#SDLKeyboardDelegate#>)
 ```
 !@
 
@@ -220,7 +220,7 @@ You can discover cells that have been preloaded on `screenManager.preloadedCells
 
 ##### Swift
 ```swift
-sdlManager.screenManager.deleteChoices(<#T##choices: [SDLChoiceCell]##[SDLChoiceCell]#>)
+sdlManager.screenManager.deleteChoices(<#choices: [SDLChoiceCell]#>)
 ```
 !@
 
@@ -247,7 +247,7 @@ Keyboards are unavailable for use in many countries when the driver is distracte
 
 ##### Swift
 ```swift
-sdlManager.screenManager.presentKeyboard(withInitialText: <#T##String#>, delegate: <#T##SDLKeyboardDelegate#>)
+sdlManager.screenManager.presentKeyboard(withInitialText: <#String#>, delegate: <#SDLKeyboardDelegate#>)
 ```
 !@
 
