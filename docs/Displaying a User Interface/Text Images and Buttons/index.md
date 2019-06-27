@@ -106,7 +106,86 @@ sdlManager.getScreenManager().setPrimaryGraphic(null);
 !@
 
 ## Soft Button Objects
-To create a soft button using the `ScreenManager`, you only need to create a custom name for the button and provide the text for the button's label and/or an image for the button's icon. If your button cycles between different states (e.g. a button used to set the repeat state of a song playlist can have three states: repeat-off, repeat-one, and repeat-all) you can upload all the states on initialization. 
+To create a soft button using the `ScreenManager`, you only need to create a custom name for the button and provide the text for the button's label and/or an image for the button's icon. If your button cycles between different states (e.g. a button used to set the repeat state of a song playlist can have three states: repeat-off, repeat-one, and repeat-all) you can upload all the states on initialization. Soft Buttons can contain images, text or both.
+
+### Soft Button (Text Only)
+@![iOS]
+#### Objective -C
+```objc
+SDLSoftButtonState *textState = [[SDLSoftButtonState alloc] initWithStateName:@"<#State Name#>" text:@"<#Button Label Text#>" image:nil];
+
+SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"<#Button Name#>" state:textState handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
+    if (buttonPress == nil) { return; }
+    <#Button Selected#>
+}];
+```
+#### Swift
+```swift
+let textState = SDLSoftButtonState(stateName: "<#State Name#>", text: @"<#Button Label Text#>", image: nil)
+
+let softButton = SDLSoftButtonObject(name: "<#Button Name#>", state: textState) { (buttonPress, SDLOnButtonEvent?) in
+    guard buttonPress != nil else { return }
+    <#Button Selected#>
+}
+```
+!@
+
+### Soft Button (Image Only)
+To see if soft buttons support images you should check the @![iOS] `softButtonCapabilities` !@ property on the `SDLManager`s `systemCapabilityManager`.
+
+@![iOS]
+#### Objective-C
+```objc
+NSArray<SDLSoftButtonCapabilities *> *softButtonCapabilities = self.sdlManager.systemCapabilityManager.softButtonCapabilities
+```
+#### Swift
+```swift
+let softButtonCapabilities = sdlManager.systemCapabilityManager.softButtonCapabilities
+```
+!@
+
+@![iOS]
+#### Objective-C
+```objc
+SDLSoftButtonState *imageState = [[SDLSoftButtonState alloc] initWithStateName:@"<#State Name#>" text:nil image:[[UIImage imageNamed:<#Image Name#>] imageWithRenderingMode:<#Rendering Mode#>]];
+
+SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"<#Button Name#>" state:imageState handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
+if (buttonPress == nil) { return; }
+    <#Button Selected#>
+}];
+```
+#### Swift
+```swift
+let imageState = SDLSoftButtonState(stateName: "State Name", text: @"<#State Name#>", image: UIImage(named:<#Image Name#>)?.withRenderingMode(<#Rendering Mode#>))
+
+let softButton = SDLSoftButtonObject(name: @"<#Button Name#>", state: imageState) { (buttonPress, SDLOnButtonEvent?) in
+    guard buttonPress != nil else { return }
+    <#Button Selected#>
+}
+```
+!@
+
+### Soft Button (Image and Text)
+@![iOS]
+#### Objective-C
+```objc
+SDLSoftButtonState *state = [[SDLSoftButtonState alloc] initWithStateName:@"<#State Name#>" text:@"<#Button Label Text#>" image:[[UIImage imageNamed:@"<#Image Name#>"] imageWithRenderingMode:<#Rendering Mode#>]];
+
+SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"<#Button Name#>" state:state handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
+    if (buttonPress == nil) { return; }
+    <#Button Selected#>
+}];
+```
+#### Swift
+```swift
+let state = SDLSoftButtonState(stateName: "<#State Name#>", text: @"<#Button Label Text#>", image: UIImage(named:<#Image Name#>)?.withRenderingMode(<#Rendering Mode#>))
+
+let softButton = SDLSoftButtonObject(name: @"<#Button Name#>", state: state) { (buttonPress, SDLOnButtonEvent?) in
+    guard buttonPress != nil else { return }
+    <#Button Selected#>
+}
+```
+!@
 
 ### Updating the Soft Button State
 When the soft button state needs to be updated, simply tell the `SoftButtonObject` to transition to the next state. If your button states do not cycle in a predictable order, you can also tell the soft button the state to transition to by passing the `stateName` of the new soft button state.
@@ -144,6 +223,10 @@ retrievedSoftButtonObject?.transitionToNextState()
 !@
 
 @![android, javaSE, javaEE]
+`TODO break apart the below example into 3 seperate exampeles for the sections listed above.`
+!@
+
+@![android, javaSE, javaEE]
 ```java
 SoftButtonState softButtonState = new SoftButtonState("state1", "cancel", new SdlArtwork("cancel.jpeg", FileType.GRAPHIC_JPEG, R.drawable.cancel, true));
 SoftButtonObject softButtonObject = new SoftButtonObject("object", Collections.singletonList(softButtonState), softButtonState.getName(), null);
@@ -166,7 +249,23 @@ softButtonObject.setOnEventListener(new SoftButtonObject.OnEventListener() {
 !@
 
 ### Deleting Soft Buttons
-To delete soft buttons, simply pass the screen manager an empty array of soft buttons.
+To delete soft buttons, simply pass the screen manager a new array of soft buttons. To delete all soft buttons, simply pass the screen manager an empty array.
+
+@![iOS]
+#### Objective-C
+```objc
+self.sdlManager.screenManager.softButtonObjects = @[];
+```
+
+#### Swift
+```swift
+self.sdlManager.screenManager.softButtonObjects = [];
+```
+!@
+
+@![android,javaSE,javaEE]
+`TODO add example`
+!@
 
 ## Templating Images
 When connected to a remote system running SDL Core 5.0+, you may be able to use template images. Templated images are tinted by Core so the image is visible regardless of whether your user has set the head unit to day or night mode. For example, if a head unit is in night mode with a dark theme (see [Template Coloring in the Integration Basics section](Getting Started/Integration Basics) for more details on how to customize theme colors), then your templated images will be displayed as white. In the day theme, the image will automatically change to black.
