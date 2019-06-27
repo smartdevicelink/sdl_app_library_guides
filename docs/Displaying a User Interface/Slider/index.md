@@ -48,15 +48,24 @@ manager.send(request: slider, responseHandler: { (req, res, err) in
 ```
 !@
 @![android,javaSE,javaEE]
-```java
-//Create a slider
-Slider slider = new Slider(5, 1, "This is a Header")
 
-List<String> footer = Arrays.asList("Static Footer")
-slider.setSliderFooter(footer)
+```java
+
+//Create a slider
+Slider slider = new Slider(5, 1, "This is a Header");
+
+List<String> footer = Collections.singletonList("Static Footer");
+slider.setSliderFooter(footer);
+slider.setOnRPCResponseListener(new OnRPCResponseListener() {
+	@Override
+	public void onResponse(int correlationId, RPCResponse response) {
+		SliderResponse sliderResponse = (SliderResponse) response;
+		Log.i(TAG, "Slider Position Set: "+ sliderResponse.getSliderPosition());
+	}
+});
 
 //Send Request
-sdlManager.sendRPC(slider)
+sdlManager.sendRPC(slider);
 ```
 !@
 
@@ -113,14 +122,23 @@ manager.send(request: slider, responseHandler: { (req, res, err) in
 ```
 !@
 @![android,javaSE,javaEE]
+
 ```java
 //Create a slider
-Slider slider = new Slider(3, 1, "This is a Header")
+Slider slider = new Slider(3, 1, "This is a Header");
 
-List<String> footer = Arrays.asList("Footer 1","Footer 2","Footer 3")
-slider.setSliderFooter(footer)
+// Each footer corresponds with the slider's position
+List<String> footer = Arrays.asList("Footer 1","Footer 2","Footer 3");
+slider.setSliderFooter(footer);
+slider.setOnRPCResponseListener(new OnRPCResponseListener() {
+	@Override
+	public void onResponse(int correlationId, RPCResponse response) {
+	SliderResponse sliderResponse = (SliderResponse) response;
+	Log.i(TAG, "Slider Position Set: "+ sliderResponse.getSliderPosition());
+	}
+});
 
 //Send Request
-sdlManager.sendRPC(slider)
+sdlManager.sendRPC(slider);
 ```
 !@
