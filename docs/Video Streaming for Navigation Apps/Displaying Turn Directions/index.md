@@ -1,20 +1,19 @@
 # Displaying Turn Directions
-When your navigation app is guiding the user to a specific destination, you can provide the user with visual and/or audio turn-by-turn prompts. These prompts will be shown/spoken even when your SDL app is backgrounded or when the user is taking a phone call.
+When your navigation app is guiding the user to a specific destination, you can provide the user with visual and audio turn-by-turn prompts. These prompts will be presented even when your SDL app is backgrounded or a phone call is ongoing.
 
 To create a turn-by-turn direction that provides both a visual and audio cues, a combination of the @![iOS]`SDLShowConstantTBT`!@@![android]`ShowConstantTBT`!@ and @![iOS]`SDLAlertManeuver`!@@![android]`AlertManeuver`!@ RPCs must should be sent to the head unit.
-
-### Visual Cues 
-The visual data is sent using the @![iOS]`SDLShowConstantTBT`!@@![android]`ShowConstantTBT`!@ RPC. The main properties that should be set are `navigationText1`, `navigationText2`, and `turnIcon`. A best practice for navigation apps is to use the `navigationText1` as the direction to give (i.e. turn right) and `navigationText2` to provide the distance to that direction (i.e. 3 mi.). 
- 
-### Audio Cues
-The audio data is sent using the @![iOS]`SDLAlertManeuver`!@@![android]`AlertManeuver`!@ RPC. When sent, the head unit will speak the text you provide (e.g. In 3 miles turn right).
 
 !!! NOTE
 If the connected device has received a phone call in the vehicle, the @![iOS]`SDLAlertManeuver`!@@![android]`AlertManeuver`!@ is the only way for your app to inform the user of the next turn.
 !!!
 
-## Sending Both Audio and Visual Turn Directions
+### Visual Turn Directions 
+The visual data is sent using the @![iOS]`SDLShowConstantTBT`!@@![android]`ShowConstantTBT`!@ RPC. The main properties that should be set are `navigationText1`, `navigationText2`, and `turnIcon`. A best practice for navigation apps is to use the `navigationText1` as the direction to give (i.e. turn right) and `navigationText2` to provide the distance to that direction (i.e. 3 mi.). 
+ 
+### Audio Turn Directions
+The audio data is sent using the @![iOS]`SDLAlertManeuver`!@@![android]`AlertManeuver`!@ RPC. When sent, the head unit will speak the text you provide (e.g. In 3 miles turn right).
 
+## Sending Both Audio and Visual Turn Directions
 @![iOS]
 #### Objective-C
 ```objc
