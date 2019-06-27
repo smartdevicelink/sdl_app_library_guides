@@ -1,45 +1,40 @@
 # Calling a Phone Number
-The `DialNumber` RPC allows you make a phone call via the user's phone. Regardless of platform (Android or iOS), you must be sure that a device is connected via Bluetooth (even if using USB) for this RPC to work. If the phone is not connected via Bluetooth, you will receive a result of `REJECTED` from Core.
+The @![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ RPC allows you make a phone call via the user's phone. Regardless of platform (Android or iOS), you must be sure that a device is connected via Bluetooth (even if using USB) for this RPC to work. If the phone is not connected via Bluetooth, you will receive a result of `REJECTED` from Core.
 
 !!! note
-DialNumber is an RPC that is usually restricted by OEMs. As a result, the OEM you are connecting to may limit app functionality if not approved for usage.
+@![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ is an RPC that is usually restricted by OEMs. As a result, the OEM you are connecting to may limit app functionality if not approved for usage.
 !!!
 
 ## Detecting if DialNumber is Available
-
-`DialNumber` is a newer RPC, so there is a possibility that not all head units will support it. To find out if `DialNumber` is supported by the head unit, check the system capability manager's @![iOS]`hmiCapabilities.phoneCall`!@ @![android,javaSE,javaEE]`getCapability(SystemCapabilityType.PHONE_CALL)`!@ property after the manager has been started successfully.
+@![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ is a newer RPC, so there is a possibility that not all head units will support it. supported by the head unit, check the system capability manager's @![iOS]`hmiCapabilities.phoneCall`!@ @![android,javaSE,javaEE]`getCapability(SystemCapabilityType.PHONE_CALL)`!@ property after the manager has been started successfully.
 
 @![iOS]
 ##### Objective-C
 ```objc
-BOOL isPhoneCallSupported = NO;
-
-[self.sdlManager startWithReadyHandler:^(BOOL success, NSError * _Nullable error) {
-    if (!success) {
-        <#Error starting up#>
-        return;
+[self.sdlManager.systemCapabilityManager updateCapabilityType:SDLSystemCapabilityTypePhoneCall completionHandler:^(NSError * _Nullable error, SDLSystemCapabilityManager * _Nonnull systemCapabilityManager) {
+    BOOL isDialNumberSupported = NO;
+    if (error == nil) {
+        isDialNumberSupported = systemCapabilityManager.phoneCapability.dialNumberEnabled.boolValue;
+    }
+    else {
+        isDialNumberSupported = systemCapabilityManager.hmiCapabilities.phoneCall.boolValue;
     }
 
-    SDLHMICapabilities *hmiCapabilities = self.sdlManager.systemCapabilityManager.hmiCapabilities;
-    if (hmiCapabilities != nil) {
-        isPhoneCallSupported = hmiCapabilities.phoneCall.boolValue;
-    }
+    <#If making phone calls is supported, send the `DialNumber` RPC#>
 }];
 ```
 
 ##### Swift
 ```swift
-var isPhoneCallSupported = false
-
-sdlManager.start { (success, error) in
-    if !success {
-        <#Error starting up#>
-        return
+sdlManager.systemCapabilityManager.updateCapabilityType(.phoneCall) { (error, systemCapabilityManager) in
+    var isDialNumberSupported = false
+    if error == nil {
+        isDialNumberSupported = systemCapabilityManager.phoneCapability?.dialNumberEnabled?.boolValue ?? false;
+    } else {
+        isDialNumberSupported = systemCapabilityManager.hmiCapabilities?.phoneCall?.boolValue ?? false
     }
 
-    if let hmiCapabilities = self.sdlManager.systemCapabilityManager.hmiCapabilities, let phoneCallsSupported = hmiCapabilities.phoneCall?.boolValue {
-        isPhoneCallSupported = phoneCallsSupported
-    }
+    <#If making phone calls is supported, send the `DialNumber` RPC#>
 }
 ```
 !@
