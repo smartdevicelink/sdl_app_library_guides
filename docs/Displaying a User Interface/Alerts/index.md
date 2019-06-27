@@ -49,7 +49,7 @@ okButton.handler = ^(SDLOnButtonPress *_Nullable buttonPress,  SDLOnButtonEvent 
       return;
     }
 
-    // create a custom action for the selected button
+    <#Create a custom action for the selected button#>
 };
 
 alert.softButtons = @[okButton];
@@ -57,7 +57,7 @@ alert.softButtons = @[okButton];
 // Send the alert
 [self.sdlManager sendRequest:alert withResponseHandler:^(SDLRPCRequest *request, SDLRPCResponse *response, NSError *error) {
     if ([response.resultCode isEqualToEnum:SDLResultSuccess]) {
-      // alert was dismissed successfully
+      <#alert was dismissed successfully#>
     }
 }];
 ```
@@ -69,27 +69,27 @@ let alert = SDLAlert(alertText1: "<#Line 1#>", alertText2: "<#Line 2#>", alertTe
 // Maximum time alert appears before being dismissed
 // Timeouts must be between 3-10 seconds
 // Timeouts may not work when soft buttons are also used in the alert
-alert.duration = 5000
+alert.duration = 5000 as NSNumber
 
 // A progress indicator (e.g. spinning wheel or hourglass)
 // Not all head units support the progress indicator
-alert.progressIndicator = true
+alert.progressIndicator = true as NSNumber
 
 // Text-to-speech
 alert.ttsChunks = SDLTTSChunk.textChunks(from: "<#Text to speak#>")
 
 // Special tone played before the tts is spoken
-alert.playTone = true
+alert.playTone = true as NSNumber
 
 // Soft buttons
 let okButton = SDLSoftButton()
 okButton.text = "OK"
 okButton.type = .text
-okButton.softButtonID = <#Soft Button Id#>
+okButton.softButtonID = <#Soft Button Id#> as NSNumber
 okButton.handler = { (buttonPress, buttonEvent) in
     guard let press = buttonPress else { return }
 
-    // create a custom action for the selected button
+    <#Create a custom action for the selected button#>
 }
 
 alert.softButtons = [okButton]
@@ -97,7 +97,7 @@ alert.softButtons = [okButton]
 // Send the alert
 sdlManager.send(request: alert) { (request, response, error) in
     if response?.resultCode == .success {
-        // alert was dismissed successfully
+        <#alert was dismissed successfully#>
     }
 }
 ```
