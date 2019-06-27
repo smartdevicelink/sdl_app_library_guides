@@ -2,6 +2,7 @@
 Mobile navigation allows map partners to easily display their maps as well as present visual and audio turn-by-turn prompts on the head unit.
 
  Navigation apps have different behavior on the head unit than normal applications. The main differences are:
+ 
 * Navigation apps don't use base screen templates. Their main view is the video stream sent from the device.
 * Navigation apps can send audio via a binary stream. This will attenuate the current audio source and should be used for navigation commands.
 * Navigation apps can receive touch events from the video stream.
