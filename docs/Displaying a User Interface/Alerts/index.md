@@ -1,14 +1,13 @@
 # Alerts
 An alert is a pop-up window that can show a short message with optional buttons. When an alert is activated, it will abort any SDL operation that is in-progress, except the already-in-progress alert. If an alert is issued while another alert is still in progress, the newest alert will simply be ignored.
 
+Depending the platform, an alert can have up to three lines of text, a progress indicator (e.g. a spinning wheel or hourglass), and up to four soft buttons.
+
 !!! NOTE
 The alert will persist on the screen until the timeout has elapsed, or the user dismisses the alert by selecting a button. There is no way to dismiss the alert programmatically other than to set the timeout length.
 !!!
 
-## Alert UI
-Depending the platform, an alert can have up to three lines of text, a progress indicator (e.g. a spinning wheel or hourglass), and up to four soft buttons.
-
-## Create an Alert
+## Creating an Alert
 ### Alert With No Soft Buttons
 !!! NOTE
 If no soft buttons are added to an alert some OEMs may add a default "cancel" or "close" button.
@@ -45,27 +44,19 @@ SDLAlert *alert = [[SDLAlert alloc] initWithAlertText1:@"<#Line 1#>" alertText2:
 
 NSMutableArray<SDLSoftButton *> *softButtons = [[NSMutableArray alloc] init];
 
-SDLSoftButton *button1 = [[SDLSoftButton alloc] init];
-button1.text = @"<# Button Text #>";
-button1.type = SDLSoftButtonTypeText;
-button1.softButtonID  = @<#Soft Button Id#>;
-button1.handler = ^(SDLOnButtonPress *_Nullable buttonPress,  SDLOnButtonEvent *_Nullable buttonEvent) {
-if (buttonPress == nil) {
-    return;
-}
-<# Code for when the button is pressed #>
-};
+SDLSoftButton *button1 = [[SDLSoftButton alloc] initWithType:SDLSoftButtonTypeText text:<#Button Text#> image:nil highlighted:@NO buttonId:<#Soft Button Id#> systemAction:SDLSystemActionDefaultAction handler:^(SDLOnButtonPress *_Nullable buttonPress, SDLOnButtonEvent *_Nullable buttonEvent) {
+    if (buttonPress == nil) {
+        return;
+    }
+    <#Code for when the button is pressed#>
+}];
 
-SDLSoftButton *button2 = [[SDLSoftButton alloc] init];
-button2.text = @"<# Button Text 2 #>";
-button2.type = SDLSoftButtonTypeText;
-button2.softButtonID  = @<#Soft Button Id#>;
-button2.handler = ^(SDLOnButtonPress *_Nullable buttonPress,  SDLOnButtonEvent *_Nullable buttonEvent) {
-if (buttonPress == nil) {
-    return;
-}
-<# Code for when the button is pressed #>
-};
+SDLSoftButton *button2 = [[SDLSoftButton alloc] initWithType:SDLSoftButtonTypeText text:<#Button Text#> image:nil highlighted:@NO buttonId:<#Soft Button Id#> systemAction:SDLSystemActionDefaultAction handler:^(SDLOnButtonPress *_Nullable buttonPress, SDLOnButtonEvent *_Nullable buttonEvent) {
+    if (buttonPress == nil) {
+        return;
+    }
+    <#Code for when the button is pressed#>
+}];
 
 [softButtons addObject: button1];
 [softButtons addObject: button2];
@@ -79,21 +70,15 @@ let alert = SDLAlert(alertText1: "<#Line 1#>", alertText2: "<#Line 2#>", alertTe
 
 var softButtons = [SDLSoftButton]()
 
-var button1 = SDLSoftButton()
-button1.text = "<# Button Text #>"
-button1.type = .text
-button1.handler = { buttonPress, buttonEvent in
+let button1 = SDLSoftButton(type: .text, text: <#Button Text#>, image: nil, highlighted: false, buttonId: <#Soft Button Id#>, systemAction: .defaultAction, handler: { buttonPress, buttonEvent in
     guard buttonPress != nil else { return }
-<# Code for when the button is pressed #>
-}
+    <#Code for when the button is pressed#>
+})
 
-var button2 = SDLSoftButton()
-button2.text = "<# Button Text 2 #>"
-button2.type = .text
-button2.handler = { buttonPress, buttonEvent in
+let button2 = SDLSoftButton(type: .text, text: <#Button Text#>, image: nil, highlighted: false, buttonId: <#Soft Button Id#>, systemAction: .defaultAction, handler: { buttonPress, buttonEvent in
     guard buttonPress != nil else { return }
-<# Code for when the button is pressed #>
-}
+    <#Code for when the button is pressed#>
+})
 
 softButtons.append(button1)
 softButtons.append(button2)
@@ -107,18 +92,20 @@ alert.softButtons = softButtons;
 !@
 
 ## Additonal Alert Paramaters
-@![iOS]
 
 ### Timeouts
 An optional timeout can be added that will dimiss the alert when the duration is over.  Typical timeouts are between 3 and 10 seconds. If omitted a default of 5 second is used.
 
+@![iOS]
 ##### Objective-C
 ```objc
+// Duration timeout is in milliseconds
 alert.duration = @(4000);
 ```
 
 ##### Swift
 ```swift
+// Duration timeout is in milliseconds
 alert.duration = 4000
 ```
 !@
@@ -150,7 +137,6 @@ alert.progressIndicator = true
 The alert can also be formatted to speak a prompt or play a file when the alert appears on the screen. Do this by setting the `ttsChunks` parameter.
 
 @![iOS]
-
 ##### Objective-C
 ```objc
 alert.ttsChunks = [SDLTTSChunk textChunksFromString:@"<#Text to speak#>"];
@@ -162,6 +148,22 @@ alert.ttsChunks = SDLTTSChunk.textChunks(from: "<#Text to speak#>")
 ```
 !@
 
+@![android,javaSE,javaEE]
+` TODO - code example `
+!@
+
+The `ttsChunks` can also take a file to play/speak. First you must [upload](https://smartdevicelink.com/en/guides/iOS/other-sdl-features/uploading-files/) a file to the head unit.
+ ##### Objective-C
+ ```objc
+ alert.ttsChunks = [SDLTTSChunk fileChunksWithName:@""<#Name#>"];
+ ```
+ 
+ ##### Swift
+ ```swift
+ alert.ttsChunks = SDLTTSChunk.fileChunks(withName: "<#Name#>")
+ ```
+ !@
+ 
 @![android,javaSE,javaEE]
 ` TODO - code example `
 !@
@@ -186,6 +188,7 @@ alert.playTone = true
 !@
 
 ### Showing the Alert
+
 @![iOS]
 ##### Objective-C
 ```objc
@@ -199,7 +202,7 @@ alert.playTone = true
 ##### Swift
 ```swift
 sdlManager.send(request: alert) { (request, response, error) in
-    if response?.resultCode == .success {
+    guard error == nil else { return }
         // alert was dismissed successfully
     }    
 }
