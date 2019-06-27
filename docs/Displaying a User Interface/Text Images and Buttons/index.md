@@ -108,6 +108,8 @@ sdlManager.getScreenManager().setPrimaryGraphic(null);
 ## Soft Button Objects
 To create a soft button using the `ScreenManager`, you only need to create a custom name for the button and provide the text for the button's label and/or an image for the button's icon. If your button cycles between different states (e.g. a button used to set the repeat state of a song playlist can have three states: repeat-off, repeat-one, and repeat-all) you can upload all the states on initialization. Soft Buttons can contain images, text or both.
 
+![Generic HMI](assets/buttonExample.png)
+
 ### Soft Button (Text Only)
 @![iOS]
 #### Objective -C
