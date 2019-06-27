@@ -74,7 +74,7 @@ sdlManager.send(request: turnByTurn) { [weak self] (request, response, error) in
 `// TODO Add Code Example`
 !@
 
-Remember when sending a !@[iOS]`SDLImage`!@@![android,javaSE,javaEE]`Image`!@, that the image must first be uploaded to the head unit with the !@[iOS]`SDLFileManager`!@@![android,javaSE,javaEE]`FileManager`!@.
+Remember when sending a @![iOS]`SDLImage`!@@![android,javaSE,javaEE]`Image`!@, that the image must first be uploaded to the head unit with the @![iOS]`SDLFileManager`!@@![android,javaSE,javaEE]`FileManager`!@.
 
 ## Clearing the Turn Directions
 To clear a navigation direction from the screen, send a @![iOS]`SDLShowConstantTBT`!@@![android,javaSE,javaEE]`ShowConstantTbt`!@ with the `maneuverComplete` property set to true. This will also clear the accompanying @![iOS]`SDLAlertManeuver`!@@![android,javaSE,javaEE]`AlertManeuver`!@.
