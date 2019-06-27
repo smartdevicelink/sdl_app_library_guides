@@ -11,20 +11,19 @@ Depending the platform, an alert can have up to three lines of text, a progress 
 ## Create an Alert
 ### Alert With No Soft Buttons
 !!! NOTE
-If no soft buttons are added to an alert some OEMs may add a default button.
+If no soft buttons are added to an alert some OEMs may add a default "cancel" or "close" button.
 !!!
 
 #### Alert HMI
-###### Generic HMI
 ![Generic - Alert](assets/Generic_alert.png)
 
 @![iOS]
-####  Objective-C
+#####  Objective-C
 ```objc
-SDLALert *alert =  [SDLAlert alloc] initWithAlertText1:@"<#Line 1#>" alertText2:@"<#Line 2#>" alertText3:@"<#Line 3#>"];
+SDLAlert *alert =  [SDLAlert alloc] initWithAlertText1:@"<#Line 1#>" alertText2:@"<#Line 2#>" alertText3:@"<#Line 3#>"];
 ```
 
-#### Swift
+##### Swift
 ```swift
 let alert = SDLAlert(alertText1: "<#Line 1#>", alertText2: "<#Line 2#>", alertText3: "<#Line 3#>")
 ```
@@ -37,13 +36,12 @@ let alert = SDLAlert(alertText1: "<#Line 1#>", alertText2: "<#Line 2#>", alertTe
 ### Alert With Soft Buttons
 
 #### Alert HMI
-###### Generic HMI
 ![Generic - Alert](assets/Generic_alert_buttons.png)
 
 @![iOS]
-#### Objective-C
+##### Objective-C
 ```objc
-SDLAlert *alert =  [[SDLAlert alloc] initWithAlertText1:@"<#Line 1#>" alertText2:@"<#Line 2#>" alertText3:@"<#Line 3#>"];
+SDLAlert *alert = [[SDLAlert alloc] initWithAlertText1:@"<#Line 1#>" alertText2:@"<#Line 2#>" alertText3:@"<#Line 3#>"];
 
 NSMutableArray<SDLSoftButton *> *softButtons = [[NSMutableArray alloc] init];
 
@@ -55,7 +53,7 @@ button1.handler = ^(SDLOnButtonPress *_Nullable buttonPress,  SDLOnButtonEvent *
 if (buttonPress == nil) {
     return;
 }
-// create a custom action for the selected button
+<# Code for when the button is pressed #>
 };
 
 SDLSoftButton *button2 = [[SDLSoftButton alloc] init];
@@ -66,7 +64,7 @@ button2.handler = ^(SDLOnButtonPress *_Nullable buttonPress,  SDLOnButtonEvent *
 if (buttonPress == nil) {
     return;
 }
-// create a custom action for the selected button
+<# Code for when the button is pressed #>
 };
 
 [softButtons addObject: button1];
@@ -86,7 +84,7 @@ button1.text = "<# Button Text #>"
 button1.type = .text
 button1.handler = { buttonPress, buttonEvent in
     guard buttonPress != nil else { return }
-    <# Create a custom action for the selected button #>
+<# Code for when the button is pressed #>
 }
 
 var button2 = SDLSoftButton()
@@ -94,7 +92,7 @@ button2.text = "<# Button Text 2 #>"
 button2.type = .text
 button2.handler = { buttonPress, buttonEvent in
     guard buttonPress != nil else { return }
-    <# Create a custom action for the selected button #>
+<# Code for when the button is pressed #>
 }
 
 softButtons.append(button1)
@@ -112,8 +110,9 @@ alert.softButtons = softButtons;
 @![iOS]
 
 ### Timeouts
-An optional timeout can be added that will dimiss the alert when the duration is over.  Typical timeouts are between 3 and 5 seconds. If omitted a default of 5 second is used.
-#### Objective-C
+An optional timeout can be added that will dimiss the alert when the duration is over.  Typical timeouts are between 3 and 10 seconds. If omitted a default of 5 second is used.
+
+##### Objective-C
 ```objc
 alert.duration = @(4000);
 ```
@@ -125,11 +124,11 @@ alert.duration = 4000
 !@
 
 @![android,javaSE,javaEE]
-` TODO - code example `
+`//TODO - code example `
 !@
 
 ### Progress Indicator
-Not all OEMs support progress Indicator, if supported the alert will show an animation that indictates  loading of a feature (e.g. a spinning wheel or hourglass, etc). If ommited no progess indicator will be shown.
+Not all OEMs support a progress indicator. If supported, the alert will show an animation that indicates that the user must wait (e.g. a spinning wheel or hourglass, etc). If omitted, no progress indicator will be shown.
 
 @![iOS]
 #### Objective-C
@@ -148,16 +147,16 @@ alert.progressIndicator = true
 !@
 
 ### Text-To-Speach
-The alert can also be formatted to speak a prompt when the alert appears on the screen. Do this by setting the `ttsChunks` parameter.
+The alert can also be formatted to speak a prompt or play a file when the alert appears on the screen. Do this by setting the `ttsChunks` parameter.
 
 @![iOS]
 
-#### Objective-C
+##### Objective-C
 ```objc
 alert.ttsChunks = [SDLTTSChunk textChunksFromString:@"<#Text to speak#>"];
 ```
 
-#### Swift
+##### Swift
 ```swift
 alert.ttsChunks = SDLTTSChunk.textChunks(from: "<#Text to speak#>")
 ```
@@ -168,10 +167,10 @@ alert.ttsChunks = SDLTTSChunk.textChunks(from: "<#Text to speak#>")
 !@
 
 ### Play Tone
-To play the alert tone before the text-to-speech is spoken, set `playTone` to `true`.
+To play the alert tone when the alert appears and before the text-to-speech is spoken, set `playTone` to `true`.
 
 @![iOS]
-#### Objective-C
+##### Objective-C
 ```objc
 alert.playTone = @YES;
 ```
@@ -186,18 +185,18 @@ alert.playTone = true
 ` TODO - code example `
 !@
 
-### Show The Alert
+### Showing the Alert
 @![iOS]
-#### Objective-C
+##### Objective-C
 ```objc
 [self.sdlManager sendRequest:alert withResponseHandler:^(SDLRPCRequest *request, SDLRPCResponse *response, NSError *error) {
     if ([response.resultCode isEqualToEnum:SDLResultSuccess]) {
         // alert was dismissed successfully
-        }
+    }
 }];
 ```
 
-#### Swift
+##### Swift
 ```swift
 sdlManager.send(request: alert) { (request, response, error) in
     if response?.resultCode == .success {
