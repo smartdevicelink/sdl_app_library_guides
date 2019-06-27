@@ -180,7 +180,7 @@ To play the alert tone when the alert appears and before the text-to-speech is s
 alert.playTone = @YES;
 ```
 
-#### Swift
+##### Swift
 ```swift
 alert.playTone = true
 ```
