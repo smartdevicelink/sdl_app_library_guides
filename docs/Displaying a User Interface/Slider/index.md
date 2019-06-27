@@ -133,8 +133,8 @@ slider.setSliderFooter(footer);
 slider.setOnRPCResponseListener(new OnRPCResponseListener() {
 	@Override
 	public void onResponse(int correlationId, RPCResponse response) {
-	SliderResponse sliderResponse = (SliderResponse) response;
-	Log.i(TAG, "Slider Position Set: "+ sliderResponse.getSliderPosition());
+		SliderResponse sliderResponse = (SliderResponse) response;
+		Log.i(TAG, "Slider Position Set: "+ sliderResponse.getSliderPosition());
 	}
 });
 
