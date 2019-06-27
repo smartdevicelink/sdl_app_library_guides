@@ -78,11 +78,11 @@ The `SDLFileManager` uploads files and keeps track of all the uploaded files nam
 ```objc
 UIImage* image = [UIImage imageNamed:@"<#Image Name#>"];
 if (!image) {
-    <#Error Reading from Assets#>
+    <#Error reading from assets#>
     return;
 }
 
-SDLArtwork* artwork = [[SDLArtwork alloc] initWithImage:image persistent:<#BOOL#> asImageFormat:<#SDLArtworkImageFormat#>];
+SDLArtwork *artwork = [SDLArtwork persistentArtworkWithImage:image asImageFormat:<#SDLArtworkImageFormat#>];
 
 [self.sdlManager.fileManager uploadArtwork:artwork completionHandler:^(BOOL success, NSString * _Nonnull artworkName, NSUInteger bytesAvailable, NSError * _Nullable error) {
     if (error != nil) { return; }
@@ -95,7 +95,7 @@ SDLArtwork* artwork = [[SDLArtwork alloc] initWithImage:image persistent:<#BOOL#
 ##### Swift
 ```swift
 guard let image = UIImage(named: "<#Image Name#>") else {
-	<#Error Reading from Assets#>
+	<#Error reading from assets#>
 	return
 }
 let artwork = SDLArtwork(image: image, persistent: <#Bool#>, as: <#SDLArtworkImageFormat#>)
