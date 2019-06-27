@@ -120,6 +120,7 @@ SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"<#
     if (buttonPress == nil) { return; }
     <#Button Selected#>
 }];
+
 sdlManager.screenManager.softButtonObjects =  @[softButton];
 ```
 #### Swift
@@ -130,6 +131,7 @@ let softButton = SDLSoftButtonObject(name: "<#Button Name#>", state: textState) 
     guard buttonPress != nil else { return }
     <#Button Selected#>
 }
+
 sdlManager.screenManager.softButtonObjects = [softButton];
 ```
 !@
@@ -157,6 +159,7 @@ SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"<#
 if (buttonPress == nil) { return; }
     <#Button Selected#>
 }];
+
 sdlManager.screenManager.softButtonObjects =  @[softButton];
 ```
 #### Swift
@@ -167,6 +170,7 @@ let softButton = SDLSoftButtonObject(name: @"<#Button Name#>", state: imageState
     guard buttonPress != nil else { return }
     <#Button Selected#>
 }
+
 sdlManager.screenManager.softButtonObjects = [softButton];
 ```
 !@
@@ -181,6 +185,7 @@ SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"<#
     if (buttonPress == nil) { return; }
     <#Button Selected#>
 }];
+
 sdlManager.screenManager.softButtonObjects =  @[softButton];
 ```
 #### Swift
@@ -191,6 +196,7 @@ let softButton = SDLSoftButtonObject(name: @"<#Button Name#>", state: state) { (
     guard buttonPress != nil else { return }
     <#Button Selected#>
 }
+
 sdlManager.screenManager.softButtonObjects = [softButton];
 ```
 !@
