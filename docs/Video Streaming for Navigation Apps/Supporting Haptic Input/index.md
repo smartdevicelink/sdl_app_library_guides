@@ -115,5 +115,5 @@ public void sendHapticData() {
 
 }
 ```
-Each SendHapticData rpc should contain the entirety of all clickable areas to be accessed via haptic controls.
+Each `SendHapticData` rpc should contain the entirety of all clickable areas to be accessed via haptic controls.
 !@
