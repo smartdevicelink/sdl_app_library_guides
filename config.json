@@ -89,6 +89,23 @@
             ]
         },
         {
+            "name": "Speech and Audio",
+            "navigation": [
+                {
+                    "name": "Global Voice Commands"
+                },
+                {
+                    "name": "Custom Text-To-Speech"
+                },
+                {
+                    "name": "Getting In-Car Microphone Audio"
+                },
+                {
+                    "name": "Playing Audio Indications"
+                }
+            ]
+        },
+        {
             "name": "Other SDL Features",
             "navigation": [
                 {
