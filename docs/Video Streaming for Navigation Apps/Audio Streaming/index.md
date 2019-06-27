@@ -13,8 +13,9 @@ In order to stream audio from a SDL app, we focus on the @![iOS]`SDLStreamingMed
 Like the lifecycle of the video stream, the lifecycle of the audio stream is maintained by the SDL library. When you receive the `SDLAudioStreamDidStartNotification`, you can begin streaming audio.
 
 ### SDLAudioStreamManager
-If you do not already have raw PCM data ready at hand, the `SDLAudioStreamManager` can help. The `SDLAudioStreamManager` will help you to do on-the-fly transcoding and streaming of your files in mp3 or other formats.
+The `SDLAudioStreamManager` will help you to do on-the-fly transcoding and streaming of your files in mp3 or other formats, or prepare raw PCM data to be queued and played.
 
+#### Playing from File
 ##### Objective-C
 ```objc
 [self.sdlManager.streamManager.audioManager pushWithFileURL:audioFileURL];
@@ -27,14 +28,37 @@ self.sdlManager.streamManager?.audioManager.push(withFileURL: url)
 self.sdlManager.streamManager?.audioManager.playNextWhenReady()
 ```
 
-#### Implementing the Delegate
+#### Playing from Data
+##### Objective-C
+```objc
+[self.sdlManager.streamManager.audioManager pushWithData:audioData];
+[self.sdlManager.streamManager.audioManager playNextWhenReady];
+```
 
+##### Swift
+```swift
+self.sdlManager.streamManager?.audioManager.push(withData: audioData)
+self.sdlManager.streamManager?.audioManager.playNextWhenReady()
+```
+
+#### Implementing the Delegate
 ##### Objective-C
 ```objc
 - (void)audioStreamManager:(SDLAudioStreamManager *)audioManager errorDidOccurForFile:(NSURL *)fileURL error:(NSError *)error {
+
+}
+
+- (void)audioStreamManager:(SDLAudioStreamManager *)audioManager errorDidOccurForDataBuffer:(NSError *)error {
+
 }
 
 - (void)audioStreamManager:(SDLAudioStreamManager *)audioManager fileDidFinishPlaying:(NSURL *)fileURL successfully:(BOOL)successfully {
+    if (audioManager.queue.count != 0) {
+        [audioManager playNextWhenReady];
+    }
+}
+
+- (void)audioStreamManager:(SDLAudioStreamManager *)audioManager dataBufferDidFinishPlayingSuccessfully:(BOOL)successfully {
     if (audioManager.queue.count != 0) {
         [audioManager playNextWhenReady];
     }
@@ -43,11 +67,21 @@ self.sdlManager.streamManager?.audioManager.playNextWhenReady()
 
 ##### Swift
 ```swift
-public func audioStreamManager(_ audioManager: SDLAudioStreamManager, errorDidOccurForFile fileURL: URL, error: Error) {
+func audioStreamManager(_ audioManager: SDLAudioStreamManager, errorDidOccurForFile fileURL: URL, error: Error) {
 
 }
 
-public func audioStreamManager(_ audioManager: SDLAudioStreamManager, fileDidFinishPlaying fileURL: URL, successfully: Bool) {
+func audioStreamManager(_ audioManager: SDLAudioStreamManager, errorDidOccurForDataBuffer error: Error) {
+    
+}
+
+func audioStreamManager(_ audioManager: SDLAudioStreamManager, fileDidFinishPlaying fileURL: URL, successfully: Bool) {
+    if audioManager.queue.count != 0 {
+        audioManager.playNextWhenReady()
+    }
+}
+
+func audioStreamManager(_ audioManager: SDLAudioStreamManager, dataBufferDidFinishPlayingSuccessfully successfully: Bool) {
     if audioManager.queue.count != 0 {
         audioManager.playNextWhenReady()
     }
