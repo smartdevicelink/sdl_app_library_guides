@@ -1,40 +1,64 @@
 # Audio Streaming
-A navigation app can stream raw audio to the head unit. This audio data is played immediately. If audio is already playing, the current audio source will be attenuated and your audio will play. Raw audio must be played with the following parameters:
+Navigation apps are allowed to stream raw audio to be played by the head unit. The audio received this way is played immediately, and the current audio source will be attenuated. The raw audio has to be played with the following parameters:
 
 * **Format**: PCM
 * **Sample Rate**: 16k
 * **Number of Channels**: 1
 * **Bits Per Second (BPS)**: 16 bits per sample / 2 bytes per sample
 
-To stream audio from a SDL app, use the @![iOS]`SDLStreamingMediaManager`!@@![android]`AudioStreamingManager`!@ class. A reference to this class is available from the @![iOS]`SDLManager`'s `streamManager`!@@![android]`SdlManager`s `audioStreamManager`!@ property.
+In order to stream audio from a SDL app, we focus on the @![iOS]`SDLStreamingMediaManager`!@@![android]`AudioStreamingManager`!@ class. @![iOS]A reference to this class is available from an `SDLManager` property `streamManager`!@@![android]The `AudioStreamingManager` object can we obtained from `SdlManager`s `getAudioStreamManager()`!@.
 
 @![iOS]
 ## Audio Stream Lifecycle
 Like the lifecycle of the video stream, the lifecycle of the audio stream is maintained by the SDL library. When you receive the `SDLAudioStreamDidStartNotification`, you can begin streaming audio.
 
-### Audio Stream Manager
-If you do not already have raw PCM data ready at hand, the `SDLAudioStreamManager` can help. The `SDLAudioStreamManager` will help you to do on-the-fly transcoding and streaming of your files in mp3 or other formats.
+### SDLAudioStreamManager
+The `SDLAudioStreamManager` will help you to do on-the-fly transcoding and streaming of your files in mp3 or other formats, or prepare raw PCM data to be queued and played.
 
+#### Playing from File
 ##### Objective-C
 ```objc
-[self.sdlManager.streamManager.audioManager pushWithFileURL:<#audioFileURL#>];
+[self.sdlManager.streamManager.audioManager pushWithFileURL:audioFileURL];
 [self.sdlManager.streamManager.audioManager playNextWhenReady];
 ```
 
 ##### Swift
 ```swift
-sdlManager.streamManager?.audioManager.push(withFileURL: <#audioFileURL#>)
-sdlManager.streamManager?.audioManager.playNextWhenReady()
+self.sdlManager.streamManager?.audioManager.push(withFileURL: url)
+self.sdlManager.streamManager?.audioManager.playNextWhenReady()
+```
+
+#### Playing from Data
+##### Objective-C
+```objc
+[self.sdlManager.streamManager.audioManager pushWithData:audioData];
+[self.sdlManager.streamManager.audioManager playNextWhenReady];
+```
+
+##### Swift
+```swift
+self.sdlManager.streamManager?.audioManager.push(withData: audioData)
+self.sdlManager.streamManager?.audioManager.playNextWhenReady()
 ```
 
 #### Implementing the Delegate
-
 ##### Objective-C
 ```objc
 - (void)audioStreamManager:(SDLAudioStreamManager *)audioManager errorDidOccurForFile:(NSURL *)fileURL error:(NSError *)error {
+
+}
+
+- (void)audioStreamManager:(SDLAudioStreamManager *)audioManager errorDidOccurForDataBuffer:(NSError *)error {
+
 }
 
 - (void)audioStreamManager:(SDLAudioStreamManager *)audioManager fileDidFinishPlaying:(NSURL *)fileURL successfully:(BOOL)successfully {
+    if (audioManager.queue.count != 0) {
+        [audioManager playNextWhenReady];
+    }
+}
+
+- (void)audioStreamManager:(SDLAudioStreamManager *)audioManager dataBufferDidFinishPlayingSuccessfully:(BOOL)successfully {
     if (audioManager.queue.count != 0) {
         [audioManager playNextWhenReady];
     }
@@ -43,11 +67,21 @@ sdlManager.streamManager?.audioManager.playNextWhenReady()
 
 ##### Swift
 ```swift
-public func audioStreamManager(_ audioManager: SDLAudioStreamManager, errorDidOccurForFile fileURL: URL, error: Error) {
+func audioStreamManager(_ audioManager: SDLAudioStreamManager, errorDidOccurForFile fileURL: URL, error: Error) {
 
 }
 
-public func audioStreamManager(_ audioManager: SDLAudioStreamManager, fileDidFinishPlaying fileURL: URL, successfully: Bool) {
+func audioStreamManager(_ audioManager: SDLAudioStreamManager, errorDidOccurForDataBuffer error: Error) {
+    
+}
+
+func audioStreamManager(_ audioManager: SDLAudioStreamManager, fileDidFinishPlaying fileURL: URL, successfully: Bool) {
+    if audioManager.queue.count != 0 {
+        audioManager.playNextWhenReady()
+    }
+}
+
+func audioStreamManager(_ audioManager: SDLAudioStreamManager, dataBufferDidFinishPlayingSuccessfully successfully: Bool) {
     if audioManager.queue.count != 0 {
         audioManager.playNextWhenReady()
     }
@@ -59,10 +93,11 @@ Once the audio stream is connected, data may be easily passed to the Head Unit. 
 
 ##### Objective-C
 ```objective-c
+
 NSData* audioData = <#Acquire Audio Data#>;
 
 if ([self.sdlManager.streamManager sendAudioData:audioData] == NO) {
-  <#Could not send audio data#>
+  NSLog(@"Could not send Audio Data");
 }
 ```
 
@@ -73,7 +108,7 @@ let audioData = <#Acquire Audio Data#>;
 guard let streamManager = self.sdlManager.streamManager, streamManager.isAudioConnected else { return }
 
 if streamManager.sendAudioData(audioData) == false {
-    <#Could not send audio data#>
+    print("Could not send Audio Data")
 }
 ```
 !@
@@ -124,7 +159,7 @@ if (sdlManager.getAudioStreamManager() != null) {
 ```
 
 #### Stopping the Audio Stream
-When the stream is complete, or you receive `HMI_NONE`, you should stop the stream by calling:
+When the stream is complete, or you receive HMI_NONE, you should stop the stream by calling:
 
 ```java
 sdlManager.getAudioStreamManager().stopAudioStream(new CompletionListener() {

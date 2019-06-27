@@ -125,11 +125,19 @@ Subscribing to vehicle data allows you to get notifications whenever new data is
 
 ##### Objective-C
 ```objc
+// sdl_ios v6.3+
+[self.sdlManager subscribeToRPC:SDLDidReceiveVehicleDataNotification withObserver:self selector:@selector(vehicleDataAvailable:)];
+
+// Pre sdl_ios v6.3
 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(vehicleDataAvailable:) name:SDLDidReceiveVehicleDataNotification object:nil];
 ```
 
 ##### Swift
 ```swift
+// sdl_ios v6.3+
+sdlManager.subscribe(to: .SDLDidReceiveVehicleData, observer: self, selector: #selector(vehicleDataAvailable(_:)))
+
+// Pre sdl_ios v6.3
 NotificationCenter.default.addObserver(self, selector: #selector(vehicleDataAvailable(_:)), name: .SDLDidReceiveVehicleData, object: nil)
 ```
 
