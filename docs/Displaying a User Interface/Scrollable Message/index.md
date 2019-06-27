@@ -92,10 +92,10 @@ String scrollableMessageText = "Lorem ipsum dolor sit amet, consectetur adipisci
 		
 // Create SoftButtons
 SoftButton softButton1 = new SoftButton(SoftButtonType.SBT_TEXT, 0);
-softButton1.setText("SoftButton1");
+softButton1.setText("Button 1");
 
 SoftButton softButton2 = new SoftButton(SoftButtonType.SBT_TEXT, 1);
-softButton2.setText("SoftButton2");
+softButton2.setText("Button 2");
 
 // Create SoftButton Array
 List<SoftButton> softButtonList = new ArrayList<>();
@@ -112,4 +112,24 @@ scrollableMessage.setSoftButtons(softButtonList);
 sdlManager.sendRPC(scrollableMessage);
 
 ```
+
+To listen for `OnButtonPress` Events for `SoftButton`s, we need to add a listener that listens for their Id's:
+
+```java
+sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNotificationListener() {
+	@Override
+	public void onNotified(RPCNotification notification) {
+		OnButtonPress onButtonPress = (OnButtonPress) notification;
+		switch (onButtonPress.getCustomButtonName()){
+			case 0:
+				Log.i(TAG, "Button 1 Pressed");
+				break;
+			case 1:
+				Log.i(TAG, "Button 2 Pressed");
+				break;
+		}
+	}
+});
+```
+
 !@
