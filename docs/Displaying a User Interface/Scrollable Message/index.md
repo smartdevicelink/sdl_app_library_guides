@@ -98,9 +98,7 @@ SoftButton softButton2 = new SoftButton(SoftButtonType.SBT_TEXT, 1);
 softButton2.setText("Button 2");
 
 // Create SoftButton Array
-List<SoftButton> softButtonList = new ArrayList<>();
-softButtonList.add(softButton1);
-softButtonList.add(softButton2);
+List<SoftButton> softButtonList = Arrays.asList(softButton1, softButton2);
 
 // Create ScrollableMessage Object
 ScrollableMessage scrollableMessage = new ScrollableMessage();
