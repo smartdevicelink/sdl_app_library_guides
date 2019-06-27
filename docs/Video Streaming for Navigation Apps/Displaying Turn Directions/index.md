@@ -28,7 +28,7 @@ turnByTurn.turnIcon = turnIcon;
 __weak typeof(self) weakSelf = self;
 [self.sdlManager sendRequest:turnByTurn withResponseHandler:^(SDLRPCRequest *request, SDLRPCResponse *response, NSError *error) {
     if (![response.resultCode isEqualToEnum:SDLResultSuccess]) {
-        NSLog(@"Error sending TBT");
+        <#Error sending ShowConstantTBT#>
         return;
     }
 
@@ -36,9 +36,11 @@ __weak typeof(self) weakSelf = self;
     SDLAlertManeuver* alertManeuver = [[SDLAlertManeuver alloc] initWithTTS:@"In 3 miles turn right" softButtons:nil];
     [strongSelf.sdlManager sendRequest:alertManeuver withResponseHandler:^(SDLRPCRequest *request, SDLRPCResponse *response, NSError *error) {
         if (![response.resultCode isEqualToEnum:SDLResultSuccess]) {
-            NSLog(@"Error sending AlertManeuver.");
+            <#Error sending AlertManeuver#>
             return;
         }
+
+        <#Both ShowConstantTBT and AlertManeuver were sent successfully#>
     }];
 }];
 ```
@@ -53,19 +55,21 @@ turnByTurn.navigationText1 = "Turn Right"
 turnByTurn.navigationText2 = "3 mi"
 turnByTurn.turnIcon = turnIcon
 
-sdlManager.send(request: turnByTurn) { [weak self] (request, response, error) in
-    if response?.resultCode.isEqual(to: .success) == false {
-        print("Error sending TBT.")
+sdlManager.send(request: turnByTurn) { (request, response, error) in
+    guard response?.resultCode == .success else {
+        <#Error sending ShowConstantTBT#>
         return
     }
 
     let alertManeuver = SDLAlertManeuver(tts: "In 3 miles turn right", softButtons: nil)
-    self.sdlManager.send(alertManeuver) { (request, response, error) in
-        if response?.resultCode.isEqual(to: .success) == false {
-            print("Error sending AlertManeuver.")
-            return
+    self.sdlManager.send(request: alertManeuver, responseHandler: { (request, response, error) in
+        guard response?.resultCode == .success else { 
+            <#Error sending AlertManeuver#>
+            return 
         }
-    }
+
+        <#Both ShowConstantTBT and AlertManeuver were sent successfully#>
+    })
 }
 ```
 !@
