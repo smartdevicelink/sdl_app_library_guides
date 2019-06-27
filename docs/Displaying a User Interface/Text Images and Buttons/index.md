@@ -142,7 +142,7 @@ To see if soft buttons support images you should check the @![iOS] `softButtonCa
 @![iOS]
 #### Objective-C
 ```objc
-NSArray<SDLSoftButtonCapabilities *> *softButtonCapabilities = self.sdlManager.systemCapabilityManager.softButtonCapabilities
+NSArray<SDLSoftButtonCapabilities *> *softButtonCapabilities = self.sdlManager.systemCapabilityManager.softButtonCapabilities;
 ```
 #### Swift
 ```swift
@@ -171,7 +171,7 @@ let softButton = SDLSoftButtonObject(name: @"<#Button Name#>", state: imageState
     <#Button Selected#>
 }
 
-sdlManager.screenManager.softButtonObjects = [softButton];
+sdlManager.screenManager.softButtonObjects = [softButton]
 ```
 !@
 
@@ -197,7 +197,7 @@ let softButton = SDLSoftButtonObject(name: @"<#Button Name#>", state: state) { (
     <#Button Selected#>
 }
 
-sdlManager.screenManager.softButtonObjects = [softButton];
+sdlManager.screenManager.softButtonObjects = [softButton]
 ```
 !@
 
@@ -273,7 +273,7 @@ self.sdlManager.screenManager.softButtonObjects = @[];
 
 #### Swift
 ```swift
-self.sdlManager.screenManager.softButtonObjects = [];
+self.sdlManager.screenManager.softButtonObjects = []
 ```
 !@
 
