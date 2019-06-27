@@ -84,56 +84,32 @@ sdlManager.send(scrollableMessage)
 !@
 
 @![android,javaSE,javaEE]
+
 ```java
-// Create SoftButton Array
-List<SoftButtonObject> softButtonObjects = new ArrayList<SoftButtonObject>;
 
 // Create Message To Display
-String scrollableMessageText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Vestibulum mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare. Purus in massa tempor nec feugiat nisl pretium fusce id. Pharetra convallis posuere morbi leo urna molestie at elementum eu. Dictum sit amet justo donec enim diam."
-
+String scrollableMessageText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Vestibulum mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare. Purus in massa tempor nec feugiat nisl pretium fusce id. Pharetra convallis posuere morbi leo urna molestie at elementum eu. Dictum sit amet justo donec enim diam.";
+		
 // Create SoftButtons
-SoftButtonState softButtonState1 = new SoftButtonState("state1", "state1", new SdlArtwork("state1.png", FileType.GRAPHIC_PNG, R.drawable.state1, true));
-SoftButtonState softButtonState2 = new SoftButtonState("state2", "state2", new SdlArtwork("state2.png", FileType.GRAPHIC_PNG, R.drawable.state2, true));
+SoftButton softButton1 = new SoftButton(SoftButtonType.SBT_TEXT, 0);
+softButton1.setText("SoftButton1");
 
-SoftButtonObject softButtonObject1 = new SoftButtonObject("Button 1", softButtonState1, null);
-SoftButtonObject softButtonObject2 = new SoftButtonObject("Button 2", softButtonState2, null);
+SoftButton softButton2 = new SoftButton(SoftButtonType.SBT_TEXT, 1);
+softButton2.setText("SoftButton2");
 
-// Add Event Listeners for buttons
-softButtonObject1.setOnEventListener(new SoftButtonObject.OnEventListener() {
-@Override
-public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
-softButtonObject.transitionToNextState();
-}
-
-@Override
-public void onEvent(SoftButtonObject softButtonObject, OnButtonEvent onButtonEvent) {
-
-}
-});
-
-softButtonObject2.setOnEventListener(new SoftButtonObject.OnEventListener() {
-@Override
-public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
-softButtonObject.transitionToNextState();
-}
-
-@Override
-public void onEvent(SoftButtonObject softButtonObject, OnButtonEvent onButtonEvent) {
-
-}
-});
-
-//Add to button array 
-softButtonObjects.add(softButtonObject1);
-softButtonObjects.add(softButtonObject2);
+// Create SoftButton Array
+List<SoftButton> softButtonList = new ArrayList<>();
+softButtonList.add(softButton1);
+softButtonList.add(softButton2);
 
 // Create ScrollableMessage Object
 ScrollableMessage scrollableMessage = new ScrollableMessage();
 scrollableMessage.setScrollableMessageBody(scrollableMessageText);
-scrollableMessage.setTimeout(50000)
-scrollableMessage.setSoftButtons(softButtonObjects)
+scrollableMessage.setTimeout(50000);
+scrollableMessage.setSoftButtons(softButtonList);
 
 // Send the scrollable message
 sdlManager.sendRPC(scrollableMessage);
+
 ```
 !@
