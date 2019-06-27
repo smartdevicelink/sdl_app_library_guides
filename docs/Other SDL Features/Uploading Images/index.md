@@ -24,7 +24,7 @@ __weak typeof (self) weakSelf = self;
     if (!success) {
         <#Manager errored while starting up#>
         return;
-}
+    }
 
     SDLDisplayCapabilities *displayCapabilities = weakSelf.sdlManager.systemCapabilityManager.displayCapabilities;
     BOOL graphicsSupported = (displayCapabilities != nil) ? displayCapabilities.graphicSupported.boolValue : NO;
