@@ -37,7 +37,7 @@ There are several customizations you can make to `CarWindow` to optimize it for 
 ### Mirroring the Device Screen vs. Off-Screen UI
 It is recommended that you use an off-screen view controller for your UI. This view controller will appear on-screen in the car, while remaining off-screen on the device. It is possible to mirror your device screen, however we strongly recommend this course of action.
 
-### Off-Screen
+#### Off-Screen
 To set an off-screen view controller all you have to do is instantiate a new `UIViewController` class and use it to set the `rootViewController`. 
 
 ##### Objective-C
@@ -52,7 +52,7 @@ let offScreenViewController = <#Aquire a UIViewController#>
 sdlManager.streamManager?.rootViewController = offScreenViewController
 ```
 
-### Mirroring the Device Screen
+#### Mirroring the Device Screen
 If you must use mirroring to stream video please be aware of the following limitations.
 
 1. Getting the app's topmost view controller using `UIApplication.shared.keyWindow.rootViewController` will not work as this will give you SDL's lock screen view controller. The projected image you see in the car will be distorted because the view controller you want to project will not be resized correctly. Instead, the `rootViewController` should be set in the `viewDidAppear:animated` method of the `UIViewController`.
