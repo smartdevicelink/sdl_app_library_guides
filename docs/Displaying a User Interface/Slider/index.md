@@ -1,5 +1,5 @@
 # Slider
-An @![iOS]`SDLSlider`!@@![android,javaSE,javaEE]`Slider`!@ creates a full screen or pop-up overlay (depending on platform) that a user can control. There are two main @![iOS]`SDLSlider`!@@![android,javaSE,javaEE]`Slider`!@ layouts, one with a static footer and one with a dynamic footer.  
+A @![iOS]`SDLSlider`!@@![android,javaSE,javaEE]`Slider`!@ creates a full screen or pop-up overlay (depending on platform) that a user can control. There are two main @![iOS]`SDLSlider`!@@![android,javaSE,javaEE]`Slider`!@ layouts, one with a static footer and one with a dynamic footer.  
 
 !!! NOTE
 The slider will persist on the screen until the timeout has elapsed or the user dismisses the slider by selecting a position or canceling.
