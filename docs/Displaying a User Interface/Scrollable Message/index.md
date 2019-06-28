@@ -1,5 +1,5 @@
 # Scrollable Message
-An @![iOS]`SDLScrollableMessage`!@@![android,javaSE,javaEE]`ScrollableMessage`!@ creates an overlay containing a large block of formatted text that can be scrolled. @![iOS]`SDLScrollableMessage`!@@![android,javaSE,javaEE]`ScrollableMessage`!@ contains a body of text, a message timeout, and up to 8 soft buttons depending on head unit. You must check the `DisplayCapabilities` to get the max number of `SoftButtons` allowed by the head unit for a `ScrollableMessage`.
+A @![iOS]`SDLScrollableMessage`!@@![android,javaSE,javaEE]`ScrollableMessage`!@ creates an overlay containing a large block of formatted text that can be scrolled. @![iOS]`SDLScrollableMessage`!@@![android,javaSE,javaEE]`ScrollableMessage`!@ contains a body of text, a message timeout, and up to 8 soft buttons depending on head unit. You must check the `DisplayCapabilities` to get the max number of `SoftButtons` allowed by the head unit for a `ScrollableMessage`.
 
 You simply create @![iOS]an `SDLScrollableMessage`!@@![android,javaSE,javaEE]a `ScrollableMessage`!@ RPC request and send it to display the Scrollable Message.
 
@@ -111,7 +111,7 @@ sdlManager.sendRPC(scrollableMessage);
 
 ```
 
-To listen for `OnButtonPress` Events for `SoftButton`s, we need to add a listener that listens for their Id's:
+To listen for `OnButtonPress` events for `SoftButton`s, we need to add a listener that listens for their Id's:
 
 ```java
 sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNotificationListener() {
