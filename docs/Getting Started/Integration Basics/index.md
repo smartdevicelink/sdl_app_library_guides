@@ -595,33 +595,6 @@ The SDL Java library supports Java 7 and above.
 !!!
 !@
  
-@![android]
-## Required System Permissions
-In the AndroidManifest for our sample project we need to ensure we have the following system permissions: 
-
-* [Internet](https://developer.android.com/reference/android/Manifest.permission.html#INTERNET) - Used by the mobile library to communicate with a SDL Server
-* [Bluetooth](https://developer.android.com/reference/android/Manifest.permission.html#BLUETOOTH) - Primary transport for SDL communication between the device and the vehicle's head-unit
-* [Access Network State](https://developer.android.com/reference/android/Manifest.permission.html#ACCESS_NETWORK_STATE) - Required to check if WiFi is enabled on the device
-
-```xml
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.company.mySdlApplication">
-    
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-</manifest>
-```
-
-!!! NOTE
-If the app is targeting Android P (API Level 28) or higher, the Android Manifest file should also have the following permission to allow the app to start a foreground service:
-
-```xml
-<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-```
-!!!
-!@
 
 @![android,javaSE,javaEE]
 ## SmartDeviceLink Service
