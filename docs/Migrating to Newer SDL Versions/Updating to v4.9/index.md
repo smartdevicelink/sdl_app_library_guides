@@ -35,11 +35,11 @@ VoiceCommand voiceCommand2 = new VoiceCommand(list2, new VoiceCommandSelectionLi
 sdlManager.getScreenManager().setVoiceCommands(Arrays.asList(voiceCommand1,voiceCommand2));
 ```
 
-## Menus
+## Menu Manager
 
 Menus have now become simpler with the `MenuManager`, which is accessed via the `ScreenManager`. The cells, called `MenuCell`'s contain 2 constructors. One is for a cell itself, and the other is a cell that contains a sub-menu. Note that currently SmartDeviceLink (SDL) only supports sub-menus to the depth of 1.
 
-`MenuCell`s contain a `MenuSelectionListener` which informs you that the cell has been triggered, so that you might perform an action based on the cell selected.
+`MenuCell`s contain a `MenuSelectionListener` which informs you that the cell has been triggered, so that you might perform an action based on the cell selected. Note that you can add images and voice commands to menu cells.
 
 !!! NOTE
 When submitting a list of Menu cells, or adding a list of sub cells to a menu cell, the order in which the cells will appear from top to bottom will be the order in which they are in the list.
@@ -81,3 +81,30 @@ MenuCell mainCell2 = new MenuCell("Test Cell 3 (sub menu)", null, Arrays.asList(
 // Send the entire menu off to be created
 sdlManager.getScreenManager().setMenu(Arrays.asList(mainCell1, mainCell2));
 ```
+
+## Choice Set Manager
+
+Previously it required a lot of code to use `PerformInteraction`s with SDL. To alleviate some of this pain, we have introduced the Choice Set Manager, which is accessible via the `ScreenManager`. Because the Choice Set Manager covers so many items, we will do a brief overview here, and you may continue to the "Popup Menus and Keyboards" guide within the "Displaying a User Interface" folding menu.
+
+There are 2 main use cases for using this manager, one is to display a choice set, and the other is to display a keyboard. 
+
+### Choice Set
+
+Displaying a choice set is achieved by creating some `ChoiceCell`s. If you know what your choices will be, we recommend using the `preloadChoices` method. This will ensure your `ChoiceSet` is ready to be displayed when you want to display it, and your user is not kept waiting. You can preload cells as follows:
+
+```java
+// create some choice cells
+ChoiceCell cell1 = new ChoiceCell("Item 1");
+ChoiceCell cell2 = new ChoiceCell("Item 2");
+ChoiceCell cell3 = new ChoiceCell("Item 3");
+
+// create the array of choice cells
+choiceCellList = new ArrayList<>(Arrays.asList(cell1,cell2,cell3));
+
+// pre-load the cells on the head unit
+sdlManager.getScreenManager().preloadChoices(choiceCellList, null);
+```
+
+!!! NOTE
+You will want to reference this array of cells when presenting your choice set later (even if you add more cells). This is why we are setting this list to a variable for now.
+!!!
