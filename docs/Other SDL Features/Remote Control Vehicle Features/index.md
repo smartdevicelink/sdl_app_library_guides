@@ -293,7 +293,7 @@ The notification listener should be added before sending the @![iOS]`SDLGetInter
 @![iOS]
 ##### Objective-C
 ```objc
-[NSNotificationCenter.defaultCenter addObserverForName:SDLDidReceiveInteriorVehicleDataNotification object:nil queue:NSOperationQueue.mainQueue usingBlock:^(NSNotification * _Nonnull note) {
+[self.sdlManager subscribeToRPC:SDLDidReceiveInteriorVehicleDataNotification withBlock:^(__kindof SDLRPCMessage * _Nonnull message) {
     SDLRPCNotificationNotification *dataNotification = (SDLRPCNotificationNotification *)note;
     SDLOnInteriorVehicleData *onInteriorVehicleData = (SDLOnInteriorVehicleData *)dataNotification.notification;
     if (onInteriorVehicleData == nil) { return; }
@@ -313,9 +313,9 @@ SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData 
 
 ##### Swift
 ```swift
-NotificationCenter.default.addObserver(forName: .SDLDidReceiveInteriorVehicleData, object: nil, queue: OperationQueue.main) { (notification) in
-    guard let dataNotification = notification as? SDLRPCNotificationNotification,
-        let onInteriorVehicleData = dataNotification.notification as? SDLOnInteriorVehicleData else { return }
+sdlManager.subscribe(to: .SDLDidReceiveInteriorVehicleData) { (message) in
+    let onInteriorVehicleData = message as? SDLOnInteriorVehicleData else { return }
+
     // This block will now be called whenever vehicle data changes
     // NOTE: If you subscibe to multiple modules, all the data will be sent here. You will have to split it out based on `onInteriorVehicleData.moduleData.moduleType` yourself.
     <#Code#>

@@ -456,21 +456,34 @@ Handling app service subscribers is a two step process. First, you must register
 First, you will need to register for the notification of a `GetAppServiceDataRequest` being received by your application.
 
 @![iOS]
-
 ##### Objective-C
 ```objc
+// sdl_ios v6.3+
+[self.sdlManager subscribeToRPC:SDLDidReceiveGetAppServiceDataRequest withBlock:^(__kindof SDLRPCMessage * _Nonnull message) {
+    SDLGetAppServiceData *getAppServiceRequest = message;
+
+    <#Use the request#>
+}];
+
+// Pre sdl_ios v6.3
 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appServiceDataRequestReceived:) name:SDLDidReceiveGetAppServiceDataRequest object:nil];
 ```
 
 ##### Swift
 ```swift
+// sdl_ios v6.3+
+sdlManager.subscribe(to: SDLDidReceiveGetAppServiceDataRequest) { (message) in
+    guard let getAppServiceRequest = message as? SDLGetAppServiceData else { return }
+
+    <#Use the request#>
+}
+
+// Pre sdl_ios v6.3
 NotificationCenter.default.addObserver(self, selector: #selector(appServiceDataRequestReceived(_:)), name: SDLDidReceiveGetAppServiceDataRequest, object: nil)
 ```
 !@
 
 @![android,javaSE,javaEE]
-
-##### Java
 ```java
 // Get App Service Data Request Listener
 sdlManager.addOnRPCRequestListener(FunctionID.GET_APP_SERVICE_DATA, new OnRPCRequestListener() {
@@ -486,7 +499,6 @@ sdlManager.addOnRPCRequestListener(FunctionID.GET_APP_SERVICE_DATA, new OnRPCReq
 Second, you need to respond to the notification when you receive it with your app service data. This means that you will need to store your current service data after your most recent update using `OnAppServiceData` (see the section Updating Your Service Data).
 
 @![iOS]
-
 ##### Objective-C
 ```objc
 - (void)appServiceDataRequestReceived:(SDLRPCRequestNotification *)request {
@@ -521,7 +533,6 @@ Second, you need to respond to the notification when you receive it with your ap
 !@
 
 @![android,javaSE,javaEE]
-##### Java
 ```java
 // Get App Service Data Request Listener
 sdlManager.addOnRPCRequestListener(FunctionID.GET_APP_SERVICE_DATA, new OnRPCRequestListener() {
@@ -567,7 +578,7 @@ SDLAppServiceManifest *manifest = [[SDLAppServiceManifest alloc] init];
 NSNumber *buttonPressRPCID = [[SDLFunctionID sharedInstance] functionIdForName:SDLRPCFunctionNameButtonPress];
 manifest.handledRPCs = @[buttonPressRPCID];
 
-[NSNotificationCenter.defaultCenter addObserver:self selector:@selector(buttonPressRequestReceived:) name:SDLDidReceiveButtonPressRequest object:nil];
+[self.sdlManager subscribeToRPC:SDLDidReceiveButtonPressRequest withObserver:self selector:@selector(buttonPressRequestReceived:)];
 
 - (void)buttonPressRequestReceived:(SDLRPCRequestNotification *)request {
     SDLButtonPress *buttonPressRequest = (SDLButtonPress *)request.request;
@@ -591,7 +602,7 @@ let manifest = SDLAppServiceManifest()
 let buttonPressRPCID = SDLFunctionID.sharedInstance().functionId(forName: .buttonPress)
 manifest.handledRPCs = [buttonPressRPCID]
 
-NotificationCenter.default.addObserver(self, selector: #selector(buttonPressRequestReceived(_:)), name: SDLDidReceiveButtonPressRequest, object: nil)
+sdlManager.subscribe(to: SDLDidReceiveButtonPressRequest, observer: self, selector: #selector(buttonPressRequestReceived(_:)))
 
 @objc private func buttonPressRequestReceived(_ notification: SDLRPCRequestNotification) {
     guard let interactionRequest = notification.request as? SDLButtonPress else { return }
@@ -650,7 +661,7 @@ In order to support actions through SDL services, you will need to observe and r
 ##### Objective-C
 ```objc
 // Subscribe to PerformAppServiceInteraction requests
-[NSNotificationCenter.defaultCenter addObserver:self selector:@selector(performAppServiceInteractionRequestReceived:) name:SDLDidReceivePerformAppServiceInteractionRequest object:nil];
+[self.sdlManager subscribeToRPC:SDLDidReceivePerformAppServiceInteractionRequest withObserver:self selector:@selector(performAppServiceInteractionRequestReceived:)];
 
 - (void)performAppServiceInteractionRequestReceived:(SDLRPCRequestNotification *)notification {
     SDLPerformAppServiceInteraction *interactionRequest = notification.request;
@@ -680,7 +691,7 @@ In order to support actions through SDL services, you will need to observe and r
 ##### Swift
 ```swift
 // Subscribe to PerformAppServiceInteraction requests
-NotificationCenter.default.addObserver(self, selector: #selector(performAppServiceInteractionRequestReceived(_:)), name: SDLDidReceivePerformAppServiceInteractionRequest, object: nil)
+sdlManager.subscribe(to: SDLDidReceivePerformAppServiceInteractionRequest, observer: self, selector: #selector(performAppServiceInteractionRequestReceived(_:)))
 
 @objc private func performAppServiceInteractionRequestReceived(_ notification: SDLRPCRequestNotification) {
     guard let interactionRequest = notification.request as? SDLPerformAppServiceInteraction else { return }
