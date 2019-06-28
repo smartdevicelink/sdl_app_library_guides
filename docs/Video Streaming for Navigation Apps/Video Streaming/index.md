@@ -34,16 +34,13 @@ There are several customizations you can make to `CarWindow` to optimize it for 
         };
 
 
-### Showing a New View Controller
-Simply update the streaming media manager's `rootViewController` to the new view controller. This will also automatically update the [haptic parser](Video Streaming for Navigation Apps/Supporting Haptic Input).
-
 ### Mirroring the Device Screen vs. Off-Screen UI
 It is recommended that you use an off-screen view controller for your UI. This view controller will appear on-screen in the car, while remaining off-screen on the device. It is possible to mirror your device screen, however we strongly recommend this course of action.
 
 ### Off-Screen
 To set an off-screen view controller all you have to do is instantiate a new `UIViewController` class and use it to set the `rootViewController`. 
 
-#### Objective-C
+##### Objective-C
 ```objc
 UIViewController *offScreenViewController = <#Aquire a UIViewController#>;
 self.sdlManager.streamManager.rootViewController = offScreenViewController;
@@ -55,7 +52,7 @@ let offScreenViewController = <#Aquire a UIViewController#>
 sdlManager.streamManager?.rootViewController = offScreenViewController
 ```
 
-## Mirroring the Device Screen
+### Mirroring the Device Screen
 If you must use mirroring to stream video please be aware of the following limitations.
 
 1. Getting the app's topmost view controller using `UIApplication.shared.keyWindow.rootViewController` will not work as this will give you SDL's lock screen view controller. The projected image you see in the car will be distorted because the view controller you want to project will not be resized correctly. Instead, the `rootViewController` should be set in the `viewDidAppear:animated` method of the `UIViewController`.
@@ -66,6 +63,10 @@ If mirroring your device's screen, the `rootViewController` should only be set a
 
 If setting the `rootViewController` when the app returns to the foreground, the app should register for the `UIApplicationDidBecomeActive` notification and not the `UIApplicationWillEnterForeground` notification. Setting the frame after a notification from the latter can also cause weird behavior when setting the new frame.
 !!!
+
+### Showing a New View Controller
+Simply update the streaming media manager's `rootViewController` to the new view controller. This will also automatically update the [haptic parser](Video Streaming for Navigation Apps/Supporting Haptic Input).
+
 
 ## Sending Raw Video Data
 If you decide to send raw video data instead of relying on the `CarWindow` API to generate that video data from a view controller, you must maintain the lifecycle of the video stream as there are limitations to when video is allowed to stream. The app's HMI state on the head unit and the app's application state on the device determines whether video can stream. Due to an iOS limitation, video cannot be streamed when the app on the device is no longer in the foreground and/or the device is locked/sleeping. 
