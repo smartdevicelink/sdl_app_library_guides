@@ -138,22 +138,22 @@ lockScreenConfig.setCustomView(customViewInt);
 ## Disabling the Lock Screen
 Please note that a lock screen will be required by most OEMs. You can disable the lock screen manager, but you will then be required to implement your own logic for showing and hiding the lock screen. This is not recommended as the @![iOS]`SDLLockScreenConfiguration` !@ @![android]`LockScreenConfig`!@ adheres to most OEM lock screen requirements. However, if you must create a lock screen manager from scratch, the library's lock screen manager can be disabled via the @![iOS]`SDLLockScreenConfiguration`!@ @![android]`LockScreenConfig`!@ as follows:
 
-@![android]
-```java
-lockScreenConfig.setEnabled(false);
-```
-!@
-
 @![iOS]
 ##### Objective-C
 ```objc
 SDLLockScreenConfiguration *lockScreenConfiguration = [SDLLockScreenConfiguration enabledConfiguration];
 lockScreenConfiguration.enableAutomaticLockScreen = NO;
 ```
-
+##### Swift
 ```swift
 let lockScreenConfiguration = SDLLockScreenConfiguration.enabledConfiguration()
 lockScreenConfiguration.enableAutomaticLockScreen = false
+```
+!@
+
+@![android]
+```java
+lockScreenConfig.setEnabled(false);
 ```
 !@
 
@@ -166,7 +166,7 @@ The lock screen manager is configured to dismiss the lock screen when it is safe
 SDLLockScreenConfiguration *lockScreenConfiguration = [SDLLockScreenConfiguration enabledConfiguration];
 lockScreenConfiguration.showInOptionalState = YES;
 ```
-
+##### Swift
 ```swift
 let lockScreenConfiguration = SDLLockScreenConfiguration.enabledConfiguration()
 lockScreenConfiguration.showInOptionalState = true
