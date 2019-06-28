@@ -1,6 +1,6 @@
 # Video Streaming
 @![iOS]
-To stream video from a SDL app use the `SDLStreamingMediaManager` class. A reference to this class is available from the `SDLManager`. You can choose to create your own video streaming manager, or you can use the `CarWindow` API to easily stream video to the head unit.
+To stream video from a SDL app use the `SDLStreamingMediaManager` class. A reference to this class is available from the `SDLManager`. You can choose to create your own video streaming manager or you can use the `CarWindow` API to easily stream video to the head unit.
 
 !!! NOTE
 Due to an iOS limitation, video can not be streamed when the app on the device is backgrounded or when the device is sleeping/locked. Text will automatically be displayed telling the user that they must bring your app to the foreground.
@@ -14,8 +14,8 @@ Transports are automatically handled for you. As of SDL v6.1, the iOS library wi
 
 To start, you will have to set a `rootViewController`, which can easily be set using one of the convenience initializers: `autostreamingInsecureConfigurationWithInitialViewController:` or `autostreamingSecureConfigurationWithSecurityManagers:initialViewController:`
 
-!!! NOTE
-The View Controller you set to the `rootViewController` must be a subclass of `SDLCarWindowViewController` or have only one `supportedInterfaceOrientation`. The `SDLCarWindowViewController` prevents the `rootViewController` from rotating. This is necessary because rotation between landscape and portrait modes can cause the app to crash while the `CarWindow` API is capturing an image.
+!!! MUST
+The view controller you are streaming must be a subclass of `SDLCarWindowViewController` or have only one `supportedInterfaceOrientation`. The `SDLCarWindowViewController` class prevents the `rootViewController` from rotating. This is necessary because rotation between landscape and portrait modes can cause the app to crash while the `CarWindow` API is capturing an image.
 !!!
 
 There are several customizations you can make to `CarWindow` to optimize it for your video streaming needs:
@@ -35,10 +35,31 @@ There are several customizations you can make to `CarWindow` to optimize it for 
 
 
 ### Showing a New View Controller
-Simply update `self.sdlManager.streamManager.rootViewController` to the new view controller. This will also update the [haptic parser](Video Streaming for Navigation Apps/Supporting Haptic Input).
+Simply update the streaming media manager's `rootViewController` to the new view controller. This will also automatically update the [haptic parser](Video Streaming for Navigation Apps/Supporting Haptic Input).
 
 ### Mirroring the Device Screen vs. Off-Screen UI
-It is recommended that you set the `rootViewController` to an off-screen view controller, i.e. you should instantiate a new `UIViewController` class and use it to set the `rootViewController`. This view controller will appear on-screen in the car, while remaining off-screen on the device. It is also possible, but not recommended, to display your on-device-screen UI to the car screen by setting the `rootViewController` to `UIApplication.sharedApplication.keyWindow.rootViewController`. However, if you mirror your device's screen, your app's UI will resize to match the head unit's screen size, thus making most of the app's UI off-screen.
+It is recommended that you use an off-screen view controller for your UI. This view controller will appear on-screen in the car, while remaining off-screen on the device. It is possible to mirror your device screen, however we strongly recommend this course of action.
+
+### Off-Screen
+To set an off-screen view controller all you have to do is instantiate a new `UIViewController` class and use it to set the `rootViewController`. 
+
+#### Objective-C
+```objc
+UIViewController *offScreenViewController = <#Aquire a UIViewController#>;
+self.sdlManager.streamManager.rootViewController = offScreenViewController;
+```
+
+##### Swift
+```swift
+let offScreenViewController = <#Aquire a UIViewController#>
+sdlManager.streamManager?.rootViewController = offScreenViewController
+```
+
+## Mirroring the Device Screen
+If you must use mirroring to stream video please be aware of the following limitations.
+
+1. Getting the app's topmost view controller using `UIApplication.shared.keyWindow.rootViewController` will not work as this will give you SDL's lock screen view controller. The projected image you see in the car will be distorted because the view controller you want to project will not be resized correctly. Instead, the `rootViewController` should be set in the `viewDidAppear:animated` method of the `UIViewController`.
+1. Configure your SDL app so the lock screen is [always visible](Getting Started > Adding the Lock Screen). If you do not do this, video streaming can stop when the device is rotated.
 
 !!! NOTE
 If mirroring your device's screen, the `rootViewController` should only be set after `viewDidAppear:animated` is called. Setting the `rootViewController` in `viewDidLoad` or `viewWillAppear:animated` can cause weird behavior when setting the new frame.
