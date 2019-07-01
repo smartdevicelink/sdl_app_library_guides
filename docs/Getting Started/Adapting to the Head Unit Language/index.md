@@ -1,5 +1,5 @@
 # Adapting to the Head Unit Language
-Since a head unit can support multiple languages, you may want to add support for more than one language to your SDL app. The SDL library allows you to check which language is currently be used by the head unit. If desired, the app's name and the app's text-to-speech (TTS) name can be customized to reflect the head unit's current language. If your app name is not part of the current lexicon, you should tell the VR system how a native speaker will pronounce your app name by setting the TTS name using [phonemes](https://en.wikipedia.org/wiki/Phoneme) from either the Microsoft SAPI phoneme set or from the LHPLUS phoneme set.
+Since a head unit can support multiple languages, you may want to add support for more than one language to your SDL app. The SDL library allows you to check which language is currently used by the head unit. If desired, the app's name and the app's text-to-speech (TTS) name can be customized to reflect the head unit's current language. If your app name is not part of the current lexicon, you should tell the VR system how a native speaker will pronounce your app name by setting the TTS name using [phonemes](https://en.wikipedia.org/wiki/Phoneme) from either the Microsoft SAPI phoneme set or from the LHPLUS phoneme set.
 
 ## Setting the Default Language
 The initial configuration of the @![iOS]`SDLManager`!@@![android,javaSE,javaEE]`SdlManager`!@ requires a default language when setting the @![iOS]`SDLLifecycleConfiguration`!@@![android,javaSE,javaEE]`Builder`!@. If not set, the SDL library uses American English (*EN_US*) as the default language. The connection will fail if the head unit does not support the `language` set in the @![iOS]`SDLLifecycleConfiguration`!@@![android,javaSE,javaEE]`Builder`!@. The `RegisterAppInterface` response RPC will return `INVALID_DATA` as the reason for rejecting the request.
@@ -73,14 +73,27 @@ func managerShouldUpdateLifecycle(toLanguage language: SDLLanguage) -> SDLLifecy
 @![android,javaSE,javaEE]
 
 ## Handling a Language Change
-
 When a user changes the language on a head unit, an `OnLanguageChange` notification will be sent from Core. Then your app will disconnect. In order for your app to automatically reconnect to the head unit, there are a few changes to make in the following files:
 
-* Local SDL Broadcast Receiver
 * Local SDL Service
+* Local SDL Broadcast Receiver
+
+### SDL Service
+We want to tell our local SDL Broadcast Receiver to restart the service when an `OnLanguageChange` notification is received from Core . To do so, add a notification listener as follows:
+
+```java
+sdlManager.addOnRPCNotificationListener(FunctionID.ON_LANGUAGE_CHANGE, new OnRPCNotificationListener() {
+    @Override
+    public void onNotified(RPCNotification notification) {
+        SdlService.this.stopSelf();
+        Intent intent = new Intent(TransportConstants.START_ROUTER_SERVICE_ACTION);
+        intent.putExtra(SdlReceiver.RECONNECT_LANG_CHANGE, true);
+        AndroidTools.sendExplicitBroadcast(context, intent, null);
+    }
+});
+```
 
 ### SDL Broadcast Receiver
-
 When the SDL Service's connection to core is closed, we want to tell our local SDL Broadcast Receiver to restart the SDL Service. To do this, first add a public String in your app's local SDL Broadcast Receiver class that can be included as an extra in a broadcast intent.
 
 `public static final String RECONNECT_LANG_CHANGE = "RECONNECT_LANG_CHANGE";`
@@ -119,21 +132,5 @@ public void onSdlEnabled(Context context, Intent intent) {
 	intent.setClass(context, SdlService.class);
 	context.startService(intent);
 }
-```
-
-### SDL Service
-
-We want to tell our local SDL Broadcast Receiver to restart the service when an `OnLanguageChange` notification is received from Core . To do so, add a notification listener as follows:
-
-```java
-sdlManager.addOnRPCNotificationListener(FunctionID.ON_LANGUAGE_CHANGE, new OnRPCNotificationListener() {
-    @Override
-    public void onNotified(RPCNotification notification) {
-        SdlService.this.stopSelf();
-        Intent intent = new Intent(TransportConstants.START_ROUTER_SERVICE_ACTION);
-        intent.putExtra(SdlReceiver.RECONNECT_LANG_CHANGE, true);
-        AndroidTools.sendExplicitBroadcast(context, intent, null);
-    }
-});
 ```
 !@
