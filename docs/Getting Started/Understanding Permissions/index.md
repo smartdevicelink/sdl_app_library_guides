@@ -107,6 +107,8 @@ let isAllowed = sdlManager.permissionManager.isRPCAllowed(<#RPC name#>)
 @![android,javaSE,javaEE]
 ```java
 boolean allowed = sdlManager.getPermissionManager().isRPCAllowed(FunctionID.SHOW);
+
+// You can also check if a permission parameter is allowed  
 boolean parameterAllowed = sdlManager.getPermissionManager().isPermissionParameterAllowed(FunctionID.GET_VEHICLE_DATA, GetVehicleData.KEY_RPM);
 ```
 !@
