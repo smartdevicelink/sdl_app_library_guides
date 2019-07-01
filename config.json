@@ -37,9 +37,6 @@
                     "name": "Understanding Permissions"
                 },
                 {
-                    "name": "Example Apps"
-                },
-                {
                     "name": "Using AOA Protocol",
                     "platforms": ["Android"]
                 },
@@ -55,6 +52,9 @@
                 {
                     "name": "Deploying to AWS",
                     "platforms": ["JavaEE"]
+                },
+                {
+                    "name": "Example Apps"
                 }
             ]
         },
