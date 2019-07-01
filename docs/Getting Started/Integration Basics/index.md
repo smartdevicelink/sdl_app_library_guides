@@ -750,6 +750,10 @@ The `sdlManager` must be shutdown properly in the `SdlService.onDestroy()` callb
 !!!
 !@
 
+!!! MUST
+A new instance of `SdlManager` should be created on every connection. `SdlManager` cannot be reused after getting disposed.
+!!!
+
 @![javaSE,javaEE]
 ```java
 public class SdlService {
