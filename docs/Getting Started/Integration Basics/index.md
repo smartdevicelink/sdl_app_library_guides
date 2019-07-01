@@ -753,9 +753,26 @@ The `sdlManager` must be shutdown properly in the `SdlService.onDestroy()` callb
 @![javaSE,javaEE]
 ```java
 public class SdlService {
-
+    
     //The manager handles communication between the application and SDL
     private SdlManager sdlManager = null;
+
+    public SdlService(BaseTransportConfig config){
+        buildSdlManager(config);
+    }
+
+    public void start() {
+        if(sdlManager != null){
+            sdlManager.start();
+        }
+    }
+
+    public void stop() {
+        if (sdlManager != null) {
+            sdlManager.dispose();
+            sdlManager = null;
+        }
+    }
 
     //...
 
@@ -771,16 +788,16 @@ public class SdlService {
             SdlManagerListener listener = new SdlManagerListener() {
 
                 @Override
-                public void onStart() {
+                public void onStart(SdlManager sdlManager) {
                     // After this callback is triggered the SdlManager can be used to interact with the connected SDL session (updating the display, sending RPCs, etc)
                 }
 
                 @Override
-                public void onDestroy() {
+                public void onDestroy(SdlManager sdlManager) {
                 }
 
                 @Override
-                public void onError(String info, Exception e) {
+                public void onError(SdlManager sdlManager, String info, Exception e) {
                 }
             };
 
@@ -1095,7 +1112,7 @@ The `onSdlEnabled` method will be the main start point for our SDL connection se
 !!!
 
 ### Main Activity
-Now that the basic connection infrastructure is in place, we should add methods to start the SdlService when our application starts. In `onCreate()` in your main activity, you need to call a method that will check to see if there is currently an SDL connection made. If there is one, the onSdlEnabled method will be called and we will follow the flow we already set up. In our `MainActivity.java` we need to check for an SDL connection:
+Now that the basic connection infrastructure is in place, we should add methods to start the `SdlService` when our application starts. In `onCreate()` in your main activity, you need to call a method that will check to see if there is currently an SDL connection made. If there is one, the `onSdlEnabled` method will be called and we will follow the flow we already set up:
 
 ```java
 public class MainActivity extends Activity {
