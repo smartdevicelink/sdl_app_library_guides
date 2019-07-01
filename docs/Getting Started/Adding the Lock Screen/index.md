@@ -28,17 +28,9 @@ Using the default lock screen is simple. Using the lock screen this way will aut
 
 @![iOS]
 ![Generic Lock Screen](/assets/GenericLockScreen.png)
-!@
 
-@![iOS]
 To do this, instantiate a new `SDLLockScreenConfiguration`:
-!@
 
-@![android]
-If you have implemented the SdlManager and have defined the SDLLockScreenActivity in your manifest but have not defined any lock screen configuration, you are already have a working default configuration.
-!@
-
-@![iOS]
 ##### Objective-C
 ```objc
 SDLLockScreenConfiguration *lockScreenConfiguration = [SDLLockScreenConfiguration enabledConfiguration];
@@ -49,6 +41,12 @@ SDLLockScreenConfiguration *lockScreenConfiguration = [SDLLockScreenConfiguratio
 let lockScreenConfiguration = SDLLockScreenConfiguration.enabled()
 ```
 !@
+
+@![android]
+If you have implemented the `SdlManager` and have defined the `SDLLockScreenActivity` in your manifest but have not defined any lock screen configuration, you are already have a working default configuration.
+![Generic Lock Screen](/assets/GenericLockScreen_Android.png)
+!@
+
 
 ## Customizing the Default Lock Screen
 If you would like to use the provided lock screen but would like to add your own appearance to it, we provide that as well. @![iOS]`SDLLockScreenConfiguration`!@ @![android]`LockScreenConfig`!@ allows you to customize the background color as well as your app's icon. If the app icon is not included, we will use the SDL logo.
@@ -136,14 +134,7 @@ lockScreenConfig.setCustomView(customViewInt);
 !@
 
 ## Disabling the Lock Screen Manager
-
 Please note that a lock screen will be required by most OEMs. You can disable the lock screen manager, but you will then be required to implement your own logic for showing and hiding the lock screen. This is not recommended as the @![iOS]`SDLLockScreenConfiguration` !@ @![android]`LockScreenConfig`!@ adheres to most OEM lock screen requirements. However, if you must create a lock screen manager from scratch, the library's lock screen manager can be disabled via the @![iOS]`SDLLockScreenConfiguration`!@ @![android]`LockScreenConfig`!@ as follows:
-
-@![android]
-```java
-lockScreenConfig.setEnabled(false);
-```
-!@
 
 @![iOS]
 ##### Objective-C
@@ -155,5 +146,11 @@ lockScreenConfiguration.enableAutomaticLockScreen = NO;
 ```swift
 let lockScreenConfiguration = SDLLockScreenConfiguration.enabledConfiguration()
 lockScreenConfiguration.enableAutomaticLockScreen = false
+```
+!@
+
+@![android]
+```java
+lockScreenConfig.setEnabled(false);
 ```
 !@
