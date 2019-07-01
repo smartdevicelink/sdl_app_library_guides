@@ -89,6 +89,9 @@
                     "name": "Media Clock"
                 },
                 {
+                    "name": "Slider"
+                },
+                {
                     "name": "Scrollable Message"
                 }
             ]
