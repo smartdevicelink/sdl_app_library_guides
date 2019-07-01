@@ -822,80 +822,6 @@ The `sdlManager` must be shutdown properly if this class is shutting down in the
 !!!
 !@
 
-@![javaEE]
-### Adding EJB and Websockets
-Create a new package where all the JavaEE-specific code will go. 
-
-The SDL Java library comes with a `CustomTransport` class which takes the role of sending messages between incoming sdl_core connections and your SDL application. You need to pass that class to the `SdlManager` builder to make the SDL Java library aware that you want to use your JavaEE websocket server as the transport.
-
-Create a Java class in the new package which will be the `SDLSessionBean` class. This class utilizes the `CustomTransport` class and EJB JavaEE API which will make it the entry point of your app when a connection is made. It will open up a websocket server at `/` and create stateful beans, where the bean represents the logic of your cloud app. Every new connection to this endpoint creates a new bean containing your app logic, allowing for load balancing across all the instances of your app that were automatically created. 
-
-```java
-import com.smartdevicelink.transport.CustomTransport;
-import javax.ejb.Stateful;
-import javax.websocket.*;
-import javax.websocket.server.ServerEndpoint;
-import java.io.IOException;
-import java.nio.ByteBuffer;
-
-@ServerEndpoint("/")
-@Stateful(name = "SDLSessionEJB")
-public class SDLSessionBean {
-
-    CustomTransport websocket;
-
-    public class WebSocketEE extends CustomTransport {
-        Session session;
-        public WebSocketEE(String address, Session session) {
-            super(address);
-            this.session = session;
-        }
-        public void onWrite(byte[] bytes, int i, int i1) {
-            try {
-                session.getBasicRemote().sendBinary(ByteBuffer.wrap(bytes));
-            }
-            catch (IOException e) {
-
-            }
-        }
-    }
-    
-    @OnOpen
-    public void onOpen (Session session) {
-        websocket = new WebSocketEE("http://localhost", session) {};
-        //TODO: pass your CustomTransport instance to your SDL app here
-    }
-
-    @OnMessage
-    public void onMessage (ByteBuffer message, Session session) {
-        websocket.onByteBufferReceived(message); //received message from core
-    }
-}
-```
-
-Unfortunately, [there's no way to get a client's IP address using the standard API](https://stackoverflow.com/a/23025059), so localhost is passed to the `CustomTransport` for now as the transport address (this is only used locally in the library so it is not necessary). 
-
-The `SDLSessionBean` class’s `@OnOpen` method is where you will start your app, and should call your entry of your application and invoke whatever is needed to start it. You need to pass the instantiated `CustomTransport` object to your application so that the connection can be passed into the `SdlManager`.
-
-The `SdlManager` will need you to create a `CustomTransportConfig`, pass in the `CustomTransport` instance from the `SDLSessionBean` instance, then set the `SdlManager` Builder’s transport type to that config. This will set your transport type into `CUSTOM` mode and will use your `CustomTransport` instance to handle the read and write operations.
-
-```java
-// Set transport config. builder is a SdlManager.Builder
-CustomTransportConfig transport = new CustomTransportConfig(websocket);
-builder.setTransportType(transport);
-```
-
-!!! IMPORTANT
-The `SDLSessionBean` should be inside a Java package other than the default package in order for it to work properly.
-!!!
-
-##### Add a New Artifact:
-
-* Right-click project -> Open Module Settings -> Artifacts -> + ->
-  Web Application: Archive -> for your war: exploded artifact which should already exist
-* Create Manifest. Apply + OK.
-* Run Build -> Build Artifacts to get a .war file in the /out folder.
-!@
 
 @![android,javaSE,javaEE]
 ### Determining SDL Support
@@ -1163,4 +1089,79 @@ private void startSdlService() {
     }
 }
 ```
+!@
+
+@![javaEE]
+### Adding EJB and Websockets
+Create a new package where all the JavaEE-specific code will go. 
+
+The SDL Java library comes with a `CustomTransport` class which takes the role of sending messages between incoming sdl_core connections and your SDL application. You need to pass that class to the `SdlManager` builder to make the SDL Java library aware that you want to use your JavaEE websocket server as the transport.
+
+Create a Java class in the new package which will be the `SDLSessionBean` class. This class utilizes the `CustomTransport` class and EJB JavaEE API which will make it the entry point of your app when a connection is made. It will open up a websocket server at `/` and create stateful beans, where the bean represents the logic of your cloud app. Every new connection to this endpoint creates a new bean containing your app logic, allowing for load balancing across all the instances of your app that were automatically created. 
+
+```java
+import com.smartdevicelink.transport.CustomTransport;
+import javax.ejb.Stateful;
+import javax.websocket.*;
+import javax.websocket.server.ServerEndpoint;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+
+@ServerEndpoint("/")
+@Stateful(name = "SDLSessionEJB")
+public class SDLSessionBean {
+
+    CustomTransport websocket;
+
+    public class WebSocketEE extends CustomTransport {
+        Session session;
+        public WebSocketEE(String address, Session session) {
+            super(address);
+            this.session = session;
+        }
+        public void onWrite(byte[] bytes, int i, int i1) {
+            try {
+                session.getBasicRemote().sendBinary(ByteBuffer.wrap(bytes));
+            }
+            catch (IOException e) {
+
+            }
+        }
+    }
+    
+    @OnOpen
+    public void onOpen (Session session) {
+        websocket = new WebSocketEE("http://localhost", session) {};
+        //TODO: pass your CustomTransport instance to your SDL app here
+    }
+
+    @OnMessage
+    public void onMessage (ByteBuffer message, Session session) {
+        websocket.onByteBufferReceived(message); //received message from core
+    }
+}
+```
+
+Unfortunately, [there's no way to get a client's IP address using the standard API](https://stackoverflow.com/a/23025059), so localhost is passed to the `CustomTransport` for now as the transport address (this is only used locally in the library so it is not necessary). 
+
+The `SDLSessionBean` class’s `@OnOpen` method is where you will start your app, and should call your entry of your application and invoke whatever is needed to start it. You need to pass the instantiated `CustomTransport` object to your application so that the connection can be passed into the `SdlManager`.
+
+The `SdlManager` will need you to create a `CustomTransportConfig`, pass in the `CustomTransport` instance from the `SDLSessionBean` instance, then set the `SdlManager` Builder’s transport type to that config. This will set your transport type into `CUSTOM` mode and will use your `CustomTransport` instance to handle the read and write operations.
+
+```java
+// Set transport config. builder is a SdlManager.Builder
+CustomTransportConfig transport = new CustomTransportConfig(websocket);
+builder.setTransportType(transport);
+```
+
+!!! IMPORTANT
+The `SDLSessionBean` should be inside a Java package other than the default package in order for it to work properly.
+!!!
+
+##### Add a New Artifact:
+
+* Right-click project -> Open Module Settings -> Artifacts -> + ->
+  Web Application: Archive -> for your war: exploded artifact which should already exist
+* Create Manifest. Apply + OK.
+* Run Build -> Build Artifacts to get a .war file in the /out folder.
 !@
