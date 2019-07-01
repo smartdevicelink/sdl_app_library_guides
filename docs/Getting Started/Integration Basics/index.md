@@ -856,11 +856,11 @@ public class SDLSessionBean {
 }
 ```
 
-Unfortunately, [there's no way to get a client's IP address using the standard API](https://stackoverflow.com/a/23025059), so localhost is passed to the CustomTransport for now as the transport address (this is only used locally in the library so it is not necessary). 
+Unfortunately, [there's no way to get a client's IP address using the standard API](https://stackoverflow.com/a/23025059), so localhost is passed to the `CustomTransport` for now as the transport address (this is only used locally in the library so it is not necessary). 
 
 The `SDLSessionBean` class’s `@OnOpen` method is where you will start your app, and should call your entry of your application and invoke whatever is needed to start it. You need to pass the instantiated `CustomTransport` object to your application so that the connection can be passed into the `SdlManager`.
 
-The SdlManager will need you to create a `CustomTransportConfig`, pass in the `CustomTransport` instance from the `SDLSessionBean` instance, then set the `SdlManager` Builder’s transport type to that config. This will set your transport type into `CUSTOM` mode and will use your `CustomTransport` instance to handle the read and write operations.
+The `SdlManager` will need you to create a `CustomTransportConfig`, pass in the `CustomTransport` instance from the `SDLSessionBean` instance, then set the `SdlManager` Builder’s transport type to that config. This will set your transport type into `CUSTOM` mode and will use your `CustomTransport` instance to handle the read and write operations.
 
 ```java
 // Set transport config. builder is a SdlManager.Builder
@@ -977,11 +977,11 @@ Some OEMs choose to implement custom router services. Setting the `sdl_custom_ro
 
 
 ## SmartDeviceLink Broadcast Receiver
-The Android implementation of the SdlManager relies heavily on the OS's bluetooth and USB intents. When the phone is connected to SDL and the router service has sent a connection intent, the app needs to create an SdlManager, which will bind to the already connected router service. As mentioned previously, the SdlManager cannot be re-used. When a disconnect between the app and SDL occurs, the current SdlManager must be disposed of and a new one created.
+The Android implementation of the `SdlManager` relies heavily on the OS's bluetooth and USB intents. When the phone is connected to SDL and the router service has sent a connection intent, the app needs to create an `SdlManager`, which will bind to the already connected router service. As mentioned previously, the `SdlManager` cannot be re-used. When a disconnect between the app and SDL occurs, the current `SdlManager` must be disposed of and a new one created.
 
-The SDL Android library has a custom broadcast receiver named `SdlBroadcastReceiver` that should be used as the base for your BroadcastReceiver. It is a child class of Android's BroadcastReceiver so all normal flow and attributes will be available. Two abstract methods will be automatically populate the class, we will fill them out soon.
+The SDL Android library has a custom broadcast receiver named `SdlBroadcastReceiver` that should be used as the base for your `BroadcastReceiver`. It is a child class of Android's `BroadcastReceiver` so all normal flow and attributes will be available. Two abstract methods will be automatically populate the class, we will fill them out soon.
 
-Create a new SdlBroadcastReceiver and name it appropriately, for this guide we are going to call it `SdlReceiver`:
+Create a new `SdlBroadcastReceiver` and name it appropriately, for this guide we are going to call it `SdlReceiver`:
 
 ```java
 public class SdlReceiver extends SdlBroadcastReceiver {
@@ -1011,7 +1011,7 @@ SdlBroadcastReceiver must call super if ```onReceive``` is overridden
 	}
 ```
 
-If you created the BroadcastReceiver using the Android Studio template then the service should have been added to your `AndroidManifest.xml` otherwise the receiver needs to be defined in the manifest. Regardless, the manifest needs to be edited so that the `SdlBroadcastReceiver` needs to respond to the following intents:
+If you created the `BroadcastReceiver` using the Android Studio template then the service should have been added to your `AndroidManifest.xml` otherwise the receiver needs to be defined in the manifest. Regardless, the manifest needs to be edited so that the `SdlBroadcastReceiver` needs to respond to the following intents:
 
 * [android.bluetooth.device.action.ACL_CONNECTED](https://developer.android.com/reference/android/bluetooth/BluetoothDevice.html#ACTION_ACL_CONNECTED)
 * sdl.router.startservice
@@ -1035,22 +1035,18 @@ If you created the BroadcastReceiver using the Android Studio template then the 
         </receiver>
     
     </application>
-    
-    <!-- Required to use the lock screen -->
-    <activity android:name="com.smartdevicelink.managers.lockscreen.SDLLockScreenActivity"
-                  android:launchMode="singleTop"/>
 
 </manifest>
 ```
 !!! NOTE
-The intent `sdl.router.startservice` is a custom intent that will come from the SdlRouterService to tell us that we have just connected to an SDL enabled piece of hardware.
+The intent `sdl.router.startservice` is a custom intent that will come from the `SdlRouterService` to tell us that we have just connected to an SDL enabled piece of hardware.
 !!!
 
 !!! MUST
 SdlBroadcastReceiver has to be exported, or it will not work correctly
 !!!
 
-Next, we want to make sure we supply our instance of the SdlBroadcastService with our local copy of the SdlRouterService. We do this by simply returning the class object in the method defineLocalSdlRouterClass:
+Next, we want to make sure we supply our instance of the `SdlBroadcastService` with our local copy of the `SdlRouterService`. We do this by simply returning the class object in the method `defineLocalSdlRouterClass`:
 
 ```java
 public class SdlReceiver extends SdlBroadcastReceiver {
@@ -1067,8 +1063,7 @@ public class SdlReceiver extends SdlBroadcastReceiver {
 }
 ```
 
-
-We want to start the SdlManager when an SDL connection is made via the `SdlRouterService`. We do this by taking action in the onSdlEnabled method:
+We want to start the `SdlManager` when an SDL connection is made via the `SdlRouterService`. We do this by taking action in the onSdlEnabled method:
 
 !!! MUST
 Apps must start their service in the foreground as of Android Oreo (API 26).
