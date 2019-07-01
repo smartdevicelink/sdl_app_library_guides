@@ -107,6 +107,7 @@ let isAllowed = sdlManager.permissionManager.isRPCAllowed(<#RPC name#>)
 @![android,javaSE,javaEE]
 ```java
 boolean allowed = sdlManager.getPermissionManager().isRPCAllowed(FunctionID.SHOW);
+boolean parameterAllowed = sdlManager.getPermissionManager().isPermissionParameterAllowed(FunctionID.GET_VEHICLE_DATA, GetVehicleData.KEY_RPM);
 ```
 !@
 
@@ -148,12 +149,30 @@ switch (groupStatus) {
         break;
 }
 ```
+
+The previous snippet will give a quick generic status for all permissions together. However, if developers want to get a more detailed result about the status of every permission or parameter in the group, they can use `getStatusOfPermissions` method:
+
+```java
+List<PermissionElement> permissionElements = new ArrayList<>();
+permissionElements.add(new PermissionElement(FunctionID.SHOW, null));
+permissionElements.add(new PermissionElement(FunctionID.GET_VEHICLE_DATA, Arrays.asList(GetVehicleData.KEY_RPM, GetVehicleData.KEY_AIRBAG_STATUS)));
+
+Map<FunctionID, PermissionStatus> status = sdlManager.getPermissionManager().getStatusOfPermissions(permissionElements);
+
+if (status.get(FunctionID.GET_VEHICLE_DATA).getIsRPCAllowed()){
+    // GetVehicleData RPC is allowed
+}
+
+if (status.get(FunctionID.GET_VEHICLE_DATA).getAllowedParameters().get(GetVehicleData.KEY_RPM)){
+    // rpm parameter in GetVehicleData RPC is allowed
+}
+```
 !@
 
 ### Observing Permissions
-@![iOS]
-If desired, you can set an observer for a group of permissions. The observer's handler will be called when the permissions for the group changes. If you want to be notified when the permission status of any of RPCs in the group change, set the `groupType` to `SDLPermissionGroupTypeAny`. If you only want to be notified when all of the RPCs in the group are allowed, set the `groupType` to `SDLPermissionGroupTypeAllAllowed`.
+If desired, you can set an observer for a group of permissions. The observer's handler will be called when the permissions for the group changes. If you want to be notified when the permission status of any of RPCs in the group change, set the `groupType` to @![iOS]`SDLPermissionGroupTypeAny`!@ @![android,javaSE,javaEE]`PERMISSION_GROUP_TYPE_ANY`!@. If you only want to be notified when all of the RPCs in the group are allowed, set the `groupType` to @![iOS]`SDLPermissionGroupTypeAllAllowed`!@ @![android,javaSE,javaEE]`PERMISSION_GROUP_TYPE_ALL_ALLOWED`!@.
 
+@![iOS]
 ##### Objective-C
 ```objc
 SDLPermissionObserverIdentifier observerId = [self.sdlManager.permissionManager addObserverForRPCs:@[<#RPC name#>, <#RPC name#>] groupType:<#SDLPermissionGroupType#> withHandler:^(NSDictionary<SDLPermissionRPCName, NSNumber<SDLBool> *> * _Nonnull change, SDLPermissionGroupStatus status) {
@@ -170,7 +189,25 @@ let observerId = sdlManager.permissionManager.addObserver(forRPCs: <#RPC name#>,
 !@
 
 @![android,javaSE,javaEE]
-`TODO Add description and Code Example`
+```java
+List<PermissionElement> permissionElements = new ArrayList<>();
+permissionElements.add(new PermissionElement(FunctionID.SHOW, null));
+permissionElements.add(new PermissionElement(FunctionID.GET_VEHICLE_DATA, Arrays.asList(GetVehicleData.KEY_RPM, GetVehicleData.KEY_AIRBAG_STATUS)));
+
+
+UUID listenerId = sdlManager.getPermissionManager().addListener(permissionElements, PermissionManager.PERMISSION_GROUP_TYPE_ANY, new OnPermissionChangeListener() {
+    @Override
+    public void onPermissionsChange(@NonNull Map<FunctionID, PermissionStatus> allowedPermissions, @NonNull int permissionGroupStatus) {
+        if (allowedPermissions.get(FunctionID.GET_VEHICLE_DATA).getIsRPCAllowed()) {
+            // GetVehicleData RPC is allowed
+        }
+
+        if (allowedPermissions.get(FunctionID.GET_VEHICLE_DATA).getAllowedParameters().get(GetVehicleData.KEY_RPM)){
+            // rpm parameter in GetVehicleData RPC is allowed
+        }
+    }
+});
+```
 !@
 
 ### Stopping Observation of Permissions
@@ -189,7 +226,9 @@ sdlManager.permissionManager.removeObserver(forIdentifier: observerId)
 !@
 
 @![android,javaSE,javaEE]
-`TODO Add description and Code Example`
+```java
+sdlManager.getPermissionManager().removeListener(listenerId);
+```
 !@
 
 ## Additional HMI State Information
