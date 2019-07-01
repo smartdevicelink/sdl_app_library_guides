@@ -59,7 +59,7 @@ This is only required for USB and Bluetooth enabled head units. It is not necess
 
 @![android]
 ## 2. Add Required System Permissions
-In the AndroidManifest file, we need to ensure we have the following system permissions: 
+Some permissions are required to be granted to the sdl app in order for it to work properly. In the AndroidManifest file, we need to ensure we have the following system permissions: 
 
 * [Internet](https://developer.android.com/reference/android/Manifest.permission.html#INTERNET) - Used by the mobile library to communicate with a SDL Server
 * [Bluetooth](https://developer.android.com/reference/android/Manifest.permission.html#BLUETOOTH) - Primary transport for SDL communication between the device and the vehicle's head-unit
