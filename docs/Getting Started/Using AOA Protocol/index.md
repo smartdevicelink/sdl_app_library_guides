@@ -5,7 +5,7 @@ Incorporating AOA into an SDL enabled app allows it to create and register an SD
 Prerequisites:
 
 * [Installation guide](Getting Started/Installation)
-* [Integration Basics guide](Getting Started/Integration Basics/)
+* [Integration Basics guide](Getting Started/Integration Basics)
 
 We will add or make changes to:
 
