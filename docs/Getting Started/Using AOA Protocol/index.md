@@ -4,8 +4,8 @@ Incorporating AOA into an SDL enabled app allows it to create and register an SD
 
 Prerequisites:
 
-* [Installation guide](/guides/android/getting-started/installation/)
-* [Integration Basics guide](/guides/android/getting-started/integration-basics/)
+* [Installation guide](Getting Started/Installation)
+* [Integration Basics guide](Getting Started/Integration Basics/)
 
 We will add or make changes to:
 
