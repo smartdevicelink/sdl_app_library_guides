@@ -69,7 +69,7 @@ let vrCapability = sdlManager.systemCapabilityManager.vrCapability;
 
 @![android,javaSE,javaEE]
 ```java
-// TODO: Add a code sample for retrieving an RAIR capability
+sdlManager.getRegisterAppInterfaceResponse().getVrCapabilities();
 ```
 !@
 
