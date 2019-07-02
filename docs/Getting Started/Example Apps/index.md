@@ -81,32 +81,9 @@ For TCP, you may use the built-in Android emulator or an Android phone on the sa
 Make sure SDL Core and the HMI are running prior to running Hello Sdl Android
 !!!
 
-Run the project in Android Studio, targeting the device you want Hello Sdl Android installed on.
-
-Hello Sdl Android should compile and launch on your device of choosing:
-
-![Main Screen](assets/mainscreen.png)
-
-Following this, you should see an application appear on the TDK or HMI. In the case of the Generic HMI (using TCP), you will see the following:
-
-![HMI Apps](assets/hmi1.png)
-
-Click on the Hello Sdl icon in the HMI.
-
-![HMI Apps](assets/hmi2.png)
-
-This is the main screen of the Hello Sdl App. If you get to this point, the project is working.
-
-On the device you are running the app on, a lock screen should now appear once the app is opened on the HMI if distracted driver notifications are set to `DD_On`:
-
-![Lockscreen](assets/lockscreen.png)
-
-!!! NOTE
-Lock Screens are an important part of Sdl enabled applications. The goal is to keep the driver's eyes forward and off of the device
-!!!
-
-At this point Hello Sdl Android has been compiled and is running properly! Continue reading through our guides to learn about all of the
-RPCs (Remote Procedure Calls) that can be made with the library.
+To know more about how to connect the app to the infotainment ssytem, please check the [Connecting to an Infotainment System
+guide](Getting Started With Android/Connecting to an Infotainment System
+)
 
 ### Troubleshooting
 Sometimes things don't always go as planned, and so this section exists. If your app compiles and does NOT show up on the HMI, there are a few things to check out.

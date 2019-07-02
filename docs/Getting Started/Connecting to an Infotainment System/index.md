@@ -41,13 +41,11 @@ builder.setTransportType(new MultiplexTransportConfig(context, <APP ID>));
 ```
 !@
 
-Run the project in Android Studio, targeting the device you want the Sdl Android installed on. The Sdl Android should compile and launch on your device of choosing:
-
-Following this, you should see an application appear on the TDK or HMI. In the case of the Generic HMI (using TCP), you will see the following:
+Run the project in Android Studio, targeting the device you want the Sdl Android installed on. The Sdl Android should compile and launch on your device of choosing. Following this, you should see an application appear on the TDK or HMI:
 
 ![HMI Apps](assets/hmi1.png)
 
-Click on the Hello Sdl icon in the HMI.
+Click on the Sdl icon in the HMI.
 
 ![HMI Apps](assets/hmi2.png)
 
