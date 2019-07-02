@@ -17,7 +17,7 @@ To connect the example app to production or debug hardware, make sure you are on
 !@
 
 @![android]
-In this guide we take you through the steps to get our sample project, Hello Sdl Android, running and connected to Sdl Core as well as showing up on the generic HMI.
+In this guide we take you through the steps to get our sample project, Hello Sdl Android, running and connected to Sdl Core as well as showing up on HMI.
 
 First, make sure you download or clone the latest release from [GitHub](https://github.com/smartdevicelink/sdl_java_suite). The Hello Sdl Android app is a package within the SDL Android library.
 
@@ -81,9 +81,8 @@ For TCP, you may use the built-in Android emulator or an Android phone on the sa
 Make sure SDL Core and the HMI are running prior to running Hello Sdl Android
 !!!
 
-To know more about how to connect the app to the infotainment ssytem, please check the [Connecting to an Infotainment System
-guide](Getting Started With Android/Connecting to an Infotainment System
-)
+To know more about how to connect the app to the infotainment system, please check the [Connecting to an Infotainment System
+guide](Getting Started/Connecting to an Infotainment System)
 
 ### Troubleshooting
 Sometimes things don't always go as planned, and so this section exists. If your app compiles and does NOT show up on the HMI, there are a few things to check out.
