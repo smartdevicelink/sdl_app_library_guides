@@ -39,7 +39,6 @@ To connect your device directly to a vehicle head unit or TDK, make sure to use 
 // Set the SdlManager.Builder transport 
 builder.setTransportType(new MultiplexTransportConfig(context, <APP ID>));
 ```
-!@
 
 Run the project in Android Studio, targeting the device you want the Sdl Android installed on. The Sdl Android should compile and launch on your device of choosing. Following this, you should see an application appears on the TDK or HMI:
 
@@ -50,6 +49,7 @@ Click on the Sdl icon in the HMI.
 ![HMI Apps](assets/hmi2.png)
 
 This is the main screen of your Sdl app. If you get to this point, the project is working.
+!@
 
 @![javaSE,javaEE]
 ## Getting Started
