@@ -116,7 +116,7 @@ The [Hello Sdl JavaEE](https://github.com/smartdevicelink/sdl_java_suite/tree/ma
 
 @![javaSE,javaEE]
 ## Connecting to Head Unit 
-To know more about how to connect the app to the infotainment system, please follow the instructions in the [Connecting to an Infotainment System guide](Getting Started/Connecting to an Infotainment System)
+To connect the sample app to the infotainment system, please follow the instructions in the [Connecting to an Infotainment System guide](Getting Started/Connecting to an Infotainment System)
 !@
 
 
