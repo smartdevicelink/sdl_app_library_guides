@@ -103,16 +103,14 @@ Sometimes things don't always go as planned, and so this section exists. If your
 !@
 
 @![javaSE]
-## Getting Started
 First, make sure you download or clone the latest release from [GitHub](https://github.com/smartdevicelink/sdl_java_suite). It is a [project](https://github.com/smartdevicelink/sdl_java_suite/tree/master/hello_sdl_java) within the SDL Java Suite root directory. Then, open the Hello Sdl project in [IntelliJ IDEA](https://www.jetbrains.com/idea/) and wait for it to finish loading.
 !@
 
 @![javaEE]
-## Getting Started
 Make sure that you follow the steps in [Installation](Getting Started/Installation) and [Integration Basics guide](Getting Started/Integration Basics) sections to create a new JavaEE SDL project before continuing this section.
 
 !!! NOTE
-The [Hello Sdl JavaEE](https://github.com/smartdevicelink/sdl_java_suite/tree/master/hello_sdl_java_ee) has some code commented out and cannot be compiled. The project just includes samples for `SdlService` and `Main` classes that can be copied to the new javaEE project that you create by following the steps in [Installation page](Getting Started/Installation.
+The [Hello Sdl JavaEE](https://github.com/smartdevicelink/sdl_java_suite/tree/master/hello_sdl_java_ee) has some code commented out and cannot be compiled. The project just includes samples for `SdlService` and `Main` classes that can be copied to the new javaEE project that you create by following the steps in [Installation page](Getting Started/Installation).
 !!!
 !@
 
