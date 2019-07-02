@@ -1,6 +1,6 @@
 # Adaptive Interface Capabilities
 ## Designing for Different Head Units
-Since each car manufacturer has different user interface style guidelines, the number of lines of text, soft and hard buttons, and images supported will vary between different types of head units. When the app first connects to the SDL Core, a `RegisterAppInterface` RPC will be sent by Core with the `displayCapabilities`, `buttonCapabilities`, `speechCapabilities` and other properties. You should use this information to create the user interface of your SDL app. 
+Since each car manufacturer has different user interface style guidelines, the number of lines of text, soft and hard buttons, and images supported will vary between different types of head units. When the app first connects to the SDL Core, a `RegisterAppInterface` response RPC will be sent by Core with the `displayCapabilities`, `buttonCapabilities`, `speechCapabilities` and other properties. You should use this information to create the user interface of your SDL app. 
 
 You may access these properties on the @![iOS]`SDLManager.systemCapabilityManager`!@ @![android, javaSE, javaEE]`SdlManager.systemCapabilityManager`!@ instance as of library v.@![iOS]6.0!@@![android, javaSE, javaEE]4.4!@.
 
@@ -38,10 +38,10 @@ The `RegisterAppInterface` response contains information about the display type,
 
 ### Image Specifics
 #### Image File Types
-Images may be formatted as PNG, JPEG, or BMP. Each @![iOS]`SDLManager.registerResponse.displayCapabilities.imageFields`!@@![android, javaSE, javaEE]`SdlManager.registerAppInterfaceResponse.displayCapabilities.imageFields`!@ property will have a list of `imageTypeSupported`.
+Images may be formatted as PNG, JPEG, or BMP. Each @![iOS]`SDLManager.registerResponse.displayCapabilities.imageFields`!@@![android, javaSE, javaEE]`sdlManager.getRegisterAppInterfaceResponse().getDisplayCapabilities().getImageFields()`!@ property will have a list of `imageTypeSupported`.
 
 #### Image Sizes
-If an image is uploaded that is larger than the supported size, that image will be scaled down by Core. All image sizes are available from the @![iOS]`SDLManager.registerResponse.displayCapabilities.imageFields`!@@![android, javaSE, javaEE]`SdlManager.registerAppInterfaceResponse.displayCapabilities.imageFields`!@ property once the manager has started successfully.
+If an image is uploaded that is larger than the supported size, that image will be scaled down by Core. All image sizes are available from the @![iOS]`SDLManager.registerResponse.displayCapabilities.imageFields`!@@![android, javaSE, javaEE]`sdlManager.getRegisterAppInterfaceResponse().getDisplayCapabilities().getImageFields()`!@ property once the manager has started successfully.
 
 | ImageName | Used in RPC | Details | Height | Width | Type |
 |:--------------|:----------------|:--------|:---------|:-------|:-------|
