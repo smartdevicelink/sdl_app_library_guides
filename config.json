@@ -31,14 +31,14 @@
                     "platforms": ["iOS", "Android"]
                 },
                 {
+                    "name": "Using AOA Protocol",
+                    "platforms": ["Android"]
+                },
+                {
                     "name": "Adapting to the Head Unit Language"
                 },
                 {
                     "name": "Understanding Permissions"
-                },
-                {
-                    "name": "Using AOA Protocol",
-                    "platforms": ["Android"]
                 },
                 {
                     "name": "Setting Security Level for Multiplexing",

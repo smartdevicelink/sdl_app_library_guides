@@ -5,6 +5,7 @@ Incorporating AOA into an SDL enabled app allows it to create and register an SD
 Prerequisites:
 
 * [Installation guide](Getting Started/Installation)
+* [SDK Configuration guide](Getting Started/SDK Configuration)
 * [Integration Basics guide](Getting Started/Integration Basics)
 
 We will add or make changes to:
@@ -14,7 +15,7 @@ We will add or make changes to:
 
 ## Prerequisites
 
-The Installation and Integration Basics guides must be completed before enabling the use of the AOA USB transport. The remainder of the guide will assume all steps of those two guides will be followed.  
+The Installation, SDK Configuration, and Integration Basics guides must be completed before enabling the use of the AOA USB transport. The remainder of the guide will assume all steps will be followed.  
 
 
 ## Android Manifest
@@ -29,7 +30,7 @@ To use the AOA protocol, you must specify so in your app's Manifest with:
 This feature will not work without including this line!
 !!!
 
-The SDL Android library houses a USBAccessoryAttachmentActivity that you need to add between your Manifest's `<application>…</application>` tags:
+The SDL Android library houses a `USBAccessoryAttachmentActivity` that you need to add between your Manifest's `<application>…</application>` tags:
 
 ```xml
 <activity android:name="com.smartdevicelink.transport.USBAccessoryAttachmentActivity"
@@ -51,7 +52,7 @@ The accessory_filter.xml file is included with the SDL Android Library
 
 ## SmartDeviceLink Service
 
-As long as the app doesn't require high bandwidth, it shouldn't matter which transport is being connected, and will be transport to the developer. If the integration guides were followed, a multiplex transport configuration was already created and provided to the `SdlManager` like the one that follows:
+As long as the app doesn't require high bandwidth, it shouldn't matter which transport is being connected. A multiplex transport should be used like the one that follows:
 
 ```java
 @Override
