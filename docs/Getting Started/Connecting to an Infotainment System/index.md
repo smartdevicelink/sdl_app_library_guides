@@ -41,6 +41,18 @@ builder.setTransportType(new MultiplexTransportConfig(context, <APP ID>));
 ```
 !@
 
+Run the project in Android Studio, targeting the device you want the Sdl Android installed on. The Sdl Android should compile and launch on your device of choosing:
+
+Following this, you should see an application appear on the TDK or HMI. In the case of the Generic HMI (using TCP), you will see the following:
+
+![HMI Apps](assets/hmi1.png)
+
+Click on the Hello Sdl icon in the HMI.
+
+![HMI Apps](assets/hmi2.png)
+
+This is the main screen of your Sdl app. If you get to this point, the project is working.
+
 @![javaSE,javaEE]
 ## Getting Started
 We assume that you have [SDL Core](https://github.com/smartdevicelink/sdl_core) (We recommend Ubuntu 16.04) and an [HMI](https://github.com/smartdevicelink/generic_hmi) set up prior to this point. Most people getting started with this tutorial will be using Sdl Core and our Generic HMI. If you don't want to set up a virtual machine for testing, we offer [Manticore](https://smartdevicelink.com/resources/manticore/), which is a free service that allows you to test your apps in the cloud.
