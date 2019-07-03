@@ -118,8 +118,8 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.APP_S
 ### Subscribing to System Capability Updates
 In addition getting the current system capabilities, it is also possible to register to get updates when the head unit capabilities change. @![iOS]To get these notifications you must register using a `subscribeToCapabilityType:` method.!@@![android, javaSE, javaEE]Since this information must be queried from Core you must implement the `OnSystemCapabilityListener`.!@ This feature is only available on head units supporting v.5.1 or greater.
 
-#### Checking if the Head Unit Supports Subscriptions
 @![iOS]
+#### Checking if the Head Unit Supports Subscriptions
 ##### Objective-C
 ```objc
 BOOL supportsSubscriptions = self.sdlManager.systemCapabilityManager.supportsSubscriptions;
@@ -127,11 +127,6 @@ BOOL supportsSubscriptions = self.sdlManager.systemCapabilityManager.supportsSub
 ##### Swift
 ```swift
 let supportsSubscriptions = sdlManager.systemCapabilityManager.supportsSubscriptions;
-```
-!@
-@![android,javaSE,javaEE]
-```java
-// TODO: Show how to determine if the head unit supports subscriptions
 ```
 !@
 
