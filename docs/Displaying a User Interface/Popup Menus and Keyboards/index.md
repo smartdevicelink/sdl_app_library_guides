@@ -15,7 +15,7 @@ Presenting a popup menu is similiar to presenting a modal view to request input 
 | Present Keyboard           | A keyboard shows up immediately in the HMI |
 
 ### Creating Cells
-An @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`SdlChoiceCell`!@ is similar to a @![iOS]`UITableViewCell`!@ @![android, javaSE, javaEE]`RecyclerView`!@ without the ability to configure your own UI. We provide several properties on the @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`SdlChoiceCell`!@ to set your data, but the layout itself is determined by the manufacturer of the head unit.
+An @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`ChoiceCell`!@ is similar to a @![iOS]`UITableViewCell`!@ @![android, javaSE, javaEE]`RecyclerView`!@ without the ability to configure your own UI. We provide several properties on the @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`ChoiceCell`!@ to set your data, but the layout itself is determined by the manufacturer of the head unit.
 
 !!! IMPORTANT
 On many systems, including VR commands will be *exponentially* slower than not including them. However, including them is necessary for a user to be able to respond to your prompt with their voice.
@@ -31,12 +31,15 @@ SDLChoiceCell *fullCell = [[SDLChoiceCell alloc] initWithText:<#(nonnull NSStrin
 ##### Swift
 ```swift
 let cell = SDLChoiceCell(text: <#T##String#>)
-let cell = SDLChoiceCell(text: <#T##String#>, secondaryText: <#T##String?#>, tertiaryText: <#T##String?#>, voiceCommands: <#T##[String]?#>, artwork: <#T##SDLArtwork?#>, secondaryArtwork: <#T##SDLArtwork?#>)
+let cell = SDLChoiceCell(text: <#T##String#>, secondaryText: <#T##String?#>, ": <#T##String?#>, voiceCommands: <#T##[String]?#>, artwork: <#T##SDLArtwork?#>, secondaryArtwork: <#T##SDLArtwork?#>)
 ```
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+```java
+ChoiceCell cell = new ChoiceCell("cell1 text", Collections.singletonList("cell 1"), null);
+ChoiceCell fullCell = new ChoiceCell("cell2 text", "cell2 secondaryText", "cell2 tertiaryText", Collections.singletonList(""), image1Artwork, image2Artwork);
+```
 !@
 
 ### Preloading Cells
@@ -59,7 +62,14 @@ sdlManager.screenManager.preloadChoices(<#T##choices: [SDLChoiceCell]##[SDLChoic
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+```java
+sdlManager.getScreenManager().preloadChoices(Arrays.asList(cell, fullCell), new CompletionListener() {
+    @Override
+    public void onComplete(boolean b) {
+        // <#code#>
+    }
+});
+```
 !@
 
 ### Presenting a Menu
@@ -81,10 +91,10 @@ When you preload a cell, you **do not** need to maintain a reference to it. If y
 !!!
 
 #### Creating a Choice Set
-In order to present a menu, you must bundle together a bunch of @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`SdlChoiceCell`!@s into an @![iOS]`SDLChoiceSet`!@ @![android, javaSE, javaEE]`SdlChoiceSet`!@.
+In order to present a menu, you must bundle together a bunch of @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`ChoiceCell`!@s into an @![iOS]`SDLChoiceSet`!@ @![android, javaSE, javaEE]`ChoiceSet`!@.
 
 !!! IMPORTANT
-If the @![iOS]`SDLChoiceSet`!@ @![android, javaSE, javaEE]`SdlChoiceSet`!@ contains an invalid set of @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`SdlChoiceCell`!@s, the initializer will return @![iOS]`nil`!@ @![android, javaSE, javaEE]`null`!@. This can happen, for example, if you have duplicate title text or if some, but not all choices have voice commands.
+If the @![iOS]`SDLChoiceSet`!@ @![android, javaSE, javaEE]`SdlChoiceSet`!@ contains an invalid set of @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`ChoiceCell`!@s, the initializer will return @![iOS]`nil`!@ @![android, javaSE, javaEE]`null`!@. This can happen, for example, if you have duplicate title text or if some, but not all choices have voice commands.
 !!!
 
 Some notes on various parameters (full documentation is available as API documentation on this website):
@@ -93,9 +103,9 @@ Some notes on various parameters (full documentation is available as API documen
 @![iOS]- Delegate: You must implement this delegate to receive callbacks based on the user's interaction with the menu
 !@
 @![android, javaSE, javaEE]
-- Listeners: `// TODO: Android / Java content`
+- Listeners: You must implement this listener interface to receive callbacks based on the user's interaction with the menu
 !@
-- Layout: You may present your menu as a set of tiles (like a @![iOS]`UICollectionView`!@ @![android, javaSE, javaEE]`GridView`!@) or a list (like a @![iOS]`UITableView`!@ @![android, javaSE, javaEE]`ListView`!@). If you are using tiles, it's recommended to use artworks on each item.
+- Layout: You may present your menu as a set of tiles (like a @![iOS]`UICollectionView`!@ @![android, javaSE, javaEE]`GridView`!@) or a list (like a @![iOS]`UITableView`!@ @![android, javaSE, javaEE]`RecyclerView`!@). If you are using tiles, it's recommended to use artworks on each item.
 
 @![iOS]
 ##### Objective-C
@@ -110,7 +120,20 @@ let choiceSet = SDLChoiceSet(title: <#T##String#>, delegate: <#T##SDLChoiceSetDe
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+```java
+ChoiceSet choiceSet = new ChoiceSet("ChoiceSet Title", Arrays.asList(cell, fullCell), new ChoiceSetSelectionListener() {
+    @Override
+    public void onChoiceSelected(ChoiceCell choiceCell, TriggerSource triggerSource, int rowIndex) {
+        // You will be passed the `cell` that was selected, the manner in which it was selected (voice or text), and the index of the cell that was passed.      
+        // <#handle selection#>    
+    }
+
+    @Override
+    public void onError(String error) {
+        // <#handle error#>              
+    }
+});
+```
 !@
 
 @![iOS]
@@ -142,11 +165,6 @@ extension <#Class Name#>: SDLChoiceSetDelegate {
     }
 }
 ```
-!@
-
-@![android, javaSE, javaEE]
-#### Implementing the Choice Set Listeners
-`// TODO: Android / Java content`
 !@
 
 #### Presenting the Menu with a Mode
@@ -183,7 +201,9 @@ manager.screenManager.present(<#T##choiceSet: SDLChoiceSet##SDLChoiceSet#>, mode
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+```java
+sdlManager.getScreenManager().presentChoiceSet(choiceSet, InteractionMode.MANUAL_ONLY);
+```
 !@
 
 ### Presenting a Searchable Menu
@@ -206,7 +226,9 @@ sdlManager.screenManager.presentSearchableChoiceSet(<#T##choiceSet: SDLChoiceSet
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+```java
+sdlManager.getScreenManager().presentSearchableChoiceSet(choiceSet, InteractionMode.MANUAL_ONLY, keyboardListener);
+```
 !@
 
 ### Deleting Cells
@@ -225,7 +247,9 @@ sdlManager.screenManager.deleteChoices(<#T##choices: [SDLChoiceCell]##[SDLChoice
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+```java
+sdlManager.getScreenManager().deleteChoices(<List of choices to delete>);
+```
 !@
 
 ## Presenting a Keyboard
@@ -252,7 +276,9 @@ sdlManager.screenManager.presentKeyboard(withInitialText: <#T##String#>, delegat
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+```java
+sdlManager.getScreenManager().presentKeyboard("Initial text", null, keyboardListener);
+```
 !@
 
 @![iOS]
@@ -344,7 +370,54 @@ extension <#Class Name#>: SDLKeyboardDelegate {
 
 @![android, javaSE, javaEE]
 ### Implementing the Keyboard Listeners
-`// TODO: Android / Java content`
+Using the `KeyboardListener` involves two implementing five methods 
+
+```java
+KeyboardListener keyboardListener = new KeyboardListener() {
+    @Override
+    public void onUserDidSubmitInput(String inputText, KeyboardEvent event) {
+        switch (event) {
+            case ENTRY_VOICE:
+                // <#The user decided to start voice input, you should start an AudioPassThru session if supported#>
+                break;
+            case ENTRY_SUBMITTED:
+                // <#The user submitted some text with the keyboard#>
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onKeyboardDidAbortWithReason(KeyboardEvent event) {
+        switch (event) {
+            case ENTRY_CANCELLED:
+                // <#The user cancelled the keyboard interaction#>
+                break;
+            case ENTRY_ABORTED:
+                // <#The system aborted the keyboard interaction#>
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void updateAutocompleteWithInput(String currentInputText, KeyboardAutocompleteCompletionListener keyboardAutocompleteCompletionListener) {
+        // <#Check the input text and return a string with the current autocomplete text#>
+    }
+
+    @Override
+    public void updateCharacterSetWithInput(String currentInputText, KeyboardCharacterSetCompletionListener keyboardCharacterSetCompletionListener) {
+        // <#Check the input text and return a set of characters to allow the user to enter#>
+    }
+
+    @Override
+    public void onKeyboardDidSendEvent(KeyboardEvent event, String currentInputText) {
+        // <#This is sent upon every event, such as keypresses, cancellations, and aborting#>
+    }
+};
+```
 !@
 
 ## Using RPCs

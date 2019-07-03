@@ -9,7 +9,7 @@ You have the ability to create voice command shortcuts to your [Main Menu](Displ
 
 
 ## Creating Voice Commands
-To create voice commands, you simply create and set @![iOS]`SDLVoiceCommand`!@ @![android, javaSE, javaEE]`SdlVoiceCommand`!@ objects to the `voiceCommands` array on the screen manager.
+To create voice commands, you simply create and set @![iOS]`SDLVoiceCommand`!@ @![android, javaSE, javaEE]`VoiceCommand`!@ objects to the `voiceCommands` array on the screen manager.
 
 @![iOS]
 ##### Objective-C
@@ -39,7 +39,6 @@ VoiceCommand voiceCommand = new VoiceCommand(Collections.singletonList("Command 
         // <#Handle the VoiceCommand's Selection#>
     }
 });
-
 
 sdlManager.getScreenManager().setVoiceCommands(Collections.singletonList(voiceCommand));
 ```
