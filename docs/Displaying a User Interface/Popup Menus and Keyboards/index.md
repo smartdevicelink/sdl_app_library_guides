@@ -37,8 +37,8 @@ let cell = SDLChoiceCell(text: <#T##String#>, secondaryText: <#T##String?#>, ": 
 
 @![android, javaSE, javaEE]
 ```java
-ChoiceCell cell = new ChoiceCell("cell1 text", Collections.singletonList("cell 1"), null);
-ChoiceCell fullCell = new ChoiceCell("cell2 text", "cell2 secondaryText", "cell2 tertiaryText", Collections.singletonList(""), image1Artwork, image2Artwork);
+ChoiceCell cell = new ChoiceCell("cell1 text", Collections.singletonList("cell1"), null);
+ChoiceCell fullCell = new ChoiceCell("cell2 text", "cell2 secondaryText", "cell2 tertiaryText", Collections.singletonList("cell2"), image1Artwork, image2Artwork);
 ```
 !@
 
@@ -94,7 +94,7 @@ When you preload a cell, you **do not** need to maintain a reference to it. If y
 In order to present a menu, you must bundle together a bunch of @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`ChoiceCell`!@s into an @![iOS]`SDLChoiceSet`!@ @![android, javaSE, javaEE]`ChoiceSet`!@.
 
 !!! IMPORTANT
-If the @![iOS]`SDLChoiceSet`!@ @![android, javaSE, javaEE]`SdlChoiceSet`!@ contains an invalid set of @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`ChoiceCell`!@s, the initializer will return @![iOS]`nil`!@ @![android, javaSE, javaEE]`null`!@. This can happen, for example, if you have duplicate title text or if some, but not all choices have voice commands.
+If the @![iOS]`SDLChoiceSet`!@ @![android, javaSE, javaEE]`ChoiceSet`!@ contains an invalid set of @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`ChoiceCell`!@s, @![iOS]the initializer will return `nil`!@ @![android, javaSE, javaEE]presenting the `ChoiceSet` will fail!@. This can happen, for example, if you have duplicate title text or if some, but not all choices have voice commands.
 !!!
 
 Some notes on various parameters (full documentation is available as API documentation on this website):
