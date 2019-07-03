@@ -42,7 +42,18 @@ self.sdlManager.screenManager.menu = [cell]
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+```java
+// Create the menu cell
+MenuCell cell = new MenuCell("Cell text", null, Collections.singletonList("cell text"), new MenuSelectionListener() {
+    @Override
+    public void onTriggered(TriggerSource trigger) {
+        // Menu item was selected, check the `triggerSource` to know if the user used touch or voice to activate it
+        // <#Handle the Cell's Selection#>
+    }
+});
+
+sdlManager.getScreenManager().setMenu(Collections.singletonList(cell));
+```
 !@
 
 ### Adding Submenus
@@ -76,7 +87,21 @@ self.sdlManager.screenManager.menu = @[submenuCell]
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+```java
+// Create the inner menu cell
+MenuCell innerCell = new MenuCell("inner menu cell", null, Collections.singletonList("inner menu cell"), new MenuSelectionListener() {
+    @Override
+    public void onTriggered(TriggerSource trigger) {
+        // Menu item was selected, check the `triggerSource` to know if the user used touch or voice to activate it
+        // <#Handle the cell's selection#>
+    }
+});
+
+// Create and set the submenu cell
+MenuCell cell = new MenuCell("cell", null, Collections.singletonList(innerCell));
+
+sdlManager.getScreenManager().setMenu(Collections.singletonList(cell));
+```
 !@
 
 ### Artworks
