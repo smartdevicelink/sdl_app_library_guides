@@ -232,7 +232,7 @@ sdlManager.getScreenManager().presentSearchableChoiceSet(choiceSet, InteractionM
 !@
 
 ### Deleting Cells
-You can discover cells that have been preloaded on `screenManager.preloadedCells`. You may then pass an array of cells to delete from the remote system. Many times this is not necessary, but if you have deleted artwork used by cells, for example, you should delete the cells as well.
+You can discover cells that have been preloaded on @![iOS]`screenManager.preloadedCells`!@ @![android, javaSE, javaEE]`sdlManager.getScreenManager().getPreloadedChoices()`!@. You may then pass an array of cells to delete from the remote system. Many times this is not necessary, but if you have deleted artwork used by cells, for example, you should delete the cells as well.
 
 @![iOS]
 ##### Objective-C
@@ -370,7 +370,7 @@ extension <#Class Name#>: SDLKeyboardDelegate {
 
 @![android, javaSE, javaEE]
 ### Implementing the Keyboard Listeners
-Using the `KeyboardListener` involves two implementing five methods 
+Using the `KeyboardListener` involves implementing five methods: 
 
 ```java
 KeyboardListener keyboardListener = new KeyboardListener() {
