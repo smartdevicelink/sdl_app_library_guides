@@ -32,7 +32,17 @@ self.sdlManager.screenManager.voiceCommands = [voiceCommand]
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+```java
+VoiceCommand voiceCommand = new VoiceCommand(Collections.singletonList("Command One"), new VoiceCommandSelectionListener() {
+    @Override
+    public void onVoiceCommandSelected() {
+        // <#Handle the VoiceCommand's Selection#>
+    }
+});
+
+
+sdlManager.getScreenManager().setVoiceCommands(Collections.singletonList(voiceCommand));
+```
 !@
 
 ## Using RPCs
