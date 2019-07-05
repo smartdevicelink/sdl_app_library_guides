@@ -178,7 +178,7 @@ If you use SDL Debug Tool to log messages without enabling the DebugTool nothing
 ### Logging messages
 The SDL debug tool can be used to log messages with different log levels. The log level defines how serious the log message is. This table summarizes when to use each log level:
 
-| Log Level | Visible Logs | 
+| Log Level | When to use | 
 | ------------- | ------------- |
 | Info | Use this to post useful information to the log |
 | Warning | Use this when you suspect something shady is going on|
