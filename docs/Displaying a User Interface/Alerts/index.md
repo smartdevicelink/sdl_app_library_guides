@@ -120,13 +120,35 @@ alert.setDuration(5000);
 alert.setProgressIndicator(true);
 
 // Text-to-speech
-alert.setTtsChunks(TTS_list); // TTS_list populated elsewhere
+alert.setTtsChunks(Collections.singletonList(new TTSChunk("Ok Button", SpeechCapabilities.TEXT)));
 
 // Special tone played before the tts is spoken
 alert.setPlayTone(true);
 
 // Soft buttons
-alert.setSoftButtons(softButtons); // softButtons populated elsewhere
+final int softButtonId = 123; // Set it to any unique ID
+SoftButton okButton = new SoftButton(SoftButtonType.SBT_TEXT, softButtonId);
+okButton.setText("OK");
+sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNotificationListener() {
+    @Override
+    public void onNotified(RPCNotification notification) {
+        OnButtonPress onButtonPress = (OnButtonPress) notification;
+        if (onButtonPress.getCustomButtonName() == softButtonId){
+            Log.i(TAG, "Ok button pressed");
+        }
+    }
+});
+alert.setSoftButtons(Collections.singletonList(okButton));
+
+// Handle RPC response
+alert.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        if (response.getSuccess()){
+            Log.i(TAG, "Alert was dismissed successfully");
+        }
+    }
+});
 
 // Send alert
 sdlManager.sendRPC(alert);
