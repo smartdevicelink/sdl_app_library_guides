@@ -183,14 +183,13 @@ sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
 
 @![android, javaSE, javaEE]
 ```java
-GetInteriorVehicleData interiorVehicleData = new GetInteriorVehicleData();
-interiorVehicleData.setModuleType(ModuleType.RADIO);
+GetInteriorVehicleData interiorVehicleData = new GetInteriorVehicleData(ModuleType.RADIO);
 interiorVehicleData.setSubscribe(true);
 interiorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
-        GetInteriorVehicleData getResponse = (GetInteriorVehicleData) response;
-        //This can now be used to retrieve data
+        GetInteriorVehicleDataResponse getResponse = (GetInteriorVehicleDataResponse) response;
+        // This can now be used to retrieve data
     }
 });
 
@@ -224,9 +223,7 @@ sdlManager.send(setInteriorVehicleData)
 
 @![android, javaSE, javaEE]
 ```java
-Temperature temp = new Temperature();
-temp.setUnit(TemperatureUnit.FAHRENHEIT);
-temp.setValue((float) 74.1);
+Temperature temp = new Temperature(TemperatureUnit.FAHRENHEIT, 74.1f);
 
 ClimateControlData climateControlData = new ClimateControlData();
 climateControlData.setAcEnable(true);
@@ -240,13 +237,10 @@ climateControlData.setFanSpeed(2);
 climateControlData.setVentilationMode(VentilationMode.BOTH);
 climateControlData.setDesiredTemperature(temp);
 
-ModuleData moduleData = new ModuleData();
-moduleData.setModuleType(ModuleType.CLIMATE);
+ModuleData moduleData = new ModuleData(ModuleType.CLIMATE);
 moduleData.setClimateControlData(climateControlData);
 
-SetInteriorVehicleData setInteriorVehicleData = new SetInteriorVehicleData();
-setInteriorVehicleData.setModuleData(moduleData);
-
+SetInteriorVehicleData setInteriorVehicleData = new SetInteriorVehicleData(moduleData);
 sdlManager.sendRPC(setInteriorVehicleData);
 ```
 !@
@@ -274,11 +268,7 @@ sdlManager.send(buttonPress)
 
 @![android, javaSE, javaEE]
 ```java
-ButtonPress buttonPress = new ButtonPress();
-buttonPress.setModuleType(ModuleType.RADIO);
-buttonPress.setButtonName(ButtonName.EJECT);
-buttonPress.setButtonPressMode(ButtonPressMode.SHORT);
-
+ButtonPress buttonPress = new ButtonPress(ModuleType.RADIO, ButtonName.EJECT, ButtonPressMode.SHORT);
 sdlManager.sendRPC(buttonPress);
 ```
 !@
@@ -341,10 +331,9 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_INTERIOR_VEHICLE_DATA, new
 });
 
 //Then send the GetInteriorVehicleData with subscription set to true
-GetInteriorVehicleData interiorVehicleData = new GetInteriorVehicleData();
-interiorVehicleData.setModuleType(ModuleType.RADIO);
+GetInteriorVehicleData interiorVehicleData = new GetInteriorVehicleData(ModuleType.RADIO);
 interiorVehicleData.setSubscribe(true);
-
 sdlManager.sendRPC(interiorVehicleData);
+
 ```
 !@
