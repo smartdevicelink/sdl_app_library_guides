@@ -307,7 +307,7 @@ sdlManager.subscribe(to: .SDLDidReceiveInteriorVehicleData) { (message) in
     let onInteriorVehicleData = message as? SDLOnInteriorVehicleData else { return }
 
     // This block will now be called whenever vehicle data changes
-    // NOTE: If you subscibe to multiple modules, all the data will be sent here. You will have to split it out based on `onInteriorVehicleData.moduleData.moduleType` yourself.
+    // NOTE: If you subscribe to multiple modules, all the data will be sent here. You will have to split it out based on `onInteriorVehicleData.moduleData.moduleType` yourself.
     <#Code#>
 }
 
@@ -326,11 +326,11 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_INTERIOR_VEHICLE_DATA, new
     @Override
     public void onNotified(RPCNotification notification) {
         OnInteriorVehicleData onInteriorVehicleData = (OnInteriorVehicleData) notification;
-        //Perform action based on notification
+        // Perform action based on notification
     }
 });
 
-//Then send the GetInteriorVehicleData with subscription set to true
+// Then send the GetInteriorVehicleData with subscription set to true
 GetInteriorVehicleData interiorVehicleData = new GetInteriorVehicleData(ModuleType.RADIO);
 interiorVehicleData.setSubscribe(true);
 sdlManager.sendRPC(interiorVehicleData);
