@@ -172,7 +172,7 @@
         },
         {
             "name": "Migrating to Newer SDL Versions",
-            "platforms": ["Android","iOS"],
+            "platforms": ["Android","iOS", "JavaEE", "JavaSE"],
             "navigation": [
                 {
                     "name": "Updating to v4.3+",
