@@ -110,9 +110,10 @@ To create a soft button using the `ScreenManager`, you only need to create a cus
 
 ![Generic HMI](assets/buttonExample.png)
 
-### Soft Button (Text Only)
+### Soft Button Layouts
+#### Soft Button (Text Only)
 @![iOS]
-#### Objective -C
+##### Objective -C
 ```objc
 SDLSoftButtonState *textState = [[SDLSoftButtonState alloc] initWithStateName:@"<#State Name#>" text:@"<#Button Label Text#>" image:nil];
 
@@ -123,7 +124,7 @@ SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"<#
 
 sdlManager.screenManager.softButtonObjects =  @[softButton];
 ```
-#### Swift
+##### Swift
 ```swift
 let textState = SDLSoftButtonState(stateName: "<#State Name#>", text: @"<#Button Label Text#>", image: nil)
 
@@ -136,22 +137,22 @@ sdlManager.screenManager.softButtonObjects = [softButton];
 ```
 !@
 
-### Soft Button (Image Only)
+#### Soft Button (Image Only)
 To see if soft buttons support images you should check the @![iOS] `softButtonCapabilities` !@ property on the `SDLManager`s `systemCapabilityManager`.
 
 @![iOS]
-#### Objective-C
+##### Objective-C
 ```objc
-NSArray<SDLSoftButtonCapabilities *> *softButtonCapabilities = self.sdlManager.systemCapabilityManager.softButtonCapabilities;
+BOOL softButtonsSupportImages = self.sdlManager.systemCapabilityManager.softButtonCapabilities.firstObject.imageSupported.boolValue;
 ```
-#### Swift
+##### Swift
 ```swift
-let softButtonCapabilities = sdlManager.systemCapabilityManager.softButtonCapabilities
+let supportsImages = sdlManager.systemCapabilityManager.softButtonCapabilities?.first?.imageSupported.boolValue ?? false
 ```
 !@
 
 @![iOS]
-#### Objective-C
+##### Objective-C
 ```objc
 SDLSoftButtonState *imageState = [[SDLSoftButtonState alloc] initWithStateName:@"<#State Name#>" text:nil image:[[UIImage imageNamed:<#Image Name#>] imageWithRenderingMode:<#Rendering Mode#>]];
 
@@ -162,7 +163,7 @@ if (buttonPress == nil) { return; }
 
 sdlManager.screenManager.softButtonObjects =  @[softButton];
 ```
-#### Swift
+##### Swift
 ```swift
 let imageState = SDLSoftButtonState(stateName: "State Name", text: @"<#State Name#>", image: UIImage(named:<#Image Name#>)?.withRenderingMode(<#Rendering Mode#>))
 
@@ -175,9 +176,9 @@ sdlManager.screenManager.softButtonObjects = [softButton]
 ```
 !@
 
-### Soft Button (Image and Text)
+#### Soft Button (Image and Text)
 @![iOS]
-#### Objective-C
+##### Objective-C
 ```objc
 SDLSoftButtonState *state = [[SDLSoftButtonState alloc] initWithStateName:@"<#State Name#>" text:@"<#Button Label Text#>" image:[[UIImage imageNamed:@"<#Image Name#>"] imageWithRenderingMode:<#Rendering Mode#>]];
 
@@ -188,7 +189,7 @@ SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"<#
 
 sdlManager.screenManager.softButtonObjects =  @[softButton];
 ```
-#### Swift
+##### Swift
 ```swift
 let state = SDLSoftButtonState(stateName: "<#State Name#>", text: @"<#Button Label Text#>", image: UIImage(named:<#Image Name#>)?.withRenderingMode(<#Rendering Mode#>))
 
