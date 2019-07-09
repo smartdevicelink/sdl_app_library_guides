@@ -2,7 +2,7 @@
 
 ## Overview
 
-This guide is to help developers get setup with the SDL Android library version 4.9. It is assumed that the developer is already updated to at least version 4.7 or 4.8 of the library.
+This guide is to help developers get setup with the SDL Java library version 4.9. It is assumed that the developer is already updated to at least version 4.7 or 4.8 of the library.
 
 The full release notes are published [here](https://github.com/smartdevicelink/sdl_java_suite/releases).
 
@@ -169,6 +169,7 @@ sdlManager.getScreenManager().presentKeyboard("initialText", null, keyboardListe
 
 The `null` parameter in this example is a `KeyboardProperties` object that you can optionally pass in to modify the keyboard for this request.
 
+@![android]
 ## Audio Stream Buffer
 
 We now have the option to send `ByteBuffer`s to the `AudioStreamManager` to be played.
@@ -198,7 +199,7 @@ from Android Studio's terminal.
 You will need administrator privileges and Python installed to execute this task.
 !!!
 
-
+!@
 
 
 
