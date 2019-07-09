@@ -138,7 +138,7 @@ sdlManager.screenManager.softButtonObjects = [softButton];
 !@
 
 #### Soft Button (Image Only)
-To see if soft buttons support images you should check the @![iOS] `softButtonCapabilities` !@ property on the `SDLManager`s `systemCapabilityManager`.
+To see if soft buttons support images you should check the @![iOS] `softButtonCapabilities` property@! @![android,javaSE,javaEE] `getGraphicSupported()`method @! on @![iOS]`SDLManager`s@! @![android,javaSE,javaEE]`SdlManager`s@! @![iOS] `systemCapabilityManager`!@ @![android,javeSE,javaEE]`DisplayCapabilities` using `SystemCapabilityManager`!@.
 
 @![iOS]
 ##### Objective-C
@@ -149,6 +149,10 @@ BOOL softButtonsSupportImages = self.sdlManager.systemCapabilityManager.softButt
 ```swift
 let supportsImages = sdlManager.systemCapabilityManager.softButtonCapabilities?.first?.imageSupported.boolValue ?? false
 ```
+!@
+
+@![android, javaSE, javaEE]
+`TODO add example.`
 !@
 
 @![iOS]
@@ -176,6 +180,10 @@ sdlManager.screenManager.softButtonObjects = [softButton]
 ```
 !@
 
+@![android, javaSE, javaEE]
+`TODO add example.`
+!@
+
 #### Soft Button (Image and Text)
 @![iOS]
 ##### Objective-C
@@ -200,6 +208,10 @@ let softButton = SDLSoftButtonObject(name: @"<#Button Name#>", state: state) { (
 
 sdlManager.screenManager.softButtonObjects = [softButton]
 ```
+!@
+
+@![android, javaSE, javaEE]
+`TODO add example.`
 !@
 
 ### Updating the Soft Button State
@@ -238,7 +250,7 @@ retrievedSoftButtonObject?.transitionToNextState()
 !@
 
 @![android, javaSE, javaEE]
-`TODO break apart the below example into 3 seperate exampeles for the sections listed above.`
+`TODO break apart the below example into 3 seperate examples for the sections listed above.`
 !@
 
 @![android, javaSE, javaEE]
