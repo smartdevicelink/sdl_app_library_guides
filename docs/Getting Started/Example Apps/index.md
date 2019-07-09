@@ -18,8 +18,8 @@ To connect the example app to production or debug hardware, make sure you are on
 ## TCP Debugging Help
 1.  Make sure the correct IP address and port number is set in the `SDLLifecycleConfiguration`.
 2.  Make sure the device and SDL Core are on the same network.
-3.  If running SDL Core on a virtual machine, and you are using port forwarding to connect your device to the virtual machine, the IP address should be the IP address of your machine hosting the VM, not the IP address of the VM. The port number will be 12345.
-4.  Make sure there is no firewall blocking the incoming port 12345 on the machine or VM running SDL Core. Also make sure your firewall allows that outgoing port.
+3.  If running SDL Core on a virtual machine, and you are using port forwarding to connect your device to the virtual machine, the IP address should be the IP address of your machine hosting the VM, not the IP address of the VM. The port number will be `12345`.
+4.  Make sure there is no firewall blocking the incoming port `12345` on the machine or VM running SDL Core. Also make sure your firewall allows that outgoing port.
 5.  When the app on the device is backgrounded, the app will be unable to communicate with SDL Core. This will work on IAP connections.
 6.  Audio will not play when using a TCP connection. Only IAP connections are currently able to play audio because this happens over the standard Bluetooth / USB system audio channel.
 
