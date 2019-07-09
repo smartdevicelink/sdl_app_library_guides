@@ -7,13 +7,12 @@ Depending the platform, an alert can have up to three lines of text, a progress 
 The alert will persist on the screen until the timeout has elapsed, or the user dismisses the alert by selecting a button. There is no way to dismiss the alert programmatically other than to set the timeout length.
 !!!
 
-## Creating an Alert
+## Alert Layouts
 ### Alert With No Soft Buttons
 !!! NOTE
 If no soft buttons are added to an alert some OEMs may add a default "cancel" or "close" button.
 !!!
 
-#### Alert HMI
 ![Generic - Alert](assets/Generic_alert.png)
 
 @![iOS]
@@ -64,7 +63,7 @@ SDLSoftButton *button2 = [[SDLSoftButton alloc] initWithType:SDLSoftButtonTypeTe
 alert.softButtons = softButtons;
 ```
 
-#### Swift
+##### Swift
 ```swift
 let alert = SDLAlert(alertText1: "<#Line 1#>", alertText2: "<#Line 2#>", alertText3: "<#Line 3#>")
 
@@ -91,7 +90,7 @@ alert.softButtons = softButtons;
 ` TODO - code example `
 !@
 
-## Additonal Alert Paramaters
+## Creating the Alert
 
 ### Timeouts
 An optional timeout can be added that will dimiss the alert when the duration is over.  Typical timeouts are between 3 and 10 seconds. If omitted a default of 5 second is used.
@@ -118,12 +117,12 @@ alert.duration = 4000
 Not all OEMs support a progress indicator. If supported, the alert will show an animation that indicates that the user must wait (e.g. a spinning wheel or hourglass, etc). If omitted, no progress indicator will be shown.
 
 @![iOS]
-#### Objective-C
+##### Objective-C
 ```objc
 alert.progressIndicator = @YES;
 ```
 
-#### Swift
+##### Swift
 ```swift
 alert.progressIndicator = true
 ```
@@ -190,7 +189,7 @@ alert.playTone = true
 ` TODO - code example `
 !@
 
-### Showing the Alert
+## Showing the Alert
 
 @![iOS]
 ##### Objective-C
