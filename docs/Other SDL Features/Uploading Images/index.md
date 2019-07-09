@@ -67,14 +67,9 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.DISPL
 ```
 !@
 
-## Uploading an Image Using SDLFileManager
-@![iOS]
-The `SDLFileManager` uploads files and keeps track of all the uploaded files names during a session. To send data with the `SDLFileManager`, you need to create either a `SDLFile` or `SDLArtwork` object. `SDLFile` objects are created with a local `NSURL` or `NSData`; `SDLArtwork` a `UIImage`.
-!@
+## Uploading an Image Using SDL FileManager
+The @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE]`FileManager`!@ uploads files and keeps track of all the uploaded files names during a session. To send data with the @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE]`FileManager`!@, you need to create either a @![iOS]`SDLFile`!@ @![android, javaSE, javaEE]`SdlFile`!@ or @![iOS]`SDLArtwork`!@ @![android, javaSE, javaEE]`SdlArtwork`!@object. @![iOS]`SDLFile` objects are created with a local `NSURL` or `NSData`; `SDLArtwork` a `UIImage`.!@ @![android]Both `SdlFile`s and `SdlArtwork`s can be created with a `Uri`, `byte[]`, or `resourceId`.!@ @![javaSE, javaEE]Both `SdlFile`s and `SdlArtwork`s can be created with using `filePath`, or `byte[]`.!@
 
-@![android,javaSE,javaEE]
-`// TODO Android Add FileManger documentation information to align this documentation. Code example has been added but documentation may need more Android Specific documentation.`
-!@
 
 @![iOS]
 ##### Objective-C
