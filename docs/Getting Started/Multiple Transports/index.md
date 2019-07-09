@@ -1,10 +1,5 @@
 # Multiple Transports
-@![iOS]
-// TODO Add Multiple Transports Information
-!@
-
-@![android]
-As of Protocol Version 5.1.0, which is supported from SDL Android 4.7 and SDL Core 5.0, a new feature was introduced called Multiple Transports. This feature allows apps to carry their SDL session over multiple transports. The first transport that the app connects to is referred to as the primary transport, and a later connected transport being a secondary. For example, apps can register over bluetooth as a primary transport, then connect over WiFi when necessary (video/audio streaming) as a secondary transport.
+As of Protocol version 5.1.0, which is supported from SDL Android 4.7 and SDL Core 5.0, a new feature was introduced called Multiple Transports. This feature allows apps to carry their SDL session over multiple transports. The first transport that the app connects to is referred to as the primary transport, and a later connected transport being a secondary. For example, apps can register over bluetooth as a primary transport, then connect over WiFi when necessary (video/audio streaming) as a secondary transport.
 
 ## Primary Transports
 
@@ -65,4 +60,3 @@ mtc.setSecondaryTransports(multiplexSecondaryTransports);
 ```
 
 By default, all three transports are set as supported secondary transports. As mentioned above, secondary transports will often be used for high bandwidth services.
-!@
