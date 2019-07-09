@@ -14,6 +14,26 @@ The example apps implement soft buttons, template text and images, a main menu a
 To connect the example app to [Manticore](https://smartdevicelink.com/resources/manticore/) or another emulator, make sure you are on the `TCP Debug` tab and type in the IP address and port, then press "Connect". The button will turn green when you are connected.
 
 To connect the example app to production or debug hardware, make sure you are on the `iAP` tab and press "Connect". The button will turn green when you are connected.
+
+## TCP Debugging Help
+1.  Make sure the correct IP address and port number is set in the `SDLLifecycleConfiguration`.
+2.  Make sure the device and SDL Core are on the same network
+3.  If running SDL Core on a virtual machine, and you are using port forwarding to connect your device to the virtual machine, the IP address should be the IP address of your machine hosting the VM, not the IP address of the VM. The port number will be 12345.
+4.  Make sure there is no firewall blocking the incoming port 12345 on the machine or VM running SDL Core. Also make sure your firewall allows that outgoing port.
+5.  When the app on the device is backgrounded, the app will be unable to communicate with SDL Core. This will work on IAP connections.
+6.  Audio will not play when using a TCP connection. Only IAP connections are currently able to play audio because this happens over the standard Bluetooth / USB system audio channel.
+
+## iAP Debugging Help
+1.  Make sure to use the default `SDLLifecycleConfiguration`
+2.  Make sure the  [protocol](https://smartdevicelink.com/en/guides/pull_request/iOS/99b0a57187920105edcc5d3da9be798b564123f2/getting-started/sdk-configuration/) strings have been added to the app.
+3.  Make sure you have enabled background [capabilities](https://smartdevicelink.com/en/guides/pull_request/iOS/99b0a57187920105edcc5d3da9be798b564123f2/getting-started/sdk-configuration/) for your app 
+4.  If the head unit does not support bluetooth, an iAP connection requires a USB cord.
+
+## Bluetooth Debugging Help
+1.  Make sure the head unit supports bluetooth transport for iPhones. Currently, only some head units support bluetooth.
+2.  Make sure to use the default `SDLLifecycleConfiguration`
+3.  Make sure Bluetooth is turned on - on Both the TDK and your iPhone
+4.  Ensure your iPhone is properly paired with the TDK
 !@
 
 @![android]
