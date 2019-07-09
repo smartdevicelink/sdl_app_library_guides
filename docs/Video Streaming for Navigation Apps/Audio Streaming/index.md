@@ -72,7 +72,7 @@ func audioStreamManager(_ audioManager: SDLAudioStreamManager, errorDidOccurForF
 }
 
 func audioStreamManager(_ audioManager: SDLAudioStreamManager, errorDidOccurForDataBuffer error: Error) {
-    
+
 }
 
 func audioStreamManager(_ audioManager: SDLAudioStreamManager, fileDidFinishPlaying fileURL: URL, successfully: Bool) {
@@ -158,6 +158,23 @@ if (sdlManager.getAudioStreamManager() != null) {
 }
 ```
 
+#### Using a Buffer
+
+You can also send `ByteBuffer`s to the `AudioStreamManager` to be played. To use it, replace the `pushAudioSource` call in the example above to the `pushBuffer` call shown below:
+
+```java
+sdlManager.getAudioStreamManager().pushBuffer(byteBuffer, new CompletionListener() {
+    @Override
+    public void onComplete(boolean success) {
+        if (success) {
+            Log.i(TAG, "Buffer played successfully!");
+        } else {
+            Log.i(TAG, "Buffer failed to play!");
+        }
+    }
+});
+```
+
 #### Stopping the Audio Stream
 When the stream is complete, or you receive HMI_NONE, you should stop the stream by calling:
 
@@ -165,7 +182,7 @@ When the stream is complete, or you receive HMI_NONE, you should stop the stream
 sdlManager.getAudioStreamManager().stopAudioStream(new CompletionListener() {
     @Override
     public void onComplete(boolean success) {
-
+        // do something once the stream is stopped
     }
 });
 ```

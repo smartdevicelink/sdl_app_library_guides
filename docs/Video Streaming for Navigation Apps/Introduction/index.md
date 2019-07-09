@@ -53,9 +53,7 @@ hmiTypes.add(AppHMIType.NAVIGATION);
 builder.setAppTypes(hmiTypes);
 
 List<? extends SdlSecurityBase> securityManagers = new ArrayList();
-securityManagers.add(OEMSecurityManager1.class);
-securityManagers.add(OEMSecurityManager1.class);
-builder.setSdlSecurity(securityManagers);
+builder.setSdlSecurity(Arrays.asList(OEMSecurityManager1.class, OEMSecurityManager2.class));
 
 MultiplexTransportConfig mtc = new MultiplexTransportConfig(this, APP_ID, MultiplexTransportConfig.FLAG_MULTI_SECURITY_OFF);
 mtc.setRequiresHighBandwidth(true);
@@ -70,11 +68,5 @@ sdlManager.start();
 When compiling, you must make sure to include all possible OEM security managers that you wish to support.
 !!!
 
-@![iOS]
 ## Keyboard Input
-To present a keyboard (such as for searching for navigation destinations), you should use the `SDLScreenManager`'s keyboard presentation feature. For more information, see the [Popup Menus and Keyboards](Displaying a User Interface/Popup Menus and Keyboards) guide.
-!@
-
-@![android]
-`// TODO: Add keyboard input section
-!@
+To present a keyboard (such as for searching for navigation destinations), you should use the @![iOS]`SDLScreenManager`'s!@@![android,javaSE,javaEE]`ScreenManager`'s!@ keyboard presentation feature. For more information, see the [Popup Menus and Keyboards](Displaying a User Interface/Popup Menus and Keyboards) guide.

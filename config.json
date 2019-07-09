@@ -4,7 +4,9 @@
         "Timur Pulathaneli",
         "Joel Fischer",
         "Nicole Yarroch",
-        "Justin Gluck"
+        "Justin Gluck",
+        "Bilal Alsharifi",
+        "Brett",
     ],
     "languages": [
         "en"
@@ -49,7 +51,7 @@
                 {
                     "name":"Proguard Guidelines",
                     "platforms": ["Android"]
-    
+
                 },
                 {
                     "name": "Deploying to AWS",
