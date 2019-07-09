@@ -34,6 +34,10 @@
                     "name": "Using AOA Protocol",
                     "platforms": ["Android"]
                 },
+                {  
+                    "name":"Multiple Transports",
+                    "platforms": ["iOS","Android"]
+                 },
                 {
                     "name": "Adapting to the Head Unit Language"
                 },
