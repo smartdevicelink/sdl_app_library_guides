@@ -204,7 +204,7 @@ After the initial app record is passed to you in the @![iOS]`SDLPublishAppServic
 For more information, see the [Using App Services guide](Other SDL Features/Using App Services) and see the "Getting and Subscribing to Services" section.
 
 ### 3. Update Your Service's Data
-After your service is published, it's time to update your service data. First, you must send an `onAppServiceData` RPC notification with your updated service data. RPC notifications are different than RPC requests in that they will not receive a response from the connected head unit, and must use a different `SDLManager` method call to send.
+After your service is published, it's time to update your service data. First, you must send an `onAppServiceData` RPC notification with your updated service data. RPC notifications are different than RPC requests in that they will not receive a response from the connected head unit @![iOS], and must use a different `SDLManager` method call to send!@.
 
 !!! NOTE
 You should only update your service's data when you are the active service; service consumers will only be able to see your data when you are the active service.
@@ -568,7 +568,7 @@ Certain RPCs are related to certain services. The chart below shows the current 
 | ButtonPress (SHUFFLE) | | |
 | ButtonPress (REPEAT) | | |
 
-When you are the active service for your service's type (e.g. media), and you have declared that you support these RPCs in your manifest (see section 1. Creating an App Service Manifest), then these RPCs will be automatically routed to your app. You will have to set up notifications to be aware that they have arrived, and you will then need to respond to those requests.
+When you are the active service for your service's type (e.g. media), and you have declared that you support these RPCs in your manifest (see section 1. Creating an App Service Manifest), then these RPCs will be automatically routed to your app. You will have to set up @![iOS]notifications!@ @![android,javaSE,javaEE]listeners!@ to be aware that they have arrived, and you will then need to respond to those requests.
 
 @![iOS]
 ##### Objective-C
