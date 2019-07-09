@@ -3,7 +3,7 @@ In almost all cases, you will not need to handle uploading images because the sc
 
 
 ## Uploading an MP3 Using the File Manager
-The @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE]`FileManager`!@ uploads files and keeps track of all the uploaded files names during a session. To send data with the file manager you need to create either a @![iOS]`SDLFile`!@ @![android, javaSE, javaEE]`SdlFile`!@ or @![iOS]`SDLArtwork`!@ @![android, javaSE, javaEE]`SdlArtwork`!@ object. @![iOS]`SDLFile` objects are created with a local `NSURL` or `NSData`; `SDLArtwork` uses a `UIImage`.!@ @![android, javaSE, javaEE]Both `SdlFile`s and `SdlArtwork`s can be created with a `Uri`, `byte` array, or resourceId.!@
+The @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE]`FileManager`!@ uploads files and keeps track of all the uploaded files names during a session. To send data with the file manager you need to create either a @![iOS]`SDLFile`!@ @![android, javaSE, javaEE]`SdlFile`!@ or @![iOS]`SDLArtwork`!@ @![android, javaSE, javaEE]`SdlArtwork`!@ object. @![iOS]`SDLFile` objects are created with a local `NSURL` or `NSData`; `SDLArtwork` uses a `UIImage`.!@ @![android]Both `SdlFile`s and `SdlArtwork`s can be created with a `Uri`, `byte[]`, or `resourceId`.!@ @![javaSE, javaEE]Both `SdlFile`s and `SdlArtwork`s can be created with using `filePath`, or `byte[]`.!@
 
 @![iOS]
 ##### Objective-C
@@ -38,7 +38,7 @@ sdlManager.sendRPC(audioFile);
 !@
 
 ## Batching File Uploads
-If you want to upload a group of files, you can use the @![iOS]`SDLFileManager`'s!@ @![android, javaSE, javaEE]`FileManager`!@ batch upload methods. Once all of the uploads have completed you will be notified if any of the uploads failed. If desired, you can also track the progress of each file in the group.
+If you want to upload a group of files, you can use the @![iOS]`SDLFileManager`'s!@ @![android, javaSE, javaEE]`FileManager`!@ batch upload methods. Once all of the uploads have completed you will be notified if any of the uploads failed. @![iOS]If desired, you can also track the progress of each file in the group.!@
 
 @![iOS]
 ##### Objective-C
