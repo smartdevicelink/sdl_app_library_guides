@@ -113,7 +113,7 @@ alert.duration = 4000
 !@
 
 @![android,javaSE,javaEE]
-`//TODO - code example `
+` TODO - code example `
 !@
 
 ### Progress Indicator
