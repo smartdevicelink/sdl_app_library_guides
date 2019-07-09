@@ -279,12 +279,12 @@ softButtonObject.setOnEventListener(new SoftButtonObject.OnEventListener() {
 To delete soft buttons, simply pass the screen manager a new array of soft buttons. To delete all soft buttons, simply pass the screen manager an empty array.
 
 @![iOS]
-#### Objective-C
+##### Objective-C
 ```objc
 self.sdlManager.screenManager.softButtonObjects = @[];
 ```
 
-#### Swift
+##### Swift
 ```swift
 self.sdlManager.screenManager.softButtonObjects = []
 ```
