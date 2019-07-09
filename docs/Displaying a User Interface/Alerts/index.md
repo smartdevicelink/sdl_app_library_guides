@@ -24,9 +24,9 @@ If no soft buttons are added to an alert some OEMs may add a default "cancel" or
 
 ### Text
 @![iOS]
-#####  Objective-C
+##### Objective-C
 ```objc
-SDLAlert *alert =  [SDLAlert alloc] initWithAlertText1:@"<#Line 1#>" alertText2:@"<#Line 2#>" alertText3:@"<#Line 3#>"];
+SDLAlert *alert =  [[SDLAlert alloc] initWithAlertText1:@"<#Line 1#>" alertText2:@"<#Line 2#>" alertText3:@"<#Line 3#>"];
 ```
 
 ##### Swift
@@ -96,7 +96,7 @@ alert.softButtons = softButtons;
 !@
 
 ### Timeouts
-An optional timeout can be added that will dimiss the alert when the duration is over.  Typical timeouts are between 3 and 10 seconds. If omitted a default of 5 second is used.
+An optional timeout can be added that will dimiss the alert when the duration is over. Typical timeouts are between 3 and 10 seconds. If omitted a default of 5 second is used.
 
 @![iOS]
 ##### Objective-C
