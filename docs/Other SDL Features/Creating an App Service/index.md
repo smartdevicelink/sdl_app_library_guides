@@ -450,10 +450,10 @@ sdlManager.getFileManager().uploadFile(weatherImage, new CompletionListener() { 
 ### 4. Handling App Service Subscribers
 If you choose to make your app service available to other apps, you will have to handle requests to get your app service data when a consumer requests it directly.
 
-Handling app service subscribers is a two step process. First, you must register for notifications from the subscriber. Then, when you get a request, you will either have to send a response to the subscriber with the app service data or if you have no data to send, send a response with a relevant failure result code.
+Handling app service subscribers is a two step process. First, you must @![iOS]register for notifications!@ @![android,javaSE,javaEE]setup listeners!@ from the subscriber. Then, when you get a request, you will either have to send a response to the subscriber with the app service data or if you have no data to send, send a response with a relevant failure result code.
 
-#### Registering for Notifications
-First, you will need to register for the notification of a `GetAppServiceDataRequest` being received by your application.
+#### Listening for Requests
+First, you will need to @![iOS]register for notification of!@ @![android,javaSE,javaEE]setup a listener for!@ a `GetAppServiceDataRequest`.
 
 @![iOS]
 ##### Objective-C
