@@ -138,7 +138,7 @@ sdlManager.screenManager.softButtonObjects = [softButton];
 !@
 
 #### Soft Button (Image Only)
-To see if soft buttons support images you should check the @![iOS] `softButtonCapabilities` property@! @![android,javaSE,javaEE] `getGraphicSupported()`method @! on @![iOS]`SDLManager`s@! @![android,javaSE,javaEE]`SdlManager`s@! @![iOS] `systemCapabilityManager`!@ @![android,javeSE,javaEE]`DisplayCapabilities` using `SystemCapabilityManager`!@.
+To see if soft buttons support images you should check the @![iOS] `softButtonCapabilities` property !@ @![android,javaSE,javaEE] `getGraphicSupported()` method !@ on @![iOS]`SDLManager`s !@ @![android,javaSE,javaEE]`SdlManager`s!@ @![iOS] `systemCapabilityManager`!@ @![android,javeSE,javaEE] `DisplayCapabilities` using `SystemCapabilityManager`!@.
 
 @![iOS]
 ##### Objective-C
@@ -152,7 +152,7 @@ let supportsImages = sdlManager.systemCapabilityManager.softButtonCapabilities?.
 !@
 
 @![android, javaSE, javaEE]
-`TODO add example.`
+`TODO add example how to check for images supported.`
 !@
 
 @![iOS]
