@@ -8,7 +8,7 @@ The alert will persist on the screen until the timeout has elapsed, or the user 
 !!!
 
 ## Alert Layouts
-### Alert With No Soft Buttons
+###### Alert With No Soft Buttons
 
 ![Generic - Alert](assets/Generic_alert.png)
 
@@ -16,7 +16,7 @@ The alert will persist on the screen until the timeout has elapsed, or the user 
 If no soft buttons are added to an alert some OEMs may add a default "cancel" or "close" button.
 !!!
 
-### Alert With Soft Buttons
+###### Alert With Soft Buttons
 
 ![Generic - Alert](assets/Generic_alert_buttons.png)
 
