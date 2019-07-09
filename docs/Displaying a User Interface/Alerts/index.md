@@ -9,12 +9,20 @@ The alert will persist on the screen until the timeout has elapsed, or the user 
 
 ## Alert Layouts
 ### Alert With No Soft Buttons
+
+![Generic - Alert](assets/Generic_alert.png)
+
 !!! NOTE
 If no soft buttons are added to an alert some OEMs may add a default "cancel" or "close" button.
 !!!
 
-![Generic - Alert](assets/Generic_alert.png)
+### Alert With Soft Buttons
 
+![Generic - Alert](assets/Generic_alert_buttons.png)
+
+## Creating the Alert
+
+### Text
 @![iOS]
 #####  Objective-C
 ```objc
@@ -31,10 +39,7 @@ let alert = SDLAlert(alertText1: "<#Line 1#>", alertText2: "<#Line 2#>", alertTe
 ` TODO - code example `
 !@
 
-### Alert With Soft Buttons
-
-#### Alert HMI
-![Generic - Alert](assets/Generic_alert_buttons.png)
+### Buttons
 
 @![iOS]
 ##### Objective-C
@@ -89,8 +94,6 @@ alert.softButtons = softButtons;
 @![android,javaSE,javaEE]
 ` TODO - code example `
 !@
-
-## Creating the Alert
 
 ### Timeouts
 An optional timeout can be added that will dimiss the alert when the duration is over.  Typical timeouts are between 3 and 10 seconds. If omitted a default of 5 second is used.
