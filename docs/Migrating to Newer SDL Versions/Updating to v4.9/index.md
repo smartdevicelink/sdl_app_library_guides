@@ -131,32 +131,32 @@ sdlManager.getScreenManager().presentChoiceSet(choiceSet, InteractionMode.MANUAL
 There is now also an easy way to display a keyboard, and listen for key events. You simply need a `KeyboardListener` object.
 
 ```java
-		KeyboardListener keyboardListener = new KeyboardListener() {
-			@Override
-			public void onUserDidSubmitInput(String inputText, KeyboardEvent event) {
+KeyboardListener keyboardListener = new KeyboardListener() {
+	@Override
+	public void onUserDidSubmitInput(String inputText, KeyboardEvent event) {
 
-			}
+	}
 
-			@Override
-			public void onKeyboardDidAbortWithReason(KeyboardEvent event) {
+	@Override
+	public void onKeyboardDidAbortWithReason(KeyboardEvent event) {
 
-			}
+	}
 
-			@Override
-			public void updateAutocompleteWithInput(String currentInputText, KeyboardAutocompleteCompletionListener keyboardAutocompleteCompletionListener) {
+	@Override
+	public void updateAutocompleteWithInput(String currentInputText, KeyboardAutocompleteCompletionListener keyboardAutocompleteCompletionListener) {
 
-			}
+	}
 
-			@Override
-			public void updateCharacterSetWithInput(String currentInputText, KeyboardCharacterSetCompletionListener keyboardCharacterSetCompletionListener) {
+	@Override
+	public void updateCharacterSetWithInput(String currentInputText, KeyboardCharacterSetCompletionListener keyboardCharacterSetCompletionListener) {
 
-			}
+	}
 
-			@Override
-			public void onKeyboardDidSendEvent(KeyboardEvent event, String currentInputText) {
+	@Override
+	public void onKeyboardDidSendEvent(KeyboardEvent event, String currentInputText) {
 
-			}
-		};
+	}
+};
 ```
 
 You can note that two of the methods contain a `KeyboardAutocompleteCompletionListener` and a `KeyboardCharacterSetCompletionListener`. These listeners allow you to show auto completion text and to modify the available keys, respectively, on supported head units.
