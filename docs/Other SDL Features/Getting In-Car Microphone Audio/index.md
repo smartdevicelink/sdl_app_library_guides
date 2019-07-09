@@ -5,9 +5,7 @@ Capturing in-car audio allows developers to interact with users by requesting ra
 PerformAudioPassThru does not support automatic speech cancellation detection, so if this feature is desired, it is up to the developer to implement. The user may press an OK or Cancel button, the dialog may timeout, or you may close the dialog with @![iOS]`SDLEndAudioPassThru`!@ @![android,javaSE,javaEE]`EndAudioPassThru`!@.
 !!!
 
-In order to know the currently supported audio capture capabilities of the connected head unit, please refer to the @![iOS]`SDLSystemCapabilityManager.audioPassThruCapabilities` [documentation](https://smartdevicelink.com/en/docs/iOS/master/Classes/SDLRegisterAppInterfaceResponse/).!@ @![android,javaSE,javaEE] `SystemCapabilityManager`.!@ It can retrieve the `AudioPassThruCapabilities` that the head unit supports.
-
-@![android,javaSE,javaEE] `// TODO Android : add link to the documentation like iOS does above: Please see .md file for an example.`!@
+In order to know the currently supported audio capture capabilities of the connected head unit, please refer to the @![iOS]`SDLSystemCapabilityManager.audioPassThruCapabilities` [documentation](https://smartdevicelink.com/en/docs/iOS/master/Classes/SDLRegisterAppInterfaceResponse/).!@ @![android,javaSE,javaEE] `sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.AUDIO_PASSTHROUGH)` [documentation](https://smartdevicelink.com/en/docs/android/master/com/smartdevicelink/proxy/rpc/AudioPassThruCapabilities/).!@ It can retrieve the `AudioPassThruCapabilities` that the head unit supports.
 
 !!! NOTE
 SDL does not support an open microphone. However, SDL is working on wake-word support in the future. You may implement a voice command and start an audio pass thru session when that voice command occurs.
