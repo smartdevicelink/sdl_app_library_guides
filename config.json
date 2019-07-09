@@ -48,7 +48,7 @@
                 {
                     "name":"Proguard Guidelines",
                     "platforms": ["Android"]
-    
+
                 },
                 {
                     "name": "Deploying to AWS",
@@ -201,7 +201,7 @@
                 {
                     "name": "Updating to v4.9",
                     "platforms": [
-                        "Android"
+                        "Android", "JavaEE", "JavaSE"
                     ]
                 }
             ]
