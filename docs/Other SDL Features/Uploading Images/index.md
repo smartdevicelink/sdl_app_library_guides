@@ -108,37 +108,14 @@ sdlManager.fileManager.upload(artwork: artwork) { (success, artworkName, bytesAv
 !@
 
 @![android,javaSE,javaEE]
-#### Creation
-
-The first step in uploading files to the connected module is creating an instance of `SdlFile`. There are a few different constructors that can be used based on the source of the file. The following can be used to instantiate `SdlFile`:
-
-##### A resource ID
-
 ```java
-new SdlFile(@NonNull String fileName, @NonNull FileType fileType, int id, boolean persistentFile)
-```
-##### A URI
-
-```java
-new SdlFile(@NonNull String fileName, @NonNull FileType fileType, Uri uri, boolean persistentFile)
-```
-
-##### A byte array
-
-```java
-new SdlFile(@NonNull String fileName, @NonNull FileType fileType, byte[] data, boolean persistentFile)
-```
-
-
-### Uploading a File
-
-Uploading a file with the `FileManager` is a simple process. With an instantiated `SdlManager`,
-you can simply call:
-
-```java
-sdlManager.getFileManager().uploadFile(sdlFile, new CompletionListener() {
+SdlArtwork artwork = new SdlArtwork("image_name", FileType.GRAPHIC_PNG, <image byte array>, false);
+sdlManager.getFileManager().uploadFile(artwork, new CompletionListener() {
     @Override
     public void onComplete(boolean success) {
+        if (success){
+            <#Image Upload Successful#>
+        }
     }
 });
 ```
