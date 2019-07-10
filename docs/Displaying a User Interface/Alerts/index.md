@@ -1,5 +1,5 @@
 # Alerts
-An alert is a pop-up window that can show a short message with optional buttons. When an alert is activated, it will abort any SDL operation that is in-progress, except the already-in-progress alert. If an alert is issued while another alert is still in progress, the newest alert will simply be ignored.
+An alert is a pop-up window showing a short message with optional buttons. When an alert is activated, it will abort any SDL operation that is in-progress, except the already-in-progress alert. If an alert is issued while another alert is still in progress, the newest alert will simply be ignored.
 
 Depending the platform, an alert can have up to three lines of text, a progress indicator (e.g. a spinning wheel or hourglass), and up to four soft buttons.
 
@@ -46,48 +46,38 @@ let alert = SDLAlert(alertText1: "<#Line 1#>", alertText2: "<#Line 2#>", alertTe
 ```objc
 SDLAlert *alert = [[SDLAlert alloc] initWithAlertText1:@"<#Line 1#>" alertText2:@"<#Line 2#>" alertText3:@"<#Line 3#>"];
 
-NSMutableArray<SDLSoftButton *> *softButtons = [[NSMutableArray alloc] init];
-
-SDLSoftButton *button1 = [[SDLSoftButton alloc] initWithType:SDLSoftButtonTypeText text:<#Button Text#> image:nil highlighted:@NO buttonId:<#Soft Button Id#> systemAction:SDLSystemActionDefaultAction handler:^(SDLOnButtonPress *_Nullable buttonPress, SDLOnButtonEvent *_Nullable buttonEvent) {
+SDLSoftButton *button1 = [[SDLSoftButton alloc] initWithType:SDLSoftButtonTypeText text:@"<#Button Text#>" image:nil highlighted:false buttonId:<#Soft Button Id#> systemAction:SDLSystemActionDefaultAction handler:^(SDLOnButtonPress *_Nullable buttonPress, SDLOnButtonEvent *_Nullable buttonEvent) {
     if (buttonPress == nil) {
         return;
     }
-    <#Code for when the button is pressed#>
+    <#Button has been pressed#>
 }];
 
-SDLSoftButton *button2 = [[SDLSoftButton alloc] initWithType:SDLSoftButtonTypeText text:<#Button Text#> image:nil highlighted:@NO buttonId:<#Soft Button Id#> systemAction:SDLSystemActionDefaultAction handler:^(SDLOnButtonPress *_Nullable buttonPress, SDLOnButtonEvent *_Nullable buttonEvent) {
+SDLSoftButton *button2 = [[SDLSoftButton alloc] initWithType:SDLSoftButtonTypeText text:<#Button Text#> image:nil highlighted:false buttonId:<#Soft Button Id#> systemAction:SDLSystemActionDefaultAction handler:^(SDLOnButtonPress *_Nullable buttonPress, SDLOnButtonEvent *_Nullable buttonEvent) {
     if (buttonPress == nil) {
         return;
     }
-    <#Code for when the button is pressed#>
+    <#Button has been pressed#>
 }];
 
-[softButtons addObject: button1];
-[softButtons addObject: button2];
-
-alert.softButtons = softButtons;
+alert.softButtons = @[button1, button2];
 ```
 
 ##### Swift
 ```swift
 let alert = SDLAlert(alertText1: "<#Line 1#>", alertText2: "<#Line 2#>", alertText3: "<#Line 3#>")
 
-var softButtons = [SDLSoftButton]()
-
 let button1 = SDLSoftButton(type: .text, text: <#Button Text#>, image: nil, highlighted: false, buttonId: <#Soft Button Id#>, systemAction: .defaultAction, handler: { buttonPress, buttonEvent in
     guard buttonPress != nil else { return }
-    <#Code for when the button is pressed#>
+    <#Button has been pressed#>
 })
 
 let button2 = SDLSoftButton(type: .text, text: <#Button Text#>, image: nil, highlighted: false, buttonId: <#Soft Button Id#>, systemAction: .defaultAction, handler: { buttonPress, buttonEvent in
     guard buttonPress != nil else { return }
-    <#Code for when the button is pressed#>
+    <#Button has been pressed#>
 })
 
-softButtons.append(button1)
-softButtons.append(button2)
-
-alert.softButtons = softButtons;
+alert.softButtons = [button1, button2]
 ```
 !@
 
@@ -96,7 +86,7 @@ alert.softButtons = softButtons;
 !@
 
 ### Timeouts
-An optional timeout can be added that will dimiss the alert when the duration is over. Typical timeouts are between 3 and 10 seconds. If omitted a default of 5 second is used.
+An optional timeout can be added that will dimiss the alert when the duration is over. Typical timeouts are between 3 and 10 seconds. If omitted a default of 5 seconds is used.
 
 @![iOS]
 ##### Objective-C
@@ -108,7 +98,7 @@ alert.duration = @(4000);
 ##### Swift
 ```swift
 // Duration timeout is in milliseconds
-alert.duration = 4000
+alert.duration = 4000 as NSNumber
 ```
 !@
 
@@ -127,7 +117,7 @@ alert.progressIndicator = @YES;
 
 ##### Swift
 ```swift
-alert.progressIndicator = true
+alert.progressIndicator = true as NSNumber
 ```
 !@
 
@@ -135,9 +125,10 @@ alert.progressIndicator = true
 ` TODO - code example `
 !@
 
-### Text-To-Speach
-The alert can also be formatted to speak a prompt or play a file when the alert appears on the screen. Do this by setting the `ttsChunks` parameter.
+### Text-To-Speech
+An alert can also speak a prompt or play a sound file when the alert appears on the screen. This is done by setting the `ttsChunks` parameter.
 
+#### Text
 @![iOS]
 ##### Objective-C
 ```objc
@@ -154,8 +145,8 @@ alert.ttsChunks = SDLTTSChunk.textChunks(from: "<#Text to speak#>")
 ` TODO - code example `
 !@
 
-### Text-To-Speach With File
-The `ttsChunks` can also take a file to play/speak. First you must [upload](https://smartdevicelink.com/en/guides/iOS/other-sdl-features/uploading-files/) a file to the head unit.
+#### Sound File
+The `ttsChunks` parameter can also take a file to play/speak. For more information on how to upload the file please refer to the [Playing Audio Indications](Other SDL Features/Playing Audio Indications) guide.
 
 @![iOS]
 ##### Objective-C
@@ -184,7 +175,7 @@ alert.playTone = @YES;
 
 ##### Swift
 ```swift
-alert.playTone = true
+alert.playTone = true as NSNumber
 ```
 !@
 
@@ -198,9 +189,8 @@ alert.playTone = true
 ##### Objective-C
 ```objc
 [self.sdlManager sendRequest:alert withResponseHandler:^(SDLRPCRequest *request, SDLRPCResponse *response, NSError *error) {
-    if ([response.resultCode isEqualToEnum:SDLResultSuccess]) {
-        // alert was dismissed successfully
-    }
+    if (![response.resultCode isEqualToEnum:SDLResultSuccess]) { return; }
+    <#alert was dismissed successfully#>
 }];
 ```
 
@@ -208,8 +198,7 @@ alert.playTone = true
 ```swift
 sdlManager.send(request: alert) { (request, response, error) in
     guard error == nil else { return }
-        // alert was dismissed successfully
-    }    
+    <#alert was dismissed successfully#>   
 }
 ```
 !@
