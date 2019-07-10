@@ -198,8 +198,7 @@ The `ttsChunks` parameter can also take a file to play/speak. For more informati
 @![android,javaSE,javaEE]
 ```java
 TTSChunk ttsChunk = new TTSChunk(sdlFile.getName(), SpeechCapabilities.FILE);
-List<TTSChunk> ttsChunkList = Collections.singletonList(ttsChunk);
-alert.setTtsChunks(ttsChunkList);
+alert.setTtsChunks(Collections.singletonList(ttsChunk));
 ```
 !@
 
