@@ -1,5 +1,5 @@
 # Understanding Permissions
-While creating your SDL app, remember that just because your app is connected to a head unit it does not mean that the app has permission to send any RPCs you want. If your app does not have the required permissions, requests will be rejected. There are three important things to remember in regards to permissions:
+While creating your SDL app, remember that just because your app is connected to a head unit it does not mean that the app has permission to send the RPCs you want. If your app does not have the required permissions, requests will be rejected. There are three important things to remember in regards to permissions:
 
 1. You may not be able to send a RPC when the SDL app is closed, in the background, or obscured by an alert. Each RPC has a set of `hmiLevel`s during which it can be sent.
 1. For some RPCs, like those that access vehicle data or make a phone call, you may need special permissions from the OEM to use. This permission is granted when you submit your app to the OEM for approval. Each OEM decides which RPCs it will restrict access to, so it is up you to check if you are allowed to use the RPC with the head unit.
@@ -63,7 +63,7 @@ func hmiLevel(_ oldLevel: SDLHMILevel, didChangeToLevel newLevel: SDLHMILevel) {
     switch newLevel {
     case .full:
         <#Send user interface RPCs#>
-    case .limited: break 
+    case .limited: break
     case .background: break
     case .none: break
     default: break
@@ -108,7 +108,7 @@ let isAllowed = sdlManager.permissionManager.isRPCAllowed(<#RPC name#>)
 ```java
 boolean allowed = sdlManager.getPermissionManager().isRPCAllowed(FunctionID.SHOW);
 
-// You can also check if a permission parameter is allowed  
+// You can also check if a permission parameter is allowed
 boolean parameterAllowed = sdlManager.getPermissionManager().isPermissionParameterAllowed(FunctionID.GET_VEHICLE_DATA, GetVehicleData.KEY_RPM);
 ```
 !@
@@ -172,7 +172,7 @@ if (status.get(FunctionID.GET_VEHICLE_DATA).getAllowedParameters().get(GetVehicl
 !@
 
 ### Observing Permissions
-If desired, you can set an observer for a group of permissions. The observer's handler will be called when the permissions for the group changes. If you want to be notified when the permission status of any of RPCs in the group change, set the `groupType` to @![iOS]`SDLPermissionGroupTypeAny`!@ @![android,javaSE,javaEE]`PERMISSION_GROUP_TYPE_ANY`!@. If you only want to be notified when all of the RPCs in the group are allowed, set the `groupType` to @![iOS]`SDLPermissionGroupTypeAllAllowed`!@ @![android,javaSE,javaEE]`PERMISSION_GROUP_TYPE_ALL_ALLOWED`!@.
+If desired, you can set @![iOS]an observer!@ @![android,javaSE,javaEE]`a listener`!@ for a group of permissions. The @![iOS]observer's handler!@ @![android,javaSE,javaEE]`listener`!@ will be called when the permissions for the group changes. If you want to be notified when the permission status of any of RPCs in the group change, set the `groupType` to @![iOS]`SDLPermissionGroupTypeAny`!@ @![android,javaSE,javaEE]`PERMISSION_GROUP_TYPE_ANY`!@. If you only want to be notified when all of the RPCs in the group are allowed, set the `groupType` to @![iOS]`SDLPermissionGroupTypeAllAllowed`!@ @![android,javaSE,javaEE]`PERMISSION_GROUP_TYPE_ALL_ALLOWED`!@.
 
 @![iOS]
 ##### Objective-C
@@ -213,7 +213,7 @@ UUID listenerId = sdlManager.getPermissionManager().addListener(permissionElemen
 !@
 
 ### Stopping Observation of Permissions
-When you set up the observer, you will get an unique id back. Use this id to unsubscribe to the permissions at a later date.
+When you set up the @![iOS]observer!@ @![android,javaSE,javaEE]`listener`!@, you will get an unique id back. Use this id to unsubscribe to the permissions at a later date.
 
 @![iOS]
 ##### Objective-C

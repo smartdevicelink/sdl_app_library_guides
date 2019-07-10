@@ -24,10 +24,10 @@ The same issues apply when connecting the relay app with a TDK or head unit as d
 !@
 
 @![android]
-To connect to an emulator, such as Manticore or a local Ubuntu SDL Core-based emulator, make sure to use `TCPTransportConfig`. The emulator and app should be on the same network (i.e. remember to set the correct IP address and port number correctly). The IP will most likely be the IP address of the operating system running the emulator. The port will most likely be `12345`.
+To connect to an emulator, such as Manticore or a local Ubuntu SDL Core-based emulator, make sure to use `TCPTransportConfig`. The emulator and app should be on the same network (i.e. remember to set the correct IP address and port number). The IP will most likely be the IP address of the operating system running the emulator. The port will most likely be `12345`.
 
-```java 
-// Set the SdlManager.Builder transport 
+```java
+// Set the SdlManager.Builder transport
 builder.setTransportType(new TCPTransportConfig(<IP ADDRESS>, <PORT>, false));
 ```
 
@@ -36,11 +36,11 @@ To connect your device directly to a vehicle head unit or TDK, make sure to use 
 
 
 ```java
-// Set the SdlManager.Builder transport 
+// Set the SdlManager.Builder transport
 builder.setTransportType(new MultiplexTransportConfig(context, <APP ID>));
 ```
 
-Run the project in Android Studio, targeting the device you want the Sdl Android installed on. The Sdl Android should compile and launch on your device of choosing. Following this, you should see an application appears on the TDK or HMI:
+Run the project in Android Studio, targeting the device you want Sdl Android installed on. Sdl Android should compile and launch on your device of choosing. Following this, you should see an application appears on the TDK or HMI:
 
 ![HMI Apps](assets/hmi1.png)
 
@@ -59,10 +59,10 @@ We assume that you have [SDL Core](https://github.com/smartdevicelink/sdl_core) 
 Sdl Core and an HMI or Manticore are needed to run the cloud app to ensure that it connects.
 !!!
 
-## Configuring Core 
-To let Sdl Core connect to your app, first you will have to know the IP address of the machine that is running the cloud app. If you don't know what it is, running ```ifconfig``` in the terminal will usually let you see it for the interface you are connected with to your network. 
+## Configuring Core
+To let Sdl Core connect to your app, first you will have to know the IP address of the machine that is running the cloud app. If you don't know what it is, running ```ifconfig``` in the terminal will usually let you see it for the interface you are connected with to your network.
 
-After getting the IP address, you will have to set App ID, App Websocket Endpoint, and App Nicknames in Sdl Core to let it know where your instance of cloud app is running. 
+After getting the IP address, you will have to set App ID, App Websocket Endpoint, and App Nicknames in Sdl Core to let it know where your instance of cloud app is running.
 
 !!! NOTE
 The App Websocket Endpoint contains the IP Address and port as the following: `ws://<ip address>:<port>/`.

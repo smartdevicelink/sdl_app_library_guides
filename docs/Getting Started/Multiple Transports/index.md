@@ -1,13 +1,13 @@
 # Multiple Transports
-As of Protocol version 5.1.0, which is supported from SDL Android 4.7 and SDL Core 5.0, a new feature was introduced called Multiple Transports. This feature allows apps to carry their SDL session over multiple transports. The first transport that the app connects to is referred to as the primary transport, and a later connected transport being a secondary. For example, apps can register over bluetooth as a primary transport, then connect over WiFi when necessary (video/audio streaming) as a secondary transport.
+As of Protocol version 5.1.0, which is supported from SDL Android 4.7 and SDL Core 5.0, a new feature was introduced called Multiple Transports. This feature allows apps to carry their SDL session over multiple transports. The first transport that the app connects to is referred to as the primary transport, and a later connected transport being a secondary transport. For example, apps can register over bluetooth as a primary transport, then connect over WiFi when necessary (ex. to allow video/audio streaming) as a secondary transport.
 
 ## Primary Transports
 
-This feature coincides with our newly redesigned multiplexing transport. In SDL Android 4.7 and newer, you can connect and register apps via a multiplexed bluetooth and/or USB connection. On head units that support multiple transports, the primary transport will be used for RPC communication while the secondary will be used for high bandwidth services. Otherwise, the primary transport will be used for all applicable services for that transport type.
+In SDL Android 4.7 and newer, you can connect and register apps via a multiplexed bluetooth and/or USB connection. On head units that support multiple transports, the primary transport will be used for RPC communication while the secondary will be used for high bandwidth services. Otherwise, the primary transport will be used for all applicable services for that transport type.
 
 ### Supporting specific primary transports
 
-Whether your app supports both bluetooth and/or USB connections are determined by what you set as acceptable primary transports. By default, both USB and bluetooth are supported and should be kept unless there is a specific reason otherwise. If you list multiple primary transports and one disconnects, if another included transport is available the app will automatically attempt to connect and register. 
+Whether your app supports both bluetooth and/or USB connections is determined by what you set as acceptable primary transports. By default, both USB and bluetooth are supported and should be kept unless there is a specific reason otherwise. If you list multiple primary transports and one disconnects, if another included transport is available the app will automatically attempt to connect and register to it.
 
 ```java
 List<TransportType> multiplexPrimaryTransports = Arrays.asList(TransportType.USB, TransportType.BLUETOOTH);
@@ -22,7 +22,7 @@ If you only want to use bluetooth or USB, simply pass in a list with the one you
 For the best compatibility we suggest supporting both primary transports.
 !!!
 
-### Requires High Bandwidth
+### Requiring High Bandwidth
 
 Certain app types will require a high bandwidth transport to be available, which could be either primary or secondary transports. If this is the case, an app will only be registered if a high bandwidth transport is either connected or available to connect.
 
@@ -47,7 +47,7 @@ mtc.setRequiresHighBandwidth(false);
 
 ## Secondary Transports
 
-Secondary transports are supported as of Protocol Version 5.1.0 , and must be enabled by the module the app is connecting. In addition to supporting bluetooth and USB, TCP is also a supported as a secondary transport.
+Secondary transports are supported as of Protocol Version 5.1.0 , and must be enabled by the module the app is connecting to. In addition to supporting bluetooth and USB, TCP is also a supported as a secondary transport.
 
 Setting secondary transports that your app supports is similar to setting the primary transports:
 

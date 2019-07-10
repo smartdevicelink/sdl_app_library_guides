@@ -1,5 +1,5 @@
 # Adding the Lock Screen
-The lock screen is a vital part of SmartDeviceLink, as the lock screen prevents the user from using your application while the vehicle is in motion. SDL takes care of the lock screen for you. It still allows you to use your own view controller if you prefer your own look, but still want the recommended logic that SDL provides for free.
+The lock screen is a vital part of SmartDeviceLink as the lock screen prevents the user from using your application while the vehicle is in motion. SDL takes care of the lock screen for you. It still allows you to use your own @![iOS]view controller!@ @![android]activity!@ if you prefer your own look, but still want the recommended logic that SDL provides for free.
 
 
 @![iOS]
@@ -24,7 +24,7 @@ This manifest entry must be added for the lock screen feature to work.
 !@
 
 ## Using the Provided Lock Screen
-Using the default lock screen is simple. Using the lock screen this way will automatically load an automaker's logo, if available, to show alongside your logo. If it is not, the default lock screen will show your logo alone.
+@![iOS]Using the default lock screen is simple. Using the lock screen this way will automatically load an automaker's logo, if available, to show alongside your logo. If it is not, the default lock screen will show your logo alone.!@
 
 @![iOS]
 ![Generic Lock Screen](/assets/GenericLockScreen.png)
@@ -103,7 +103,7 @@ The default lock screen handles retrieving and setting the OEM logo from head un
 !@
 
 @![android]
-This sets whether or not to show the connected device's logo on the default lock screen. The logo will come from the connected hardware if set by the manufacturer. When using a Custom View, the custom layout will have to handle the logic to display the device logo or not. The default setting is false, but some OEM partners may require it.
+This sets whether or not to show the connected device's logo on the default lock screen. The logo will come from the connected hardware if set by the manufacturer. When using a custom view, the custom layout will have to handle the logic to display the device logo. The default setting is false, but some OEM partners may require it.
 In your `LockScreenConfig` object, you can set the boolean of whether or not you want the device logo shown, if available:
 ```java
 lockScreenConfig.showDeviceLogo(true);
