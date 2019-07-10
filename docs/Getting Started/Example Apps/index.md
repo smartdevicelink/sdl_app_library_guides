@@ -26,8 +26,8 @@ To connect the example app to production or debug hardware, make sure you are on
 
 ### iAP Production Transport
 1.  Make sure to use the default `SDLLifecycleConfiguration`.
-2.  Make sure the  [protocol](https://smartdevicelink.com/en/guides/pull_request/iOS/99b0a57187920105edcc5d3da9be798b564123f2/getting-started/sdk-configuration/) strings have been added to the app.
-3.  Make sure you have enabled background [capabilities](https://smartdevicelink.com/en/guides/pull_request/iOS/99b0a57187920105edcc5d3da9be798b564123f2/getting-started/sdk-configuration/) for your app.
+2.  Make sure the  [protocol](https://smartdevicelink.com/en/guides/iOS/getting-started/sdk-configuration/) strings have been added to the app.
+3.  Make sure you have enabled background [capabilities](https://smartdevicelink.com/en/guides/iOS/getting-started/sdk-configuration/) for your app.
 4.  If the head unit (emulators do not support IAP) does not support bluetooth, an iAP connection requires a USB cord.
 
 #### iAP Bluetooth Production Transport
