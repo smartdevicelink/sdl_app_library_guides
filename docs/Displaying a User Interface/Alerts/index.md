@@ -197,7 +197,7 @@ alert.playTone = true as NSNumber
 ##### Swift
 ```swift
 sdlManager.send(request: alert) { (request, response, error) in
-    guard error == nil else { return }
+    guard response?.resultCode == .success else { return }
     <#alert was dismissed successfully#>   
 }
 ```
