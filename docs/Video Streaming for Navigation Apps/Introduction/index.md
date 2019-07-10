@@ -21,7 +21,7 @@ The second difference is that a `SDLStreamingMediaConfiguration` must be created
 !@
 
 @![android]
-The second difference is the requirement to call the `setSdlSecurity(List<Class<? extends SdlSecurityBase>> secList)` method from the `SdlManager.Builder` if connecting to an implementation of Core that requires secure video & audio streaming. This method requires an array of Security Managers, which will extend the `SdlSecurityBase` class. These security libraries are provided by the OEMs themselves, and will only work for that OEM. There is not a general catch-all security library.
+The second difference is the ability to call the `setSdlSecurity(List<Class<? extends SdlSecurityBase>> secList)` method from the `SdlManager.Builder` if connecting to an implementation of Core that requires secure video & audio streaming. This method requires an array of security libraries, which will extend the `SdlSecurityBase` class. These security libraries are provided by the OEMs themselves, and will only work for that OEM. There is not a general catch-all security library.
 !@
 
 @![iOS]
@@ -52,6 +52,7 @@ Vector<AppHMIType> hmiTypes = new Vector<AppHMIType>();
 hmiTypes.add(AppHMIType.NAVIGATION);
 builder.setAppTypes(hmiTypes);
 
+// Add security managers if Core requires secure video & audio streaming
 List<? extends SdlSecurityBase> securityManagers = new ArrayList();
 builder.setSdlSecurity(Arrays.asList(OEMSecurityManager1.class, OEMSecurityManager2.class));
 

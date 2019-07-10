@@ -114,7 +114,7 @@ if streamManager.sendAudioData(audioData) == false {
 !@
 
 @![android]
-To stream audio, we call `sdlManager.getAudioStreamManager().start()` which will start the manager. When that callback returns successful, you call `sdlManager.getAudioStreamManager().startAudioStream()`. When the callback for that is successful, you can push the audio source using `sdlManager.getAudioStreamManager().pushAudioSource()`. Below is an example of playing an `mp3` file that we have in our resource directory:
+To stream audio, we call `sdlManager.getAudioStreamManager().start()` which will start the manager. When that callback returns successful, you call `sdlManager.getAudioStreamManager().startAudioStream()`. When the callback for that is successful, you can push the audio source using `sdlManager.getAudioStreamManager().pushResource()`. Below is an example of playing an `mp3` file that we have in our resource directory:
 
 ```java
 if (sdlManager.getAudioStreamManager() != null) {
@@ -127,15 +127,7 @@ if (sdlManager.getAudioStreamManager() != null) {
                     @Override
                     public void onComplete(boolean success) {
                         if (success) {
-                            Resources resources = getApplicationContext().getResources();
-                            int resourceId = R.raw.exampleMp3;
-                            Uri uri = new Uri.Builder()
-                            .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
-                            .authority(resources.getResourcePackageName(resourceId))
-                            .appendPath(resources.getResourceTypeName(resourceId))
-                            .appendPath(resources.getResourceEntryName(resourceId))
-                            .build();
-                            sdlManager.getAudioStreamManager().pushAudioSource(uri, new CompletionListener() {
+                            sdlManager.getAudioStreamManager().pushResource(R.raw.exampleMp3, new CompletionListener() {
                                 @Override
                                 public void onComplete(boolean success) {
                                     if (success) {
@@ -160,7 +152,7 @@ if (sdlManager.getAudioStreamManager() != null) {
 
 #### Using a Buffer
 
-You can also send `ByteBuffer`s to the `AudioStreamManager` to be played. To use it, replace the `pushAudioSource` call in the example above to the `pushBuffer` call shown below:
+You can also send `ByteBuffer`s to the `AudioStreamManager` to be played. To use it, replace the `pushResource` call in the example above to the `pushBuffer` call shown below:
 
 ```java
 sdlManager.getAudioStreamManager().pushBuffer(byteBuffer, new CompletionListener() {

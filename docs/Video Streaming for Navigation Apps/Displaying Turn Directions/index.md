@@ -1,5 +1,5 @@
 # Displaying Turn Directions
-While your app is navigating the user, you will also want to send turn by turn directions. This is useful for if your app is in the background or if the user is in the middle of a phone call, and gives the system additional information about the next maneuver the user must make.
+While your app is navigating the user, you will also want to send turn by turn directions. This is useful if your app is in the background or if the user is in the middle of a phone call, and gives the system additional information about the next maneuver the user must make.
 
 To display a Turn by Turn direction, a combination of the @![iOS]`SDLShowConstantTBT`!@@![android]`ShowConstantTBT`!@ and @![iOS]`SDLAlertManeuver`!@@![android]`AlertManeuver`!@ RPCs must be used. The @![iOS]`SDLShowConstantTBT`!@@![android]`ShowConstantTBT`!@ RPC involves the data that will be shown on the head unit. The main properties of this object to set are `navigationText1`, `navigationText2`, and `turnIcon`. A best practice for navigation applications is to use the `navigationText1` as the direction to give (Turn Right) and `navigationText2` to provide the distance to that direction (3 mi). When an @![iOS]`SDLAlertManeuver`!@@![android]`AlertManeuver`!@ is sent, you may also include accompanying text that you would like the head unit to speak when a direction is displayed on screen (e.g. In 3 miles turn right.).
 
@@ -101,7 +101,7 @@ sdlManager.sendRPC(turnByTurn);
 Remember when sending a @![iOS]`SDLImage`!@@![android,javaSE,javaEE]`Image`!@, that the image must first be uploaded to the head unit with the FileManager.
 
 ## Clearing the Maneuver
-To clear a navigation direction from the screen, we send an @![iOS]`SDLShowConstantTBT`!@@![android,javaSE,javaEE]`ShowConstantTbt`!@ with the `maneuverComplete` property as `YES`. This specific RPC does not require an accompanying @![iOS]`SDLAlertManeuver`!@@![android,javaSE,javaEE]`AlertManeuver`!@.
+To clear a navigation direction from the screen, we send an @![iOS]`SDLShowConstantTBT`!@@![android,javaSE,javaEE]`ShowConstantTbt`!@ with the `maneuverComplete` property as @![iOS]`YES`!@@![android,javaSE,javaEE]`True`!@. This specific RPC does not require an accompanying @![iOS]`SDLAlertManeuver`!@@![android,javaSE,javaEE]`AlertManeuver`!@.
 
 @![iOS]
 ##### Objective-C

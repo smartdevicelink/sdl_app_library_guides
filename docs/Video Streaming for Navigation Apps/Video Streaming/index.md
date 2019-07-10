@@ -131,6 +131,26 @@ If you are obfuscating the code in your app, make sure to exclude your class tha
 The `VideoStreamingManager` can be used to start streaming video after the `SdlManager` has successfully been started. This is performed by calling the method `startRemoteDisplayStream(Context context, final Class<? extends SdlRemoteDisplay> remoteDisplay, final VideoStreamingParameters parameters, final boolean encrypted)`.
 
 ```java
+public static class MyDisplay extends SdlRemoteDisplay {
+
+    public MyDisplay(Context context, Display display) {
+        super(context, display);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.stream);
+
+        String videoUri = "android.resource://" + context.getPackageName() + "/" + R.raw.sdl;
+        VideoView videoView = findViewById(R.id.videoView);
+        videoView.setVideoURI(Uri.parse(videoUri));
+        videoView.start();
+    }
+}
+```
+
+```java
 if (sdlManager.getVideoStreamManager() != null) {
     sdlManager.getVideoStreamManager().start(new CompletionListener() {
         @Override
