@@ -157,7 +157,7 @@ NS_ASSUME_NONNULL_END
 class ProxyManager: NSObject {
   // Manager
   fileprivate var sdlManager: SDLManager!
-    
+
   // Singleton
   static let sharedManager = ProxyManager()
 
@@ -167,7 +167,7 @@ class ProxyManager: NSObject {
 }
 ```
 
-### 1. Create a Lifecycle Configuration   
+### 1. Create a Lifecycle Configuration
 In order to instantiate the `SDLManager` class, you must first configure an `SDLConfiguration`. To start, we will look at the `SDLLifecycleConfiguration`. You will at minimum need a `SDLLifecycleConfiguration` instance with the application name and application id. During the development stage, a dummy app id is usually sufficient. For more information about obtaining an application id, please consult the [SDK Configuration](Getting Started/SDK Configuration) section of this guide. You must also decide which network configuration to use to connect the app to the SDL Core. Optional, but recommended, configuration properties include short app name, app icon, and app type.
 
 #### Network Connection Type
@@ -191,7 +191,7 @@ SDLLifecycleConfiguration* lifecycleConfiguration = [SDLLifecycleConfiguration d
 ##### Swift
 ```swift
 let lifecycleConfiguration = SDLLifecycleConfiguration(appName: "<#App Name#>", fullAppId: "<#App Id#>", ipAddress: "<#IP Address#>", port: <#Port#>))
-```  
+```
 
 !!! NOTE
 If you are connecting your app to an emulator using a TCP connection, the IP address is your computer or virtual machine’s IP address, and the port number is usually 12345.
@@ -218,7 +218,7 @@ This is a custom icon for your application. Please refer to [Adaptive Interface 
 UIImage* appImage = [UIImage imageNamed:@"<#AppIcon Name#>"];
 if (appImage) {
   SDLArtwork* appIcon = [SDLArtwork persistentArtworkWithImage:appImage name:@"<#Name to Upload As#>" asImageFormat:SDLArtworkImageFormatPNG /* or SDLArtworkImageFormatJPG */];
-  lifecycleConfiguration.appIcon = appIcon;  
+  lifecycleConfiguration.appIcon = appIcon;
 }
 ```
 
@@ -226,7 +226,7 @@ if (appImage) {
 ```swift
 if let appImage = UIImage(named: "<#AppIcon Name#>") {
   let appIcon = SDLArtwork(image: appImage, name: "<#Name to Upload As#>", persistent: true, as: .JPG /* or .PNG */)
-  lifecycleConfiguration.appIcon = appIcon  
+  lifecycleConfiguration.appIcon = appIcon
 }
 ```
 
@@ -402,9 +402,9 @@ func connect() {
 }
 ```
 
-!!! NOTE  
-In production, your app will be watching for connections using iAP, which will not use any more battery power than normal.  
-!!!  
+!!! NOTE
+In production, your app will be watching for connections using iAP, which will not use any more battery power than normal.
+!!!
 
 If the connection is successful, you can start sending RPCs to the SDL Core. However, some RPCs can only be sent when the HMI is in the `FULL` or `LIMITED` state. If the SDL Core's HMI is not ready to accept these RPCs, your requests will be ignored. If you want to make sure that the SDL Core will not ignore your RPCs, use the `SDLManagerDelegate` methods in the next section.
 
@@ -420,7 +420,7 @@ In addition, there are three optional methods:
 1. `systemContext:didChangeToContext:` Called when the system context (i.e. a menu is open, an alert is visible,  a voice recognition session is in progress) of this application changes on the remote system. For more information, please refer to [Understanding Permissions](Getting Started/Understanding Permissions).
 1. `managerShouldUpdateLifecycleToLanguage:` Called when the head unit language does not match the `language` set in the `SDLLifecycleConfiguration` but does match a language included in `languagesSupported`. If desired, you can customize the `appName`, the `shortAppName`,  and `ttsName` for the head unit's current language. For more information about supporting more than one language in your app please refer to [Getting Started/Adapting to the Head Unit Language](Getting Started/Adapting to the Head Unit Language).
 
-### Example Implementation of a Proxy Class  
+### Example Implementation of a Proxy Class
 The following code snippet has an example of setting up both a TCP and iAP connection.
 
 ##### Objective-C
@@ -440,7 +440,7 @@ NS_ASSUME_NONNULL_BEGIN
 NS_ASSUME_NONNULL_END
 ```
 
-###### ProxyManager.m 
+###### ProxyManager.m
 ```objc
 #import <SmartDeviceLink/SmartDeviceLink.h>
 
@@ -462,7 +462,7 @@ static NSString* const AppId = @"<#App Id#>";
     dispatch_once(&onceToken, ^{
         sharedManager = [[ProxyManager alloc] init];
     });
-    
+
     return sharedManager;
 }
 
@@ -471,26 +471,26 @@ static NSString* const AppId = @"<#App Id#>";
     if (!self) {
         return nil;
     }
-    
+
     // Used for USB Connection
     SDLLifecycleConfiguration* lifecycleConfiguration = [SDLLifecycleConfiguration defaultConfigurationWithAppName:AppName fullAppId:AppId];
 
     // Used for TCP/IP Connection
 //    SDLLifecycleConfiguration* lifecycleConfiguration = [SDLLifecycleConfiguration debugConfigurationWithAppName:AppName fullAppId:AppId  ipAddress:@"<#IP Address#>" port:<#Port#>];
-    
+
     UIImage* appImage = [UIImage imageNamed:@"<#AppIcon Name#>"];
     if (appImage) {
         SDLArtwork* appIcon = [SDLArtwork persistentArtworkWithImage:appImage name:@"<#Name to Upload As#>" asImageFormat:SDLArtworkImageFormatJPG /* or SDLArtworkImageFormatPNG */];
         lifecycleConfiguration.appIcon = appIcon;
     }
-    
+
     lifecycleConfiguration.shortAppName = @"<#Shortened App Name#>";
     lifecycleConfiguration.appType = [SDLAppHMIType MEDIA];
-    
+
     SDLConfiguration* configuration = [SDLConfiguration configurationWithLifecycle:lifecycleConfiguration lockScreen:[SDLLockScreenConfiguration enabledConfiguration] logging:[SDLLogConfiguration defaultConfiguration] fileManager:[SDLFileManager defaultConfiguration]];
 
     self.sdlManager = [[SDLManager alloc] initWithConfiguration:configuration delegate:self];
-    
+
     return self;
 }
 
@@ -523,36 +523,36 @@ import SmartDeviceLink
 class ProxyManager: NSObject {
     private let appName = "<#App Name#>"
     private let appId = "<#App Id#>"
-    
+
     // Manager
     fileprivate var sdlManager: SDLManager!
-    
+
     // Singleton
     static let sharedManager = ProxyManager()
-    
+
     private override init() {
         super.init()
 
         // Used for USB Connection
         let lifecycleConfiguration = SDLLifecycleConfiguration(appName: appName, fullAppId: appId)
-        
+
         // Used for TCP/IP Connection
         // let lifecycleConfiguration = SDLLifecycleConfiguration(appName: appName, fullAppId: appId, ipAddress: "<#IP Address#>", port: <#Port#>)
-        
+
         // App icon image
         if let appImage = UIImage(named: "<#AppIcon Name#>") {
             let appIcon = SDLArtwork(image: appImage, name: "<#Name to Upload As#>", persistent: true, as: .JPG /* or .PNG */)
             lifecycleConfiguration.appIcon = appIcon
         }
-        
+
         lifecycleConfiguration.shortAppName = "<#Shortened App Name#>"
         lifecycleConfiguration.appType = .media
-        
+
         let configuration = SDLConfiguration(lifecycle: lifecycleConfiguration, lockScreen: .enabled(), logging: .default(), fileManager: .default())
-        
-        sdlManager = SDLManager(configuration: configuration, delegate: self)                
+
+        sdlManager = SDLManager(configuration: configuration, delegate: self)
     }
-    
+
     func connect() {
         // Start watching for a connection with a SDL Core
         sdlManager.start { (success, error) in
@@ -594,13 +594,13 @@ In this guide, we exclusively use IntelliJ. We are going to set-up a bare-bones 
 The SDL Java library supports Java 7 and above.
 !!!
 !@
- 
+
 
 @![android,javaSE,javaEE]
 ## SmartDeviceLink Service
-A SmartDeviceLink Android Service should be created to manage the lifecycle of the SDL session. The `SdlService` should build and start an instance of the `SdlManager` which will automatically connect with a headunit when available. This `SdlManager` will handle sending and receiving messages to and from SDL after connected.
+A SmartDeviceLink Service should be created to manage the lifecycle of the SDL session. The `SdlService` should build and start an instance of the `SdlManager` which will automatically connect with a headunit when available. This `SdlManager` will handle sending and receiving messages to and from SDL after it is connected.
 
-Create a new service and name it appropriately, for this guide we are going to call it `SdlService`. 
+Create a new service and name it appropriately, for this guide we are going to call it `SdlService`.
 !@
 
 @![android]
@@ -618,9 +618,9 @@ public class SdlService {
 }
 ```
 !@
- 
+
 @![android]
-If you created the service using the Android Studio template then the service should have been added to your `AndroidManifest.xml` otherwise the service needs to be defined in the manifest:
+If you created the service using the Android Studio template then the service should have been added to your `AndroidManifest.xml`. If not, then service needs to be defined in the manifest:
 
 ```xml
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
@@ -631,7 +631,7 @@ If you created the service using the Android Studio template then the service sh
         <service
         android:name=".SdlService"
         android:enabled="true"/>
-    
+
     </application>
 
 </manifest>
@@ -661,11 +661,11 @@ public void onCreate() {
 
 ```
 !!! NOTE
-The sample code checks if the OS is of Android Oreo or newer to start a foreground service. It is up to the app developer if they wish to start the notification in previous versions.  
+The sample code checks if the OS is of Android Oreo or newer to start a foreground service. It is up to the app developer if they wish to start the notification in previous versions.
 !!!
 
 ### Exiting the Foreground
-It's important that you don't leave you notification in the notification tray as it is very confusing to users. So in the `onDestroy` method in your service, simply call the `stopForeground` method.
+It's important that you don't leave your notification in the notification tray as it is very confusing to users. So in the `onDestroy` method in your service, simply call the `stopForeground` method.
 
 ```java
 @Override
@@ -702,17 +702,17 @@ public class SdlService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        
+
         if (sdlManager == null) {
             MultiplexTransportConfig transport = new MultiplexTransportConfig(this, APP_ID, MultiplexTransportConfig.FLAG_MULTI_SECURITY_OFF);
-           
+
             // The app type to be used
             Vector<AppHMIType> appType = new Vector<>();
             appType.add(AppHMIType.MEDIA);
 
             // The manager listener helps you know when certain events that pertain to the SDL Manager happen
             SdlManagerListener listener = new SdlManagerListener() {
-                
+
                 @Override
                 public void onStart() {
                 	// After this callback is triggered the SdlManager can be used to interact with the connected SDL session (updating the display, sending RPCs, etc)
@@ -753,7 +753,7 @@ The `sdlManager` must be shutdown properly in the `SdlService.onDestroy()` callb
 @![javaSE,javaEE]
 ```java
 public class SdlService {
-    
+
     //The manager handles communication between the application and SDL
     private SdlManager sdlManager = null;
 
@@ -836,7 +836,7 @@ builder.setMinimumRPCVersion(new Version("4.0.0"));
 
 ### Listening for RPC notifications and events
 
-We can listen for specific events using `SdlManager`'s builder `setRPCNotificationListeners`. The following example shows how to listen for HMI Status notifications. Additional listeners can be added for specific RPCs by using their corresponding `FunctionID` in place of the `ON_HMI_STATUS` in the following example and casting the `RPCNotification` object to the correct type. 
+We can listen for specific events using `SdlManager`'s builder `setRPCNotificationListeners`. The following example shows how to listen for HMI Status notifications. Additional listeners can be added for specific RPCs by using their corresponding `FunctionID` in place of the `ON_HMI_STATUS` in the following example and casting the `RPCNotification` object to the correct type.
 
 ##### Example of a listener for HMI Status:
 
@@ -871,14 +871,14 @@ public class SdlRouterService extends  com.smartdevicelink.transport.SdlRouterSe
 }
 ```
 !!! MUST
-The local extension of the `com.smartdevicelink.transport.SdlRouterService` must be named `SdlRouterService`. 
+The local extension of the `com.smartdevicelink.transport.SdlRouterService` must be named `SdlRouterService`.
 !!!
 
 !!! MUST
 Make sure this local class `SdlRouterService.java` is in the same package of `SdlReceiver.java` (described below)
 !!!
 
-If you created the service using the Android Studio template then the service should have been added to your `AndroidManifest.xml` otherwise the service needs to be added in the manifest. Because we want our service to be seen by other SDL enabled apps, we need to set `android:exported="true"`. The system may issue a lint warning because of this, so we can suppress that using `tools:ignore="ExportedService"`.  
+If you created the service using the Android Studio template then the service should have been added to your `AndroidManifest.xml` otherwise the service needs to be added in the manifest. Because we want our service to be seen by other SDL enabled apps, we need to set `android:exported="true"`. The system may issue a lint warning because of this, so we can suppress that using `tools:ignore="ExportedService"`.
 
 !!! MUST
 The `SdlRouterService` must be placed in a separate process with the name `com.smartdevicelink.router`. If it is not in that process during it's start up it will stop itself.
@@ -915,7 +915,7 @@ Adding the `sdl_router_version` metadata allows the library to know the version 
 This is only for specific OEM applications, therefore normal developers do not need to worry about this.
 !!!
 
-Some OEMs choose to implement custom router services. Setting the `sdl_custom_router` metadata value to `true` means that the app is using something custom over the default router service that is included in the SDL Android library. Do not include this `meta-data` entry unless you know what you are doing. 
+Some OEMs choose to implement custom router services. Setting the `sdl_custom_router` metadata value to `true` means that the app is using something custom over the default router service that is included in the SDL Android library. Do not include this `meta-data` entry unless you know what you are doing.
 
 
 ## SmartDeviceLink Broadcast Receiver
@@ -931,7 +931,7 @@ public class SdlReceiver extends SdlBroadcastReceiver {
     @Override
 	public void onSdlEnabled(Context context, Intent intent) {
 		//...
-		
+
 	}
 
 	@Override
@@ -941,7 +941,7 @@ public class SdlReceiver extends SdlBroadcastReceiver {
 }
 ```
 
-!!! MUST 
+!!! MUST
 SdlBroadcastReceiver must call super if ```onReceive``` is overridden
 !!!
 
@@ -968,14 +968,14 @@ If you created the `BroadcastReceiver` using the Android Studio template then th
             android:name=".SdlReceiver"
             android:exported="true"
             android:enabled="true">
-    
+
             <intent-filter>
                 <action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
                 <action android:name="sdl.router.startservice" />
             </intent-filter>
-    
+
         </receiver>
-    
+
     </application>
 
 </manifest>
@@ -994,7 +994,7 @@ Next, we want to make sure we supply our instance of the `SdlBroadcastService` w
 public class SdlReceiver extends SdlBroadcastReceiver {
    @Override
 	public void onSdlEnabled(Context context, Intent intent) {
-	
+
 	}
 
 	@Override
@@ -1013,7 +1013,7 @@ Apps must start their service in the foreground as of Android Oreo (API 26).
 
 ```java
 public class SdlReceiver extends SdlBroadcastReceiver {
-   
+
    @Override
 	public void onSdlEnabled(Context context, Intent intent) {
 		//Use the provided intent but set the class to the SdlService
@@ -1065,13 +1065,13 @@ public class Main {
 
 	Thread thread;
 	SdlService sdlService;
-	
+
     public static void main(String[] args) {
         Main main = new Main();
         main.startSdlService();
-    
+
     }
-    
+
 private void startSdlService() {
 
         thread = new Thread(new Runnable() {
@@ -1092,11 +1092,11 @@ private void startSdlService() {
 
 @![javaEE]
 ### Adding EJB and Websockets
-Create a new package where all the JavaEE-specific code will go. 
+Create a new package where all the JavaEE-specific code will go.
 
 The SDL Java library comes with a `CustomTransport` class which takes the role of sending messages between incoming sdl_core connections and your SDL application. You need to pass that class to the `SdlManager` builder to make the SDL Java library aware that you want to use your JavaEE websocket server as the transport.
 
-Create a Java class in the new package which will be the `SDLSessionBean` class. This class utilizes the `CustomTransport` class and EJB JavaEE API which will make it the entry point of your app when a connection is made. It will open up a websocket server at `/` and create stateful beans, where the bean represents the logic of your cloud app. Every new connection to this endpoint creates a new bean containing your app logic, allowing for load balancing across all the instances of your app that were automatically created. 
+Create a Java class in the new package which will be the `SDLSessionBean` class. This class utilizes the `CustomTransport` class and EJB JavaEE API which will make it the entry point of your app when a connection is made. It will open up a websocket server at `/` and create stateful beans, where the bean represents the logic of your cloud app. Every new connection to this endpoint creates a new bean containing your app logic, allowing for load balancing across all the instances of your app that were automatically created.
 
 ```java
 import com.smartdevicelink.transport.CustomTransport;
@@ -1127,7 +1127,7 @@ public class SDLSessionBean {
             }
         }
     }
-    
+
     @OnOpen
     public void onOpen (Session session) {
         websocket = new WebSocketEE("http://localhost", session) {};
@@ -1141,7 +1141,7 @@ public class SDLSessionBean {
 }
 ```
 
-Unfortunately, [there's no way to get a client's IP address using the standard API](https://stackoverflow.com/a/23025059), so localhost is passed to the `CustomTransport` for now as the transport address (this is only used locally in the library so it is not necessary). 
+Unfortunately, [there's no way to get a client's IP address using the standard API](https://stackoverflow.com/a/23025059), so localhost is passed to the `CustomTransport` for now as the transport address (this is only used locally in the library so it is not necessary).
 
 The `SDLSessionBean` class’s `@OnOpen` method is where you will start your app, and should call your entry of your application and invoke whatever is needed to start it. You need to pass the instantiated `CustomTransport` object to your application so that the connection can be passed into the `SdlManager`.
 
