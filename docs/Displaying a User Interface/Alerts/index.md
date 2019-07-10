@@ -36,7 +36,12 @@ let alert = SDLAlert(alertText1: "<#Line 1#>", alertText2: "<#Line 2#>", alertTe
 !@
 
 @![android,javaSE,javaEE]
-` TODO - code example `
+```java
+Alert alert = new Alert();
+alert.setAlertText1("Line 1");
+alert.setAlertText2("Line 2");
+alert.setAlertText3("Line 3");
+```
 !@
 
 ### Buttons
@@ -82,7 +87,31 @@ alert.softButtons = [button1, button2]
 !@
 
 @![android,javaSE,javaEE]
-` TODO - code example `
+```java
+Alert alert = new Alert();
+alert.setAlertText1("Line 1");
+alert.setAlertText2("Line 2");
+alert.setAlertText3("Line 3");
+
+// Soft buttons
+final int softButtonId = 123; // Set it to any unique ID
+SoftButton okButton = new SoftButton(SoftButtonType.SBT_TEXT, softButtonId);
+okButton.setText("OK");
+
+// Set the softbuttons(s) to the alert
+alert.setSoftButtons(Collections.singletonList(okButton));
+
+// This listener is only needed once, and will work for all of soft buttons you send with your alert
+sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNotificationListener() {
+      @Override
+      public void onNotified(RPCNotification notification) {
+          OnButtonPress onButtonPress = (OnButtonPress) notification;
+          if (onButtonPress.getCustomButtonName() == softButtonId){
+               Log.i(TAG, "Ok button pressed");
+          }
+      }
+});
+```
 !@
 
 ### Timeouts
@@ -103,7 +132,9 @@ alert.duration = 4000 as NSNumber
 !@
 
 @![android,javaSE,javaEE]
-` TODO - code example `
+```java
+alert.setDuration(5000);
+```
 !@
 
 ### Progress Indicator
@@ -122,7 +153,9 @@ alert.progressIndicator = true as NSNumber
 !@
 
 @![android,javaSE,javaEE]
-` TODO - code example `
+```java
+alert.setProgressIndicator(true);
+```
 !@
 
 ### Text-To-Speech
@@ -142,7 +175,9 @@ alert.ttsChunks = SDLTTSChunk.textChunks(from: "<#Text to speak#>")
 !@
 
 @![android,javaSE,javaEE]
-` TODO - code example `
+```java
+alert.setTtsChunks(TTSChunkFactory.createSimpleTTSChunks("Text to Speak"));
+```
 !@
 
 #### Sound File
@@ -153,15 +188,19 @@ The `ttsChunks` parameter can also take a file to play/speak. For more informati
 ```objc
  alert.ttsChunks = [SDLTTSChunk fileChunksWithName:@"<#Name#>"];
 ```
- 
+
 ##### Swift
 ```swift
  alert.ttsChunks = SDLTTSChunk.fileChunks(withName: "<#Name#>")
 ```
 !@
- 
+
 @![android,javaSE,javaEE]
-` TODO - code example `
+```java
+TTSChunk ttsChunk = new TTSChunk(sdlFile.getName(), SpeechCapabilities.FILE);
+List<TTSChunk> ttsChunkList = Collections.singletonList(ttsChunk);
+alert.setTtsChunks(ttsChunkList);
+```
 !@
 
 ### Play Tone
@@ -180,7 +219,9 @@ alert.playTone = true as NSNumber
 !@
 
 @![android,javaSE,javaEE]
-` TODO - code example `
+```java
+alert.setPlayTone(true);
+```
 !@
 
 ## Showing the Alert
@@ -198,11 +239,22 @@ alert.playTone = true as NSNumber
 ```swift
 sdlManager.send(request: alert) { (request, response, error) in
     guard response?.resultCode == .success else { return }
-    <#alert was dismissed successfully#>   
+    <#alert was dismissed successfully#>
 }
 ```
 !@
 
 @![android,javaSE,javaEE]
-` TODO - code example `
+```java
+// Handle RPC response
+alert.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        if (response.getSuccess()){
+            Log.i(TAG, "Alert was dismissed successfully");
+        }
+    }
+});
+sdlManager.sendRPC(alert);
+```
 !@
