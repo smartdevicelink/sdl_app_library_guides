@@ -113,7 +113,7 @@ To create a soft button using the `ScreenManager`, you only need to create a cus
 ### Soft Button Layouts
 #### Soft Button (Text Only)
 @![iOS]
-##### Objective -C
+##### Objective-C
 ```objc
 SDLSoftButtonState *textState = [[SDLSoftButtonState alloc] initWithStateName:@"<#State Name#>" text:@"<#Button Label Text#>" image:nil];
 
@@ -142,7 +142,7 @@ sdlManager.screenManager.softButtonObjects = [softButton];
 !@
 
 #### Soft Button (Image Only)
-To see if soft buttons support images you should check the @![iOS] `softButtonCapabilities` property !@ @![android,javaSE,javaEE] `getGraphicSupported()` method !@ on @![iOS]`SDLManager`s !@ @![android,javaSE,javaEE]`SdlManager`s!@ @![iOS] `systemCapabilityManager`!@ @![android,javeSE,javaEE] `DisplayCapabilities` using `SystemCapabilityManager`!@.
+To see if soft buttons support images you should check the @![iOS]`softButtonCapabilities` property!@ @![android,javaSE,javaEE]`getGraphicSupported()` method!@ on @![iOS]`SDLManager`s!@ @![android,javaSE,javaEE]`SdlManager`s!@ @![iOS]`systemCapabilityManager`!@ @![android,javeSE,javaEE]`DisplayCapabilities` using `SystemCapabilityManager`!@.
 
 @![iOS]
 ##### Objective-C
