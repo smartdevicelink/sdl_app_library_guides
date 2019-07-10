@@ -57,6 +57,7 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.DISPL
    @Override
    public void onCapabilityRetrieved(Object capability){
       DisplayCapabilities dispCapability = (DisplayCapabilities) capability;
+      boolean graphicsSupported = dispCapability.getGraphicSupported();
    }
 
    @Override
@@ -109,7 +110,7 @@ sdlManager.fileManager.upload(artwork: artwork) { (success, artworkName, bytesAv
 
 @![android,javaSE,javaEE]
 ```java
-SdlArtwork artwork = new SdlArtwork("image_name", FileType.GRAPHIC_PNG, <image byte array>, false);
+SdlArtwork artwork = new SdlArtwork("image_name", FileType.GRAPHIC_PNG, <byte[], Uri, or resourceID>, false);
 sdlManager.getFileManager().uploadFile(artwork, new CompletionListener() {
     @Override
     public void onComplete(boolean success) {
