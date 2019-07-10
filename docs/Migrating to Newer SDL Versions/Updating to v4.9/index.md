@@ -99,7 +99,7 @@ ChoiceCell cell2 = new ChoiceCell("Item 2");
 ChoiceCell cell3 = new ChoiceCell("Item 3");
 
 // create the array of choice cells
-choiceCellList = new ArrayList<>(Arrays.asList(cell1,cell2,cell3));
+choiceCellList = Arrays.asList(cell1,cell2,cell3);
 
 // pre-load the cells on the head unit
 sdlManager.getScreenManager().preloadChoices(choiceCellList, null);
