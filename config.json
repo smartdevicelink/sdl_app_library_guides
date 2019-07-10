@@ -3,7 +3,8 @@
         "Alexander Muller",
         "Timur Pulathaneli",
         "Joel Fischer",
-        "Nicole Yarroch"
+        "Nicole Yarroch",
+        "Justin Gluck"
     ],
     "languages": [
         "en"
@@ -85,6 +86,12 @@
                 },
                 {
                     "name": "Media Clock"
+                },
+                {
+                    "name": "Slider"
+                },
+                {
+                    "name": "Scrollable Message"
                 }
             ]
         },
