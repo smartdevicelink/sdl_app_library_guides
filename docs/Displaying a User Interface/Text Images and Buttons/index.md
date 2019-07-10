@@ -147,25 +147,14 @@ To see if soft buttons support images you should check the @![iOS]`softButtonCap
 @![iOS]
 ##### Objective-C
 ```objc
+// Check to see if soft buttons support images
 BOOL softButtonsSupportImages = self.sdlManager.systemCapabilityManager.softButtonCapabilities.firstObject.imageSupported.boolValue;
-```
-##### Swift
-```swift
-let supportsImages = sdlManager.systemCapabilityManager.softButtonCapabilities?.first?.imageSupported.boolValue ?? false
-```
-!@
 
-@![android, javaSE, javaEE]
-`TODO add example how to check for images supported.`
-!@
-
-@![iOS]
-##### Objective-C
-```objc
+// If HMI supports images create a soft button with an image
 SDLSoftButtonState *imageState = [[SDLSoftButtonState alloc] initWithStateName:@"<#State Name#>" text:nil image:[[UIImage imageNamed:<#Image Name#>] imageWithRenderingMode:<#Rendering Mode#>]];
 
 SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"<#Button Name#>" state:imageState handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
-if (buttonPress == nil) { return; }
+    if (buttonPress == nil) { return; }
     <#Button Selected#>
 }];
 
@@ -173,6 +162,10 @@ sdlManager.screenManager.softButtonObjects =  @[softButton];
 ```
 ##### Swift
 ```swift
+// Check to see if soft buttons support images
+let supportsImages = sdlManager.systemCapabilityManager.softButtonCapabilities?.first?.imageSupported.boolValue ?? false
+
+// If HMI supports images create a soft button with an image
 let imageState = SDLSoftButtonState(stateName: "State Name", text: @"<#State Name#>", image: UIImage(named:<#Image Name#>)?.withRenderingMode(<#Rendering Mode#>))
 
 let softButton = SDLSoftButtonObject(name: @"<#Button Name#>", state: imageState) { (buttonPress, SDLOnButtonEvent?) in
