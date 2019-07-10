@@ -5,7 +5,8 @@
         "Joel Fischer",
         "Nicole Yarroch",
         "Justin Gluck",
-        "Bilal Alsharifi"
+        "Bilal Alsharifi",
+        "Brett"
     ],
     "languages": [
         "en"
@@ -51,7 +52,7 @@
                 {
                     "name":"Proguard Guidelines",
                     "platforms": ["Android"]
-    
+
                 },
                 {
                     "name": "Deploying to AWS",
@@ -184,7 +185,7 @@
         },
         {
             "name": "Migrating to Newer SDL Versions",
-            "platforms": ["Android","iOS"],
+            "platforms": ["Android","iOS", "JavaEE", "JavaSE"],
             "navigation": [
                 {
                     "name": "Updating to v4.3+",
@@ -209,6 +210,12 @@
                 {
                     "name": "Updating to v4.7",
                     "platforms": ["Android"]
+                },
+                {
+                    "name": "Updating to v4.9",
+                    "platforms": [
+                        "Android", "JavaEE", "JavaSE"
+                    ]
                 }
             ]
         },
