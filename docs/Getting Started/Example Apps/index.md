@@ -15,8 +15,8 @@ To connect the example app to [Manticore](https://smartdevicelink.com/resources/
 
 To connect the example app to production or debug hardware, make sure you are on the `iAP` tab and press "Connect". The button will turn green when you are connected.
 
-## Debugging Help
-### TCP Transport
+## Troubleshooting
+### TCP Debug Transport
 1.  Make sure the correct IP address and port number is set in the `SDLLifecycleConfiguration`.
 2.  Make sure the device and SDL Core are on the same network.
 3.  If running SDL Core on a virtual machine, and you are using port forwarding to connect your device to the virtual machine, the IP address should be the IP address of your machine hosting the VM, not the IP address of the VM. The port number will be `12345`.
@@ -30,8 +30,9 @@ To connect the example app to production or debug hardware, make sure you are on
 3.  Make sure you have enabled background [capabilities](https://smartdevicelink.com/en/guides/pull_request/iOS/99b0a57187920105edcc5d3da9be798b564123f2/getting-started/sdk-configuration/) for your app.
 4.  If the head unit (emulators do not support IAP) does not support bluetooth, an iAP connection requires a USB cord.
 
-#### Bluetooth Debugging Help
-1.  Make sure the head unit supports bluetooth transport for iPhones. Currently, only some head units support bluetooth.
+#### iAP Bluetooth Production Transport
+1. Bluetooth transport support is automatic when you support the iAP production transport. It cannot be turned on or off separately.
+2.  Make sure the head unit supports Bluetooth transport for iPhones. Currently, only some head units support bluetooth.
 2.  Make sure to use the default `SDLLifecycleConfiguration`.
 3.  Make sure Bluetooth is turned on - on Both the TDK and your iPhone.
 4.  Ensure your iPhone is properly paired with the TDK. 
