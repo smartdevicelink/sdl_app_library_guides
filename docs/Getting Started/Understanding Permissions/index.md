@@ -172,7 +172,7 @@ if (status.get(FunctionID.GET_VEHICLE_DATA).getAllowedParameters().get(GetVehicl
 !@
 
 ### Observing Permissions
-If desired, you can set @![iOS]an observer!@ @![android,javaSE,javaEE]`a listener`!@ for a group of permissions. The @![iOS]observer's handler!@ @![android,javaSE,javaEE]`listener`!@ will be called when the permissions for the group changes. If you want to be notified when the permission status of any of RPCs in the group change, set the `groupType` to @![iOS]`SDLPermissionGroupTypeAny`!@ @![android,javaSE,javaEE]`PERMISSION_GROUP_TYPE_ANY`!@. If you only want to be notified when all of the RPCs in the group are allowed, set the `groupType` to @![iOS]`SDLPermissionGroupTypeAllAllowed`!@ @![android,javaSE,javaEE]`PERMISSION_GROUP_TYPE_ALL_ALLOWED`!@.
+If desired, you can set @![iOS]an observer!@ @![android,javaSE,javaEE]a listener!@ for a group of permissions. The @![iOS]observer's handler!@ @![android,javaSE,javaEE]listener!@ will be called when the permissions for the group changes. If you want to be notified when the permission status of any of RPCs in the group change, set the `groupType` to @![iOS]`SDLPermissionGroupTypeAny`!@ @![android,javaSE,javaEE]`PERMISSION_GROUP_TYPE_ANY`!@. If you only want to be notified when all of the RPCs in the group are allowed, set the `groupType` to @![iOS]`SDLPermissionGroupTypeAllAllowed`!@ @![android,javaSE,javaEE]`PERMISSION_GROUP_TYPE_ALL_ALLOWED`!@.
 
 @![iOS]
 ##### Objective-C
@@ -213,7 +213,7 @@ UUID listenerId = sdlManager.getPermissionManager().addListener(permissionElemen
 !@
 
 ### Stopping Observation of Permissions
-When you set up the @![iOS]observer!@ @![android,javaSE,javaEE]`listener`!@, you will get an unique id back. Use this id to unsubscribe to the permissions at a later date.
+When you set up the @![iOS]observer!@ @![android,javaSE,javaEE]listener!@, you will get an unique id back. Use this id to unsubscribe to the permissions at a later date.
 
 @![iOS]
 ##### Objective-C
