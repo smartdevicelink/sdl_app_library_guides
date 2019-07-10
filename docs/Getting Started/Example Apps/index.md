@@ -33,9 +33,9 @@ To connect the example app to production or debug hardware, make sure you are on
 #### iAP Bluetooth Production Transport
 1. Bluetooth transport support is automatic when you support the iAP production transport. It cannot be turned on or off separately.
 2.  Make sure the head unit supports Bluetooth transport for iPhones. Currently, only some head units support bluetooth.
-2.  Make sure to use the default `SDLLifecycleConfiguration`.
-3.  Make sure Bluetooth is turned on - on Both the TDK and your iPhone.
-4.  Ensure your iPhone is properly paired with the TDK. 
+3.  Make sure to use the default `SDLLifecycleConfiguration`.
+4.  Make sure Bluetooth is turned on - on Both the TDK and your iPhone.
+5.  Ensure your iPhone is properly paired with the TDK. 
 !@
 
 @![android]
