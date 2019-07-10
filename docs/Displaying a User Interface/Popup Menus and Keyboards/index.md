@@ -66,14 +66,9 @@ sdlManager.screenManager.preloadChoices(<#T##choices: [SDLChoiceCell]##[SDLChoic
 To show a popup menu to the user, you must present the menu. If some or all of the cells in the menu have not yet been preloaded, calling the `present` API will preload the cells and then present the menu once all the cells have been uploaded. Calling `present` without preloading the cells can take longer than if the cells were preloaded earlier in the app's lifecycle especially if your cell has voice commands. Subsequent menu presentations using the same cells will be faster because the library will reuse those cells (unless you have deleted them).
 
 ##### Menu - List
-###### Ford HMI
-![SYNC 3 - List Only Interaction Layout](assets/SYNC3_popup_menu_row.jpg)
-
-###### Generic HMI
 ![Generic - List Only Interaction Layout](assets/Generic_popup_menu_row.png)
 
 ##### Menu - Icon
-###### Ford HMI
 ![SYNC 3 - Icon Only Interaction Layout](assets/SYNC3_popup_menu_tiles.jpg)
 
 !!! NOTE
@@ -163,11 +158,9 @@ It may seem that the answer is to always use `both`. However, remember that you 
 | Both              | Interactions can occur both manually or through VR |
 
 ##### Menu - Manual Only Mode
-###### Ford HMI
 ![SYNC 3 - Menu - Manual Only](assets/SYNC3_popup_menu_row.jpg)
 
 ##### Menu - Voice Only Mode
-###### Ford HMI
 ![SYNC 3 - Menu - Voice Only](assets/SYNC3_popup_menu_voice_recognition.jpg)
 
 @![iOS]
@@ -190,7 +183,6 @@ manager.screenManager.present(<#T##choiceSet: SDLChoiceSet##SDLChoiceSet#>, mode
 In addition to presenting a standard menu, you can also present a "searchable" menu, that is, a menu with a keyboard input box at the top. For more information on implementing the keyboard portion of this menu, see *Presenting a Keyboard* below.
 
 ##### Menu with Search
-###### Ford HMI
 ![SYNC 3 - Menu with Search Interaction Layout](assets/SYNC3_popup_menu_with_search.jpg)
 
 @![iOS]
@@ -236,7 +228,6 @@ Keyboards are unavailable for use in many countries when the driver is distracte
 !!!
 
 ##### Keyboard Search
-###### Ford HMI
 ![SYNC 3 - Keyboard Search](assets/SYNC3_keyboard_search.jpg)
 
 @![iOS]
