@@ -5,7 +5,7 @@ There are two ways to send multiple requests to the head unit: concurrently and 
 Both methods have optional progress and completion handlers. Use the `progressHandler` to check the status of each sent RPC; it will tell you if there was an error sending the request and what percentage of the group has completed sending. The optional `completionHandler` is called when all RPCs in the group have been sent. Use it to check if all of the requests have been sent successfully or not.!@
 
 @![android,javaSE,javaEE]
-Both methods have optional listeners that are specific to them, the `OnMultipleRequestListener`. This listener will provide more information than the normal `OnRPCResponseListener`.!@
+Both methods have optional listener that is specific to them, the `OnMultipleRequestListener`. This listener will provide more information than the normal `OnRPCResponseListener`.!@
 
 ## Sending Concurrent Requests
 When you send multiple RPCs concurrently, it will not wait for the response of the previous RPC before sending the next one. Therefore, there is no guarantee that responses will be returned in order, and you will not be able to use information sent in a previous RPC for a later RPC.
@@ -36,20 +36,9 @@ sdlManager.send([subscribeButtonLeft, subscribeButtonRight], progressHandler: { 
 
 @![android,javaSE,javaEE]
 ```java
-List<RPCRequest> rpcs = new ArrayList<>();
-
-// rpc 1
-SubscribeButton subscribeButtonRequestLeft = new SubscribeButton();
-subscribeButtonRequestLeft.setButtonName(ButtonName.SEEKLEFT);
-rpcs.add(subscribeButtonRequestLeft);
-
-// rpc 2
-SubscribeButton subscribeButtonRequestRight = new SubscribeButton();
-subscribeButtonRequestRight.setButtonName(ButtonName.SEEKRIGHT);
-rpcs.add(subscribeButtonRequestRight);
-
-
-sdlManager.sendRPCs(rpcs, new OnMultipleRequestListener() {
+SubscribeButton subscribeButtonLeft = new SubscribeButton(ButtonName.SEEKLEFT);
+SubscribeButton subscribeButtonRight = new SubscribeButton(ButtonName.SEEKRIGHT);
+sdlManager.sendRPCs(Arrays.asList(subscribeButtonLeft, subscribeButtonLeft), new OnMultipleRequestListener() {
     @Override
     public void onUpdate(int remainingRequests) {
 
@@ -61,16 +50,15 @@ sdlManager.sendRPCs(rpcs, new OnMultipleRequestListener() {
     }
 
     @Override
-    public void onResponse(int correlationId, RPCResponse response) {
+    public void onError(int correlationId, Result resultCode, String info) {
 
     }
 
     @Override
-    public void onError(int correlationId, RPCResponse response) {
+    public void onResponse(int correlationId, RPCResponse response) {
 
     }
-    });
-
+});
 ```
 !@
 
@@ -108,24 +96,14 @@ sdlManager.sendSequential(requests: [createInteractionChoiceSet, performInteract
 !@
 
 @![android,javaSE,javaEE]
-`// TODO maybe update the example to match iOS example. The texts states using createInteractionChoiceSet and performInteraction but shows an example of button subscribing. The choice menu manager is nearly done for Android so it would be nice if the code examples matched for better alignment.`
-
 ```java
-List<RPCRequest> rpcs = new ArrayList<>();
-
-// rpc 1
-SubscribeButton subscribeButtonRequestLeft = new SubscribeButton();
-subscribeButtonRequestLeft.setButtonName(ButtonName.SEEKLEFT);
-rpcs.add(subscribeButtonRequestLeft);
-
-// rpc 2
-SubscribeButton subscribeButtonRequestRight = new SubscribeButton();
-subscribeButtonRequestRight.setButtonName(ButtonName.SEEKRIGHT);
-rpcs.add(subscribeButtonRequestRight);
-
-sdlManager.sendSequentialRPCs(rpcs, new OnMultipleRequestListener() {
+int choiceId = 111, choiceSetId = 222;
+Choice choice = new Choice(choiceId, "Choice title");
+CreateInteractionChoiceSet createInteractionChoiceSet = new CreateInteractionChoiceSet(choiceSetId, Collections.singletonList(choice));
+PerformInteraction performInteraction = new PerformInteraction("Initial Text", InteractionMode.MANUAL_ONLY, Collections.singletonList(choiceSetId));
+sdlManager.sendSequentialRPCs(Arrays.asList(createInteractionChoiceSet, performInteraction), new OnMultipleRequestListener() {
     @Override
-    public void onUpdate(int remainingRequests) {
+    public void onUpdate(int i) {
 
     }
 
@@ -135,14 +113,14 @@ sdlManager.sendSequentialRPCs(rpcs, new OnMultipleRequestListener() {
     }
 
     @Override
-    public void onResponse(int correlationId, RPCResponse response) {
+    public void onError(int i, Result result, String s) {
 
     }
 
     @Override
-    public void onError(int correlationId, Result resultCode, String info) {
+    public void onResponse(int i, RPCResponse rpcResponse) {
 
     }
-    });
+});
 ```
 !@
