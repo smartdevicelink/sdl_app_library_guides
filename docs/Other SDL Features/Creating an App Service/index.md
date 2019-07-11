@@ -1,7 +1,7 @@
 # Creating an App Service
 App services is a powerful feature enabling both a new kind of vehicle-to-app communication and app-to-app communication via SDL.
 
-App services are used to publish navigation, weather and media data (such as temperature, navigation waypoints, or the current playlist name). This data can then be used by both the vehicle head unit and, if the publisher of the app service desires, other SDL apps.  
+App services are used to publish navigation, weather and media data (such as temperature, navigation waypoints, or the current playlist name). This data can then be used by both the vehicle head unit and, if the publisher of the app service desires, other SDL apps.
 
 Vehicle head units may use these services in various ways. One app service for each type will be the "active" service to the module. For media, for example, this will be the media app that the user is currently using or listening to. For navigation, it would be a navigation app that the user is using to navigate. For weather, it may be the last used weather app, or a user-selected default. The system may then use that service's data to perform various actions (such as navigating to an address with the active service or to display the temperature as provided from the active weather service).
 
@@ -51,7 +51,7 @@ manifest.mediaServiceManifest = <#Code#> // Covered below
 AppServiceManifest manifest = new AppServiceManifest(AppServiceType.MEDIA.toString());
 manifest.setServiceName("My Media App"); // Must be unique across app services.
 manifest.setServiceIcon(new Image("Service Icon Name", ImageType.DYNAMIC)); // Previously uploaded service icon. This could be the same as your app icon.
-manifest.setAllowAppConsumers(true); // Whether or not other apps can view your data in addition to the head unit. If set to `NO` only the head unit will have access to this data.
+manifest.setAllowAppConsumers(true); // Whether or not other apps can view your data in addition to the head unit. If set to `false` only the head unit will have access to this data.
 manifest.setRpcSpecVersion(new SdlMsgVersion(5,0)); // An *optional* parameter that limits the RPC spec versions you can understand to the provided version *or below*.
 manifest.setHandledRpcs(List<FunctionID>); // If you add function ids to this *optional* parameter, you can support newer RPCs on older head units (that don't support those RPCs natively) when those RPCs are sent from other connected applications.
 manifest.setMediaServiceManifest(<#Code#>); // Covered Below
@@ -259,7 +259,7 @@ appData.setMediaServiceData(mediaData);
 
 OnAppServiceData onAppData = new OnAppServiceData();
 onAppData.setServiceData(appData);
-		
+
 sdlManager.sendRPC(onAppData);
 ```
 !@
@@ -322,7 +322,7 @@ sdlManager.fileManager.upload(file: artwork) { [weak self] (success, bytesAvaila
 ##### Java
 ```java
 final SdlArtwork navInstructionArt = new SdlArtwork("turn", FileType.GRAPHIC_PNG, R.drawable.turn, true);
-        
+
 sdlManager.getFileManager().uploadFile(navInstructionArt, new CompletionListener() { // We have to send the image to the system before it's used in the app service.
     @Override
     public void onComplete(boolean success) {
@@ -450,7 +450,7 @@ sdlManager.getFileManager().uploadFile(weatherImage, new CompletionListener() { 
 ### 4. Handling App Service Subscribers
 If you choose to make your app service available to other apps, you will have to handle requests to get your app service data when a consumer requests it directly.
 
-Handling app service subscribers is a two step process. First, you must @![iOS]register for notifications!@ @![android,javaSE,javaEE]setup listeners!@ from the subscriber. Then, when you get a request, you will either have to send a response to the subscriber with the app service data or if you have no data to send, send a response with a relevant failure result code.
+Handling app service subscribers is a two step process. First, you must @![iOS]register for notifications from!@ @![android,javaSE,javaEE]setup listeners for!@ the subscriber. Then, when you get a request, you will either have to send a response to the subscriber with the app service data or if you have no data to send, send a response with a relevant failure result code.
 
 #### Listening for Requests
 First, you will need to @![iOS]register for notification of!@ @![android,javaSE,javaEE]setup a listener for!@ a `GetAppServiceDataRequest`.

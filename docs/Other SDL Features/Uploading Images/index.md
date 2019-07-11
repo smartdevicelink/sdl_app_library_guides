@@ -41,7 +41,7 @@ sdlManager.start { [weak self] (success, error) in
         print("SDL encountered an error starting up: \(error.debugDescription)")
         return
     }
-    
+
     var areGraphicsSupported = false
     if let displayCapabilities = self?.sdlManager.systemCapabilityManager?.displayCapabilities {
         areGraphicsSupported = displayCapabilities.graphicSupported.boolValue
