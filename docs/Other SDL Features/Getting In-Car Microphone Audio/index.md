@@ -70,9 +70,9 @@ This audio data is only the current chunk of audio data, so the developer must b
 SDLPerformAudioPassThru *audioPassThru = [[SDLPerformAudioPassThru alloc] initWithInitialPrompt:@"<#A speech prompt when the dialog appears#>" audioPassThruDisplayText1:@"<#Ask me \"What's the weather?\"#>" audioPassThruDisplayText2:@"<#or \"What is 1 + 2?\"#>" samplingRate:SDLSamplingRate16KHZ bitsPerSample:SDLBitsPerSample16Bit audioType:SDLAudioTypePCM maxDuration:<#Time in milliseconds to keep the dialog open#> muteAudio:YES];
 
 audioPassThru.audioDataHandler = ^(NSData * _Nullable audioData) {
-    // Do something with current audio data.
-    if (audioData.length == 0) { return; }
-    <#code#>
+// Do something with current audio data.
+if (audioData.length == 0) { return; }
+<#code#>
 }
 
 [self.sdlManager sendRequest:audioPassThru];
@@ -83,9 +83,9 @@ audioPassThru.audioDataHandler = ^(NSData * _Nullable audioData) {
 let audioPassThru = SDLPerformAudioPassThru(initialPrompt: "<#A speech prompt when the dialog appears#>", audioPassThruDisplayText1: "<#Ask me \"What's the weather?\"#>", audioPassThruDisplayText2: "<#or \"What is 1 + 2?\"#>", samplingRate: .rate16KHZ, bitsPerSample: .sample16Bit, audioType: .PCM, maxDuration: <#Time in milliseconds to keep the dialog open#>, muteAudio: true)
 
 audioPassThru.audioDataHandler = { (data) in
-    // Do something with current audio data.
-    guard let audioData = data else { return }
-    <#code#>
+// Do something with current audio data.
+guard let audioData = data else { return }
+<#code#>
 }
 
 sdlManager.send(audioPassThru)
@@ -95,12 +95,12 @@ sdlManager.send(audioPassThru)
 @![android,javaSE,javaEE]
 ```java
 sdlManager.addOnRPCNotificationListener(FunctionID.ON_AUDIO_PASS_THRU, new OnRPCNotificationListener() {
-    @Override
-    public void onNotified(RPCNotification notification) {
-        OnAudioPassThru onAudioPassThru = (OnAudioPassThru) notification;
-        byte[] dataRcvd = onAudioPassThru.getAPTData();
-        processAPTData(dataRcvd); // Do something with audio data
-    }
+@Override
+public void onNotified(RPCNotification notification) {
+OnAudioPassThru onAudioPassThru = (OnAudioPassThru) notification;
+byte[] dataRcvd = onAudioPassThru.getAPTData();
+processAPTData(dataRcvd); // Do something with audio data
+}
 });
 ```
 !@
@@ -119,19 +119,19 @@ Audio Capture can be ended in 4 ways:
 
 1. Audio Pass Thru has timed out.
 
-    If the Audio Pass Thru has proceeded longer than the requested timeout duration, Core will end this request with a @![iOS]`resultCode`!@ @![android,javaSE,javaEE]`Result`!@ of `SUCCESS`. You should expect to handle this Audio Pass Thru as though it was successful.
+If the Audio Pass Thru has proceeded longer than the requested timeout duration, Core will end this request with a @![iOS]`resultCode`!@ @![android,javaSE,javaEE]`Result`!@ of `SUCCESS`. You should expect to handle this Audio Pass Thru as though it was successful.
 
 2. Audio Pass Thru was closed due to user pressing "Cancel".
 
-    If the Audio Pass Thru was displayed, and the user pressed the "Cancel" button, you will receive a @![iOS]`resultCode`!@ @![android,javaSE,javaEE]`Result`!@ of `ABORTED`. You should expect to ignore this Audio Pass Thru.
+If the Audio Pass Thru was displayed, and the user pressed the "Cancel" button, you will receive a @![iOS]`resultCode`!@ @![android,javaSE,javaEE]`Result`!@ of `ABORTED`. You should expect to ignore this Audio Pass Thru.
 
 3. Audio Pass Thru was closed due to user pressing "Done".
 
-    If the Audio Pass Thru was displayed, and the user pressed the "Done" button, you will receive a @![iOS]`resultCode`!@ @![android,javaSE,javaEE]`Result`!@ of `SUCCESS`. You should expect to handle this Audio Pass Thru as though it was successful.
+If the Audio Pass Thru was displayed, and the user pressed the "Done" button, you will receive a @![iOS]`resultCode`!@ @![android,javaSE,javaEE]`Result`!@ of `SUCCESS`. You should expect to handle this Audio Pass Thru as though it was successful.
 
 4. Audio Pass Thru was ended due to the developer ending the request.
 
-    If the Audio Pass Thru was displayed, but you have established on your own that you no longer need to capture audio data, you can send an @![iOS]`SDLEndAudioPassThru`!@ @![android,javaSE,javaEE] `EndAudioPassThru`!@ RPC.
+If the Audio Pass Thru was displayed, but you have established on your own that you no longer need to capture audio data, you can send an @![iOS]`SDLEndAudioPassThru`!@ @![android,javaSE,javaEE] `EndAudioPassThru`!@ RPC.
 
 @![iOS]
 ##### Objective-C
@@ -163,32 +163,32 @@ To process the response that we received from an ended audio capture, we @![iOS]
 ##### Objective-C
 ```objc
 [self.sdlManager sendRequest:performAudioPassThru withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    if (error || ![response isKindOfClass:SDLPerformAudioPassThruResponse.class]) {
-        NSLog(@"Encountered Error sending Perform Audio Pass Thru: %@", error);
-        return;
-    }
+if (error || ![response isKindOfClass:SDLPerformAudioPassThruResponse.class]) {
+NSLog(@"Encountered Error sending Perform Audio Pass Thru: %@", error);
+return;
+}
 
-    SDLPerformAudioPassThruResponse *audioPassThruResponse = (SDLPerformAudioPassThruResponse *)response;
-    SDLResult *resultCode = audioPassThruResponse.resultCode;
-    if (![resultCode isEqualToEnum:SDLResultSuccess]) {
-        // Cancel any usage of the audio data
-    }
+SDLPerformAudioPassThruResponse *audioPassThruResponse = (SDLPerformAudioPassThruResponse *)response;
+SDLResult *resultCode = audioPassThruResponse.resultCode;
+if (![resultCode isEqualToEnum:SDLResultSuccess]) {
+// Cancel any usage of the audio data
+}
 
-    // Process audio data
+// Process audio data
 }];
 ```
 
 ##### Swift
 ```swift
 sdlManager.send(request: performAudioPassThru) { (request, response, error) in
-    guard let response = response else { return }
+guard let response = response else { return }
 
-    guard response.resultCode == .success else {
-        // Cancel any usage of the audio data.
-        return
-    }
+guard response.resultCode == .success else {
+// Cancel any usage of the audio data.
+return
+}
 
-    // Process audio data
+// Process audio data
 }
 ```
 !@
@@ -196,17 +196,17 @@ sdlManager.send(request: performAudioPassThru) { (request, response, error) in
 @![android,javaSE,javaEE]
 ```java
 performAPT.setOnRPCResponseListener(new OnRPCResponseListener() {
-    @Override
-    public void onResponse(int correlationId, RPCResponse response) {
-        Result result = response.getResultCode();
+@Override
+public void onResponse(int correlationId, RPCResponse response) {
+Result result = response.getResultCode();
 
-        if(result.equals(Result.SUCCESS)){
-            // We can use the data
-        }else{
-            // Cancel any usage of the data
-            Log.e("SdlService", "Audio pass thru attempt failed.");
-        }
-    }
+if(result.equals(Result.SUCCESS)){
+// We can use the data
+}else{
+// Cancel any usage of the data
+Log.e("SdlService", "Audio pass thru attempt failed.");
+}
+}
 });
 ```
 !@
