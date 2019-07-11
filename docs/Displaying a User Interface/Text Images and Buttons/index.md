@@ -138,7 +138,21 @@ sdlManager.screenManager.softButtonObjects = [softButton];
 !@
 
 @![android, javaSE, javaEE]
-`TODO add example.`
+```java
+SoftButtonState textState = new SoftButtonState("<#State Name#>", "<#Button Label Text#>", null);
+SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Collections.singletonList(textState), textState.getName(), new SoftButtonObject.OnEventListener() {
+    @Override
+    public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
+    }
+
+    @Override
+    public void onEvent(SoftButtonObject softButtonObject, OnButtonEvent onButtonEvent) {
+
+    }
+});
+
+sdlManager.getScreenManager().setSoftButtonObjects(Collections.singletonList(softButtonObject));
+```
 !@
 
 #### Soft Button (Image Only)
@@ -178,7 +192,24 @@ sdlManager.screenManager.softButtonObjects = [softButton]
 !@
 
 @![android, javaSE, javaEE]
-`TODO add example.`
+```java
+if (supportsImages) {
+    SoftButtonState textState = new SoftButtonState("<#State Name#>", "<#Button Label Text#>", imageArtwork);
+    SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Collections.singletonList(textState), textState.getName(), new SoftButtonObject.OnEventListener() {
+        @Override
+        public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
+        }
+
+        @Override
+        public void onEvent(SoftButtonObject softButtonObject, OnButtonEvent onButtonEvent) {
+
+        }
+    });
+
+    sdlManager.getScreenManager().setSoftButtonObjects(Collections.singletonList(softButtonObject));
+}
+
+```
 !@
 
 #### Soft Button (Image and Text)
@@ -288,7 +319,9 @@ self.sdlManager.screenManager.softButtonObjects = []
 !@
 
 @![android,javaSE,javaEE]
-`TODO add example`
+```java
+sdlManager.getScreenManager().setSoftButtonObjects(Collections.EMPTY_LIST);
+```
 !@
 
 ## Templating Images
