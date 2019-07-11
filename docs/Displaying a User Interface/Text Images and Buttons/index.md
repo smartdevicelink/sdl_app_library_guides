@@ -193,10 +193,16 @@ sdlManager.screenManager.softButtonObjects = [softButton]
 
 @![android, javaSE, javaEE]
 ```java
-boolean supportsImages = ((SoftButtonCapabilities)sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.SOFTBUTTON)).getImageSupported();
+Object softButtonCapabilities = sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.SOFTBUTTON);
+List<SoftButtonCapabilities> softButtonCapabilitiesList = SystemCapabilityManager.convertToList(softButtonCapabilities, SoftButtonCapabilities.class);
+boolean imageSupported = false;
+if (softButtonCapabilities != null && !softButtonCapabilitiesList.isEmpty() && softButtonCapabilitiesList.get(0).getImageSupported()){
+    imageSupported = true;
+}
 
-if (supportsImages) {
-    SoftButtonState tate = new SoftButtonState("<#State Name#>", "<#Button Label Text#>", imageArtwork);
+
+if (imageSupported) {
+    SoftButtonState state = new SoftButtonState("<#State Name#>", "<#Button Label Text#>", imageArtwork);
     SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Collections.singletonList(state), state.getName(), new SoftButtonObject.OnEventListener() {
         @Override
         public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
@@ -210,7 +216,6 @@ if (supportsImages) {
 
     sdlManager.getScreenManager().setSoftButtonObjects(Collections.singletonList(softButtonObject));
 }
-
 ```
 !@
 
@@ -301,6 +306,7 @@ SoftButtonState state2 = new SoftButtonState("<#State2 Name#>", "<#Button2 Label
 SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Arrays.asList(state1, state2), state1.getName(), new SoftButtonObject.OnEventListener() {
     @Override
     public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
+        
     }
 
     @Override
@@ -312,7 +318,7 @@ SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Arr
 sdlManager.getScreenManager().setSoftButtonObjects(Collections.singletonList(softButtonObject));
 
 
-
+// Transition to a new state
 SoftButtonObject retrievedSoftButtonObject = sdlManager.getScreenManager().getSoftButtonObjectByName("softButtonObject");
 retrievedSoftButtonObject.transitionToNextState();
 ```
