@@ -193,6 +193,8 @@ sdlManager.screenManager.softButtonObjects = [softButton]
 
 @![android, javaSE, javaEE]
 ```java
+boolean supportsImages = ((SoftButtonCapabilities)sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.SOFTBUTTON)).getImageSupported();
+
 if (supportsImages) {
     SoftButtonState textState = new SoftButtonState("<#State Name#>", "<#Button Label Text#>", imageArtwork);
     SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Collections.singletonList(textState), textState.getName(), new SoftButtonObject.OnEventListener() {
