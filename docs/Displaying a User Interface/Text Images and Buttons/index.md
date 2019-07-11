@@ -202,7 +202,7 @@ if (softButtonCapabilities != null && !softButtonCapabilitiesList.isEmpty() && s
 
 
 if (imageSupported) {
-    SoftButtonState state = new SoftButtonState("<#State Name#>", "<#Button Label Text#>", imageArtwork);
+    SoftButtonState state = new SoftButtonState("<#State Name#>", null, imageArtwork);
     SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Collections.singletonList(state), state.getName(), new SoftButtonObject.OnEventListener() {
         @Override
         public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
