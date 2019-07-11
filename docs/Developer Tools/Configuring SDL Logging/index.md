@@ -40,7 +40,7 @@ The configuration provides two properties, `asynchronous` and `errorsAsynchronou
 ### Log level
 The `globalLogLevel` defines which logs will be logged to the target outputs. For example, if you set the log level to `debug`, all error, warning, and debug level logs will be logged, but verbose level logs will not be logged.
 
-| SDLLogLevel | Visible Logs | 
+| SDLLogLevel | Visible Logs |
 | ------------- | ------------- |
 | Off | none |
 | Error | error |
@@ -122,7 +122,7 @@ First, import the the `SDLLogMacros` header.
 #import "SDLLogMacros.h"
 ```
 
-Then, simply use the convenient log macros to create a custom SDL log in your project. 
+Then, simply use the convenient log macros to create a custom SDL log in your project.
 
 ```objc
 SDLLogV(@"This is a verbose log");
@@ -156,7 +156,7 @@ SDLLog.e("This is an error log")
 !@
 
 @![android,javaSE,javaEE]
-Sdl Java Suit has a built-in logging framework that is designed to make debugging easier. It provides many of the features common to other 3rd party logging frameworks for java and can be used by your own app as well. We recommend that your app's integration with SDL provide logging using this framework rather than any other 3rd party framework your app may be using or `System.out.print`. This will consolidate all SDL related logs in a common format and to common destinations.
+Sdl Java Suite has a built-in logging framework that is designed to make debugging easier. It provides many of the features common to other 3rd party logging frameworks for java and can be used by your own app as well. We recommend that your app's integration with SDL provide logging using this framework rather than any other 3rd party framework your app may be using or `System.out.print`. This will consolidate all SDL related logs into a common format and to a common destination.
 
 ## Enabling the DebugTool
 To make sure that log messages are displayed, you should enable the SDL Debug Tool:
@@ -178,7 +178,7 @@ If you use SDL Debug Tool to log messages without enabling the DebugTool nothing
 ### Logging messages
 The SDL debug tool can be used to log messages with different log levels. The log level defines how serious the log message is. This table summarizes when to use each log level:
 
-| Log Level | When to use | 
+| Log Level | When to use |
 | ------------- | ------------- |
 | Info | Use this to post useful information to the log |
 | Warning | Use this when you suspect something shady is going on|
@@ -209,7 +209,7 @@ DebugTool.logError("error message goes here", new SdlException("Sdl connection f
 ### Filtering logs
 The log level defines which logs will be logged to the target outputs. For example, if you set the log level filter in `Logcat` to `Warning`, all error, and warning logs will be logged, but info level logs will not be logged.
 
-| LogLevel | Visible Logs | 
+| LogLevel | Visible Logs |
 | ------------- | ------------- |
 | Error | error |
 | Warning | error and warning |
