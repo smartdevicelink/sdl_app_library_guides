@@ -183,5 +183,10 @@ sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapa
         <# Handle Error #>
     }
 });
+
+GetSystemCapability getSystemCapability = new GetSystemCapability();
+getSystemCapability.setSystemCapabilityType(SystemCapabilityType.APP_SERVICES);
+getSystemCapability.setSubscribe(true);
+sdlManager.sendRPC(getSystemCapability);
 ```
 !@
