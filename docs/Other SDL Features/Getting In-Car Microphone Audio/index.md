@@ -53,6 +53,7 @@ sdlManager.sendRPC(performAPT);
 ```
 !@
 
+###### Ford HMI
 ![Ford Audio Pass Thru](assets/Ford_AudioPassThruPrompt.png)
 
 ### Gathering Audio Data
@@ -208,4 +209,5 @@ performAPT.setOnRPCResponseListener(new OnRPCResponseListener() {
     }
 });
 ```
+
 !@
