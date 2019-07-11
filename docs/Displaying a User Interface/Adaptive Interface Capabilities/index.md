@@ -1,6 +1,6 @@
 # Adaptive Interface Capabilities
 ## Designing for Different Head Units
-Since each car manufacturer has different user interface style guidelines, the number of lines of text, soft and hard buttons, and images supported will vary between different types of head units. When the app first connects to the SDL Core, a `RegisterAppInterface` RPC will be sent by Core with the `displayCapabilities`, `buttonCapabilities`, `speechCapabilities` and other properties. You should use this information to create the user interface of your SDL app. 
+Since each car manufacturer has different user interface style guidelines, the number of lines of text, soft and hard buttons, and images supported will vary between different types of head units. When the app first connects to the SDL Core, a `RegisterAppInterface` response RPC will be sent by Core with the `displayCapabilities`, `buttonCapabilities`, `speechCapabilities` and other properties. You should use this information to create the user interface of your SDL app.
 
 You may access these properties on the @![iOS]`SDLManager.systemCapabilityManager`!@ @![android, javaSE, javaEE]`SdlManager.systemCapabilityManager`!@ instance as of library v.@![iOS]6.0!@@![android, javaSE, javaEE]4.4!@.
 
@@ -12,8 +12,8 @@ You may access these properties on the @![iOS]`SDLManager.systemCapabilityManage
 | @![iOS]softButtonCapabilities!@ @![android, javaSE, javaEE]SystemCapabilityType.SOFTBUTTON!@ | A list of available soft buttons and whether the button support images. Also, information about whether the button supports long, short and up-down presses. | Check @![iOS]SDLSoftButtonCapabilities.h!@ @![android, javaSE, javaEE]SoftButtonCapabilities.java!@ for more information |
 | @![iOS]presetBankCapabilities!@ @![android, javaSE, javaEE]SystemCapabilityType.PRESET_BANK!@ | If returned, the platform supports custom on-screen presets. | Check @![iOS]SDLPresetBankCapabilities.h!@ @![android, javaSE, javaEE]PresetBankCapabilities.java!@ for more information |
 | @![iOS]hmiZoneCapabilities!@ @![android, javaSE, javaEE]SystemCapabilityType.HMI_ZONE!@ | Specifies HMI Zones in the vehicle. There may be a HMI available for back seat passengers as well as front seat passengers. | Check @![iOS]SDLHMIZoneCapabilities.h!@ @![android, javaSE, javaEE]HmiZoneCapabilities.java!@ |
-| @![iOS]speechCapabilities!@ @![android, javaSE, javaEE]SystemCapabilityType.SPEECH!@ | Contains information about TTS capabilities on the SDL platform. Platforms may support text, SAPI phonemes, LH PLUS phonemes, pre-recorded speech, and silence. | Check @![iOS]SDLSpeechCapabilities.h!@ @![android, javaSE, javaEE]SpeechCapabilities.java!@ for more information | 
-| prerecordedSpeechCapabilities | @![iOS]A list of pre-recorded sounds you can use in your app. Sounds may include a help, initial, listen, positive, or a negative jingle.!@ @![android, javaSE, javaEE]Currently only available in the SDL_iOS library!@ | @![iOS]Check SDLPrerecordedSpeech.h!@ @![android, javaSE, javaEE]currently only available in the SDL_iOS library!@ for more information |
+| @![iOS]speechCapabilities!@ @![android, javaSE, javaEE]SystemCapabilityType.SPEECH!@ | Contains information about TTS capabilities on the SDL platform. Platforms may support text, SAPI phonemes, LH PLUS phonemes, pre-recorded speech, and silence. | Check @![iOS]SDLSpeechCapabilities.h!@ @![android, javaSE, javaEE]SpeechCapabilities.java!@ for more information |
+| prerecordedSpeechCapabilities | @![iOS]A list of pre-recorded sounds you can use in your app. Sounds may include a help, initial, listen, positive, or a negative jingle.!@ @![android, javaSE, javaEE]Currently only available in the SDL_iOS library!@ | @![iOS]Check SDLPrerecordedSpeech.h for more information!@ @![android, javaSE, javaEE]currently only available in the SDL_iOS library!@ |
 | @![iOS]vrCapability!@ @![android, javaSE, javaEE]SystemCapabilityType.VOICE_RECOGNITION!@ | The voice-recognition capabilities of the connected SDL platform. The platform may be able to recognize spoken text in the current language. | Check @![iOS]SDLVRCapabilities.h!@ @![android, javaSE, javaEE]VrCapabilities.java!@ for more information |
 | @![iOS]audioPassThruCapabilities!@ @![android, javaSE, javaEE]SystemCapabilityType.AUDIO_PASSTHROUGH!@ | Describes the sampling rate, bits per sample, and audio types available. | Check @![iOS]SDLAudioPassThruCapabilities.h!@ @![android, javaSE, javaEE]AudioPassThruCapabilities.java!@ for more information|
 | @![iOS]pcmStreamCapabilities!@ @![android, javaSE, javaEE]SystemCapabilityType.PCM_STREAMING!@ | Describes different audio type configurations for the audio PCM stream service, e.g. {8kHz,8-bit,PCM}. | Check @![iOS]SDLAudioPassThruCapabilities.h!@ @![android, javaSE, javaEE]AudioPassThruCapabilities.java!@ for more information|
@@ -38,10 +38,10 @@ The `RegisterAppInterface` response contains information about the display type,
 
 ### Image Specifics
 #### Image File Types
-Images may be formatted as PNG, JPEG, or BMP. Each @![iOS]`SDLManager.registerResponse.displayCapabilities.imageFields`!@@![android, javaSE, javaEE]`SdlManager.registerAppInterfaceResponse.displayCapabilities.imageFields`!@ property will have a list of `imageTypeSupported`.
+Images may be formatted as PNG, JPEG, or BMP. Each @![iOS]`SDLManager.registerResponse.displayCapabilities.imageFields`!@@![android, javaSE, javaEE]`sdlManager.getRegisterAppInterfaceResponse().getDisplayCapabilities().getImageFields()`!@ property will have a list of `imageTypeSupported`.
 
 #### Image Sizes
-If an image is uploaded that is larger than the supported size, that image will be scaled down by Core. All image sizes are available from the @![iOS]`SDLManager.registerResponse.displayCapabilities.imageFields`!@@![android, javaSE, javaEE]`SdlManager.registerAppInterfaceResponse.displayCapabilities.imageFields`!@ property once the manager has started successfully.
+If an image is uploaded that is larger than the supported size, that image will be scaled down by Core. All image sizes are available from the @![iOS]`SDLManager.registerResponse.displayCapabilities.imageFields`!@@![android, javaSE, javaEE]`sdlManager.getRegisterAppInterfaceResponse().getDisplayCapabilities().getImageFields()`!@ property once the manager has started successfully.
 
 | ImageName | Used in RPC | Details | Height | Width | Type |
 |:--------------|:----------------|:--------|:---------|:-------|:-------|
@@ -68,13 +68,14 @@ let vrCapability = sdlManager.systemCapabilityManager.vrCapability;
 !@
 
 @![android,javaSE,javaEE]
+An example of querying the Vr Capabilities:
 ```java
-// TODO: Add a code sample for retrieving an RAIR capability
+sdlManager.getRegisterAppInterfaceResponse().getVrCapabilities();
 ```
 !@
 
 ## System Capabilities
-Most head units provide features that your app can use: making and receiving phone calls, an embedded navigation system, video and audio streaming, as well as supporting app services. To find out if the head unit supports a feature as well as more information about the feature, use the @![iOS]`SDLSystemCapabilityManager`!@@![android, javaSE, javaEE]`SystemCapabilityManager`!@ to query the head unit for the desired capability. Querying for capabilities is only available on head units supporting SDL Core v4.5 or greater; if connecting to older head units, the query will return `nil` even if the head unit may support the capabilty.
+Most head units provide features that your app can use: making and receiving phone calls, an embedded navigation system, video and audio streaming, as well as supporting app services. To find out if the head unit supports a feature as well as more information about the feature, use the @![iOS]`SDLSystemCapabilityManager`!@@![android, javaSE, javaEE]`SystemCapabilityManager`!@ to query the head unit for the desired capability. Querying for capabilities is only available on head units supporting SDL Core v4.5 or greater; if connecting to older head units, the query will return @![iOS]`nil`!@@![android, javaSE, javaEE]`null`!@ even if the head unit may support the capabilty.
 
 ### Querying for System Capabilities
 @![iOS]
@@ -118,8 +119,8 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.APP_S
 ### Subscribing to System Capability Updates
 In addition getting the current system capabilities, it is also possible to register to get updates when the head unit capabilities change. @![iOS]To get these notifications you must register using a `subscribeToCapabilityType:` method.!@@![android, javaSE, javaEE]Since this information must be queried from Core you must implement the `OnSystemCapabilityListener`.!@ This feature is only available on head units supporting v.5.1 or greater.
 
-#### Checking if the Head Unit Supports Subscriptions
 @![iOS]
+#### Checking if the Head Unit Supports Subscriptions
 ##### Objective-C
 ```objc
 BOOL supportsSubscriptions = self.sdlManager.systemCapabilityManager.supportsSubscriptions;
@@ -127,11 +128,6 @@ BOOL supportsSubscriptions = self.sdlManager.systemCapabilityManager.supportsSub
 ##### Swift
 ```swift
 let supportsSubscriptions = sdlManager.systemCapabilityManager.supportsSubscriptions;
-```
-!@
-@![android,javaSE,javaEE]
-```java
-// TODO: Show how to determine if the head unit supports subscriptions
 ```
 !@
 
