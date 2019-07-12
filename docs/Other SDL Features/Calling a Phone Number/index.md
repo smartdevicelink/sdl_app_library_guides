@@ -52,7 +52,7 @@ if (hmiCapabilities.isPhoneCallAvailable()) {
 
 ## Sending a DialNumber Request
 !!! note
-`DialNumber` strips all characters except for `0`-`9`, `*`, `#`, `,`, `;`, and `+`
+`DialNumber` strips all characters except for `0`-`9`, `*`, `#`, `,`, `;`, and `+`.
 !!!
 
 @![iOS]
