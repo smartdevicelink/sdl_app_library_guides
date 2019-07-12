@@ -16,15 +16,17 @@ To connect the example app to [Manticore](https://smartdevicelink.com/resources/
 To connect the example app to production or debug hardware, make sure you are on the `iAP` tab and press "Connect". The button will turn green when you are connected.
 !@
 
+@![android, javaSE, javaEE]
+In this guide we take you through the steps to get our sample project, Hello Sdl, running and connected to Sdl Core as well as showing up on HMI.
+!@
+
 @![android]
-In this guide we take you through the steps to get our sample project, Hello Sdl Android, running and connected to Sdl Core as well as showing up on the generic HMI.
+First, make sure you download or clone the latest release from [GitHub](https://github.com/smartdevicelink/sdl_java_suite). The Hello Sdl Android app is a package within the SDL Android library.
 
-First, make sure you download or clone the latest release from [GitHub](https://github.com/smartdevicelink/sdl_android). The Hello Sdl Android app is a package within the SDL Android library.
-
-Open the project in [Android Studio](https://developer.android.com/studio/index.html). We will exclusively use Android Studio as it is the current supported platform for Android development.
+Open the the `sdl_java_suite/android` project using "Open an existing Android Studio project" in [Android Studio](https://developer.android.com/studio/index.html). We will exclusively use Android Studio as it is the current supported platform for Android development.
 
 ## Getting Started
-If you are not using a production head unit for development, we recommend using [SDL Core](https://github.com/smartdevicelink/sdl_core) and this [Generic HMI](https://github.com/smartdevicelink/generic_hmi) for testing. Example screenshots for this tutorial were created using SDL Core and Generic HMI.
+If you are not using a production head unit for development, we recommend using [SDL Core](https://github.com/smartdevicelink/sdl_core) and this [Generic HMI](https://github.com/smartdevicelink/generic_hmi) for testing. 
 
 If you don't want to set up a virtual machine for testing, we offer [Manticore](https://smartdevicelink.com/resources/manticore/), which is a free service that allows you to test your apps via TCP/IP in the cloud.
 
@@ -81,32 +83,8 @@ For TCP, you may use the built-in Android emulator or an Android phone on the sa
 Make sure SDL Core and the HMI are running prior to running Hello Sdl Android
 !!!
 
-Run the project in Android Studio, targeting the device you want Hello Sdl Android installed on.
-
-Hello Sdl Android should compile and launch on your device of choosing:
-
-![Main Screen](assets/mainscreen.png)
-
-Following this, you should see an application appear on the TDK or HMI. In the case of the Generic HMI (using TCP), you will see the following:
-
-![HMI Apps](assets/hmi1.png)
-
-Click on the Hello Sdl icon in the HMI.
-
-![HMI Apps](assets/hmi2.png)
-
-This is the main screen of the Hello Sdl App. If you get to this point, the project is working.
-
-On the device you are running the app on, a lock screen should now appear once the app is opened on the HMI if distracted driver notifications are set to `DD_On`:
-
-![Lockscreen](assets/lockscreen.png)
-
-!!! NOTE
-Lock Screens are an important part of Sdl enabled applications. The goal is to keep the driver's eyes forward and off of the device
-!!!
-
-At this point Hello Sdl Android has been compiled and is running properly! Continue reading through our guides to learn about all of the
-RPCs (Remote Procedure Calls) that can be made with the library.
+To know more about how to connect the app to the infotainment system, please check the [Connecting to an Infotainment System
+guide](Getting Started/Connecting to an Infotainment System)
 
 ### Troubleshooting
 Sometimes things don't always go as planned, and so this section exists. If your app compiles and does NOT show up on the HMI, there are a few things to check out.
@@ -124,83 +102,21 @@ Sometimes things don't always go as planned, and so this section exists. If your
 4. Make sure apps are enabled on the TDK (in settings)
 !@
 
-@![javaEE, javaSE]
-In this guide we take you through the steps to get our sample project, Hello Sdl, running and connected to SDL Core as well as showing up on the generic HMI.
+@![javaSE]
+First, make sure you download or clone the latest release from [GitHub](https://github.com/smartdevicelink/sdl_java_suite). It is a [project](https://github.com/smartdevicelink/sdl_java_suite/tree/master/hello_sdl_java) within the SDL Java Suite root directory. Then, open the Hello Sdl project in [IntelliJ IDEA](https://www.jetbrains.com/idea/) and wait for it to finish loading.
 !@
 
 @![javaEE]
-Make sure that you follow the steps in [Installation](Getting Started/Installation) and [Integration Basics](Getting Started/Integration Basics) sections to create a new SDL project before continuing this section. The [Hello Sdl JavaEE](https://github.com/smartdevicelink/sdl_java_suite/tree/master/hello_sdl_java_ee) project includes samples for `SdlService` and `Main` classes that can be copied to your project.
+Make sure that you follow the steps in [Installation](Getting Started/Installation) and [Integration Basics](Getting Started/Integration Basics) sections to create a new JavaEE SDL project before continuing this section.
+
+!!! NOTE
+The [Hello Sdl JavaEE](https://github.com/smartdevicelink/sdl_java_suite/tree/master/hello_sdl_java_ee) has some code commented out and cannot be compiled. The project just includes samples for `SdlService` and `Main` classes that can be copied to the new javaEE project that you create by following the steps in [Installation page](Getting Started/Installation).
+!!!
 !@
 
 @![javaSE,javaEE]
-## Getting Started
-We assume that you have [SDL Core](https://github.com/smartdevicelink/sdl_core) (We recommend Ubuntu 16.04) and an [HMI](https://github.com/smartdevicelink/generic_hmi) set up prior to this point. Most people getting started with this tutorial will be using Sdl Core and our Generic HMI. If you don't want to set up a virtual machine for testing, we offer [Manticore](https://smartdevicelink.com/resources/manticore/), which is a free service that allows you to test your apps in the cloud.
-
-!!! NOTE
-Sdl Core and an HMI or Manticore are needed to run Hello Sdl and to ensure that it connects.
-!!!
-
-### Configuring Manticore
-If you are using Manticore, the app information can be easily set in the settings tab:
-
-![Main Screen](assets/mainscreen.png)
-
-!!! NOTE
-Manticore needs to access you machine's IP address to be able to start a websocket connection with your cloud app. If you are hosting the cloud app on your local machine, you may need to do extra setup to make your machine publicly accessible. The other solution is to setup Core and HMI on your machine instead of using Manticore so Core can access your local IP address.
-!!!
-
-### Configuring a Local Instance of SDL Core
-To connect your app to SDL Core you will have to know the IP address of the machine that is running the Hello Sdl app. If you don't know what it is, the terminal command `ifconfig` will print out the network address. 
-
-After getting the IP address, you will have to set the app ID, app websocket endpoint, and app nicknames in Core's policy table. This will let Core know the location of your app's instance. 
-
-!!! NOTE
-The app websocket endpoint should format the IP Address and port like so: `ws://<ip address>:<port>/`.
-!!!
-
-If you are using SDL Core and Generic HMI, you will have to add a policy table entry (in `sdl_preloaded_pt.json`) for your app to the existing `app_policies` entries. The key for your policy table entry should be the same as your app ID.
-
-```JSON
-"app_policies": {
-    "8678309": {
-        "keep_context": false,
-        "steal_focus": false,
-        "priority": "NONE",
-        "default_hmi": "NONE",
-        "groups": ["Base-4"],
-        "RequestType": [],
-        "RequestSubType": [],
-        "hybrid_app_preference": "CLOUD",
-        "endpoint": "ws://<ip address>:<port>",
-        "enabled": true,
-        "auth_token": "",
-        "cloud_transport_type": "WS",
-        "nicknames": ["Hello Sdl"]
-    }
-}
- 
-```
-
-!!! NOTE
-The `storage` folder in the same directory as the `sdl_preloaded_pt.json` file needs to be deleted before changes made to the `sdl_preloaded_pt.json` will take effect.
-!!!
-
-For more information about policy tables please visit the [Policy Tables Guide](https://smartdevicelink.com/en/guides/sdl-server/api-reference-documentation/policy-table/overview).
-
-!!! NOTE
-Don't forget to modify `ws://<ip address>:<port>` with your own IP address and port number. To find and/or change the port configured in the Hello Sdl app, check the port variable in the `Main.java` class.
-!!!
-
-If the policy table configuration is correct, after you have connected at least once (the app has to download the app icon from the stored URL and send it to Core), you should see the app icon appear:
-
-![HMI Apps](assets/hmi1.png)
-
-#### Running the App
-After you have successfully configured SDL Core's policy table, you can run an instance of app in the IntelliJ IDEA. Once the Hello Sdl app compiles and launches on your your machine, you can click on the Hello Sdl icon in the HMI.
-
-![HMI Apps](assets/hmi2.png)
-
-This is the main screen of the Hello Sdl app. If you get to this point, the project is working.
-
-At this point Hello Sdl has been successfully setup! Continue reading through our guides to learn how to build a SDL application.
+## Connecting to Head Unit 
+To connect the sample app to the infotainment system, please follow the instructions in the [Connecting to an Infotainment System guide](Getting Started/Connecting to an Infotainment System)
 !@
+
+

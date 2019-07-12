@@ -20,7 +20,7 @@ The View Controller you set to the `rootViewController` must be a subclass of `S
 
 There are several customizations you can make to `CarWindow` to optimize it for your video streaming needs:
 
-1. Choose how `CarWindow` captures and renders the screen using the `carWindowRenderingType` enum. 
+1. Choose how `CarWindow` captures and renders the screen using the `carWindowRenderingType` enum.
 2. By default, when using `CarWindow`, the `SDLTouchManager` will sync it's touch updates to the framerate. To disable this feature, set `SDLTouchManager.enableSyncedPanning` to `NO`.
 3. `CarWindow` hard-dictates the framerate of the app. To change the framerate and other parameters, update `SDLStreamingMediaConfiguration.customVideoEncoderSettings`.
 
@@ -47,7 +47,7 @@ If setting the `rootViewController` when the app returns to the foreground, the 
 !!!
 
 ## Sending Raw Video Data
-If you decide to send raw video data instead of relying on the `CarWindow` API to generate that video data from a view controller, you must maintain the lifecycle of the video stream as there are limitations to when video is allowed to stream. The app's HMI state on the head unit and the app's application state on the device determines whether video can stream. Due to an iOS limitation, video cannot be streamed when the app on the device is no longer in the foreground and/or the device is locked/sleeping. 
+If you decide to send raw video data instead of relying on the `CarWindow` API to generate that video data from a view controller, you must maintain the lifecycle of the video stream as there are limitations to when video is allowed to stream. The app's HMI state on the head unit and the app's application state on the device determines whether video can stream. Due to an iOS limitation, video cannot be streamed when the app on the device is no longer in the foreground and/or the device is locked/sleeping.
 
 The lifecycle of the video stream is maintained by the SDL library. The `SDLManager.streamingMediaManager` can be accessed once the `start` method of `SDLManager` is called. The `SDLStreamingMediaManager` automatically takes care of determining screen size and encoding to the correct video format.
 
@@ -124,11 +124,31 @@ public static class MyDisplay extends SdlRemoteDisplay{
 ```
 
 !!! Note
-If you are obfuscating the code in your app, make sure to exclude your class that extends `SdlRemoteDisplay`. For more information on how to do that, you can check [Proguard Guidelines](/guides/android/proguard-guidelines/).
+If you are obfuscating the code in your app, make sure to exclude your class that extends `SdlRemoteDisplay`. For more information on how to do that, you can check [Proguard Guidelines](Getting Started/Proguard Guidelines).
 !!!
 
 ## Managing the Stream
 The `VideoStreamingManager` can be used to start streaming video after the `SdlManager` has successfully been started. This is performed by calling the method `startRemoteDisplayStream(Context context, final Class<? extends SdlRemoteDisplay> remoteDisplay, final VideoStreamingParameters parameters, final boolean encrypted)`.
+
+```java
+public static class MyDisplay extends SdlRemoteDisplay {
+
+    public MyDisplay(Context context, Display display) {
+        super(context, display);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.stream);
+
+        String videoUri = "android.resource://" + context.getPackageName() + "/" + R.raw.sdl;
+        VideoView videoView = findViewById(R.id.videoView);
+        videoView.setVideoURI(Uri.parse(videoUri));
+        videoView.start();
+    }
+}
+```
 
 ```java
 if (sdlManager.getVideoStreamManager() != null) {
@@ -155,12 +175,12 @@ onRPCNotificationListenerMap.put(FunctionID.ON_HMI_STATUS, new OnRPCNotification
     public void onNotified(RPCNotification notification) {
         OnHMIStatus status = (OnHMIStatus) notification;
 		if (status != null && status.getHmiLevel() == HMILevel.HMI_NONE) {
-			
-			//Stop the stream 
+
+			//Stop the stream
 			if (sdlManager.getVideoStreamManager() != null && sdlManager.getVideoStreamManager().isStreaming()) {
 				sdlManager.getVideoStreamManager().stopStreaming();
 			}
-			
+
 		}
     }
 });

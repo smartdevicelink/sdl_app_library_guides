@@ -4,7 +4,9 @@
         "Timur Pulathaneli",
         "Joel Fischer",
         "Nicole Yarroch",
-        "Justin Gluck"
+        "Justin Gluck",
+        "Bilal Alsharifi",
+        "Brett"
     ],
     "languages": [
         "en"
@@ -30,17 +32,18 @@
                     "platforms": ["iOS", "Android"]
                 },
                 {
+                    "name": "Using AOA Protocol",
+                    "platforms": ["Android"]
+                },
+                {  
+                    "name":"Multiple Transports",
+                    "platforms": ["Android"]
+                 },
+                {
                     "name": "Adapting to the Head Unit Language"
                 },
                 {
                     "name": "Understanding Permissions"
-                },
-                {
-                    "name": "Example Apps"
-                },
-                {
-                    "name": "Using AOA Protocol",
-                    "platforms": ["Android"]
                 },
                 {
                     "name": "Setting Security Level for Multiplexing",
@@ -49,11 +52,14 @@
                 {
                     "name":"Proguard Guidelines",
                     "platforms": ["Android"]
-    
+
                 },
                 {
                     "name": "Deploying to AWS",
                     "platforms": ["JavaEE"]
+                },
+                {
+                    "name": "Example Apps"
                 }
             ]
         },
@@ -179,7 +185,7 @@
         },
         {
             "name": "Migrating to Newer SDL Versions",
-            "platforms": ["Android","iOS"],
+            "platforms": ["Android","iOS", "JavaEE", "JavaSE"],
             "navigation": [
                 {
                     "name": "Updating to v4.3+",
@@ -204,6 +210,12 @@
                 {
                     "name": "Updating to v4.7",
                     "platforms": ["Android"]
+                },
+                {
+                    "name": "Updating to v4.9",
+                    "platforms": [
+                        "Android", "JavaEE", "JavaSE"
+                    ]
                 }
             ]
         },

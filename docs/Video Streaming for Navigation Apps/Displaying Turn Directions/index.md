@@ -1,5 +1,7 @@
 # Displaying Turn Directions
+While your app is navigating the user, you will also want to send turn by turn directions. This is useful for if your app is in the background or if the user is in the middle of a phone call, and gives the system additional information about the next maneuver the user must make.
 When your navigation app is guiding the user to a specific destination, you can provide the user with visual and audio turn-by-turn prompts. These prompts will be presented even when your SDL app is backgrounded or a phone call is ongoing.
+While your app is navigating the user, you will also want to send turn by turn directions. This is useful if your app is in the background or if the user is in the middle of a phone call, and gives the system additional information about the next maneuver the user must make.
 
 To create a turn-by-turn direction that provides both a visual and audio cues, a combination of the @![iOS]`SDLShowConstantTBT`!@@![android]`ShowConstantTBT`!@ and @![iOS]`SDLAlertManeuver`!@@![android]`AlertManeuver`!@ RPCs must should be sent to the head unit.
 
@@ -75,7 +77,36 @@ sdlManager.send(request: turnByTurn) { (request, response, error) in
 !@
 
 @![android]
-`// TODO Add Code Example`
+```java
+Image turnIcon =  <#Create Image#>
+
+ShowConstantTbt turnByTurn = new ShowConstantTbt();
+turnByTurn.setNavigationText1("Turn Right");
+turnByTurn.setNavigationText2("3 mi");
+turnByTurn.setTurnIcon(turnIcon);
+turnByTurn.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        if (!response.getSuccess()){
+            Log.e(TAG, "onResponse: Error sending TBT");
+            return;
+        }
+
+        AlertManeuver alertManeuver = new AlertManeuver();
+        alertManeuver.setTtsChunks(TTSChunkFactory.createSimpleTTSChunks("In 3 miles turn right"));
+        alertManeuver.setOnRPCResponseListener(new OnRPCResponseListener() {
+            @Override
+            public void onResponse(int correlationId, RPCResponse response) {
+                if (!response.getSuccess()){
+                    Log.e(TAG, "onResponse: Error sending AlertManeuver");
+                }
+            }
+        });
+        sdlManager.sendRPC(alertManeuver);
+    }
+});
+sdlManager.sendRPC(turnByTurn);
+```
 !@
 
 Remember when sending a @![iOS]`SDLImage`!@@![android,javaSE,javaEE]`Image`!@, that the image must first be uploaded to the head unit with the @![iOS]`SDLFileManager`!@@![android,javaSE,javaEE]`FileManager`!@.
@@ -116,5 +147,17 @@ sdlManager.send(request: clearTurnByTurn) { (request, response, error) in
 !@
 
 @![android]
-`// TODO Add Code Example`
+```java
+ShowConstantTbt turnByTurn = new ShowConstantTbt();
+turnByTurn.setManeuverComplete(true);
+turnByTurn.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        if (!response.getSuccess()){
+            Log.e(TAG, "onResponse: Error sending TBT");
+        }
+    }
+});
+sdlManager.sendRPC(turnByTurn);
+```
 !@

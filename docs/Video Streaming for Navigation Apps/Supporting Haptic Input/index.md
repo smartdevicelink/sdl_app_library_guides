@@ -59,6 +59,7 @@ public static class MyPresentation extends SdlRemoteDisplay {
 }
 ```
 
+
 This will go through your view that was passed in and then find and send the rects to the head unit for use. When your UI changes, call `invalidate()` from your class that extends `SdlRemoteDisplay`.
 !@
 

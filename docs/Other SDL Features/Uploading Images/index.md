@@ -54,6 +54,7 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.DISPL
    @Override
    public void onCapabilityRetrieved(Object capability){
       DisplayCapabilities dispCapability = (DisplayCapabilities) capability;
+      boolean graphicsSupported = dispCapability.getGraphicSupported();
    }
 
    @Override
@@ -64,14 +65,9 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.DISPL
 ```
 !@
 
-## Uploading an Image Using SDLFileManager
-@![iOS]
-The `SDLFileManager` uploads files and keeps track of all the uploaded files names during a session. To send data with the `SDLFileManager`, you need to create either a `SDLFile` or `SDLArtwork` object. `SDLFile` objects are created with a local `NSURL` or `NSData`; `SDLArtwork` a `UIImage`.
-!@
+## Uploading an Image Using SDL FileManager
+The @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE]`FileManager`!@ uploads files and keeps track of all the uploaded files names during a session. To send data with the @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE]`FileManager`!@, you need to create either a @![iOS]`SDLFile`!@ @![android, javaSE, javaEE]`SdlFile`!@ or @![iOS]`SDLArtwork`!@ @![android, javaSE, javaEE]`SdlArtwork`!@object. @![iOS]`SDLFile` objects are created with a local `NSURL` or `NSData`; `SDLArtwork` a `UIImage`.!@ @![android]Both `SdlFile`s and `SdlArtwork`s can be created with a `Uri`, `byte[]`, or `resourceId`.!@ @![javaSE, javaEE]Both `SdlFile`s and `SdlArtwork`s can be created with using `filePath`, or `byte[]`.!@
 
-@![android,javaSE,javaEE]
-`// TODO Android Add FileManger documentation information to align this documentation. Code example has been added but documentation may need more Android Specific documentation.`
-!@
 
 @![iOS]
 ##### Objective-C
@@ -110,31 +106,14 @@ sdlManager.fileManager.upload(artwork: artwork) { (success, artworkName, bytesAv
 !@
 
 @![android,javaSE,javaEE]
-#### Creation
-The first step in uploading files to the connected module is creating an instance of `SdlFile`. There are a few different constructors that can be used based on the source of the file. The following can be used to instantiate `SdlFile`:
-
-##### A resource ID
 ```java
-new SdlFile(@NonNull String fileName, @NonNull FileType fileType, int id, boolean persistentFile)
-```
-##### A URI
-```java
-new SdlFile(@NonNull String fileName, @NonNull FileType fileType, Uri uri, boolean persistentFile)
-```
-
-##### A byte array
-```java
-new SdlFile(@NonNull String fileName, @NonNull FileType fileType, byte[] data, boolean persistentFile)
-```
-
-### Uploading a File
-Uploading a file with the `FileManager` is a simple process. With an instantiated `SdlManager`,
-you can simply call:
-
-```java
-sdlManager.getFileManager().uploadFile(sdlFile, new CompletionListener() {
+SdlArtwork artwork = new SdlArtwork("image_name", FileType.GRAPHIC_PNG, <image byte[]>, false);
+sdlManager.getFileManager().uploadFile(artwork, new CompletionListener() {
     @Override
     public void onComplete(boolean success) {
+        if (success){
+            <#Image Upload Successful#>
+        }
     }
 });
 ```

@@ -1,12 +1,12 @@
-# Calling a Phone Number
+ # Calling a Phone Number
 The @![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ RPC allows you make a phone call via the user's phone. Regardless of platform (Android or iOS), you must be sure that a device is connected via Bluetooth (even if using USB) for this RPC to work. If the phone is not connected via Bluetooth, you will receive a result of `REJECTED` from Core.
 
 !!! note
 @![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ is an RPC that is usually restricted by OEMs. As a result, the OEM you are connecting to may limit app functionality if not approved for usage.
 !!!
 
-## Detecting if DialNumber is Available
-@![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ is a newer RPC, so there is a possibility that not all head units will support it. supported by the head unit, check the system capability manager's @![iOS]`hmiCapabilities.phoneCall`!@ @![android,javaSE,javaEE]`getCapability(SystemCapabilityType.PHONE_CALL)`!@ property after the manager has been started successfully.
+## Checking if Dial Number is Available
+@![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ is a newer RPC, so there is a possibility that not all head units will support it. To find out if the RPC is supported by the head unit, check the system capability manager's @![iOS]`hmiCapabilities.phoneCall`!@ @![android,javaSE,javaEE]`hmiCapabilities.isPhoneCallAvailable()`!@ property after the manager has been started successfully.
 
 @![iOS]
 ##### Objective-C

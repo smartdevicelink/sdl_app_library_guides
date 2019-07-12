@@ -1,5 +1,5 @@
 # Adding the Lock Screen
-The lock screen is a vital part of SmartDeviceLink, as the lock screen prevents the user from using your application while the vehicle is in motion. SDL takes care of the lock screen for you. It still allows you to use your own view controller if you prefer your own look, but still want the recommended logic that SDL provides for free.
+The lock screen is a vital part of SmartDeviceLink as the lock screen prevents the user from using your application while the vehicle is in motion. SDL takes care of the lock screen for you. It still allows you to use your own @![iOS]view controller!@ @![android]activity!@ if you prefer your own look, but still want the recommended logic that SDL provides for free.
 
 
 @![iOS]
@@ -24,21 +24,13 @@ This manifest entry must be added for the lock screen feature to work.
 !@
 
 ## Using the Provided Lock Screen
-Using the default lock screen is simple. Using the lock screen this way will automatically load an automaker's logo, if available, to show alongside your logo. If it is not, the default lock screen will show your logo alone.
+@![iOS]Using the default lock screen is simple. Using the lock screen this way will automatically load an automaker's logo, if available, to show alongside your logo. If it is not, the default lock screen will show your logo alone.!@
 
 @![iOS]
 ![Generic Lock Screen](/assets/GenericLockScreen.png)
-!@
 
-@![iOS]
 To do this, instantiate a new `SDLLockScreenConfiguration`:
-!@
 
-@![android]
-If you have implemented the SdlManager and have defined the SDLLockScreenActivity in your manifest but have not defined any lock screen configuration, you are already have a working default configuration.
-!@
-
-@![iOS]
 ##### Objective-C
 ```objc
 SDLLockScreenConfiguration *lockScreenConfiguration = [SDLLockScreenConfiguration enabledConfiguration];
@@ -49,6 +41,12 @@ SDLLockScreenConfiguration *lockScreenConfiguration = [SDLLockScreenConfiguratio
 let lockScreenConfiguration = SDLLockScreenConfiguration.enabled()
 ```
 !@
+
+@![android]
+If you have implemented the `SdlManager` and have defined the `SDLLockScreenActivity` in your manifest but have not defined any lock screen configuration, you are already have a working default configuration.
+![Generic Lock Screen](/assets/GenericLockScreen_Android.png)
+!@
+
 
 ## Customizing the Default Lock Screen
 If you would like to use the provided lock screen but would like to add your own appearance to it, we provide that as well. @![iOS]`SDLLockScreenConfiguration`!@ @![android]`LockScreenConfig`!@ allows you to customize the background color as well as your app's icon. If the app icon is not included, we will use the SDL logo.
@@ -105,7 +103,7 @@ The default lock screen handles retrieving and setting the OEM logo from head un
 !@
 
 @![android]
-This sets whether or not to show the connected device's logo on the default lock screen. The logo will come from the connected hardware if set by the manufacturer. When using a Custom View, the custom layout will have to handle the logic to display the device logo or not. The default setting is false, but some OEM partners may require it.
+This sets whether or not to show the connected device's logo on the default lock screen. The logo will come from the connected hardware if set by the manufacturer. When using a custom view, the custom layout will have to handle the logic to display the device logo. The default setting is false, but some OEM partners may require it.
 In your `LockScreenConfig` object, you can set the boolean of whether or not you want the device logo shown, if available:
 ```java
 lockScreenConfig.showDeviceLogo(true);
@@ -136,14 +134,7 @@ lockScreenConfig.setCustomView(customViewInt);
 !@
 
 ## Disabling the Lock Screen Manager
-
 Please note that a lock screen will be required by most OEMs. You can disable the lock screen manager, but you will then be required to implement your own logic for showing and hiding the lock screen. This is not recommended as the @![iOS]`SDLLockScreenConfiguration` !@ @![android]`LockScreenConfig`!@ adheres to most OEM lock screen requirements. However, if you must create a lock screen manager from scratch, the library's lock screen manager can be disabled via the @![iOS]`SDLLockScreenConfiguration`!@ @![android]`LockScreenConfig`!@ as follows:
-
-@![android]
-```java
-lockScreenConfig.setEnabled(false);
-```
-!@
 
 @![iOS]
 ##### Objective-C
@@ -155,5 +146,11 @@ lockScreenConfiguration.enableAutomaticLockScreen = NO;
 ```swift
 let lockScreenConfiguration = SDLLockScreenConfiguration.enabledConfiguration()
 lockScreenConfiguration.enableAutomaticLockScreen = false
+```
+!@
+
+@![android]
+```java
+lockScreenConfig.setEnabled(false);
 ```
 !@
