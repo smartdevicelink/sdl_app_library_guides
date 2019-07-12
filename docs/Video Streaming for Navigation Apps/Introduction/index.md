@@ -14,12 +14,13 @@ In order to use SDL's Mobile Navigation feature, the app must have a minimum req
 !@
 
 ## Connecting an app
-The basic connection is similar for all apps. Please follow the [Integration Basics](Getting Started/Integration Basics) guide for more information.
+The basic connection setup is similar for all apps. Please follow the [Integration Basics](Getting Started/Integration Basics) guide for more information.
 
 In order to create a navigation app an @![iOS]`appType`!@@![android,javaSE,javaEE]`appHMIType`!@ of @![iOS]`SDLAppHMITypeNavigation`!@@![android,javaSE,javaEE]`NAVIGATION`!@ must be set in the @![iOS]`SDLManager`'s `SDLLifecycleConfiguration`!@@![android,javaSE,javaEE]`SdlManager`'s `Builder`!@.
 
-
-@![iOS]In addition, a `SDLStreamingMediaConfiguration` must be created and passed to the `SDLConfiguration`. A property called `securityManagers` must be set if connecting to a version of SDL Core that requires secure video and audio streaming. This property requires an array of Security Managers that conform to the `SDLSecurityType` protocol.!@ @![android]In addition, you must call the `setSdlSecurity(List<Class<? extends SdlSecurityBase>> secList)` method from the `SdlManager.Builder` if connecting to an implementation of Core that requires secure video and audio streaming. This method requires an array of Security Managers that extend the `SdlSecurityBase` class.!@ These security libraries are provided by the OEMs themselves and will only work for that OEM. There is no general catch-all security library.
+@![iOS]The second difference is that a `SDLStreamingMediaConfiguration` must be created and passed to the `SDLConfiguration`. A property called securityManagers must be set if connecting to a version of Core that requires secure video & audio streaming. This property requires an array of classes of Security Managers, which will conform to the `SDLSecurityType` protocol.!@
+@![android] The second difference is the ability to call the `setSdlSecurity(List<Class<? extends SdlSecurityBase>> secList)` method from the `SdlManager.Builder` if connecting to an implementation of Core that requires secure video & audio streaming. This method requires an array of security libraries, which will extend the `SdlSecurityBase` class.!@ 
+These security libraries are provided by the OEMs themselves, and will only work for that OEM. There is no general catch-all security library.
 
 @![iOS]
 ##### Objective-C
@@ -49,10 +50,9 @@ Vector<AppHMIType> hmiTypes = new Vector<AppHMIType>();
 hmiTypes.add(AppHMIType.NAVIGATION);
 builder.setAppTypes(hmiTypes);
 
+// Add security managers if Core requires secure video & audio streaming
 List<? extends SdlSecurityBase> securityManagers = new ArrayList();
-securityManagers.add(OEMSecurityManager1.class);
-securityManagers.add(OEMSecurityManager1.class);
-builder.setSdlSecurity(securityManagers);
+builder.setSdlSecurity(Arrays.asList(OEMSecurityManager1.class, OEMSecurityManager2.class));
 
 MultiplexTransportConfig mtc = new MultiplexTransportConfig(this, APP_ID, MultiplexTransportConfig.FLAG_MULTI_SECURITY_OFF);
 mtc.setRequiresHighBandwidth(true);
