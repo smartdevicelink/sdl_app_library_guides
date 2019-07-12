@@ -39,7 +39,7 @@ You will only have access to vehicle data that is allowed to your `appName` & `a
 | Wiper Status | wiperStatus | The status of the wipers: off, automatic off, off moving, manual interaction off, manual interaction on, manual low, manual high, manual flick, wash, automatic low, automatic high, courtesy wipe, automatic adjust, stalled, no data exists |
 
 ## One-Time Vehicle Data Retrieval
-To get vehicle data a single time, use the @![iOS]`SDLGetVehicleData`!@@![android, javaSE, javaEE]`GetVehicleData`!@ RPC. 
+To get vehicle data a single time, use the @![iOS]`SDLGetVehicleData`!@@![android, javaSE, javaEE]`GetVehicleData`!@ RPC.
 
 @![iOS]
 ##### Objective-C
@@ -49,6 +49,7 @@ getGPSData.gps = @YES;
 [self.sdlManager sendRequest:getGPSData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     SDLGetVehicleDataResponse *vehicleDataResponse = (SDLGetVehicleDataResponse *)response;
     SDLResult resultCode = vehicleDataResponse.resultCode;
+
     if (![resultCode isEqualToEnum:SDLResultSuccess]) {
         if ([resultCode isEqualToEnum:SDLResultDisallowed]) {
             <#The app does not have permission to access this vehicle data#>
@@ -103,15 +104,20 @@ sdlManager.send(request: getGPSData) { (request, response, error) in
 GetVehicleData vdRequest = new GetVehicleData();
 vdRequest.setPrndl(true);
 vdRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
-	@Override
-	public void onResponse(int correlationId, RPCResponse response) {
-		if(response.getSuccess()){
-			PRNDL prndl = ((GetVehicleDataResponse) response).getPrndl();
-			Log.i("SdlService", "PRNDL status: " + prndl.toString());
-		}else{
-			Log.i("SdlService", "GetVehicleData was rejected.");
-		}
-	}
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        if(response.getSuccess()){
+            PRNDL prndl = ((GetVehicleDataResponse) response).getPrndl();
+            Log.i("SdlService", "PRNDL status: " + prndl.toString());
+        }else{
+            Log.i("SdlService", "GetVehicleData was rejected.");
+        }
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
+    }
 });
 sdlManager.sendRPC(vdRequest);
 ```
@@ -121,7 +127,7 @@ sdlManager.sendRPC(vdRequest);
 Subscribing to vehicle data allows you to get notifications whenever new data is available. You should not rely upon getting this data in a consistent manner. New vehicle data is available roughly every second, but this is totally dependent on which head unit you are connected to.
 
 @![iOS]
-**First**, register to observe the `SDLDidReceiveVehicleDataNotification` notification: 
+**First**, register to observe the `SDLDidReceiveVehicleDataNotification` notification:
 
 ##### Objective-C
 ```objc
@@ -231,7 +237,7 @@ func vehicleDataAvailable(_ notification: SDLRPCNotificationNotification) {
 !@
 
 @![android, javaSE, javaEE]
-**First**, you should add a notification listener for the `OnVehicleData` notification: 
+**First**, you should add a notification listener for the `OnVehicleData` notification:
 
 ```java
 sdlManager.addOnRPCNotificationListener(FunctionID.ON_VEHICLE_DATA, new OnRPCNotificationListener() {
@@ -259,7 +265,12 @@ subscribeRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
             Log.i("SdlService", "Request to subscribe to vehicle data was rejected.");
         }
     }
-}); 
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
+    }
+});
 sdlManager.sendRPC(subscribeRequest);
 ```
 
@@ -345,6 +356,11 @@ unsubscribeRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
         }else{
             Log.i("SdlService", "Request to unsubscribe to vehicle data was rejected.");
         }
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
     }
 });
 sdlManager.sendRPC(unsubscribeRequest);
