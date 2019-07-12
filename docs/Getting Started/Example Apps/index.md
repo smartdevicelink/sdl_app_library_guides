@@ -28,7 +28,7 @@ To connect the example app to production or debug hardware, make sure you are on
 1.  Make sure to use the default `SDLLifecycleConfiguration`.
 2.  Make sure the [protocol](https://smartdevicelink.com/en/guides/iOS/getting-started/sdk-configuration/) strings have been added to the app.
 3.  Make sure you have enabled background [capabilities](https://smartdevicelink.com/en/guides/iOS/getting-started/sdk-configuration/) for your app.
-4.  If the head unit (emulators do not support IAP) does not support bluetooth, an iAP connection requires a USB cord.
+4.  If the head unit (emulators do not support IAP) does not support Bluetooth, an iAP connection requires a USB cord.
 
 #### iAP Bluetooth Production Transport
 1. Bluetooth transport support is automatic when you support the iAP production transport. It cannot be turned on or off separately.
@@ -91,7 +91,7 @@ if you do not change the target IP address, the application will not connect to 
 !!!
 
 ### Configure for Bluetooth
-Right out of the box, all you need to do to run bluetooth is to select the ```multi_sec_offDebug``` (Multiplexing) build flavor.
+Right out of the box, all you need to do to run Bluetooth is to select the ```multi_sec_offDebug``` (Multiplexing) build flavor.
 
 ### Configure for USB (AOA)
 To connect to an SDL Core instance or TDK via USB transport, select the ```multi_sec_offDebug ``` (Multiplexing) build flavor. There is more information for USB transport under [Getting Started - Using AOA Protocol](Getting Started/Using AOA Protocol).
