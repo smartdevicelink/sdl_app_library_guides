@@ -39,7 +39,7 @@ You will only have access to vehicle data that is allowed to your `appName` & `a
 | Wiper Status | wiperStatus | The status of the wipers: off, automatic off, off moving, manual interaction off, manual interaction on, manual low, manual high, manual flick, wash, automatic low, automatic high, courtesy wipe, automatic adjust, stalled, no data exists |
 
 ## One-Time Vehicle Data Retrieval
-To get vehicle data a single time, use the @![iOS]`SDLGetVehicleData`!@@![android, javaSE, javaEE]`GetVehicleData`!@ RPC. 
+To get vehicle data a single time, use the @![iOS]`SDLGetVehicleData`!@@![android, javaSE, javaEE]`GetVehicleData`!@ RPC.
 
 @![iOS]
 ##### Objective-C
@@ -51,7 +51,7 @@ getVehicleData.prndl = @YES;
         NSLog(@"Encountered Error sending GetVehicleData: %@", error);
         return;
     }
-    
+
     SDLGetVehicleDataResponse* getVehicleDataResponse = (SDLGetVehicleDataResponse *)response;
     SDLResult *resultCode = getVehicleDataResponse.resultCode;
     if (![resultCode isEqualToEnum:SDLResultSuccess]) {
@@ -64,7 +64,7 @@ getVehicleData.prndl = @YES;
         }
         return;
     }
-    
+
     SDLPRNDL *prndl = getVehicleDataResponse.prndl;
 }];
 ```
@@ -75,12 +75,12 @@ let getVehicleData = SDLGetVehicleData()
 getVehicleData.prndl = true
 sdlManager.send(getVehicleData) { (request, response, error) in
     guard let response = response as? SDLGetVehicleDataResponse else { return }
-    
+
     if let error = error {
         print("Encountered Error sending GetVehicleData: \(error)")
         return
     }
-    
+
     if !response.resultCode == .success {
         if response.resultCode == .rejected {
             print("GetVehicleData was rejected. Are you in an appropriate HMI?")
@@ -91,7 +91,7 @@ sdlManager.send(getVehicleData) { (request, response, error) in
         }
         return
     }
-    
+
     guard let prndl = response.prndl else { return }
 }
 ```
@@ -102,15 +102,20 @@ sdlManager.send(getVehicleData) { (request, response, error) in
 GetVehicleData vdRequest = new GetVehicleData();
 vdRequest.setPrndl(true);
 vdRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
-	@Override
-	public void onResponse(int correlationId, RPCResponse response) {
-		if(response.getSuccess()){
-			PRNDL prndl = ((GetVehicleDataResponse) response).getPrndl();
-			Log.i("SdlService", "PRNDL status: " + prndl.toString());
-		}else{
-			Log.i("SdlService", "GetVehicleData was rejected.");
-		}
-	}
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        if(response.getSuccess()){
+            PRNDL prndl = ((GetVehicleDataResponse) response).getPrndl();
+            Log.i("SdlService", "PRNDL status: " + prndl.toString());
+        }else{
+            Log.i("SdlService", "GetVehicleData was rejected.");
+        }
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
+    }
 });
 sdlManager.sendRPC(vdRequest);
 ```
@@ -120,7 +125,7 @@ sdlManager.sendRPC(vdRequest);
 Subscribing to vehicle data allows you to get notifications whenever new data is available. You should not rely upon getting this data in a consistent manner. New vehicle data is available roughly every second, but this is totally dependent on which head unit you are connected to.
 
 @![iOS]
-**First**, register to observe the `SDLDidReceiveVehicleDataNotification` notification: 
+**First**, register to observe the `SDLDidReceiveVehicleDataNotification` notification:
 
 ##### Objective-C
 ```objc
@@ -151,7 +156,7 @@ subscribeVehicleData.prndl = @YES;
     if (![response isKindOfClass:[SDLSubscribeVehicleDataResponse class]]) {
         return;
     }
-    
+
     SDLSubscribeVehicleDataResponse *subscribeVehicleDataResponse = (SDLSubscribeVehicleDataResponse*)response;
     SDLVehicleDataResult *prndlData = subscribeVehicleDataResponse.prndl;
     if (!response.success.boolValue) {
@@ -170,10 +175,10 @@ subscribeVehicleData.prndl = @YES;
         } else if (error) {
             NSLog(@"Encountered Error sending SubscribeVehicleData: %@", error);
         }
-        
+
         return;
     }
-    
+
     // Successfully subscribed
 }];
 ```
@@ -185,7 +190,7 @@ subscribeVehicleData.prndl = true
 
 sdlManager.send(request: subscribeVehicleData) { (request, response, error) in
     guard let response = response as? SDLSubscribeVehicleDataResponse else { return }
-    
+
     guard response.success.boolValue == true else {
         if response.resultCode == .disallowed {
             // Not allowed to register for this vehicle data.
@@ -208,7 +213,7 @@ sdlManager.send(request: subscribeVehicleData) { (request, response, error) in
         }
         return
     }
-    
+
     // Successfully subscribed
 }
 ```
@@ -221,9 +226,9 @@ sdlManager.send(request: subscribeVehicleData) { (request, response, error) in
     if (![notification.notification isKindOfClass:SDLOnVehicleData.class]) {
         return;
     }
-    
+
     SDLOnVehicleData *onVehicleData = (SDLOnVehicleData *)notification.notification;
-    
+
     SDLPRNDL *prndl = onVehicleData.prndl;
 }
 ```
@@ -234,14 +239,14 @@ func vehicleDataAvailable(_ notification: SDLRPCNotificationNotification) {
     guard let onVehicleData = notification.notification as? SDLOnVehicleData else {
         return
     }
-    
+
     let prndl = onVehicleData.prndl
 }
 ```
 !@
 
 @![android, javaSE, javaEE]
-**First**, you should add a notification listener for the `OnVehicleData` notification: 
+**First**, you should add a notification listener for the `OnVehicleData` notification:
 
 ```java
 sdlManager.addOnRPCNotificationListener(FunctionID.ON_VEHICLE_DATA, new OnRPCNotificationListener() {
@@ -269,7 +274,12 @@ subscribeRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
             Log.i("SdlService", "Request to subscribe to vehicle data was rejected.");
         }
     }
-}); 
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
+    }
+});
 sdlManager.sendRPC(subscribeRequest);
 ```
 
@@ -309,7 +319,7 @@ unsubscribeVehicleData.prndl = @YES;
         }
         return;
     }
-    
+
     // Successfully unsubscribed
 }];
 ```
@@ -321,12 +331,12 @@ unsubscribeVehicleData.prndl = true
 
 sdlManager.send(request: unsubscribeVehicleData) { (request, response, error) in
     guard let response = response as? SDLUnsubscribeVehicleDataResponse else { return }
-    
+
     guard response.success.boolValue == true else {
         if response.resultCode == .disallowed {
-            
+
         } else if response.resultCode == .userDisallowed {
-            
+
         } else if response.resultCode == .ignored {
             if let prndlData = response.prndl {
                 if prndlData.resultCode == .dataNotSubscribed {
@@ -344,7 +354,7 @@ sdlManager.send(request: unsubscribeVehicleData) { (request, response, error) in
         }
         return
     }
-    
+
     // Successfully unsubscribed
 }
 ```
@@ -362,6 +372,11 @@ unsubscribeRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
         }else{
             Log.i("SdlService", "Request to unsubscribe to vehicle data was rejected.");
         }
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
     }
 });
 sdlManager.sendRPC(unsubscribeRequest);

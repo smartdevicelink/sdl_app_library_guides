@@ -250,9 +250,14 @@ sdlManager.send(request: alert) { (request, response, error) in
 alert.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
-        if (response.getSuccess()){
-            Log.i(TAG, "Alert was dismissed successfully");
-        }
+      if (response.getSuccess()){
+        Log.i(TAG, "Alert was dismissed successfully");
+      }
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+      Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
     }
 });
 sdlManager.sendRPC(alert);

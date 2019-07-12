@@ -2,7 +2,7 @@
 The remote control framework allows apps to control certain modules, such as climate, radio, seat, lights, etc., within a vehicle.
 
 !!! Note
-Not all head units support this feature. If using this feature in your app you will most likely need to request permission from the vehicle manufacturer. 
+Not all head units support this feature. If using this feature in your app you will most likely need to request permission from the vehicle manufacturer.
 !!!
 
 ## Why Use Remote Control?
@@ -143,7 +143,7 @@ if (sdlManager.getSystemCapabilityManager().isCapabilitySupported(SystemCapabili
         @Override
         public void onCapabilityRetrieved(Object capability){
             RemoteControlCapabilities remoteControlCapabilities = (RemoteControlCapabilities) capability;
-            // Now it is possible to get details on how this capability 
+            // Now it is possible to get details on how this capability
             // is supported using the remoteControlCapabilities object
         }
 
@@ -190,6 +190,10 @@ interiorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
     public void onResponse(int correlationId, RPCResponse response) {
         GetInteriorVehicleDataResponse getResponse = (GetInteriorVehicleDataResponse) response;
         // This can now be used to retrieve data
+    }
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
     }
 });
 

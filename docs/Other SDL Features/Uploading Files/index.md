@@ -79,7 +79,7 @@ sdlManager.fileManager.upload(files: [file1, file2], progressHandler: { (fileNam
 sdlManager.getFileManager().uploadFiles(sdlFileList, new MultipleFileCompletionListener() {
     @Override
     public void onComplete(Map<String, String> errors) {
-                            
+
     }
 });
 ```
@@ -153,6 +153,11 @@ listFiles.setOnRPCResponseListener(new OnRPCResponseListener() {
             Log.i("SdlService", "Failed to request list of uploaded files.");
         }
     }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
+    }
 });
 
 sdlManager.sendRPC(listFiles);
@@ -208,7 +213,7 @@ sdlManager.fileManager.delete(fileName: "<#Save As Name#>") { (success, bytesAva
 sdlManager.getFileManager().deleteRemoteFileWithName("testFile", new CompletionListener() {
 	@Override
 	public void onComplete(boolean success) {
-				
+
 	}
 });
 ```
@@ -240,7 +245,7 @@ sdlManager.fileManager.delete(fileNames: ["<#Save As Name#>", "<#Save as Name 2#
 sdlManager.getFileManager().deleteRemoteFilesWithNames(remoteFiles, new MultipleFileCompletionListener() {
 	@Override
 	public void onComplete(Map<String, String> errors) {
-				
+
 	}
 });
 ```
