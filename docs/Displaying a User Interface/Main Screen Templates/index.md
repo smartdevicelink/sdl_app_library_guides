@@ -40,6 +40,11 @@ setDisplayLayoutRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
             Log.i("SdlService", "Display layout request rejected.");
         }
     }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
+    }
 });
 
 sdlManager.sendRPC(setDisplayLayoutRequest);
@@ -47,7 +52,7 @@ sdlManager.sendRPC(setDisplayLayoutRequest);
 !@
 
 ### Available Templates
-There are fifteen standard templates to choose from, however some head units may only support a subset of these templates. The following examples show how templates will appear on the [Generic HMI](https://github.com/smartdevicelink/generic_hmi) and [Ford's SYNC 3 HMI](https://developer.ford.com). 
+There are fifteen standard templates to choose from, however some head units may only support a subset of these templates. The following examples show how templates will appear on the [Generic HMI](https://github.com/smartdevicelink/generic_hmi) and [Ford's SYNC 3 HMI](https://developer.ford.com).
 
 #### Media
 ##### Generic HMI
@@ -97,13 +102,13 @@ Template currently not supported.
 ##### Ford HMI
 ![SYNC 3 - Tiles with Graphic](assets/SYNC3HMI/SYNC3_tiles_with_graphic.jpg)
 
-#### Graphic with Text and Soft Buttons 
+#### Graphic with Text and Soft Buttons
 ##### Generic HMI
 Template currently not supported.
 ##### Ford HMI
 ![SYNC 3 - Graphic with Text and Soft Buttons](assets/SYNC3HMI/SYNC3_graphic_with_text_and_soft_buttons.jpg)
 
-#### Text and Soft Buttons with Graphic 
+#### Text and Soft Buttons with Graphic
 ##### Generic HMI
 Template currently not supported.
 ##### Ford HMI
