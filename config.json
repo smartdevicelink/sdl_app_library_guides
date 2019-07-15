@@ -52,7 +52,6 @@
                 {
                     "name":"Proguard Guidelines",
                     "platforms": ["Android"]
-
                 },
                 {
                     "name": "Deploying to AWS",
@@ -60,6 +59,10 @@
                 },
                 {
                     "name": "Example Apps"
+                },
+                {
+                    "name": "React Native",
+                    "platforms": ["iOS"]
                 }
             ]
         },
@@ -139,10 +142,6 @@
                 },
                 {
                     "name": "Creating an OEM Cloud App Store"
-                },
-                {
-                    "name": "React Native",
-                    "platforms": ["iOS"]
                 },
             ]
         },
