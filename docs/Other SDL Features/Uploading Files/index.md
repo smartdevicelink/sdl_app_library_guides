@@ -3,7 +3,7 @@ In almost all cases, you will not need to handle uploading images because the sc
 
 
 ## Uploading an MP3 Using the File Manager
-The @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE]`FileManager`!@ uploads files and keeps track of all the uploaded files names during a session. To send data with the file manager you need to create either a @![iOS]`SDLFile`!@ @![android, javaSE, javaEE]`SdlFile`!@ or @![iOS]`SDLArtwork`!@ @![android, javaSE, javaEE]`SdlArtwork`!@ object. @![iOS]`SDLFile` objects are created with a local `NSURL` or `NSData`; `SDLArtwork` uses a `UIImage`.!@ @![android, javaSE, javaEE]Both `SdlFile`s and `SdlArtwork`s can be created with a `Uri`, `byte` array, or resource `id`.!@
+The @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE]`FileManager`!@ uploads files and keeps track of all the uploaded files names during a session. To send data with the file manager you need to create either a @![iOS]`SDLFile`!@ @![android, javaSE, javaEE]`SdlFile`!@ or @![iOS]`SDLArtwork`!@ @![android, javaSE, javaEE]`SdlArtwork`!@ object. @![iOS]`SDLFile` objects are created with a local `NSURL` or `NSData`; `SDLArtwork` uses a `UIImage`.!@ @![android]Both `SdlFile`s and `SdlArtwork`s can be created with a `Uri`, `byte[]`, or `resourceId`.!@ @![javaSE, javaEE]Both `SdlFile`s and `SdlArtwork`s can be created with using `filePath`, or `byte[]`.!@
 
 @![iOS]
 ##### Objective-C
@@ -38,7 +38,7 @@ sdlManager.sendRPC(audioFile);
 !@
 
 ## Batching File Uploads
-If you want to upload a group of files, you can use the @![iOS]`SDLFileManager`'s!@ @![android, javaSE, javaEE]`FileManager`!@ batch upload methods. Once all of the uploads have completed you will be notified if any of the uploads failed. If desired, you can also track the progress of each file in the group.
+If you want to upload a group of files, you can use the @![iOS]`SDLFileManager`'s!@ @![android, javaSE, javaEE]`FileManager`!@ batch upload methods. Once all of the uploads have completed you will be notified if any of the uploads failed. @![iOS]If desired, you can also track the progress of each file in the group.!@
 
 @![iOS]
 ##### Objective-C
@@ -79,14 +79,14 @@ sdlManager.fileManager.upload(files: [file1, file2], progressHandler: { (fileNam
 sdlManager.getFileManager().uploadFiles(sdlFileList, new MultipleFileCompletionListener() {
     @Override
     public void onComplete(Map<String, String> errors) {
-                            
+
     }
 });
 ```
 !@
 
 ## File Persistance
-@![iOS]`SDLFile`!@ @![android, javaSE, javaEE]`SdlFile`!@ and its subclass @![iOS]`SDLArtwork`!@ @![android, javaSE, javaEE]`SdlArtwork`!@ support uploading persistant files, i.e. files that are not deleted when the car turns off. Persistance should be used for files that will be used every time the user opens the app. If the file is only displayed for short time the file should not be persistant because it will take up unnecessary space on the head unit. You can check the persistence via:
+@![iOS]`SDLFile`!@ @![android, javaSE, javaEE]`SdlFile`!@ and its subclass @![iOS]`SDLArtwork`!@ @![android, javaSE, javaEE]`SdlArtwork`!@ support uploading persistant files, i.e. files that are not deleted when the car turns off. Persistance should be used for files that will be used every time the user opens the app. If the file is only displayed for short time the file should not be persistent because it will take up unnecessary space on the head unit. You can check the persistence via:
 
 @![iOS]
 ##### Objective-C
@@ -153,6 +153,11 @@ listFiles.setOnRPCResponseListener(new OnRPCResponseListener() {
             Log.i("SdlService", "Failed to request list of uploaded files.");
         }
     }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
+    }
 });
 
 sdlManager.sendRPC(listFiles);
@@ -208,7 +213,7 @@ sdlManager.fileManager.delete(fileName: "<#Save As Name#>") { (success, bytesAva
 sdlManager.getFileManager().deleteRemoteFileWithName("testFile", new CompletionListener() {
 	@Override
 	public void onComplete(boolean success) {
-				
+
 	}
 });
 ```
@@ -240,7 +245,7 @@ sdlManager.fileManager.delete(fileNames: ["<#Save As Name#>", "<#Save as Name 2#
 sdlManager.getFileManager().deleteRemoteFilesWithNames(remoteFiles, new MultipleFileCompletionListener() {
 	@Override
 	public void onComplete(Map<String, String> errors) {
-				
+
 	}
 });
 ```

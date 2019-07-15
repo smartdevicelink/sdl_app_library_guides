@@ -7,7 +7,7 @@ DialNumber is an RPC that is usually restricted by OEMs. As a result, the OEM yo
 
 ## Detecting if DialNumber is Available
 
-`DialNumber` is a newer RPC, so there is a possibility that not all head units will support it. To find out if `DialNumber` is supported by the head unit, check the system capability manager's @![iOS]`hmiCapabilities.phoneCall`!@ @![android,javaSE,javaEE]`getCapability(SystemCapabilityType.PHONE_CALL)`!@ property after the manager has been started successfully.
+`DialNumber` is a newer RPC, so there is a possibility that not all head units will support it. To find out if `DialNumber` is supported by the head unit, check the system capability manager's @![iOS]`hmiCapabilities.phoneCall`!@ @![android,javaSE,javaEE]`hmiCapabilities.isPhoneCallAvailable()`!@ property after the manager has been started successfully.
 
 @![iOS]
 ##### Objective-C
@@ -79,7 +79,7 @@ dialNumber.number = @"1238675309";
 	        NSLog(@"DialNumber was rejected. Either the call was sent and cancelled or there is no device connected");
 	    } else if ([resultCode isEqualToEnum:SDLResultDisallowed]) {
 	        NSLog(@"Your app is not allowed to use DialNumber");
-	    } else { 	
+	    } else {
 	    	NSLog(@"Some unknown error has occurred!");
 	    }
 	    return;
@@ -96,12 +96,12 @@ dialNumber.number = "1238675309"
 
 sdlManager.send(request: dialNumber) { (request, response, error) in
     guard let response = response as? SDLDialNumberResponse else { return }
-    
+
     if let error = error {
         print("Encountered Error sending DialNumber: \(error)")
         return
     }
-    
+
     if response.resultCode != .success {
         if response.resultCode == .rejected {
             print("DialNumber was rejected. Either the call was sent and cancelled or there is no device connected")
@@ -112,7 +112,7 @@ sdlManager.send(request: dialNumber) { (request, response, error) in
         }
         return
     }
-    
+
     // Successfully sent!
 }
 ```
@@ -134,8 +134,13 @@ dialNumber.setOnRPCResponseListener(new OnRPCResponseListener() {
             // Your app does not have permission to use DialNumber.
         }
     }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
+    }
 });
-    
+
 sdlManager.sendRPC(dialNumber);
 ```
 !@
