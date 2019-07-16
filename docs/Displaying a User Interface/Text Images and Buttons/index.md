@@ -239,7 +239,7 @@ let state = SDLSoftButtonState(stateName: "<#State Name#>", text: "<#Button Labe
 
 let softButton = SDLSoftButtonObject(name: "<#Button Name#>", state: state) { (buttonPress, buttonEvent) in
     guard buttonPress != nil else { return }
-    <#Button Selected#>
+    <#Button selected#>
 }
 
 sdlManager.screenManager.softButtonObjects = [softButton]
