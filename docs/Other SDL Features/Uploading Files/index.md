@@ -189,7 +189,7 @@ Use the file manager’s delete request to delete a file associated with a file 
 ```objc
 [self.sdlManager.fileManager deleteRemoteFileWithName:@"<#Name Uploaded As#>" completionHandler:^(BOOL success, NSUInteger bytesAvailable, NSError *error) {
     if (success) {
-        <#Image was deleted successfully#>
+        <#File was deleted successfully#>
     }
 }];
 ```
