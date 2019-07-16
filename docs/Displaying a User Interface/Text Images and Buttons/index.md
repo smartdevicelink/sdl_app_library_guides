@@ -169,7 +169,7 @@ SDLSoftButtonState *imageState = [[SDLSoftButtonState alloc] initWithStateName:@
 
 SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"<#Button Name#>" state:imageState handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     if (buttonPress == nil) { return; }
-    <#Button Selected#>
+    <#Button selected#>
 }];
 
 self.sdlManager.screenManager.softButtonObjects =  @[softButton];
