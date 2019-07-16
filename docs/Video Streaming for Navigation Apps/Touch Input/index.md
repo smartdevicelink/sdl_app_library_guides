@@ -1,5 +1,5 @@
 # Touch Input
-Navigation applications have support for touch events like single taps, double-taps, panning, and pinch gestures. You can use the `SDLTouchManager` class to get touch events, or you can manage the touch events yourself by listening for the `SDLDidReceiveTouchEventNotification` notification.
+Navigation applications support touch events like single taps, double-taps, panning, and pinch gestures. You can use the `SDLTouchManager` class to get touch events, or you can manage the touch events yourself by listening for the `SDLDidReceiveTouchEventNotification` notification.
 
 !!! NOTE
 You must have a valid and approved `appId` from an OEM in order to receive touch events.
