@@ -63,7 +63,7 @@ Adding a submenu is as simple as adding subcells to a @![iOS]`SDLMenuCell`!@ @![
 ##### Objective-C
 ```objc
 // Create the inner menu cell
-SDLMenuCell *cell = [[SDLMenuCell alloc] initWithTitle: <#NSString#> icon: <#SDLArtwork?#> voiceCommands: <#@[NSString]#> handler:^(SDLTriggerSource  _Nonnull triggerSource) {
+SDLMenuCell *cell = [[SDLMenuCell alloc] initWithTitle: <#NSString#> icon: <#SDLArtwork#> voiceCommands: <#@[NSString]#> handler:^(SDLTriggerSource  _Nonnull triggerSource) {
     // Menu item was selected, check the `triggerSource` to know if the user used touch or voice to activate it
     <#Handle the cell's selection#>
 }];
