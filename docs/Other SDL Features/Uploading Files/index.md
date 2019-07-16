@@ -44,7 +44,7 @@ If you want to upload a group of files, you can use the @![iOS]`SDLFileManager`'
 ##### Objective-C
 ```objc
 SDLFile *file1 = [SDLFile fileWithData:<#Data#> name:<#File name to be referenced later#> fileExtension:<#File Extension#>];
-SDLFile *file2 = [SDLFile fileWithData:<#Data#> name:<#File name to be referenced later#> fileExtension:<#File Extension#>];
+SDLFile *file2 = [SDLFile fileWithData:<#Data#> name:<#File name#> fileExtension:<#File Extension#>];
 
 [self.sdlManager.fileManager uploadFiles:@[file1, file2] progressHandler:^BOOL(NSString * _Nonnull fileName, float uploadPercentage, NSError * _Nullable error) {
     <#Called as each upload completes#>
