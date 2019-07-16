@@ -230,7 +230,7 @@ sdlManager.getFileManager().deleteRemoteFileWithName("Name Uploaded As", new Com
 ```swift
 sdlManager.fileManager.delete(fileNames: ["<#Name Uploaded As#>", "<#Name Uploaded As 2#>"]) { (error) in
     if (error == nil) {
-        <#Images were deleted successfully#>
+        <#Files were deleted successfully#>
     }
 }
 ```
