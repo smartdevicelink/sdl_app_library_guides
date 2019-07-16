@@ -228,7 +228,7 @@ SDLSoftButtonState *state = [[SDLSoftButtonState alloc] initWithStateName:@"<#St
 
 SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"<#Button Name#>" state:state handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     if (buttonPress == nil) { return; }
-    <#Button Selected#>
+    <#Button selected#>
 }];
 
 self.sdlManager.screenManager.softButtonObjects =  @[softButton];
