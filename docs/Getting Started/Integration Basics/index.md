@@ -190,7 +190,7 @@ SDLLifecycleConfiguration* lifecycleConfiguration = [SDLLifecycleConfiguration d
 ```
 ##### Swift
 ```swift
-let lifecycleConfiguration = SDLLifecycleConfiguration(appName: "<#App Name#>", fullAppId: "<#App Id#>", ipAddress: "<#IP Address#>", port: <#Port#>))
+let lifecycleConfiguration = SDLLifecycleConfiguration(appName: "<#App Name#>", fullAppId: "<#App Id#>", ipAddress: "<#IP Address#>", port: <#Port#>)
 ```
 
 !!! NOTE
@@ -263,7 +263,7 @@ lifecycleConfiguration.additionalAppTypes = @[SDLAppHMITypeInformation];
 ##### Swift
 
 ```swift
-lifecycleConfiguration.additionalAppTypes = [SDLAppHMITypeInformation];
+lifecycleConfiguration.additionalAppTypes = [.information];
 ```
 
 ### 5. Template Coloring

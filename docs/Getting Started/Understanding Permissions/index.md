@@ -184,7 +184,7 @@ SDLPermissionObserverIdentifier observerId = [self.sdlManager.permissionManager 
 
 ##### Swift
 ```swift
-let observerId = sdlManager.permissionManager.addObserver(forRPCs: <#RPC name#>, <#RPC name#>, groupType:<#SDLPermissionGroupType#>, withHandler: { (individualStatuses, groupStatus) in
+let observerId = sdlManager.permissionManager.addObserver(forRPCs: [<#RPC name#>, <#RPC name#>], groupType:<#SDLPermissionGroupType#>, withHandler: { (individualStatuses, groupStatus) in
     <#RPC group status changed#>
 })
 ```

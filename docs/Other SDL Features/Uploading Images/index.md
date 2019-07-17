@@ -22,30 +22,27 @@ Before uploading images to a head unit you should first check if the head unit s
 __weak typeof (self) weakSelf = self;
 [self.sdlManager startWithReadyHandler:^(BOOL success, NSError * _Nullable error) {
     if (!success) {
-        NSLog(@"SDL encountered an error starting up: %@", error);
+        <#Manager errored while starting up#>
         return;
     }
 
     SDLDisplayCapabilities *displayCapabilities = weakSelf.sdlManager.systemCapabilityManager.displayCapabilities;
-    BOOL areGraphicsSupported = NO;
-    if (displayCapabilities != nil) {
-        areGraphicsSupported = displayCapabilities.graphicSupported.boolValue;
-    }
+    BOOL graphicsSupported = (displayCapabilities != nil) ? displayCapabilities.graphicSupported.boolValue : NO;
 }];
 ```
 
 ##### Swift
 ```swift
 sdlManager.start { [weak self] (success, error) in
-    if !success {
-        print("SDL encountered an error starting up: \(error.debugDescription)")
+    guard let self = self else { return }
+
+    guard success else {
+        <#Manager errored while starting up#>
         return
     }
 
-    var areGraphicsSupported = false
-    if let displayCapabilities = self?.sdlManager.systemCapabilityManager?.displayCapabilities {
-        areGraphicsSupported = displayCapabilities.graphicSupported.boolValue
-    }
+    let displayCapabilities = self.sdlManager.systemCapabilityManager.displayCapabilities
+    let graphicsSupported = displayCapabilities != nil ? displayCapabilities?.graphicSupported.boolValue : false
 }
 ```
 !@
@@ -77,24 +74,24 @@ The @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE]`FileManager`!@ uploads
 ```objc
 UIImage* image = [UIImage imageNamed:@"<#Image Name#>"];
 if (!image) {
-    <#Error Reading from Assets#>
+    <#Error reading from assets#>
     return;
 }
 
-SDLArtwork* artwork = [SDLArtwork artworkWithImage:image asImageFormat:<#SDLArtworkImageFormat#>];
+SDLArtwork *artwork = [SDLArtwork persistentArtworkWithImage:image asImageFormat:<#SDLArtworkImageFormat#>];
 
 [self.sdlManager.fileManager uploadArtwork:artwork completionHandler:^(BOOL success, NSString * _Nonnull artworkName, NSUInteger bytesAvailable, NSError * _Nullable error) {
     if (error != nil) { return; }
     <#Image Upload Successful#>
     // To send the image as part of a show request, create a SDLImage object using the artworkName
-    SDLImage *image = [[SDLImage alloc] initWithName:artworkName];
+    SDLImage *image = [[SDLImage alloc] initWithName:artworkName isTemplate:<#BOOL#>];
 }];
 ```
 
 ##### Swift
 ```swift
 guard let image = UIImage(named: "<#Image Name#>") else {
-	<#Error Reading from Assets#>
+	<#Error reading from assets#>
 	return
 }
 let artwork = SDLArtwork(image: image, persistent: <#Bool#>, as: <#SDLArtworkImageFormat#>)
@@ -103,7 +100,7 @@ sdlManager.fileManager.upload(artwork: artwork) { (success, artworkName, bytesAv
     guard error == nil else { return }
     <#Image Upload Successful#>
     // To send the image as part of a show request, create a SDLImage object using the artworkName
-    let graphic = SDLImage(name: artworkName)
+    let graphic = SDLImage(name: artworkName, isTemplate: <#Bool#>)
 }
 ```
 !@

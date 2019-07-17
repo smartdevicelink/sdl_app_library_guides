@@ -16,9 +16,9 @@ When you send multiple RPCs concurrently, it will not wait for the response of t
 SDLSubscribeButton *subscribeButtonLeft = [[SDLSubscribeButton alloc] initWithName:SDLButtonNameSeekLeft];
 SDLSubscribeButton *subscribeButtonRight = [[SDLSubscribeButton alloc] initWithName:SDLButtonNameSeekRight];
 [self.sdlManager sendRequests:@[subscribeButtonLeft, subscribeButtonRight] progressHandler:^(__kindof SDLRPCRequest * _Nonnull request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error, float percentComplete) {
-    NSLog(@"Command %@ sent %@, percent complete %f%%", request.name, response.resultCode == SDLResultSuccess ? @"successfully" : @"unsuccessfully", percentComplete * 100);
+    <#Called as each request completes#>
 } completionHandler:^(BOOL success) {
-    NSLog(@"All requests sent %@", success ? @"successfully" : @"unsuccessfully");
+    <#Called when all requests complete#>
 }];
 ```
 
@@ -27,9 +27,9 @@ SDLSubscribeButton *subscribeButtonRight = [[SDLSubscribeButton alloc] initWithN
 let subscribeButtonLeft = SDLSubscribeButton(name: SDLButtonNameSeekLeft)
 let subscribeButtonRight = SDLSubscribeButton(name: SDLButtonNameSeekRight)
 sdlManager.send([subscribeButtonLeft, subscribeButtonRight], progressHandler: { (request, response, error, percentComplete) in
-    print("Command \(request.name) sent \(response?.resultCode == .success ? "successfully" : "unsuccessfully"), percent complete \(percentComplete * 100)")
+    <#Called as each request completes#>
 }) { success in
-    print("All requests sent \(success ? "successfully" : "unsuccessfully")")
+    <#Called when all requests complete#>
 }
 ```
 !@
@@ -75,9 +75,10 @@ SDLCreateInteractionChoiceSet *createInteractionChoiceSet = [[SDLCreateInteracti
 SDLPerformInteraction *performInteraction = [[SDLPerformInteraction alloc] initWithInteractionChoiceSetId:<#Choice Set Id#>];
 
 [self.sdlManager sendSequentialRequests:@[createInteractionChoiceSet, performInteraction] progressHandler:^BOOL(__kindof SDLRPCRequest * _Nonnull request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error, float percentComplete) {
-    NSLog(@"Command %@ sent %@, percent complete %f%%", request.name, response.resultCode == SDLResultSuccess ? @"successfully" : @"unsuccessfully", percentComplete * 100);
+    <#Called as each request completes#>
+    return YES;
 } completionHandler:^(BOOL success) {
-    NSLog(@"All requests sent %@", success ? @"successfully" : @"unsuccessfully");
+    <#Called when all requests complete#>
 }];
 ```
 
@@ -88,9 +89,10 @@ let createInteractionChoiceSet = SDLCreateInteractionChoiceSet(id: <#Choice Set 
 let performInteraction = SDLPerformInteraction(interactionChoiceSetId: <#Choice Set Id#>)
 
 sdlManager.sendSequential(requests: [createInteractionChoiceSet, performInteraction], progressHandler: { (request, response, error, percentageCompleted) -> Bool in
-    print("Command \(request.name) sent \(response?.resultCode == .success ? "successfully" : "unsuccessfully"), percent complete \(percentComplete * 100)")
+    <#Called as each request completes#>
+    return true
 }) { success in
-    print("All requests sent \(success ? "successfully" : "unsuccessfully")")
+    <#Called when all requests complete#>
 }
 ```
 !@

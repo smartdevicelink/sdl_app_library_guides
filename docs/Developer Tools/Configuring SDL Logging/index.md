@@ -109,7 +109,7 @@ SDLLogFilter *filter = [SDLLogFilter filterByDisallowingString:@"Test" caseSensi
 
 ##### Swift
 ```swift
-let filter = SDLLogFilter(disallowingString: "Test", caseSensitive: false)
+let filter = SDLLogFilter(byDisallowingString: "Test", caseSensitive: false)
 ```
 
 ## Logging with the SDL Logger
