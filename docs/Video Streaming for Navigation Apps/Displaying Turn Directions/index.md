@@ -1,14 +1,21 @@
 # Displaying Turn Directions
+While your app is navigating the user, you will also want to send turn by turn directions. This is useful for if your app is in the background or if the user is in the middle of a phone call, and gives the system additional information about the next maneuver the user must make.
+When your navigation app is guiding the user to a specific destination, you can provide the user with visual and audio turn-by-turn prompts. These prompts will be presented even when your SDL app is backgrounded or a phone call is ongoing.
 While your app is navigating the user, you will also want to send turn by turn directions. This is useful if your app is in the background or if the user is in the middle of a phone call, and gives the system additional information about the next maneuver the user must make.
 
-To display a Turn by Turn direction, a combination of the @![iOS]`SDLShowConstantTBT`!@@![android]`ShowConstantTBT`!@ and @![iOS]`SDLAlertManeuver`!@@![android]`AlertManeuver`!@ RPCs must be used. The @![iOS]`SDLShowConstantTBT`!@@![android]`ShowConstantTBT`!@ RPC involves the data that will be shown on the head unit. The main properties of this object to set are `navigationText1`, `navigationText2`, and `turnIcon`. A best practice for navigation applications is to use the `navigationText1` as the direction to give (Turn Right) and `navigationText2` to provide the distance to that direction (3 mi). When an @![iOS]`SDLAlertManeuver`!@@![android]`AlertManeuver`!@ is sent, you may also include accompanying text that you would like the head unit to speak when a direction is displayed on screen (e.g. In 3 miles turn right.).
+To create a turn-by-turn direction that provides both a visual and audio cues, a combination of the @![iOS]`SDLShowConstantTBT`!@@![android]`ShowConstantTBT`!@ and @![iOS]`SDLAlertManeuver`!@@![android]`AlertManeuver`!@ RPCs must should be sent to the head unit.
 
 !!! NOTE
-If the connected device has received a phone call in the vehicle, the Alert Maneuver is the only way for your app to inform the user of the next turn.
+If the connected device has received a phone call in the vehicle, the @![iOS]`SDLAlertManeuver`!@@![android]`AlertManeuver`!@ is the only way for your app to inform the user of the next turn.
 !!!
 
-## Sending a Maneuver
+### Visual Turn Directions 
+The visual data is sent using the @![iOS]`SDLShowConstantTBT`!@@![android]`ShowConstantTBT`!@ RPC. The main properties that should be set are `navigationText1`, `navigationText2`, and `turnIcon`. A best practice for navigation apps is to use the `navigationText1` as the direction to give (i.e. turn right) and `navigationText2` to provide the distance to that direction (i.e. 3 mi.). 
+ 
+### Audio Turn Directions
+The audio data is sent using the @![iOS]`SDLAlertManeuver`!@@![android]`AlertManeuver`!@ RPC. When sent, the head unit will speak the text you provide (e.g. In 3 miles turn right).
 
+## Sending Both Audio and Visual Turn Directions
 @![iOS]
 #### Objective-C
 ```objc
@@ -23,7 +30,7 @@ turnByTurn.turnIcon = turnIcon;
 __weak typeof(self) weakSelf = self;
 [self.sdlManager sendRequest:turnByTurn withResponseHandler:^(SDLRPCRequest *request, SDLRPCResponse *response, NSError *error) {
     if (![response.resultCode isEqualToEnum:SDLResultSuccess]) {
-        NSLog(@"Error sending TBT");
+        <#Error sending ShowConstantTBT#>
         return;
     }
 
@@ -31,9 +38,11 @@ __weak typeof(self) weakSelf = self;
     SDLAlertManeuver* alertManeuver = [[SDLAlertManeuver alloc] initWithTTS:@"In 3 miles turn right" softButtons:nil];
     [strongSelf.sdlManager sendRequest:alertManeuver withResponseHandler:^(SDLRPCRequest *request, SDLRPCResponse *response, NSError *error) {
         if (![response.resultCode isEqualToEnum:SDLResultSuccess]) {
-            NSLog(@"Error sending AlertManeuver.");
+            <#Error sending AlertManeuver#>
             return;
         }
+
+        <#Both ShowConstantTBT and AlertManeuver were sent successfully#>
     }];
 }];
 ```
@@ -48,19 +57,21 @@ turnByTurn.navigationText1 = "Turn Right"
 turnByTurn.navigationText2 = "3 mi"
 turnByTurn.turnIcon = turnIcon
 
-sdlManager.send(request: turnByTurn) { [weak self] (request, response, error) in
-    if response?.resultCode.isEqual(to: .success) == false {
-        print("Error sending TBT.")
+sdlManager.send(request: turnByTurn) { (request, response, error) in
+    guard response?.resultCode == .success else {
+        <#Error sending ShowConstantTBT#>
         return
     }
 
     let alertManeuver = SDLAlertManeuver(tts: "In 3 miles turn right", softButtons: nil)
-    self.sdlManager.send(alertManeuver) { (request, response, error) in
-        if response?.resultCode.isEqual(to: .success) == false {
-            print("Error sending AlertManeuver.")
-            return
+    self.sdlManager.send(request: alertManeuver, responseHandler: { (request, response, error) in
+        guard response?.resultCode == .success else { 
+            <#Error sending AlertManeuver#>
+            return 
         }
-    }
+
+        <#Both ShowConstantTBT and AlertManeuver were sent successfully#>
+    })
 }
 ```
 !@
@@ -90,45 +101,57 @@ turnByTurn.setOnRPCResponseListener(new OnRPCResponseListener() {
                     Log.e(TAG, "onResponse: Error sending AlertManeuver");
                 }
             }
+
+            @Override
+            public void onError(int correlationId, Result resultCode, String info){
+                Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
+            }
         });
         sdlManager.sendRPC(alertManeuver);
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
     }
 });
 sdlManager.sendRPC(turnByTurn);
 ```
 !@
 
-Remember when sending a @![iOS]`SDLImage`!@@![android,javaSE,javaEE]`Image`!@, that the image must first be uploaded to the head unit with the FileManager.
+Remember when sending a @![iOS]`SDLImage`!@@![android,javaSE,javaEE]`Image`!@, that the image must first be uploaded to the head unit with the @![iOS]`SDLFileManager`!@@![android,javaSE,javaEE]`FileManager`!@.
 
-## Clearing the Maneuver
-To clear a navigation direction from the screen, we send an @![iOS]`SDLShowConstantTBT`!@@![android,javaSE,javaEE]`ShowConstantTbt`!@ with the `maneuverComplete` property as @![iOS]`YES`!@@![android,javaSE,javaEE]`True`!@. This specific RPC does not require an accompanying @![iOS]`SDLAlertManeuver`!@@![android,javaSE,javaEE]`AlertManeuver`!@.
+## Clearing the Turn Directions
+To clear a navigation direction from the screen, send a @![iOS]`SDLShowConstantTBT`!@@![android,javaSE,javaEE]`ShowConstantTbt`!@ with the `maneuverComplete` property set to true. This will also clear the accompanying @![iOS]`SDLAlertManeuver`!@@![android,javaSE,javaEE]`AlertManeuver`!@.
 
 @![iOS]
 ##### Objective-C
 ```objc
-SDLShowConstantTBT* turnByTurn = [[SDLShowConstantTBT alloc] init];
-turnByTurn.maneuverComplete = @(YES);
+SDLShowConstantTBT* clearTurnByTurn = [[SDLShowConstantTBT alloc] init];
+clearTurnByTurn.maneuverComplete = @YES;
 
-[self.sdlManager sendRequest:turnByTurn withResponseHandler:^(SDLRPCRequest *request, SDLRPCResponse *response, NSError *error) {
+[self.sdlManager sendRequest:clearTurnByTurn withResponseHandler:^(SDLRPCRequest *request, SDLRPCResponse *response, NSError *error) {
     if (![response.resultCode isEqualToEnum:SDLResultSuccess]) {
-        NSLog(@"Error sending TBT.");
+        <#Error sending TBT#>
         return;
     }
 
-    // Successfully cleared
+    <#TBT successfully cleared#>
 }];
 ```
 
 ##### Swift
 ```swift
-let turnByTurn = SDLShowConstantTBT()
-turnByTurn.maneuverComplete = true
+let clearTurnByTurn = SDLShowConstantTBT()
+clearTurnByTurn.maneuverComplete = true as NSNumber
 
-sdlManager.send(request: turnByTurn) { (request, response, error) in
-    if response?.resultCode.isEqual(to: .success) == false {
-        print("Error sending TBT.")
+sdlManager.send(request: clearTurnByTurn) { (request, response, error) in
+    guard response?.resultCode == .success else {
+        <#Error sending TBT#>
         return
     }
+
+    <#TBT successfully cleared#>
 }
 ```
 !@
@@ -143,6 +166,11 @@ turnByTurn.setOnRPCResponseListener(new OnRPCResponseListener() {
         if (!response.getSuccess()){
             Log.e(TAG, "onResponse: Error sending TBT");
         }
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
     }
 });
 sdlManager.sendRPC(turnByTurn);

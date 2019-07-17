@@ -106,7 +106,163 @@ sdlManager.getScreenManager().setPrimaryGraphic(null);
 !@
 
 ## Soft Button Objects
-To create a soft button using the `ScreenManager`, you only need to create a custom name for the button and provide the text for the button's label and/or an image for the button's icon. If your button cycles between different states (e.g. a button used to set the repeat state of a song playlist can have three states: repeat-off, repeat-one, and repeat-all) you can upload all the states on initialization. 
+To create a soft button using the `ScreenManager`, you only need to create a custom name for the button and provide the text for the button's label and/or an image for the button's icon. If your button cycles between different states (e.g. a button used to set the repeat state of a song playlist can have three states: repeat-off, repeat-one, and repeat-all) you can upload all the states on initialization. Soft Buttons can contain images, text or both.
+
+![Generic HMI](assets/buttonExample.png)
+
+### Soft Button Layouts
+#### Soft Button (Text Only)
+@![iOS]
+##### Objective-C
+```objc
+SDLSoftButtonState *textState = [[SDLSoftButtonState alloc] initWithStateName:@"<#State Name#>" text:@"<#Button Label Text#>" image:nil];
+
+SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"<#Button Name#>" state:textState handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
+    if (buttonPress == nil) { return; }
+    <#Button selected#>
+}];
+
+self.sdlManager.screenManager.softButtonObjects =  @[softButton];
+```
+##### Swift
+```swift
+let textState = SDLSoftButtonState(stateName: "<#State Name#>", text: "<#Button Label Text#>", image: nil)
+
+let softButton = SDLSoftButtonObject(name: "<#Button Name#>", state: textState) { (buttonPress, buttonEvent) in
+    guard buttonPress != nil else { return }
+    <#Button selected#>
+}
+
+sdlManager.screenManager.softButtonObjects = [softButton]
+```
+!@
+
+@![android, javaSE, javaEE]
+```java
+SoftButtonState textState = new SoftButtonState("<#State Name#>", "<#Button Label Text#>", null);
+SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Collections.singletonList(textState), textState.getName(), new SoftButtonObject.OnEventListener() {
+    @Override
+    public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
+    }
+
+    @Override
+    public void onEvent(SoftButtonObject softButtonObject, OnButtonEvent onButtonEvent) {
+
+    }
+});
+
+sdlManager.getScreenManager().setSoftButtonObjects(Collections.singletonList(softButtonObject));
+```
+!@
+
+#### Soft Button (Image Only)
+To see if soft buttons support images you should check the @![iOS]`softButtonCapabilities` property!@ @![android,javaSE,javaEE]`getGraphicSupported()` method!@ on @![iOS]`SDLManager`s!@ @![android,javaSE,javaEE]`SdlManager`s!@ @![iOS]`systemCapabilityManager`!@ @![android,javeSE,javaEE]`SoftButtonCapabilities` using `SystemCapabilityManager`!@.
+
+@![iOS]
+##### Objective-C
+```objc
+// Check to see if soft buttons support images
+BOOL softButtonsSupportImages = self.sdlManager.systemCapabilityManager.softButtonCapabilities.firstObject.imageSupported.boolValue;
+
+// If HMI supports images create a soft button with an image
+SDLSoftButtonState *imageState = [[SDLSoftButtonState alloc] initWithStateName:@"<#State Name#>" text:nil image:[[UIImage imageNamed:@"<#Image Name#>"] imageWithRenderingMode:<#UIImageRenderingMode#>]];
+
+SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"<#Button Name#>" state:imageState handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
+    if (buttonPress == nil) { return; }
+    <#Button selected#>
+}];
+
+self.sdlManager.screenManager.softButtonObjects =  @[softButton];
+```
+
+##### Swift
+```swift
+// Check to see if soft buttons support images
+let supportsImages = sdlManager.systemCapabilityManager.softButtonCapabilities?.first?.imageSupported.boolValue ?? false
+
+// If HMI supports images create a soft button with an image
+let imageState = SDLSoftButtonState(stateName: "State Name", text: "<#State Name#>", image: UIImage(named:"<#Image Name#>")?.withRenderingMode(<#RenderingMode#>))
+
+let softButton = SDLSoftButtonObject(name: "<#Button Name#>", state: imageState) { (buttonPress, buttonEvent) in
+    guard buttonPress != nil else { return }
+    <#Button selected#>
+}
+
+sdlManager.screenManager.softButtonObjects = [softButton]
+```
+!@
+
+@![android, javaSE, javaEE]
+```java
+Object softButtonCapabilities = sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.SOFTBUTTON);
+List<SoftButtonCapabilities> softButtonCapabilitiesList = SystemCapabilityManager.convertToList(softButtonCapabilities, SoftButtonCapabilities.class);
+boolean imageSupported = false;
+if (softButtonCapabilities != null && !softButtonCapabilitiesList.isEmpty() && softButtonCapabilitiesList.get(0).getImageSupported()){
+    imageSupported = true;
+}
+
+
+if (imageSupported) {
+    SoftButtonState state = new SoftButtonState("<#State Name#>", null, imageArtwork);
+    SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Collections.singletonList(state), state.getName(), new SoftButtonObject.OnEventListener() {
+        @Override
+        public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
+        }
+
+        @Override
+        public void onEvent(SoftButtonObject softButtonObject, OnButtonEvent onButtonEvent) {
+
+        }
+    });
+
+    sdlManager.getScreenManager().setSoftButtonObjects(Collections.singletonList(softButtonObject));
+}
+```
+!@
+
+#### Soft Button (Image and Text)
+@![iOS]
+##### Objective-C
+```objc
+SDLSoftButtonState *state = [[SDLSoftButtonState alloc] initWithStateName:@"<#State Name#>" text:@"<#Button Label Text#>" image:[[UIImage imageNamed:@"<#Image Name#>"] imageWithRenderingMode:<#UIImageRenderingMode#>]];
+
+SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"<#Button Name#>" state:state handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
+    if (buttonPress == nil) { return; }
+    <#Button selected#>
+}];
+
+self.sdlManager.screenManager.softButtonObjects =  @[softButton];
+```
+##### Swift
+```swift
+let state = SDLSoftButtonState(stateName: "<#State Name#>", text: "<#Button Label Text#>", image: UIImage(named:"<#Image Name#>")?.withRenderingMode(<#RenderingMode#>))
+
+let softButton = SDLSoftButtonObject(name: "<#Button Name#>", state: state) { (buttonPress, buttonEvent) in
+    guard buttonPress != nil else { return }
+    <#Button selected#>
+}
+
+sdlManager.screenManager.softButtonObjects = [softButton]
+```
+!@
+
+@![android, javaSE, javaEE]
+```java
+SoftButtonState state = new SoftButtonState("<#State Name#>", "<#Button Label Text#>", imageArtwork);
+SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Collections.singletonList(state), state.getName(), new SoftButtonObject.OnEventListener() {
+    @Override
+    public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
+    }
+
+    @Override
+    public void onEvent(SoftButtonObject softButtonObject, OnButtonEvent onButtonEvent) {
+
+    }
+});
+
+sdlManager.getScreenManager().setSoftButtonObjects(Collections.singletonList(softButtonObject));
+```
+!@
 
 ### Updating the Soft Button State
 When the soft button state needs to be updated, simply tell the `SoftButtonObject` to transition to the next state. If your button states do not cycle in a predictable order, you can also tell the soft button the state to transition to by passing the `stateName` of the new soft button state.
@@ -145,28 +301,50 @@ retrievedSoftButtonObject?.transitionToNextState()
 
 @![android, javaSE, javaEE]
 ```java
-SoftButtonState softButtonState = new SoftButtonState("state1", "cancel", new SdlArtwork("cancel.jpeg", FileType.GRAPHIC_JPEG, R.drawable.cancel, true));
-SoftButtonObject softButtonObject = new SoftButtonObject("object", Collections.singletonList(softButtonState), softButtonState.getName(), null);
-sdlManager.getScreenManager().setSoftButtonObjects(Collections.singletonList(softButtonObject));
-```
+SoftButtonState state1 = new SoftButtonState("<#State1 Name#>", "<#Button1 Label Text#>", image1Artwork);
+SoftButtonState state2 = new SoftButtonState("<#State2 Name#>", "<#Button2 Label Text#>", image2Artwork);
 
-```java
-softButtonObject.setOnEventListener(new SoftButtonObject.OnEventListener() {
+SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Arrays.asList(state1, state2), state1.getName(), new SoftButtonObject.OnEventListener() {
     @Override
     public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
-        Log.i(TAG, "OnButtonPress: ");
+        
     }
 
     @Override
     public void onEvent(SoftButtonObject softButtonObject, OnButtonEvent onButtonEvent) {
-        Log.i(TAG, "OnButtonEvent: ");
+
     }
 });
+
+sdlManager.getScreenManager().setSoftButtonObjects(Collections.singletonList(softButtonObject));
+
+
+// Transition to a new state
+SoftButtonObject retrievedSoftButtonObject = sdlManager.getScreenManager().getSoftButtonObjectByName("softButtonObject");
+retrievedSoftButtonObject.transitionToNextState();
 ```
 !@
 
 ### Deleting Soft Buttons
-To delete soft buttons, simply pass the screen manager an empty array of soft buttons.
+To delete soft buttons, simply pass the screen manager a new array of soft buttons. To delete all soft buttons, simply pass the screen manager an empty array.
+
+@![iOS]
+##### Objective-C
+```objc
+self.sdlManager.screenManager.softButtonObjects = @[];
+```
+
+##### Swift
+```swift
+sdlManager.screenManager.softButtonObjects = []
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+sdlManager.getScreenManager().setSoftButtonObjects(Collections.EMPTY_LIST);
+```
+!@
 
 ## Templating Images
 When connected to a remote system running SDL Core 5.0+, you may be able to use template images. Templated images are tinted by Core so the image is visible regardless of whether your user has set the head unit to day or night mode. For example, if a head unit is in night mode with a dark theme (see [Template Coloring in the Integration Basics section](Getting Started/Integration Basics) for more details on how to customize theme colors), then your templated images will be displayed as white. In the day theme, the image will automatically change to black.
@@ -185,13 +363,13 @@ In the screenshots below, the shuffle and repeat icons have been templated. In n
 @![iOS]
 ##### Objective-C
 ```objc
-UIImage *image = [[UIImage imageNamed:<#String#>] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+UIImage *image = [[UIImage imageNamed:@"<#String#>"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 SDLArtwork *artwork = [SDLArtwork artworkWithImage:image asImageFormat:SDLArtworkImageFormatPNG];
 ```
 
 ##### Swift
 ```swift
-let image = UIImage(named: <#T##String#>)?.withRenderingMode(.alwaysTemplate)
+let image = UIImage(named: "<#String#>")?.withRenderingMode(.alwaysTemplate)
 let artwork = SDLArtwork(image: image, persistent: true, as: .PNG)
 ```
 !@

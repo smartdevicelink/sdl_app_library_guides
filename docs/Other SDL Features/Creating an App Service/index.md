@@ -1,7 +1,7 @@
 # Creating an App Service
 App services is a powerful feature enabling both a new kind of vehicle-to-app communication and app-to-app communication via SDL.
 
-App services are used to publish navigation, weather and media data (such as temperature, navigation waypoints, or the current playlist name). This data can then be used by both the vehicle head unit and, if the publisher of the app service desires, other SDL apps.  
+App services are used to publish navigation, weather and media data (such as temperature, navigation waypoints, or the current playlist name). This data can then be used by both the vehicle head unit and, if the publisher of the app service desires, other SDL apps.
 
 Vehicle head units may use these services in various ways. One app service for each type will be the "active" service to the module. For media, for example, this will be the media app that the user is currently using or listening to. For navigation, it would be a navigation app that the user is using to navigate. For weather, it may be the last used weather app, or a user-selected default. The system may then use that service's data to perform various actions (such as navigating to an address with the active service or to display the temperature as provided from the active weather service).
 
@@ -51,7 +51,7 @@ manifest.mediaServiceManifest = <#Code#> // Covered below
 AppServiceManifest manifest = new AppServiceManifest(AppServiceType.MEDIA.toString());
 manifest.setServiceName("My Media App"); // Must be unique across app services.
 manifest.setServiceIcon(new Image("Service Icon Name", ImageType.DYNAMIC)); // Previously uploaded service icon. This could be the same as your app icon.
-manifest.setAllowAppConsumers(true); // Whether or not other apps can view your data in addition to the head unit. If set to `NO` only the head unit will have access to this data.
+manifest.setAllowAppConsumers(true); // Whether or not other apps can view your data in addition to the head unit. If set to `false` only the head unit will have access to this data.
 manifest.setRpcSpecVersion(new SdlMsgVersion(5,0)); // An *optional* parameter that limits the RPC spec versions you can understand to the provided version *or below*.
 manifest.setHandledRpcs(List<FunctionID>); // If you add function ids to this *optional* parameter, you can support newer RPCs on older head units (that don't support those RPCs natively) when those RPCs are sent from other connected applications.
 manifest.setMediaServiceManifest(<#Code#>); // Covered Below
@@ -204,7 +204,7 @@ After the initial app record is passed to you in the @![iOS]`SDLPublishAppServic
 For more information, see the [Using App Services guide](Other SDL Features/Using App Services) and see the "Getting and Subscribing to Services" section.
 
 ### 3. Update Your Service's Data
-After your service is published, it's time to update your service data. First, you must send an `onAppServiceData` RPC notification with your updated service data. RPC notifications are different than RPC requests in that they will not receive a response from the connected head unit, and must use a different `SDLManager` method call to send.
+After your service is published, it's time to update your service data. First, you must send an `onAppServiceData` RPC notification with your updated service data. RPC notifications are different than RPC requests in that they will not receive a response from the connected head unit @![iOS], and must use a different `SDLManager` method call to send!@.
 
 !!! NOTE
 You should only update your service's data when you are the active service; service consumers will only be able to see your data when you are the active service.
@@ -259,7 +259,7 @@ appData.setMediaServiceData(mediaData);
 
 OnAppServiceData onAppData = new OnAppServiceData();
 onAppData.setServiceData(appData);
-		
+
 sdlManager.sendRPC(onAppData);
 ```
 !@
@@ -322,7 +322,7 @@ sdlManager.fileManager.upload(file: artwork) { [weak self] (success, bytesAvaila
 ##### Java
 ```java
 final SdlArtwork navInstructionArt = new SdlArtwork("turn", FileType.GRAPHIC_PNG, R.drawable.turn, true);
-        
+
 sdlManager.getFileManager().uploadFile(navInstructionArt, new CompletionListener() { // We have to send the image to the system before it's used in the app service.
     @Override
     public void onComplete(boolean success) {
@@ -450,10 +450,10 @@ sdlManager.getFileManager().uploadFile(weatherImage, new CompletionListener() { 
 ### 4. Handling App Service Subscribers
 If you choose to make your app service available to other apps, you will have to handle requests to get your app service data when a consumer requests it directly.
 
-Handling app service subscribers is a two step process. First, you must register for notifications from the subscriber. Then, when you get a request, you will either have to send a response to the subscriber with the app service data or if you have no data to send, send a response with a relevant failure result code.
+Handling app service subscribers is a two step process. First, you must @![iOS]register for notifications from!@ @![android,javaSE,javaEE]setup listeners for!@ the subscriber. Then, when you get a request, you will either have to send a response to the subscriber with the app service data or if you have no data to send, send a response with a relevant failure result code.
 
-#### Registering for Notifications
-First, you will need to register for the notification of a `GetAppServiceDataRequest` being received by your application.
+#### Listening for Requests
+First, you will need to @![iOS]register for notification of!@ @![android,javaSE,javaEE]setup a listener for!@ a `GetAppServiceDataRequest`.
 
 @![iOS]
 ##### Objective-C
@@ -496,7 +496,7 @@ sdlManager.addOnRPCRequestListener(FunctionID.GET_APP_SERVICE_DATA, new OnRPCReq
 !@
 
 #### Sending a Response to Subscribers
-Second, you need to respond to the notification when you receive it with your app service data. This means that you will need to store your current service data after your most recent update using `OnAppServiceData` (see the section Updating Your Service Data).
+Second, you need to respond to the request when you receive it with your app service data. This means that you will need to store your current service data after your most recent update using `OnAppServiceData` (see the section Updating Your Service Data).
 
 @![iOS]
 ##### Objective-C
@@ -568,7 +568,7 @@ Certain RPCs are related to certain services. The chart below shows the current 
 | ButtonPress (SHUFFLE) | | |
 | ButtonPress (REPEAT) | | |
 
-When you are the active service for your service's type (e.g. media), and you have declared that you support these RPCs in your manifest (see section 1. Creating an App Service Manifest), then these RPCs will be automatically routed to your app. You will have to set up notifications to be aware that they have arrived, and you will then need to respond to those requests.
+When you are the active service for your service's type (e.g. media), and you have declared that you support these RPCs in your manifest (see section 1. Creating an App Service Manifest), then these RPCs will be automatically routed to your app. You will have to set up @![iOS]notifications!@ @![android,javaSE,javaEE]listeners!@ to be aware that they have arrived, and you will then need to respond to those requests.
 
 @![iOS]
 ##### Objective-C

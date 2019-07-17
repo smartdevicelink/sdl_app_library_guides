@@ -3,7 +3,7 @@
 To stream video from a SDL app use the `SDLStreamingMediaManager` class. A reference to this class is available from the `SDLManager`. You can choose to create your own video streaming manager, or you can use the `CarWindow` API to easily stream video to the head unit.
 
 !!! NOTE
-Due to an iOS limitation, video can not be streamed when the app on the device is backgrounded or when the device is sleeping/locked. Text will automatically be displayed telling the user that they must bring your app to the foreground.
+Due to an iOS limitation, video can not be streamed when the app on the phone is backgrounded or when the phone is sleeping/locked. Text will automatically be displayed telling the user that they must bring the application to the foreground.
 !!!
 
 ### Transports for Video Streaming
@@ -35,7 +35,7 @@ There are several customizations you can make to `CarWindow` to optimize it for 
 
 
 ### Showing a New View Controller
-Simply update `self.sdlManager.streamManager.rootViewController` to the new view controller. This will also update the [haptic parser](Video Streaming for Navigation Apps/Supporting Haptic Input).
+Simply update `sdlManager.streamManager.rootViewController` to the new view controller. This will also update the [haptic parser](Video Streaming for Navigation Apps/Supporting Haptic Input).
 
 ### Mirroring the Device Screen vs. Off-Screen UI
 It is recommended that you set the `rootViewController` to an off-screen view controller, i.e. you should instantiate a new `UIViewController` class and use it to set the `rootViewController`. This view controller will appear on-screen in the car, while remaining off-screen on the device. It is also possible, but not recommended, to display your on-device-screen UI to the car screen by setting the `rootViewController` to `UIApplication.sharedApplication.keyWindow.rootViewController`. However, if you mirror your device's screen, your app's UI will resize to match the head unit's screen size, thus making most of the app's UI off-screen.

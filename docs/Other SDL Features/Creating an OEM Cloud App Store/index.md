@@ -1,5 +1,5 @@
 # Creating an OEM Cloud App Store
-A new feature of SDL Core v5.1 and library v.@![iOS]6.2!@@![android,javaSE,javaEE]4.8!@ allows OEMs to offer an app store that lets users browse and install remote cloud apps. If the cloud app requires users to login with their credentials, the app store can use an authentication token to automatically login users after their first session.
+A new feature of SDL Core v5.1 and Sdl Java Suite v.@![iOS]6.2!@@![android,javaSE,javaEE]4.8!@ allows OEMs to offer an app store that lets users browse and install remote cloud apps. If the cloud app requires users to login with their credentials, the app store can use an authentication token to automatically login users after their first session.
 
 !!! note
 An OEM app store can be a mobile app or a cloud app.
@@ -8,7 +8,7 @@ An OEM app store can be a mobile app or a cloud app.
 ## User Authentication
 App stores can handle user authentication for the installed cloud apps. For example, users can log in after installing a cloud app using the app store. After that, the app store will save an authentication token for the cloud app in the local policy table. Then, the cloud app can retrieve the authentication token from the local policy table and use it to authenticate a user with the application. If desired, an optional parameter, `CloudAppVehicleID`, can be used to identify the head unit.
 
-## Setting and Getting Cloud App Properties 
+## Setting and Getting Cloud App Properties
 An OEM's app store can manage the properties of a specific cloud app by setting and getting its `CloudAppProperties`. This table summarizes the properties that are included in `CloudAppProperties`:
 
 | Parameter Name  |  Description |
@@ -75,6 +75,11 @@ setCloudAppProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
             Log.i("SdlService", "Request was rejected.");
         }
     }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
+    }
 });
 sdlManager.sendRPC(setCloudAppProperties);
 ```
@@ -126,6 +131,11 @@ getCloudAppProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
             Log.i("SdlService", "Request was rejected.");
         }
     }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
+    }
 });
 sdlManager.sendRPC(getCloudAppProperties);
 ```
@@ -135,7 +145,7 @@ sdlManager.sendRPC(getCloudAppProperties);
 Cloud app developers don't need to add any code to download the app icon. The cloud app icon will be automatically downloaded from the url provided by the policy table and sent to Core to be later displayed on the HMI.
 
 ## Getting the Authentication Token
-When users install cloud apps from an OEM's app store, they may be asked to login to that cloud app using the app store. After logging in, app store can save the `authToken` in the local policy table to be used later by the cloud app for user authentication. 
+When users install cloud apps from an OEM's app store, they may be asked to login to that cloud app using the app store. After logging in, app store can save the `authToken` in the local policy table to be used later by the cloud app for user authentication.
 A cloud app can retrieve its `authToken` from local policy table after starting the RPC service. The `authToken` can be used later by the app to authenticate the user:
 
 @![iOS]
@@ -157,5 +167,5 @@ String authToken = sdlManager.getAuthToken();
 !@
 
 ## Getting CloudAppVehicleID (Optional)
-The `CloudAppVehicleID` is an optional parameter used by cloud apps to identify a head unit. The content of `CloudAppVehicleID` is up to the OEM's implementation. Possible values could be the VIN or a hashed VIN. 
+The `CloudAppVehicleID` is an optional parameter used by cloud apps to identify a head unit. The content of `CloudAppVehicleID` is up to the OEM's implementation. Possible values could be the VIN or a hashed VIN.
 The `CloudAppVehicleID` value can be retrieved as part of the `GetVehicleData` RPC.  To find out more about how to retrieve `CloudAppVehicleID`, check out the [Retrieving Vehicle Data](Other SDL Features/Retrieving Vehicle Data) section.

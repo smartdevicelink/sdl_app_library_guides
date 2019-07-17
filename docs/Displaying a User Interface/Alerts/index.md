@@ -115,7 +115,7 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
 !@
 
 ### Timeouts
-An optional timeout can be added that will dimiss the alert when the duration is over. Typical timeouts are between 3 and 10 seconds. If omitted a default of 5 seconds is used.
+An optional timeout can be added that will dismiss the alert when the duration is over. Typical timeouts are between 3 and 10 seconds. If omitted a default of 5 seconds is used.
 
 @![iOS]
 ##### Objective-C
@@ -202,6 +202,7 @@ alert.setTtsChunks(Collections.singletonList(ttsChunk));
 ```
 !@
 
+
 ### Play Tone
 To play the alert tone when the alert appears and before the text-to-speech is spoken, set `playTone` to `true`.
 
@@ -249,9 +250,14 @@ sdlManager.send(request: alert) { (request, response, error) in
 alert.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
-        if (response.getSuccess()){
-            Log.i(TAG, "Alert was dismissed successfully");
-        }
+      if (response.getSuccess()){
+        Log.i(TAG, "Alert was dismissed successfully");
+      }
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+      Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
     }
 });
 sdlManager.sendRPC(alert);
