@@ -4,7 +4,7 @@ Since your user will be driving while interacting with your SDL app, speech phra
 When using the `SDLSpeak` RPC, you will receive a response from the head unit once the operation has completed. From the response you will be able to tell if the speech was completed, interrupted, rejected or aborted. It is important to keep in mind that a speech request can interrupt another on-going speech request. If you want to chain speech requests you must wait for for the current speech request to finish before sending the next speech request. 
 
 ## Creating the Speak Request
-The speech request you send can simply be a text phrase, or it can consist of phoneme specifications to direct SDL’s TTS engine to speak a speech-sculpted phrase. 
+The speech request you send can simply be a text phrase or it can consist of phoneme specifications to direct SDL’s TTS engine to speak a speech-sculpted phrase. It is also possible to play a pre-recorded sound file using the speech request. For more information on how to play a sound file please refer to [Playing Audio Indications](Speech and Audio/Playing Audio Indications). 
 
 ### Text Phrase
 @![iOS]
