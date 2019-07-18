@@ -158,7 +158,7 @@ lockScreenConfig.setEnabled(false);
 !@
 
 ## Always Show the Lock Screen
-The lock screen manager is configured to dismiss the lock screen when it is safe to do so. To always have the lock screen visible when the device is connected to the head unit, simply make an change to the lock screen configuration. 
+The lock screen manager is configured to dismiss the lock screen when it is safe to do so. To always have the lock screen visible when the device is connected to the head unit, simply update the lock screen configuration. 
 
 @![iOS]
 ##### Objective-C
