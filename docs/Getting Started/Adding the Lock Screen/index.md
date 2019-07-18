@@ -144,6 +144,7 @@ Please note that a lock screen will be required by most OEMs. You can disable th
 SDLLockScreenConfiguration *lockScreenConfiguration = [SDLLockScreenConfiguration enabledConfiguration];
 lockScreenConfiguration.enableAutomaticLockScreen = NO;
 ```
+
 ##### Swift
 ```swift
 let lockScreenConfiguration = SDLLockScreenConfiguration.enabledConfiguration()
@@ -166,6 +167,7 @@ The lock screen manager is configured to dismiss the lock screen when it is safe
 SDLLockScreenConfiguration *lockScreenConfiguration = [SDLLockScreenConfiguration enabledConfiguration];
 lockScreenConfiguration.showInOptionalState = YES;
 ```
+
 ##### Swift
 ```swift
 let lockScreenConfiguration = SDLLockScreenConfiguration.enabledConfiguration()
