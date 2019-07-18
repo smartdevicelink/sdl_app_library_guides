@@ -1,55 +1,50 @@
-# Calling a Phone Number
-The `DialNumber` RPC allows you make a phone call via the user's phone. Regardless of platform (Android or iOS), you must be sure that a device is connected via Bluetooth (even if using USB) for this RPC to work. If the phone is not connected via Bluetooth, you will receive a result of `REJECTED` from Core.
+ # Calling a Phone Number
+The @![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ RPC allows you make a phone call via the user's phone. Regardless of platform (Android or iOS), you must be sure that a device is connected via Bluetooth (even if using USB) for this RPC to work. If the phone is not connected via Bluetooth, you will receive a result of `REJECTED` from Core.
 
 !!! note
-DialNumber is an RPC that is usually restricted by OEMs. As a result, the OEM you are connecting to may limit app functionality if not approved for usage.
+@![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ is an RPC that is usually restricted by OEMs. As a result, the OEM you are connecting to may limit app functionality if not approved for usage.
 !!!
 
-## Detecting if DialNumber is Available
-
-`DialNumber` is a newer RPC, so there is a possibility that not all head units will support it. To find out if `DialNumber` is supported by the head unit, check the system capability manager's @![iOS]`hmiCapabilities.phoneCall`!@ @![android,javaSE,javaEE]`getCapability(SystemCapabilityType.PHONE_CALL)`!@ property after the manager has been started successfully.
+## Checking if Dial Number is Available
+@![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ is a newer RPC, so there is a possibility that not all head units will support it. To find out if the RPC is supported by the head unit, check the system capability manager's @![iOS]`hmiCapabilities.phoneCall`!@ @![android,javaSE,javaEE]`hmiCapabilities.isPhoneCallAvailable()`!@ property after the manager has been started successfully.
 
 @![iOS]
 ##### Objective-C
 ```objc
-BOOL isPhoneCallSupported = NO;
-
-[self.sdlManager startWithReadyHandler:^(BOOL success, NSError * _Nullable error) {
-    if (!success) {
-        NSLog(@"SDL encountered an error starting up: %@", error);
-        return;
+[self.sdlManager.systemCapabilityManager updateCapabilityType:SDLSystemCapabilityTypePhoneCall completionHandler:^(NSError * _Nullable error, SDLSystemCapabilityManager * _Nonnull systemCapabilityManager) {
+    BOOL isDialNumberSupported = NO;
+    if (error == nil) {
+        isDialNumberSupported = systemCapabilityManager.phoneCapability.dialNumberEnabled.boolValue;
+    }
+    else {
+        isDialNumberSupported = systemCapabilityManager.hmiCapabilities.phoneCall.boolValue;
     }
 
-    SDLHMICapabilities *hmiCapabilities = self.sdlManager.systemCapabilityManager.hmiCapabilities;
-    if (hmiCapabilities != nil) {
-        isPhoneCallSupported = hmiCapabilities.phoneCall.boolValue;
-    }
+    <#If making phone calls is supported, send the `DialNumber` RPC#>
 }];
 ```
 
 ##### Swift
 ```swift
-var isPhoneCallSupported = false
-
-sdlManager.start { (success, error) in
-    if !success {
-        print("SDL encountered an error starting up: \(error.debugDescription)")
-        return
+sdlManager.systemCapabilityManager.updateCapabilityType(.phoneCall) { (error, systemCapabilityManager) in
+    var isDialNumberSupported = false
+    if error == nil {
+        isDialNumberSupported = systemCapabilityManager.phoneCapability?.dialNumberEnabled?.boolValue ?? false;
+    } else {
+        isDialNumberSupported = systemCapabilityManager.hmiCapabilities?.phoneCall?.boolValue ?? false
     }
 
-    if let hmiCapabilities = self.sdlManager.systemCapabilityManager.hmiCapabilities, let phoneCallsSupported = hmiCapabilities.phoneCall?.boolValue {
-        isPhoneCallSupported = phoneCallsSupported
-    }
+    <#If making phone calls is supported, send the `DialNumber` RPC#>
 }
 ```
 !@
 
 @![android,javaSE,javaEE]
 ```java
-HMICapabilities hmiCapabilities = (HMICapabilities) sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.HMI);
-if(hmiCapabilities.isPhoneCallAvailable()){
+HMICapabilities hmiCapabilities = (HMICapabilities)sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.HMI);
+if (hmiCapabilities.isPhoneCallAvailable()) {
     // DialNumber supported
-}else{
+} else {
     // DialNumber is not supported
 }
 ```
@@ -57,18 +52,17 @@ if(hmiCapabilities.isPhoneCallAvailable()){
 
 ## Sending a DialNumber Request
 !!! note
-For DialNumber, all characters are stripped except for `0`-`9`, `*`, `#`, `,`, `;`, and `+`
+`DialNumber` strips all characters except for `0`-`9`, `*`, `#`, `,`, `;`, and `+`.
 !!!
 
 @![iOS]
 ##### Objective-C
 ```objc
-SDLDialNumber *dialNumber = [[SDLDialNumber alloc] init];
-dialNumber.number = @"1238675309";
+SDLDialNumber *dialNumber = [[SDLDialNumber alloc] initWithNumber: @"1238675309"];
 
 [self.sdlManager sendRequest:dialNumber withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if (error != nil || ![response isKindOfClass:SDLDialNumberResponse.class]) {
-        NSLog(@"Encountered Error sending DialNumber: %@", error);
+        <#Encountered error sending DialNumber#>
         return;
     }
 
@@ -76,44 +70,42 @@ dialNumber.number = @"1238675309";
     SDLResult *resultCode = dialNumber.resultCode;
     if (![resultCode isEqualToEnum:SDLResultSuccess]) {
 		if ([resultCode isEqualToEnum:SDLResultRejected]) {
-	        NSLog(@"DialNumber was rejected. Either the call was sent and cancelled or there is no device connected");
+	        <#DialNumber was rejected. Either the call was sent and cancelled or there is no device connected#>
 	    } else if ([resultCode isEqualToEnum:SDLResultDisallowed]) {
-	        NSLog(@"Your app is not allowed to use DialNumber");
+	        <#Your app is not allowed to use DialNumber#>
 	    } else { 	
-	    	NSLog(@"Some unknown error has occurred!");
+	    	<#Some unknown error has occurred#>
 	    }
 	    return;
     }
 
-	// Successfully sent!
+	<#DialNumber successfully sent#>
 }];
 ```
 
 ##### Swift
 ```swift
-let dialNumber = SDLDialNumber()
-dialNumber.number = "1238675309"
+let dialNumber = SDLDialNumber(number: "1238675309")
 
 sdlManager.send(request: dialNumber) { (request, response, error) in
-    guard let response = response as? SDLDialNumberResponse else { return }
-    
-    if let error = error {
-        print("Encountered Error sending DialNumber: \(error)")
+    guard let response = response as? SDLDialNumberResponse, error == nil else {
+        <#Encountered error sending DialNumber#>
         return
     }
-    
-    if response.resultCode != .success {
-        if response.resultCode == .rejected {
-            print("DialNumber was rejected. Either the call was sent and cancelled or there is no device connected")
-        } else if response.resultCode == .disallowed {
-            print("Your app is not allowed to use DialNumber")
-        } else {
-            print("Some unknown error has occurred!")
+
+    guard response.resultCode == .success else {
+        switch response.resultCode {
+        case .rejected:
+            <#DialNumber was rejected. Either the call was sent and cancelled or there is no device connected#>
+        case .disallowed:
+            <#Your app is not allowed to use DialNumber#>
+        default:
+            <#Some unknown error has occurred#>
         }
         return
     }
-    
-    // Successfully sent!
+
+    <#DialNumber successfully sent#>
 }
 ```
 !@
@@ -134,8 +126,13 @@ dialNumber.setOnRPCResponseListener(new OnRPCResponseListener() {
             // Your app does not have permission to use DialNumber.
         }
     }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
+    }
 });
-    
+
 sdlManager.sendRPC(dialNumber);
 ```
 !@

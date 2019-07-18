@@ -2,7 +2,7 @@
 The remote control framework allows apps to control certain modules, such as climate, radio, seat, lights, etc., within a vehicle.
 
 !!! Note
-Not all head units support this feature. If using this feature in your app you will most likely need to request permission from the vehicle manufacturer. 
+Not all head units support this feature. If using this feature in your app you will most likely need to request permission from the vehicle manufacturer.
 !!!
 
 ## Why Use Remote Control?
@@ -143,7 +143,7 @@ if (sdlManager.getSystemCapabilityManager().isCapabilitySupported(SystemCapabili
         @Override
         public void onCapabilityRetrieved(Object capability){
             RemoteControlCapabilities remoteControlCapabilities = (RemoteControlCapabilities) capability;
-            // Now it is possible to get details on how this capability 
+            // Now it is possible to get details on how this capability
             // is supported using the remoteControlCapabilities object
         }
 
@@ -183,14 +183,17 @@ sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
 
 @![android, javaSE, javaEE]
 ```java
-GetInteriorVehicleData interiorVehicleData = new GetInteriorVehicleData();
-interiorVehicleData.setModuleType(ModuleType.RADIO);
+GetInteriorVehicleData interiorVehicleData = new GetInteriorVehicleData(ModuleType.RADIO);
 interiorVehicleData.setSubscribe(true);
 interiorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
-        GetInteriorVehicleData getResponse = (GetInteriorVehicleData) response;
-        //This can now be used to retrieve data
+        GetInteriorVehicleDataResponse getResponse = (GetInteriorVehicleDataResponse) response;
+        // This can now be used to retrieve data
+    }
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
     }
 });
 
@@ -214,7 +217,7 @@ SDLSetInteriorVehicleData *setInteriorVehicleData = [[SDLSetInteriorVehicleData 
 ##### Swift
 ```swift
 let temperature = SDLTemperature(unit: .fahrenheit, value: 74.1)
-let climateControlData = SDLClimateControlData(fanSpeed: 2, desiredTemperature: temperature, acEnable: true, circulateAirEnable: false, autoModeEnable: false, defrostZone: nil, dualModeEnable: false, acMaxEnable: false, ventilationMode: .lower, heatedSteeringWheelEnable: true, heatedWindshieldEnable: true, heatedRearWindowEnable: true, heatedMirrorsEnable: false)
+let climateControlData = SDLClimateControlData(fanSpeed: 2 as NSNumber, desiredTemperature: temperature, acEnable: true as NSNumber, circulateAirEnable: false as NSNumber, autoModeEnable: false as NSNumber, defrostZone: nil, dualModeEnable: false as NSNumber, acMaxEnable: false as NSNumber, ventilationMode: .lower, heatedSteeringWheelEnable: true as NSNumber, heatedWindshieldEnable: true as NSNumber, heatedRearWindowEnable: true as NSNumber, heatedMirrorsEnable: false as NSNumber)
 let moduleData = SDLModuleData(climateControlData: climateControlData)
 let setInteriorVehicleData = SDLSetInteriorVehicleData(moduleData: moduleData)
 
@@ -224,9 +227,7 @@ sdlManager.send(setInteriorVehicleData)
 
 @![android, javaSE, javaEE]
 ```java
-Temperature temp = new Temperature();
-temp.setUnit(TemperatureUnit.FAHRENHEIT);
-temp.setValue((float) 74.1);
+Temperature temp = new Temperature(TemperatureUnit.FAHRENHEIT, 74.1f);
 
 ClimateControlData climateControlData = new ClimateControlData();
 climateControlData.setAcEnable(true);
@@ -240,13 +241,10 @@ climateControlData.setFanSpeed(2);
 climateControlData.setVentilationMode(VentilationMode.BOTH);
 climateControlData.setDesiredTemperature(temp);
 
-ModuleData moduleData = new ModuleData();
-moduleData.setModuleType(ModuleType.CLIMATE);
+ModuleData moduleData = new ModuleData(ModuleType.CLIMATE);
 moduleData.setClimateControlData(climateControlData);
 
-SetInteriorVehicleData setInteriorVehicleData = new SetInteriorVehicleData();
-setInteriorVehicleData.setModuleData(moduleData);
-
+SetInteriorVehicleData setInteriorVehicleData = new SetInteriorVehicleData(moduleData);
 sdlManager.sendRPC(setInteriorVehicleData);
 ```
 !@
@@ -274,11 +272,7 @@ sdlManager.send(buttonPress)
 
 @![android, javaSE, javaEE]
 ```java
-ButtonPress buttonPress = new ButtonPress();
-buttonPress.setModuleType(ModuleType.RADIO);
-buttonPress.setButtonName(ButtonName.EJECT);
-buttonPress.setButtonPressMode(ButtonPressMode.SHORT);
-
+ButtonPress buttonPress = new ButtonPress(ModuleType.RADIO, ButtonName.EJECT, ButtonPressMode.SHORT);
 sdlManager.sendRPC(buttonPress);
 ```
 !@
@@ -317,7 +311,7 @@ sdlManager.subscribe(to: .SDLDidReceiveInteriorVehicleData) { (message) in
     let onInteriorVehicleData = message as? SDLOnInteriorVehicleData else { return }
 
     // This block will now be called whenever vehicle data changes
-    // NOTE: If you subscibe to multiple modules, all the data will be sent here. You will have to split it out based on `onInteriorVehicleData.moduleData.moduleType` yourself.
+    // NOTE: If you subscribe to multiple modules, all the data will be sent here. You will have to split it out based on `onInteriorVehicleData.moduleData.moduleType` yourself.
     <#Code#>
 }
 
@@ -336,15 +330,14 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_INTERIOR_VEHICLE_DATA, new
     @Override
     public void onNotified(RPCNotification notification) {
         OnInteriorVehicleData onInteriorVehicleData = (OnInteriorVehicleData) notification;
-        //Perform action based on notification
+        // Perform action based on notification
     }
 });
 
-//Then send the GetInteriorVehicleData with subscription set to true
-GetInteriorVehicleData interiorVehicleData = new GetInteriorVehicleData();
-interiorVehicleData.setModuleType(ModuleType.RADIO);
+// Then send the GetInteriorVehicleData with subscription set to true
+GetInteriorVehicleData interiorVehicleData = new GetInteriorVehicleData(ModuleType.RADIO);
 interiorVehicleData.setSubscribe(true);
-
 sdlManager.sendRPC(interiorVehicleData);
+
 ```
 !@

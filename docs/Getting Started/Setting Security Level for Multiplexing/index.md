@@ -1,8 +1,8 @@
 # Setting Security Level for Multiplexing
 
-When connecting to Core via Multiplex Bluetooth transport, your SDL app will use a Router Service housed within your app or another SDL enabled app.
+When connecting to Core via Multiplex transport, your SDL app will use a Router Service housed within your app or another SDL enabled app.
 
-To help ensure the validility of the Router Service, you can select the security level explicity when you create your Multiplex Bluetooth transport in your app's SdlService:
+To help ensure the validility of the Router Service, you can select the security level explicity when you create your Multiplex transport in your app's SdlService:
 
 ```java
 int securityLevel = FLAG_MULTI_SECURITY_MED;
@@ -26,4 +26,4 @@ For an Android application to be added to the Trusted Router Service database, t
 
 Any Android application that is certified by the SDLC will be added to the Trusted Router Service database; there are no additional steps required as it is part of the certification process.  
 
-Please consult the [Trusted Router Service FAQs](https://smartdevicelink.com/en/guides/android/frequently-asked-questions/trusted-router-service/) if you have any additional questions.
+Please consult the [Trusted Router Service FAQs](Frequently Asked Questions/Trusted Router Service) if you have any additional questions.
