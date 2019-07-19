@@ -112,19 +112,19 @@ Audio capture can be ended in 4 ways:
 
 1. Audio pass thru has timed out.
 
-    If the Audio Pass Thru has proceeded longer than the requested timeout duration, Core will end this request with a `resultCode` of `SUCCESS`. You should expect to handle this Audio Pass Thru as though it was successful.
+    * If the Audio Pass Thru has proceeded longer than the requested timeout duration, Core will end this request with a `resultCode` of `SUCCESS`. You should expect to handle this Audio Pass Thru as though it was successful.
 
 2. Audio pass thru was closed due to user pressing "Cancel".
 
-    If the Audio Pass Thru was displayed, and the user pressed the "Cancel" button, you will receive a `resultCode` of `ABORTED`. You should expect to ignore this Audio Pass Thru.
+    * If the Audio Pass Thru was displayed, and the user pressed the "Cancel" button, you will receive a `resultCode` of `ABORTED`. You should expect to ignore this Audio Pass Thru.
 
 3. Audio pass thru was closed due to user pressing "Done".
 
-    If the Audio Pass Thru was displayed, and the user pressed the "Done" button, you will receive a `resultCode` of `SUCCESS`. You should expect to handle this Audio Pass Thru as though it was successful.
+    * If the Audio Pass Thru was displayed, and the user pressed the "Done" button, you will receive a `resultCode` of `SUCCESS`. You should expect to handle this Audio Pass Thru as though it was successful.
 
 4. Audio pass thru was ended due to the developer ending the request.
 
-    If the Audio Pass Thru was displayed, but you have established on your own that you no longer need to capture audio data, you can send an @![iOS]`SDLEndAudioPassThru`!@@![android,javaSE,javaEE]`EndAudioPassThru`!@ RPC.
+    * If the Audio Pass Thru was displayed, but you have established on your own that you no longer need to capture audio data, you can send an @![iOS]`SDLEndAudioPassThru`!@@![android,javaSE,javaEE]`EndAudioPassThru`!@ RPC.
 
 @![iOS]
 ##### Objective-C
@@ -147,7 +147,7 @@ sdlManager.sendRPC(endAPT);
 ```
 !@
 
-You will receive a `resultCode` of `SUCCESS`, and should expect to handle this audio pass thru as though it was successful.
+You will receive a `resultCode` of `SUCCESS`, and should handle the audio pass thru as though it was successful.
 
 ## Handling the Response
 To process the response received from an ended audio capture, @![iOS]use the `withResponseHandler` property in `SDLManager`'s `send(_ :)` function!@ @![android,javaSE,javaEE] monitor the `PerformAudioPassThruResponse` by adding a listener to the `PerformAudioPassThru` RPC before sending it. If the response has a successful result, all of the audio data for the passthrough has been received and is ready for processing!@.
@@ -157,17 +157,16 @@ To process the response received from an ended audio capture, @![iOS]use the `wi
 ```objc
 [self.sdlManager sendRequest:audioPassThru withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if (error || ![response isKindOfClass:SDLPerformAudioPassThruResponse.class]) {
-        NSLog(@"Encountered Error sending Perform Audio Pass Thru: %@", error);
         return;
     }
 
     SDLPerformAudioPassThruResponse *audioPassThruResponse = (SDLPerformAudioPassThruResponse *)response;
-    SDLResult *resultCode = audioPassThruResponse.resultCode;
-    if (![resultCode isEqualToEnum:SDLResultSuccess]) {
-        // Cancel any usage of the audio data
+    if (![audioPassThruResponse.resultCode isEqualToEnum:SDLResultSuccess]) {
+        <#Cancel any usage of the audio data#>
+        return;
     }
 
-    // Process audio data
+    <#Process audio data#>
 }];
 ```
 
@@ -177,11 +176,11 @@ sdlManager.send(request: audioPassThru) { (request, response, error) in
     guard let response = response else { return }
 
     guard response.resultCode == .success else {
-        // Cancel any usage of the audio data.
+        <#Cancel any usage of the audio data#>
         return
     }
 
-    // Process audio data
+    <#Process audio data#>
 }
 ```
 !@
