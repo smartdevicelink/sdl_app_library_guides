@@ -117,6 +117,7 @@ public static class MyDisplay extends SdlRemoteDisplay{
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 Log.d(TAG, "Received motion event for button1");
+                return true;
             }
         });
     }
