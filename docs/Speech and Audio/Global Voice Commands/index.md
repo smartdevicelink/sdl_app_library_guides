@@ -27,7 +27,7 @@ let voiceCommand = SDLVoiceCommand(voiceCommands: <#[String]#>) {
     <#code#>
 }
 
-self.sdlManager.screenManager.voiceCommands = [voiceCommand]
+sdlManager.screenManager.voiceCommands = [voiceCommand]
 ```
 !@
 
