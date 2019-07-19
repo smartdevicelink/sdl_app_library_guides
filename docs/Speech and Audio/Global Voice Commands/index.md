@@ -14,17 +14,17 @@ To create voice commands, you simply create and set @![iOS]`SDLVoiceCommand`!@ @
 @![iOS]
 ##### Objective-C
 ```objc
-// Create the voice command
-SDLVoiceCommand *voiceCommand = [[SDLVoiceCommand alloc] initWithVoiceCommands:<#(nonnull NSArray<NSString *> *)#> handler:<#^(void)handler#>];
+SDLVoiceCommand *voiceCommand = [[SDLVoiceCommand alloc] initWithVoiceCommands:@[<#NSString#>] handler:^{
+    <#Voice command selected#>
+}];
 
 self.sdlManager.screenManager.voiceCommands = @[voiceCommand];
 ```
 
 ##### Swift
 ```swift
-// Create the voice command
-let voiceCommand = SDLVoiceCommand(voiceCommands: <#[String]#>) {
-    <#code#>
+let voiceCommand = SDLVoiceCommand(voiceCommands: [<#String#>]) {
+    <#Voice command triggered#>
 }
 
 sdlManager.screenManager.voiceCommands = [voiceCommand]
