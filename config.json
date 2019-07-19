@@ -105,16 +105,16 @@
             "name": "Speech and Audio",
             "navigation": [
                 {
+                    "name": "Playing Spoken Feedback"
+                },
+                {
+                    "name": "Playing Audio Indications"
+                },
+                {
                     "name": "Global Voice Commands"
                 },
                 {
-                    "name": "Creating Custom Spoken Feedback"
-                },
-                {
                     "name": "Getting In-Car Microphone Audio"
-                },
-                {
-                    "name": "Playing Spoken Feedback"
                 }
             ]
         },
