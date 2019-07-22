@@ -1,135 +1,265 @@
 # Alerts
-An alert is a pop-up window that can show a short message with optional buttons. When an alert is activated, it will abort any SDL operation that is in-progress, except the already-in-progress alert. If an alert is issued while another alert is still in progress, the newest alert will simply be ignored.
+An alert is a pop-up window showing a short message with optional buttons. When an alert is activated, it will abort any SDL operation that is in-progress, except the already-in-progress alert. If an alert is issued while another alert is still in progress, the newest alert will simply be ignored.
+
+Depending the platform, an alert can have up to three lines of text, a progress indicator (e.g. a spinning wheel or hourglass), and up to four soft buttons.
 
 !!! NOTE
 The alert will persist on the screen until the timeout has elapsed, or the user dismisses the alert by selecting a button. There is no way to dismiss the alert programmatically other than to set the timeout length.
 !!!
 
-## Alert UI
-Depending the platform, an alert can have up to three lines of text, a progress indicator (e.g. a spinning wheel or hourglass), and up to four soft buttons.
+## Alert Layouts
+###### Alert With No Soft Buttons
 
-### Alert HMI
-###### Generic HMI
 ![Generic - Alert](assets/Generic_alert.png)
 
-###### Ford HMI
-![SYNC 3 - Alert](assets/SYNC3_alert.jpg)
+!!! NOTE
+If no soft buttons are added to an alert some OEMs may add a default "cancel" or "close" button.
+!!!
 
-## Alert Text-To-Speech
-The alert can also be formatted to speak a prompt when the alert appears on the screen. Do this by setting the `ttsChunks` parameter. To play the alert tone before the text-to-speech is spoken, set `playTone` to `true`.
+###### Alert With Soft Buttons
 
-## Create an Alert
+![Generic - Alert](assets/Generic_alert_buttons.png)
+
+## Creating the Alert
+
+### Text
+@![iOS]
+##### Objective-C
+```objc
+SDLAlert *alert =  [[SDLAlert alloc] initWithAlertText1:@"<#Line 1#>" alertText2:@"<#Line 2#>" alertText3:@"<#Line 3#>"];
+```
+
+##### Swift
+```swift
+let alert = SDLAlert(alertText1: "<#Line 1#>", alertText2: "<#Line 2#>", alertText3: "<#Line 3#>")
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+Alert alert = new Alert();
+alert.setAlertText1("Line 1");
+alert.setAlertText2("Line 2");
+alert.setAlertText3("Line 3");
+```
+!@
+
+### Buttons
+
 @![iOS]
 ##### Objective-C
 ```objc
 SDLAlert *alert = [[SDLAlert alloc] initWithAlertText1:@"<#Line 1#>" alertText2:@"<#Line 2#>" alertText3:@"<#Line 3#>"];
 
-// Maximum time alert appears before being dismissed
-// Timeouts must be between 3-10 seconds
-// Timeouts may not work when soft buttons are also used in the alert
-alert.duration = @5000;
-
-// A progress indicator (e.g. spinning wheel or hourglass)
-// Not all head units support the progress indicator
-alert.progressIndicator = @YES;
-
-// Text-to-speech
-alert.ttsChunks = [SDLTTSChunk textChunksFromString:@"<#Text to speak#>"];
-
-// Special tone played before the tts is spoken
-alert.playTone = @YES;
-
-// Soft buttons
-SDLSoftButton *okButton = [[SDLSoftButton alloc] init];
-okButton.text = @"OK";
-okButton.type = SDLSoftButtonTypeText;
-okButton.softButtonID = @<#Soft Button Id#>;
-okButton.handler = ^(SDLOnButtonPress *_Nullable buttonPress,  SDLOnButtonEvent *_Nullable buttonEvent) {
+SDLSoftButton *button1 = [[SDLSoftButton alloc] initWithType:SDLSoftButtonTypeText text:@"<#Button Text#>" image:nil highlighted:false buttonId:<#Soft Button Id#> systemAction:SDLSystemActionDefaultAction handler:^(SDLOnButtonPress *_Nullable buttonPress, SDLOnButtonEvent *_Nullable buttonEvent) {
     if (buttonPress == nil) {
-      return;
+        return;
     }
-
-    // create a custom action for the selected button
-};
-
-alert.softButtons = @[okButton];
-
-// Send the alert
-[self.sdlManager sendRequest:alert withResponseHandler:^(SDLRPCRequest *request, SDLRPCResponse *response, NSError *error) {
-    if ([response.resultCode isEqualToEnum:SDLResultSuccess]) {
-      // alert was dismissed successfully
-    }
+    <#Button has been pressed#>
 }];
+
+SDLSoftButton *button2 = [[SDLSoftButton alloc] initWithType:SDLSoftButtonTypeText text:<#Button Text#> image:nil highlighted:false buttonId:<#Soft Button Id#> systemAction:SDLSystemActionDefaultAction handler:^(SDLOnButtonPress *_Nullable buttonPress, SDLOnButtonEvent *_Nullable buttonEvent) {
+    if (buttonPress == nil) {
+        return;
+    }
+    <#Button has been pressed#>
+}];
+
+alert.softButtons = @[button1, button2];
 ```
 
 ##### Swift
 ```swift
 let alert = SDLAlert(alertText1: "<#Line 1#>", alertText2: "<#Line 2#>", alertText3: "<#Line 3#>")
 
-// Maximum time alert appears before being dismissed
-// Timeouts must be between 3-10 seconds
-// Timeouts may not work when soft buttons are also used in the alert
-alert.duration = 5000
+let button1 = SDLSoftButton(type: .text, text: <#Button Text#>, image: nil, highlighted: false, buttonId: <#Soft Button Id#>, systemAction: .defaultAction, handler: { buttonPress, buttonEvent in
+    guard buttonPress != nil else { return }
+    <#Button has been pressed#>
+})
 
-// A progress indicator (e.g. spinning wheel or hourglass)
-// Not all head units support the progress indicator
-alert.progressIndicator = true
+let button2 = SDLSoftButton(type: .text, text: <#Button Text#>, image: nil, highlighted: false, buttonId: <#Soft Button Id#>, systemAction: .defaultAction, handler: { buttonPress, buttonEvent in
+    guard buttonPress != nil else { return }
+    <#Button has been pressed#>
+})
 
-// Text-to-speech
-alert.ttsChunks = SDLTTSChunk.textChunks(from: "<#Text to speak#>")
+alert.softButtons = [button1, button2]
+```
+!@
 
-// Special tone played before the tts is spoken
-alert.playTone = true
+@![android,javaSE,javaEE]
+```java
+Alert alert = new Alert();
+alert.setAlertText1("Line 1");
+alert.setAlertText2("Line 2");
+alert.setAlertText3("Line 3");
 
 // Soft buttons
-let okButton = SDLSoftButton()
-okButton.text = "OK"
-okButton.type = .text
-okButton.softButtonID = <#Soft Button Id#>
-okButton.handler = { (buttonPress, buttonEvent) in
-    guard let press = buttonPress else { return }
+final int softButtonId = 123; // Set it to any unique ID
+SoftButton okButton = new SoftButton(SoftButtonType.SBT_TEXT, softButtonId);
+okButton.setText("OK");
 
-    // create a custom action for the selected button
-}
+// Set the softbuttons(s) to the alert
+alert.setSoftButtons(Collections.singletonList(okButton));
 
-alert.softButtons = [okButton]
+// This listener is only needed once, and will work for all of soft buttons you send with your alert
+sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNotificationListener() {
+      @Override
+      public void onNotified(RPCNotification notification) {
+          OnButtonPress onButtonPress = (OnButtonPress) notification;
+          if (onButtonPress.getCustomButtonName() == softButtonId){
+               Log.i(TAG, "Ok button pressed");
+          }
+      }
+});
+```
+!@
 
-// Send the alert
+### Timeouts
+An optional timeout can be added that will dismiss the alert when the duration is over. Typical timeouts are between 3 and 10 seconds. If omitted a default of 5 seconds is used.
+
+@![iOS]
+##### Objective-C
+```objc
+// Duration timeout is in milliseconds
+alert.duration = @(4000);
+```
+
+##### Swift
+```swift
+// Duration timeout is in milliseconds
+alert.duration = 4000 as NSNumber
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+alert.setDuration(5000);
+```
+!@
+
+### Progress Indicator
+Not all OEMs support a progress indicator. If supported, the alert will show an animation that indicates that the user must wait (e.g. a spinning wheel or hourglass, etc). If omitted, no progress indicator will be shown.
+
+@![iOS]
+##### Objective-C
+```objc
+alert.progressIndicator = @YES;
+```
+
+##### Swift
+```swift
+alert.progressIndicator = true as NSNumber
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+alert.setProgressIndicator(true);
+```
+!@
+
+### Text-To-Speech
+An alert can also speak a prompt or play a sound file when the alert appears on the screen. This is done by setting the `ttsChunks` parameter.
+
+#### Text
+@![iOS]
+##### Objective-C
+```objc
+alert.ttsChunks = [SDLTTSChunk textChunksFromString:@"<#Text to speak#>"];
+```
+
+##### Swift
+```swift
+alert.ttsChunks = SDLTTSChunk.textChunks(from: "<#Text to speak#>")
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+alert.setTtsChunks(TTSChunkFactory.createSimpleTTSChunks("Text to Speak"));
+```
+!@
+
+#### Sound File
+The `ttsChunks` parameter can also take a file to play/speak. For more information on how to upload the file please refer to the [Playing Audio Indications](Other SDL Features/Playing Audio Indications) guide.
+
+@![iOS]
+##### Objective-C
+```objc
+ alert.ttsChunks = [SDLTTSChunk fileChunksWithName:@"<#Name#>"];
+```
+
+##### Swift
+```swift
+ alert.ttsChunks = SDLTTSChunk.fileChunks(withName: "<#Name#>")
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+TTSChunk ttsChunk = new TTSChunk(sdlFile.getName(), SpeechCapabilities.FILE);
+alert.setTtsChunks(Collections.singletonList(ttsChunk));
+```
+!@
+
+
+### Play Tone
+To play the alert tone when the alert appears and before the text-to-speech is spoken, set `playTone` to `true`.
+
+@![iOS]
+##### Objective-C
+```objc
+alert.playTone = @YES;
+```
+
+##### Swift
+```swift
+alert.playTone = true as NSNumber
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+alert.setPlayTone(true);
+```
+!@
+
+## Showing the Alert
+
+@![iOS]
+##### Objective-C
+```objc
+[self.sdlManager sendRequest:alert withResponseHandler:^(SDLRPCRequest *request, SDLRPCResponse *response, NSError *error) {
+    if (![response.resultCode isEqualToEnum:SDLResultSuccess]) { return; }
+    <#alert was dismissed successfully#>
+}];
+```
+
+##### Swift
+```swift
 sdlManager.send(request: alert) { (request, response, error) in
-    if response?.resultCode == .success {
-        // alert was dismissed successfully
-    }
+    guard response?.resultCode == .success else { return }
+    <#alert was dismissed successfully#>
 }
 ```
 !@
 
-@![android, javaSE, javaEE]
+@![android,javaSE,javaEE]
 ```java
-Alert alert = new Alert();
-alert.setAlertText1("Alert Text 1");
-alert.setAlertText2("Alert Text 2");
-alert.setAlertText3("Alert Text 3");
+// Handle RPC response
+alert.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+      if (response.getSuccess()){
+        Log.i(TAG, "Alert was dismissed successfully");
+      }
+    }
 
-// Maximum time alert appears before being dismissed
-// Timeouts must be between 3-10 seconds
-// Timeouts may not work when soft buttons are also used in the alert
-alert.setDuration(5000);
-
-// A progress indicator (e.g. spinning wheel or hourglass)
-// Not all head units support the progress indicator
-alert.setProgressIndicator(true);
-
-// Text-to-speech
-alert.setTtsChunks(TTS_list); // TTS_list populated elsewhere
-
-// Special tone played before the tts is spoken
-alert.setPlayTone(true);
-
-// Soft buttons
-alert.setSoftButtons(softButtons); // softButtons populated elsewhere
-
-// Send alert
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+      Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
+    }
+});
 sdlManager.sendRPC(alert);
 ```
 !@
-

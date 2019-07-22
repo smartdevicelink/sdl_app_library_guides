@@ -1,18 +1,18 @@
 # Audio Streaming
-Navigation apps are allowed to stream raw audio to be played by the head unit. The audio received this way is played immediately, and the current audio source will be attenuated. The raw audio has to be played with the following parameters:
+A navigation app can stream raw audio to the head unit. This audio data is played immediately. If audio is already playing, the current audio source will be attenuated and your audio will play. Raw audio must be played with the following parameters:
 
 * **Format**: PCM
 * **Sample Rate**: 16k
 * **Number of Channels**: 1
 * **Bits Per Second (BPS)**: 16 bits per sample / 2 bytes per sample
 
-In order to stream audio from a SDL app, we focus on the @![iOS]`SDLStreamingMediaManager`!@@![android]`AudioStreamingManager`!@ class. @![iOS]A reference to this class is available from an `SDLManager` property `streamManager`!@@![android]The `AudioStreamingManager` object can we obtained from `SdlManager`s `getAudioStreamManager()`!@.
+To stream audio from a SDL app, use the @![iOS]`SDLStreamingMediaManager`!@@![android]`AudioStreamingManager`!@ class. A reference to this class is available from the @![iOS]`SDLManager`'s `streamManager`!@@![android]`SdlManager`s `audioStreamManager`!@ property.
 
 @![iOS]
 ## Audio Stream Lifecycle
 Like the lifecycle of the video stream, the lifecycle of the audio stream is maintained by the SDL library. When you receive the `SDLAudioStreamDidStartNotification`, you can begin streaming audio.
 
-### SDLAudioStreamManager
+### Audio Stream Manager
 The `SDLAudioStreamManager` will help you to do on-the-fly transcoding and streaming of your files in mp3 or other formats, or prepare raw PCM data to be queued and played.
 
 #### Playing from File
@@ -24,8 +24,8 @@ The `SDLAudioStreamManager` will help you to do on-the-fly transcoding and strea
 
 ##### Swift
 ```swift
-self.sdlManager.streamManager?.audioManager.push(withFileURL: url)
-self.sdlManager.streamManager?.audioManager.playNextWhenReady()
+sdlManager.streamManager?.audioManager.push(withFileURL: url)
+sdlManager.streamManager?.audioManager.playNextWhenReady()
 ```
 
 #### Playing from Data
@@ -37,8 +37,8 @@ self.sdlManager.streamManager?.audioManager.playNextWhenReady()
 
 ##### Swift
 ```swift
-self.sdlManager.streamManager?.audioManager.push(withData: audioData)
-self.sdlManager.streamManager?.audioManager.playNextWhenReady()
+sdlManager.streamManager?.audioManager.push(withData: audioData)
+sdlManager.streamManager?.audioManager.playNextWhenReady()
 ```
 
 #### Implementing the Delegate
@@ -72,7 +72,7 @@ func audioStreamManager(_ audioManager: SDLAudioStreamManager, errorDidOccurForF
 }
 
 func audioStreamManager(_ audioManager: SDLAudioStreamManager, errorDidOccurForDataBuffer error: Error) {
-    
+
 }
 
 func audioStreamManager(_ audioManager: SDLAudioStreamManager, fileDidFinishPlaying fileURL: URL, successfully: Bool) {
@@ -96,25 +96,25 @@ Once the audio stream is connected, data may be easily passed to the Head Unit. 
 
 NSData* audioData = <#Acquire Audio Data#>;
 
-if ([self.sdlManager.streamManager sendAudioData:audioData] == NO) {
-  NSLog(@"Could not send Audio Data");
+if (![self.sdlManager.streamManager sendAudioData:audioData]) {
+    <#Could not send audio data#>
 }
 ```
 
 ##### Swift
 ```swift
-let audioData = <#Acquire Audio Data#>;
+let audioData = <#Acquire Audio Data#>
 
 guard let streamManager = self.sdlManager.streamManager, streamManager.isAudioConnected else { return }
 
-if streamManager.sendAudioData(audioData) == false {
-    print("Could not send Audio Data")
+if !streamManager.sendAudioData(audioData) {
+    <#Could not send audio data#>
 }
 ```
 !@
 
 @![android]
-To stream audio, we call `sdlManager.getAudioStreamManager().start()` which will start the manager. When that callback returns successful, you call `sdlManager.getAudioStreamManager().startAudioStream()`. When the callback for that is successful, you can push the audio source using `sdlManager.getAudioStreamManager().pushAudioSource()`. Below is an example of playing an `mp3` file that we have in our resource directory:
+To stream audio, we call `sdlManager.getAudioStreamManager().start()` which will start the manager. When that callback returns successful, you call `sdlManager.getAudioStreamManager().startAudioStream()`. When the callback for that is successful, you can push the audio source using `sdlManager.getAudioStreamManager().pushResource()`. Below is an example of playing an `mp3` file that we have in our resource directory:
 
 ```java
 if (sdlManager.getAudioStreamManager() != null) {
@@ -127,15 +127,7 @@ if (sdlManager.getAudioStreamManager() != null) {
                     @Override
                     public void onComplete(boolean success) {
                         if (success) {
-                            Resources resources = getApplicationContext().getResources();
-                            int resourceId = R.raw.exampleMp3;
-                            Uri uri = new Uri.Builder()
-                            .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
-                            .authority(resources.getResourcePackageName(resourceId))
-                            .appendPath(resources.getResourceTypeName(resourceId))
-                            .appendPath(resources.getResourceEntryName(resourceId))
-                            .build();
-                            sdlManager.getAudioStreamManager().pushAudioSource(uri, new CompletionListener() {
+                            sdlManager.getAudioStreamManager().pushResource(R.raw.exampleMp3, new CompletionListener() {
                                 @Override
                                 public void onComplete(boolean success) {
                                     if (success) {
@@ -158,14 +150,31 @@ if (sdlManager.getAudioStreamManager() != null) {
 }
 ```
 
+#### Using a Buffer
+
+You can also send `ByteBuffer`s to the `AudioStreamManager` to be played. To use it, replace the `pushResource` call in the example above to the `pushBuffer` call shown below:
+
+```java
+sdlManager.getAudioStreamManager().pushBuffer(byteBuffer, new CompletionListener() {
+    @Override
+    public void onComplete(boolean success) {
+        if (success) {
+            Log.i(TAG, "Buffer played successfully!");
+        } else {
+            Log.i(TAG, "Buffer failed to play!");
+        }
+    }
+});
+```
+
 #### Stopping the Audio Stream
-When the stream is complete, or you receive HMI_NONE, you should stop the stream by calling:
+When the stream is complete, or you receive `HMI_NONE`, you should stop the stream by calling:
 
 ```java
 sdlManager.getAudioStreamManager().stopAudioStream(new CompletionListener() {
     @Override
     public void onComplete(boolean success) {
-
+        // do something once the stream is stopped
     }
 });
 ```
