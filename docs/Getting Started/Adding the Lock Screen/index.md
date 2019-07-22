@@ -109,7 +109,7 @@ lockScreenConfig.showDeviceLogo(true);
 ```
 !@
 
-## Create a Custom Lock Screen
+## Creating a Custom Lock Screen
 If you would like to use your own lock screen instead of the one provided by the library, but still use the logic we provide, you can use a new initializer within @![iOS]`SDLLockScreenConfiguration`!@ @![android]`LockScreenConfig`!@:
 
 @![iOS]
@@ -133,7 +133,7 @@ lockScreenConfig.setCustomView(customViewInt);
 !@
 
 ## Customizing the Lock Screen State
-## Disabling the Lock Screen
+### Disabling the Lock Screen
 Please note that a lock screen will be required by most OEMs. You can disable the lock screen manager, but you will then be required to implement your own logic for showing and hiding the lock screen. This is not recommended as the @![iOS]`SDLLockScreenConfiguration` !@ @![android]`LockScreenConfig`!@ adheres to most OEM lock screen requirements. However, if you must create a lock screen manager from scratch, the library's lock screen manager can be disabled via the @![iOS]`SDLLockScreenConfiguration`!@ @![android]`LockScreenConfig`!@ as follows:
 
 @![iOS]
@@ -156,7 +156,7 @@ lockScreenConfig.setEnabled(false);
 ```
 !@
 
-## Making the Lock Screen Always On
+### Making the Lock Screen Always On
 The lock screen manager is configured to dismiss the lock screen when it is safe to do so. To always have the lock screen visible when the device is connected to the head unit, simply update the lock screen configuration. 
 
 @![iOS]
