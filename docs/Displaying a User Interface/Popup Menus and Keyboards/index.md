@@ -176,7 +176,7 @@ It may seem that the answer is to always use `both`. However, remember that you 
 | Both              | Interactions can occur both manually or through VR |
 
 ##### Menu - Manual Only Mode
-![SYNC 3 - Menu - Manual Only](assets/SYNC3_popup_menu_row.jpg)
+![Generic - Menu - Manual Only](assets/Generic_popup_menu_row.png)
 
 ##### Menu - Voice Only Mode
 ![SYNC 3 - Menu - Voice Only](assets/SYNC3_popup_menu_voice_recognition.jpg)
