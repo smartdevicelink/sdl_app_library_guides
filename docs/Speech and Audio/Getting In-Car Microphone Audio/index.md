@@ -150,7 +150,7 @@ sdlManager.sendRPC(endAPT);
 You will receive a `resultCode` of `SUCCESS`, and should handle the audio pass thru as though it was successful.
 
 ## Handling the Response
-To process the response received from an ended audio capture, @![iOS]use the `withResponseHandler` property in `SDLManager`'s `send(_ :)` function!@ @![android,javaSE,javaEE] monitor the `PerformAudioPassThruResponse` by adding a listener to the `PerformAudioPassThru` RPC before sending it. If the response has a successful result, all of the audio data for the passthrough has been received and is ready for processing!@.
+To process the response received from an ended audio capture, @![iOS]use the `withResponseHandler` property in `SDLManager`'s `send(_ :)` function!@@![android,javaSE,javaEE] monitor the `PerformAudioPassThruResponse` by adding a listener to the `PerformAudioPassThru` RPC before sending it. If the response has a successful result, all of the audio data for the passthrough has been received and is ready for processing!@.
 
 @![iOS]
 ##### Objective-C
