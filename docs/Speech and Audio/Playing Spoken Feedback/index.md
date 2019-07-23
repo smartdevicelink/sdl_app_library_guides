@@ -10,7 +10,7 @@ The speech request you send can simply be a text phrase, which will be played ba
 To get the head unit's supported speech capabilities, check the @![iOS]`SDLSystemCapabilityManager.speechCapabilities`!@@![android,javaSE,javaEE] `sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.SPEECH)`!@ after successfully connecting to the head unit. Below is a list of commonly supported speech capabilities.
 
 | Speech Capability |  Description |
-| ------------- | ------------- | ------------- |
+| ------------- | ------------- |
 | Text | Text phrases |
 | SAPI Phonemes | Microsoft speech synthesis API |
 | File | A pre-recorded sound file |
