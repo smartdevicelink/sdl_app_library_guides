@@ -109,6 +109,9 @@
                 },
                 {
                     "name": "Setting Up Voice Commands"
+                },
+                {
+                    "name": "Getting Microphone Audio"
                 }
             ]
         },
