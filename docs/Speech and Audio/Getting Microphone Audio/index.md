@@ -13,8 +13,8 @@ To initiate audio capture, first construct a @![iOS]`SDLPerformAudioPassThru`!@@
 | Audio Pass Thru Capability | Parameter Name  |  Description |
 | ------------- | ------------- | ------------- |
 | Sampling Rate | samplingRate | The sampling rate |
-| Bits Per Sample | bitsPerSample | The sample depth in bit |
-| Audio Type | bitsPerSample | The audio type |
+| Bits Per Sample | bitsPerSample | The sample depth in bits |
+| Audio Type | audioType | The audio type |
 
 @![iOS]
 ##### Objective-C
