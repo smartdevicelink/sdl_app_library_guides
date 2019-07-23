@@ -115,19 +115,19 @@ Audio capture can be ended in 4 ways:
 
 1. Audio pass thru has timed out.
 
-    * If the audio pass thru has proceeded longer than the requested timeout duration, Core will end this request with a `resultCode` of `SUCCESS`. You should handle this audio pass thru though it was successful.
+    * If the audio pass thru has proceeded longer than the requested timeout duration, Core will end this request with a `resultCode` of `SUCCESS`. You should handle the audio pass thru though it was successful.
 
 2. Audio pass thru was closed due to user pressing "Cancel".
 
-    * If the audio pass thru was displayed, and the user pressed the "Cancel" button, you will receive a `resultCode` of `ABORTED`. You should ignore this audio pass thru.
+    * If the audio pass thru was displayed, and the user pressed the "Cancel" button, you will receive a `resultCode` of `ABORTED`. You should ignore the audio pass thru.
 
 3. Audio pass thru was closed due to user pressing "Done".
 
-    * If the audio pass thru was displayed and the user pressed the "Done" button, you will receive a `resultCode` of `SUCCESS`. You should handle this audio pass thru as though it was successful.
+    * If the audio pass thru was displayed and the user pressed the "Done" button, you will receive a `resultCode` of `SUCCESS`. You should handle the audio pass thru as though it was successful.
 
 4. Audio pass thru was ended due to the developer ending the request.
 
-    * If the audio pass thru was displayed, but you have established on your own that you no longer need to capture audio data, you can send an @![iOS]`SDLEndAudioPassThru`!@@![android,javaSE,javaEE]`EndAudioPassThru`!@ RPC.
+    * If the audio pass thru was displayed, but you have established on your own that you no longer need to capture audio data, you can send an @![iOS]`SDLEndAudioPassThru`!@@![android,javaSE,javaEE]`EndAudioPassThru`!@ RPC. You will receive a `resultCode` of `SUCCESS`, and should handle the audio pass thru as though it was successful.
 
 @![iOS]
 ##### Objective-C
@@ -149,8 +149,6 @@ EndAudioPassThru endAPT = new EndAudioPassThru();
 sdlManager.sendRPC(endAPT);
 ```
 !@
-
-You will receive a `resultCode` of `SUCCESS`, and should handle the audio pass thru as though it was successful.
 
 ## Handling the Response
 To process the response received from an ended audio capture, @![iOS]use the `withResponseHandler` property in `SDLManager`'s `send(_ :)` function!@@![android,javaSE,javaEE] monitor the `PerformAudioPassThruResponse` by adding a listener to the `PerformAudioPassThru` RPC before sending it. If the response has a successful result, all of the audio data for the passthrough has been received and is ready for processing!@.
