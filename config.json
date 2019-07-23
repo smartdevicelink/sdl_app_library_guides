@@ -82,9 +82,6 @@
                     "name": "Main Menu"
                 },
                 {
-                    "name": "Global Voice Commands"
-                },
-                {
                     "name": "Popup Menus and Keyboards"
                 },
                 {
@@ -112,9 +109,6 @@
                 },
                 {
                     "name": "Global Voice Commands"
-                },
-                {
-                    "name": "Getting In-Car Microphone Audio"
                 }
             ]
         },
@@ -150,9 +144,6 @@
                 },
                 {
                     "name": "Uploading Images"
-                },
-                {
-                    "name": "Playing Audio Indications"
                 },
                 {
                     "name": "Creating an OEM Cloud App Store"
