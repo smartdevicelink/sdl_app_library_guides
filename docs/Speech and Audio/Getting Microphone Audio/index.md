@@ -1,7 +1,7 @@
 # Getting Microphone Audio
 Capturing in-car audio allows developers to interact with users by requesting raw audio data provided to them from the car's microphones. In order to gather the raw audio from the vehicle, you must leverage the @![iOS][`SDLPerformAudioPassThru`](https://smartdevicelink.com/en/docs/iOS/master/Classes/SDLPerformAudioPassThru/)!@@![android,javaSE,javaEE]`PerformAudioPassThru`!@ RPC.
 
-SDL does not support automatic speech cancellation detection, so if this feature is desired, it is up to the developer to implement. The user may press an OK or Cancel button, the dialog may timeout, or you may close the dialog with @![iOS]`SDLEndAudioPassThru`!@ @![android,javaSE,javaEE]`EndAudioPassThru`!@.
+SDL does not support automatic speech cancellation detection, so if this feature is desired, it is up to the developer to implement. The user may press an "OK" or "Cancel" button, the dialog may timeout, or you may close the dialog with @![iOS]`SDLEndAudioPassThru`!@ @![android,javaSE,javaEE]`EndAudioPassThru`!@.
 
 In order to know the currently supported audio capture capabilities of the connected head unit, please refer to the @![iOS]`SDLSystemCapabilityManager.audioPassThruCapabilities` [documentation](https://smartdevicelink.com/en/docs/iOS/master/Classes/SDLRegisterAppInterfaceResponse/).!@ @![android,javaSE,javaEE] `sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.AUDIO_PASSTHROUGH)` [documentation](https://smartdevicelink.com/en/docs/android/master/com/smartdevicelink/proxy/rpc/AudioPassThruCapabilities/).!@ It can retrieve the `AudioPassThruCapabilities` that the head unit supports.
 
@@ -112,19 +112,19 @@ Audio capture can be ended in 4 ways:
 
 1. Audio pass thru has timed out.
 
-    * If the Audio Pass Thru has proceeded longer than the requested timeout duration, Core will end this request with a `resultCode` of `SUCCESS`. You should expect to handle this Audio Pass Thru as though it was successful.
+    * If the audio pass thru has proceeded longer than the requested timeout duration, Core will end this request with a `resultCode` of `SUCCESS`. You should handle this audio pass thru though it was successful.
 
 2. Audio pass thru was closed due to user pressing "Cancel".
 
-    * If the Audio Pass Thru was displayed, and the user pressed the "Cancel" button, you will receive a `resultCode` of `ABORTED`. You should expect to ignore this Audio Pass Thru.
+    * If the audio pass thru was displayed, and the user pressed the "Cancel" button, you will receive a `resultCode` of `ABORTED`. You should ignore this audio pass thru.
 
 3. Audio pass thru was closed due to user pressing "Done".
 
-    * If the Audio Pass Thru was displayed, and the user pressed the "Done" button, you will receive a `resultCode` of `SUCCESS`. You should expect to handle this Audio Pass Thru as though it was successful.
+    * If the audio pass thru was displayed and the user pressed the "Done" button, you will receive a `resultCode` of `SUCCESS`. You should handle this audio pass thru as though it was successful.
 
 4. Audio pass thru was ended due to the developer ending the request.
 
-    * If the Audio Pass Thru was displayed, but you have established on your own that you no longer need to capture audio data, you can send an @![iOS]`SDLEndAudioPassThru`!@@![android,javaSE,javaEE]`EndAudioPassThru`!@ RPC.
+    * If the audio pass thru was displayed, but you have established on your own that you no longer need to capture audio data, you can send an @![iOS]`SDLEndAudioPassThru`!@@![android,javaSE,javaEE]`EndAudioPassThru`!@ RPC.
 
 @![iOS]
 ##### Objective-C
