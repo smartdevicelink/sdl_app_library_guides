@@ -1,17 +1,20 @@
 # Getting Microphone Audio
 Capturing in-car audio allows developers to interact with users by requesting raw audio data provided to them from the car's microphones. In order to gather the raw audio from the vehicle, you must leverage the @![iOS][`SDLPerformAudioPassThru`](https://smartdevicelink.com/en/docs/iOS/master/Classes/SDLPerformAudioPassThru/)!@@![android,javaSE,javaEE]`PerformAudioPassThru`!@ RPC.
 
-SDL does not support automatic speech cancellation detection, so if this feature is desired, it is up to the developer to implement. The user may press an "OK" or "Cancel" button, the dialog may timeout, or you may close the dialog with @![iOS]`SDLEndAudioPassThru`!@ @![android,javaSE,javaEE]`EndAudioPassThru`!@.
-
-In order to know the currently supported audio capture capabilities of the connected head unit, please refer to the @![iOS]`SDLSystemCapabilityManager.audioPassThruCapabilities` [documentation](https://smartdevicelink.com/en/docs/iOS/master/Classes/SDLRegisterAppInterfaceResponse/).!@ @![android,javaSE,javaEE] `sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.AUDIO_PASSTHROUGH)` [documentation](https://smartdevicelink.com/en/docs/android/master/com/smartdevicelink/proxy/rpc/AudioPassThruCapabilities/).!@ It can retrieve the `AudioPassThruCapabilities` that the head unit supports.
+SDL does not support automatic speech cancellation detection, so if this feature is desired, it is up to the developer to implement. The user may press an "OK" or "Cancel" button, the dialog may timeout, or you may close the dialog with @![iOS]`SDLEndAudioPassThru`!@@![android,javaSE,javaEE]`EndAudioPassThru`!@.
 
 !!! NOTE
 SDL does not support an open microphone. However, SDL is working on wake-word support in the future. You may implement a voice command and start an audio pass thru session when that voice command occurs.
 !!!
 
 ## Starting Audio Capture
-To initiate audio capture, first you must construct a @![iOS]`SDLPerformAudioPassThru`!@ @![android,javaSE,javaEE]`PerformAudioPassThru`!@ request. Currently, SDL only supports sampling rates of 16 khz and bit rates of 16 bit.
+To initiate audio capture, first construct a @![iOS]`SDLPerformAudioPassThru`!@@![android,javaSE,javaEE]`PerformAudioPassThru`!@ request. You must use a sampling rate, bit rate, and audio type supported by the head unit. To get the head unit's supported audio capture capabilities, check the @![iOS]`SDLSystemCapabilityManager.audioPassThruCapabilities`!@@![android,javaSE,javaEE] `sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.AUDIO_PASSTHROUGH)`!@ after successfully connecting to the head unit.
 
+| Audio Pass Thru Capability | Parameter Name  |  Description |
+| ------------- | ------------- | ------------- |
+| Sampling Rate | samplingRate | The sampling rate |
+| Bits Per Sample | bitsPerSample | The sample depth in bit |
+| Audio Type | bitsPerSample | The audio type |
 
 @![iOS]
 ##### Objective-C
