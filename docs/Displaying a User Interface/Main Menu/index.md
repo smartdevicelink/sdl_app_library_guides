@@ -1,12 +1,8 @@
 # Main Menu
 You have two different options when creating menus. One is to simply add items to the default menu available in every template. The other is to create a custom menu that pops up when needed. You can find more information about these popups in the [Popup Menus and Keyboards](Displaying a User Interface/Popup Menus and Keyboards) section.
 
-#### Menu Templates
-##### Generic HMI
+#### Menu Template
 ![Generic - Menu Appearance](assets/Generic_menu_dark.png)
-
-##### Ford HMI
-![SYNC 3 - Menu Appearance](assets/SYNC3_menu.jpg)
 
 !!! NOTE
 Every template has a main menu button. The position of this button varies between templates and cannot be removed from the template. Some OEMs may format certain templates to not display the main menu button if you have no menu items (such as the navigation map view).
