@@ -156,10 +156,10 @@ lockScreenConfig.setEnabled(false);
 ```
 !@
 
+@![iOS]
 ### Making the Lock Screen Always On
 The lock screen manager is configured to dismiss the lock screen when it is safe to do so. To always have the lock screen visible when the device is connected to the head unit, simply update the lock screen configuration. 
 
-@![iOS]
 ##### Objective-C
 ```objc
 SDLLockScreenConfiguration *lockScreenConfiguration = [SDLLockScreenConfiguration enabledConfiguration];
@@ -172,10 +172,3 @@ let lockScreenConfiguration = SDLLockScreenConfiguration.enabledConfiguration()
 lockScreenConfiguration.showInOptionalState = true
 ```
 !@
-
-@![android]
-```java
-// TODO
-```
-!@
-
