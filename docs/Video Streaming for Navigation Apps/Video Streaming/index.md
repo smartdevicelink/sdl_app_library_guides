@@ -129,14 +129,14 @@ public static class MyDisplay extends SdlRemoteDisplay{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.sdl);
+        setContentView(R.layout.stream);
 
-        final Button button1 = (Button) findViewById(R.id.button_1);
+        Button button = findViewById(R.id.button);
 
-        button1.setOnTouchListener(new View.OnTouchListener() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                Log.d(TAG, "Received motion event for button1");
+            public void onClick(View view) {
+                Log.i(TAG, "Button Clicked");
             }
         });
     }
