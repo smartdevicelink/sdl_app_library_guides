@@ -326,6 +326,10 @@ retrievedSoftButtonObject.transitionToNextState();
 !@
 
 ### Highlighting the SoftButton
+![Generic HMI](assets/On.png)
+
+![Generic HMI](assets/Off.png)
+
 @![iOS]
 ##### Objective-C
 ```objc
