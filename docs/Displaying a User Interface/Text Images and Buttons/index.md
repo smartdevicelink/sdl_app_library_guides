@@ -279,7 +279,7 @@ SDLSoftButtonObject *softButtonObject = [[SDLSoftButtonObject alloc] initWithNam
 self.sdlManager.screenManager.softButtonObjects = @[softButtonObject];
 
 // Transition to a new state
-SDLSoftButtonObject *retrieSoftButtonObject = [self.sdlManager.screenManager softButtonObjectNamed:@"<#Soft Button Object Name#>"];
+SDLSoftButtonObject *retrievedSoftButtonObject = [self.sdlManager.screenManager softButtonObjectNamed:@"<#Soft Button Object Name#>"];
 [retrievedSoftButtonObject transitionToNextState];
 ```
 
@@ -287,7 +287,7 @@ SDLSoftButtonObject *retrieSoftButtonObject = [self.sdlManager.screenManager sof
 ```swift
 let softButtonState1 = SDLSoftButtonState(stateName: "<#Soft Button State Name#>", text: "<#Button Label Text#>", artwork: <#SDLArtwork#>)
 let softButtonState2 = SDLSoftButtonState(stateName: "<#Soft Button State Name#>", text: "<#Button Label Text#>", artwork: <#SDLArtwork#>)
-let softButtonObject = SDLSoftButtonObject(name: "<#Soft Button Object Name#>", states: [softButtonState1, softButtonState2], initialStateName: <#Soft Button State#>.name  ) { (buttonPress, buttonEvent) in
+let softButtonObject = SDLSoftButtonObject(name: "<#Soft Button Object Name#>", states: [softButtonState1, softButtonState2], initialStateName: <#Soft Button State#>.name) { (buttonPress, buttonEvent) in
     guard buttonPress != nil else { return }
     <#Button Selected#>
 }
@@ -325,15 +325,14 @@ retrievedSoftButtonObject.transitionToNextState();
 ```
 !@
 
-### Highlighting the SoftButton
+### Highlighting the Soft Button
 
-#### Highlight Images Examples
 
 ##### Highlight On
-![Generic HMI](assets/Generic_On.png)
+![Generic HMI](assets/ford_sync3_soft_button_highlight_on.png)
 
 ##### Highlight Off
-![Generic HMI](assets/Generic_Off.png)
+![Generic HMI](assets/ford_sync3_soft_button_highlight_off.png)
 
 @![iOS]
 ##### Objective-C
