@@ -272,14 +272,14 @@ When the soft button state needs to be updated, simply tell the `SoftButtonObjec
 ```objc
 SDLSoftButtonState *softButtonState1 = [[SDLSoftButtonState alloc] initWithStateName:@"<#Soft Button State Name#>" text:@"<#Button Label Text#>" artwork:<#SDLArtwork#>];
 SDLSoftButtonState *softButtonState2 = [[SDLSoftButtonState alloc] initWithStateName:@"<#Soft Button State Name#>" text:@"<#Button Label Text#>" artwork:<#SDLArtwork#>];
-SDLSoftButtonObject *softButtonObject = [[SDLSoftButtonObject alloc] initWithName:@"<#Soft Button Object Name#>" states:@[softButtonState1, softButtonState2] initialStateName:@"<#Soft Button State Name#>" handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
+SDLSoftButtonObject *softButtonObject = [[SDLSoftButtonObject alloc] initWithName:@"<#Soft Button Object Name#>" states:@[softButtonState1, softButtonState2] initialStateName:<#Soft Button State#>.name handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     if (buttonPress == nil) { return; }
     <#Button Selected#>
 }];
 self.sdlManager.screenManager.softButtonObjects = @[softButtonObject];
 
 // Transition to a new state
-SDLSoftButtonObject *retrievedSoftButtonObject = [self.sdlManager.screenManager softButtonObjectNamed:@"<#Soft Button Object Name#>"];
+SDLSoftButtonObject *retrieSoftButtonObject = [self.sdlManager.screenManager softButtonObjectNamed:@"<#Soft Button Object Name#>"];
 [retrievedSoftButtonObject transitionToNextState];
 ```
 
@@ -287,7 +287,7 @@ SDLSoftButtonObject *retrievedSoftButtonObject = [self.sdlManager.screenManager 
 ```swift
 let softButtonState1 = SDLSoftButtonState(stateName: "<#Soft Button State Name#>", text: "<#Button Label Text#>", artwork: <#SDLArtwork#>)
 let softButtonState2 = SDLSoftButtonState(stateName: "<#Soft Button State Name#>", text: "<#Button Label Text#>", artwork: <#SDLArtwork#>)
-let softButtonObject = SDLSoftButtonObject(name: "<#Soft Button Object Name#>", states: [softButtonState1, softButtonState2], initialStateName: "") { (buttonPress, buttonEvent) in
+let softButtonObject = SDLSoftButtonObject(name: "<#Soft Button Object Name#>", states: [softButtonState1, softButtonState2], initialStateName: <#Soft Button State#>.name  ) { (buttonPress, buttonEvent) in
     guard buttonPress != nil else { return }
     <#Button Selected#>
 }
@@ -326,9 +326,14 @@ retrievedSoftButtonObject.transitionToNextState();
 !@
 
 ### Highlighting the SoftButton
-![Generic HMI](assets/On.png)
 
-![Generic HMI](assets/Off.png)
+#### Highlight Images Examples
+
+##### Highlight On
+![Generic HMI](assets/Generic_On.png)
+
+##### Highlight Off
+![Generic HMI](assets/Generic_Off.png)
 
 @![iOS]
 ##### Objective-C
