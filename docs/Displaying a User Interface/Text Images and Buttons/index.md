@@ -264,6 +264,51 @@ sdlManager.getScreenManager().setSoftButtonObjects(Collections.singletonList(sof
 ```
 !@
 
+### Highlighting the Soft Button
+
+##### Highlight On
+![Generic HMI](assets/ford_sync3_soft_button_highlight_on.png)
+
+##### Highlight Off
+![Generic HMI](assets/ford_sync3_soft_button_highlight_off.png)
+
+@![iOS]
+##### Objective-C
+```objc
+SDLSoftButtonState *highlightOn = [[SDLSoftButtonState alloc] initWithStateName:@"<#Soft Button State Name#>" text:@"On" artwork:<#SDLArtwork#>];
+highlightOn.highlighted = YES;
+
+SDLSoftButtonState *highlightOff = [[SDLSoftButtonState alloc] initWithStateName:@"<#Soft Button State Name#>" text:@"Off" artwork:<#SDLArtwork#>];
+highlightOff.highlighted = NO;
+
+__weak typeof(self) weakSelf = self;
+SDLSoftButtonObject *highlightButton = [[SDLSoftButtonObject alloc] initWithName:@"HighlightButton" states:@[highlightOn, highlightOff] initialStateName:highlightOn.name handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
+if (buttonPress == nil) { return; }
+SDLSoftButtonObject *transitionHighlight = [weakSelf.sdlManager.screenManager softButtonObjectNamed:@"HighlightButton"];
+[transitionHighlight transitionToNextState];
+}];
+```
+##### Swift
+```swift
+let highlightOn = SDLSoftButtonState(stateName: "<#Soft Button State Name#>", text: "On", artwork: <#SDLArtwork#>)
+highlightOn.isHighlighted = true
+let highlightOff = SDLSoftButtonState(stateName: "<#Soft Button State Name#>", text: "Off", artwork: <#SDLArtwork#>)
+highlightOff.isHighlighted = false
+
+return SDLSoftButtonObject(name: "HighlightButton", states: [highlightOn, highlightOff], initialStateName: highlightOn.name) { [unowned self] (buttonPress, buttonEvent) in
+guard buttonPress != nil else { return }
+let transitionHighlight = self.sdlManager.screenManager.softButtonObjectNamed("HighlightButton")
+transitionHighlight?.transitionToNextState()
+}
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+`//ToDO add example`
+```
+!@
+
 ### Updating the Soft Button State
 When the soft button state needs to be updated, simply tell the `SoftButtonObject` to transition to the next state. If your button states do not cycle in a predictable order, you can also tell the soft button the state to transition to by passing the `stateName` of the new soft button state.
 
@@ -322,52 +367,6 @@ sdlManager.getScreenManager().setSoftButtonObjects(Collections.singletonList(sof
 // Transition to a new state
 SoftButtonObject retrievedSoftButtonObject = sdlManager.getScreenManager().getSoftButtonObjectByName("softButtonObject");
 retrievedSoftButtonObject.transitionToNextState();
-```
-!@
-
-### Highlighting the Soft Button
-
-
-##### Highlight On
-![Generic HMI](assets/ford_sync3_soft_button_highlight_on.png)
-
-##### Highlight Off
-![Generic HMI](assets/ford_sync3_soft_button_highlight_off.png)
-
-@![iOS]
-##### Objective-C
-```objc
-SDLSoftButtonState *highlightOn = [[SDLSoftButtonState alloc] initWithStateName:@"<#Soft Button State Name#>" text:@"On" artwork:<#SDLArtwork#>];
-highlightOn.highlighted = YES;
-
-SDLSoftButtonState *highlightOff = [[SDLSoftButtonState alloc] initWithStateName:@"<#Soft Button State Name#>" text:@"Off" artwork:<#SDLArtwork#>];
-highlightOff.highlighted = NO;
-
-__weak typeof(self) weakSelf = self;
-SDLSoftButtonObject *highlightButton = [[SDLSoftButtonObject alloc] initWithName:@"HighlightButton" states:@[highlightOn, highlightOff] initialStateName:highlightOn.name handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
-    if (buttonPress == nil) { return; }
-    SDLSoftButtonObject *transitionHighlight = [weakSelf.sdlManager.screenManager softButtonObjectNamed:@"HighlightButton"];
-    [transitionHighlight transitionToNextState];
-}];
-```
-##### Swift
-```swift
-let highlightOn = SDLSoftButtonState(stateName: "<#Soft Button State Name#>", text: "On", artwork: <#SDLArtwork#>)
-highlightOn.isHighlighted = true
-let highlightOff = SDLSoftButtonState(stateName: "<#Soft Button State Name#>", text: "Off", artwork: <#SDLArtwork#>)
-highlightOff.isHighlighted = false
-
-return SDLSoftButtonObject(name: "HighlightButton", states: [highlightOn, highlightOff], initialStateName: highlightOn.name) { [unowned self] (buttonPress, buttonEvent) in
-    guard buttonPress != nil else { return }
-    let transitionHighlight = self.sdlManager.screenManager.softButtonObjectNamed("HighlightButton")
-    transitionHighlight?.transitionToNextState()
-}
-```
-!@
-
-@![android,javaSE,javaEE]
-```java
-`//ToDO add example`
 ```
 !@
 
