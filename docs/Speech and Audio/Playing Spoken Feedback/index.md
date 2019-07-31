@@ -130,7 +130,6 @@ speak.setOnRPCResponseListener(new OnRPCResponseListener() {
 
     @Override
     public void onError(int correlationId, Result resultCode, String info) {
-        super.onError(correlationId, resultCode, info);
         Log.i(TAG, "onError: " + info);
     }
 });
