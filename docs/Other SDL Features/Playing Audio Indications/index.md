@@ -7,15 +7,15 @@ The first step is to make sure the audio file is available on the remote system.
 @![iOS]
 ##### Objective-C
 ```objc
-SDLFile *audioFile = [[SDLFile alloc] initWithFileURL:<#(File location on disk)#> name:<#(Audio file's reference for usage)#> persistent:<#(True if the file is generic beyond just this session)#>];
+SDLFile *audioFile = [[SDLFile alloc] initWithFileURL:<#File location on disk#> name:<#Audio file name#> persistent:<#True if the file will be used beyond just this session#>];
 [self.sdlManager.fileManager uploadFile:audioFile completionHandler:^(BOOL success, NSUInteger bytesAvailable, NSError * _Nullable error) {
-    <#(audio file is ready if success is true)#>
+    <#audio file is ready if success is true#>
 }];
 ```
 
 ##### Swift
 ```swift
-let audioFile = SDLFile(fileURL: <#File Location on disk#>, name: <#Audio file's reference for usage#>, persistent: <#True if the file is generic beyond just this session#>)
+let audioFile = SDLFile(fileURL: <#File Location on disk#>, name: <#Audio file name#>, persistent: <#True if the file will be used beyond just this session#>)
 sdlManager.fileManager.upload(file: audioFile) { (success, bytesAvailable, error) in
     <#audio file is ready if success is true#>
 }
@@ -24,7 +24,7 @@ sdlManager.fileManager.upload(file: audioFile) { (success, bytesAvailable, error
 
 @![android, javaSE, javaEE]
 ```java
-SdlFile audioFile = new SdlFile("Audio File Name", FileType.AUDIO_MP3, Uri.parse("File Location"), true);
+SdlFile audioFile = new SdlFile("Audio file name", FileType.AUDIO_MP3, Uri.parse("File Location"), true);
 sdlManager.getFileManager().uploadFile(audioFile, new CompletionListener() {
 	@Override
 	public void onComplete(boolean success) {
@@ -42,15 +42,15 @@ Now that the file is uploaded to the remote system, it can be used in various RP
 @![iOS]
 ##### Objective-C
 ```objc
-SDLAlert *alert = [[SDLAlert alloc] initWithAlertText1:<#(nullable NSString *)#> alertText2:<#(nullable NSString *)#> duration:<#(UInt16)#>];
-alert.ttsChunks = [SDLTTSChunk fileChunksWithName:<#(File's name)#>];
+SDLAlert *alert = [[SDLAlert alloc] initWithAlertText1:<#nullable NSString *#> alertText2:<#nullable NSString *#> duration:<#UInt16#>];
+alert.ttsChunks = [SDLTTSChunk fileChunksWithName:<#Audio file name#>];
 [self.sdlManager sendRequest:alert];
 ```
 
 ##### Swift
 ```swift
-let alert = SDLAlert(alertText1: <#T##String?#>, alertText2: <#T##String?#>, duration: <#T##UInt16#>)
-alert.ttsChunks = SDLTTSChunk.fileChunks(withName: <#File's name#>)
+let alert = SDLAlert(alertText1: <#String?#>, alertText2: <#String?#>, duration: <#UInt16#>)
+alert.ttsChunks = SDLTTSChunk.fileChunks(withName: <#Audio file name#>)
 sdlManager.send(alert)
 ```
 !@
@@ -61,6 +61,6 @@ Alert alert = new Alert();
 alert.setAlertText1("Alert Text 1");
 alert.setAlertText2("Alert Text 2");
 alert.setDuration(5000);
-alert.setTtsChunks(Arrays.asList(new TTSChunk("Audio File Name", SpeechCapabilities.FILE)));
+alert.setTtsChunks(Arrays.asList(new TTSChunk("Audio file name", SpeechCapabilities.FILE)));
 ```
 !@

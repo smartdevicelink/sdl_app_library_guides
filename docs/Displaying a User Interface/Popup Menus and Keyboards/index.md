@@ -15,7 +15,7 @@ Presenting a popup menu is similiar to presenting a modal view to request input 
 | Present Keyboard           | A keyboard shows up immediately in the HMI |
 
 ### Creating Cells
-An @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`SdlChoiceCell`!@ is similar to a @![iOS]`UITableViewCell`!@ @![android, javaSE, javaEE]`RecyclerView`!@ without the ability to configure your own UI. We provide several properties on the @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`SdlChoiceCell`!@ to set your data, but the layout itself is determined by the manufacturer of the head unit.
+An @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`ChoiceCell`!@ is similar to a @![iOS]`UITableViewCell`!@ @![android, javaSE, javaEE]`RecyclerView`!@ without the ability to configure your own UI. We provide several properties on the @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`ChoiceCell`!@ to set your data, but the layout itself is determined by the manufacturer of the head unit.
 
 !!! IMPORTANT
 On many systems, including VR commands will be *exponentially* slower than not including them. However, including them is necessary for a user to be able to respond to your prompt with their voice.
@@ -30,13 +30,16 @@ SDLChoiceCell *fullCell = [[SDLChoiceCell alloc] initWithText:<#(nonnull NSStrin
 
 ##### Swift
 ```swift
-let cell = SDLChoiceCell(text: <#T##String#>)
-let cell = SDLChoiceCell(text: <#T##String#>, secondaryText: <#T##String?#>, tertiaryText: <#T##String?#>, voiceCommands: <#T##[String]?#>, artwork: <#T##SDLArtwork?#>, secondaryArtwork: <#T##SDLArtwork?#>)
+let cell = SDLChoiceCell(text: <#String#>)
+let fullCell = SDLChoiceCell(text: <#String#>, secondaryText: <#String?#>, tertiaryText: <#String?#>, voiceCommands: <#[String]?#>, artwork: <#SDLArtwork?#>, secondaryArtwork: <#SDLArtwork?#>)
 ```
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+```java
+ChoiceCell cell = new ChoiceCell("cell1 text", Collections.singletonList("cell1"), null);
+ChoiceCell fullCell = new ChoiceCell("cell2 text", "cell2 secondaryText", "cell2 tertiaryText", Collections.singletonList("cell2"), image1Artwork, image2Artwork);
+```
 !@
 
 ### Preloading Cells
@@ -52,28 +55,30 @@ If you know the content you will show in the popup menu long before the menu is 
 
 ##### Swift
 ```swift
-sdlManager.screenManager.preloadChoices(<#T##choices: [SDLChoiceCell]##[SDLChoiceCell]#>) { (error) in
+sdlManager.screenManager.preloadChoices(<#choices: [SDLChoiceCell]#>) { (error) in
     <#code#>
 }
 ```
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+```java
+sdlManager.getScreenManager().preloadChoices(Arrays.asList(cell, fullCell), new CompletionListener() {
+    @Override
+    public void onComplete(boolean b) {
+        // <#code#>
+    }
+});
+```
 !@
 
 ### Presenting a Menu
 To show a popup menu to the user, you must present the menu. If some or all of the cells in the menu have not yet been preloaded, calling the `present` API will preload the cells and then present the menu once all the cells have been uploaded. Calling `present` without preloading the cells can take longer than if the cells were preloaded earlier in the app's lifecycle especially if your cell has voice commands. Subsequent menu presentations using the same cells will be faster because the library will reuse those cells (unless you have deleted them).
 
 ##### Menu - List
-###### Ford HMI
-![SYNC 3 - List Only Interaction Layout](assets/SYNC3_popup_menu_row.jpg)
-
-###### Generic HMI
 ![Generic - List Only Interaction Layout](assets/Generic_popup_menu_row.png)
 
 ##### Menu - Icon
-###### Ford HMI
 ![SYNC 3 - Icon Only Interaction Layout](assets/SYNC3_popup_menu_tiles.jpg)
 
 !!! NOTE
@@ -81,10 +86,10 @@ When you preload a cell, you **do not** need to maintain a reference to it. If y
 !!!
 
 #### Creating a Choice Set
-In order to present a menu, you must bundle together a bunch of @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`SdlChoiceCell`!@s into an @![iOS]`SDLChoiceSet`!@ @![android, javaSE, javaEE]`SdlChoiceSet`!@.
+In order to present a menu, you must bundle together a bunch of @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`ChoiceCell`!@s into an @![iOS]`SDLChoiceSet`!@ @![android, javaSE, javaEE]`ChoiceSet`!@.
 
 !!! IMPORTANT
-If the @![iOS]`SDLChoiceSet`!@ @![android, javaSE, javaEE]`SdlChoiceSet`!@ contains an invalid set of @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`SdlChoiceCell`!@s, the initializer will return @![iOS]`nil`!@ @![android, javaSE, javaEE]`null`!@. This can happen, for example, if you have duplicate title text or if some, but not all choices have voice commands.
+If the @![iOS]`SDLChoiceSet`!@ @![android, javaSE, javaEE]`ChoiceSet`!@ contains an invalid set of @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`ChoiceCell`!@s, @![iOS]the initializer will return `nil`!@ @![android, javaSE, javaEE]presenting the `ChoiceSet` will fail!@. This can happen, for example, if you have duplicate title text or if some, but not all choices have voice commands.
 !!!
 
 Some notes on various parameters (full documentation is available as API documentation on this website):
@@ -93,9 +98,9 @@ Some notes on various parameters (full documentation is available as API documen
 @![iOS]- Delegate: You must implement this delegate to receive callbacks based on the user's interaction with the menu
 !@
 @![android, javaSE, javaEE]
-- Listeners: `// TODO: Android / Java content`
+- Listeners: You must implement this listener interface to receive callbacks based on the user's interaction with the menu
 !@
-- Layout: You may present your menu as a set of tiles (like a @![iOS]`UICollectionView`!@ @![android, javaSE, javaEE]`GridView`!@) or a list (like a @![iOS]`UITableView`!@ @![android, javaSE, javaEE]`ListView`!@). If you are using tiles, it's recommended to use artworks on each item.
+- Layout: You may present your menu as a set of tiles (like a @![iOS]`UICollectionView`!@ @![android, javaSE, javaEE]`GridView`!@) or a list (like a @![iOS]`UITableView`!@ @![android, javaSE, javaEE]`RecyclerView`!@). If you are using tiles, it's recommended to use artworks on each item.
 
 @![iOS]
 ##### Objective-C
@@ -105,12 +110,25 @@ SDLChoiceSet *choiceSet = [[SDLChoiceSet alloc] initWithTitle:<#(nonnull NSStrin
 
 ##### Swift
 ```swift
-let choiceSet = SDLChoiceSet(title: <#T##String#>, delegate: <#T##SDLChoiceSetDelegate#>, layout: <#T##SDLChoiceSetLayout#>, timeout: <#T##TimeInterval#>, initialPromptString: <#T##String?#>, timeoutPromptString: <#T##String?#>, helpPromptString: <#T##String?#>, vrHelpList: <#T##[SDLVRHelpItem]?#>, choices: <#T##[SDLChoiceCell]#>)
+let choiceSet = SDLChoiceSet(title: <#String#>, delegate: <#SDLChoiceSetDelegate#>, layout: <#SDLChoiceSetLayout#>, timeout: <#TimeInterval#>, initialPromptString: <#String?#>, timeoutPromptString: <#String?#>, helpPromptString: <#String?#>, vrHelpList: <#[SDLVRHelpItem]?#>, choices: <#[SDLChoiceCell]#>)
 ```
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+```java
+ChoiceSet choiceSet = new ChoiceSet("ChoiceSet Title", Arrays.asList(cell, fullCell), new ChoiceSetSelectionListener() {
+    @Override
+    public void onChoiceSelected(ChoiceCell choiceCell, TriggerSource triggerSource, int rowIndex) {
+        // You will be passed the `cell` that was selected, the manner in which it was selected (voice or text), and the index of the cell that was passed.      
+        // <#handle selection#>    
+    }
+
+    @Override
+    public void onError(String error) {
+        // <#handle error#>              
+    }
+});
+```
 !@
 
 @![iOS]
@@ -144,11 +162,6 @@ extension <#Class Name#>: SDLChoiceSetDelegate {
 ```
 !@
 
-@![android, javaSE, javaEE]
-#### Implementing the Choice Set Listeners
-`// TODO: Android / Java content`
-!@
-
 #### Presenting the Menu with a Mode
 Finally, you will present the menu. When you do so, you must choose a `mode` to present it in. If you have no `vrCommands` on the choice cell you should choose `manualOnly`. If `vrCommands` are available, you may choose `voiceRecognitionOnly` or `both`.
 
@@ -163,34 +176,33 @@ It may seem that the answer is to always use `both`. However, remember that you 
 | Both              | Interactions can occur both manually or through VR |
 
 ##### Menu - Manual Only Mode
-###### Ford HMI
-![SYNC 3 - Menu - Manual Only](assets/SYNC3_popup_menu_row.jpg)
+![Generic - Menu - Manual Only](assets/Generic_popup_menu_row.png)
 
 ##### Menu - Voice Only Mode
-###### Ford HMI
 ![SYNC 3 - Menu - Voice Only](assets/SYNC3_popup_menu_voice_recognition.jpg)
 
 @![iOS]
 ##### Objective-C
 ```objc
-[self.manager.screenManager presentChoiceSet:<#(nonnull SDLChoiceSet *)#> mode:<#(nonnull SDLInteractionMode)#>];
+[self.sdlManager.screenManager presentChoiceSet:<#(nonnull SDLChoiceSet *)#> mode:<#(nonnull SDLInteractionMode)#>];
 ```
 
 ##### Swift
 ```swift
-manager.screenManager.present(<#T##choiceSet: SDLChoiceSet##SDLChoiceSet#>, mode: <#T##SDLInteractionMode#>)
+sdlManager.screenManager.present(<#choiceSet: SDLChoiceSet#>, mode: <#SDLInteractionMode#>)
 ```
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+```java
+sdlManager.getScreenManager().presentChoiceSet(choiceSet, InteractionMode.MANUAL_ONLY);
+```
 !@
 
 ### Presenting a Searchable Menu
 In addition to presenting a standard menu, you can also present a "searchable" menu, that is, a menu with a keyboard input box at the top. For more information on implementing the keyboard portion of this menu, see *Presenting a Keyboard* below.
 
 ##### Menu with Search
-###### Ford HMI
 ![SYNC 3 - Menu with Search Interaction Layout](assets/SYNC3_popup_menu_with_search.jpg)
 
 @![iOS]
@@ -201,16 +213,18 @@ In addition to presenting a standard menu, you can also present a "searchable" m
 
 ##### Swift
 ```swift
-sdlManager.screenManager.presentSearchableChoiceSet(<#T##choiceSet: SDLChoiceSet##SDLChoiceSet#>, mode: <#T##SDLInteractionMode#>, with: <#T##SDLKeyboardDelegate#>)
+sdlManager.screenManager.presentSearchableChoiceSet(<#choiceSet: SDLChoiceSet#>, mode: <#SDLInteractionMode#>, with: <#SDLKeyboardDelegate#>)
 ```
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+```java
+sdlManager.getScreenManager().presentSearchableChoiceSet(choiceSet, InteractionMode.MANUAL_ONLY, keyboardListener);
+```
 !@
 
 ### Deleting Cells
-You can discover cells that have been preloaded on `screenManager.preloadedCells`. You may then pass an array of cells to delete from the remote system. Many times this is not necessary, but if you have deleted artwork used by cells, for example, you should delete the cells as well.
+You can discover cells that have been preloaded on @![iOS]`screenManager.preloadedCells`!@ @![android, javaSE, javaEE]`sdlManager.getScreenManager().getPreloadedChoices()`!@. You may then pass an array of cells to delete from the remote system. Many times this is not necessary, but if you have deleted artwork used by cells, for example, you should delete the cells as well.
 
 @![iOS]
 ##### Objective-C
@@ -220,12 +234,14 @@ You can discover cells that have been preloaded on `screenManager.preloadedCells
 
 ##### Swift
 ```swift
-sdlManager.screenManager.deleteChoices(<#T##choices: [SDLChoiceCell]##[SDLChoiceCell]#>)
+sdlManager.screenManager.deleteChoices(<#choices: [SDLChoiceCell]#>)
 ```
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+```java
+sdlManager.getScreenManager().deleteChoices(<List of choices to delete>);
+```
 !@
 
 ## Presenting a Keyboard
@@ -236,7 +252,6 @@ Keyboards are unavailable for use in many countries when the driver is distracte
 !!!
 
 ##### Keyboard Search
-###### Ford HMI
 ![SYNC 3 - Keyboard Search](assets/SYNC3_keyboard_search.jpg)
 
 @![iOS]
@@ -247,12 +262,14 @@ Keyboards are unavailable for use in many countries when the driver is distracte
 
 ##### Swift
 ```swift
-sdlManager.screenManager.presentKeyboard(withInitialText: <#T##String#>, delegate: <#T##SDLKeyboardDelegate#>)
+sdlManager.screenManager.presentKeyboard(withInitialText: <#String#>, delegate: <#SDLKeyboardDelegate#>)
 ```
 !@
 
 @![android, javaSE, javaEE]
-`// TODO: Android / Java content`
+```java
+sdlManager.getScreenManager().presentKeyboard("Initial text", null, keyboardListener);
+```
 !@
 
 @![iOS]
@@ -344,7 +361,54 @@ extension <#Class Name#>: SDLKeyboardDelegate {
 
 @![android, javaSE, javaEE]
 ### Implementing the Keyboard Listeners
-`// TODO: Android / Java content`
+Using the `KeyboardListener` involves implementing five methods: 
+
+```java
+KeyboardListener keyboardListener = new KeyboardListener() {
+    @Override
+    public void onUserDidSubmitInput(String inputText, KeyboardEvent event) {
+        switch (event) {
+            case ENTRY_VOICE:
+                // <#The user decided to start voice input, you should start an AudioPassThru session if supported#>
+                break;
+            case ENTRY_SUBMITTED:
+                // <#The user submitted some text with the keyboard#>
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onKeyboardDidAbortWithReason(KeyboardEvent event) {
+        switch (event) {
+            case ENTRY_CANCELLED:
+                // <#The user cancelled the keyboard interaction#>
+                break;
+            case ENTRY_ABORTED:
+                // <#The system aborted the keyboard interaction#>
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void updateAutocompleteWithInput(String currentInputText, KeyboardAutocompleteCompletionListener keyboardAutocompleteCompletionListener) {
+        // <#Check the input text and return a string with the current autocomplete text#>
+    }
+
+    @Override
+    public void updateCharacterSetWithInput(String currentInputText, KeyboardCharacterSetCompletionListener keyboardCharacterSetCompletionListener) {
+        // <#Check the input text and return a set of characters to allow the user to enter#>
+    }
+
+    @Override
+    public void onKeyboardDidSendEvent(KeyboardEvent event, String currentInputText) {
+        // <#This is sent upon every event, such as keypresses, cancellations, and aborting#>
+    }
+};
+```
 !@
 
 ## Using RPCs

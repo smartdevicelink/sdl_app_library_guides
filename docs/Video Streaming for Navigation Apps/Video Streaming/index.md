@@ -1,9 +1,9 @@
 # Video Streaming
 @![iOS]
-To stream video from a SDL app use the `SDLStreamingMediaManager` class. A reference to this class is available from the `SDLManager`. You can choose to create your own video streaming manager, or you can use the `CarWindow` API to easily stream video to the head unit.
+To stream video from a SDL app use the `SDLStreamingMediaManager` class. A reference to this class is available from the `SDLManager`. You can choose to create your own video streaming manager or you can use the `CarWindow` API to easily stream video to the head unit.
 
 !!! NOTE
-Due to an iOS limitation, video can not be streamed when the app on the device is backgrounded or when the device is sleeping/locked. Text will automatically be displayed telling the user that they must bring your app to the foreground.
+Due to an iOS limitation, video can not be streamed when the app on the phone is backgrounded or when the phone is sleeping/locked. Text will automatically be displayed telling the user that they must bring the application to the foreground.
 !!!
 
 ### Transports for Video Streaming
@@ -14,13 +14,13 @@ Transports are automatically handled for you. As of SDL v6.1, the iOS library wi
 
 To start, you will have to set a `rootViewController`, which can easily be set using one of the convenience initializers: `autostreamingInsecureConfigurationWithInitialViewController:` or `autostreamingSecureConfigurationWithSecurityManagers:initialViewController:`
 
-!!! NOTE
-The View Controller you set to the `rootViewController` must be a subclass of `SDLCarWindowViewController` or have only one `supportedInterfaceOrientation`. The `SDLCarWindowViewController` prevents the `rootViewController` from rotating. This is necessary because rotation between landscape and portrait modes can cause the app to crash while the `CarWindow` API is capturing an image.
+!!! MUST
+The view controller you are streaming must be a subclass of `SDLCarWindowViewController` or have only one `supportedInterfaceOrientation`. The `SDLCarWindowViewController` class prevents the `rootViewController` from rotating. This is necessary because rotation between landscape and portrait modes can cause the app to crash while the `CarWindow` API is capturing an image.
 !!!
 
 There are several customizations you can make to `CarWindow` to optimize it for your video streaming needs:
 
-1. Choose how `CarWindow` captures and renders the screen using the `carWindowRenderingType` enum. 
+1. Choose how `CarWindow` captures and renders the screen using the `carWindowRenderingType` enum.
 2. By default, when using `CarWindow`, the `SDLTouchManager` will sync it's touch updates to the framerate. To disable this feature, set `SDLTouchManager.enableSyncedPanning` to `NO`.
 3. `CarWindow` hard-dictates the framerate of the app. To change the framerate and other parameters, update `SDLStreamingMediaConfiguration.customVideoEncoderSettings`.
 
@@ -35,19 +35,39 @@ There are several customizations you can make to `CarWindow` to optimize it for 
 
 
 ### Showing a New View Controller
-Simply update `self.sdlManager.streamManager.rootViewController` to the new view controller. This will also update the [haptic parser](Video Streaming for Navigation Apps/Supporting Haptic Input).
+Simply update `sdlManager.streamManager.rootViewController` to the new view controller. This will also update the [haptic parser](Video Streaming for Navigation Apps/Supporting Haptic Input).
 
 ### Mirroring the Device Screen vs. Off-Screen UI
-It is recommended that you set the `rootViewController` to an off-screen view controller, i.e. you should instantiate a new `UIViewController` class and use it to set the `rootViewController`. This view controller will appear on-screen in the car, while remaining off-screen on the device. It is also possible, but not recommended, to display your on-device-screen UI to the car screen by setting the `rootViewController` to `UIApplication.sharedApplication.keyWindow.rootViewController`. However, if you mirror your device's screen, your app's UI will resize to match the head unit's screen size, thus making most of the app's UI off-screen.
+It is recommended that you use an off-screen view controller for your UI. This view controller will appear on-screen in the car, while remaining off-screen on the device. It is possible to mirror your device screen, however we strongly recommend against this course of action.
 
-!!! NOTE
-If mirroring your device's screen, the `rootViewController` should only be set after `viewDidAppear:animated` is called. Setting the `rootViewController` in `viewDidLoad` or `viewWillAppear:animated` can cause weird behavior when setting the new frame.
+#### Off-Screen
+To set an off-screen view controller all you have to do is instantiate a new `UIViewController` class and use it to set the `rootViewController`. 
 
-If setting the `rootViewController` when the app returns to the foreground, the app should register for the `UIApplicationDidBecomeActive` notification and not the `UIApplicationWillEnterForeground` notification. Setting the frame after a notification from the latter can also cause weird behavior when setting the new frame.
-!!!
+##### Objective-C
+```objc
+UIViewController *offScreenViewController = <#Aquire a UIViewController#>;
+self.sdlManager.streamManager.rootViewController = offScreenViewController;
+```
+
+##### Swift
+```swift
+let offScreenViewController = <#Aquire a UIViewController#>
+sdlManager.streamManager?.rootViewController = offScreenViewController
+```
+
+#### Mirroring the Device Screen
+If you must use mirroring to stream video please be aware of the following limitations:
+
+1. Getting the app's topmost view controller using `UIApplication.shared.keyWindow.rootViewController` will not work as this will give you SDL's lock screen view controller. The projected image you see in the car will be distorted because the view controller being projected will not be resized correctly. Instead, the `rootViewController` should be set in the `viewDidAppear:animated` method of the `UIViewController`.
+1. If mirroring your device's screen, the `rootViewController` should only be set after `viewDidAppear:animated` is called. Setting the `rootViewController` in `viewDidLoad` or `viewWillAppear:animated` can cause weird behavior when setting the new frame.
+1. If setting the `rootViewController` when the app returns to the foreground, the app should register for the `UIApplicationDidBecomeActive` notification and not the `UIApplicationWillEnterForeground` notification. Setting the frame after a notification from the latter can also cause weird behavior when setting the new frame.
+1. Configure your SDL app so the lock screen is [always visible](Getting Started/Adding the Lock Screen). If you do not do this, video streaming can stop when the device is rotated.
+
+### Showing a New View Controller
+Simply update the streaming media manager's `rootViewController` to the new view controller. This will also automatically update the [haptic parser](Video Streaming for Navigation Apps/Supporting Haptic Input).
 
 ## Sending Raw Video Data
-If you decide to send raw video data instead of relying on the `CarWindow` API to generate that video data from a view controller, you must maintain the lifecycle of the video stream as there are limitations to when video is allowed to stream. The app's HMI state on the head unit and the app's application state on the device determines whether video can stream. Due to an iOS limitation, video cannot be streamed when the app on the device is no longer in the foreground and/or the device is locked/sleeping. 
+If you decide to send raw video data instead of relying on the `CarWindow` API to generate that video data from a view controller, you must maintain the lifecycle of the video stream as there are limitations to when video is allowed to stream. The app's HMI state on the head unit and the app's application state on the device determines whether video can stream. Due to an iOS limitation, video cannot be streamed when the app on the device is no longer in the foreground and/or the device is locked/sleeping.
 
 The lifecycle of the video stream is maintained by the SDL library. The `SDLManager.streamingMediaManager` can be accessed once the `start` method of `SDLManager` is called. The `SDLStreamingMediaManager` automatically takes care of determining screen size and encoding to the correct video format.
 
@@ -109,14 +129,14 @@ public static class MyDisplay extends SdlRemoteDisplay{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.sdl);
+        setContentView(R.layout.stream);
 
-        final Button button1 = (Button) findViewById(R.id.button_1);
+        Button button = findViewById(R.id.button);
 
-        button1.setOnTouchListener(new View.OnTouchListener() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                Log.d(TAG, "Received motion event for button1");
+            public void onClick(View view) {
+                Log.i(TAG, "Button Clicked");
             }
         });
     }
@@ -124,11 +144,31 @@ public static class MyDisplay extends SdlRemoteDisplay{
 ```
 
 !!! Note
-If you are obfuscating the code in your app, make sure to exclude your class that extends `SdlRemoteDisplay`. For more information on how to do that, you can check [Proguard Guidelines](/guides/android/proguard-guidelines/).
+If you are obfuscating the code in your app, make sure to exclude your class that extends `SdlRemoteDisplay`. For more information on how to do that, you can check [Proguard Guidelines](Getting Started/Proguard Guidelines).
 !!!
 
 ## Managing the Stream
 The `VideoStreamingManager` can be used to start streaming video after the `SdlManager` has successfully been started. This is performed by calling the method `startRemoteDisplayStream(Context context, final Class<? extends SdlRemoteDisplay> remoteDisplay, final VideoStreamingParameters parameters, final boolean encrypted)`.
+
+```java
+public static class MyDisplay extends SdlRemoteDisplay {
+
+    public MyDisplay(Context context, Display display) {
+        super(context, display);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.stream);
+
+        String videoUri = "android.resource://" + context.getPackageName() + "/" + R.raw.sdl;
+        VideoView videoView = findViewById(R.id.videoView);
+        videoView.setVideoURI(Uri.parse(videoUri));
+        videoView.start();
+    }
+}
+```
 
 ```java
 if (sdlManager.getVideoStreamManager() != null) {
@@ -155,12 +195,12 @@ onRPCNotificationListenerMap.put(FunctionID.ON_HMI_STATUS, new OnRPCNotification
     public void onNotified(RPCNotification notification) {
         OnHMIStatus status = (OnHMIStatus) notification;
 		if (status != null && status.getHmiLevel() == HMILevel.HMI_NONE) {
-			
-			//Stop the stream 
+
+			//Stop the stream
 			if (sdlManager.getVideoStreamManager() != null && sdlManager.getVideoStreamManager().isStreaming()) {
 				sdlManager.getVideoStreamManager().stopStreaming();
 			}
-			
+
 		}
     }
 });

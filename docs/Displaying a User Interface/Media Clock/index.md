@@ -7,11 +7,7 @@ The media clock constists of three parts: the progress bar, a current position l
 Ensure your app has an `appType` of media and you are using the media template before implementing this feature.
 !!!
 
-###### Generic HMI
 ![Generic - Media Clock](assets/generic_mediaclock.png)
-
-###### Ford HMI
-![SYNC 3 - Media Clock](assets/ford_mediaclock.png)
 
 ## Counting Up
 In order to count up using the timer, you will need to set a start time that is less than the end time. The "bottom end" of the media clock will always start at `0:00` and the "top end" will be the end time you specified. The start time can be set to any position between 0 and the end time. For example, if you are starting a song at `0:30` and it ends at `4:13` the media clock timer progress bar will start at the `0:30` position and start incrementing up automatically every second until it reaches `4:13`. The current position label will start counting upwards from `0:30` and the remaining time label will start counting down from `3:43`. When the end is reached, the current time label will read `4:13`, the remaining time label will read `0:00` and the progress bar will stop moving.
