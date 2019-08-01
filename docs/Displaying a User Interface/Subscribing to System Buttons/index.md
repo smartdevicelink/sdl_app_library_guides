@@ -101,20 +101,34 @@ sdlManager.sendRPC(subscribeButtonRequest);
 ```
 !@
 
+
+## Preset Buttons
+
 ![Ford - Preset Soft Button Menu Button](assets/ford_sync_presetMenu.png)
 
 ![Ford - Preset Soft Buttons List](assets/ford_sync_presetOptions.png)
 
-## Preset Buttons
-Preset buttons may not appear as soft buttons on certain templates. You can check if an HMI supports subscrbing to preset buttons by calling  @![iOS] `SDLManager`s   `DisplayCapabilities` `numCustomPresetsAvailable`!@ @![android,javaSE, javaEE] !@ property.
-
+Preset buttons may not appear as soft buttons on certain templates. You can check if an HMI supports subscrbing to preset buttons by calling  @![iOS] `SDLManager`s   `displayCapabilities` `numCustomPresetsAvailable`!@ @![android,javaSE, javaEE] !@ property.
+@![iOS]
 ##### Objective-C
 ```objc
+SDLSubscribeButton *preset1 = [[SDLSubscribeButton alloc] initWithButtonName: SDLButtonNamePreset1 handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
+    if (buttonPress == nil) { return; }
+    <#Button Selected#>
+}];
+
+SDLSubscribeButton *preset2 = [[SDLSubscribeButton alloc] initWithButtonName: SDLButtonNamePreset2 handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
+    if (buttonPress == nil) { return; }
+    <#Button Selected#>
+}];
+
+[self.sdlManager sendRequests:@[preset1, preset2] progressHandler:nil completionHandler:^(BOOL success) {
+    if(success) {
+        <#subscribe button sent successfully#>
+    }
+}];
 ```
 ```swift
-guard error != nil else { return }
-SDLLog.e("Textfields, graphics and soft buttons failed to update: \(error!.localizedDescription)")
-
 let preset1 = SDLSubscribeButton(buttonName: .preset1, handler: { (buttonPress, buttonEvent) in
     guard buttonPress != nil else { return }
     <#subscribe button selected#>
@@ -125,11 +139,15 @@ let preset2 = SDLSubscribeButton(buttonName: .preset2, handler: { (buttonPress, 
     <#subscribe button selected#>
 })
 
-self.sdlManager.send([preset1, preset2], progressHandler: nil, completionHandler: { (didFinish) in
-    guard didFinish else { return }
+self.sdlManager.send([preset1, preset2], progressHandler: nil, completionHandler: { (success) in
+    guard success else { return }
     <#subscriptions sent#>
 })
-})
 ```
+!@
+
+@![android,javaSE,javaEE]
+```TODO: Add example```
+!@
 
 
