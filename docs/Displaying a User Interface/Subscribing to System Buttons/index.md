@@ -100,3 +100,36 @@ subscribeButtonRequest.setButtonName(ButtonName.OK);
 sdlManager.sendRPC(subscribeButtonRequest);
 ```
 !@
+
+![Ford - Preset Soft Button Menu Button](assets/ford_sync_presetMenu.png)
+
+![Ford - Preset Soft Buttons List](assets/ford_sync_presetOptions.png)
+
+## Preset Buttons
+Preset buttons may not appear as soft buttons on certain templates. You can check if an HMI supports subscrbing to preset buttons by calling  @![iOS] `SDLManager`s   `DisplayCapabilities` `numCustomPresetsAvailable`!@ @![android,javaSE, javaEE] !@ property.
+
+##### Objective-C
+```objc
+```
+```swift
+guard error != nil else { return }
+SDLLog.e("Textfields, graphics and soft buttons failed to update: \(error!.localizedDescription)")
+
+let preset1 = SDLSubscribeButton(buttonName: .preset1, handler: { (buttonPress, buttonEvent) in
+    guard buttonPress != nil else { return }
+    <#subscribe button selected#>
+})
+
+let preset2 = SDLSubscribeButton(buttonName: .preset2, handler: { (buttonPress, buttonEvent) in
+    guard buttonPress != nil else { return }
+    <#subscribe button selected#>
+})
+
+self.sdlManager.send([preset1, preset2], progressHandler: nil, completionHandler: { (didFinish) in
+    guard didFinish else { return }
+    <#subscriptions sent#>
+})
+})
+```
+
+
