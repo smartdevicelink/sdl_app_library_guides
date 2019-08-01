@@ -283,9 +283,9 @@ highlightOff.highlighted = NO;
 
 __weak typeof(self) weakSelf = self;
 SDLSoftButtonObject *highlightButton = [[SDLSoftButtonObject alloc] initWithName:@"HighlightButton" states:@[highlightOn, highlightOff] initialStateName:highlightOn.name handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
-if (buttonPress == nil) { return; }
-SDLSoftButtonObject *transitionHighlight = [weakSelf.sdlManager.screenManager softButtonObjectNamed:@"HighlightButton"];
-[transitionHighlight transitionToNextState];
+    if (buttonPress == nil) { return; }
+    SDLSoftButtonObject *transitionHighlight = [weakSelf.sdlManager.screenManager softButtonObjectNamed:@"HighlightButton"];
+    [transitionHighlight transitionToNextState];
 }];
 ```
 ##### Swift
@@ -296,9 +296,9 @@ let highlightOff = SDLSoftButtonState(stateName: "<#Soft Button State Name#>", t
 highlightOff.isHighlighted = false
 
 return SDLSoftButtonObject(name: "HighlightButton", states: [highlightOn, highlightOff], initialStateName: highlightOn.name) { [unowned self] (buttonPress, buttonEvent) in
-guard buttonPress != nil else { return }
-let transitionHighlight = self.sdlManager.screenManager.softButtonObjectNamed("HighlightButton")
-transitionHighlight?.transitionToNextState()
+    guard buttonPress != nil else { return }
+    let transitionHighlight = self.sdlManager.screenManager.softButtonObjectNamed("HighlightButton")
+    transitionHighlight?.transitionToNextState()
 }
 ```
 !@
