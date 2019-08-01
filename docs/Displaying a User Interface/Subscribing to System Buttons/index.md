@@ -108,7 +108,7 @@ sdlManager.sendRPC(subscribeButtonRequest);
 
 ![Ford - Preset Soft Buttons List](assets/ford_sync_presetOptions.png)
 
-Preset buttons may not appear as soft buttons on certain templates. You can check if an HMI supports subscrbing to preset buttons by calling  @![iOS] `SDLManager`s   `displayCapabilities` `numCustomPresetsAvailable`!@ @![android,javaSE, javaEE] !@ property.
+Preset buttons may not appear as soft buttons on certain templates. If an HMI does not suppport adding subscribed buttons to the template, a hard button press will still send messages to the subscribed preset button. You can check if an HMI supports subscrbing to preset buttons by calling  @![iOS] `SDLManager`s   `displayCapabilities` `numCustomPresetsAvailable`!@ @![android,javaSE, javaEE] !@ property.
 @![iOS]
 ##### Objective-C
 ```objc
