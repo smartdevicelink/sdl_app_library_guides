@@ -108,16 +108,16 @@ sdlManager.sendRPC(subscribeButtonRequest);
 
 ![Ford - Preset Soft Buttons List](assets/ford_sync_presetOptions.png)
 
-Preset buttons may not appear as soft buttons on certain templates. If an HMI does not suppport adding subscribed buttons to the template, a hard button press will still send messages to the subscribed preset button. You can check if an HMI supports subscrbing to preset buttons by calling  @![iOS] `SDLManager`s   `displayCapabilities` `numCustomPresetsAvailable`!@ @![android,javaSE, javaEE] !@ property.
+Preset buttons may not work in the same way as seen on the above screenshots on all head units. Some head units may have physical buttons on their console and these will trigger the subscribed button. You can check if an HMI supports subscribing to preset buttons, and how many, by calling the @![iOS] `SDLManager.systemCapabilityManager.displayCapabilities.numCustomPresetsAvailable`!@@![android,javaSE, javaEE] // TODO !@ property.
 @![iOS]
 ##### Objective-C
 ```objc
-SDLSubscribeButton *preset1 = [[SDLSubscribeButton alloc] initWithButtonName: SDLButtonNamePreset1 handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
+SDLSubscribeButton *preset1 = [[SDLSubscribeButton alloc] initWithButtonName:SDLButtonNamePreset1 handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     if (buttonPress == nil) { return; }
     <#Button Selected#>
 }];
 
-SDLSubscribeButton *preset2 = [[SDLSubscribeButton alloc] initWithButtonName: SDLButtonNamePreset2 handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
+SDLSubscribeButton *preset2 = [[SDLSubscribeButton alloc] initWithButtonName:SDLButtonNamePreset2 handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     if (buttonPress == nil) { return; }
     <#Button Selected#>
 }];
