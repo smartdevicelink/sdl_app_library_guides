@@ -128,6 +128,8 @@ SDLSubscribeButton *preset2 = [[SDLSubscribeButton alloc] initWithButtonName:SDL
     }
 }];
 ```
+
+##### Swift
 ```swift
 let preset1 = SDLSubscribeButton(buttonName: .preset1, handler: { (buttonPress, buttonEvent) in
     guard buttonPress != nil else { return }
