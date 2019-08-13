@@ -352,7 +352,9 @@ SDLLogConfiguration.default()
 The file manager configuration allows you to configure retry behavior for uploading files and images. The default configuration attempts one re-upload, but will fail after that.
 
 ##### Objective-C
+```objc
 [SDLFileManagerConfiguration defaultConfiguration];
+```
 
 ##### Swift
 ```swift
