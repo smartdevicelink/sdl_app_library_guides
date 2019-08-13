@@ -24,7 +24,7 @@ The first step to publishing an app service is to create an @![iOS]`SDLAppServic
 
 ##### Objective-C
 ```objc
-SDLAppServiceManifest *manifest = [[SDLAppServiceManifest alloc] initWithServiceType:SDLAppServiceTypeMedia];
+SDLAppServiceManifest *manifest = [[SDLAppServiceManifest alloc] initWithAppServiceType:SDLAppServiceTypeMedia];
 manifest.serviceName = @"My Media App"; // Must be unique across app services.
 manifest.serviceIcon = [[SDLImage alloc] initWithName:@"Service Icon Name" isTemplate:NO]; // Previously uploaded service icon. This could be the same as your app icon.
 manifest.allowAppConsumers = @YES; // Whether or not other apps can view your data in addition to the head unit. If set to `NO` only the head unit will have access to this data.
@@ -35,7 +35,7 @@ manifest.mediaServiceManifest = <#Code#> // Covered below
 
 ##### Swift
 ```swift
-let manifest = SDLAppServiceManifest(serviceType: .media)
+let manifest = SDLAppServiceManifest(appServiceType: .media)
 manifest.serviceIcon = SDLImage(name:"Service Icon Name", isTemplate: false) // Previously uploaded service icon. This could be the same as your app icon.
 manifest.allowAppConsumers = true; // Whether or not other apps can view your data in addition to the head unit. If set to `NO` only the head unit will have access to this data.
 manifest.rpcSpecVersion = SDLSyncMsgVersion(majorVersion: 5, minorVersion: 0, patchVersion: 0) // An *optional* parameter that limits the RPC spec versions you can understand to the provided version *or below*.
