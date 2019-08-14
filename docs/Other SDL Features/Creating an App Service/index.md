@@ -508,7 +508,7 @@ Second, you need to respond to the request when you receive it with your app ser
     SDLGetAppServiceDataResponse *response = [[SDLGetAppServiceDataResponse alloc] initWithAppServiceData:<#Your App Service Data#>];
     response.correlationID = getAppServiceData.correlationID;
     response.success = @YES;
-    response.resultCode = SDLVehicleDataResultCodeSuccess;
+    response.resultCode = SDLResultCodeSuccess;
     response.info = @"<#Use to provide more information about an error#>";
 
     [self.sdlManager sendRPC:response];
