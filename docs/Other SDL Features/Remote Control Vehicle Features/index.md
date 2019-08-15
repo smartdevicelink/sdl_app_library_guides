@@ -54,9 +54,9 @@ The following table lists what control items are in each control module.
 | Radio Band | band | AM,FM,XM  | Get/Set/Notification | | Since SDL v4.5 |
 | Radio Frequency | frequencyInteger / frequencyFraction | 0-1710, 0-9 | Get/Set/Notification | value range depends on band | Since SDL v4.5 |
 | Radio RDS Data | rdsData | RdsData struct | Get/Notification | read only | Since SDL v4.5 |
-| Available HD Channels | availableHdChannels | Array size 0-8, values 0-7 | Get/Notification | read only, added in SDL v.6.0 | Since SDL v6.0, replaces availableHDs |
+| Available HD Channels | availableHdChannels | Array size 0-8, values 0-7 | Get/Notification | read only | Since SDL v6.0, replaces availableHDs |
 | Available HD Channels (DEPRECATED) | availableHDs | 1-7 (Deprecated in SDL v.6.0) (1-3 before SDL v.5.0) | Get/Notification | read only | Since SDL v4.5, updated in v5.0, deprecated in v6.0 |
-| Current HD Channel | hdChannel | 0-7 (1-3 before SDL v.5.0) (1-7 between SDL v.5.0-6.0) | Get/Set/Notification |  Since SDL v4.5, updated in SDL v5.0, updated in SDL v6.0 |
+| Current HD Channel | hdChannel | 0-7 (1-3 before SDL v.5.0) (1-7 between SDL v.5.0-6.0) | Get/Set/Notification |  | Since SDL v4.5, updated in SDL v5.0, updated in SDL v6.0 |
 | Radio Signal Strength | signalStrength | 0-100% | Get/Notification | read only | Since SDL v4.5 |
 | Signal Change Threshold | signalStrengthThreshold | 0-100% | Get/Notification | read only | Since SDL v4.5 |
 | Radio State | state | Acquiring, acquired, multicast, not_found | Get/Notification | read only | Since SDL v4.5 |
@@ -78,9 +78,9 @@ The following table lists what control items are in each control module.
 | Head Support Horizontal Positon | headSupportHorizontalPosition | 0-100% | Get/Set/Notification | Adjust head support forward/backward, 0 means the nearest position to the front, 100% means the furthest position from the front | Since SDL v5.0 |
 | Head Support Vertical Position | headSupportVerticalPosition | 0-100% | Get/Set/Notification | Adjust head support height (up or down), 0 means the lowest position, 100% means the highest position | Since SDL v5.0 |
 | Seat Massaging Enabled | massageEnabled | true, false | Get/Set/Notification | Indicates whether massage is enabled for a seat | Since SDL v5.0 |
-| Massage Mode | massageMode | MassageModeData struct | Get/Set/Notification | list of massage mode of each zone | Since SDL v5.0 |
-| Massage Cushion Firmness | massageCushionFirmness | MassageCushionFirmness struct | Get/Set/Notification | list of firmness of each massage cushion | Since SDL v5.0 |
-| Seat memory | memory | SeatMemoryAction struct | Get/Set/Notification | seat memory | Since SDL v5.0 |
+| Massage Mode | massageMode | MassageModeData struct | Get/Set/Notification | List of massage mode of each zone | Since SDL v5.0 |
+| Massage Cushion Firmness | massageCushionFirmness | MassageCushionFirmness struct | Get/Set/Notification | List of firmness of each massage cushion | Since SDL v5.0 |
+| Seat memory | memory | SeatMemoryAction struct | Get/Set/Notification | Seat memory | Since SDL v5.0 |
 
 #### Audio
 
@@ -88,7 +88,7 @@ The following table lists what control items are in each control module.
 | --------------- | ------------ | ------------ | ------------ | ------------ | ------------ |
 | Audio Volume | volume | 0%-100% | Get/Set/Notification | The audio source volume level | Since SDL v5.0 |
 | Audio Source | source | PrimaryAudioSource enum | Get/Set/Notification | Defines one of the available audio sources | Since SDL v5.0 |
-| Keep Context | keepContext | true, false | Set only | control whether HMI shall keep current application context or switch to default media UI/APP associated with the audio source | Since SDL v5.0 |
+| Keep Context | keepContext | true, false | Set only | Controls whether the HMI will keep the current application context or switch to the default media UI/APP associated with the audio source | Since SDL v5.0 |
 | Equilizer Settings | equalizerSettings | EqualizerSettings struct | Get/Set/Notification | Defines the list of supported channels (band) and their current/desired settings on HMI | Since SDL v5.0 |
 
 #### Light
