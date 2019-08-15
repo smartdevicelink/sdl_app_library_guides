@@ -101,9 +101,9 @@ The following table lists what control items are in each control module.
 
 | Control Item | RPC Item Name | Value Range | Type | Comments | Version Changes |
 | --------------- | ------------ | ------------ | ------------ | ------------ | ------------ |
-| Display Mode | displayMode | DAY, NIGHT, AUTO | Get/Set/Notification | Current display mode of the HMI display | Since SDL v5.0 |
-| Distance Unit | distanceUnit | MILES, KILOMETERS | Get/Set/Notification | Distance Unit used in the HMI (for maps/tracking distances) | Since SDL v5.0 |
-| Temperature Unit | temperatureUnit | FAHRENHEIT, CELSIUS | Get/Set/Notification | Temperature Unit used in the HMI (for temperature measuring systems) | Since SDL v5.0 |
+| Display Mode | displayMode | Day, Night, Auto | Get/Set/Notification | Current display mode of the HMI display | Since SDL v5.0 |
+| Distance Unit | distanceUnit | Miles, Kilometers | Get/Set/Notification | Distance Unit used in the HMI (for maps/tracking distances) | Since SDL v5.0 |
+| Temperature Unit | temperatureUnit | Fahrenheit, Celsius | Get/Set/Notification | Temperature Unit used in the HMI (for temperature measuring systems) | Since SDL v5.0 |
 
 ### Remote Control Button Presses
 The remote control framework also allows mobile applications to send simulated button press events for the following common buttons in the vehicle.
