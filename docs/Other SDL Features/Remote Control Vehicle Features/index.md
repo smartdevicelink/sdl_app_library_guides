@@ -26,59 +26,84 @@ Currently, the remote control feature supports these modules:
 
 The following table lists what control items are in each control module.
 
-| RC Module | Control Item | RPC Item Name | Value Range | Type | Comments | Version Changes |
+#### Climate
+
+| Control Item | RPC Item Name | Value Range | Type | Comments | Version Changes |
 | --------------- | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
-| **Climate**     | Climate Enable | climateEnable | on, off | Get/Set/Notification | Enabled to turn on the climate system, Disabled to turn off the climate system. All other climate items need climate enabled to work. | Since SDL v6.0 |
-|                 | Current Cabin Temperature | currentTemperature | N/A | Get/Notification | read only, value range depends on OEM | Since SDL v4.5 |
-|                 | Desired Cabin Temperature | desiredTemperature | N/A | Get/Set/Notification | value range depends on OEM | Since SDL v4.5 |
-|                 | AC Setting | acEnable | on, off | Get/Set/Notification |  | Since SDL v4.5 |
-|                 | AC MAX Setting | acMaxEnable | on, off  | Get/Set/Notification |  | Since SDL v4.5 |
-|                 | Air Recirculation Setting | circulateAirEnable | on, off  | Get/Set/Notification |  | Since SDL v4.5 |
-|                 | Auto AC Mode Setting | autoModeEnable | on, off | Get/Set/Notification |  | Since SDL v4.5 |
-|                 | Defrost Zone Setting | defrostZone | front, rear, all, none  | Get/Set/Notification |  | Since SDL v4.5 |
-|                 | Dual Mode Setting | dualModeEnable | on, off  | Get/Set/Notification |  | Since SDL v4.5 |
-|                 | Fan Speed Setting | fanSpeed | 0%-100% | Get/Set/Notification |  | Since SDL v4.5 |
-|                 | Ventilation Mode Setting | ventilationMode | upper, lower, both, none | Get/Set/Notification |  | Since SDL v4.5 |
-|                 | Heated Steering Wheel Enabled | heatedSteeringWheelEnable | on, off | Get/Set/Notification | | Since SDL v5.0 |
-|                 | Heated Windshield Enabled | heatedWindshieldEnable | on, off | Get/Set/Notification | | Since SDL v5.0 |
-|                 | Heated Rear Window Enabled | heatedRearWindowEnable | on, off | Get/Set/Notification | | Since SDL v5.0 |
-|                 | Heated Mirrors Enabled | heatedMirrorsEnable | on, off | Get/Set/Notification | | Since SDL v5.0 |
-| **Radio**       | Radio Enabled | radioEnable | true,false  | Get/Set/Notification | read only, all other radio control items need radio enabled to work | Since SDL v4.5 |
-|                 | Radio Band | band | AM,FM,XM  | Get/Set/Notification | | Since SDL v4.5 |
-|                 | Radio Frequency | frequencyInteger / frequencyFraction | 0-1710, 0-9 | Get/Set/Notification | value range depends on band | Since SDL v4.5 |
-|                 | Radio RDS Data | rdsData | RdsData struct | Get/Notification | read only | Since SDL v4.5 |
-|                 | Available HD Channels | availableHdChannels | Array size 0-8, values 0-7 | Get/Notification | read only, added in SDL v.6.0 | Since SDL v6.0, replaces availableHDs |
-|                 | Available HD Channels (DEPRECATED) | availableHDs | 1-7 (Deprecated in SDL v.6.0) (1-3 before SDL v.5.0) | Get/Notification | read only | Since SDL v4.5, updated in v5.0, deprecated in v6.0 |
-|                 | Current HD Channel | hdChannel | 0-7 (1-3 before SDL v.5.0) (1-7 between SDL v.5.0-6.0) | Get/Set/Notification |  Since SDL v4.5, updated in SDL v5.0, updated in SDL v6.0 |
-|                 | Radio Signal Strength | signalStrength | 0-100% | Get/Notification | read only | Since SDL v4.5 |
-|                 | Signal Change Threshold | signalStrengthThreshold | 0-100% | Get/Notification | read only | Since SDL v4.5 |
-|                 | Radio State | state | Acquiring, acquired, multicast, not_found | Get/Notification | read only | Since SDL v4.5 |
-|                 | SIS Data | sisData | See SisData struct | Get/Notification | read only | Since SDL v5.0 |
-| **Seat**        | Seat Heating Enabled | true, false | Get/Set/Notification | Indicates whether heating is enabled for a seat |
-|                 | Seat Cooling Enabled | true, false | Get/Set/Notification | Indicates whether cooling is enabled for a seat |
-|                 | Seat Heating  level | 0-100% | Get/Set/Notification | Level of the seat heating |
-|                 | Seat Cooling  level | 0-100% | Get/Set/Notification | Level of the seat cooling |
-|                 | Seat Horizontal Positon | 0-100% | Get/Set/Notification | Adjust a seat forward/backward, 0 means the nearest position to the steering wheel, 100% means the furthest position from the steering wheel |
-|                 | Seat Vertical Position | 0-100% | Get/Set/Notification | Adjust seat height (up or down) in case there is only one actuator for seat height, 0 means the lowest position, 100% means the highest position|
-|                 | Seat-Front Vertical Position | 0-100% | Get/Set/Notification | Adjust seat front height (in case there are two actuators for seat height), 0 means the lowest position, 100% means the highest position|
-|                 | Seat-Back Vertical Position | 0-100% | Get/Set/Notification | Adjust seat back height (in case there are two actuators for seat height), 0 means the lowest position, 100% means the highest position|
-|                 | Seat Back Tilt Angle | 0-100% | Get/Set/Notification | Backrest recline, 0 means the angle that back top is nearest to the steering wheel, 100% means the angle that back top is furthest from the steering wheel|
-|                 | Head Support Horizontal Positon | 0-100% | Get/Set/Notification | Adjust head support forward/backward, 0 means the nearest position to the front, 100% means the furthest position from the front |
-|                 | Head Support Vertical Position | 0-100% | Get/Set/Notification | Adjust head support height (up or down), 0 means the lowest position, 100% means the highest position|
-|                 | Seat Massaging Enabled | true, false | Get/Set/Notification | Indicates whether massage is enabled for a seat |
-|                 | Massage Mode | List of Struct {MassageZone, MassageMode} | Get/Set/Notification | list of massage mode of each zone |
-|                 | Massage Cushion Firmness | List of Struct {Cushion, 0-100%} | Get/Set/Notification | list of firmness of each massage cushion|
-|                 | Seat memory    | Struct{ id, label, action (SAVE/RESTORE/NONE)} | Get/Set/Notification | seat memory |
-| **Audio**       | Audio volume | 0%-100%| Get/Set/Notification | The audio source volume level |
-|                 | Audio Source | MOBILE_APP, RADIO_TUNER, CD, BLUETOOTH, USB, etc. see PrimaryAudioSource| Get/Set/Notification | defines one of the available audio sources |
-|                 | keep Context | true, false| Set only | control whether HMI shall keep current application context or switch to default media UI/APP associated with the audio source|
-|                 | Equilizer Settings | Struct {Channel ID as integer, Channel setting as 0%-100%} | Get/Set/Notification | Defines the list of supported channels (band) and their current/desired settings on HMI
-| **Light**       | Light Status | ON, OFF| Get/Set/Notification | turn on/off a single light or all lights in a group |
-|                 | Light Density | float 0.0-1.0| Get/Set/Notification | change the density/dim a single light or all lights in a group|
-|                 | Light Color | RGB color| Get/Set/Notification | change the color scheme of a single light or all lights in a group|
-| **HMI Settings** | Display Mode | DAY, NIGHT, AUTO | Get/Set/Notification | Current display mode of the HMI display |
-|                 | Distance Unit | MILES, KILOMETERS | Get/Set/Notification | Distance Unit used in the HMI (for maps/tracking distances) |
-|                 | Temperature Unit | FAHRENHEIT, CELSIUS | Get/Set/Notification | Temperature Unit used in the HMI (for temperature measuring systems) |
+| Climate Enable | climateEnable | on, off | Get/Set/Notification | Enabled to turn on the climate system, Disabled to turn off the climate system. All other climate items need climate enabled to work. | Since SDL v6.0 |
+| Current Cabin Temperature | currentTemperature | N/A | Get/Notification | read only, value range depends on OEM | Since SDL v4.5 |
+| Desired Cabin Temperature | desiredTemperature | N/A | Get/Set/Notification | value range depends on OEM | Since SDL v4.5 |
+| AC Setting | acEnable | on, off | Get/Set/Notification |  | Since SDL v4.5 |
+| AC MAX Setting | acMaxEnable | on, off  | Get/Set/Notification |  | Since SDL v4.5 |
+| Air Recirculation Setting | circulateAirEnable | on, off  | Get/Set/Notification |  | Since SDL v4.5 |
+| Auto AC Mode Setting | autoModeEnable | on, off | Get/Set/Notification |  | Since SDL v4.5 |
+| Defrost Zone Setting | defrostZone | front, rear, all, none  | Get/Set/Notification |  | Since SDL v4.5 |
+| Dual Mode Setting | dualModeEnable | on, off  | Get/Set/Notification |  | Since SDL v4.5 |
+| Fan Speed Setting | fanSpeed | 0%-100% | Get/Set/Notification |  | Since SDL v4.5 |
+| Ventilation Mode Setting | ventilationMode | upper, lower, both, none | Get/Set/Notification |  | Since SDL v4.5 |
+| Heated Steering Wheel Enabled | heatedSteeringWheelEnable | on, off | Get/Set/Notification | | Since SDL v5.0 |
+| Heated Windshield Enabled | heatedWindshieldEnable | on, off | Get/Set/Notification | | Since SDL v5.0 |
+| Heated Rear Window Enabled | heatedRearWindowEnable | on, off | Get/Set/Notification | | Since SDL v5.0 |
+| Heated Mirrors Enabled | heatedMirrorsEnable | on, off | Get/Set/Notification | | Since SDL v5.0 |
+
+#### Radio
+
+| Control Item | RPC Item Name | Value Range | Type | Comments | Version Changes |
+| --------------- | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
+| Radio Enabled | radioEnable | true,false  | Get/Set/Notification | read only, all other radio control items need radio enabled to work | Since SDL v4.5 |
+| Radio Band | band | AM,FM,XM  | Get/Set/Notification | | Since SDL v4.5 |
+| Radio Frequency | frequencyInteger / frequencyFraction | 0-1710, 0-9 | Get/Set/Notification | value range depends on band | Since SDL v4.5 |
+| Radio RDS Data | rdsData | RdsData struct | Get/Notification | read only | Since SDL v4.5 |
+| Available HD Channels | availableHdChannels | Array size 0-8, values 0-7 | Get/Notification | read only, added in SDL v.6.0 | Since SDL v6.0, replaces availableHDs |
+| Available HD Channels (DEPRECATED) | availableHDs | 1-7 (Deprecated in SDL v.6.0) (1-3 before SDL v.5.0) | Get/Notification | read only | Since SDL v4.5, updated in v5.0, deprecated in v6.0 |
+| Current HD Channel | hdChannel | 0-7 (1-3 before SDL v.5.0) (1-7 between SDL v.5.0-6.0) | Get/Set/Notification |  Since SDL v4.5, updated in SDL v5.0, updated in SDL v6.0 |
+| Radio Signal Strength | signalStrength | 0-100% | Get/Notification | read only | Since SDL v4.5 |
+| Signal Change Threshold | signalStrengthThreshold | 0-100% | Get/Notification | read only | Since SDL v4.5 |
+| Radio State | state | Acquiring, acquired, multicast, not_found | Get/Notification | read only | Since SDL v4.5 |
+| SIS Data | sisData | See SisData struct | Get/Notification | read only | Since SDL v5.0 |
+
+#### Seat
+
+| Control Item | RPC Item Name | Value Range | Type | Comments | Version Changes |
+| --------------- | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
+| Seat Heating Enabled | heatingEnabled | true, false | Get/Set/Notification | Indicates whether heating is enabled for a seat | Since SDL v5.0 |
+| Seat Cooling Enabled | coolingEnabled | true, false | Get/Set/Notification | Indicates whether cooling is enabled for a seat | Since SDL v5.0 |
+| Seat Heating level | heatingLevel | 0-100% | Get/Set/Notification | Level of the seat heating | Since SDL v5.0 |
+| Seat Cooling level | coolingLevel | 0-100% | Get/Set/Notification | Level of the seat cooling | Since SDL v5.0 |
+| Seat Horizontal Positon | horizontalPosition | 0-100% | Get/Set/Notification | Adjust a seat forward/backward, 0 means the nearest position to the steering wheel, 100% means the furthest position from the steering wheel | Since SDL v5.0 |
+| Seat Vertical Position | verticalPosition | 0-100% | Get/Set/Notification | Adjust seat height (up or down) in case there is only one actuator for seat height, 0 means the lowest position, 100% means the highest position| Since SDL v5.0 |
+| Seat-Front Vertical Position | frontVerticalPosition | 0-100% | Get/Set/Notification | Adjust seat front height (in case there are two actuators for seat height), 0 means the lowest position, 100% means the highest position | Since SDL v5.0 |
+| Seat-Back Vertical Position | backVerticalPosition | 0-100% | Get/Set/Notification | Adjust seat back height (in case there are two actuators for seat height), 0 means the lowest position, 100% means the highest position | Since SDL v5.0 |
+| Seat Back Tilt Angle | backTiltAngle | 0-100% | Get/Set/Notification | Backrest recline, 0 means the angle that back top is nearest to the steering wheel, 100% means the angle that back top is furthest from the steering wheel | Since SDL v5.0 |
+| Head Support Horizontal Positon | headSupportHorizontalPosition | 0-100% | Get/Set/Notification | Adjust head support forward/backward, 0 means the nearest position to the front, 100% means the furthest position from the front | Since SDL v5.0 |
+| Head Support Vertical Position | headSupportVerticalPosition | 0-100% | Get/Set/Notification | Adjust head support height (up or down), 0 means the lowest position, 100% means the highest position | Since SDL v5.0 |
+| Seat Massaging Enabled | massageEnabled | true, false | Get/Set/Notification | Indicates whether massage is enabled for a seat | Since SDL v5.0 |
+| Massage Mode | massageMode | MassageModeData struct | Get/Set/Notification | list of massage mode of each zone | Since SDL v5.0 |
+| Massage Cushion Firmness | massageCushionFirmness | MassageCushionFirmness struct | Get/Set/Notification | list of firmness of each massage cushion | Since SDL v5.0 |
+| Seat memory | memory | SeatMemoryAction struct | Get/Set/Notification | seat memory | Since SDL v5.0 |
+
+#### Audio
+
+|Control Item | RPC Item Name | Value Range | Type | Comments | Version Changes |
+| --------------- | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
+| Audio Volume | volume | 0%-100% | Get/Set/Notification | The audio source volume level | Since SDL v5.0 |
+| Audio Source | source | PrimaryAudioSource enum | Get/Set/Notification | Defines one of the available audio sources | Since SDL v5.0 |
+| Keep Context | keepContext | true, false | Set only | control whether HMI shall keep current application context or switch to default media UI/APP associated with the audio source | Since SDL v5.0 |
+| Equilizer Settings | equalizerSettings | EqualizerSettings struct | Get/Set/Notification | Defines the list of supported channels (band) and their current/desired settings on HMI | Since SDL v5.0 |
+
+#### Light
+
+| Control Item | RPC Item Name | Value Range | Type | Comments | Version Changes |
+| --------------- | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
+| Light State | lightState | Array of LightState struct | Get/Set/Notification | | Since SDL v5.0 |
+
+#### HMI Settings
+
+| Control Item | RPC Item Name | Value Range | Type | Comments | Version Changes |
+| --------------- | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
+| Display Mode | displayMode | DAY, NIGHT, AUTO | Get/Set/Notification | Current display mode of the HMI display | Since SDL v5.0 |
+| Distance Unit | distanceUnit | MILES, KILOMETERS | Get/Set/Notification | Distance Unit used in the HMI (for maps/tracking distances) | Since SDL v5.0 |
+| Temperature Unit | temperatureUnit | FAHRENHEIT, CELSIUS | Get/Set/Notification | Temperature Unit used in the HMI (for temperature measuring systems) | Since SDL v5.0 |
 
 ### Remote Control Button Presses
 The remote control framework also allows mobile applications to send simulated button press events for the following common buttons in the vehicle.
