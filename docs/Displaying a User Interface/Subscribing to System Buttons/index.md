@@ -3,14 +3,29 @@ Subscribe buttons are used to detect changes to hard buttons located in the car'
 
 | Button  | Template | Button Type |
 | ------------- | ------------- | ------------- |
-| Play / Pause | media template only | soft button and hard button |
-| Ok | media template only | soft button and hard button |
-| Seek left | media template only | soft button and hard button |
-| Seek right | media template only | soft button and hard button |
-| Tune up | media template only | hard button |
-| Tune down | media template only | hard button |
-| Preset 0-9 | any template | hard button |
-| Search | any template | hard button |
+| Play / Pause | media only | soft button and hard button |
+| Ok | media only | soft button and hard button |
+| Seek left | media only | soft button and hard button |
+| Seek right | media only | soft button and hard button |
+| Tune up | media only | hard button |
+| Tune down | media only | hard button |
+| Preset 0-9 | any | hard button |
+| Search | any | hard button |
+| Center Location | NavigationFullscreenMap only | soft and hard button |
+| Zoom In | NavigationFullscreenMap only | soft and hard button |
+| Zoom Out | NavigationFullscreenMap only | soft and hard button |
+| Pan Up | NavigationFullscreenMap only | soft and hard button |
+| Pan Up-Right | NavigationFullscreenMap only | soft and hard button |
+| Pan Right | NavigationFullscreenMap only | soft and hard button |
+| Pan Down-Right | NavigationFullscreenMap only | soft and hard button |
+| Pan Down | NavigationFullscreenMap only | soft and hard button |
+| Pan Down-Left | NavigationFullscreenMap only | soft and hard button |
+| Pan Left | NavigationFullscreenMap only | soft and hard button |
+| Pan Up-Left | NavigationFullscreenMap only | soft and hard button |
+| Toggle Tilt | NavigationFullscreenMap only | soft and hard button |
+| Rotate Clockwise | NavigationFullscreenMap only | soft and hard button |
+| Rotate Counter-Clockwise | NavigationFullscreenMap only | soft and hard button |
+| Toggle Heading | NavigationFullscreenMap only | soft and hard button |
 
 ### Subscribe Buttons HMI
 In the screenshot below, the pause, seek left and seek right icons are subscribe buttons.

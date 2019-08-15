@@ -67,3 +67,6 @@ When compiling your app for production, make sure to include all possible OEM se
 
 ## Keyboard Input
 To present a keyboard (such as for searching for navigation destinations), you should use the @![iOS]`SDLScreenManager`!@@![android]`ScreenManager`!@'s keyboard presentation feature. For more information, see the [Popup Menus and Keyboards](Displaying a User Interface/Popup Menus and Keyboards) guide.
+
+## Navigation Subscription Buttons
+Some head units running SDL Core 6.0+ support subscription buttons designed for the navigation template (which displays your video stream). It is important to support these subscription buttons especially on head units that don't support touch input, because the head unit may support these buttons as hard buttons and it will be difficult to support these features without supporting these buttons. See [Subscribing to System Buttons](Displaying a User Interface/Subscribing to System Buttons) for a list of these navigation buttons.
