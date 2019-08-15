@@ -1,31 +1,31 @@
 # Subscribing to System Buttons
 Subscribe buttons are used to detect changes to hard buttons located in the car's center console or steering wheel. You can subscribe to the following hard buttons:
 
-| Button  | Template | Button Type |
+| Button  | Template |
 | ------------- | ------------- | ------------- |
-| Play / Pause | media only | soft button and hard button |
-| Ok | media only | soft button and hard button |
-| Seek left | media only | soft button and hard button |
-| Seek right | media only | soft button and hard button |
-| Tune up | media only | hard button |
-| Tune down | media only | hard button |
-| Preset 0-9 | any | hard button |
-| Search | any | hard button |
-| Center Location | NavigationFullscreenMap only | soft and hard button |
-| Zoom In | NavigationFullscreenMap only | soft and hard button |
-| Zoom Out | NavigationFullscreenMap only | soft and hard button |
-| Pan Up | NavigationFullscreenMap only | soft and hard button |
-| Pan Up-Right | NavigationFullscreenMap only | soft and hard button |
-| Pan Right | NavigationFullscreenMap only | soft and hard button |
-| Pan Down-Right | NavigationFullscreenMap only | soft and hard button |
-| Pan Down | NavigationFullscreenMap only | soft and hard button |
-| Pan Down-Left | NavigationFullscreenMap only | soft and hard button |
-| Pan Left | NavigationFullscreenMap only | soft and hard button |
-| Pan Up-Left | NavigationFullscreenMap only | soft and hard button |
-| Toggle Tilt | NavigationFullscreenMap only | soft and hard button |
-| Rotate Clockwise | NavigationFullscreenMap only | soft and hard button |
-| Rotate Counter-Clockwise | NavigationFullscreenMap only | soft and hard button |
-| Toggle Heading | NavigationFullscreenMap only | soft and hard button |
+| Play / Pause | Media only |
+| Ok | Media only |
+| Seek left | Media only |
+| Seek right | Media only |
+| Tune up | Media only |
+| Tune down | Media only |
+| Preset 0-9 | Any |
+| Search | Any |
+| Center Location | NavigationFullscreenMap only |
+| Zoom In | NavigationFullscreenMap only |
+| Zoom Out | NavigationFullscreenMap only |
+| Pan Up | NavigationFullscreenMap only |
+| Pan Up-Right | NavigationFullscreenMap only |
+| Pan Right | NavigationFullscreenMap only |
+| Pan Down-Right | NavigationFullscreenMap only |
+| Pan Down | NavigationFullscreenMap only |
+| Pan Down-Left | NavigationFullscreenMap only |
+| Pan Left | NavigationFullscreenMap only |
+| Pan Up-Left | NavigationFullscreenMap only |
+| Toggle Tilt | NavigationFullscreenMap only |
+| Rotate Clockwise | NavigationFullscreenMap only |
+| Rotate Counter-Clockwise | NavigationFullscreenMap only |
+| Toggle Heading | NavigationFullscreenMap only |
 
 ### Subscribe Buttons HMI
 In the screenshot below, the pause, seek left and seek right icons are subscribe buttons.
