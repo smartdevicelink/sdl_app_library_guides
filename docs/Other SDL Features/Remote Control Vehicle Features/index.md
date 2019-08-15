@@ -29,7 +29,7 @@ The following table lists what control items are in each control module.
 #### Climate
 
 | Control Item | RPC Item Name | Value Range | Type | Comments | Version Changes |
-| --------------- | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
+| --------------- | ------------ | ------------ | ------------ | ------------ | ------------ |
 | Climate Enable | climateEnable | on, off | Get/Set/Notification | Enabled to turn on the climate system, Disabled to turn off the climate system. All other climate items need climate enabled to work. | Since SDL v6.0 |
 | Current Cabin Temperature | currentTemperature | N/A | Get/Notification | read only, value range depends on OEM | Since SDL v4.5 |
 | Desired Cabin Temperature | desiredTemperature | N/A | Get/Set/Notification | value range depends on OEM | Since SDL v4.5 |
@@ -49,7 +49,7 @@ The following table lists what control items are in each control module.
 #### Radio
 
 | Control Item | RPC Item Name | Value Range | Type | Comments | Version Changes |
-| --------------- | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
+| --------------- | ------------ | ------------ | ------------ | ------------ | ------------ |
 | Radio Enabled | radioEnable | true,false  | Get/Set/Notification | read only, all other radio control items need radio enabled to work | Since SDL v4.5 |
 | Radio Band | band | AM,FM,XM  | Get/Set/Notification | | Since SDL v4.5 |
 | Radio Frequency | frequencyInteger / frequencyFraction | 0-1710, 0-9 | Get/Set/Notification | value range depends on band | Since SDL v4.5 |
@@ -65,7 +65,7 @@ The following table lists what control items are in each control module.
 #### Seat
 
 | Control Item | RPC Item Name | Value Range | Type | Comments | Version Changes |
-| --------------- | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
+| --------------- | ------------ | ------------ | ------------ | ------------ | ------------ |
 | Seat Heating Enabled | heatingEnabled | true, false | Get/Set/Notification | Indicates whether heating is enabled for a seat | Since SDL v5.0 |
 | Seat Cooling Enabled | coolingEnabled | true, false | Get/Set/Notification | Indicates whether cooling is enabled for a seat | Since SDL v5.0 |
 | Seat Heating level | heatingLevel | 0-100% | Get/Set/Notification | Level of the seat heating | Since SDL v5.0 |
@@ -85,7 +85,7 @@ The following table lists what control items are in each control module.
 #### Audio
 
 |Control Item | RPC Item Name | Value Range | Type | Comments | Version Changes |
-| --------------- | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
+| --------------- | ------------ | ------------ | ------------ | ------------ | ------------ |
 | Audio Volume | volume | 0%-100% | Get/Set/Notification | The audio source volume level | Since SDL v5.0 |
 | Audio Source | source | PrimaryAudioSource enum | Get/Set/Notification | Defines one of the available audio sources | Since SDL v5.0 |
 | Keep Context | keepContext | true, false | Set only | control whether HMI shall keep current application context or switch to default media UI/APP associated with the audio source | Since SDL v5.0 |
@@ -94,13 +94,13 @@ The following table lists what control items are in each control module.
 #### Light
 
 | Control Item | RPC Item Name | Value Range | Type | Comments | Version Changes |
-| --------------- | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
+| --------------- | ------------ | ------------ | ------------ | ------------ | ------------ |
 | Light State | lightState | Array of LightState struct | Get/Set/Notification | | Since SDL v5.0 |
 
 #### HMI Settings
 
 | Control Item | RPC Item Name | Value Range | Type | Comments | Version Changes |
-| --------------- | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
+| --------------- | ------------ | ------------ | ------------ | ------------ | ------------ |
 | Display Mode | displayMode | DAY, NIGHT, AUTO | Get/Set/Notification | Current display mode of the HMI display | Since SDL v5.0 |
 | Distance Unit | distanceUnit | MILES, KILOMETERS | Get/Set/Notification | Distance Unit used in the HMI (for maps/tracking distances) | Since SDL v5.0 |
 | Temperature Unit | temperatureUnit | FAHRENHEIT, CELSIUS | Get/Set/Notification | Temperature Unit used in the HMI (for temperature measuring systems) | Since SDL v5.0 |
