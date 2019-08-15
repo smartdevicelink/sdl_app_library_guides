@@ -26,27 +26,34 @@ Currently, the remote control feature supports these modules:
 
 The following table lists what control items are in each control module.
 
-| RC Module | Control Item | Value Range |Type | Comments |
-| --------------- | ------------ |------------ | ------------ | ------------ |
-| **Climate**     | Current Cabin Temperature |  | Get/Notification | read only, value range depends on OEM |
-|                 | Desired Cabin Temperature |  | Get/Set/Notification | value range depends on OEM |
-|                 | AC Setting | on, off | Get/Set/Notification |  |
-|                 | AC MAX Setting | on, off  | Get/Set/Notification |  |
-|                 | Air Recirculation Setting | on, off  | Get/Set/Notification |  |
-|                 | Auto AC Mode Setting | on, off  | Get/Set/Notification |  |
-|                 | Defrost Zone Setting | front, rear, all, none  | Get/Set/Notification |  |
-|                 | Dual Mode Setting | on, off  | Get/Set/Notification |  |
-|                 | Fan Speed Setting | 0%-100% | Get/Set/Notification |  |
-|                 | Ventilation Mode Setting | upper, lower, both, none  | Get/Set/Notification |  |
-| **Radio**       | Radio Enabled | true,false  | Get/Set/Notification| read only, all other radio control items need radio enabled to work|
-|                 | Radio Band | AM,FM,XM  | Get/Set/Notification| |
-|                 | Radio Frequency | | Get/Set/Notification | value range depends on band |
-|                 | Radio RDS Data | | Get/Notification | read only |
-|                 | Available HD Channel | 1-3 | Get/Notification | read only |
-|                 | Current HD Channel | 1-3 | Get/Set/Notification |
-|                 | Radio Signal Strength |  | Get/Notification | read only |
-|                 | Signal Change Threshold |  | Get/Notification | read only |
-|                 | Radio State | Acquiring, acquired, multicast, not_found | Get/Notification | read only |
+| RC Module | Control Item | RPC Item Name | Value Range | Type | Comments | Version Changes |
+| --------------- | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
+| **Climate**     | Climate Enable | climateEnable | on, off | Get/Set/Notification | Enabled to turn on the climate system, Disabled to turn off the climate system. All other climate items need climate enabled to work. | Since SDL v6.0 |
+|                 | Current Cabin Temperature | currentTemperature | N/A | Get/Notification | read only, value range depends on OEM | Since SDL v4.5 |
+|                 | Desired Cabin Temperature | desiredTemperature | N/A | Get/Set/Notification | value range depends on OEM | Since SDL v4.5 |
+|                 | AC Setting | acEnable | on, off | Get/Set/Notification |  | Since SDL v4.5 |
+|                 | AC MAX Setting | acMaxEnable | on, off  | Get/Set/Notification |  | Since SDL v4.5 |
+|                 | Air Recirculation Setting | circulateAirEnable | on, off  | Get/Set/Notification |  | Since SDL v4.5 |
+|                 | Auto AC Mode Setting | autoModeEnable | on, off | Get/Set/Notification |  | Since SDL v4.5 |
+|                 | Defrost Zone Setting | defrostZone | front, rear, all, none  | Get/Set/Notification |  | Since SDL v4.5 |
+|                 | Dual Mode Setting | dualModeEnable | on, off  | Get/Set/Notification |  | Since SDL v4.5 |
+|                 | Fan Speed Setting | fanSpeed | 0%-100% | Get/Set/Notification |  | Since SDL v4.5 |
+|                 | Ventilation Mode Setting | ventilationMode | upper, lower, both, none | Get/Set/Notification |  | Since SDL v4.5 |
+|                 | Heated Steering Wheel Enabled | heatedSteeringWheelEnable | on, off | Get/Set/Notification | | Since SDL v5.0 |
+|                 | Heated Windshield Enabled | heatedWindshieldEnable | on, off | Get/Set/Notification | | Since SDL v5.0 |
+|                 | Heated Rear Window Enabled | heatedRearWindowEnable | on, off | Get/Set/Notification | | Since SDL v5.0 |
+|                 | Heated Mirrors Enabled | heatedMirrorsEnable | on, off | Get/Set/Notification | | Since SDL v5.0 |
+| **Radio**       | Radio Enabled | radioEnable | true,false  | Get/Set/Notification | read only, all other radio control items need radio enabled to work | Since SDL v4.5 |
+|                 | Radio Band | band | AM,FM,XM  | Get/Set/Notification | | Since SDL v4.5 |
+|                 | Radio Frequency | frequencyInteger / frequencyFraction | 0-1710, 0-9 | Get/Set/Notification | value range depends on band | Since SDL v4.5 |
+|                 | Radio RDS Data | rdsData | RdsData struct | Get/Notification | read only | Since SDL v4.5 |
+|                 | Available HD Channels | availableHdChannels | Array size 0-8, values 0-7 | Get/Notification | read only, added in SDL v.6.0 | Since SDL v6.0, replaces availableHDs |
+|                 | Available HD Channels (DEPRECATED) | availableHDs | 1-7 (Deprecated in SDL v.6.0) (1-3 before SDL v.5.0) | Get/Notification | read only | Since SDL v4.5, updated in v5.0, deprecated in v6.0 |
+|                 | Current HD Channel | hdChannel | 0-7 (1-3 before SDL v.5.0) (1-7 between SDL v.5.0-6.0) | Get/Set/Notification |  Since SDL v4.5, updated in SDL v5.0, updated in SDL v6.0 |
+|                 | Radio Signal Strength | signalStrength | 0-100% | Get/Notification | read only | Since SDL v4.5 |
+|                 | Signal Change Threshold | signalStrengthThreshold | 0-100% | Get/Notification | read only | Since SDL v4.5 |
+|                 | Radio State | state | Acquiring, acquired, multicast, not_found | Get/Notification | read only | Since SDL v4.5 |
+|                 | SIS Data | sisData | See SisData struct | Get/Notification | read only | Since SDL v5.0 |
 | **Seat**        | Seat Heating Enabled | true, false | Get/Set/Notification | Indicates whether heating is enabled for a seat |
 |                 | Seat Cooling Enabled | true, false | Get/Set/Notification | Indicates whether cooling is enabled for a seat |
 |                 | Seat Heating  level | 0-100% | Get/Set/Notification | Level of the seat heating |
