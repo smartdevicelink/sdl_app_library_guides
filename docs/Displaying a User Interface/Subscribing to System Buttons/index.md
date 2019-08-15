@@ -2,7 +2,7 @@
 Subscribe buttons are used to detect changes to hard buttons located in the car's center console or steering wheel. You can subscribe to the following hard buttons:
 
 | Button  | Template |
-| ------------- | ------------- | ------------- |
+| ------------- | ------------- |
 | Play / Pause | Media only |
 | Ok | Media only |
 | Seek left | Media only |
