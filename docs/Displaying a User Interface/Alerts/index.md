@@ -238,8 +238,6 @@ An alert can also include a custom or static image that will be displayed within
 }];
 ```
 
-
-
 ## Showing the Alert
 
 @![iOS]
