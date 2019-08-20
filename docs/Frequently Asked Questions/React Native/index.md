@@ -34,7 +34,7 @@ Swift will have a few more steps in order to achieve this since swift does not s
 ```objc
 #import <React/RCTBridgeModule.h>
 @interface ProxyManager : NSObject <RCTBridgeModule>
-...
+<#...#>
 @end
 ```
 ###### ProxyManager.h
@@ -42,8 +42,7 @@ A  `RCT_EXPORT_MODULE()` macro must be added to the implementation file.
 ```objc
 @implementation ProxyManager
 RCT_EXPORT_MODULE();
-...
-@end
+<#...#>
 ```
 ##### Swift
 First you must add  `#import "React/RCTBridgeModule.h"` to the `Bridging Header` before you move forward. When creating a swift appication xcode ask if it should create a header file for you. You must include this bridging header for your React Native app to work. You can create this file manually if you choose to do so.
@@ -51,7 +50,7 @@ First you must add  `#import "React/RCTBridgeModule.h"` to the `Bridging Header`
 ```swift
 @objc(ProxyManager)
 class ProxyManager: NSObject
-...
+<#...#>
 ```
 To expose the Swift class to React Native you must create an Objective-C file in order to use React Native macros.
 
