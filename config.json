@@ -59,10 +59,6 @@
                 },
                 {
                     "name": "Example Apps"
-                },
-                {
-                    "name": "React Native",
-                    "platforms": ["iOS"]
                 }
             ]
         },
@@ -226,6 +222,10 @@
             "name": "Frequently Asked Questions",
             "platforms": ["Android"],
             "navigation": [
+                {
+                    "name": "Can I Integrate SDL into a React Native App?",
+                    "platforms": ["iOS"]
+                },
                 {
                     "name": "SDL Notifications"
                 },
