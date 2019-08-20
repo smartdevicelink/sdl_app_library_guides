@@ -223,7 +223,7 @@
             "platforms": ["Android" ,"iOS"],
             "navigation": [
                 {
-                    "name": "Can I Integrate SDL into a React Native App?",
+                    "name": "Can I Integrate SDL into a React Native App",
                     "platforms": ["iOS"]
                 },
                 {
