@@ -224,6 +224,22 @@ alert.setPlayTone(true);
 ```
 !@
 
+### Alert Icon
+
+![Generic - Alert](assets/Generic_alertIcon.png)
+
+An alert can also include a custom or static image that will be displayed within the alert. Before you add the image to the alert make sure the image is uploaded to the head unit. If you are certain the image is already uploaded, you can just set `alertIcon` right away.
+
+```objc
+[self.sdlManager.fileManager uploadArtwork:[SDLArtwork artworkWithImage:[UIImage imageNamed:<#ImageName#>] asImageFormat:SDLArtworkImageFormatPNG] completionHandler:^(BOOL success, NSString * _Nonnull artworkName, NSUInteger bytesAvailable, NSError * _Nullable error) {
+    if(error == nil) {
+        alert.alertIcon = [[SDLImage alloc] initWithName:artworkName isTemplate:YES];
+    }
+}];
+```
+
+
+
 ## Showing the Alert
 
 @![iOS]
