@@ -37,7 +37,7 @@ Swift will have a few more steps in order to achieve this since swift does not s
 <#...#>
 @end
 ```
-###### ProxyManager.h
+###### ProxyManager.m
 A  `RCT_EXPORT_MODULE()` macro must be added to the implementation file.
 ```objc
 @implementation ProxyManager
@@ -50,8 +50,9 @@ First you must add  `#import "React/RCTBridgeModule.h"` to the `Bridging Header`
 
 ```swift
 @objc(ProxyManager)
-class ProxyManager: NSObject
+class ProxyManager: NSObject {
 <#...#>
+}
 ```
 To expose the Swift class to React Native you must create an Objective-C file in order to use React Native macros.
 
