@@ -126,7 +126,6 @@ RCT_EXPORT_MODULE()
 }
 
 @end
-
 ```
 ##### Swift
 ```swift
