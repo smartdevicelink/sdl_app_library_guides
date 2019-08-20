@@ -43,6 +43,7 @@ A  `RCT_EXPORT_MODULE()` macro must be added to the implementation file.
 @implementation ProxyManager
 RCT_EXPORT_MODULE();
 <#...#>
+@end
 ```
 ##### Swift
 First you must add  `#import "React/RCTBridgeModule.h"` to the `Bridging Header` before you move forward. When creating a swift appication xcode ask if it should create a header file for you. You must include this bridging header for your React Native app to work. You can create this file manually if you choose to do so.
@@ -122,6 +123,9 @@ RCT_EXPORT_MODULE()
     }
     [self sendEventWithName:@"GetWeather" body:@{@"type": @"weatherType"}];
 }
+
+@end
+
 ```
 ##### Swift
 ```swift
