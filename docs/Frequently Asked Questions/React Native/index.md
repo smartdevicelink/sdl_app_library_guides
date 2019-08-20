@@ -62,7 +62,6 @@ To expose the Swift class to React Native you must create an Objective-C file in
 @interface RCT_EXTERN_MODULE(ProxyManager, NSObject)
 @end
 ```
-
 ## Exposing Methods
 Since it is recommended that the `ProxyManager` is used for inital set up only we suggest creating a new class that exposes your methods and post a notification from the `ProxyManager` class.
 Posting a notification to a class that extends `RCTEventEmitter` is the preferred way to send events to JavaScript. When extending `RCTEventEmitter` you must include the `supportedEvents` method.
