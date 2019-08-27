@@ -27,6 +27,10 @@ Subscribe buttons are used to detect changes to hard buttons located in the car'
 | Rotate Counter-Clockwise | NavigationFullscreenMap only |
 | Toggle Heading | NavigationFullscreenMap only |
 
+!!! NOTE
+`Media` is the default template for media apps and `NavigationFullscreenMap` is the default template for navigation apps.
+!!!
+
 ### Subscribe Buttons HMI
 In the screenshot below, the pause, seek left and seek right icons are subscribe buttons.
 ![Generic - Media Template with subscribe buttons](assets/Generic_template_media_light.png)
