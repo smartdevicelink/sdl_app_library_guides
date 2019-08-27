@@ -229,7 +229,7 @@ SDLOnAppServiceData *onAppData = [[SDLOnAppServiceData alloc] initWithServiceDat
 ##### Swift
 ```swift
 let currentImage = SDLImage(name: "some artwork name", isTemplate: false)
-let mediaData = SDLMediaServiceData(mediaType: .music, image: currentImage, mediaTitle: "Some media title", mediaArtist: "Some artist", mediaAlbum: "Some album", playlistName: "Some playlist", isExplicit: true, trackPlaybackProgress: 45, trackPlaybackDuration: 90, queuePlaybackProgress: 45, queuePlaybackDuration: 150, queueCurrentTrackNumber: 2, queueTotalTrackCount: 3)
+let mediaData = SDLMediaServiceData(mediaType: .music, mediaImage: currentImage, mediaTitle: "Some media title", mediaArtist: "Some artist", mediaAlbum: "Some album", playlistName: "Some playlist", isExplicit: true, trackPlaybackProgress: 45, trackPlaybackDuration: 90, queuePlaybackProgress: 45, queuePlaybackDuration: 150, queueCurrentTrackNumber: 2, queueTotalTrackCount: 3)
 let appMediaData = SDLAppServiceData(mediaServiceData: mediaData, serviceId: serviceId)
 
 let onAppData = SDLOnAppServiceData(serviceData: appMediaData)
