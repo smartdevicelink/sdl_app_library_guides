@@ -228,8 +228,9 @@ alert.setPlayTone(true);
 
 ![Generic - Alert](assets/Generic_alertIcon.png)
 
-An alert can also include a custom or static image that will be displayed within the alert. Before you add the image to the alert make sure the image is uploaded to the head unit. If you are certain the image is already uploaded, you can just set `alertIcon` right away.
+An alert can include a custom or static image that will be displayed within the alert. Before you add the image to the alert make sure the image is uploaded to the head unit. If you are certain the image is already uploaded, you can just set `alertIcon` right away.
 
+##### Objective-C
 ```objc
 [self.sdlManager.fileManager uploadArtwork:[SDLArtwork artworkWithImage:[UIImage imageNamed:<#ImageName#>] asImageFormat:SDLArtworkImageFormatPNG] completionHandler:^(BOOL success, NSString * _Nonnull artworkName, NSUInteger bytesAvailable, NSError * _Nullable error) {
     if(error == nil) {
@@ -237,7 +238,13 @@ An alert can also include a custom or static image that will be displayed within
     }
 }];
 ```
-
+##### Swift
+```swift
+self.sdlManager.fileManager.upload(artwork: SDLArtwork(image: UIImage(named: <#ImageName#>)!, name: <#ImageName#>, persistent: false, as: <#T##SDLArtworkImageFormat#>)) { (success, artworkName, bytesAvailable, error) in
+    guard error == nil else { return }
+    alert.alertIcon = SDLImage(name: artworkName, isTemplate: true)
+}
+```
 ## Showing the Alert
 
 @![iOS]
