@@ -20,7 +20,7 @@ Make sure you have followed the [Getting Started](https://smartdevicelink.com/en
 !!!
 
 ## Integerating Basics
-Native API methods are not exposed automatically to javascript. This means you must expose methods you wish to use to use.  To get started you must implement `RCTBridgeModule` protocol. Please follow [Integrating Basics](https://smartdevicelink.com/en/guides/iOS/getting-started/integration-basics/) for the basic setup. This is the necessary starting point in order to contunie with this example. Please make sure you also set up a simple UI with buttons and some textfields.
+Native API methods are not exposed automatically to Javascript. This means you must expose methods you wish to use to use own your own.  To get started you must implement `RCTBridgeModule` protocol. Please follow [Integrating Basics](https://smartdevicelink.com/en/guides/iOS/getting-started/integration-basics/) for the basic setup. This is the necessary starting point in order to contunie with this example. Please make sure you also set up a simple UI with buttons and some textfields.
 
 ## Creating the RCTBridge
 To create a native module you must implement the `RCTBridgeModule` protocol. Update ProxyManager to include `RCTBridgeModule`.
@@ -38,7 +38,7 @@ Swift will have a few more steps in order to achieve this since swift does not s
 @end
 ```
 ###### ProxyManager.m
-A  `RCT_EXPORT_MODULE()` macro must be added to the implementation file.
+A  `RCT_EXPORT_MODULE()` macro must be added to the implementation file to expose the class to React Native.
 ```objc
 @implementation ProxyManager
 RCT_EXPORT_MODULE();
@@ -80,8 +80,20 @@ SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"Bu
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ReactNotificationGetWeather" object:nil userInfo:managers];
 }];
 ```
-Add a listener for the notificaiton inside the new class and all required methods for sending an event.
 
+##### Swift
+```swift
+let softButton = SDLSoftButtonObject(name: "Button", state: SDLSoftButtonState(stateName: "State", text: "Weather", artwork: nil), handler: { (buttonPress, butonEvent) in
+    guard buttonPress == nil else { return }
+    
+    let managers = ["sdlManager":self.sdlManager]
+    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "ReactNotificationGetWeather"), object: nil, userInfo: managers)
+})
+
+```
+Create the new class and add a listener for the notificaiton and all required methods for sending an event.
+
+##### Objective-C
 ###### SDLEventEmitter.h
 ```objc
 #import <React/RCTEventEmitter.h>
@@ -98,7 +110,7 @@ NS_ASSUME_NONNULL_END
 ```
 ###### SDLEventEmitter.m
 ```objc
-#import "SDLExposeMethods.h"
+#import "SDLEventEmitter.h"
 #import "ProxyManager.h"
 #import <React/RCTConvert.h>
 #import <SmartDeviceLink/SmartDeviceLink.h>
@@ -151,9 +163,9 @@ override func supportedEvents() -> [String]! {
 
 }
 ```
-Make sure you add `#import "React/RCTEventEmitter.h"` to the apps bridging header before moving forward.
+Make sure you add `#import "React/RCTEventEmitter.h"` to the apps bridging header before moving forward if you using a Swift class.
 
-Now you need to create the Objective-C bridging class for `SDLEventEmitter` and add the proper `RCT_EXTERN_METHOD` wrapper
+Now you need to create the Objective-C bridging class for `SDLEventEmitter` and add the proper `RCT_EXTERN_METHOD` wrapper. Swift ONLY.
 
 ```objc
 #import "React/RCTBridgeModule.h"
@@ -210,10 +222,10 @@ self.sdlManager.screenManager.textField2 = [NSString stringWithFormat:@"High: %@
 Add the following method to `SDLEventEmitter.swift`
 ```swift
 @objc func weather(_ dict: NSDictionary) {
-self.sdlManager.screenManager.beginUpdates()
-let weather = dict["weather"]! as! NSDictionary
-self.sdlManager.screenManager.textField1 = "Low: \(weather["low"]!) ºF")"
-self.sdlManager.screenManager.textField2 = "High: \(weather["high"]!) ºF")"
-self.sdlManager.screenManager.endUpdates()
+    self.sdlManager.screenManager.beginUpdates()
+    let weather = dict["weather"]! as! NSDictionary
+    self.sdlManager.screenManager.textField1 = "Low: \(weather["low"]!) ºF")"
+    self.sdlManager.screenManager.textField2 = "High: \(weather["high"]!) ºF")"
+    self.sdlManager.screenManager.endUpdates()
 }
 ```
