@@ -226,7 +226,9 @@ alert.setPlayTone(true);
 
 ### Alert Icon
 
+###### Alert With Non Default Icon
 ![Generic - Alert](assets/Generic_alertIcon.png)
+
 
 An alert can include a custom or static image that will be displayed within the alert. Before you add the image to the alert make sure the image is uploaded to the head unit. If you are certain the image is already uploaded, you can just set `alertIcon` right away.
 
