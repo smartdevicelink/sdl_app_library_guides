@@ -46,7 +46,7 @@ RCT_EXPORT_MODULE();
 @end
 ```
 ##### Swift
-First you must add  `#import "React/RCTBridgeModule.h"` to the `Bridging Header` before you move forward. When creating a swift appication xcode ask if it should create a header file for you. You must include this bridging header for your React Native app to work. You can create this file manually if you choose to do so.
+First you must add  `#import "React/RCTBridgeModule.h"` to your `Bridging Header` before you move forward. When creating a swift appication xcode ask if it should create a header file for you. You must include this bridging header for your React Native app to work. You can create this file manually if you choose to do so. 
 
 ```swift
 @objc(ProxyManager)
@@ -163,7 +163,7 @@ override func supportedEvents() -> [String]! {
 
 }
 ```
-Make sure you add `#import "React/RCTEventEmitter.h"` to the apps bridging header before moving forward if you using a Swift class.
+Make sure you add `#import "React/RCTEventEmitter.h"` to the apps bridging header before moving forward if you making a Swift application.
 
 Now you need to create the Objective-C bridging class for `SDLEventEmitter` and add the proper `RCT_EXTERN_METHOD` wrapper. Swift ONLY.
 
