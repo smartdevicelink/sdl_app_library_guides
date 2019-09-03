@@ -1,7 +1,7 @@
 # Video Streaming Menu
 
 ## Open Built-In Menu
-The Show Menu RPC allows you to open the menu programmatically. When creating a projection applicaiton it is recommended to still use the built-in menu rather then creating a custom one. Since there is no guaranteed the built-in menu button will be visble in a projection application we recommned creating a custom button and call the `ShowMenu` RPC.
+The Show Menu RPC allows you to open the menu programmatically. When creating a projection applicaiton it is recommended to still use the built-in menu rather then creating a custom one. Since there is no guarantee the built-in menu button will be visble in a projection application we recommned creating a custom button and call the `ShowMenu` RPC.
 
 ### Show Top Level Menu
 To show the top level menu use the `screenManger`s `openMenu` function.
