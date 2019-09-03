@@ -128,7 +128,6 @@ alert.alertIcon = [[SDLImage alloc] initWithName:<#artworkName#> isTemplate:YES]
 ##### Swift
 ```swift
 alert.alertIcon = SDLImage(name: <#artworkName#>, isTemplate: true)
-}
 ```
 !@
 
