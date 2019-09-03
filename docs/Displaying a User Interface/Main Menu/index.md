@@ -107,7 +107,6 @@ The Show Menu RPC allows you to open the menu programmatically. The ideal time t
 Please make sure you have set a menu before calliing either fuction. 
 !!!
 
-
 #### Show Top Level Menu
 To show the top level menu use the `screenManger`s `openMenu` function.
 
@@ -128,8 +127,8 @@ toDO - add example
 ```
 !@
 
-#### Show SubLevel Menu
-Opening a sub menu is also possible with the new Show App Menu RPC. To open a certain sub menu simply pass the cell that has sub cells. If a cell is passed in that has no sub cells the RPC will fail. 
+#### Show Sub Menu
+Showing  a sub menu is also possible with the new Show App Menu RPC. To open a certain sub menu simply pass the parent cell that contains sub cells. If the cell has no sub cells the RPC will fail. 
 
 @![iOS]
 ##### Objective-C
