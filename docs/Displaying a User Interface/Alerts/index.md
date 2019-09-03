@@ -114,6 +114,31 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
 ```
 !@
 
+### Alert Icon
+
+![Generic - Alert](assets/Generic_alertIcon.png)
+
+An alert can include a custom or static (built-in) image that will be displayed within the alert. Before you add the image to the alert make sure the image is uploaded to the head unit using the @![iOS]SDLFileManager!@@![android,javaSE,javaEE]//TODO!@. If the image is already uploaded, you can set the `alertIcon` property.
+
+@![iOS]
+##### Objective-C
+```objc
+alert.alertIcon = [[SDLImage alloc] initWithName:<#artworkName#> isTemplate:YES];
+```
+##### Swift
+```swift
+alert.alertIcon = SDLImage(name: <#artworkName#>, isTemplate: true)
+}
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+// TODO: Add example
+```
+!@
+
+
 ### Timeouts
 An optional timeout can be added that will dismiss the alert when the duration is over. Typical timeouts are between 3 and 10 seconds. If omitted a default of 5 seconds is used.
 
@@ -224,35 +249,6 @@ alert.setPlayTone(true);
 ```
 !@
 
-### Alert Icon
-
-![Generic - Alert](assets/Generic_alertIcon.png)
-
-An alert can include a custom or static (built-in) image that will be displayed within the alert. Before you add the image to the alert make sure the image is uploaded to the head unit using the @![iOS]SDLFileManager!@@![android,javaSE,javaEE]//TODO!@. If the image is already uploaded, you can set the `alertIcon` property.
-
-@![iOS]
-##### Objective-C
-```objc
-[self.sdlManager.fileManager uploadArtwork:[SDLArtwork artworkWithImage:[UIImage imageNamed:<#ImageName#>] asImageFormat:SDLArtworkImageFormatPNG] completionHandler:^(BOOL success, NSString * _Nonnull artworkName, NSUInteger bytesAvailable, NSError * _Nullable error) {
-    if(error == nil) {
-        alert.alertIcon = [[SDLImage alloc] initWithName:artworkName isTemplate:YES];
-    }
-}];
-```
-##### Swift
-```swift
-self.sdlManager.fileManager.upload(artwork: SDLArtwork(image: UIImage(named: <#ImageName#>)!, name: <#ImageName#>, persistent: false, as: <#T##SDLArtworkImageFormat#>)) { (success, artworkName, bytesAvailable, error) in
-    guard error == nil else { return }
-    alert.alertIcon = SDLImage(name: artworkName, isTemplate: true)
-}
-```
-!@
-
-@![android,javaSE,javaEE]
-```java
-// TODO: Add example
-```
-!@
 
 ## Showing the Alert
 
