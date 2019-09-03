@@ -100,6 +100,37 @@ sdlManager.getScreenManager().setMenu(Collections.singletonList(cell));
 ```
 !@
 
+### Show Menu
+The Show Menu RPC allows you to open the menu programmatically. The ideal time to use this RPC is when the built-in menu button is hidden. The built-in menu is typically hidden in projection mode like a navigation app. By using the show menu RPC, navigation apps can now easily open the built-in menu when needed. 
+
+!!! NOTE
+Please make sure you have set a menu before calliing either fuction. 
+!!!
+
+#### Show Top Level Menu
+To show the top level menu use the `screenManger`s `openMenu` function.
+
+##### Objective-C
+```objc
+[self.sdlManger.screenManager openMenu];
+```
+##### Swift
+```swift
+self.sdlManager.screenManager.openMenu()
+```
+
+#### Show SubLevel Menu
+Opening a sub menu is also possible with the new Show App Menu RPC. To open a certain sub menu simply pass the cell that has sub cells. If a cell is passed in that has no sub cells the RPC will fail. 
+
+##### Objective-C
+```objc
+[self.sdlManager.screenManager openSubmenu:(<#CellWithSubCells#>)];
+```
+##### Swift
+```swift
+self.sdlManager.screenManager.openSubmenu(<#CellWithSubCells#>)
+```
+
 ### Artworks
 Artworks will be automatically handled when using the screen manager API. First, a "non-artwork" menu will be displayed, then, when the artworks have finished uploading, the "artwork-ified" menu will be displayed. If you are doing this manually with RPCs, you will have to upload artworks using the file manager yourself and send the correct menu when they are ready.
 
