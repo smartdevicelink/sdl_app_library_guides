@@ -1,6 +1,4 @@
 # Can I Integrate SDL into a React Native App?
-
-## Getting Started
 SDL does work and can be integrated into a React Native application. 
 
 !!! NOTE
@@ -11,6 +9,7 @@ Please follow [this guide](https://facebook.github.io/react-native/docs/getting-
 
 To install SDL into your React Native app, you will need to follow [this guide](https://facebook.github.io/react-native/docs/native-modules-ios) to integrate the SDL library into your application using React Native's Native Modules feature.
 
+## Getting Started
 This guide is not meant to walk you though how to make a React Native app but help you integrate SDL into an existing application. We will show you a basic example of how to communicate between your app's JavaScript code and SDL's native Obj-C code. For more advanced features, please refer to the React Native documentation linked above.
 
 ## Integration Basics
