@@ -4,7 +4,7 @@
 SDL does work and can be integrated into a React Native application. 
 
 !!! NOTE
-You must make sure you have [Native Modules](https://facebook.github.io/react-native/docs/native-modules-setup) installed as a dependency in order to use 3rd party APIs in a React Native application. If this is not done your app will not work with SmartDeviceLink. Make sure you have followed the [Getting Started](https://smartdevicelink.com/en/guides/iOS/getting-started/installation/) and have `SmartDeviceLink` installed on the native side. 
+You must make sure you have [Native Modules](https://facebook.github.io/react-native/docs/native-modules-setup) installed as a dependency in order to use 3rd party APIs in a React Native application. If this is not done your app will not work with SmartDeviceLink. Native API methods are not exposed to Javascript automatically, this must be done manually by you.
 !!!
 
 Please follow [this guide](https://facebook.github.io/react-native/docs/getting-started) for how to create a new React Native application if you need one. Also ensure you have followed the [Getting Started](Getting Started/Installation) and have `SmartDeviceLink` installed on the native side. 
