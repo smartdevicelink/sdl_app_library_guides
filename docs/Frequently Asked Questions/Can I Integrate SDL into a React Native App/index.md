@@ -1,11 +1,13 @@
 # Can I Integrate SDL into a React Native App?
 
 ## Getting Started
-SDL works in a React Native application. Please follow [this guide](https://facebook.github.io/react-native/docs/getting-started) for how to create a new React Native application if you need one.
+SDL does work and can be integrated into a React Native application. 
 
-React Native does support Native Modules, however you will need to follow [this guide](https://facebook.github.io/react-native/docs/native-modules-ios) to integrate the the SDL library into your application.
+Please follow [this guide](https://facebook.github.io/react-native/docs/getting-started) for how to create a new React Native application if you need one. Also ensure you have followed the [Getting Started](Getting Started/Installation) and have `SmartDeviceLink` installed on the native side. 
 
-This guide is not meant to walk you though how to make a React Native app but help you integrate SDL into a React Native application. We will leave the rest up to you to figure out. We will show you a basic example of how to communicate between Javascript code and native code. For more advanced features please refer to the React Native documentation linked above.
+To install SDL into your React Native app, you will need to follow [this guide](https://facebook.github.io/react-native/docs/native-modules-ios) to integrate the SDL library into your application using React Native's Native Modules feature.
+
+This guide is not meant to walk you though how to make a React Native app but help you integrate SDL into an existing application. We will show you a basic example of how to communicate between your app's JavaScript code and SDL's native Obj-C code. For more advanced features, please refer to the React Native documentation linked above.
 
 !!! NOTE
 You must make sure you have [Native Modules](https://facebook.github.io/react-native/docs/native-modules-setup) installed as a dependency in order to use 3rd party APIs in a React Native application. If this is not done your app will not work with SmartDeviceLink.
@@ -19,11 +21,11 @@ Native API methods are not exposed to Javascript. Follow the guides for more in 
 Make sure you have followed the [Getting Started](https://smartdevicelink.com/en/guides/iOS/getting-started/installation/) and have `SmartDeviceLink` installed on the native side. 
 !!!
 
-## Integerating Basics
-Native API methods are not exposed automatically to Javascript. This means you must expose methods you wish to use to use own your own.  To get started you must implement `RCTBridgeModule` protocol. Please follow [Integrating Basics](https://smartdevicelink.com/en/guides/iOS/getting-started/integration-basics/) for the basic setup. This is the necessary starting point in order to contunie with this example. Please make sure you also set up a simple UI with buttons and some textfields.
+## Integration Basics
+Native API methods are not exposed automatically to Javascript. This means you must expose methods you wish to use from SDL to your React Native app. You must implement the `RCTBridgeModule` protocol into a bridge class (see below for an example). Please follow [Integrating Basics](Getting Started/Integration Basics) for the basic setup of a native SDL `ProxyManager` class that your bridge code will call into. This is the necessary starting point in order to continue with this example. Please make sure you also set up a simple UI with buttons and some textfields.
 
-## Creating the RCTBridge
-To create a native module you must implement the `RCTBridgeModule` protocol. Update ProxyManager to include `RCTBridgeModule`.
+### Creating the RCTBridge
+To create a native module you must implement the `RCTBridgeModule` protocol. Update your `ProxyManager` to include `RCTBridgeModule`.
 
 !!! NOTE
 Swift will have a few more steps in order to achieve this since swift does not support macros.
@@ -33,41 +35,53 @@ Swift will have a few more steps in order to achieve this since swift does not s
 ###### ProxyManager.h
 ```objc
 #import <React/RCTBridgeModule.h>
+
 @interface ProxyManager : NSObject <RCTBridgeModule>
+
 <#...#>
+
 @end
 ```
+
 ###### ProxyManager.m
-A  `RCT_EXPORT_MODULE()` macro must be added to the implementation file to expose the class to React Native.
+An `RCT_EXPORT_MODULE()` macro must be added to the implementation file to expose the class to React Native.
 ```objc
 @implementation ProxyManager
+
 RCT_EXPORT_MODULE();
 <#...#>
+
 @end
 ```
+
 ##### Swift
-First you must add  `#import "React/RCTBridgeModule.h"` to your `Bridging Header` before you move forward. When creating a swift appication xcode ask if it should create a header file for you. You must include this bridging header for your React Native app to work. You can create this file manually if you choose to do so. 
+First you must add  `#import "React/RCTBridgeModule.h"` to your `Bridging Header` before you move forward. When creating a Swift application and importing Objective-C code, Xcode should ask if it should create this header file for you. You must include this bridging header for your React Native app to work. You can create this file manually as well. 
 
 ```swift
 @objc(ProxyManager)
+
 class ProxyManager: NSObject {
+
 <#...#>
+
 }
 ```
-To expose the Swift class to React Native you must create an Objective-C file in order to use React Native macros.
 
+Next, to expose the Swift class to React Native you must create an Objective-C file in order to use React Native macros.
+
+##### Objective-C
+###### ProxyManager.m 
 ```objc
-// ProxyManager.m
 #import "React/RCTBridgeModule.h"
 
 @interface RCT_EXTERN_MODULE(ProxyManager, NSObject)
+
 @end
 ```
-## Exposing Methods
-Since it is recommended that the `ProxyManager` is used for inital set up only we suggest creating a new class that exposes your methods and post a notification from the `ProxyManager` class.
-Posting a notification to a class that extends `RCTEventEmitter` is the preferred way to send events to JavaScript. When extending `RCTEventEmitter` you must include the `supportedEvents` method.
 
-You may choose to post the notificaiton however you like but in this example we will use a SoftButton to do so. For this example the `appType` used in setup is `SDLAppHMITypeDefault`.
+### Exposing Methods
+Since it is recommended that the `ProxyManager` is used for inital set up only we suggest creating a new class that exposes your methods and post a notification from the `ProxyManager` class.
+
 
 ##### Objective-C
 Inside the `ProxyManager` add a SoftButton to the HMI. Inside the handler post the notification and pass along a refrence to the `sdlManager` in order to update the UI. You may choose how to keep a refrence to the `sdlManager` object however you like.
@@ -76,8 +90,8 @@ Inside the `ProxyManager` add a SoftButton to the HMI. Inside the handler post t
 SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"Button" state:[[SDLSoftButtonState alloc] initWithStateName:@"State 1" text:@"Weather" artwork:nil] handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     if (buttonPress == nil) { return; }
 
-    NSDictionary *managers = @{@"sdlManager" : self.sdlManager};
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ReactNotificationGetWeather" object:nil userInfo:managers];
+    NSDictionary *userInfo = @{@"sdlManager" : self.sdlManager};
+    [[NSNotificationCenter defaultCenter] postNotificationName:<#Notification Name#> object:nil userInfo:managers];
 }];
 ```
 
@@ -86,11 +100,10 @@ SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"Bu
 let softButton = SDLSoftButtonObject(name: "Button", state: SDLSoftButtonState(stateName: "State", text: "Weather", artwork: nil), handler: { (buttonPress, butonEvent) in
     guard buttonPress == nil else { return }
     
-    let managers = ["sdlManager":self.sdlManager]
-    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "ReactNotificationGetWeather"), object: nil, userInfo: managers)
+    let userInfo = ["sdlManager":self.sdlManager]
+    NotificationCenter.default.post(name: NSNotification.Name(rawValue: <#Notification Name#>), object: nil, userInfo: managers)
 })
 
-```
 Create the new class and add a listener for the notificaiton and all required methods for sending an event.
 
 ##### Objective-C
@@ -108,6 +121,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 NS_ASSUME_NONNULL_END
 ```
+
 ###### SDLEventEmitter.m
 ```objc
 #import "SDLEventEmitter.h"
@@ -121,13 +135,13 @@ RCT_EXPORT_MODULE()
 
 - (instancetype)init {
     self = [super init];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getWeatherNotification:) name:@"ReactNotificationGetWeather" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getWeatherNotification:) name:<#Notification Name#> object:nil];
 
     return self;
 }
 
 - (NSArray<NSString *> *)supportedEvents {
-    return @[@"GetWeather"];
+    return @[@"DoAction"];
 }
 
 - (void)getWeatherNotification:(NSNotification *)notification {
@@ -139,17 +153,18 @@ RCT_EXPORT_MODULE()
 
 @end
 ```
+
 ##### Swift
 ```swift
 @objc(SDLEventEmitter)
 class SDLEventEmitter: RCTEventEmitter {
 
 override init() {
-    NotificationCenter.default.addObserver(self, selector: #selector(getWeatherNotification(_:)), name: "ReactNotificationGetWeather", object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(doAction(_:)), name: Notification.Name(rawValue: "<#Notification Name#>", object: nil)
     super.init()
 }
 
-@objc func getWeatherNotification(notification: Notification) {
+@objc func doAction(_ notification: Notification) {
     if self.sdlManger == nil {
         self.sdlManager = notification.userInfo["sdlManager"]
     }
@@ -163,9 +178,15 @@ override func supportedEvents() -> [String]! {
 
 }
 ```
-Make sure you add `#import "React/RCTEventEmitter.h"` to the apps bridging header before moving forward if you making a Swift application.
 
-Now you need to create the Objective-C bridging class for `SDLEventEmitter` and add the proper `RCT_EXTERN_METHOD` wrapper. Swift ONLY.
+!!! NOTE
+Make sure you add `#import "React/RCTEventEmitter.h"` to the apps bridging header before moving forward if you're making a Swift application.
+!!!
+
+!!! NOTE
+
+If you're using Swift, you will need to create the Objective-C bridging class for `SDLEventEmitter` and add the proper `RCT_EXTERN_METHOD` wrapper.
+!!!
 
 ```objc
 #import "React/RCTBridgeModule.h"
@@ -175,10 +196,9 @@ Now you need to create the Objective-C bridging class for `SDLEventEmitter` and 
 RCT_EXTERN_METHOD(weather:(weather: (id)dict))
 
 @end
-
 ```
 
-The above example will then call into JavaScript with an event type `GetWeather`.  You will need to create a  `NativeEventEmitter` with your EventEmitter module and add a listener.
+The above example will then call into JavaScript with an event type `GetWeather`. You will need to create a  `NativeEventEmitter` with your `EventEmitter` module and add a listener.
 
 ```javascript
 import { NativeEventEmitter, NativeModules } from 'react-native';
@@ -200,7 +220,9 @@ const testWeather = testEventEmitter.addListener(
     )
 )
 ```
+
 The last step is to wrap the method you wish to expose inside a `RCT_EXPORT_METHOD` for Objective-C and `RCT_EXTERN_METHOD`  for Swift. 
+
 ```objc
 RCT_EXPORT_METHOD(weather:(NSDictionary *)dict) {
 [self.sdlManager.screenManager beginUpdates];
@@ -218,6 +240,7 @@ self.sdlManager.screenManager.textField2 = [NSString stringWithFormat:@"High: %@
 @end
 }
 ```
+
 ##### Swift
 Add the following method to `SDLEventEmitter.swift`
 ```swift
