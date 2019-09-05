@@ -227,10 +227,12 @@
                     "platforms": ["iOS"]
                 },
                 {
-                    "name": "SDL Notifications"
+                    "name": "SDL Notifications",
+                    "platforms": ["Android"]
                 },
                 {
-                    "name": "Trusted Router Service"
+                    "name": "Trusted Router Service",
+                    "platforms": ["Android"]
                 }
             ]
         }
