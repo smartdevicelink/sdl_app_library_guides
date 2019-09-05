@@ -49,9 +49,11 @@ self.sdlManager.screenManager.openSubmenu(<#CellWithSubCells#>)
 !@
 
 ## Close Application
-If you choose to not use the built-in SDL menu system and instead to use your own menu UI, you need to have a way for users to close your application. This should be done through a menu option in your UI that sends the `CloseApplication` RPC. 
+If you choose to not use the built-in SDL menu system and instead want to use your own menu UI, you need to have a way for users to close your application. This should be done through a menu option in your UI that sends the `CloseApplication` RPC.
 
+!!! NOTE
 This RPC is unnecessary if you are using `OpenMenu` because OEMs will take care of providing a close button into your menu themselves.
+!!!
 
 @![iOS]
 ##### Objective-C
