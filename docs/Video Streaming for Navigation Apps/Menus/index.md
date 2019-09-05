@@ -69,7 +69,7 @@ self.sdlManager.send(closeRPC)
 
 @![android, javaSE, javaEE]
 ```java
-//TODO - add example 
+// TODO - add example 
 ```
 !@
 
