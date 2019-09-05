@@ -10,7 +10,7 @@ Please follow [this guide](https://facebook.github.io/react-native/docs/getting-
 To install SDL into your React Native app, you will need to follow [this guide](https://facebook.github.io/react-native/docs/native-modules-ios) to integrate the SDL library into your application using React Native's Native Modules feature.
 
 ## Getting Started
-This guide is not meant to walk you though how to make a React Native app but help you integrate SDL into an existing application. We will show you a basic example of how to communicate between your app's JavaScript code and SDL's native Obj-C code. For more advanced features, please refer to the React Native documentation linked above.
+This guide is not meant to walk you through how to make a React Native app but help you integrate SDL into an existing application. We will show you a basic example of how to communicate between your app's JavaScript code and SDL's native Obj-C code. For more advanced features, please refer to the React Native documentation linked above.
 
 ## Integration Basics
 Native API methods are not exposed automatically to Javascript. This means you must expose methods you wish to use from SDL to your React Native app. You must implement the `RCTBridgeModule` protocol into a bridge class (see below for an example). Please follow [Integrating Basics](Getting Started/Integration Basics) for the basic setup of a native SDL `ProxyManager` class that your bridge code will call into. This is the necessary starting point in order to continue with this example. Please make sure you also set up a simple UI with buttons and some textfields on the SDL side.
@@ -42,7 +42,7 @@ RCT_EXPORT_MODULE();
 ```
 
 ##### Swift
-First you must add  `#import "React/RCTBridgeModule.h"` to your `Bridging Header` before you move forward. When creating a Swift application and importing Objective-C code, Xcode should ask if it should create this header file for you. You must include this bridging header for your React Native app to work. You can create this file manually as well. 
+First, you must add  `#import "React/RCTBridgeModule.h"` to your `Bridging Header` before you move forward. When creating a Swift application and importing Objective-C code, Xcode should ask if it should create this header file for you. You must include this bridging header for your React Native app to work. You can create this file manually as well. 
 
 ```swift
 @objc(ProxyManager)
@@ -67,10 +67,10 @@ Next, to expose the Swift class to React Native you must create an Objective-C f
 ```
 
 ### Exposing Methods
-We suggest creating a new class that exposes your methods and post a notification from the `ProxyManager` class.
+We suggest creating a new class that exposes your methods and post notification(s) from the `ProxyManager` class.
 
 ##### Objective-C
-Inside the `ProxyManager` add a SoftButton to your SDL HMI. Inside the handler post the notification and pass along a refrence to the `sdlManager` in order to update the UI. You may choose how to keep a refrence to the `sdlManager` object however you like.
+Inside the `ProxyManager` add a SoftButton to your SDL HMI. Inside the handler post the notification and pass along a reference to the `sdlManager` in order to update the UI. You may choose how to keep a reference to the `sdlManager` object however you like.
 
 ```objc
 SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"Button" state:[[SDLSoftButtonState alloc] initWithStateName:@"State 1" text:@"Data" artwork:nil] handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
@@ -210,7 +210,7 @@ const testData = testEventEmitter.addListener(
 )
 ```
 
-The last step is to wrap the method you wish to expose inside a `RCT_EXPORT_METHOD` for Objective-C and `RCT_EXTERN_METHOD`  for Swift. 
+The last step is to wrap the method you wish to expose inside an `RCT_EXPORT_METHOD` for Objective-C and `RCT_EXTERN_METHOD` for Swift. 
 
 ##### Objective-C
 ```objc
