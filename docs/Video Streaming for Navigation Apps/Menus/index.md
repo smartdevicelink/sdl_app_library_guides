@@ -1,4 +1,7 @@
 # Video Streaming Menu
+When building a video-streaming navigation application, you can choose to create a custom menu using your own UI or use the built-in SDL menu system. The SDL menu allows you to display a menu structure so users can select menu options or submenus. For more information about the SDL menu system, see [menus](https://smartdevicelink.com/en/guides/iOS/displaying-a-user-interface/main-menu/i). It's recommended to use the built-in SDL menu system to have better performance, automatic driver distraction support - such as list limitations and text sizing, and more.
+
+To open the SDL built-in menu from your video streaming UI, see 'Opening the Built-In Menu' below.
 
 ## Opening the Built-In Menu
 The Show Menu RPC allows you to open the menu programmatically. That way, you can open the menu from your own UI.
@@ -54,19 +57,19 @@ This RPC is unnecessary if you are using `OpenMenu` because OEMs will take care 
 ##### Objective-C
 ```objc
 SDLCloseApplication *closeRPC = [[SDLCloseApplication alloc] init];
-[self.sdlManager sendRequest:closeApp];
+[self.sdlManager sendRequest:closeRPC];
 ```
 
 ##### Swift
 ```swift
 let closeRPC = SDLCloseApplication()
-self.sdlManager.send(closeApp)
+self.sdlManager.send(closeRPC)
 ```
 !@
 
 @![android, javaSE, javaEE]
 ```java
-toDO - add example 
+//TODO - add example 
 ```
 !@
 
