@@ -30,6 +30,10 @@ self.sdlManager.screenManager.openMenu()
 ### Show Sub-Menu
 You can also open the menu directly to a sub-menu. This is further down the tree than the top-level menu. To open a sub-menu, pass a cell that contains sub-cells. If the cell has no sub-cells the method call will fail. 
 
+!!! Note
+The sub-cell you use in `openSubMenu` must be included in  `sdlManager.screenManager.menu` array. Please make sure it is in the array before trying to open the sub-cell. If it is not included in the array the method call will fail.
+!!!
+
 @![iOS]
 ##### Objective-C
 ```objc
