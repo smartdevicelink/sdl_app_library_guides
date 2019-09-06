@@ -28,7 +28,7 @@ The @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@ is 
 
 self.sdlManager.screenManager.textField1 = @"<#Line 1 of Text#>";
 self.sdlManager.screenManager.textField2 = @"<#Line 2 of Text#>";
-self.sdlManager.screenManager.title = @"<##><#Template Title#>";
+self.sdlManager.screenManager.title = @"<##><#Title#>";
 self.sdlManager.screenManager.primaryGraphic = [SDLArtwork persistentArtworkWithImage:[UIImage imageNamed:@"<#Image Name#>"] asImageFormat:<#SDLArtworkImageFormat#>];
 SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"<#Soft Button Name#>" state:[[SDLSoftButtonState alloc] initWithStateName:@"<#Soft Button State Name#>" text:@"<#Button Text#>" artwork:<#SDLArtwork#>] handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     if (buttonPress == nil) { return; }
@@ -51,7 +51,7 @@ sdlManager.screenManager.beginUpdates()
 
 sdlManager.screenManager.textField1 = "<#Line 1 of Text#>"
 sdlManager.screenManager.textField2 = "<#Line 2 of Text#>"
-sdlManager.screenManager.title = "<##><#Template Title#>"
+sdlManager.screenManager.title = "<##><#Title#>"
 sdlManager.screenManager.primaryGraphic = <#SDLArtwork#>
 sdlManager.screenManager.softButtonObjects = [<#SDLButtonObject#>, <#SDLButtonObject#>]
 
