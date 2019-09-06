@@ -29,7 +29,7 @@ The `RegisterAppInterface` response contains information about the display type,
 
 | Parameters  |  Description | Notes |
 | ------------- | ------------- |------------- |
-| @![iOS]syncMsgVersion!@@![android, javaSE, javaEE]sdlMsgVersion!@ | Specifies the version number of the SmartDeviceLink protocol that is supported by the mobile application. | Check @![iOS]SDLSyncMsgVersion.h!@@![android, javaSE, javaEE]SdlMsgVersion.java!@ for more information |
+| @![iOS]sdlMsgVersion!@@![android, javaSE, javaEE]sdlMsgVersion!@ | Specifies the version number of the SmartDeviceLink protocol that is supported by the mobile application. | Check @![iOS]SDLMsgVersion.h!@@![android, javaSE, javaEE]SdlMsgVersion.java!@ for more information |
 | language | The currently active VR+TTS language on the module. | Check @![iOS]SDLLanguage.h!@@![android, javaSE, javaEE]Language.java!@ for more information |
 | vehicleType | The make, model, year, and the trim of the vehicle. | Check @![iOS]SDLVehicleType.h!@@![android, javaSE, javaEE]VehicleType.java!@ for more information |
 | supportedDiagModes | Specifies the white-list of supported diagnostic modes (0x00-0xFF) capable for DiagnosticMessage requests. If a mode outside this list is requested, it will be rejected. | Check @![iOS]SDLDiagnosticMessage.h!@@![android, javaSE, javaEE]DiagnosticMessage.java!@ for more information |
