@@ -137,7 +137,6 @@ alert.alertIcon = SDLImage(name: <#artworkName#>, isTemplate: true)
 ```
 !@
 
-
 ### Timeouts
 An optional timeout can be added that will dismiss the alert when the duration is over. Typical timeouts are between 3 and 10 seconds. If omitted a default of 5 seconds is used.
 
@@ -282,7 +281,7 @@ alert.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onError(int correlationId, Result resultCode, String info){
       Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
-    }   
+    }
 });
 sdlManager.sendRPC(alert);
 ```
