@@ -2,7 +2,7 @@
 SDL does work and can be integrated into a React Native application. 
 
 !!! NOTE
-You must make sure you have [Native Modules](https://facebook.github.io/react-native/docs/native-modules-setup) installed as a dependency in order to use 3rd party APIs in a React Native application. If this is not done your app will not work with SmartDeviceLink. Native API methods are not exposed to Javascript automatically, this must be done manually by you.
+You must make sure you have [Native Modules](https://facebook.github.io/react-native/docs/native-modules-setup) installed as a dependency in order to use 3rd party APIs in a React Native application. If this is not done your app will not work with SmartDeviceLink. Native API methods are not exposed to JavaScript automatically, this must be done manually by you.
 !!!
 
 Please follow [this guide](https://facebook.github.io/react-native/docs/getting-started) for how to create a new React Native application if you need one. Also ensure you have followed the [Getting Started](Getting Started/Installation) and have `SmartDeviceLink` installed on the native side. 
@@ -13,7 +13,7 @@ To install SDL into your React Native app, you will need to follow [this guide](
 This guide is not meant to walk you through how to make a React Native app but help you integrate SDL into an existing application. We will show you a basic example of how to communicate between your app's JavaScript code and SDL's native Obj-C code. For more advanced features, please refer to the React Native documentation linked above.
 
 ## Integration Basics
-Native API methods are not exposed automatically to Javascript. This means you must expose methods you wish to use from SDL to your React Native app. You must implement the `RCTBridgeModule` protocol into a bridge class (see below for an example). Please follow [Integrating Basics](Getting Started/Integration Basics) for the basic setup of a native SDL `ProxyManager` class that your bridge code will call into. This is the necessary starting point in order to continue with this example. Please make sure you also set up a simple UI with buttons and some textfields on the SDL side.
+Native API methods are not exposed automatically to JavaScript. This means you must expose methods you wish to use from SDL to your React Native app. You must implement the `RCTBridgeModule` protocol into a bridge class (see below for an example). Please follow [SmartDeviceLink Integration Basics](Getting Started/Integration Basics) for the basic setup of a native SDL `ProxyManager` class that your bridge code will communicate with. This is the necessary starting point in order to continue with this example. Please make sure you also set up a simple UI with buttons and some text on the SDL side.
 
 ### Creating the RCTBridge
 To create a native module you must implement the `RCTBridgeModule` protocol. Update your `ProxyManager` to include `RCTBridgeModule`.
@@ -70,15 +70,16 @@ Next, to expose the Swift class to React Native you must create an Objective-C f
 We suggest creating a new class that exposes your methods and post notification(s) from the `ProxyManager` class.
 
 ##### Objective-C
-Inside the `ProxyManager` add a SoftButton to your SDL HMI. Inside the handler post the notification and pass along a reference to the `sdlManager` in order to update the UI. You may choose how to keep a reference to the `sdlManager` object however you like.
+Inside the `ProxyManager` add a soft button to your SDL HMI. Inside the handler post the notification and pass along a reference to the `sdlManager` in order to update the UI. You may choose how to keep a reference to the `sdlManager` object however you like.
 
 ```objc
 SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"Button" state:[[SDLSoftButtonState alloc] initWithStateName:@"State 1" text:@"Data" artwork:nil] handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     if (buttonPress == nil) { return; }
 
-    NSDictionary *userInfo = @{@"sdlManager" : self.sdlManager};
+    NSDictionary *userInfo = @{@"sdlManager": self.sdlManager};
     [[NSNotificationCenter defaultCenter] postNotificationName:<#Notification Name#> object:nil userInfo:managers];
 }];
+
 self.sdlManager.screenManager.softButtonObjects = @[softButton];
 ```
 
@@ -87,11 +88,13 @@ self.sdlManager.screenManager.softButtonObjects = @[softButton];
 let softButton = SDLSoftButtonObject(name: "Button", state: SDLSoftButtonState(stateName: "State", text: "Data", artwork: nil), handler: { (buttonPress, butonEvent) in
     guard buttonPress == nil else { return }
     
-    let userInfo = ["sdlManager":self.sdlManager]
+    let userInfo = ["sdlManager": self.sdlManager]
     NotificationCenter.default.post(name: NSNotification.Name(rawValue: <#Notification Name#>), object: nil, userInfo: managers)
 })
+
 self.sdlManager.screenManager.softButtonObjects = [softButton];
 ```
+
 ### Create the EventEmitter Class
 
 Create the new class and add a listener for the notificaiton and all required methods for sending an event.
@@ -187,7 +190,7 @@ RCT_EXTERN_METHOD(eventCall:(eventCall: (id)dict))
 @end
 ```
 
-The above example will then call into JavaScript with an event type `DoAction`. Inside your React Native(Javascript) code create a `NativeEventEmitter` object  within your `EventEmitter` module and add a listener for the event.
+The above example will then call into JavaScript with an event type `DoAction`. Inside your React Native (JavaScript) code, create a `NativeEventEmitter` object within your `EventEmitter` module and add a listener for the event.
 
 ```javascript
 import { NativeEventEmitter, NativeModules } from 'react-native';
@@ -232,7 +235,9 @@ self.sdlManager.screenManager.textField2 = [NSString stringWithFormat:@"High: %@
 ```
 
 ##### Swift
-Add the following method to `SDLEventEmitter.swift`
+
+Add the following method to `SDLEventEmitter.swift`:
+
 ```swift
 @objc func eventCall(_ dict: NSDictionary) {
     self.sdlManager.screenManager.beginUpdates()
