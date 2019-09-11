@@ -66,8 +66,8 @@ Next, to expose the Swift class to React Native you must create an Objective-C f
 @end
 ```
 
-### Exposing Methods
-We suggest creating a new class that exposes your methods and post notification(s) from the `ProxyManager` class.
+### Post a Notification
+Inside the `ProxyManger` class post a notification for a particular event you wish to execute. The observer of this event will call your React Native lsitener you will set up later in the documentaton below. 
 
 ##### Objective-C
 Inside the `ProxyManager` add a soft button to your SDL HMI. Inside the handler post the notification and pass along a reference to the `sdlManager` in order to update the UI. You may choose how to keep a reference to the `sdlManager` object however you like.
@@ -97,7 +97,7 @@ self.sdlManager.screenManager.softButtonObjects = [softButton];
 
 ### Create the EventEmitter Class
 
-Create the new class and add a listener for the notificaiton and all required methods for sending an event.
+Create the class that will be the listener for the notiification you created above. This class will be sending an receieving messages from your JavaScript code (React Native). There are some required method(s) you must include inorder to be an  `EventEmitter` , these method(s) are in the example below. 
 
 ##### Objective-C
 ###### SDLEventEmitter.h
@@ -133,6 +133,7 @@ RCT_EXPORT_MODULE()
     return self;
 }
 
+// Required Method 
 - (NSArray<NSString *> *)supportedEvents {
     return @[@"DoAction"];
 }
@@ -157,6 +158,7 @@ override init() {
     super.init()
 }
 
+// Required Method 
 @objc func doAction(_ notification: Notification) {
     if self.sdlManger == nil {
         self.sdlManager = notification.userInfo["sdlManager"]
@@ -172,25 +174,7 @@ override func supportedEvents() -> [String]! {
 }
 ```
 
-!!! NOTE
-Make sure you add `#import "React/RCTEventEmitter.h"` to the apps bridging header before moving forward if you're making a Swift application.
-!!!
-
-!!! NOTE
-If you're using Swift, you will need to create the Objective-C bridging class for `SDLEventEmitter` and add the proper `RCT_EXTERN_METHOD` wrapper.
-!!!
-
-```objc
-#import "React/RCTBridgeModule.h"
-#import "React/RCTEventEmitter.h"
-@interface RCT_EXTERN_MODULE(SDLEventEmitter, RCTEventEmitter)
-
-RCT_EXTERN_METHOD(eventCall:(eventCall: (id)dict))
-
-@end
-```
-
-The above example will then call into JavaScript with an event type `DoAction`. Inside your React Native (JavaScript) code, create a `NativeEventEmitter` object within your `EventEmitter` module and add a listener for the event.
+The above example will call into your JavaScript code with an event type `DoAction`. Inside your React Native (JavaScript) code, create an  `NativeEventEmitter` object within your `EventEmitter` module and add a listener for the event.
 
 ```javascript
 import { NativeEventEmitter, NativeModules } from 'react-native';
@@ -212,6 +196,7 @@ const testData = testEventEmitter.addListener(
     )
 )
 ```
+### Exposing Methods
 
 The last step is to wrap the method you wish to expose inside an `RCT_EXPORT_METHOD` for Objective-C and `RCT_EXTERN_METHOD` for Swift. 
 
@@ -233,8 +218,24 @@ self.sdlManager.screenManager.textField2 = [NSString stringWithFormat:@"High: %@
 @end
 }
 ```
-
 ##### Swift
+
+!!! NOTE
+Make sure you add `#import "React/RCTEventEmitter.h"` to the apps bridging header.
+!!!
+
+If you're making a React Native application and using native Swift code, you will need to create the Objective-C bridger for the `SDLEventEmitter` class you created above. Wrap the method(s) you wish to expose in a  `RCT_EXTERN_METHOD` macro. This wrapper will allow the JavaScript code to talk with your native code.
+
+```objc
+#import "React/RCTBridgeModule.h"
+#import "React/RCTEventEmitter.h"
+@interface RCT_EXTERN_MODULE(SDLEventEmitter, RCTEventEmitter)
+
+RCT_EXTERN_METHOD(eventCall:(eventCall: (id)dict))
+
+@end
+```
+
 
 Add the following method to `SDLEventEmitter.swift`:
 
