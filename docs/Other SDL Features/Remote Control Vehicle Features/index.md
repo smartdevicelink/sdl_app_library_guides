@@ -165,7 +165,6 @@ sdlManager.systemCapabilityManager.updateCapabilityType(.remoteControl) { (error
 ```
 !@
 
-
 @![android, javaSE, javaEE]
 ```java
 // First you can check to see if the capability is supported on the module
@@ -474,19 +473,19 @@ You should always wrap any setting data RPC in the handler of the `SDLGetInterio
 ##### Objective-C
 ```objc
 [self.sdlManager sendRequest:[[SDLGetInteriorVehicleDataConsent alloc] initWithModuleType:<#ModuleType#> moduleIds:@[<#ID#>]] withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-if (!response.success) { return; }
-SDLGetInteriorVehicleDataConsentResponse *res = (SDLGetInteriorVehicleDataConsentResponse *)response;
-if (!res.allowed[0].boolValue) { return; }
-<#Set Module Data#>
+    if (!response.success) { return; }
+    SDLGetInteriorVehicleDataConsentResponse *res = (SDLGetInteriorVehicleDataConsentResponse *)response;
+    if (!res.allowed[0].boolValue) { return; }
+    <#Set Module Data#>
 }];
 ```
 ##### Swift
 ```swift
 self.sdlManager?.send(request: SDLGetInteriorVehicleDataConsent(moduleType: <#ModuleType#>, moduleIds: [<#ID#>]), responseHandler: { (request, response, error) in
-guard let res = response as? SDLGetInteriorVehicleDataConsentResponse else { return }
-let allowed = res.allowed as! [NSNumber]
-if(allowed[0].boolValue) { return }
-<#Set Module Data#>
+    guard let res = response as? SDLGetInteriorVehicleDataConsentResponse else { return }
+    let allowed = res.allowed as! [NSNumber]
+    if(allowed[0].boolValue) { return }
+    <#Set Module Data#>
 })
 ```
 !@
