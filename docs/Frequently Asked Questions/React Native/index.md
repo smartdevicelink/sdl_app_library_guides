@@ -197,25 +197,24 @@ const testData = testEventEmitter.addListener(
 )
 ```
 ### Exposing Methods
-
 The last step is to wrap the method you wish to expose inside an `RCT_EXPORT_METHOD` for Objective-C and `RCT_EXTERN_METHOD` for Swift. 
+Inside the `SDLEventEmitter` make sure to add the following method.
 
 ##### Objective-C
 ```objc
 RCT_EXPORT_METHOD(eventCall:(NSDictionary *)dict) {
-[self.sdlManager.screenManager beginUpdates];
+    [self.sdlManager.screenManager beginUpdates];
 
-self.sdlManager.screenManager.textField1 = [NSString stringWithFormat:@"Low: %@ ºF", [RCTConvert NSString:dict[@"data"][@"low"]]];
-self.sdlManager.screenManager.textField2 = [NSString stringWithFormat:@"High: %@ ºF", [RCTConvert NSString:dict[@"data"][@"high"]]];
+    self.sdlManager.screenManager.textField1 = [NSString stringWithFormat:@"Low: %@ ºF", [RCTConvert NSString:dict[@"data"][@"low"]]];
+    self.sdlManager.screenManager.textField2 = [NSString stringWithFormat:@"High: %@ ºF", [RCTConvert NSString:dict[@"data"][@"high"]]];
 
-[self.sdlManager.screenManager endUpdatesWithCompletionHandler:^(NSError * _Nullable error) {
-    if (error != nil) {
-        <#Error#>
-    } else {
-        <#Success#>
-    }
-}];
-@end
+    [self.sdlManager.screenManager endUpdatesWithCompletionHandler:^(NSError * _Nullable error) {
+        if (error != nil) {
+            <#Error#>
+        } else {
+            <#Success#>
+        }
+    }];
 }
 ```
 ##### Swift
