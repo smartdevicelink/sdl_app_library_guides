@@ -165,6 +165,7 @@ sdlManager.systemCapabilityManager.updateCapabilityType(.remoteControl) { (error
 ```
 !@
 
+
 @![android, javaSE, javaEE]
 ```java
 // First you can check to see if the capability is supported on the module
