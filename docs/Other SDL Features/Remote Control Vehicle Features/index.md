@@ -193,7 +193,7 @@ Starting in SDL 6.0 multiple modules can exist for each module type. Since many 
 
 Controlling a module is location-based, depending on what seat you are sitting in you may or not be able to control certain modules. For example, only the person sitting in a specific seat can control that seat. Some modules allow multiple users to access and some only allow one at a time. Access to a module depends on the OEMs configuration. 
 
-#### Setting Your Seat
+### Setting Your Seat
 Before sending any setting module RPC you should have the user select their seat. Seat location may affect the modules a user can control depending on the OEMs rules. The default seat location will be `Driver`. Seat location can be updated by setting the `userLocation` property in `SDLSetGlobalProperties` and sending a `SDLSetGlobalProperties` RPC. In a real-life scenario, you may wish to show the user a map or list of all available seats and have them select where they are sitting. This example is only meant to show you how to access and use the data not build your UI/UX. An array of seats can be found in the `SDLGetSystemCapabilityResponse`s `seatLocationCapability` `seat` array. You can use the `seat` array to show the user a list of seats. Each `SeatLocation` object within the `seats` array will have a `grid` struct. This struct will tell you the seat placement of that particular seat. This information can be very useful for creating an interactive map/list for users to select from. 
 
 The `grid` system starts with the driver seat being (0,0,0). A `grid` of `col`=0, `row`=0 and `level`=0 would be referring to the drivers' location. A `col`=2, `row`=0 and `level`=0 would be referring to the front right passenger location, assuming the car has 3 columns. A negative `col` or `row` means it is outside the vehicle. The `colspan` and `rowspan` properties tell you how many rows and columns that module or seat takes up.
@@ -273,7 +273,7 @@ let selectedModuleID = <#SelectedModule#>.moduleInfo?.moduleId
 ```
 !@
 
-#### Get Consent
+### Get Consent
 Some OEMs may wish to ask the driver for consent before a user can control a module. This is typically done automatically by the HMI depending on the configuration. However, the `SDLGetInteriorVehicleDataConsent` RPC will alert the driver for consent in some OEMs if the module if not free and `allowMultipleAccess` is true. `allowMultipleAccess` is part of the `moduleInfo` in the module object.
 
 Check the `allowed` property in the `SDLGetInteriorVehicleDataConsentResponse` to see what modules can be controlled. Note the order of the `allowed` array is 1-1 of the `moduleIDs` array you passed into the `SDLGetInteriorVehicleDataConsent` RPC.
