@@ -1,5 +1,5 @@
 # Remote Control Vehicle Features
-The remote control framework allows apps to control certain modules, such as climate, radio, seat, lights, etc., within a vehicle. Some vehicles will have mutiple modules of the same type and each module can be controlled seperatley depending on seat location and permissions.
+The remote control framework allows apps to control certain modules, such as climate, radio, seat, lights, etc., within a vehicle. Some vehicles will have multiple modules of the same type and each module can be controlled separately depending on seat location and permissions.
 
 !!! Note
 Not all head units support this feature. If using this feature in your app you will most likely need to request permission from the vehicle manufacturer.
@@ -194,7 +194,7 @@ Starting in SDL 6.0 multiple modules can exist for each module type. Since many 
 Controlling a module is seat-based, depending on what seat you are sitting in you may or not be able to control certain modules. For example, only the person sitting in a specific seat can control that seat. Some modules allow multiple users to access and some only allow one at a time. Access to a module depends on the OEMs configuration. 
 
 ### Setting Your Seat
-The first step and before sending any set moudle data RPCs you should have the user select their seat. Seat location may affect the modules a user can control depending on the OEMs rules. The default seat location is `Driver`. Seat location can be updated by setting the `userLocation` property in `SDLSetGlobalProperties` and then sending a `SDLSetGlobalProperties` RPC. 
+The first step and before sending any set module data RPCs you should have the user select their seat. Seat location may affect the modules a user can control depending on the OEMs rules. The default seat location is `Driver`. Seat location can be updated by setting the `userLocation` property in `SDLSetGlobalProperties` and then sending a `SDLSetGlobalProperties` RPC.
 
 In a real-life scenario, you may wish to show the user a map or list of all available seats. This example is only meant to show you how to access the data not build your UI/UX. An array of seats can be found in the `SDLGetSystemCapabilityResponse`s `seatLocationCapability`s `seat` array. Each `SeatLocation` object within the `seats` array will have a `grid` struct. This struct will tell you the seat placement of that particular seat. This information can be very useful for creating a map/list for users to select from. 
 
