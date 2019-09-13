@@ -198,8 +198,8 @@ const testData = testEventEmitter.addListener(
 ```
 ### Exposing Methods
 The last step is to wrap the method you wish to expose inside an `RCT_EXPORT_METHOD` for Objective-C and `RCT_EXTERN_METHOD` for Swift. 
-Inside the `SDLEventEmitter` make sure to add the following method.
 
+Inside the `SDLEventEmitter.m` file make sure to add the following method.
 ##### Objective-C
 ```objc
 RCT_EXPORT_METHOD(eventCall:(NSDictionary *)dict) {
@@ -223,7 +223,7 @@ RCT_EXPORT_METHOD(eventCall:(NSDictionary *)dict) {
 Make sure you add `#import "React/RCTEventEmitter.h"` to the apps bridging header.
 !!!
 
-If you're making a React Native application and using native Swift code, you will need to create the Objective-C bridger for the `SDLEventEmitter` class you created above. Wrap the method(s) you wish to expose in a  `RCT_EXTERN_METHOD` macro. This wrapper will allow the JavaScript code to talk with your native code.
+If you're making a React Native application and using native Swift code, you will need to create the Objective-C bridger for the `SDLEventEmitter` class you created above. Wrap the method(s) you wish to expose in a  `RCT_EXTERN_METHOD` macro inside your wrapper class. This wrapper will allow the JavaScript code to talk with your native code.
 
 ```objc
 #import "React/RCTBridgeModule.h"
@@ -234,8 +234,6 @@ RCT_EXTERN_METHOD(eventCall:(eventCall: (id)dict))
 
 @end
 ```
-
-
 Add the following method to `SDLEventEmitter.swift`:
 
 ```swift
