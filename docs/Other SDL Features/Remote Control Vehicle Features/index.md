@@ -194,7 +194,9 @@ Starting in SDL 6.0 multiple modules can exist for each module type. Since many 
 Controlling a module is seat-based, depending on what seat you are sitting in you may or not be able to control certain modules. For example, only the person sitting in a specific seat can control that seat. Some modules allow multiple users to access and some only allow one at a time. Access to a module depends on the OEMs configuration. 
 
 ### Setting Your Seat
-The first step and before sending any set moudle data RPCs you should have the user select their seat. Seat location may affect the modules a user can control depending on the OEMs rules. The default seat location is `Driver`. Seat location can be updated by setting the `userLocation` property in `SDLSetGlobalProperties` and then sending a `SDLSetGlobalProperties` RPC. In a real-life scenario, you may wish to show the user a map or list of all available seats. This example is only meant to show you how to access the data not build your UI/UX. An array of seats can be found in the `SDLGetSystemCapabilityResponse`s `seatLocationCapability`s `seat` array. Each `SeatLocation` object within the `seats` array will have a `grid` struct. This struct will tell you the seat placement of that particular seat. This information can be very useful for creating a map/list for users to select from. 
+The first step and before sending any set moudle data RPCs you should have the user select their seat. Seat location may affect the modules a user can control depending on the OEMs rules. The default seat location is `Driver`. Seat location can be updated by setting the `userLocation` property in `SDLSetGlobalProperties` and then sending a `SDLSetGlobalProperties` RPC. 
+
+In a real-life scenario, you may wish to show the user a map or list of all available seats. This example is only meant to show you how to access the data not build your UI/UX. An array of seats can be found in the `SDLGetSystemCapabilityResponse`s `seatLocationCapability`s `seat` array. Each `SeatLocation` object within the `seats` array will have a `grid` struct. This struct will tell you the seat placement of that particular seat. This information can be very useful for creating a map/list for users to select from. 
 
 The `grid` system starts with the driver seat being (0,0,0). A `grid` of `col`=0, `row`=0 and `level`=0 would be referring to the drivers' location. A `col`=2, `row`=0 and `level`=0 would be referring to the front right passenger location, assuming the car has 3 columns. A negative `col` or `row` means it is outside the vehicle. The `colspan` and `rowspan` properties tell you how many rows and columns that module or seat takes up.
 
@@ -245,7 +247,7 @@ self.sdlManager.send(seatLocation)
 !@
 
 ### Getting Remote Control Modules
-If the vehicle supports multiple modules of a module type you will have to pass in the `moduleID` along with the module type to access that module. To get a list of all modules you can check the `SDLGetSystemCapabilityResponse`s `remoteControlCapability` object. The `moduleID` is contained within `moduleInfo` in the remote control capability module. 
+If the vehicle supports multiple modules of a module type you will have to pass in the `moduleID` along with the module type to control that module. To get a list of all modules you can check the `SDLGetSystemCapabilityResponse`s `remoteControlCapability` object. The `moduleID` is contained within `moduleInfo` in the remote control capability module. 
 
 @![iOS]
 ##### Objective-C
@@ -267,7 +269,7 @@ self.sdlManager.send(request: getRemoteCapability) { (request, response, error) 
 ```
 !@
 
-With the saved Remote Capabilities object saved you can build a UI/UX to display modules to a user. When the user selects the module you can send a Remote Control RPCs using the `moduleInfo`s `moduleId` property. 
+With the saved remote capabilities struct you can build a UI/UX to display modules to the user. When the user selects the module you can send remote control RPCs using the `moduleInfo`s `moduleId` property. 
 
 @![iOS]
 ##### Objective-C
@@ -308,7 +310,7 @@ self.sdlManager?.send(request: SDLGetInteriorVehicleDataConsent(moduleType: "<#M
 !@
 
 ### Getting Data
-Once you know you have permission to use the remote control feature and you have the moudleID, you can retrieve the data. The following code is an example of how to get data from a radio module. The example also subscribes to updates to radio data, which will be discussed later on in this guide. Since not all vehicles will suport mutiple modules it is recommended to have both of the following implemented. Seat location does not effect the ability to obtain information about a module. However, to set module data, seat location in taken into account.
+Seat location does not effect the ability to obtain information about a module. However, to set module data, seat location is taken into account. Once you know you have permission to use the remote control feature and you have the moudleID(s), you can retrieve the data for any module. The following code is an example of how to get data from a radio module. The example also subscribes to updates to radio data, which will be discussed later on in this guide.
 
 @![iOS]
 ##### Objective-C
@@ -330,7 +332,6 @@ SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData 
     <#Code#>
 }];
 ```
-
 ##### Swift
 ###### No ModuleID
 ```swift
@@ -530,7 +531,7 @@ The notification listener should be added before sending the @![iOS]`SDLGetInter
     <#Code#>
 }];
 
-// No MoudleID
+// With MoudleID
 SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData alloc] initAndSubscribeToModuleType:SDLModuleTypeRadio moduleId:@"<#ModuleID#>"];
 [self.sdlManager sendRequest:getInteriorVehicleData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     SDLGetInteriorVehicleDataResponse *dataResponse = (SDLGetInteriorVehicleDataResponse *)response;
@@ -538,7 +539,7 @@ SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData 
     <#Code#>
 }];
 
-// With ModuleID
+// Without ModuleID
 SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData alloc] initAndSubscribeToModuleType:SDLModuleTypeRadio];
 [self.sdlManager sendRequest:getInteriorVehicleData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     SDLGetInteriorVehicleDataResponse *dataResponse = (SDLGetInteriorVehicleDataResponse *)response;
@@ -557,11 +558,20 @@ sdlManager.subscribe(to: .SDLDidReceiveInteriorVehicleData) { (message) in
     <#Code#>
 }
 
+// With MoudleID
 let getInteriorVehicleData = SDLGetInteriorVehicleData(andSubscribeToModuleType: .radio, moduleId: "<#ModuleID#>")
 sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
     guard let response = res as? SDLGetInteriorVehicleDataResponse else { return }
     // This can now be used to retrieve initialData data
     <#Code#>
+}
+
+// Without MoudleID
+let getInteriorVehicleData = SDLGetInteriorVehicleData(andSubscribeToModuleType: .radio)
+sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
+guard let response = res as? SDLGetInteriorVehicleDataResponse else { return }
+// This can now be used to retrieve initialData data
+<#Code#>
 }
 ```
 !@
