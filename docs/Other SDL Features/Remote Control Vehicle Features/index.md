@@ -198,7 +198,7 @@ The first step and before sending any set moudle data RPCs you should have the u
 
 The `grid` system starts with the driver seat being (0,0,0). A `grid` of `col`=0, `row`=0 and `level`=0 would be referring to the drivers' location. A `col`=2, `row`=0 and `level`=0 would be referring to the front right passenger location, assuming the car has 3 columns. A negative `col` or `row` means it is outside the vehicle. The `colspan` and `rowspan` properties tell you how many rows and columns that module or seat takes up.
 
-![t](assets/car)
+![Car](assets/Car.png)
 
 | col=-1, row=-1  | col=0 | col=1 | col=2 |
 | --- | --- | --- | --- |
