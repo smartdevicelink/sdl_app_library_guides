@@ -13,7 +13,7 @@ To install SDL into your React Native app, you will need to follow [this guide](
 This guide is not meant to walk you through how to make a React Native app but help you integrate SDL into an existing application. We will show you a basic example of how to communicate between your app's JavaScript code and SDL's native Obj-C code. For more advanced features, please refer to the React Native documentation linked above.
 
 ## Integration Basics
-Native API methods are not exposed automatically to JavaScript. This means you must expose methods you wish to use from SDL to your React Native app. You must implement the `RCTBridgeModule` protocol into a bridge class (see below for an example). Please follow [SmartDeviceLink Integration Basics](Getting Started/Integration Basics) for the basic setup of a native SDL `ProxyManager` class that your bridge code will communicate with. This is the necessary starting point in order to continue with this example. Please make sure you also set up a simple UI with buttons and some text on the SDL side.
+Native API methods are not exposed automatically to JavaScript. This means you must expose methods you wish to use from SDL to your React Native app. You must implement the `RCTBridgeModule` protocol into a bridge class (see below for an example). Please follow [SmartDeviceLink Integration Basics](Getting Started/Integration Basics) for the basic setup of a native SDL `ProxyManager` class that your bridge code will communicate with. This is the necessary starting point in order to continue with this example. Also set up a simple UI with buttons and some text on the SDL side.
 
 ### Creating the RCTBridge
 To create a native module you must implement the `RCTBridgeModule` protocol. Update your `ProxyManager` to include `RCTBridgeModule`.
@@ -42,7 +42,7 @@ RCT_EXPORT_MODULE();
 ```
 
 ##### Swift
-First, you must add  `#import "React/RCTBridgeModule.h"` to your `Bridging Header` before you move forward. When creating a Swift application and importing Objective-C code, Xcode should ask if it should create this header file for you. You must include this bridging header for your React Native app to work. You can create this file manually as well. 
+Before you move forward, you must add  `#import "React/RCTBridgeModule.h"` to your `Bridging Header`. When creating a Swift application and importing Objective-C code, Xcode should ask if it should create this header file for you. You must include this bridging header for your React Native app to work. You can create this file manually as well. 
 
 ```swift
 @objc(ProxyManager)
@@ -54,7 +54,7 @@ class ProxyManager: NSObject {
 }
 ```
 
-Next, to expose the Swift class to React Native you must create an Objective-C file in order to use React Native macros.
+Next, to expose the Swift class to React Native, you must create an Objective-C file in order to use React Native macros.
 
 ##### Objective-C
 ###### ProxyManager.m 
@@ -66,11 +66,11 @@ Next, to expose the Swift class to React Native you must create an Objective-C f
 @end
 ```
 
-### Post a Notification
-Inside the `ProxyManger` class post a notification for a particular event you wish to execute. The observer of this event will call your React Native lsitener you will set up later in the documentaton below. 
+### Emitting Event Notifications to JavaScript
+Inside the `ProxyManger` class post a notification for a particular event you wish to execute. The bridge will observe this event and will call the React Native listener that you will set up later in the documentation below.
 
 ##### Objective-C
-Inside the `ProxyManager` add a soft button to your SDL HMI. Inside the handler post the notification and pass along a reference to the `sdlManager` in order to update the UI. You may choose how to keep a reference to the `sdlManager` object however you like.
+Inside the `ProxyManager` add a soft button to your SDL HMI. Inside the soft button handler, post the notification and pass along a reference to the `sdlManager` in order to update your React Native UI through the bridge.
 
 ```objc
 SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"Button" state:[[SDLSoftButtonState alloc] initWithStateName:@"State 1" text:@"Data" artwork:nil] handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
@@ -95,9 +95,9 @@ let softButton = SDLSoftButtonObject(name: "Button", state: SDLSoftButtonState(s
 self.sdlManager.screenManager.softButtonObjects = [softButton];
 ```
 
-### Create the EventEmitter Class
+#### Create the EventEmitter Bridge Class
 
-Create the class that will be the listener for the notiification you created above. This class will be sending an receieving messages from your JavaScript code (React Native). There are some required method(s) you must include inorder to be an  `EventEmitter` , these method(s) are in the example below. 
+Create the class that will be the listener for the notiification you created above. This class will be sending and receiving messages from your JavaScript code (React Native). There are some required method(s) you must include in order to be a React Native `EventEmitter`; these method(s) are in the example below. 
 
 ##### Objective-C
 ###### SDLEventEmitter.h
@@ -128,6 +128,7 @@ RCT_EXPORT_MODULE()
 
 - (instancetype)init {
     self = [super init];
+    // Subscribe to event notifications sent from ProxyManager
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getDoActionNotification:) name:<#Notification Name#> object:nil];
 
     return self;
@@ -138,6 +139,7 @@ RCT_EXPORT_MODULE()
     return @[@"DoAction"];
 }
 
+// Run this code when the subscribed event notification is received
 - (void)getDoActionNotification:(NSNotification *)notification {
     if(self.sdlManager == nil) {
         self.sdlManager = notification.userInfo[@"sdlManager"];
@@ -154,11 +156,12 @@ RCT_EXPORT_MODULE()
 class SDLEventEmitter: RCTEventEmitter {
 
 override init() {
+    // Subscribe to event notifications sent from ProxyManager
     NotificationCenter.default.addObserver(self, selector: #selector(doAction(_:)), name: Notification.Name(rawValue: "<#Notification Name#>", object: nil)
     super.init()
 }
 
-// Required Method 
+// Run this code when the subscribed event notification is received
 @objc func doAction(_ notification: Notification) {
     if self.sdlManger == nil {
         self.sdlManager = notification.userInfo["sdlManager"]
@@ -167,15 +170,16 @@ override init() {
     sendEvent(withName: "DoAction", body: ["type": "actionType"])
 }
 
+// Required Method
 override func supportedEvents() -> [String]! {
     return ["DoAction"]
 }
-
 }
 ```
 
-The above example will call into your JavaScript code with an event type `DoAction`. Inside your React Native (JavaScript) code, create an  `NativeEventEmitter` object within your `EventEmitter` module and add a listener for the event.
+The above example will call into your JavaScript code with an event type `DoAction`. Inside your React Native (JavaScript) code, create a `NativeEventEmitter` object within your `EventEmitter` module and add a listener for the event.
 
+##### JavaScript
 ```javascript
 import { NativeEventEmitter, NativeModules } from 'react-native';
 const  { SDLEventEmitter } = NativeModules;
@@ -196,10 +200,10 @@ const testData = testEventEmitter.addListener(
     )
 )
 ```
-### Exposing Methods
-The last step is to wrap the method you wish to expose inside an `RCT_EXPORT_METHOD` for Objective-C and `RCT_EXTERN_METHOD` for Swift. 
 
-Inside the `SDLEventEmitter.m` file make sure to add the following method.
+### Exposing Methods
+The last step is to wrap any methods you wish to expose inside `RCT_EXPORT_METHOD` for Objective-C and `RCT_EXTERN_METHOD` for Swift. Inside the `SDLEventEmitter.m` file add the following method.
+
 ##### Objective-C
 ```objc
 RCT_EXPORT_METHOD(eventCall:(NSDictionary *)dict) {
@@ -217,6 +221,7 @@ RCT_EXPORT_METHOD(eventCall:(NSDictionary *)dict) {
     }];
 }
 ```
+
 ##### Swift
 
 !!! NOTE
@@ -228,6 +233,7 @@ If you're making a React Native application and using native Swift code, you wil
 ```objc
 #import "React/RCTBridgeModule.h"
 #import "React/RCTEventEmitter.h"
+
 @interface RCT_EXTERN_MODULE(SDLEventEmitter, RCTEventEmitter)
 
 RCT_EXTERN_METHOD(eventCall:(eventCall: (id)dict))
