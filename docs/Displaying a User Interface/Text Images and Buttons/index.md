@@ -10,7 +10,7 @@ The @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@ is 
 | textField2 | The text displayed on the second display line of a multi-line display |
 | textField3 | The text displayed on the third display line of a multi-line display |
 | textField4 | The text displayed on the bottom display line of a multi-line display |
-| title | The title of the new template that will be displayed |
+| title | The title of the displayed template |
 | mediaTrackTextField | The text displayed in the in the track field. This field is only valid for media applications |
 | primaryGraphic | The primary image in a template that supports images |
 | secondaryGraphic | The second image in a template that supports multiple images |
