@@ -189,7 +189,7 @@ if (sdlManager.getSystemCapabilityManager().isCapabilitySupported(SystemCapabili
 !@
 
 ### Controlling Module(s)
-Starting in SDL Core 6.0 multiple modules can exist for each module type. Since many modules can exist for each module type you should provide the `moduleID` to tell the HMI the specific module you wish to control. A new struct `moduleInfo` was created to give developers the information they need to control a specific module. The `moduleInfo` is a struct on the `XYZControlCapabilities` objects. When sending remote control RPCs to a 6.0+ SDL Core, the `moduleID` should be provided to control the desired module. If no `moduleID` is set, the HMI will use the default module of that module type.
+Starting in SDL Core v6.0 multiple modules can exist for each module type. Since many modules can exist for each module type you should provide the `moduleID` to tell the HMI the specific module you wish to control. A new struct `moduleInfo` was created to give developers the information they need to control a specific module. The `moduleInfo` is a struct on the `XYZControlCapabilities` objects. When sending remote control RPCs to a v6.0+ SDL Core, the `moduleID` should be provided to control the desired module. If no `moduleID` is set, the HMI will use the default module of that module type.
 
 Controlling a module is seat-based. Depending on which seat you are sitting in you may or may not be able to control certain modules. For example, only the person sitting in a specific seat can control that seat module. Modules may also allow multiple users to access them, and some may only allow one user at a time. Access to a module will depend on the OEM.
 
@@ -198,11 +198,12 @@ Controlling a module is seat-based. Depending on which seat you are sitting in y
 !!! NOTE
 This section only applies when connected to SDL 6.0+ head units
 !!!
+
 The first step before attempting to set any module is to have the user select their seat. Seat location may affect which modules the user is permitted to control depending on the OEMs rules. The default seat location is `Driver`. Seat location can be updated by setting the `userLocation` property in the `SDLSetGlobalProperties` RPC and sending it.
 
-In a real-life scenario, you may wish to show the user a map or list of all available seats in order to ask them where they are located. This example is only meant to show you how to access the available data, and not how build your UI/UX. 
+In a real-life scenario, you may wish to show the user a map or list of all available seats in order to ask them where they are located. This example is only meant to show you how to access the available data, and not how to build your UI/UX. 
 
-An array of seats can be found in the `SDLGetSystemCapabilityResponse`s `seatLocationCapability`s `seat` array. Each `SeatLocation` object within the `seats` array will have a `grid` struct. This struct will tell you the seat placement of that particular seat. This information can be very useful for creating a map or listfor users to select from.
+An array of seats can be found in the `seatLocationCapability`s `seat` array. Each `SeatLocation` object within the `seats` array will have a `grid` struct. This struct will tell you the seat placement of that particular seat. This information can be very useful for creating a map or list for users to select from.
 
 The `grid` system starts with the top left seat being (0,0,0).  For example, assuming a United States vehicle, a `grid` of `col`=0, `row`=0 and `level`=0 would be the drivers' seat. A `col`=2, `row`=0 and `level`=0 would be referring to the front right passenger location, assuming the car has 3 columns. A negative `col` or `row` means it is outside the vehicle. The `colspan` and `rowspan` properties tell you how many rows and columns that module or seat takes up.
 
@@ -259,7 +260,7 @@ sdlManager.send(request: setData, responseHandler: { (request, response, error) 
 !@
 
 ### Getting Remote Control Modules
-If the vehicle supports multiple modules of a module type you will have to pass in the `moduleID` along with the module type to control that module. To get a list of all modules you can check the `SDLGetSystemCapabilityResponse.remoteControlCapability` object. The `moduleID` is contained within `moduleInfo` in the remote control capability module. 
+If the vehicle supports multiple modules of a module type you will have to pass in the `moduleID` along with the module type to control that module. To get a list of all modules you can check the `SDLGetSystemCapabilityResponse.remoteControlCapability` object. The `moduleID` is contained within `moduleInfo` in the remote control capability module.
 
 @![iOS]
 ##### Objective-C
@@ -299,7 +300,7 @@ let selectedModuleID = <#SelectedModule#>.moduleInfo?.moduleId
 !@
 
 ### Get Consent
-This feature is only available for Core v6.0+. Some OEMs may wish to ask the driver for consent before a user can control a module. This is typically done automatically by the HMI depending on the configuration. However, the `SDLGetInteriorVehicleDataConsent` RPC will alert the driver for consent in some OEMs if the module if not free "not being used by another user"  and `allowMultipleAccess` "multiple users can access/set the data at the same time" is true. `allowMultipleAccess` is part of the `moduleInfo` in the module object.
+This feature is only available for Core v6.0+. Some OEMs may wish to ask the driver for consent before a user can control a module. This is typically done automatically by the HMI depending on the configuration. However, the `SDLGetInteriorVehicleDataConsent` RPC will alert the driver for consent in some OEMs if the module if not free "being used by another user"  and `allowMultipleAccess` "multiple users can access/set the data at the same time" is true. `allowMultipleAccess` is part of the `moduleInfo` in the module object.
 
 Check the `allowed` property in the `SDLGetInteriorVehicleDataConsentResponse` to see what modules can be controlled. Note the order of the `allowed` array is 1-1 with the `moduleIDs` array you passed into the `SDLGetInteriorVehicleDataConsent` RPC.
 
@@ -511,7 +512,7 @@ sdlManager.sendRPC(buttonPress);
 You should wrap any setting data RPC in the handler of the `SDLGetInteriorVehicleDataConsent` request.
 
 !!! Note
-The following `SDLGetInteriorVehicleDataConsent` example is for Core v6.0+ only. Pre v6.0 only allows access to the main Modules of each type so this example is unnecessary
+`SDLGetInteriorVehicleDataConsent` is for Core v6.0+ only.
 !!! 
 
 @![iOS]
