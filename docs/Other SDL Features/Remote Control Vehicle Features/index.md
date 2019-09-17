@@ -132,6 +132,14 @@ The remote control framework also allows mobile applications to send simulated b
 ## Integration
 For remote control to work, the head unit must support SDL Core v.4.4 or newer. Also your app's @![iOS]`appType`!@ @![android, javaSE, javaEE]`appHMIType`!@ must be set to `REMOTE_CONTROL`.
 
+### Pre Core v6.0
+Pre Core 6.0 only the main module of a module type can be controled. The modules you may control will depend on the OEM.
+
+### Core v6.0
+Starting in SDL Core v6.0 multiple modules can exist for each module type. Since many modules can exist for each module type you should provide the `moduleID` to tell the HMI the specific module you wish to control. A new struct `moduleInfo` was created to give developers the information they need to control a specific module. The `moduleInfo` is a struct on the `XYZControlCapabilities` objects. When sending remote control RPCs to a v6.0+ SDL Core, the `moduleID` should be provided to control the desired module. If no `moduleID` is set, the HMI will use the default module of that module type.
+
+Controlling a module is seat-based. Depending on which seat you are sitting in you may or may not be able to control certain modules. For example, only the person sitting in a specific seat can control that seat module. Modules may also allow multiple users to access them, and some may only allow one user at a time. Access to a module will depend on the OEM.
+
 ### Checking Permissions
 Prior to using any remote control RPCs, you must check that the head unit has the remote control capability. As you will encounter head units that do *not* support it, this check is important. To check for this capability, use the following call:
 
@@ -187,11 +195,6 @@ if (sdlManager.getSystemCapabilityManager().isCapabilitySupported(SystemCapabili
 }
 ```
 !@
-
-### Controlling Module(s)
-Starting in SDL Core v6.0 multiple modules can exist for each module type. Since many modules can exist for each module type you should provide the `moduleID` to tell the HMI the specific module you wish to control. A new struct `moduleInfo` was created to give developers the information they need to control a specific module. The `moduleInfo` is a struct on the `XYZControlCapabilities` objects. When sending remote control RPCs to a v6.0+ SDL Core, the `moduleID` should be provided to control the desired module. If no `moduleID` is set, the HMI will use the default module of that module type.
-
-Controlling a module is seat-based. Depending on which seat you are sitting in you may or may not be able to control certain modules. For example, only the person sitting in a specific seat can control that seat module. Modules may also allow multiple users to access them, and some may only allow one user at a time. Access to a module will depend on the OEM.
 
 ### Setting The User's Seat
 
@@ -260,31 +263,30 @@ sdlManager.send(request: setData, responseHandler: { (request, response, error) 
 !@
 
 ### Getting Remote Control Modules
-If the vehicle supports multiple modules of a module type you will have to pass in the `moduleID` along with the module type to control that module. To get a list of all modules you can check the `SDLGetSystemCapabilityResponse.remoteControlCapability` object. The `moduleID` is contained within `moduleInfo` in the remote control capability module.
+When connected to Core v6.0+ you will want to save the moduleID for future use. The `moduleID` is contained within `moduleInfo` in the remote control capability module on Core v6.0+. If Core is less then 6.0 you shoud still get remote control module data but you do not need to save the `moduleID`.
 
 @![iOS]
 ##### Objective-C
 ```objc
-SDLGetSystemCapability *remoteControl = [[SDLGetSystemCapability alloc] initWithType: SDLSystemCapabilityTypeRemoteControl];
-[self.sdlManager sendRequest:remoteControl withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    if (!response.success) { return; }
-    SDLRemoteControlCapabilities *remoteCapabilities = ((SDLGetSystemCapabilityResponse *)response).systemCapability.remoteControlCapability;
+[self.sdlManager.systemCapabilityManager subscribeToCapabilityType:SDLSystemCapabilityTypeRemoteControl withBlock:^(SDLSystemCapability * _Nonnull capability) {
+    if(!capability.remoteControlCapability) { return; }
     <#Save Remote Capabilities#>
 }];
 ```
 ##### Swift
 ```swift
-sdlManager.systemCapabilityManager.subscribe(toCapabilityType: .seatLocation, with: { capability in
-    guard let seats = capability.seatLocationCapability?.seats else { return }
+sdlManager.systemCapabilityManager.subscribe(toCapabilityType: .remoteControl, with: { capability in
+    guard (capability.remoteControlCapability != nil) else { return }
     <#Save Remote Capabilities#>
 })
+
 ```
 !@
 
-With the saved remote capabilities struct you can build a UI/UX to display modules to the user. When the user selects the module you can send remote control RPCs using the `moduleInfo`s `moduleId` property. 
+With the saved remote control capabilities struct you can build a UI to display modules to the user.
 
 !!! Note
-`ModuleID` is only required for Core v6.0+.  Examples will be shown later in the documentation on how to use `moduleID`.
+`ModuleID` is only required for Core v6.0+. Examples will be shown later in the documentation on how to use `moduleID`.
 !!!
 
 @![iOS]
@@ -311,14 +313,16 @@ You should always try to get consent before setting any module data. If consent 
 @![iOS]
 ##### Objective-C
 ```objc
-[self.sdlManager sendRequest:[[SDLGetInteriorVehicleDataConsent alloc] initWithModuleType:@"<#ModuleType#>" moduleIds:@[@"<#ModuleID#>",@"<#ModuleID#>",@"<#ModuleID#>"]] withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+SDLGetInteriorVehicleDataConsent *getInteriorVehicleDataConsent = [[SDLGetInteriorVehicleDataConsent alloc] initWithModuleType:@"<#ModuleType#>" moduleIds:@[@"<#ModuleID#>",@"<#ModuleID#>",@"<#ModuleID#>"]];
+[self.sdlManager sendRequest:getInteriorVehicleDataConsent withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if (!response.success) { return; }
     <#Allowed is an arry of true or false values#>
 }];
 ```
 ##### Swift
 ```swift
-sdlManager.send(request: SDLGetInteriorVehicleDataConsent(moduleType: "<#ModuleType#>", moduleIds: ["<#ModuleID#>","<#ModuleID#>","<#ModuleID#>"]), responseHandler: { (request, response, error) in
+let getInteriorVehicleDataConsent =  SDLGetInteriorVehicleDataConsent(moduleType: "<#ModuleType#>", moduleIds: ["<#ModuleID#>","<#ModuleID#>","<#ModuleID#>"])
+sdlManager.send(request: getInteriorVehicleDataConsent , responseHandler: { (request, response, error) in
     guard let res = response as? SDLGetInteriorVehicleDataConsentResponse else { return }
     let allowed = res.allowed as! [NSNumber]
     <#Allowed is an arry of true or false values#>
@@ -407,7 +411,9 @@ SDLTemperature *temperature = [[SDLTemperature alloc] initWithUnit:SDLTemperatur
 SDLClimateControlData *climateControlData = [[SDLClimateControlData alloc] initWithFanSpeed:@2 desiredTemperature:temperature acEnable:@YES circulateAirEnable:@NO autoModeEnable:@NO defrostZone:nil dualModeEnable:@NO acMaxEnable:@NO ventilationMode:SDLVentilationModeLower heatedSteeringWheelEnable:@YES heatedWindshieldEnable:@YES heatedRearWindowEnable:@YES heatedMirrorsEnable:@NO];
 SDLModuleData *moduleData = [[SDLModuleData alloc] initWithClimateControlData:climateControlData];
 SDLSetInteriorVehicleData *setInteriorVehicleData = [[SDLSetInteriorVehicleData alloc] initWithModuleData:moduleData];
-[self.sdlManager sendRequest:setInteriorVehicleData];
+[self.sdlManager sendRequest:setInteriorVehicleData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+    if(!response.success) { return; }
+}];
 ```
 
 ###### Core v6.0+
@@ -417,7 +423,9 @@ SDLClimateControlData *climateControlData = [[SDLClimateControlData alloc] initW
 SDLModuleData *moduleData = [[SDLModuleData alloc] initWithClimateControlData:climateControlData];
 moduleData.moduleId = <#Module ID#>
 SDLSetInteriorVehicleData *setInteriorVehicleData = [[SDLSetInteriorVehicleData alloc] initWithModuleData:moduleData];
-[self.sdlManager sendRequest:setInteriorVehicleData];
+[self.sdlManager sendRequest:setInteriorVehicleData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+    if(!response.success) { return; }
+}];
 ```
 
 ##### Swift
@@ -428,7 +436,9 @@ let climateControlData = SDLClimateControlData(fanSpeed: 2 as NSNumber, desiredT
 let moduleData = SDLModuleData(climateControlData: climateControlData)
 let setInteriorVehicleData = SDLSetInteriorVehicleData(moduleData: moduleData)
 
-sdlManager.send(setInteriorVehicleData)
+sdlManager.send(request: setInteriorVehicleData) { (request, response, error) in
+    guard response?.success.boolValue == true else { return }
+}
 ```
 
 ###### Core v6.0+
@@ -439,7 +449,9 @@ let moduleData = SDLModuleData(climateControlData: climateControlData)
 moduleData.moduleId = <#Module ID#>
 let setInteriorVehicleData = SDLSetInteriorVehicleData(moduleData: moduleData)
 
-sdlManager.send(setInteriorVehicleData)
+sdlManager.send(request: setInteriorVehicleData) { (request, response, error) in
+    guard response?.success.boolValue == true else { return }
+}
 ```
 !@
 
@@ -477,7 +489,9 @@ Another unique feature of remote control is the ability to send simulated button
 SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameEject moduleType:SDLModuleTypeRadio];
 buttonPress.buttonPressMode = SDLButtonPressModeShort;
 
-[self.sdlManager sendRequest:buttonPress];
+[self.sdlManager sendRequest:buttonPress withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+    if(!response.success) { return; }
+}];
 ```
 
 ###### Core v6.0+
@@ -485,7 +499,9 @@ buttonPress.buttonPressMode = SDLButtonPressModeShort;
 SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameEject moduleType:SDLModuleTypeRadio moduleId:@"<#ModuleID#>"];
 buttonPress.buttonPressMode = SDLButtonPressModeShort;
 
-[self.sdlManager sendRequest:buttonPress];
+[self.sdlManager sendRequest:buttonPress withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+    if(!response.success) { return; }
+}];
 ``` 
 
 ##### Swift
@@ -494,7 +510,9 @@ buttonPress.buttonPressMode = SDLButtonPressModeShort;
 let buttonPress = SDLButtonPress(buttonName: .eject, moduleType: .radio)
 buttonPress.buttonPressMode = .short
 
-sdlManager.send(buttonPress)
+sdlManager.send(request: buttonPress) { (request, response, error) in
+    guard response?.success.boolValue == true else { return }
+}
 ```
 
 ###### Core v6.0+
@@ -502,7 +520,9 @@ sdlManager.send(buttonPress)
 let buttonPress = SDLButtonPress(buttonName: .eject, moduleType: .radio, moduleId: "<#ModuleID#>")
 buttonPress.buttonPressMode = .short
 
-sdlManager.send(buttonPress)
+sdlManager.send(request: buttonPress) { (request, response, error) in
+    guard response?.success.boolValue == true else { return }
+}
 ```
 !@
 
