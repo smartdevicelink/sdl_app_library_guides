@@ -299,8 +299,8 @@ let selectedModuleID = <#SelectedModule#>.moduleInfo?.moduleId
 ```
 !@
 
-### Get Consent
-This feature is only available for Core v6.0+. Some OEMs may wish to ask the driver for consent before a user can control a module. This is typically done automatically by the HMI depending on the configuration. However, the `SDLGetInteriorVehicleDataConsent` RPC will alert the driver for consent in some OEMs if the module if not free "being used by another user"  and `allowMultipleAccess` "multiple users can access/set the data at the same time" is true. `allowMultipleAccess` is part of the `moduleInfo` in the module object.
+### Getting Consent to Control a Module
+This feature is only available for Core v6.0+. Some OEMs may wish to ask the driver for consent before a user can control a module. The `SDLGetInteriorVehicleDataConsent` RPC will alert the driver for consent in some OEM head units if the module if not free (another user has control) and `allowMultipleAccess` (multiple users can access/set the data at the same time) is `true`. `allowMultipleAccess` is part of the `moduleInfo` in the module object.
 
 Check the `allowed` property in the `SDLGetInteriorVehicleDataConsentResponse` to see what modules can be controlled. Note the order of the `allowed` array is 1-1 with the `moduleIDs` array you passed into the `SDLGetInteriorVehicleDataConsent` RPC.
 
@@ -326,12 +326,14 @@ sdlManager.send(request: SDLGetInteriorVehicleDataConsent(moduleType: "<#ModuleT
 ```
 !@
 
-### Getting Data
-Seat location does not affect the ability to obtain information about a module. However, to set module data, seat location is taken into account. Once you know you have permission to use the remote control feature and you have the moudleID(s), you can retrieve the data for any module. The following code is an example of how to get data from a radio module. The example also subscribes to updates to radio data, which will be discussed later on in this guide.
+### Getting Module Data
+Seat location does not affect the ability to get data from a module. However, to set module data, seat location will be taken into account. Once you know you have permission to use the remote control feature and you have the `moduleID`(s) (when connected to 6.0+ systems), you can retrieve the data for any module. The following code is an example of how to get data from a radio module. The example also subscribes to updates to radio data, which will be discussed later on in this guide.
+
+When connected to < 6.0 head units, there can only be one module for each module type (e.g. there can only be one climate module, light module, radio module, etc.), so you will not need to pass a module ID.
 
 @![iOS]
 ##### Objective-C
-###### Pre Core v6.0
+###### Pre-Core v6.0
 ```objc
 SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData alloc] initAndSubscribeToModuleType:SDLModuleTypeRadio];
 [self.sdlManager sendRequest:getInteriorVehicleData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
@@ -349,6 +351,7 @@ SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData 
     <#Code#>
 }];
 ```
+
 ##### Swift
 ###### Pre Core v6.0
 ```swift
@@ -391,14 +394,14 @@ sdlManager.sendRPC(interiorVehicleData);
 ```
 !@
 
-### Setting Data
-Not only do you have the ability to get data from these modules, but, if you have the right permissions, you can also set module data. Below is an example of setting climate control data. It is likely that you will not need to set all the data as in the code example below. When connected to 6.0+ system, set the `moduleID` in a `SDLSetInteriorVehicleData` set the `moduleID` property on the `moduleData` object.
+### Setting Module Data
+Not only do you have the ability to get data from these modules, but, if you have the right permissions, you can also set module data. Below is an example of setting climate control data. It is likely that you will not need to set all the data as in the code example below. When connected to 6.0+ system, you must set the `moduleID` in `SDLSetInteriorVehicleData.moduleData`, while when connected to < 6.0 systems, there is only one module per module type, so you must only pass the type of the module you wish to control.
 
-The permission area of a module depends on the `serviceArea`s which can be found in `moduleInfo`. Each module will have its own `location` and `serviceArea`. The `location` of a module is like the `seats` array, it maps to the `grid` to tell you the physical location of a particular module. The `serviceArea` maps to the grid to show how far that module's scope reaches. For example, a radio control serves all passengers in the vehicle. Its service area will cover the entirety of the vehicle grid. If a `serviceArea` is not included, it is assumed that the `serviceArea` is the same as the module's `location`. If neither is included, it is assumed that the `serviceArea` covers the whole area of the vehicle. If a user is not sitting within the `serviceArea`'s `grid`, they will not be able to control that module.
+When you received module information above in "Getting Module Data" on 6.0+ systems, you received information on the `location` and `serviceArea` of the module. The permission area of a module depends on that `serviceArea`. The `location` of a module is like the `seats` array, it maps to the `grid` to tell you the physical location of a particular module. The `serviceArea` maps to the grid to show how far that module's scope reaches. For example, a radio control serves all passengers in the vehicle, sot its service area will cover the entirety of the vehicle grid, while a climate module may only cover a passenger area and not the driver or the back row. If a `serviceArea` is not included, it is assumed that the `serviceArea` is the same as the module's `location`. If neither is included, it is assumed that the `serviceArea` covers the whole area of the vehicle. If a user is not sitting within the `serviceArea`'s `grid`, they will not receive permission to control that module (attempting to set data will fail).
 
 @![iOS]
 ##### Objective-C
-###### Pre Core v6.0
+###### Pre-Core v6.0
 ```objc
 SDLTemperature *temperature = [[SDLTemperature alloc] initWithUnit:SDLTemperatureUnitFahrenheit value:74.1];
 SDLClimateControlData *climateControlData = [[SDLClimateControlData alloc] initWithFanSpeed:@2 desiredTemperature:temperature acEnable:@YES circulateAirEnable:@NO autoModeEnable:@NO defrostZone:nil dualModeEnable:@NO acMaxEnable:@NO ventilationMode:SDLVentilationModeLower heatedSteeringWheelEnable:@YES heatedWindshieldEnable:@YES heatedRearWindowEnable:@YES heatedMirrorsEnable:@NO];
@@ -469,7 +472,7 @@ Another unique feature of remote control is the ability to send simulated button
 
 @![iOS]
 ##### Objective-C
-###### Pre Core v6.0
+###### Pre-Core v6.0
 ```objc
 SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameEject moduleType:SDLModuleTypeRadio];
 buttonPress.buttonPressMode = SDLButtonPressModeShort;
@@ -479,11 +482,12 @@ buttonPress.buttonPressMode = SDLButtonPressModeShort;
 
 ###### Core v6.0+
 ```objc
-SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameEject moduleType:SDLModuleTypeRadio moduleId: @"<#ModuleID#>"];
+SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameEject moduleType:SDLModuleTypeRadio moduleId:@"<#ModuleID#>"];
 buttonPress.buttonPressMode = SDLButtonPressModeShort;
 
 [self.sdlManager sendRequest:buttonPress];
 ``` 
+
 ##### Swift
 ###### Pre Core v6.0
 ```swift
@@ -628,6 +632,7 @@ sdlManager.sendRPC(interiorVehicleData);
 ```objc
 [self.sdlManager subscribeToRPC:[[SDLReleaseInteriorVehicleDataModule alloc] initWithModuleType:<#Module Type#> moduleId:@"<#Module ID#>"]];
 ```
+
 ##### Swift
 ```swift
 sdlManager.send(request: SDLReleaseInteriorVehicleDataModule(moduleType: <#Module Type#>, moduleId: "<#Module ID#>"))
