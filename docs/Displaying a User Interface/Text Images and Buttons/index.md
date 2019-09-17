@@ -72,7 +72,7 @@ sdlManager.getScreenManager().setTextField1("Hello, this is MainField1.");
 sdlManager.getScreenManager().setTextField2("Hello, this is MainField2.");
 sdlManager.getScreenManager().setTextField3("Hello, this is MainField3.");
 sdlManager.getScreenManager().setTextField4("Hello, this is MainField4.");
-sdlManager.getScreenManager().setTitle("title");
+sdlManager.getScreenManager().setTitle("<#Title#>");
 sdlManager.getScreenManager().commit(new CompletionListener() {
 	@Override
 	public void onComplete(boolean success) {
