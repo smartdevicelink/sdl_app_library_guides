@@ -298,8 +298,11 @@ Using the `SDLKeyboardDelegate` involves two required methods (for handling the 
 }
 
 /// Optional Methods
-- (void)updateAutocompleteWithInput:(NSString *)currentInputText completionHandler:(SDLKeyboardAutocompleteCompletionHandler)completionHandler {
-    <#Check the input text and return a string with the current autocomplete text#>
+- (void)updateAutocompleteWithInput:(NSString *)currentInputText autoCompleteResultsHandler:(SDLKeyboardAutoCompleteResultsHandler)resultsHandler {
+    <#Check the input text and return an array of string that contain the current input text#>
+    if ([currentInputText.lowercaseString hasPrefix:@"f"]) {
+        resultsHandler(@[@"First", @"Friend", @"Fruit"]);
+    }
 }
 
 - (void)updateCharacterSetWithInput:(NSString *)currentInputText completionHandler:(SDLKeyboardCharacterSetCompletionHandler)completionHandler {
@@ -340,8 +343,11 @@ extension <#Class Name#>: SDLKeyboardDelegate {
     }
 
     /// Optional Methods
-    func updateAutocomplete(withInput currentInputText: String, completionHandler: @escaping SDLKeyboardAutocompleteCompletionHandler) {
-        <#Check the input text and return a string with the current autocomplete text#>
+    func updateAutocomplete(withInput currentInputText: String, autoCompleteResultsHandler resultsHandler: @escaping SDLKeyboardAutoCompleteResultsHandler) {
+        <#Check the input text and return an array of string that contain the current input text#>
+         if currentInputText.lowercased().hasPrefix("f") {
+            resultsHandler(@["First", "Friend", "Fruit"]);
+        }
     }
 
     func updateCharacterSet(withInput currentInputText: String, completionHandler: @escaping SDLKeyboardCharacterSetCompletionHandler) {
