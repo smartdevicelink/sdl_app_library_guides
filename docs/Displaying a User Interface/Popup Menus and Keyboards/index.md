@@ -366,6 +366,8 @@ extension <#Class Name#>: SDLKeyboardDelegate {
 Using the `KeyboardListener` involves implementing five methods: 
 
 ```java
+// ToDo - update to show example for autoComplete list
+
 KeyboardListener keyboardListener = new KeyboardListener() {
     @Override
     public void onUserDidSubmitInput(String inputText, KeyboardEvent event) {
