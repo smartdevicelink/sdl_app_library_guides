@@ -8,7 +8,32 @@ You have two different options when creating menus. One is to simply add items t
 Every template has a main menu button. The position of this button varies between templates and cannot be removed from the template. Some OEMs may format certain templates to not display the main menu button if you have no menu items (such as the navigation map view).
 !!!
 
-## Adding Menu Items
+## Setting a Menu Style
+Core v6.0+ supports menu tiles depending on OEM. To check if the head unit supports menu tiles check `displayCapabilities` `menuLayoutsAvailable` property. To set a menu layout please set the `screenManager`s `menuConfiguration` property. Default layout is `list`.
+
+!!! Note
+If this property is set after a menu already exists, sub-menu layouts will not be updated.  A new menu will have to be set to see the new sub-menu layout.
+!!!
+
+@![iOS]
+##### Objective-C
+```objc
+SDLMenuConfiguration *menuConfiguration = [SDLMenuConfiguration alloc] initWithMainMenuLayout:<#MenuLayout#> defaultSubmenuLayout:<#MenuLayout#>];
+self.sdlManager.screenManager.menuConfiguration = menuConfiguration 
+```
+##### Swift
+```swift
+let menuConfiguration = SDLMenuConfiguration(mainMenuLayout: <#MenuLayout#>, defaultSubmenuLayout: <#MenuLayout#>)
+sdlManager.screenManager.menuConfiguration = menuConfiguration
+```
+!@
+
+@![android, javaSE, javaEE]
+```//ToDo - add example how to set layout for menu
+```
+!@
+
+## Adding Menu Items 
 The best way to create and update your menu is to the use the Screen Manager API. The screen manager contains two menu related properties: `menu`, and `voiceCommands`. Setting an array of @![iOS]`SDLMenuCell`!@@![android, javaSE, javaEE]`MenuCell`!@s into the `menu` property will automatically set and update your menu and submenus, while setting an array of @![iOS]`SDLVoiceCommand`!@@![android, javaSE, javaEE]`VoiceCommand`!@s into the `voiceCommands` property allows you to use "hidden" menu items that only contain voice recognition data. The user can then use the IVI system's voice engine to activate this command even though it will not be displayed within the main menu.
 
 To find out more information on how to create `voiceCommands` see the [related documentation](Displaying a User Interface/Global Voice Commands).
@@ -53,10 +78,12 @@ sdlManager.getScreenManager().setMenu(Collections.singletonList(cell));
 !@
 
 ### Adding Submenus
-Adding a submenu is as simple as adding subcells to a @![iOS]`SDLMenuCell`!@ @![android, javaSE, javaEE]`SdlMenuCell`!@. The submenu is automatically displayed when selected by the user. Currently menus only support one layer of subcells.
+Adding a submenu is as simple as adding subcells to a @![iOS]`SDLMenuCell`!@ @![android, javaSE, javaEE]`SdlMenuCell`!@. The submenu is automatically displayed when selected by the user. Currently menus only support one layer of subcells. In Core v6.0+ it is possible to set individual submenus to use different layouts.
 
 @![iOS]
 ##### Objective-C
+
+######  Pre Core v6.0
 ```objc
 // Create the inner menu cell
 SDLMenuCell *cell = [[SDLMenuCell alloc] initWithTitle: <#NSString#> icon: <#SDLArtwork#> voiceCommands: <#@[NSString]#> handler:^(SDLTriggerSource  _Nonnull triggerSource) {
@@ -68,16 +95,31 @@ SDLMenuCell *cell = [[SDLMenuCell alloc] initWithTitle: <#NSString#> icon: <#SDL
 SDLMenuCell *submenuCell = [[SDLMenuCell alloc] initWithTitle:<#NSString#> icon:<#SDLArtwork?#> subCells:@[cell]];
 self.sdlManager.screenManager.menu = @[submenuCell];
 ```
+######  Core v6.0+
+```objc
+// Create the inner menu cell
+SDLMenuCell *cell = [[SDLMenuCell alloc] initWithTitle: <#NSString#> icon: <#SDLArtwork#> voiceCommands: <#@[NSString]#> handler:^(SDLTriggerSource  _Nonnull triggerSource) {
+    // Menu item was selected, check the `triggerSource` to know if the user used touch or voice to activate it
+    <#Handle the cell's selection#>
+}];
+
+// Create and set the submenu cell
+SDLMenuCell *submenuCell = [[SDLMenuCell alloc] initWithTitle:<#NSString#> icon:<#SDLArtwork?#> submenuLayout:<#Menu Layout#>, subCells:@[cell]];
+self.sdlManager.screenManager.menu = @[submenuCell];
+```
 
 ##### Swift
+###### Pre Core v6.0
 ```swift
 // Create the inner menu cell
 let cell = SDLMenuCell(title: <#String#>, icon: <#SDLArtwork?#>, voiceCommands: <#[String]?#>) { (triggerSource: SDLTriggerSource) in
     // Menu item was selected, check the `triggerSource` to know if the user used touch or voice to activate it
     <#Handle the cell's selection#>
 }
-
-let submenuCell = SDLMenuCell(title: <#String#>, icon: <#SDLArtwork?#>, subCells:[cell])
+```
+######  Core v6.0+
+```swift
+let submenuCell = SDLMenuCell(title: <#String#>, icon: <#SDLArtwork?#>, submenuLayout: <#Menu Layout#>, subCells:[cell])
 sdlManager.screenManager.menu = [submenuCell]
 ```
 !@
@@ -97,6 +139,8 @@ MenuCell innerCell = new MenuCell("inner menu cell", null, Collections.singleton
 MenuCell cell = new MenuCell("cell", null, Collections.singletonList(innerCell));
 
 sdlManager.getScreenManager().setMenu(Collections.singletonList(cell));
+```
+```//ToDo add new example to set a menu layout.
 ```
 !@
 
