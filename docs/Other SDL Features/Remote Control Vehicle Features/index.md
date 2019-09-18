@@ -330,13 +330,28 @@ sdlManager.send(request: getInteriorVehicleDataConsent , responseHandler: { (req
 ```
 !@
 
-### Getting Module Data
-Seat location does not affect the ability to get data from a module. However, to set module data, seat location will be taken into account. Once you know you have permission to use the remote control feature and you have the `moduleID`(s) (when connected to 6.0+ systems), you can retrieve the data for any module. The following code is an example of how to get data from a radio module. The example also subscribes to updates to radio data, which will be discussed later on in this guide.
+### Subscribing to Module Data 
+Seat location does not affect the ability to get data from a module. Once you know you have permission to use the remote control feature and you have the `moduleID`(s) (when connected to 6.0+ systems), you can retrieve the data for any module. The following code is an example of how to get data and subscirbe to a radio module. 
 
 When connected to < 6.0 head units, there can only be one module for each module type (e.g. there can only be one climate module, light module, radio module, etc.), so you will not need to pass a module ID.
 
+!!! NOTE
+Subscribing to the RPC must be done before sending the @![iOS]`SDLGetInteriorVehicleData`!@ @![android, javaSE, javaEE]`GetInteriorVehicleData`!@ request.
+!!!
+
 @![iOS]
 ##### Objective-C
+```objc
+[self.sdlManager subscribeToRPC:SDLDidReceiveInteriorVehicleDataNotification withBlock:^(__kindof SDLRPCMessage * _Nonnull message) {
+SDLRPCNotificationNotification *dataNotification = (SDLRPCNotificationNotification *)note;
+SDLOnInteriorVehicleData *onInteriorVehicleData = (SDLOnInteriorVehicleData *)dataNotification.notification;
+    if (onInteriorVehicleData == nil) { return; }
+
+    // This block will now be called whenever vehicle data changes
+    // NOTE: If you subscibe to multiple modules, all the data will be sent here. You will have to split it out based on `onInteriorVehicleData.moduleData.moduleType` yourself.
+    <#Code#>
+}];
+```
 ###### Pre-Core v6.0
 ```objc
 SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData alloc] initAndSubscribeToModuleType:SDLModuleTypeRadio];
@@ -357,6 +372,15 @@ SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData 
 ```
 
 ##### Swift
+```swift
+sdlManager.subscribe(to: .SDLDidReceiveInteriorVehicleData) { (message) in
+    let onInteriorVehicleData = message as? SDLOnInteriorVehicleData else { return }
+
+    // This block will now be called whenever vehicle data changes
+    // NOTE: If you subscribe to multiple modules, all the data will be sent here. You will have to split it out based on `onInteriorVehicleData.moduleData.moduleType` yourself.
+    <#Code#>
+}
+```
 ###### Pre Core v6.0
 ```swift
 let getInteriorVehicleData = SDLGetInteriorVehicleData(andSubscribeToModuleType: .radio)
@@ -366,7 +390,6 @@ sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
     <#Code#>
 }
 ```
-
 ###### Core v6.0+
 ```swift
 let getInteriorVehicleData = SDLGetInteriorVehicleData(andSubscribeToModuleType: .radio, moudleID: "<#ModuleID#>")
@@ -379,6 +402,15 @@ sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
 !@
 
 @![android, javaSE, javaEE]
+```java
+sdlManager.addOnRPCNotificationListener(FunctionID.ON_INTERIOR_VEHICLE_DATA, new OnRPCNotificationListener() {
+    @Override
+    public void onNotified(RPCNotification notification) {
+        OnInteriorVehicleData onInteriorVehicleData = (OnInteriorVehicleData) notification;
+        // Perform action based on notification
+    }
+});
+```
 ```java
 GetInteriorVehicleData interiorVehicleData = new GetInteriorVehicleData(ModuleType.RADIO);
 interiorVehicleData.setSubscribe(true);
@@ -398,7 +430,51 @@ sdlManager.sendRPC(interiorVehicleData);
 ```
 !@
 
+#### Getting One-Time data
+To simply get data for a module send a @![iOS]`SDLGetInteriorVehicleData`!@ @![android, javaSE, javaEE]`GetInteriorVehicleData`!@ request.
+
+##### Objective-C
+###### Pre Core v6.0
+```objc
+SDLGetInteriorVehicleData *getInteriorVehicleData = [SDLGetInteriorVehicleData alloc] initWithModuleType:SDLModuleTypeRadio];
+[self.sdlManager sendRequest:getInteriorVehicleData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+    SDLGetInteriorVehicleDataResponse *dataResponse = (SDLGetInteriorVehicleDataResponse *)response;
+    // This can now be used to retrieve data
+}];
+```
+###### Core v6.0+
+```objc
+SDLGetInteriorVehicleData *getInteriorVehicleData = [SDLGetInteriorVehicleData alloc] initWithModuleType:SDLModuleTypeRadio moduleId:<#ModuleID#>];
+[self.sdlManager sendRequest:getInteriorVehicleData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+    SDLGetInteriorVehicleDataResponse *dataResponse = (SDLGetInteriorVehicleDataResponse *)response;
+    // This can now be used to retrieve data
+}];
+```
+##### Swift
+###### Pre Core v6.0
+```swift
+let getInteriorVehicleData = SDLGetInteriorVehicleData(moduleType: .radio)
+sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
+    guard let response = res as? SDLGetInteriorVehicleDataResponse else { return }
+    // This can now be used to retrieve data
+    <#Code#>
+}
+```
+###### Core v6.0+
+```objc
+let getInteriorVehicleData =  SDLGetInteriorVehicleData(moduleType: .radio, moduleId: <#ModuleID#>)
+sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
+    guard let response = res as? SDLGetInteriorVehicleDataResponse else { return }
+    // This can now be used to retrieve data
+    <#Code#>
+}
+```
 ### Setting Module Data
+
+!!! Note
+When running Core v6.0+ you should always get consent before attempting to set module data.
+!!!
+
 Not only do you have the ability to get data from these modules, but, if you have the right permissions, you can also set module data. Below is an example of setting climate control data. It is likely that you will not need to set all the data as in the code example below. When connected to 6.0+ system, you must set the `moduleID` in `SDLSetInteriorVehicleData.moduleData`, while when connected to < 6.0 systems, there is only one module per module type, so you must only pass the type of the module you wish to control.
 
 When you received module information above in "Getting Module Data" on 6.0+ systems, you received information on the `location` and `serviceArea` of the module. The permission area of a module depends on that `serviceArea`. The `location` of a module is like the `seats` array, it maps to the `grid` to tell you the physical location of a particular module. The `serviceArea` maps to the grid to show how far that module's scope reaches. For example, a radio control serves all passengers in the vehicle, sot its service area will cover the entirety of the vehicle grid, while a climate module may only cover a passenger area and not the driver or the back row. If a `serviceArea` is not included, it is assumed that the `serviceArea` is the same as the module's `location`. If neither is included, it is assumed that the `serviceArea` covers the whole area of the vehicle. If a user is not sitting within the `serviceArea`'s `grid`, they will not receive permission to control that module (attempting to set data will fail).
@@ -533,128 +609,25 @@ sdlManager.sendRPC(buttonPress);
 ```
 !@
 
-You should wrap any setting data RPC in the handler of the `SDLGetInteriorVehicleDataConsent` request.
-
-!!! Note
-`SDLGetInteriorVehicleDataConsent` is for Core v6.0+ only.
-!!! 
-
-@![iOS]
-##### Objective-C
-```objc
-[self.sdlManager sendRequest:[[SDLGetInteriorVehicleDataConsent alloc] initWithModuleType:@"<#ModuleType#>" moduleIds:@[@"<#ModuleID#>"]] withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    if (!response.success) { return; }
-    SDLGetInteriorVehicleDataConsentResponse *res = (SDLGetInteriorVehicleDataConsentResponse *)response;
-    if (!res.allowed[0].boolValue) { return; }
-    <#Set Module Data#>
-}];
-```
-
-##### Swift
-```swift
-sdlManager.send(request: SDLGetInteriorVehicleDataConsent(moduleType: "<#ModuleID#>", moduleIds: ["<#ModuleID#>"]), responseHandler: { (request, response, error) in
-    guard let res = response as? SDLGetInteriorVehicleDataConsentResponse else { return }
-    let allowed = res.allowed as! [NSNumber]
-    if(allowed[0].boolValue) { return }
-    <#Set Module Data#>
-})
-```
-!@
-
-### Subscribing to Changes
-It is also possible to subscribe to changes in data associated with supported modules. To do so, during your request for data, simply set `subscribe` to `true`. To unsubscribe, send the request again with `subscribe` set to `false`. The response to a subscription will come in a form of a notification. You can receive this notification by adding a notification listener for `OnInteriorVehicleData`.
-
-!!! NOTE
-The notification listener should be added before sending the @![iOS]`SDLGetInteriorVehicleData`!@ @![android, javaSE, javaEE]`GetInteriorVehicleData`!@ request.
-!!!
-
-@![iOS]
-##### Objective-C
-```objc
-[self.sdlManager subscribeToRPC:SDLDidReceiveInteriorVehicleDataNotification withBlock:^(__kindof SDLRPCMessage * _Nonnull message) {
-    SDLRPCNotificationNotification *dataNotification = (SDLRPCNotificationNotification *)note;
-    SDLOnInteriorVehicleData *onInteriorVehicleData = (SDLOnInteriorVehicleData *)dataNotification.notification;
-    if (onInteriorVehicleData == nil) { return; }
-
-    // This block will now be called whenever vehicle data changes
-    // NOTE: If you subscibe to multiple modules, all the data will be sent here. You will have to split it out based on `onInteriorVehicleData.moduleData.moduleType` yourself.
-    <#Code#>
-}];
-
-// Pre Core v6.0
-SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData alloc] initAndSubscribeToModuleType:SDLModuleTypeRadio];
-[self.sdlManager sendRequest:getInteriorVehicleData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    SDLGetInteriorVehicleDataResponse *dataResponse = (SDLGetInteriorVehicleDataResponse *)response;
-    // This can now be used to retrieve data
-    <#Code#>
-}];
-
-// Core v6.0+
-SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData alloc] initAndSubscribeToModuleType:SDLModuleTypeRadio moduleId:@"<#ModuleID#>"];
-[self.sdlManager sendRequest:getInteriorVehicleData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    SDLGetInteriorVehicleDataResponse *dataResponse = (SDLGetInteriorVehicleDataResponse *)response;
-    // This can now be used to retrieve data
-    <#Code#>
-}];
-```
-
-##### Swift
-```swift
-sdlManager.subscribe(to: .SDLDidReceiveInteriorVehicleData) { (message) in
-    let onInteriorVehicleData = message as? SDLOnInteriorVehicleData else { return }
-
-    // This block will now be called whenever vehicle data changes
-    // NOTE: If you subscribe to multiple modules, all the data will be sent here. You will have to split it out based on `onInteriorVehicleData.moduleData.moduleType` yourself.
-    <#Code#>
-}
-
-// Pre Core v6.0
-let getInteriorVehicleData = SDLGetInteriorVehicleData(andSubscribeToModuleType: .radio)
-sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
-    guard let response = res as? SDLGetInteriorVehicleDataResponse else { return }
-    // This can now be used to retrieve initialData data
-    <#Code#>
-}
-
-// Core v6.0+
-let getInteriorVehicleData = SDLGetInteriorVehicleData(andSubscribeToModuleType: .radio, moduleId: "<#ModuleID#>")
-sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
-    guard let response = res as? SDLGetInteriorVehicleDataResponse else { return }
-    // This can now be used to retrieve initialData data
-    <#Code#>
-}
-```
-!@
-
-@![android, javaSE, javaEE]
-```java
-sdlManager.addOnRPCNotificationListener(FunctionID.ON_INTERIOR_VEHICLE_DATA, new OnRPCNotificationListener() {
-    @Override
-    public void onNotified(RPCNotification notification) {
-        OnInteriorVehicleData onInteriorVehicleData = (OnInteriorVehicleData) notification;
-        // Perform action based on notification
-    }
-});
-
-// Then send the GetInteriorVehicleData with subscription set to true
-GetInteriorVehicleData interiorVehicleData = new GetInteriorVehicleData(ModuleType.RADIO);
-interiorVehicleData.setSubscribe(true);
-sdlManager.sendRPC(interiorVehicleData);
-
-```
-!@
-
 ### Releasing the Moudle
 `SDLReleaseInteriorVehicleDataModule` is for Core v6.0+ only. When the user no longer needs control over a module, you should release the module so other users can control it. 
 
 @![iOS]
 ##### Objective-C
 ```objc
-[self.sdlManager subscribeToRPC:[[SDLReleaseInteriorVehicleDataModule alloc] initWithModuleType:<#Module Type#> moduleId:@"<#Module ID#>"]];
+SDLReleaseInteriorVehicleDataModule * releaseInteriorVehicleDataModule = [[SDLReleaseInteriorVehicleDataModule alloc] initWithModuleType:<#Module Type#> moduleId:@"<#Module ID#>"]
+[self.sdlManager sendRequest:releaseInteriorVehicleDataModule withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+    if(!response.success) { return; }
+    <#Module Was Released#>
+}];
 ```
 
 ##### Swift
 ```swift
-sdlManager.send(request: SDLReleaseInteriorVehicleDataModule(moduleType: <#Module Type#>, moduleId: "<#Module ID#>"))
+let releaseInteriorVehicleDataModule = SDLReleaseInteriorVehicleDataModule(moduleType: <#Module Type#>, moduleId: "<#Module ID#>")
+sdlManager.send(request: releaseInteriorVehicleDataModule) { (request, response, error) in
+    guard response?.success.boolValue == true else { return }
+    <#Module Was Released#>
+}
 ```
 !@
