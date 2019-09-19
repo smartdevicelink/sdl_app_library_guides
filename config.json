@@ -126,6 +126,9 @@
                     "name": "Setting the Navigation Destination"
                 },
                 {
+                    "name": "Getting the Navigation Destination"
+                },
+                {
                     "name": "Getting In-Car Microphone Audio"
                 },
                 {
