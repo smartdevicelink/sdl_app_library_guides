@@ -83,7 +83,7 @@ Adding a submenu is as simple as adding subcells to a @![iOS]`SDLMenuCell`!@ @![
 @![iOS]
 ##### Objective-C
 
-######  Pre Core v6.0
+###### Pre Core v6.0
 ```objc
 // Create the inner menu cell
 SDLMenuCell *cell = [[SDLMenuCell alloc] initWithTitle: <#NSString#> icon: <#SDLArtwork#> voiceCommands: <#@[NSString]#> handler:^(SDLTriggerSource  _Nonnull triggerSource) {
@@ -95,7 +95,7 @@ SDLMenuCell *cell = [[SDLMenuCell alloc] initWithTitle: <#NSString#> icon: <#SDL
 SDLMenuCell *submenuCell = [[SDLMenuCell alloc] initWithTitle:<#NSString#> icon:<#SDLArtwork?#> subCells:@[cell]];
 self.sdlManager.screenManager.menu = @[submenuCell];
 ```
-######  Core v6.0+
+###### Core v6.0+
 ```objc
 // Create the inner menu cell
 SDLMenuCell *cell = [[SDLMenuCell alloc] initWithTitle: <#NSString#> icon: <#SDLArtwork#> voiceCommands: <#@[NSString]#> handler:^(SDLTriggerSource  _Nonnull triggerSource) {
@@ -117,7 +117,7 @@ let cell = SDLMenuCell(title: <#String#>, icon: <#SDLArtwork?#>, voiceCommands: 
     <#Handle the cell's selection#>
 }
 ```
-######  Core v6.0+
+###### Core v6.0+
 ```swift
 let submenuCell = SDLMenuCell(title: <#String#>, icon: <#SDLArtwork?#>, submenuLayout: <#Menu Layout#>, subCells:[cell])
 sdlManager.screenManager.menu = [submenuCell]
