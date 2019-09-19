@@ -182,6 +182,12 @@ lockScreenConfiguration.displayMode = .always
 ```
 !@
 
+@![android]
+```java
+// ToDo - add example
+```
+!@
+
 ### Dismiss the Lockscreen (Passenger Mode)
 Starting in Core v6.0+ users may now have the ability to dismiss the lock screen if they are a passenger. Not all OEMs will support this new feature. A dismissable lock screen is enabled by default in supported OEMs. To disable this feature, set `SDLLockScreenConfiguration`s `enableDismissGesture` to false. When enabled a user can simply swipe on the lockscreen to close it.
 
@@ -196,5 +202,11 @@ lockScreenConfiguration.enableDismissGesture = NO;
 ```swift
 let lockScreenConfiguration = SDLLockScreenConfiguration.enabledConfiguration()
 lockScreenConfiguration.showInOptionalState = true
+```
+!@
+
+@![android]
+```java
+// ToDo - add example
 ```
 !@
