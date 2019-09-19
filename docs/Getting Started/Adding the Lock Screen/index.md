@@ -133,6 +133,15 @@ lockScreenConfig.setCustomView(customViewInt);
 !@
 
 ## Customizing the Lock Screen State
+A new `enum` `SDLLockScreenConfigurationDisplayMode` has been added to the `SDLLockScreenConfiguration` to control the state of the lock screen.
+
+| SDLLockScreenConfigurationDisplayMode | Description |
+|:--------------------------------------------|:--------------|
+| SDLLockScreenConfigurationDisplayModeNever | he lock screen should never be shown. This should almost always mean that you will build your own lock screen |
+| SDLLockScreenConfigurationDisplayModeRequiredOnly | The lock screen should only be shown when it is required by the head unit  |
+| SDLLockScreenConfigurationDisplayModeOptionalOrRequired | The lock screen should be shown when required by the head unit or when the head unit says that its optional, but *not* in other cases, such as before the user has interacted with your app on the head unit |
+| SDLLockScreenConfigurationDisplayModeAlways | The lock screen should always be shown after connection |
+
 ### Disabling the Lock Screen
 Please note that a lock screen will be required by most OEMs. You can disable the lock screen manager, but you will then be required to implement your own logic for showing and hiding the lock screen. This is not recommended as the @![iOS]`SDLLockScreenConfiguration` !@ @![android]`LockScreenConfig`!@ adheres to most OEM lock screen requirements. However, if you must create a lock screen manager from scratch, the library's lock screen manager can be disabled via the @![iOS]`SDLLockScreenConfiguration`!@ @![android]`LockScreenConfig`!@ as follows:
 
@@ -140,13 +149,13 @@ Please note that a lock screen will be required by most OEMs. You can disable th
 ##### Objective-C
 ```objc
 SDLLockScreenConfiguration *lockScreenConfiguration = [SDLLockScreenConfiguration enabledConfiguration];
-lockScreenConfiguration.enableAutomaticLockScreen = NO;
+lockScreenConfiguration.displayMode = SDLLockScreenConfigurationDisplayModeNever;
 ```
 
 ##### Swift
 ```swift
-let lockScreenConfiguration = SDLLockScreenConfiguration.enabledConfiguration()
-lockScreenConfiguration.enableAutomaticLockScreen = false
+let lockScreenConfiguration = SDLLockScreenConfiguration.enabled()
+lockScreenConfiguration.displayMode  = .never
 ```
 !@
 
@@ -163,7 +172,24 @@ The lock screen manager is configured to dismiss the lock screen when it is safe
 ##### Objective-C
 ```objc
 SDLLockScreenConfiguration *lockScreenConfiguration = [SDLLockScreenConfiguration enabledConfiguration];
-lockScreenConfiguration.showInOptionalState = YES;
+lockScreenConfiguration.displayMode = SDLLockScreenConfigurationDisplayModeAlways;
+```
+
+##### Swift
+```swift
+let lockScreenConfiguration = SDLLockScreenConfiguration.enabled()
+lockScreenConfiguration.displayMode = .always
+```
+!@
+
+### Dismiss the Lockscreen (Passenger Mode)
+Starting in Core v6.0+ users may now have the ability to dismiss the lock screen if they are a passenger. Not all OEMs will support this new feature. A dismissable lock screen is enabled by default in supported OEMs. To disable this feature, set `SDLLockScreenConfiguration`s `enableDismissGesture` to false. When enabled a user can simply swipe on the lockscreen to close it.
+
+@![iOS]
+##### Objective-C
+```objc
+SDLLockScreenConfiguration *lockScreenConfiguration = [SDLLockScreenConfiguration enabledConfiguration];
+lockScreenConfiguration.enableDismissGesture = NO;
 ```
 
 ##### Swift
