@@ -7,7 +7,7 @@ The `GetWayPoints` and `SubscribeWayPoints` RPCs are restricted by most vehicle 
 ### Checking if Head Unit Supports GetWaypoints
 Since there is a possibility that some head units will not support getting the navigation destination, you should check head unit support before attempting to send the request. You should also update your app's UI based on whether or not you can use `GetWayPoints`.
 
-If using library v.@![iOS]6.0!@@![android, javaSE, javaEE]4.4!@+, you can use the @![iOS]`SDLSystemCapabilityManager`!@@![android, javaSE, javaEE]`SystemCapabilityManager`!@ to check the navigation capability returned by Core as shown in the code sample below.
+You can use the @![iOS]`SDLSystemCapabilityManager`!@@![android, javaSE, javaEE]`SystemCapabilityManager`!@ to check the navigation capability returned by Core as shown in the code sample below.
 
 @![iOS]
 ##### Objective-C
@@ -41,7 +41,7 @@ sdlManager.systemCapabilityManager.updateCapabilityType(.navigation) { (error, s
 
 @![android, javaSE, javaEE]
 ```java
-// TODO: Change for GetWayPoints
+// TODO: Update for GetWayPoints
 
 sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.NAVIGATION, new OnSystemCapabilityListener() {
 	@Override
@@ -72,6 +72,7 @@ To subscribe to the waypoints, you will have to set up your callback for wheneve
 - (void)waypointsDidUpdate:(SDLRPCNotificationNotification *)notification {
     SDLOnWayPointChange *waypointUpdate = (SDLOnWayPointChange *)notification.notification;
     NSArray<SDLLocationData> *waypoints = waypointUpdate.wayPoints;
+
     <#Use the waypoint data#>
 }
 
@@ -120,7 +121,7 @@ sdlManager.send(request: subscribeWaypoints) { (request, response, error) in
 !@
 
 ### Unsubscribing from Waypoints
-To unsubscribe from waypoint data, you must send the @![iOS]SDLUnsubscribeWayPoints!@@![android, javaSE, javaEE]UnsubscribeWayPoints!@ RPC.
+To unsubscribe from waypoint data, you must send the @![iOS]`SDLUnsubscribeWayPoints`!@@![android, javaSE, javaEE]`UnsubscribeWayPoints`!@ RPC.
 
 @![iOS]
 !!! NOTE
