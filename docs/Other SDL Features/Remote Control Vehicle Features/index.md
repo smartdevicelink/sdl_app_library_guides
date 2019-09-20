@@ -136,8 +136,8 @@ For remote control to work, the head unit must support SDL Core v.4.4 or newer. 
 When connected to pre-Core 6.0 systems only the main module of a module type can be controlled. The modules you may control will depend on the OEM.
 !!!
 
-### Core v6.0
-Starting in SDL Core v6.0 multiple modules can exist for each module type. Since many modules can exist for each module type you should provide the `moduleID` to tell the HMI the specific module you wish to control. A new struct `moduleInfo` was created to give developers the information they need to control a specific module. The `moduleInfo` is a struct on the `XYZControlCapabilities` objects. When sending remote control RPCs to a v6.0+ SDL Core, the `moduleID` should be provided to control the desired module. If no `moduleID` is set, the HMI will use the default module of that module type.
+### Core v6.0+ Multiple Modules
+Starting in SDL Core v6.0 multiple modules can exist for each module type. Since many modules can exist for each module type you should provide the `moduleId` to tell the HMI the specific module you wish to control. A new struct `moduleInfo` was created to give developers the information they need to control a specific module. The `moduleInfo` is a struct on the `XYZControlCapabilities` objects. When sending remote control RPCs to a v6.0+ SDL Core, the `moduleId` should be provided to control the desired module. If no `moduleId` is set, the HMI will use the default module of that module type. When connected to pre-6.0 systems, the `moduleInfo` struct will be !@[iOS]`nil`!@@![android, javaSE, javaEE]`null`!@.
 
 Controlling a module is seat-based. Depending on which seat you are sitting in you may or may not be able to control certain modules. For example, only the person sitting in a specific seat can control that seat module. Modules may also allow multiple users to access them, and some may only allow one user at a time. Access to a module will depend on the OEM.
 
@@ -197,7 +197,7 @@ if (sdlManager.getSystemCapabilityManager().isCapabilitySupported(SystemCapabili
 ```
 !@
 
-### Setting The User's Seat
+### Setting The User's Seat (6.0+ only)
 
 !!! NOTE
 This section only applies when connected to SDL 6.0+ head units
@@ -207,7 +207,7 @@ The first step before attempting to set any module data is to have the user sele
 
 In a real-life scenario, you may wish to show the user a map or list of all available seats in order to ask them where they are located. This example is only meant to show you how to access the available data, and not how to build your UI/UX. 
 
-An array of seats can be found in the `seatLocationCapability`s `seat` array. Each `SeatLocation` object within the `seats` array will have a `grid` struct. This struct will tell you the seat placement of that particular seat. This information can be very useful for creating a map or list for users to select from.
+An array of seats can be found in the `seatLocationCapability`'s `seat` array. Each `SeatLocation` object within the `seats` array will have a `grid` parameter. The `grid` will tell you the seat placement of that particular seat. This information can be very useful for creating a map or list for users to select from.
 
 @![iOS]
 ##### Objective-C
@@ -215,6 +215,7 @@ An array of seats can be found in the `seatLocationCapability`s `seat` array. Ea
 [self.sdlManager.systemCapabilityManager subscribeToCapabilityType:SDLSystemCapabilityTypeSeatLocation withBlock:^(SDLSystemCapability * _Nonnull capability) {
     if (!capability) { return; }
     NSArray<SDLSeatLocation *> *seats = capability.seatLocationCapability.seats;
+
     <#Save Remote Capabilities#>
 }];
 ```
@@ -223,6 +224,7 @@ An array of seats can be found in the `seatLocationCapability`s `seat` array. Ea
 ```swift
 sdlManager.systemCapabilityManager.subscribe(toCapabilityType: .seatLocation, with: { capability in
     guard let seats = capability.seatLocationCapability?.seats else { return }
+
     <#Save Remote Capabilities#>
 })
 ```
@@ -276,7 +278,7 @@ sdlManager.send(request: setData, responseHandler: { (request, response, error) 
 ### Getting Remote Control Module Information
 The first step is to get the capabilities and information about each of the remote control modules.
 
-When connected to Core v6.0+, you will want to save this information for future use. The `moduleID` contained within the `moduleInfo` struct on each capability when connected to a Core v6.0+ system is necessary to control that module. If connected to Core <6.0, you should still get remote control module data to know what properties are available.
+When connected to Core v6.0+, you will want to save this information for future use. The `moduleId` contained within the `moduleInfo` struct on each capability when connected to a Core v6.0+ system is necessary to control that module. If connected to Core <6.0, you should still get remote control module data to know what properties are available.
 
 @![iOS]
 ##### Objective-C
@@ -306,7 +308,7 @@ sdlManager.systemCapabilityManager.subscribe(toCapabilityType: .remoteControl, w
 With the saved remote control capabilities struct you can build a UI to display modules to the user by getting the location of the module and the area that it services. This maps to the grid that you got in `Setting the User's Seat`.
 
 !!! Note
-This data is only available when connected to SDL 6.0+ systems. On previous systems, only one module per module type was available, so it's location didn't matter. You won't be able to build a custom UI for those cases and should use a generic UI instead.
+This data is only available when connected to SDL 6.0+ systems. On previous systems, only one module per module type was available, so its location didn't matter. You won't be able to build a custom UI for those cases and should use a generic UI instead.
 !!!
 
 @![iOS]
@@ -315,7 +317,7 @@ This data is only available when connected to SDL 6.0+ systems. On previous syst
 // Get the first climate module's information
 SDLClimateControlCapabilities *firstClimateModule = <#Remote Control Capabilities#>.climateControlCapabilities.firstObject;
 
-NSString *climateModuleID = firstClimateModule.moduleInfo.moduleID;
+NSString *climateModuleId = firstClimateModule.moduleInfo.moduleId;
 SDLGrid *climateModuleLocation = firstClimateModule.moduleInfo.location;
 // And so forth
 ```
@@ -325,7 +327,7 @@ SDLGrid *climateModuleLocation = firstClimateModule.moduleInfo.location;
 // Get the first climate module's information
 SDLClimateControlCapabilities *firstClimateModule = <#Remote Control Capabilities#>.climateControlCapabilities.first;
 
-let climateModuleID = firstClimateModule.moduleInfo.moduleID;
+let climateModuleId = firstClimateModule.moduleInfo.moduleId;
 let climateModuleLocation = firstClimateModule.moduleInfo.location;
 // And so forth
 ```
@@ -338,7 +340,7 @@ let climateModuleLocation = firstClimateModule.moduleInfo.location;
 !@
 
 ### Subscribing to Module Data 
-Seat location does not affect the ability to get data from a module. Once you know you have permission to use the remote control feature and you have `moduleID`(s) (when connected to 6.0+ systems), you can retrieve the data for any module. The following code is an example of how to subscribe to the data of a radio module. 
+Seat location does not affect the ability to get data from a module. Once you know you have permission to use the remote control feature and you have `moduleId`(s) (when connected to 6.0+ systems), you can retrieve the data for any module. The following code is an example of how to subscribe to the data of a radio module. 
 
 When connected to < 6.0 head units, there can only be one module for each module type (e.g. there can only be one climate module, light module, radio module, etc.), so you will not need to pass a module ID.
 
@@ -360,6 +362,7 @@ Subscribing to the `OnInteriorVehicleData` notification must be done before send
 }];
 ```
 After you subscribe to the `SDLDidReceiveInteriorVehicleDataNotification` you must also subscribe to the module you wish to receive updates for. Subscribing to a module will send a notification when that particular module is changed.
+
 ###### Pre-Core v6.0
 ```objc
 SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData alloc] initAndSubscribeToModuleType:SDLModuleTypeRadio];
@@ -369,6 +372,7 @@ SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData 
     <#Code#>
 }];
 ```
+
 ###### Core v6.0+
 ```objc
 SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData alloc] initAndSubscribeToModuleType:SDLModuleTypeRadio moduleId:@"<#ModuleID#>"];
@@ -389,6 +393,9 @@ sdlManager.subscribe(to: .SDLDidReceiveInteriorVehicleData) { (message) in
     <#Code#>
 }
 ```
+
+After you subscribe to the SDLDidReceiveInteriorVehicleDataNotification you must also subscribe to the module you wish to receive updates for. Subscribing to a module will send a notification when that particular module is changed.
+
 ###### Pre Core v6.0
 ```swift
 let getInteriorVehicleData = SDLGetInteriorVehicleData(andSubscribeToModuleType: .radio)
@@ -398,9 +405,10 @@ sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
     <#Code#>
 }
 ```
+
 ###### Core v6.0+
 ```swift
-let getInteriorVehicleData = SDLGetInteriorVehicleData(andSubscribeToModuleType: .radio, moduleID: "<#ModuleID#>")
+let getInteriorVehicleData = SDLGetInteriorVehicleData(andSubscribeToModuleType: .radio, moduleId: "<#ModuleID#>")
 sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
     guard let response = res as? SDLGetInteriorVehicleDataResponse else { return }
     // This can now be used to retrieve data
@@ -411,6 +419,8 @@ sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
 
 @![android, javaSE, javaEE]
 ```java
+// TODO: Update
+
 sdlManager.addOnRPCNotificationListener(FunctionID.ON_INTERIOR_VEHICLE_DATA, new OnRPCNotificationListener() {
     @Override
     public void onNotified(RPCNotification notification) {
@@ -447,7 +457,7 @@ sdlManager.sendRPC(interiorVehicleData);
 ### Getting Consent to Control a Module (6.0+ Only)
 Some OEMs may wish to ask the driver for consent before a user can control a module. The `SDLGetInteriorVehicleDataConsent` RPC will alert the driver for consent in some OEM head units if the module if not free (another user has control) and `allowMultipleAccess` (multiple users can access/set the data at the same time) is `true`. `allowMultipleAccess` is part of the `moduleInfo` in the module object.
 
-Check the `allowed` property in the `SDLGetInteriorVehicleDataConsentResponse` to see what modules can be controlled. Note the order of the `allowed` array is 1-1 with the `moduleIDs` array you passed into the `SDLGetInteriorVehicleDataConsent` RPC.
+Check the `allowed` property in the `SDLGetInteriorVehicleDataConsentResponse` to see what modules can be controlled. Note the order of the `allowed` array is 1-1 with the `moduleIds` array you passed into the `SDLGetInteriorVehicleDataConsent` RPC.
 
 !!! Note
 You should always try to get consent before setting any module data. If consent is not granted you should not attempt to set any module's data.
@@ -487,7 +497,7 @@ To get data from a module without subscribing send a @![iOS]`SDLGetInteriorVehic
 
 @![iOS]
 ##### Objective-C
-###### Pre Core v6.0
+###### Pre-Core v6.0
 ```objc
 SDLGetInteriorVehicleData *getInteriorVehicleData = [SDLGetInteriorVehicleData alloc] initWithModuleType:SDLModuleTypeRadio];
 [self.sdlManager sendRequest:getInteriorVehicleData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
@@ -504,7 +514,7 @@ SDLGetInteriorVehicleData *getInteriorVehicleData = [SDLGetInteriorVehicleData a
 }];
 ```
 ##### Swift
-###### Pre Core v6.0
+###### Pre-Core v6.0
 ```swift
 let getInteriorVehicleData = SDLGetInteriorVehicleData(moduleType: .radio)
 sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
@@ -536,7 +546,7 @@ sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
 When running Core v6.0+ you should always get consent before attempting to set module data.
 !!!
 
-Not only do you have the ability to get data from these modules, but, if you have the right permissions, you can also set module data. Below is an example of setting climate control data. It is likely that you will not need to set all the data as in the code example below. When connected to 6.0+ system, you must set the `moduleID` in `SDLSetInteriorVehicleData.moduleData`, while when connected to < 6.0 systems, there is only one module per module type, so you must only pass the type of the module you wish to control.
+Not only do you have the ability to get data from these modules, but, if you have the right permissions, you can also set module data. Below is an example of setting climate control data. It is likely that you will not need to set all the data as in the code example below. When connected to 6.0+ system, you must set the `moduleId` in `SDLSetInteriorVehicleData.moduleData`, while when connected to < 6.0 systems, there is only one module per module type, so you must only pass the type of the module you wish to control.
 
 When you received module information above in "Getting Remote Control Module Information" on 6.0+ systems, you received information on the `location` and `serviceArea` of the module. The permission area of a module depends on that `serviceArea`. The `location` of a module is like the `seats` array: it maps to the `grid` to tell you the physical location of a particular module. The `serviceArea` maps to the grid to show how far that module's scope reaches.
 
@@ -684,8 +694,8 @@ sdlManager.sendRPC(buttonPress);
 ```
 !@
 
-### Releasing the Module
-`SDLReleaseInteriorVehicleDataModule` is for Core v6.0+ only. When the user no longer needs control over a module, you should release the module so other users can control it. 
+### Releasing the Module (6.0+ only)
+When the user no longer needs control over a module, you should release the module so other users can control it. 
 
 @![iOS]
 ##### Objective-C
