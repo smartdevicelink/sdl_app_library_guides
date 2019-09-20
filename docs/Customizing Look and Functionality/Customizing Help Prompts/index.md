@@ -2,7 +2,7 @@
 You are able to customize the head unit's help system with your own information.
 
 ## Help Menu
-If the head unit supports displaying a custom help menu, you can customize this menu with your own title and menu options. This menu is commonly used to assist users with what voice commands are available. If you don't customize these options, then the head unit's default title and/or items will be used.
+If the head unit supports displaying a custom help menu, you can customize this menu with your own title and menu options. This menu is commonly used to assist users with knowing what voice commands are available. If you don't customize these options, then the head unit's default title and/or items will be used.
 
 If you wish to use an image, you should check the @![iOS]`sdlManager.systemCapabilityManager.defaultMainWindowCapability.imageFields`!@@![android, javaSE, javaEE]`// TODO`!@ for an `imageField.name` of `vrHelpItem` to see if that image is supported. If `vrHelpItem` is in the `imageFields` array, then it can be used. You will need to then upload the image using the file manager before using it in the RPC below. See the [Uploading Images guide](Other SDL Features/Uploading Images) for more information.
 

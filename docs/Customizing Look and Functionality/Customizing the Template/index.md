@@ -4,8 +4,10 @@ There is some ability to customize the look and feel of the template. How much c
 ## Customizing Template Colors (Core 5.0+)
 You can alter the appearance of your app on a head unit in a consistent way using template coloring APIs.
 
-### First Layout in Lifecycle Configuration
+### Customizing the Default Layout
 You can change the template colors of the initial template layout that appears when you connect by altering your `lifecycleConfiguration`.
+
+![Template Coloring from Above](assets/template-colors-example.png)
 
 ##### Objective-C
 ```objc
@@ -28,11 +30,11 @@ lifecycleConfiguration.nightColorScheme = SDLTemplateColorScheme(primaryRGBColor
 ```
 
 !!! NOTE
-You may only change the template coloring in the `lifecycleConfiguration` and in `SetDisplayLayout` RPC requests. You may only change the template coloring once per template. i.e. You cannot change to the same template you are already on using `SetDisplayLayout` and expect the coloring to change.
+You may only change the template coloring in the `lifecycleConfiguration` and the `SetDisplayLayout` (or `Show` if connected to a Core 6.0+ head unit) RPC requests. You may only change the template coloring once per template; that is, you cannot call `SetDisplayLayout` for the same templates you are already on and expect the coloring to change.
 !!!
 
-### Future Layouts in SetDisplayLayout
-You can also change template coloring when you change layouts by altering `SDLSetDisplayLayout`
+### Customizing Future Layouts
+You can also change template coloring when you change layouts by altering `SDLSetDisplayLayout`.
 
 @![iOS]
 ##### Objective-C
@@ -66,11 +68,8 @@ setLayout.nightColorScheme = SDLTemplateColorScheme(primaryRGBColor: green, seco
 ```
 !@
 
-### Template Coloring
-![Template Coloring from Above](assets/template-colors-example.png)
-
 ## Customizing the Menu Title and Icon
-You can also customize the title and icon of the main menu button that appears on your template layouts. The menu icon must already be uploaded with a specific name through the file manager; see the [Uploading Images guide](Other SDL Features/Uploading Images).
+You can also customize the title and icon of the main menu button that appears on your template layouts. The menu icon must already be uploaded with a specific name through the file manager; see the [Uploading Images guide](Other SDL Features/Uploading Images) for more information on how to upload your image.
 
 @![iOS]
 ##### Objective-C
