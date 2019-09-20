@@ -198,11 +198,6 @@ if (sdlManager.getSystemCapabilityManager().isCapabilitySupported(SystemCapabili
 !@
 
 ### Setting The User's Seat (6.0+ only)
-
-!!! NOTE
-This section only applies when connected to SDL 6.0+ head units
-!!!
-
 The first step before attempting to set any module data is to have the user select their seat location. Seat location may affect which modules the user is permitted to control depending on the OEMs rules. The default seat location is `Driver`. Seat location can be updated by setting the `userLocation` property in the `SDLSetGlobalProperties` RPC and sending it.
 
 In a real-life scenario, you may wish to show the user a map or list of all available seats in order to ask them where they are located. This example is only meant to show you how to access the available data, and not how to build your UI/UX. 
@@ -231,7 +226,7 @@ sdlManager.systemCapabilityManager.subscribe(toCapabilityType: .seatLocation, wi
 !@
 
 @![java,javaEE,javaSE]
-```
+```java
 // ToDo - Add example
 ```
 !@
@@ -270,7 +265,7 @@ sdlManager.send(request: setData, responseHandler: { (request, response, error) 
 !@
 
 @![java,javaEE,javaSE]
-```
+```java
 // ToDo - Add example
 ```
 !@
@@ -299,7 +294,7 @@ sdlManager.systemCapabilityManager.subscribe(toCapabilityType: .remoteControl, w
 !@
 
 @![java,javaEE,javaSE]
-```
+```java
 // ToDo - Add example
 ```
 !@
@@ -334,7 +329,7 @@ let climateModuleLocation = firstClimateModule.moduleInfo.location;
 !@
 
 @![java,javaEE,javaSE]
-```
+```java
 // ToDo - Add example
 ```
 !@
@@ -449,7 +444,7 @@ sdlManager.sendRPC(interiorVehicleData);
 !@
 
 @![java,javaEE,javaSE]
-```
+```java
 // ToDo - Add example
 ```
 !@
@@ -487,12 +482,12 @@ sdlManager.send(request: getInteriorVehicleDataConsent , responseHandler: { (req
 !@
 
 @![java,javaEE,javaSE]
-```
+```java
 // ToDo - Add example
 ```
 !@
 
-#### Getting One-Time data
+### Getting One-Time data
 To get data from a module without subscribing send a @![iOS]`SDLGetInteriorVehicleData`!@@![android, javaSE, javaEE]`GetInteriorVehicleData`!@ request with the `subscribe` flag set to `false`.
 
 @![iOS]
@@ -535,7 +530,7 @@ sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
 !@
 
 @![java,javaEE,javaSE]
-```
+```java
 // ToDo - Add example
 ```
 !@
@@ -606,6 +601,8 @@ sdlManager.send(request: setInteriorVehicleData) { (request, response, error) in
 
 @![android, javaSE, javaEE]
 ```java
+// ToDo - Updated if needed
+
 Temperature temp = new Temperature(TemperatureUnit.FAHRENHEIT, 74.1f);
 
 ClimateControlData climateControlData = new ClimateControlData();
@@ -629,7 +626,7 @@ sdlManager.sendRPC(setInteriorVehicleData);
 !@
 
 @![java,javaEE,javaSE]
-```
+```java
 // ToDo - Add example
 ```
 !@
@@ -689,7 +686,7 @@ sdlManager.sendRPC(buttonPress);
 !@
 
 @![java,javaEE,javaSE]
-```
+```java
 // ToDo - Add example
 ```
 !@
@@ -718,7 +715,7 @@ sdlManager.send(request: releaseInteriorVehicleDataModule) { (request, response,
 !@
 
 @![java,javaEE,javaSE]
-```
+```java
 // ToDo - Add example
 ```
 !@
