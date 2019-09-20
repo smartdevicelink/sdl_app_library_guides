@@ -267,39 +267,7 @@ lifecycleConfiguration.additionalAppTypes = [.information];
 ```
 
 ### 5. Template Coloring
-You can alter the appearance of your app on a head unit in a consistent way using template coloring APIs.
-
-!!! NOTE
-This will only work when connected to head units running SDL Core v5.0 or later.
-!!!
-
-##### Objective-C
-```objc
-SDLRGBColor *green = [[SDLRGBColor alloc] initWithRed:126 green:188 blue:121];
-SDLRGBColor *white = [[SDLRGBColor alloc] initWithRed:249 green:251 blue:254];
-SDLRGBColor *darkGrey = [[SDLRGBColor alloc] initWithRed:57 green:78 blue:96];
-SDLRGBColor *grey = [[SDLRGBColor alloc] initWithRed:186 green:198 blue:210];
-lifecycleConfiguration.dayColorScheme = [[SDLTemplateColorScheme alloc] initWithPrimaryRGBColor:green secondaryRGBColor:grey backgroundRGBColor:white];
-lifecycleConfiguration.nightColorScheme = [[SDLTemplateColorScheme alloc] initWithPrimaryRGBColor:green secondaryRGBColor:grey backgroundRGBColor:darkGrey];
-```
-
-##### Swift
-```swift
-let green = SDLRGBColor(red: 126, green: 188, blue: 121)
-let white = SDLRGBColor(red: 249, green: 251, blue: 254)
-let grey = SDLRGBColor(red: 186, green: 198, blue: 210)
-let darkGrey = SDLRGBColor(red: 57, green: 78, blue: 96)
-lifecycleConfiguration.dayColorScheme = SDLTemplateColorScheme(primaryRGBColor: green, secondaryRGBColor: grey, backgroundRGBColor: white)
-lifecycleConfiguration.nightColorScheme = SDLTemplateColorScheme(primaryRGBColor: green, secondaryRGBColor: grey, backgroundRGBColor: darkGrey)
-```
-
-!!! NOTE
-You may only change the template coloring in the `lifecycleConfiguration` and in `SetDisplayLayout` RPC requests. You may only change the template coloring once per template. i.e. You cannot change to the same template you are already on using `SetDisplayLayout` and expect the coloring to change.
-!!!
-
-##### Template Coloring
-
-![Template Coloring from Above](assets/template-colors-example.png)
+You can alter template coloring of the initial template that appears. For more information on altering the template coloring, see the [Customizing the Template guide](Customizing Look and Functionality/Customizing the Template).
 
 ### 6. Determine SDL Support
 You have the ability to determine a minimum SDL protocol and minimum SDL RPC version that your app supports. We recommend not setting these values until your app is ready for production. The OEMs you support will help you configure the correct `minimumProtocolVersion` and `minimumRPCVersion` during the application review process.
