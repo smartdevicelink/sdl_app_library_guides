@@ -1,7 +1,7 @@
 # Can I Integrate SDL into a React Native App?
 SDL does work and can be integrated into a React Native application. 
 
-Please follow [this guide](https://facebook.github.io/react-native/docs/getting-started) for how to create a new React Native application if you need one. Also ensure you have followed the [Getting Started](Getting Started/Installation) and have `SmartDeviceLink` installed on the native side. 
+Please follow [the React Native Getting Started guide](https://facebook.github.io/react-native/docs/getting-started) for how to create a new React Native application if you need one. To install SDL into your React Native app, you will need to follow [the React Native Native Module's guide](https://facebook.github.io/react-native/docs/native-modules-ios) to integrate the SDL library into your application using React Native's Native Modules feature. You must make sure you have [Native Modules](https://facebook.github.io/react-native/docs/native-modules-setup) installed as a dependency in order to use 3rd party APIs in a React Native application. If this is not done your app will not work with SmartDeviceLink. Native API methods are not exposed to JavaScript automatically, this must be done manually by you. Then see the [SDL Installation Guide](Getting Started/Installation) for more information on installing SDL's native library.
 
 To install SDL into your React Native app, you will need to follow [this guide](https://facebook.github.io/react-native/docs/native-modules-ios) to integrate the SDL library into your application using React Native's Native Modules feature. You must make sure you have [Native Modules](https://facebook.github.io/react-native/docs/native-modules-setup) installed as a dependency in order to use 3rd party APIs in a React Native application. If this is not done your app will not work with SmartDeviceLink. Native API methods are not exposed to JavaScript automatically, this must be done manually by you.
 
@@ -10,7 +10,7 @@ This guide is not meant to walk you through how to make a React Native app but h
 !!!
 
 ## Integration Basics
-Native API methods are not exposed automatically to JavaScript. This means you must expose methods you wish to use from SDL to your React Native app. You must implement the `RCTBridgeModule` protocol into a bridge class (see below for an example). Please follow [SmartDeviceLink Integration Basics](Getting Started/Integration Basics) for the basic setup of a native SDL `ProxyManager` class that your bridge code will communicate with. This is the necessary starting point in order to continue with this example. Also set up a simple UI with buttons and some text on the SDL side.
+Native API methods are not exposed automatically to JavaScript. This means you must expose methods you wish to use from SDL to your React Native app. You must implement the `RCTBridgeModule` protocol into a bridge class (see below for an example). Please follow [SmartDeviceLink Integration Basics guide](Getting Started/Integration Basics) for the basic setup of a native SDL `ProxyManager` class that your bridge code will communicate with. This is the necessary starting point in order to continue with this example. Also set up a simple UI with buttons and some text on the SDL side.
 
 ### Creating the RCTBridge
 To create a native module you must implement the `RCTBridgeModule` protocol. Update your `ProxyManager` to include `RCTBridgeModule`.
@@ -22,7 +22,7 @@ To create a native module you must implement the `RCTBridgeModule` protocol. Upd
 
 @interface ProxyManager : NSObject <RCTBridgeModule>
 
-<#...#>
+<#Proxy Manager code#>
 
 @end
 ```
@@ -33,20 +33,20 @@ An `RCT_EXPORT_MODULE()` macro must be added to the implementation file to expos
 @implementation ProxyManager
 
 RCT_EXPORT_MODULE();
-<#...#>
+<#Proxy Manager code#>
 
 @end
 ```
 
 ##### Swift
-Before you move forward, you must add  `#import "React/RCTBridgeModule.h"` to your `Bridging Header`. When creating a Swift application and importing Objective-C code, Xcode should ask if it should create this header file for you. You must include this bridging header for your React Native app to work. You can create this file manually as well. 
+Before you move forward, you must add  `#import "React/RCTBridgeModule.h"` to your `Bridging Header`. When creating a Swift application and importing Objective-C code, Xcode should ask if it should create this header file for you. You can create this file manually as well. You must include this bridging header for your React Native app to work.
 
 ```swift
 @objc(ProxyManager)
 
 class ProxyManager: NSObject {
 
-<#...#>
+<#Proxy Manager Code#>
 
 }
 ```
@@ -63,7 +63,7 @@ Next, to expose the above Swift class to React Native, you must create an Object
 ```
 
 ### Emitting Event Notifications to JavaScript
-Inside the `ProxyManger` class post a notification for a particular event you wish to execute. The bridge will observe this event and will call the React Native listener that you will set up later in the documentation below.
+Inside the `ProxyManger` class, post a notification for a particular event you wish to execute. The bridge will observe this event and will call the React Native listener that you will set up later in the documentation below.
 
 ##### Objective-C
 Inside the `ProxyManager` add a soft button to your SDL HMI. Inside the soft button handler, post the notification and pass along a reference to the `sdlManager` in order to update your React Native UI through the bridge.
@@ -93,7 +93,7 @@ self.sdlManager.screenManager.softButtonObjects = [softButton];
 
 #### Create the EventEmitter Bridge Class
 
-Create the class that will be the listener for the notiification you created above. This class will be sending and receiving messages from your JavaScript code (React Native). There is a required method you must include in order to be a React Native `EventEmitter`; the method is in the example below. The required `supportedEvents` method returns an array of supported events. Sending an event name that is not included in the array will result in an error. `supportedEvents` tells React Native the events it should observe. An event is sending a message from Native code to React Native code.
+Create the class that will be the listener for the notiification you created above. This class will be sending and receiving messages from your JavaScript code (React Native). The required `supportedEvents` method returns an array of supported event names. Sending an event name that is not included in the array will result in an error. An "event" is sending a message from native code to React Native code.
 
 ##### Objective-C
 ###### SDLEventEmitter.h
@@ -130,7 +130,7 @@ RCT_EXPORT_MODULE()
     return self;
 }
 
-// Required Method 
+// Required Method defining known action names
 - (NSArray<NSString *> *)supportedEvents {
     return @[@"DoAction"];
 }
@@ -140,6 +140,8 @@ RCT_EXPORT_MODULE()
     if(self.sdlManager == nil) {
         self.sdlManager = notification.userInfo[@"sdlManager"];
     }
+
+    // Send the event to your React Native code with a dictionary of information
     [self sendEventWithName:@"DoAction" body:@{@"type": @"actionType"}];
 }
 
@@ -163,10 +165,11 @@ class SDLEventEmitter: RCTEventEmitter {
             self.sdlManager = notification.userInfo["sdlManager"]
         }
 
+       // Send the event to your React Native code with a dictionary of information
         sendEvent(withName: "DoAction", body: ["type": "actionType"])
     }
 
-    // Required Method
+    // Required Method defining known action names
     override func supportedEvents() -> [String]! {
         return ["DoAction"]
     }
@@ -174,9 +177,10 @@ class SDLEventEmitter: RCTEventEmitter {
 }
 ```
 
-The above example will call into your JavaScript code with an event type `DoAction`. Inside your React Native (JavaScript) code, create a `NativeEventEmitter` object within your `EventEmitter` module and add a listener for the event.
 
 ##### JavaScript
+The above example will call into your JavaScript code with an event type `DoAction`. Inside your React Native (JavaScript) code, create a `NativeEventEmitter` object within your `EventEmitter` module and add a listener for the event.
+
 ```js
 import { NativeEventEmitter, NativeModules } from 'react-native';
 const  { SDLEventEmitter } = NativeModules;
@@ -199,7 +203,7 @@ const testData = testEventEmitter.addListener(
 ```
 
 ### Exposing Methods
-The last step is to wrap any methods you wish to expose inside `RCT_EXPORT_METHOD` for Objective-C and `RCT_EXTERN_METHOD` for Swift. Inside the `SDLEventEmitter.m` file add the following method.
+The last step is to wrap any native code methods you wish to expose to your JavaScript code inside `RCT_EXPORT_METHOD` for Objective-C and `RCT_EXTERN_METHOD` for Swift. We've seen above how native code can send notifications to your JavaScript code, now we will see how your JavaScript code can send notifications into your native SmartDeviceLink code. Inside the `SDLEventEmitter.m` file add the following method:
 
 ##### Objective-C
 ```objc
