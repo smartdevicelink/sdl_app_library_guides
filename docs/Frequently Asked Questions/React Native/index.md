@@ -63,11 +63,11 @@ Next, to expose the above Swift class to React Native, you must create an Object
 ```
 
 ### Emitting Event Notifications to JavaScript
-Inside the `ProxyManger` class, post a notification for a particular event you wish to execute. The bridge will observe this event and will call the React Native listener that you will set up later in the documentation below.
+Inside the `ProxyManger` class, post a notification for a particular event you wish to execute. The 'Event Emitter' class, which you will see later in the documentation, will observe this event notification and will call the React Native listener that you will set up later in the documentation below.
 
-##### Objective-C
 Inside the `ProxyManager` add a soft button to your SDL HMI. Inside the soft button handler, post the notification and pass along a reference to the `sdlManager` in order to update your React Native UI through the bridge.
 
+##### Objective-C
 ```objc
 SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"Button" state:[[SDLSoftButtonState alloc] initWithStateName:@"State 1" text:@"Data" artwork:nil] handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     if (buttonPress == nil) { return; }
@@ -159,19 +159,19 @@ class SDLEventEmitter: RCTEventEmitter {
         super.init()
     }
 
+    // Required Method defining known action names
+    override func supportedEvents() -> [String]! {
+        return ["DoAction"]
+    }
+    
     // Run this code when the subscribed event notification is received
     @objc func doAction(_ notification: Notification) {
         if self.sdlManger == nil {
             self.sdlManager = notification.userInfo["sdlManager"]
         }
-
-       // Send the event to your React Native code with a dictionary of information
+    
+        // Send the event to your React Native code with a dictionary of information
         sendEvent(withName: "DoAction", body: ["type": "actionType"])
-    }
-
-    // Required Method defining known action names
-    override func supportedEvents() -> [String]! {
-        return ["DoAction"]
     }
 
 }
@@ -247,8 +247,8 @@ Add the following method to `SDLEventEmitter.swift`:
 @objc func eventCall(_ dict: NSDictionary) {
     self.sdlManager.screenManager.beginUpdates()
     let data = dict["data"]! as! NSDictionary
-    self.sdlManager.screenManager.textField1 = "Low: \(data["low"]!) ºF")"
-    self.sdlManager.screenManager.textField2 = "High: \(data["high"]!) ºF")"
+    self.sdlManager.screenManager.textField1 = "Low: \(data["low"]!) °F")"
+    self.sdlManager.screenManager.textField2 = "High: \(data["high"]!) °F")"
     self.sdlManager.screenManager.endUpdates()
 }
 ```
