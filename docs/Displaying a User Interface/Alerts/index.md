@@ -3,10 +3,6 @@ An alert is a pop-up window showing a short message with optional buttons. When 
 
 Depending the platform, an alert can have up to three lines of text, a progress indicator (e.g. a spinning wheel or hourglass), and up to four soft buttons.
 
-!!! NOTE
-The alert will persist on the screen until the timeout has elapsed, or the user dismisses the alert by selecting a button. There is no way to dismiss the alert programmatically other than to set the timeout length.
-!!!
-
 ## Alert Layouts
 ###### Alert With No Soft Buttons
 
@@ -202,7 +198,6 @@ alert.setTtsChunks(Collections.singletonList(ttsChunk));
 ```
 !@
 
-
 ### Play Tone
 To play the alert tone when the alert appears and before the text-to-speech is spoken, set `playTone` to `true`.
 
@@ -261,5 +256,59 @@ alert.setOnRPCResponseListener(new OnRPCResponseListener() {
     }
 });
 sdlManager.sendRPC(alert);
+```
+!@
+
+## Canceling the Alert
+If you are connected to a head unit with SDL Core v6.0+, you can dismiss a displayed alert before the timeout has elapsed. This feature is useful if you want to let users know that you are performing a task, such as searching for a list for nearby coffee shops. As soon as you have the search results, you can cancel the alert and show the results. 
+
+If connected to older head units that do not support this feature, the cancel request will be ignored, and the alert will persist on the screen until the timeout has elapsed or the user dismisses the alert by selecting a button.
+
+Please note that canceling the alert will only dismiss the displayed alert. If you have set the `ttsChunk` property, the speech will play in its entirety even when the displayed alert has been dismissed. If you know you will cancel an alert, consider setting a short `ttsChunk` like "Searching" instead of "Searching for coffee shops, please wait". 
+
+There are two ways to dismiss an alert. The first way is to dismiss a specific alert using a unique `cancelID` assigned to the alert. The second way is to dismiss any alert currently be presented. 
+
+### Dismissing a Specific Alert
+
+@![iOS]
+##### Objective-C
+```objc
+```
+
+##### Swift
+```swift
+// Assign a unique cancel id to the alert
+let cancelID: UInt32 = 45
+alert.cancelID = cancelID as NSNumber
+
+// Use the cancel id to dismiss the alert
+let cancelInteraction = SDLCancelInteraction(alertCancelID: cancelID)
+sdlManager.send(request: cancelInteraction) { (request, response, error) in
+    guard response?.resultCode == .success else { return }
+    <#The alert was canceled successfully#>
+}
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+```
+!@
+
+
+### Dismissing any Alert
+
+@![iOS]
+##### Objective-C
+```objc
+```
+
+##### Swift
+```swift
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
 ```
 !@
