@@ -1,7 +1,7 @@
 # Customizing the Template
 There is some ability to customize the look and feel of the template. How much customization is available depends on the version of Core you are connected with and the design of the head unit.
 
-## Customizing Template Colors (Core 5.0+)
+## Customizing Template Colors (RPC 5.0+)
 You can customize the color scheme of your app using template coloring APIs.
 
 ### Customizing the Default Layout
@@ -34,7 +34,7 @@ You may change the template coloring in the `lifecycleConfiguration` and the `Se
 !!!
 
 ### Customizing Future Layouts
-You can also change template coloring when you change layouts by altering `SDLSetDisplayLayout`.
+You can change the template color scheme when you change layouts in the @![iOS]`SDLSetDisplayLayout` (any RPC version) or `SDLShow` (RPC 6.0+)!@`SetDisplayLayout` (any RPC version) or `Show` (RPC 6.0+)@![android, javaSE, javaEE]!@ request.
 
 @![iOS]
 ##### Objective-C

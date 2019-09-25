@@ -37,8 +37,9 @@ let item2 = SDLVRHelpItem(text:<#Help item name such as "Shuffle All"#>, image: 
 setGlobals.vrHelp = [item1, item2];
 
 sdlManager.send(request: setGlobals) { (request, response, error) in
-    if error != nil {
+    if let error = error {
         // Something went wrong
+        return;
     }
 
     // The help menu is updated
@@ -76,8 +77,9 @@ let setGlobals = SDLSetGlobalProperties()
 setGlobals.helpPrompt = SDLTTSChunk.textChunks(from: <#Your custom help prompt#>)
 
 sdlManager.send(request: setGlobals) { (request, response, error) in
-    if error != nil {
+    if let error = error {
         // Something went wrong
+        return
     }
 
     // The help prompt is updated
@@ -92,7 +94,7 @@ sdlManager.send(request: setGlobals) { (request, response, error) in
 !@
 
 ## Configuring the Timeout Prompt
-If a popup menu you display times out, you can create a custom text-to-speech response that will be spoken to the user.
+If you display any sort of popup menu or modal interaction that has a timeout – such as an alert, interaction, or slider – you can create a custom text-to-speech response that will be spoken to the user in the event that a timeout occurs.
 
 @![iOS]
 ##### Objective-C
@@ -115,11 +117,62 @@ let setGlobals = SDLSetGlobalProperties()
 setGlobals.timeoutPrompt = SDLTTSChunk.textChunks(from: <#Your custom help prompt#>)
 
 sdlManager.send(request: setGlobals) { (request, response, error) in
-    if error != nil {
+    if let error = error {
         // Something went wrong
     }
 
     // The timeout prompt is updated
+}
+```
+!@
+
+@![android, javaSE, javaEE]
+```java
+// TODO
+```
+!@
+
+## Clearing Help Menu and Prompt Customizations
+You can also reset your customizations to the help menu or spoken prompts. To do so, you will send a `ResetGlobalProperties` RPC with the fields that you wish to clear.
+
+@![iOS]
+##### Objective-C
+```objc
+// Reset the help menu
+SDLResetGlobalProperties *resetGlobals = [[SDLResetGlobalProperties alloc] initWithProperties:@[SDLGlobalPropertyVoiceRecognitionHelpItems, SDLGlobalPropertyVoiceRecognitionHelpTitle]];
+
+// Reset the menu icon and title
+SDLResetGlobalProperties *resetGlobals = [[SDLResetGlobalProperties alloc] initWithProperties:@[SDLGlobalPropertyMenuIcon, SDLGlobalPropertyMenuName]];
+
+
+// Reset the spoken prompts
+SDLResetGlobalProperties *resetGlobals = [[SDLResetGlobalProperties alloc] initWithProperties:@[SDLGlobalPropertyHelpPrompt, SDLGlobalPropertyTimeoutPrompt]];
+
+[self.sdlManager sendRequest:resetGlobals withResponseHandler:^(SDLRPCRequest *request, SDLRPCResponse *response, NSError *error) {
+    if (error != nil) {
+        // Something went wrong
+    }
+
+    // The global properties are reset
+}];
+```
+
+##### Swift
+```swift
+// Reset the help menu
+let resetGlobals = SDLResetGlobalProperties(properties: [.voiceRecognitionHelpItems, .voiceRecognitionHelpTitle])
+
+// Reset the menu icon and title
+let resetGlobals = SDLResetGlobalProperties(properties: [.menuIcon, .menuName])
+
+// Reset the spoken prompts
+let resetGlobals = SDLResetGlobalProperties(properties: [.helpPrompt, .timeoutPrompt])
+sdlManager.send(request: resetGlobals) { (req, res, err) in
+    if let error = error {
+        // Something went wrong
+    }
+
+    // The global properties are reset
 }
 ```
 !@
