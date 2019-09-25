@@ -1,5 +1,5 @@
 # Customizing Help Prompts
-You are able to customize the head unit's help system with your own information.
+On some head units it is possible to display a customized help menu or speak a custom command if the user asks for help while using your app. The help menu is commonly used to let users know what voice commands are available however it can also be customized to help your user navigate the app or let them know what features are available. 
 
 ## Configuring the Help Menu
 You can customize the help menu with your own title and/or menu options. If you don't customize these options, then the head unit's default menu will be used.
