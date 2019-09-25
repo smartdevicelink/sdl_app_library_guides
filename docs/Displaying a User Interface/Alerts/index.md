@@ -22,12 +22,12 @@ If no soft buttons are added to an alert some OEMs may add a default "cancel" or
 @![iOS]
 ##### Objective-C
 ```objc
-SDLAlert *alert =  [[SDLAlert alloc] initWithAlertText1:@"<#Line 1#>" alertText2:@"<#Line 2#>" alertText3:@"<#Line 3#>"];
+SDLAlert *alert = [[SDLAlert alloc] initWithAlertText:<#NSString#> softButtons:<#[SDLSoftButton]#> playTone:<#BOOL#> ttsChunks:<#[SDLTTSChunk]#> alertIcon:<#SDLImage#> cancelID:<#UInt32#>];
 ```
 
 ##### Swift
 ```swift
-let alert = SDLAlert(alertText1: "<#Line 1#>", alertText2: "<#Line 2#>", alertText3: "<#Line 3#>")
+let alert = SDLAlert(alertText: <#String?#>, softButtons: <#[SDLSoftButton]?#>, playTone: <#Bool#>, ttsChunks: <#[SDLTTSChunk]?#>, alertIcon: <#SDLImage?#>, cancelID: <#UInt32#>)
 ```
 !@
 
@@ -45,8 +45,6 @@ alert.setAlertText3("Line 3");
 @![iOS]
 ##### Objective-C
 ```objc
-SDLAlert *alert = [[SDLAlert alloc] initWithAlertText1:@"<#Line 1#>" alertText2:@"<#Line 2#>" alertText3:@"<#Line 3#>"];
-
 SDLSoftButton *button1 = [[SDLSoftButton alloc] initWithType:SDLSoftButtonTypeText text:@"<#Button Text#>" image:nil highlighted:false buttonId:<#Soft Button Id#> systemAction:SDLSystemActionDefaultAction handler:^(SDLOnButtonPress *_Nullable buttonPress, SDLOnButtonEvent *_Nullable buttonEvent) {
     if (buttonPress == nil) {
         return;
@@ -66,8 +64,6 @@ alert.softButtons = @[button1, button2];
 
 ##### Swift
 ```swift
-let alert = SDLAlert(alertText1: "<#Line 1#>", alertText2: "<#Line 2#>", alertText3: "<#Line 3#>")
-
 let button1 = SDLSoftButton(type: .text, text: <#Button Text#>, image: nil, highlighted: false, buttonId: <#Soft Button Id#>, systemAction: .defaultAction, handler: { buttonPress, buttonEvent in
     guard buttonPress != nil else { return }
     <#Button has been pressed#>
@@ -273,6 +269,14 @@ There are two ways to dismiss an alert. The first way is to dismiss a specific a
 @![iOS]
 ##### Objective-C
 ```objc
+UInt32 cancelID = 45;
+alert.cancelID = @(cancelID);
+
+SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWithAlertCancelID:cancelID];
+[self.sdlManager sendRequest:cancelInteraction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+    if (![response.resultCode isEqualToEnum:SDLResultSuccess]) { return; }
+    <#The alert was canceled successfully#>
+}];
 ```
 
 ##### Swift
@@ -292,23 +296,68 @@ sdlManager.send(request: cancelInteraction) { (request, response, error) in
 
 @![android,javaSE,javaEE]
 ```java
+// Assign a unique cancel id to the alert
+final Integer cancelID = 45;
+alert.setCancelID(cancelID);
+
+// Use the cancel id to dismiss the alert
+CancelInteraction cancelInteraction = new CancelInteraction(FunctionID.ALERT.getId(), cancelID);
+cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
+	@Override
+	public void onResponse(int correlationId, RPCResponse response) {
+		if (response.getSuccess()){
+			Log.i(TAG, "Alert was dismissed successfully");
+		}
+	}
+
+	@Override
+	public void onError(int correlationId, Result resultCode, String info) {
+		Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
+	}
+});
+sdlManager.sendRPC(cancelInteraction);
 ```
 !@
 
 
-### Dismissing any Alert
+### Dismissing Any Alert
 
 @![iOS]
 ##### Objective-C
 ```objc
+SDLCancelInteraction *cancelInteraction = [SDLCancelInteraction alert];
+[self.sdlManager sendRequest:cancelInteraction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+    if (![response.resultCode isEqualToEnum:SDLResultSuccess]) { return; }
+    <#The alert was canceled successfully#>
+}];
 ```
 
 ##### Swift
 ```swift
+let cancelInteraction = SDLCancelInteraction.alert()
+sdlManager.send(request: cancelInteraction) { (request, response, error) in
+    guard response?.resultCode == .success else { return }
+    <#The alert was canceled successfully#>
+}
 ```
 !@
 
 @![android,javaSE,javaEE]
 ```java
+CancelInteraction cancelInteraction = new CancelInteraction(FunctionID.ALERT.getId());
+cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
+	@Override
+	public void onResponse(int correlationId, RPCResponse response) {
+		if (response.getSuccess()){
+			Log.i(TAG, "Alert was dismissed successfully");
+		}
+	}
+
+	@Override
+	public void onError(int correlationId, Result resultCode, String info) {
+		Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
+	}
+});
+sdlManager.sendRPC(cancelInteraction);
 ```
 !@
