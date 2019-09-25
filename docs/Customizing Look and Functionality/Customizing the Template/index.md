@@ -2,10 +2,10 @@
 There is some ability to customize the look and feel of the template. How much customization is available depends on the version of Core you are connected with and the design of the head unit.
 
 ## Customizing Template Colors (Core 5.0+)
-You can alter the appearance of your app on a head unit in a consistent way using template coloring APIs.
+You can customize the color scheme of your app using template coloring APIs.
 
 ### Customizing the Default Layout
-You can change the template colors of the initial template layout that appears when you connect by altering your `lifecycleConfiguration`.
+You can change the template colors of the initial template layout in the `lifecycleConfiguration`.
 
 ![Template Coloring from Above](assets/template-colors-example.png)
 
@@ -30,7 +30,7 @@ lifecycleConfiguration.nightColorScheme = SDLTemplateColorScheme(primaryRGBColor
 ```
 
 !!! NOTE
-You may only change the template coloring in the `lifecycleConfiguration` and the `SetDisplayLayout` (or `Show` if connected to a Core 6.0+ head unit) RPC requests. You may only change the template coloring once per template; that is, you cannot call `SetDisplayLayout` for the same templates you are already on and expect the coloring to change.
+You may change the template coloring in the `lifecycleConfiguration` and the `SetDisplayLayout`, if connecting to a head unit with Core v.5.0+,  or with the `Show` request if connecting to Core v.6.0+. You may only change the template coloring once per template; that is, you cannot call `SetDisplayLayout` or `Show` for the template you are already on and expect the color scheme to update.
 !!!
 
 ### Customizing Future Layouts

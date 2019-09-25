@@ -1,8 +1,8 @@
 # Customizing Help Prompts
 You are able to customize the head unit's help system with your own information.
 
-## Help Menu
-If the head unit supports displaying a custom help menu, you can customize this menu with your own title and menu options. This menu is commonly used to assist users with knowing what voice commands are available. If you don't customize these options, then the head unit's default title and/or items will be used.
+## Configuring the Help Menu
+You can customize the help menu with your own title and/or menu options. If you don't customize these options, then the head unit's default menu will be used.
 
 If you wish to use an image, you should check the @![iOS]`sdlManager.systemCapabilityManager.defaultMainWindowCapability.imageFields`!@@![android, javaSE, javaEE]`// TODO`!@ for an `imageField.name` of `vrHelpItem` to see if that image is supported. If `vrHelpItem` is in the `imageFields` array, then it can be used. You will need to then upload the image using the file manager before using it in the RPC below. See the [Uploading Images guide](Other SDL Features/Uploading Images) for more information.
 
@@ -22,7 +22,7 @@ setGlobals.vrHelp = @[item1, item2];
         // Something went wrong
     }
 
-    // The help prompt is updated
+    // The help menu is updated
 }];
 ```
 
@@ -41,7 +41,7 @@ sdlManager.send(request: setGlobals) { (request, response, error) in
         // Something went wrong
     }
 
-    // The help prompt is updated
+    // The help menu is updated
 }
 ```
 !@
@@ -52,8 +52,8 @@ sdlManager.send(request: setGlobals) { (request, response, error) in
 ```
 !@
 
-## Help Prompt
-In SDL, the user is able to request assistance with using your app by saying "Help" on head units that support voice recognition. This will display the help menu discussed above, but it can also speak a custom spoken text-to-speech response to the user.
+## Configuring the  Help Prompt
+On head units that support voice recognition, a user can request assistance by saying "Help." In addition to displaying the help menu discussed above a custom spoken text-to-speech response can be spoken to the user.
 
 @![iOS]
 ##### Objective-C
@@ -91,7 +91,7 @@ sdlManager.send(request: setGlobals) { (request, response, error) in
 ```
 !@
 
-## Timeout Prompt
+## Configuring the Timeout Prompt
 If a popup menu you display times out, you can create a custom text-to-speech response that will be spoken to the user.
 
 @![iOS]
@@ -105,7 +105,7 @@ setGlobals.timeoutPrompt = SDLTTSChunk *response = [SDLTTSChunk textChunksFromSt
         // Something went wrong
     }
 
-    // The help prompt is updated
+    // The timeout prompt is updated
 }];
 ```
 
@@ -119,7 +119,7 @@ sdlManager.send(request: setGlobals) { (request, response, error) in
         // Something went wrong
     }
 
-    // The help prompt is updated
+    // The timeout prompt is updated
 }
 ```
 !@

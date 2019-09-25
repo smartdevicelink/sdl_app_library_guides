@@ -267,7 +267,7 @@ lifecycleConfiguration.additionalAppTypes = [.information];
 ```
 
 ### 5. Template Coloring
-You can alter template coloring of the initial template that appears. For more information on altering the template coloring, see the [Customizing the Template guide](Customizing Look and Functionality/Customizing the Template).
+You can customize the color scheme of your templates. For more information, see the [Customizing the Template guide](Customizing Look and Functionality/Customizing the Template) section.
 
 ### 6. Determine SDL Support
 You have the ability to determine a minimum SDL protocol and minimum SDL RPC version that your app supports. We recommend not setting these values until your app is ready for production. The OEMs you support will help you configure the correct `minimumProtocolVersion` and `minimumRPCVersion` during the application review process.
