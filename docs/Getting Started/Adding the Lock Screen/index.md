@@ -143,7 +143,7 @@ In SDL iOS v6.4, a new parameter `displayMode` has been added to the @![iOS]`SDL
 | always | The lock screen should always be shown after connection |
 
 ### Disabling the Lock Screen
-Please note that a lock screen will be required by most OEMs. You can disable the lock screen manager, but you will then be required to implement your own logic for showing and hiding the lock screen. This is not recommended as the @![iOS]`SDLLockScreenConfiguration` !@ @![android]`LockScreenConfig`!@ adheres to most OEM lock screen requirements. However, if you must create a lock screen manager from scratch, the library's lock screen manager can be disabled via the @![iOS]`SDLLockScreenConfiguration`!@ @![android]`LockScreenConfig`!@ as follows:
+Please note that a lock screen will be required by most OEMs. You can disable the lock screen manager, but you will then be required to implement your own logic for showing and hiding the lock screen. This is not recommended as the @![iOS]`SDLLockScreenConfiguration` !@@![android]`LockScreenConfig`!@ adheres to most OEM lock screen requirements. However, if you must create a lock screen manager from scratch, the library's lock screen manager can be disabled via the @![iOS]`SDLLockScreenConfiguration`!@@![android]`LockScreenConfig`!@ as follows:
 
 @![iOS]
 ##### Objective-C
@@ -186,7 +186,7 @@ lockScreenConfiguration.displayMode = .always
 ```
 !@
 
-### Dismiss the Lockscreen (Passenger Mode)
+### Enabling User Lockscreen Dismissal (Passenger Mode)
 Starting in RPC v6.0+ users may now have the ability to dismiss the lock screen by swiping the lock screen down. Not all OEMs support this new feature. A dismissable lock screen is enabled by default if the head unit enables the feature, but you can disable it manually as well. To disable this feature, set @![iOS]`SDLLockScreenConfiguration`s!@ @![android]`LockScreenConfig`s!@  `enableDismissGesture` to false.
 
 @![iOS]
