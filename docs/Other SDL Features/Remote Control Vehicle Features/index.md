@@ -372,8 +372,7 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_INTERIOR_VEHICLE_DATA, new
         // Perform action based on notification
     }
 });
-```
-```java
+
 GetInteriorVehicleData interiorVehicleData = new GetInteriorVehicleData(ModuleType.RADIO);
 interiorVehicleData.setSubscribe(true);
 interiorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
@@ -474,7 +473,8 @@ sdlManager.send(request: getInteriorVehicleDataConsent , responseHandler: { (req
     let boolAllowed = allowed.map ({ (bool) -> Bool in
         return bool.boolValue
     })
-    <#BoolAllowed is an array of true or false values#>
+
+    <#boolAllowed is an array of true or false values#>
 })
 ```
 !@
@@ -488,7 +488,6 @@ sdlManager.send(request: getInteriorVehicleDataConsent , responseHandler: { (req
 #### Controlling a Module
 Below is an example of setting climate control data. It is likely that you will not need to set all the data as in the code example below. When connected to 6.0+ system, you must set the `moduleId` in @![iOS]`SDLSetInteriorVehicleData.moduleData`!@@![android, javaSE, javaEE]`SetInteriorVehicleData.setModuleData`!@. When connected to < 6.0 systems, there is only one module per module type, so you must only pass the type of the module you wish to control.
 
-###### Controlling Modules on RPC 6.0+
 When you received module information above in "Getting Remote Control Module Information" on 6.0+ systems, you received information on the `location` and `serviceArea` of the module. The permission area of a module depends on that `serviceArea`. The `location` of a module is like the `seats` array: it maps to the `grid` to tell you the physical location of a particular module. The `serviceArea` maps to the grid to show how far that module's scope reaches.
 
 For example, a radio module usually serves all passengers in the vehicle, so its service area will likely cover the entirety of the vehicle grid, while a climate module may only cover a passenger area and not the driver or the back row. If a `serviceArea` is not included, it is assumed that the `serviceArea` is the same as the module's `location`. If neither is included, it is assumed that the `serviceArea` covers the whole area of the vehicle. If a user is not sitting within the `serviceArea`'s `grid`, they will not receive permission to control that module (attempting to set data will fail).
@@ -568,12 +567,6 @@ moduleData.setClimateControlData(climateControlData);
 
 SetInteriorVehicleData setInteriorVehicleData = new SetInteriorVehicleData(moduleData);
 sdlManager.sendRPC(setInteriorVehicleData);
-```
-!@
-
-@![android, javaEE, javaSE]
-```java
-// ToDo - Add example
 ```
 !@
 
