@@ -249,7 +249,7 @@ The `grid` system starts with the front left corner of the bottom level of the v
 | row=0   | driver's seat: {col=0, row=0, level=0, colspan=1, rowspan=1, levelspan=1} |   | front passenger's seat : {col=2, row=0, level=0, colspan=1, rowspan=1, levelspan=1} |
 | row=1   | rear-left seat : {col=0, row=1, level=0, colspan=1, rowspan=1, levelspan=1} | rear-middle seat :  {col=1, row=1, level=0, colspan=1, rowspan=1, levelspan=1} | rear-right seat : {col=2, row=1, level=0, colspan=1, rowspan=1, levelspan=1} |
 
-As noted above, when the user selects their seat, you can send an @![iOS]`SDLSetGlobalProperties`!@@![android, javaSE, javaEE]`SetGlobalProperties`@! RPC and set the `userLocation` property in order to set that user's location within the vehicle.
+As noted above, when the user selects their seat, you can send an @![iOS]`SDLSetGlobalProperties`!@@![android, javaSE, javaEE]`SetGlobalProperties`!@ RPC and set the `userLocation` property in order to set that user's location within the vehicle.
 
 @![iOS]
 ##### Objective-C
