@@ -202,7 +202,7 @@ const testData = testEventEmitter.addListener(
 )
 ```
 
-### Exposing Methods
+### Exposing Native Methods to JavaScript
 The last step is to wrap any native code methods you wish to expose to your JavaScript code inside `RCT_EXPORT_METHOD` for Objective-C and `RCT_EXTERN_METHOD` for Swift. We've seen above how native code can send notifications to your JavaScript code, now we will see how your JavaScript code can send notifications into your native SmartDeviceLink code. Inside the `SDLEventEmitter.m` file add the following method:
 
 ##### Objective-C
