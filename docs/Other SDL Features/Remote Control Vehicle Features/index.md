@@ -2,7 +2,7 @@
 The remote control framework allows apps to control certain modules, such as climate, radio, seat, lights, etc., within a vehicle. Vehicles running RPC v6.0+ may have multiple modules of the same type and each module can be controlled separately depending on seat location and permissions.
 
 !!! Note
-Not all head units support this feature. If using this feature in your app you will most likely need to request permission from the vehicle manufacturer.
+Not all head units support this feature. If you are using this feature in your app you will most likely need to request permission from the vehicle manufacturer.
 !!!
 
 ## Why Use Remote Control?
@@ -31,8 +31,8 @@ The following table lists what control items are in each control module.
 | Control Item | RPC Item Name | Value Range | Type | Comments | Version Changes |
 | --------------- | ------------ | ------------ | ------------ | ------------ | ------------ |
 | Climate Enable | climateEnable | on, off | Get/Set/Notification | Enabled to turn on the climate system, Disabled to turn off the climate system. All other climate items need climate enabled to work. | Since SDL v6.0 |
-| Current Cabin Temperature | currentTemperature | N/A | Get/Notification | read only, value range depends on OEM | Since SDL v4.5 |
-| Desired Cabin Temperature | desiredTemperature | N/A | Get/Set/Notification | value range depends on OEM | Since SDL v4.5 |
+| Current Cabin Temperature | currentTemperature | N/A | Get/Notification | Read only, value range depends on OEM | Since SDL v4.5 |
+| Desired Cabin Temperature | desiredTemperature | N/A | Get/Set/Notification | Value range depends on OEM | Since SDL v4.5 |
 | AC Setting | acEnable | on, off | Get/Set/Notification |  | Since SDL v4.5 |
 | AC MAX Setting | acMaxEnable | on, off  | Get/Set/Notification |  | Since SDL v4.5 |
 | Air Recirculation Setting | circulateAirEnable | on, off  | Get/Set/Notification |  | Since SDL v4.5 |
@@ -50,17 +50,17 @@ The following table lists what control items are in each control module.
 
 | Control Item | RPC Item Name | Value Range | Type | Comments | Version Changes |
 | --------------- | ------------ | ------------ | ------------ | ------------ | ------------ |
-| Radio Enabled | radioEnable | true,false  | Get/Set/Notification | read only, all other radio control items need radio enabled to work | Since SDL v4.5 |
+| Radio Enabled | radioEnable | true,false  | Get/Set/Notification | Read only, all other radio control items need radio enabled to work | Since SDL v4.5 |
 | Radio Band | band | AM,FM,XM  | Get/Set/Notification | | Since SDL v4.5 |
-| Radio Frequency | frequencyInteger / frequencyFraction | 0-1710, 0-9 | Get/Set/Notification | value range depends on band | Since SDL v4.5 |
-| Radio RDS Data | rdsData | RdsData struct | Get/Notification | read only | Since SDL v4.5 |
-| Available HD Channels | availableHdChannels | Array size 0-8, values 0-7 | Get/Notification | read only | Since SDL v6.0, replaces availableHDs |
-| Available HD Channels (DEPRECATED) | availableHDs | 1-7 (Deprecated in SDL v.6.0) (1-3 before SDL v.5.0) | Get/Notification | read only | Since SDL v4.5, updated in v5.0, deprecated in v6.0 |
+| Radio Frequency | frequencyInteger / frequencyFraction | 0-1710, 0-9 | Get/Set/Notification | Value range depends on band | Since SDL v4.5 |
+| Radio RDS Data | rdsData | RdsData struct | Get/Notification | Read only | Since SDL v4.5 |
+| Available HD Channels | availableHdChannels | Array size 0-8, values 0-7 | Get/Notification | Read only | Since SDL v6.0, replaces availableHDs |
+| Available HD Channels (DEPRECATED) | availableHDs | 1-7 (Deprecated in SDL v.6.0) (1-3 before SDL v.5.0) | Get/Notification | Read only | Since SDL v4.5, updated in v5.0, deprecated in v6.0 |
 | Current HD Channel | hdChannel | 0-7 (1-3 before SDL v.5.0) (1-7 between SDL v.5.0-6.0) | Get/Set/Notification |  | Since SDL v4.5, updated in SDL v5.0, updated in SDL v6.0 |
-| Radio Signal Strength | signalStrength | 0-100% | Get/Notification | read only | Since SDL v4.5 |
+| Radio Signal Strength | signalStrength | 0-100% | Get/Notification | Read only | Since SDL v4.5 |
 | Signal Change Threshold | signalStrengthThreshold | 0-100% | Get/Notification | read only | Since SDL v4.5 |
-| Radio State | state | Acquiring, acquired, multicast, not_found | Get/Notification | read only | Since SDL v4.5 |
-| SIS Data | sisData | See SisData struct | Get/Notification | read only | Since SDL v5.0 |
+| Radio State | state | Acquiring, acquired, multicast, not_found | Get/Notification | Read only | Since SDL v4.5 |
+| SIS Data | sisData | See SisData struct | Get/Notification | Read only | Since SDL v5.0 |
 
 #### Seat
 
@@ -130,14 +130,14 @@ The remote control framework also allows mobile applications to send simulated b
 |             | REPEAT |
 
 ## Integration
-For remote control to work, the head unit must support SDL Core v.4.4 or newer. Also your app's @![iOS]`appType`!@ @![android, javaSE, javaEE]`appHMIType`!@ must be set to `REMOTE_CONTROL`.
+For remote control to work, the head unit must support SDL Core v.4.4 or newer. Also your app's @![iOS]`appType`!@ @![android, javaSE, javaEE]`appHMIType`!@ must include `REMOTE_CONTROL`.
 
 !!! Note
 When connected to pre-Core 6.0 systems only the main module of a module type can be controlled. The modules you may control will depend on the OEM.
 !!!
 
 ### Multiple Modules (RPC v6.0+)
-Multiple modules can exist for each module type starting in SDL v6.0. In previous SDL versions, only one module was available for each module type. A new struct `moduleInfo` (on the `XYZControlCapabilities` objects) was created to give developers the information they need to control a specific module and contains a unique `moduleId` for each module. When sending remote control RPCs to a v6.0+, the `moduleId` must be provided to control the desired module. If no `moduleId` is set, the HMI will use the default module of that module type. When connected to pre-6.0 systems, the `moduleInfo` struct will be !@[iOS]`nil`!@@![android, javaSE, javaEE]`null`!@.
+Multiple modules can exist for each module type starting in SDL v6.0. In previous SDL versions, only one module was available for each module type. A new struct `moduleInfo` (on the `XYZControlCapabilities` objects) was created to give developers the information they need to control a specific module and contains a unique `moduleId` for each module. When sending remote control RPCs to a v6.0+, the `moduleId` must be provided to control the desired module. If no `moduleId` is set, the HMI will use the default module of that module type. When connected to pre-6.0 systems, the `moduleInfo` struct will be @![iOS]`nil`!@@![android, javaSE, javaEE]`null`!@.
 
 The permissions to control a module is seat-based. Depending on which seat the user is sitting in they may or may not be able to control certain modules. For example, only the person sitting in the front passenger seat can control the front passenger seat module. Modules may also allow multiple users to access them, while some modules may only allow one user at a time. Access control for a module will depend on the OEM.
 
@@ -207,7 +207,7 @@ let climateModuleLocation = firstClimateModule.moduleInfo.location;
 !@
 
 ### Setting The User's Seat (RPC 6.0+ only)
-The first step before attempting to take control of any module is to have the user select their seat location. Seat location may affect which modules the user is permitted to control depending on the OEMs rules. The default seat location is `Driver`. Seat location can be updated by setting the `userLocation` property in the @![iOS]`SDLSetGlobalProperties`!@@![android, javaSE, javaEE]`SetGlobalProperties`@! RPC and sending it.
+The first step before attempting to take control of any module is to have the user select their seat location. Seat location may affect which modules the user is permitted to control depending on the OEMs rules. The default seat location is `Driver`. Seat location can be updated by setting the `userLocation` property in the @![iOS]`SDLSetGlobalProperties`!@@![android, javaSE, javaEE]`SetGlobalProperties`!@ RPC and sending it.
 
 You may wish to show the user a map or list of all available seats in your app in order to ask them where they are located. This example is only meant to show you how to access the available data, and not how to build your UI/UX. 
 
