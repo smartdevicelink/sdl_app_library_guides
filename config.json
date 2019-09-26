@@ -52,7 +52,6 @@
                 {
                     "name":"Proguard Guidelines",
                     "platforms": ["Android"]
-
                 },
                 {
                     "name": "Deploying to AWS",
@@ -229,13 +228,19 @@
         },
         {
             "name": "Frequently Asked Questions",
-            "platforms": ["Android"],
+            "platforms": ["Android" ,"iOS"],
             "navigation": [
                 {
-                    "name": "SDL Notifications"
+                    "name": "React Native",
+                    "platforms": ["iOS"]
                 },
                 {
-                    "name": "Trusted Router Service"
+                    "name": "SDL Notifications",
+                    "platforms": ["Android"]
+                },
+                {
+                    "name": "Trusted Router Service",
+                    "platforms": ["Android"]
                 }
             ]
         }
