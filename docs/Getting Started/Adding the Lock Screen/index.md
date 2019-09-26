@@ -136,7 +136,7 @@ lockScreenConfig.setCustomView(customViewInt);
 In SDL iOS v6.4, a new parameter `displayMode` has been added to the @![iOS]`SDLLockScreenConfiguration` !@ @![android]`LockScreenConfig`!@ to control the state of the lock screen and the older boolean parameters have been deprecated.
 
 | DisplayMode | Description |
-| --------------- | -------------- |
+| --------------- | ------------- |
 | never | The lock screen should never be shown. This should almost always mean that you will build your own lock screen |
 | requiredOnly | The lock screen should only be shown when it is required by the head unit |
 | optionalOrRequired | The lock screen should be shown when required by the head unit or when the head unit says that its optional, but *not* in other cases, such as before the user has interacted with your app on the head unit |
@@ -187,7 +187,7 @@ lockScreenConfiguration.displayMode = .always
 !@
 
 ### Dismiss the Lockscreen (Passenger Mode)
-Starting in RPC v6.0+ users may now have the ability to dismiss the lock screen by swiping the lock screen down. Not all OEMs support this new feature. A dismissable lock screen is enabled by default if the head unit enables the feature, but you can disable it manually as well. To disable this feature, set @![iOS]`SDLLockScreenConfiguration`s!@ @![android]`LockScreenConfig`s!@ `enableDismissGesture` to false.
+Starting in RPC v6.0+ users may now have the ability to dismiss the lock screen by swiping the lock screen down. Not all OEMs support this new feature. A dismissable lock screen is enabled by default if the head unit enables the feature, but you can disable it manually as well. To disable this feature, set @![iOS]`SDLLockScreenConfiguration`s!@ @![android]`LockScreenConfig`s!@  `enableDismissGesture` to false.
 
 @![iOS]
 ##### Objective-C
