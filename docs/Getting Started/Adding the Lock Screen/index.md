@@ -133,7 +133,7 @@ lockScreenConfig.setCustomView(customViewInt);
 !@
 
 ## Customizing the Lock Screen State
-In SDL iOS v6.4, a new parameter `displayMode` has been added to the @![iOS]`SDLLockScreenConfiguration`!@@![android]`LockScreenConfig`!@ to control the state of the lock screen and the older boolean parameters have been deprecated.
+In SDL @![iOS]iOS v6.4!@@![android] Android v4.10!@, a new parameter `displayMode` has been added to the @![iOS]`SDLLockScreenConfiguration`!@@![android]`LockScreenConfig`!@ to control the state of the lock screen and the older boolean parameters have been deprecated.
 
 | DisplayMode | Description |
 | --------------- | ------------- |
