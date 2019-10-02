@@ -86,7 +86,7 @@ public class MyApplication extends Application {
 
 ```
 
-!!!NOTE
+!!! NOTE
 If other callback methods in your `Application` class are used, they must also check this flag to prevent unintended behavior.
 !!!
 
