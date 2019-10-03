@@ -241,6 +241,10 @@
                 {
                     "name": "Trusted Router Service",
                     "platforms": ["Android"]
+                },
+                {
+                    "name": "Multiple Processes",
+                    "platforms": ["Android"]
                 }
             ]
         }
