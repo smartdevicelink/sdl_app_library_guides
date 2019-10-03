@@ -10,7 +10,7 @@ The router service is designed to live outside the normal lifecycle of the app i
 
 Android content providers have a unique lifecycle that does not work in the expected flow. Content providers are actually started before the `Application` class and following `Activities`, `Services`, etc. Some libraries use this to know when their code/module can initialize and always be ready for the entire lifecycle of the application. This is found with many Google libraries (Firebase, Jetpack, etc).
 
-The issue is that, by default, content providers are only attached to and initialized for the main process. This means, when the main process starts the content provider will be started, but if a different process other than the main processes is started the content provider will not be started. So if the app has its first start from a component that is designed to run in a different process, the content provider won't be ready by the time those components start up; this includes the `Application` instance for that process. 
+The issue is that, by default, content providers are only attached to and initialized for the main process. This means, when the main process starts the content provider will be started, but if a different process other than the main process is started the content provider will not be started. So if the app has its first start from a component that is designed to run in a different process, the content provider won't be ready by the time those components start up; this includes the `Application` instance for that process. 
 
 ### Why is this a problem?
 
