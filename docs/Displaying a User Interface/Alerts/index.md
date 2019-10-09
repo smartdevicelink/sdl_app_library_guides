@@ -222,7 +222,7 @@ alert.setPlayTone(true);
 ```objc
 [self.sdlManager sendRequest:alert withResponseHandler:^(SDLRPCRequest *request, SDLRPCResponse *response, NSError *error) {
     if (![response.resultCode isEqualToEnum:SDLResultSuccess]) { return; }
-    <#alert was dismissed successfully#>
+    <#Alert was shown successfully#>
 }];
 ```
 
@@ -230,7 +230,7 @@ alert.setPlayTone(true);
 ```swift
 sdlManager.send(request: alert) { (request, response, error) in
     guard response?.resultCode == .success else { return }
-    <#alert was dismissed successfully#>
+    <#Alert was shown successfully#>
 }
 ```
 !@
@@ -360,4 +360,4 @@ cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
 });
 sdlManager.sendRPC(cancelInteraction);
 ```
-!@
+!@  

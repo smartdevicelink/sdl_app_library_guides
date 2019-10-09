@@ -17,7 +17,7 @@ A slider popup with a static footer displays a single, optional, footer message 
 ##### Objective-C
 ```objc
 // Create a slider with number of ticks, starting position 'tick number', a header message, an optional footer message, and a timeout of 30 seconds
-SDLSlider *sdlSlider = [[SDLSlider alloc] initWithNumTicks:5 position:1 sliderHeader:@"This is a Header" sliderFooter:@"Static Footer" timeout:30000];
+SDLSlider *sdlSlider = [[SDLSlider alloc] initWithNumTicks:5 position:1 sliderHeader:@"This is a Header" sliderFooter:@"Static Footer" timeout:30000 cancelID:45];
 
 // Send the slider RPC request with handler
 [manager sendRequest:sdlSlider withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
@@ -36,7 +36,7 @@ SDLSlider *sdlSlider = [[SDLSlider alloc] initWithNumTicks:5 position:1 sliderHe
 ##### Swift
 ```swift
 // Create a slider with number of ticks, starting position 'tick number', a header message, an optional footer message, and a timeout of 30 seconds
-let slider =  SDLSlider(numTicks: 5, position: 1, sliderHeader: "This is a Header", sliderFooter: "Static Footer", timeout: 30000)
+let slider =  SDLSlider(numTicks: 5, position: 1, sliderHeader: "This is a Header", sliderFooter: "Static Footer", timeout: 30000, cancelID: 45)
 
 // Send the slider RPC request with handler
 manager.send(request: slider, responseHandler: { (req, res, err) in
@@ -94,7 +94,7 @@ This type of slider will have a different footer message displayed for each posi
 NSArray<NSString *> *footers = @[@"Footer 1", @"Footer 2", @"Footer 3"];
 
 // Create a slider with number of ticks, starting position 'tick number', a header message, and an optional footer array, and a timeout of 30 seconds
-SDLSlider *sdlSlider = [[SDLSlider alloc] initWithNumTicks:3 position:1 sliderHeader:@"This is a Header" sliderFooters:footers timeout:30000];
+SDLSlider *sdlSlider = [[SDLSlider alloc] initWithNumTicks:3 position:1 sliderHeader:@"This is a Header" sliderFooters:footers timeout:30000 cancelID:45];
 
 // Send the slider RPC request with handler
 [manager sendRequest:sdlSlider withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
@@ -117,7 +117,7 @@ SDLSlider *sdlSlider = [[SDLSlider alloc] initWithNumTicks:3 position:1 sliderHe
 let footers = ["Footer 1", "Footer 2", "Footer 3"]
 
 // Create a slider with number of ticks, starting position 'tick number', a header message, and an optional footer array, and a timeout of 30 seconds
-let slider =  SDLSlider(numTicks: 3, position: 1, sliderHeader: "This is a Header", sliderFooters: footers, timeout: 30000)
+let slider =  SDLSlider(numTicks: 3, position: 1, sliderHeader: "This is a Header", sliderFooters: footers, timeout: 30000, cancelID: 45)
 manager.send(request: slider, responseHandler: { (req, res, err) in
     // Create a SDLSlider response object from the handler response
     guard let response = res as? SDLSliderResponse, response.resultCode == .success, let position = response.sliderPosition.intValue else { return }
@@ -152,3 +152,108 @@ slider.setOnRPCResponseListener(new OnRPCResponseListener() {
 sdlManager.sendRPC(slider);
 ```
 !@
+
+## Canceling a Specific Slider
+If you are connected to a head unit with SDL Core v6.0+, you can specificly dismiss a displayed slider before the timeout has elapsed.
+
+If connected to older head units that do not support this feature, the cancel request will be ignored, and the slider will persist on the screen until the timeout has elapsed or the user dismisses by selecting a position or canceling.
+
+### Dismissing a Specific Slider
+
+@![iOS]
+##### Objective-C
+```objc
+// Assign a unique cancel id to the slider
+UInt32 cancelID = 45;
+slider.cancelID = @(cancelID);
+
+// Use the cancel id to dismiss the slider
+SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWithSliderCancelID:cancelID];
+[self.sdlManager sendRequest:cancelInteraction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+    if (![response.resultCode isEqualToEnum:SDLResultSuccess]) { return; }
+    <#The slider was canceled successfully#>
+}];
+```
+
+##### Swift
+```swift
+// Assign a unique cancel id to the slider
+let cancelID: UInt32 = 45
+slider.cancelID = cancelID as NSNumber
+
+// Use the cancel id to dismiss the slider
+let cancelInteraction = SDLCancelInteraction(sliderCancelID: cancelID)
+sdlManager.send(request: cancelInteraction) { (request, response, error) in
+    guard response?.resultCode == .success else { return }
+    <#The slider was canceled successfully#>
+}
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+// Assign a unique cancel id to the slider
+final Integer cancelID = 45;
+slider.setCancelID(cancelID);
+
+// Use the cancel id to dismiss the slider
+CancelInteraction cancelInteraction = new CancelInteraction(FunctionID.SLIDER.getId(), cancelID);
+cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        if (response.getSuccess()){
+            Log.i(TAG, "Slider was dismissed successfully");
+        }
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info) {
+        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
+    }
+});
+sdlManager.sendRPC(cancelInteraction);
+```
+!@
+
+### Dismissing Current Slider
+
+@![iOS]
+##### Objective-C
+```objc
+SDLCancelInteraction *cancelInteraction = [SDLCancelInteraction slider];
+[self.sdlManager sendRequest:cancelInteraction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+    if (![response.resultCode isEqualToEnum:SDLResultSuccess]) { return; }
+    <#The slider was canceled successfully#>
+}];
+```
+
+##### Swift
+```swift
+let cancelInteraction = SDLCancelInteraction.slider()
+sdlManager.send(request: cancelInteraction) { (request, response, error) in
+    guard response?.resultCode == .success else { return }
+    <#The slider was canceled successfully#>
+}
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+CancelInteraction cancelInteraction = new CancelInteraction(FunctionID.SLIDER.getId());
+cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        if (response.getSuccess()){
+            Log.i(TAG, "Slider was dismissed successfully");
+        }
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info) {
+        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
+    }
+});
+sdlManager.sendRPC(cancelInteraction);
+```
+!@  
+
