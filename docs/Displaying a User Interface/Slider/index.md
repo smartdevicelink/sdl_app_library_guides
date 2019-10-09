@@ -154,7 +154,7 @@ sdlManager.sendRPC(slider);
 !@
 
 ## Canceling a Specific Slider
-If you are connected to a head unit with SDL Core v6.0+, you can specificly dismiss a displayed slider before the timeout has elapsed.
+If you are connected to a head unit with SDL Core v6.0+, you can dismiss a displayed slider before the timeout has elapsed.
 
 If connected to older head units that do not support this feature, the cancel request will be ignored, and the slider will persist on the screen until the timeout has elapsed or the user dismisses by selecting a position or canceling.
 

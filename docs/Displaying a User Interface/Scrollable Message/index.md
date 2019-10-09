@@ -133,7 +133,7 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
 !@
 
 ## Canceling a Specific Scrollable Message
-If you are connected to a head unit with SDL Core v6.0+, you can specificly dismiss a displayed scrollable message before the timeout has elapsed.
+If you are connected to a head unit with SDL Core v6.0+, you can dismiss a displayed scrollable message before the timeout has elapsed.
 
 If connected to older head units that do not support this feature, the cancel request will be ignored, and the scrollable message will persist on the screen until the timeout has elapsed or the user dismisses the message by selecting a button.
 

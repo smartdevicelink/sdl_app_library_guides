@@ -263,7 +263,7 @@ choiceSet.cancel()
 
 @![android, javaSE, javaEE]
 ```java
-//ToDo - add canel choice set
+// ToDo - add cancel choice set
 ```
 !@
 
