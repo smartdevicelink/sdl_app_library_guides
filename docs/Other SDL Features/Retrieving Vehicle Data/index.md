@@ -429,7 +429,7 @@ sdlManager.send(request: getCustomData) { (request, response, error) in
         return
     }
 
-    guard let customVehicleData = response.getCustomData.getOEMCustomVehicleData("OEM-X-Vehicle-Data") else { return }
+    guard let customVehicleData = response.getCustomData.getOEMCustomVehicleData("OEM-X-Vehicle-Data") as? <#OEMCustomVehicleDataType#> else { return }
     <#Use the custom data#>
 }
 ```
