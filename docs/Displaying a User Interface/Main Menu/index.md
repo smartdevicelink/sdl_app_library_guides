@@ -30,7 +30,7 @@ sdlManager.screenManager.menuConfiguration = menuConfiguration
 
 @![android, javaSE, javaEE]
 ```java
-``//ToDo - add example how to set layout for menu``
+ //ToDo - add example how to set layout for menu
 ```
 !@
 
