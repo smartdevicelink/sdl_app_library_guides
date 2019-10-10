@@ -9,7 +9,7 @@ Every template has a main menu button. The position of this button varies betwee
 !!!
 
 ## Setting a Menu Style
-Core v6.0+ supports displaying menu items as tiles or as a list depending on OEM. To see if the display supports menu tiles check @![iOS] `self.sdlManager.systemCapabilityManager.defaultMainWindowCapability`s `menuLayoutsAvailable` !@@![android,javaEE,javaSE] `//ToDo - add info` property. To set a menu layout please set the `screenManager`s `menuConfiguration` property. The default layout is `list` if none is set.
+Core v6.0+ supports displaying menu items as tiles or as a list depending on OEM. To see if the display supports menu tiles check @![iOS] `self.sdlManager.systemCapabilityManager.defaultMainWindowCapability'`s `menuLayoutsAvailable` !@@![android,javaEE,javaSE] `//ToDo - add info`!@ property. To set a menu layout please set the `screenManager`s `menuConfiguration` property. The default layout is `list` if none is set.
 
 !!! Note
 If `menuConfiguration` is set after a menu already exists, sub-menu layouts will not be updated.  A new menu will have to be set to see the new sub-menu layout.
