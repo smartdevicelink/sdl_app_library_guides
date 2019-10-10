@@ -9,10 +9,10 @@ Every template has a main menu button. The position of this button varies betwee
 !!!
 
 ## Setting a Menu Style
-Core v6.0+ supports menu tiles depending on OEM. To check if the head unit supports menu tiles check `displayCapabilities` `menuLayoutsAvailable` property. To set a menu layout please set the `screenManager`s `menuConfiguration` property. Default layout is `list`.
+Core v6.0+ supports displaying menu items as tiles or as a list depending on OEM. To see if the display supports menu tiles check @![iOS] `self.sdlManager.systemCapabilityManager.defaultMainWindowCapability`s `menuLayoutsAvailable` !@@![android,javaEE,javaSE] `//ToDo - add info` property. To set a menu layout please set the `screenManager`s `menuConfiguration` property. The default layout is `list` if none is set.
 
 !!! Note
-If this property is set after a menu already exists, sub-menu layouts will not be updated.  A new menu will have to be set to see the new sub-menu layout.
+If `menuConfiguration` is set after a menu already exists, sub-menu layouts will not be updated.  A new menu will have to be set to see the new sub-menu layout.
 !!!
 
 @![iOS]
@@ -78,7 +78,7 @@ sdlManager.getScreenManager().setMenu(Collections.singletonList(cell));
 !@
 
 ### Adding Submenus
-Adding a submenu is as simple as adding subcells to a @![iOS]`SDLMenuCell`!@ @![android, javaSE, javaEE]`SdlMenuCell`!@. The submenu is automatically displayed when selected by the user. Currently menus only support one layer of subcells. In Core v6.0+ it is possible to set individual submenus to use different layouts.
+Adding a submenu is as simple as adding subcells to a @![iOS]`SDLMenuCell`!@ @![android, javaSE, javaEE]`SdlMenuCell`!@. The submenu is automatically displayed when selected by the user. Currently menus only support one layer of subcells. In Core v6.0+ it is possible to set individual submenus to use different layouts such as tiles or lists.
 
 @![iOS]
 ##### Objective-C
