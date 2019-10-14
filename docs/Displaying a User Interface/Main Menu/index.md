@@ -9,7 +9,7 @@ Every template has a main menu button. The position of this button varies betwee
 !!!
 
 ## Setting a Menu Style
-Core v6.0+ supports displaying menu items as tiles or as a list depending on OEM. To see if the display supports menu tiles check @![iOS] `self.sdlManager.systemCapabilityManager.defaultMainWindowCapability'`s `menuLayoutsAvailable` !@@![android,javaEE,javaSE] `//ToDo - add info`!@ property. To set a menu layout please set the `screenManager's`  `menuConfiguration` property. The default layout is `list` if none is set.
+Core v6.0+ supports displaying menu items as tiles or as a list depending on OEM. To see if the display supports menu tiles check @![iOS] `self.sdlManager.systemCapabilityManager.defaultMainWindowCapability'`s `menuLayoutsAvailable` !@@![android,javaEE,javaSE] `//ToDo - add info`!@ property. To set a menu layout please set the `screenManager`s  `menuConfiguration` property. The default layout is `list` if none is set.
 
 !!! Note
 If `menuConfiguration` is set after a menu already exists, sub-menu layouts will not be updated.  A new menu will have to be set to see the new sub-menu layout.
@@ -117,10 +117,19 @@ let cell = SDLMenuCell(title: <#String#>, icon: <#SDLArtwork?#>, voiceCommands: 
     // Menu item was selected, check the `triggerSource` to know if the user used touch or voice to activate it
     <#Handle the cell's selection#>
 }
+
+let submenuCell = SDLMenuCell(title: <#String#>, icon: <#SDLArtwork?#>, subCells: [cell])
+sdlManager.screenManager.menu = [submenuCell]
 ```
 ###### Core v6.0+
 ```swift
-let submenuCell = SDLMenuCell(title: <#String#>, icon: <#SDLArtwork?#>, submenuLayout: <#Menu Layout#>, subCells:[cell])
+// Create the inner menu cell
+let cell = SDLMenuCell(title: <#String#>, icon: <#SDLArtwork?#>, voiceCommands: <#[String]?#>) { (triggerSource: SDLTriggerSource) in
+    // Menu item was selected, check the `triggerSource` to know if the user used touch or voice to activate it
+    <#Handle the cell's selection#>
+}
+
+let submenuCell = SDLMenuCell(title: <#String#>, icon: <#SDLArtwork?#>, submenuLayout: <#Menu Layout#>, subCells: [cell])
 sdlManager.screenManager.menu = [submenuCell]
 ```
 !@
