@@ -156,17 +156,15 @@ sdlManager.sendRPC(slider);
 ## Dismissing a Slider (RPC 6.0+)
 You can dismiss a displayed slider before the timeout has elapsed by dismissing either a specific slider or the current slider.
 
+!!! NOTE
 If connected to older head units that do not support this feature, the cancel request will be ignored, and the slider will persist on the screen until the timeout has elapsed or the user dismisses by selecting a position or canceling.
+!!!
 
 ### Dismissing a Specific Slider
 
 @![iOS]
 ##### Objective-C
 ```objc
-// Assign a unique cancel id to the slider
-UInt32 cancelID = 45;
-slider.cancelID = @(cancelID);
-
 // `cancelID` is the ID that you assigned when creating and sending the alert
 SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWithSliderCancelID:cancelID];
 [self.sdlManager sendRequest:cancelInteraction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
@@ -177,10 +175,6 @@ SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWith
 
 ##### Swift
 ```swift
-// Assign a unique cancel id to the slider
-let cancelID: UInt32 = 45
-slider.cancelID = cancelID as NSNumber
-
 // `cancelID` is the ID that you assigned when creating and sending the alert
 let cancelInteraction = SDLCancelInteraction(sliderCancelID: cancelID)
 sdlManager.send(request: cancelInteraction) { (request, response, error) in
@@ -192,10 +186,6 @@ sdlManager.send(request: cancelInteraction) { (request, response, error) in
 
 @![android,javaSE,javaEE]
 ```java
-// Assign a unique cancel id to the slider
-final Integer cancelID = 45;
-slider.setCancelID(cancelID);
-
 // `cancelID` is the ID that you assigned when creating and sending the alert
 CancelInteraction cancelInteraction = new CancelInteraction(FunctionID.SLIDER.getId(), cancelID);
 cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {

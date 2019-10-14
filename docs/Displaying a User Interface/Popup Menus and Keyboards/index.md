@@ -247,7 +247,9 @@ sdlManager.getScreenManager().deleteChoices(<List of choices to delete>);
 ### Dismissing the Popup Menu (RPC 6.0+)
 You can dismiss a displayed choice set before the timeout has elapsed by sending a `CancelInteraction` request. If you presented the choice set using the screen manager, you can dismiss the choice set by calling `cancel` on the `SDLChoiceSet` object that you presented.
 
+!!! NOTE
 If connected to older head units that do not support this feature, the cancel request will be ignored, and the choice set will persist on the screen until the timeout has elapsed or the user dismisses it by making a selection.
+!!!
 
 @![iOS]
 ##### Objective-C
@@ -299,7 +301,7 @@ sdlManager.getScreenManager().presentKeyboard("Initial text", null, keyboardList
 !@
 
 ### Dismissing the Keyboard (RPC 6.0+)
-If you are connected to a head unit with SDL Core v6.0+, you can dismiss a displayed keyboard.
+You can dismiss a displayed keyboard before the timeout has elapsed by sending a `CancelInteraction` request. If you presented the keyboard using the screen manager, you can dismiss the choice set by calling dismissKeyboard with the `cancelID` that was returned (if one was returned) when presenting.
 
 @![iOS]
 ##### Objective-C

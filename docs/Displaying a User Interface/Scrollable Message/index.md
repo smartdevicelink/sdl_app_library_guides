@@ -86,7 +86,6 @@ sdlManager.send(scrollableMessage)
 @![android,javaSE,javaEE]
 
 ```java
-
 // Create Message To Display
 String scrollableMessageText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Vestibulum mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare. Purus in massa tempor nec feugiat nisl pretium fusce id. Pharetra convallis posuere morbi leo urna molestie at elementum eu. Dictum sit amet justo donec enim diam.";
 		
@@ -108,7 +107,6 @@ scrollableMessage.setSoftButtons(softButtonList);
 
 // Send the scrollable message
 sdlManager.sendRPC(scrollableMessage);
-
 ```
 
 To listen for `OnButtonPress` events for `SoftButton`s, we need to add a listener that listens for their Id's:
@@ -135,17 +133,15 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
 ## Dismissing a Scrollable Message (RPC 6.0+)
 You can dismiss a displayed scrollable message before the timeout has elapsed. You can dismiss a specific scrollable message, or you can dismiss the scrollable message that is currently displayed.
 
+!!! NOTE
 If connected to older head units that do not support this feature, the cancel request will be ignored, and the scrollable message will persist on the screen until the timeout has elapsed or the user dismisses the message by selecting a button.
+!!!
 
 ### Dismissing a Specific Scrollable Message
 
 @![iOS]
 ##### Objective-C
 ```objc
-// Assign a unique cancel id to the scrollable message
-UInt32 cancelID = 45;
-scrollableMessage.cancelID = @(cancelID);
-
 // `cancelID` is the ID that you assigned when creating and sending the scrollable message
 SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWithScrollableMessageCancelID:cancelID];
 [self.sdlManager sendRequest:cancelInteraction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
@@ -156,10 +152,6 @@ SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWith
 
 ##### Swift
 ```swift
-// Assign a unique cancel id to the scrollable message
-let cancelID: UInt32 = 45
-scrollableMessage.cancelID = cancelID as NSNumber
-
 // `cancelID` is the ID that you assigned when creating and sending the alert
 let cancelInteraction = SDLCancelInteraction(scrollableMessageCancelID: cancelID)
 sdlManager.send(request: cancelInteraction) { (request, response, error) in
@@ -171,10 +163,6 @@ sdlManager.send(request: cancelInteraction) { (request, response, error) in
 
 @![android,javaSE,javaEE]
 ```java
-// Assign a unique cancel id to the scrollable message
-final Integer cancelID = 45;
-scrollableMessage.setCancelID(cancelID);
-
 // `cancelID` is the ID that you assigned when creating and sending the alert
 CancelInteraction cancelInteraction = new CancelInteraction(FunctionID.SCROLLABLE_MESSAGE.getId(), cancelID);
 cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
