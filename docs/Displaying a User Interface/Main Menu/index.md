@@ -9,7 +9,7 @@ Every template has a main menu button. The position of this button varies betwee
 !!!
 
 ## Setting a Menu Style
-Core v6.0+ supports displaying menu items as tiles or as a list depending on OEM. To see if the display supports menu tiles check @![iOS] `self.sdlManager.systemCapabilityManager.defaultMainWindowCapability'`s `menuLayoutsAvailable` !@@![android,javaEE,javaSE] `//ToDo - add info`!@ property. To set a menu layout please set the `screenManager's`  `menuConfiguration` property. The default layout is `list` if none is set.
+Core v6.0+ supports displaying menu items as tiles or as a list depending on OEM. To see if the display supports menu tiles check @![iOS] `self.sdlManager.systemCapabilityManager.defaultMainWindowCapability'`s `menuLayoutsAvailable` !@@![android,javaEE,javaSE] `//ToDo - add info`!@ property. To set a menu layout please set the `screenManager`s  `menuConfiguration` property. The default layout is `list` if none is set.
 
 !!! Note
 If `menuConfiguration` is set after a menu already exists, sub-menu layouts will not be updated.  A new menu will have to be set to see the new sub-menu layout.
@@ -154,7 +154,7 @@ sdlManager.getScreenManager().setMenu(Collections.singletonList(cell));
 ```
 !@
 
-### Artworks
+### Artwork
 Artworks will be automatically handled when using the screen manager API. First, a "non-artwork" menu will be displayed, then, when the artworks have finished uploading, the "artwork-ified" menu will be displayed. If you are doing this manually with RPCs, you will have to upload artworks using the file manager yourself and send the correct menu when they are ready.
 
 ### Deleting and Changing Menu Items
