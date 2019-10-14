@@ -368,10 +368,10 @@ sdlManager.sendRPC(unsubscribeRequest);
 !@
 
 ## OEM-Specific Vehicle Data
-OEM applications can pull vehicle data that is published by their systems but is not available in SDL vehicle data APIs. The generic vehicle data features work with the same RPCs as the SDL-specified vehicle data items, but it requires that you know the OEM-custom names of the vehicle data items that you are requesting.
+OEM applications can access additional vehicle data published by their systems that is not available via the SDL vehicle data APIs. This data is accessed using the same SDL vehicle data RPCs, but instead of requesting a certain type of SDL-specified data,  you must request data using a custom vehicle data name. The type of object returned is up to the OEM and must be parsed manually.
 
 !!! NOTE
-This feature is only for OEM-created and published applications, and is not permitted for 3rd-party use.
+This feature is only for OEM-created applications, and is not permitted for 3rd-party use.
 !!!
 
 ### Requesting One-Time OEM-Specific Vehicle Data
