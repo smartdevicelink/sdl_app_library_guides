@@ -132,8 +132,8 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
 
 !@
 
-## Canceling a Specific Scrollable Message
-If you are connected to a head unit with SDL Core v6.0+, you can dismiss a displayed scrollable message before the timeout has elapsed.
+## Dismissing a Scrollable Message (RPC 6.0+)
+You can dismiss a displayed scrollable message before the timeout has elapsed. You can dismiss a specific scrollable message, or you can dismiss the scrollable message that is currently displayed.
 
 If connected to older head units that do not support this feature, the cancel request will be ignored, and the scrollable message will persist on the screen until the timeout has elapsed or the user dismisses the message by selecting a button.
 
@@ -146,7 +146,7 @@ If connected to older head units that do not support this feature, the cancel re
 UInt32 cancelID = 45;
 scrollableMessage.cancelID = @(cancelID);
 
-// Use the cancel id to dismiss the scrollable message
+// `cancelID` is the ID that you assigned when creating and sending the scrollable message
 SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWithScrollableMessageCancelID:cancelID];
 [self.sdlManager sendRequest:cancelInteraction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if (![response.resultCode isEqualToEnum:SDLResultSuccess]) { return; }
@@ -160,7 +160,7 @@ SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWith
 let cancelID: UInt32 = 45
 scrollableMessage.cancelID = cancelID as NSNumber
 
-// Use the cancel id to dismiss the scrollable message
+// `cancelID` is the ID that you assigned when creating and sending the alert
 let cancelInteraction = SDLCancelInteraction(scrollableMessageCancelID: cancelID)
 sdlManager.send(request: cancelInteraction) { (request, response, error) in
     guard response?.resultCode == .success else { return }
@@ -175,7 +175,7 @@ sdlManager.send(request: cancelInteraction) { (request, response, error) in
 final Integer cancelID = 45;
 scrollableMessage.setCancelID(cancelID);
 
-// Use the cancel id to dismiss the scrollable message
+// `cancelID` is the ID that you assigned when creating and sending the alert
 CancelInteraction cancelInteraction = new CancelInteraction(FunctionID.SCROLLABLE_MESSAGE.getId(), cancelID);
 cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override

@@ -255,14 +255,14 @@ sdlManager.sendRPC(alert);
 ```
 !@
 
-## Canceling the Alert
-If you are connected to a head unit with SDL Core v6.0+, you can dismiss a displayed alert before the timeout has elapsed. This feature is useful if you want to let users know that you are performing a task, such as searching for a list for nearby coffee shops. As soon as you have the search results, you can cancel the alert and show the results. 
+## Dismissing the Alert (RPC 6.0+)
+You can dismiss a displayed alert before the timeout has elapsed. This feature is useful if you want to show users a loading screen while performing a task, such as searching for a list for nearby coffee shops. As soon as you have the search results, you can cancel the alert and show the results. 
 
 If connected to older head units that do not support this feature, the cancel request will be ignored, and the alert will persist on the screen until the timeout has elapsed or the user dismisses the alert by selecting a button.
 
-Please note that canceling the alert will only dismiss the displayed alert. If you have set the `ttsChunk` property, the speech will play in its entirety even when the displayed alert has been dismissed. If you know you will cancel an alert, consider setting a short `ttsChunk` like "Searching" instead of "Searching for coffee shops, please wait". 
+Please note that canceling the alert will only dismiss the displayed alert. If you have set the `ttsChunk` property, the speech will play in its entirety even when the displayed alert has been dismissed. If you know you will cancel an alert, consider setting a short `ttsChunk` like "searching" instead of "searching for coffee shops, please wait."
 
-There are two ways to dismiss an alert. The first way is to dismiss a specific alert using a unique `cancelID` assigned to the alert. The second way is to dismiss any alert currently be presented. 
+There are two ways to dismiss an alert. The first way is to dismiss a specific alert using a unique `cancelID` assigned to the alert. The second way is to dismiss whichever alert is currently on-screen.
 
 ### Dismissing a Specific Alert
 
@@ -272,6 +272,7 @@ There are two ways to dismiss an alert. The first way is to dismiss a specific a
 UInt32 cancelID = 45;
 alert.cancelID = @(cancelID);
 
+// `cancelID` is the ID that you assigned when creating and sending the alert
 SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWithAlertCancelID:cancelID];
 [self.sdlManager sendRequest:cancelInteraction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if (![response.resultCode isEqualToEnum:SDLResultSuccess]) { return; }
@@ -285,7 +286,7 @@ SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWith
 let cancelID: UInt32 = 45
 alert.cancelID = cancelID as NSNumber
 
-// Use the cancel id to dismiss the alert
+// `cancelID` is the ID that you assigned when creating and sending the alert
 let cancelInteraction = SDLCancelInteraction(alertCancelID: cancelID)
 sdlManager.send(request: cancelInteraction) { (request, response, error) in
     guard response?.resultCode == .success else { return }
@@ -300,7 +301,7 @@ sdlManager.send(request: cancelInteraction) { (request, response, error) in
 final Integer cancelID = 45;
 alert.setCancelID(cancelID);
 
-// Use the cancel id to dismiss the alert
+// `cancelID` is the ID that you assigned when creating and sending the alert
 CancelInteraction cancelInteraction = new CancelInteraction(FunctionID.ALERT.getId(), cancelID);
 cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
 	@Override
@@ -318,7 +319,6 @@ cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
 sdlManager.sendRPC(cancelInteraction);
 ```
 !@
-
 
 ### Dismissing Any Alert
 

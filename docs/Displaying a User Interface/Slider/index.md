@@ -153,8 +153,8 @@ sdlManager.sendRPC(slider);
 ```
 !@
 
-## Canceling a Specific Slider
-If you are connected to a head unit with SDL Core v6.0+, you can dismiss a displayed slider before the timeout has elapsed.
+## Dismissing a Slider (RPC 6.0+)
+You can dismiss a displayed slider before the timeout has elapsed by dismissing either a specific slider or the current slider.
 
 If connected to older head units that do not support this feature, the cancel request will be ignored, and the slider will persist on the screen until the timeout has elapsed or the user dismisses by selecting a position or canceling.
 
@@ -167,7 +167,7 @@ If connected to older head units that do not support this feature, the cancel re
 UInt32 cancelID = 45;
 slider.cancelID = @(cancelID);
 
-// Use the cancel id to dismiss the slider
+// `cancelID` is the ID that you assigned when creating and sending the alert
 SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWithSliderCancelID:cancelID];
 [self.sdlManager sendRequest:cancelInteraction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if (![response.resultCode isEqualToEnum:SDLResultSuccess]) { return; }
@@ -181,7 +181,7 @@ SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWith
 let cancelID: UInt32 = 45
 slider.cancelID = cancelID as NSNumber
 
-// Use the cancel id to dismiss the slider
+// `cancelID` is the ID that you assigned when creating and sending the alert
 let cancelInteraction = SDLCancelInteraction(sliderCancelID: cancelID)
 sdlManager.send(request: cancelInteraction) { (request, response, error) in
     guard response?.resultCode == .success else { return }
@@ -196,7 +196,7 @@ sdlManager.send(request: cancelInteraction) { (request, response, error) in
 final Integer cancelID = 45;
 slider.setCancelID(cancelID);
 
-// Use the cancel id to dismiss the slider
+// `cancelID` is the ID that you assigned when creating and sending the alert
 CancelInteraction cancelInteraction = new CancelInteraction(FunctionID.SLIDER.getId(), cancelID);
 cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
@@ -215,7 +215,7 @@ sdlManager.sendRPC(cancelInteraction);
 ```
 !@
 
-### Dismissing Current Slider
+### Dismissing the Current Slider
 
 @![iOS]
 ##### Objective-C
