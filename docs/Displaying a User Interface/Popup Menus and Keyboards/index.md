@@ -313,7 +313,7 @@ You can dismiss a displayed keyboard before the timeout has elapsed by sending a
 ##### Swift
 ```swift
 // Use the saved cancelID from above to dismiss the keyboard
-self.sdlManager.screenManager.dismissKeyboard(withCancelID: cancelID)
+sdlManager.screenManager.dismissKeyboard(withCancelID: cancelID)
 ```
 !@
 
