@@ -375,7 +375,7 @@ This feature is only for OEM-created applications, and is not permitted for 3rd-
 !!!
 
 ### Requesting One-Time OEM-Specific Vehicle Data
-Below is an example of requesting a custom piece of vehicle data with the name `OEM-X-Vehicle-Data`. To adapt this for subscriptions instead, you must look at the section `Subscribing to Vehicle Data` above and adapt the example for subscribing to custom vehicle data based on what you see in the examples below.
+Below is an example of requesting a custom piece of vehicle data with the name `OEM-X-Vehicle-Data`. To adapt this for subscriptions instead, you must look at the section **Subscribing to Vehicle Data** above and adapt the example for subscribing to custom vehicle data based on what you see in the examples below.
 
 @![iOS]
 ##### Objective-C
@@ -429,7 +429,7 @@ sdlManager.send(request: getCustomData) { (request, response, error) in
         return
     }
 
-    guard let customVehicleData = response.getCustomData.getOEMCustomVehicleData("OEM-X-Vehicle-Data") as? <#OEMCustomVehicleDataType#> else { return }
+    guard let customVehicleData = response.getOEMCustomVehicleData("OEM-X-Vehicle-Data") as? <#OEMCustomVehicleDataType#> else { return }
     <#Use the custom data#>
 }
 ```
