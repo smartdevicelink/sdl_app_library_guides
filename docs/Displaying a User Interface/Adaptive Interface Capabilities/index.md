@@ -66,11 +66,7 @@ appIcon 			 | SetAppIcon				  | Image shown as Icon in the "Mobile Apps" menu | 
 graphic 			 | Show 					  | Image shown on the basescreen as cover art | 185x185px | png, jpg, bmp
 
 ## System Capabilities
-Most head units provide features that your app can use: making and receiving phone calls, an embedded navigation system, video and audio streaming, as well as supporting app services. To find out if the head unit supports a feature as well as more information about the feature, use the @![iOS]`SDLSystemCapabilityManager`!@@![android, javaSE, javaEE]`SystemCapabilityManager`!@ to query the head unit for the desired capability. Querying for capabilities is only available on head units supporting RPC v4.5 or greater; if connecting to older head units, the query will return @![iOS]`nil`!@@![android, javaSE, javaEE]`null`!@.
-
-!!! NOTE
-You can query for `DISPLAYS` on connections all the way back to RPC v1.0.
-!!!
+Most head units provide features that your app can use: making and receiving phone calls, an embedded navigation system, video and audio streaming, as well as supporting app services. To find out if the head unit supports a feature as well as more information about the feature, use the @![iOS]`SDLSystemCapabilityManager`!@@![android, javaSE, javaEE]`SystemCapabilityManager`!@ to query the head unit for the desired capability. Querying for capabilities is only available on head units supporting RPC v4.5 or greater (except `DISPLAYS` which is available on any connection); if connecting to older head units, the query will return @![iOS]`nil`!@@![android, javaSE, javaEE]`null`!@.
 
 ### Querying for System Capabilities
 @![iOS]
