@@ -30,6 +30,7 @@ let config = SDLConfiguration(lifecycle: lifecycleConfig, lockScreen: .enabled()
 ```java
 // TODO
 ```
+!@
 
 ### Getting the Encryption Status
 Since it can take a few moments to setup the encryption manager, you must wait until you know that setup has completed before sending encrypted RPCs. If your RPC is sent before setup has completed, your RPC will not be sent. You can implement the !@[iOS]`SDLServiceEncryptionDelegate`!@@![android,javaSE,javaEE]`ServiceEncryptionListener`!@, which is set in !@[iOS]`SDLEncryptionConfiguration`!@@![android,javaSE,javaEE]`Builder.setSdlSecurity`!@, to get updates to the encryption manager state.
@@ -65,6 +66,7 @@ ServiceEncryptionListener serviceEncryptionListener = new ServiceEncryptionListe
 	}
 };
 ```
+!@
 
 ### Setting Optional Encryption
 If you want to encrypt a specific RPC, you must configure the payload protected status of the RPC before you send it to the head unit.
@@ -97,3 +99,4 @@ getVehicleData.setPayloadProtected(true);
 
 sdlManager.sendRPC(getVehicleData);
 ```
+!@
