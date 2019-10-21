@@ -55,7 +55,7 @@ If an image is uploaded that is larger than the supported size, that image will 
 Below is a table with example image sizes. Check the `SystemCapabilityManager` for the exact image sizes desired by the system you are connecting to. The connected system should be able to scale down larger sizes, but if the image you are sending is much larger than desired, then performance will be impacted.
 
 | ImageName | Used in RPC | Details | Size | Type |
-|:--------------|:----------------|:--------|:---------|:-------|:-------|
+| -------------- | ---------------- | -------- | --------- | ------- |
 softButtonImage		 | Show 					  | Image shown on softbuttons on the base screen | 70x70px | png, jpg, bmp
 choiceImage 		 | CreateInteractionChoiceSet | Image shown in the manual part of an performInteraction either big (ICON_ONLY) or small (LIST_ONLY) | 70x70px | png, jpg, bmp
 choiceSecondaryImage | CreateInteractionChoiceSet | Image shown on the right side of an entry in (LIST_ONLY) performInteraction	| 35x35px | png, jpg, bmp
