@@ -26,8 +26,9 @@ In order to create a navigation app an @![iOS]`appType`!@@![android,javaSE,javaE
 SDLLifecycleConfiguration* lifecycleConfig = [SDLLifecycleConfiguration defaultConfigurationWithAppName:@"<#App Name#>" fullAppId:@"<#App Id#>"];
 lifecycleConfig.appType = SDLAppHMITypeNavigation;
 
-SDLStreamingMediaConfiguration *streamingConfig = [SDLStreamingMediaConfiguration secureConfigurationWithSecurityManagers:@[OEMSecurityManager.class]];
-SDLConfiguration *config = [SDLConfiguration configurationWithLifecycle:lifecycleConfig lockScreen:[SDLLockScreenConfiguration enabledConfiguration] logging:[SDLLogConfiguration defaultConfiguration] streamingMedia:streamingConfig fileManager:[SDLFileManagerConfiguration defaultConfiguration]];
+SDLEncryptionConfiguration *encryptionConfig = [[SDLEncryptionConfiguration alloc] initWithSecurityManagers:@[OEMSecurityManager.self] delegate:self];
+SDLStreamingMediaConfiguration *streamingConfig = [SDLStreamingMediaConfiguration secureConfiguration];
+SDLConfiguration *config = [[SDLConfiguration alloc] initWithLifecycle:lifecycleConfig lockScreen:[SDLLockScreenConfiguration enabledConfiguration] logging:[SDLLogConfiguration defaultConfiguration] streamingMedia:streamingConfig fileManager:[SDLFileManagerConfiguration defaultConfiguration] encryption:encryptionConfig];
 ```
 
 ##### Swift
@@ -35,8 +36,9 @@ SDLConfiguration *config = [SDLConfiguration configurationWithLifecycle:lifecycl
 let lifecycleConfig = SDLLifecycleConfiguration(appName: "<#App Name#>", fullAppId: "<#App Id#>")
 lifecycleConfig.appType = .navigation
 
-let streamingConfig = SDLStreamingMediaConfiguration(securityManagers: [OEMSecurityManager.self])
-let config = SDLConfiguration(lifecycle: lifecycleConfig, lockScreen: .enabled(), logging: .default(), streamingMedia: streamingConfig, fileManager: .default())
+let encryptionConfig = SDLEncryptionConfiguration(securityManagers: [OEMSecurityManager.self], delegate: self)
+let streamingConfig = SDLStreamingMediaConfiguration.secure()
+let config = SDLConfiguration(lifecycle: lifecycleConfig, lockScreen: .enabled(), logging: .default(), streamingMedia: streamingConfig, fileManager: .default(), encryption: encryptionConfig)
 ```
 !@
 
