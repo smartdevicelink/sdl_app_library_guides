@@ -47,24 +47,30 @@ The `RegisterAppInterface` response contains information about the display type,
 Images may be formatted as PNG, JPEG, or BMP. You can find which image types are supported in @![iOS]`SDLManager.systemCapabilityManager.defaultMainWindowCapability.imageTypeSupported`!@@![android, javaSE, javaEE]`// TODO`!@.
 
 #### Image Sizes
-If an image is uploaded that is larger than the supported size, that image will be scaled down by Core. All image sizes are available from the @![iOS]`SDLManager.systemCapabilityManager.defaultMainWindowCapability.imageFields[<#item#>].imageResolution`!@@![android, javaSE, javaEE]`// TODO`!@ property once the manager has started successfully.
+Because the head unit connection is often relatively slow (especially over Bluetooth), you should take care about the size of your images to ensure that they are not much bigger than they need to be.
+
+If an image is uploaded that is larger than the supported size, that image will be scaled down by Core. All image sizes are available from the @![iOS]`SDLManager.systemCapabilityManager.defaultMainWindowCapability.imageFields[<#item#>].imageResolution`!@@![android, javaSE, javaEE]`// TODO`!@ property once the connection has started successfully.
 
 ##### Example Image Sizes
 Below is a table with example image sizes. Check the `SystemCapabilityManager` for the exact image sizes desired by the system you are connecting to. The connected system should be able to scale down larger sizes, but if the image you are sending is much larger than desired, then performance will be impacted.
 
-| ImageName | Used in RPC | Details | Height | Width | Type |
+| ImageName | Used in RPC | Details | Size | Type |
 |:--------------|:----------------|:--------|:---------|:-------|:-------|
-softButtonImage		 | Show 					  | Image shown on softbuttons on the base screen | 70px | 70px | png, jpg, bmp
-choiceImage 		 | CreateInteractionChoiceSet | Image shown in the manual part of an performInteraction either big (ICON_ONLY) or small (LIST_ONLY) | 70px | 70px | png, jpg, bmp
-choiceSecondaryImage | CreateInteractionChoiceSet | Image shown on the right side of an entry in (LIST_ONLY) performInteraction	| 35px | 35px | png, jpg, bmp
-vrHelpItem			 | SetGlobalProperties		  | Image shown during voice interaction | 35px | 35px | png, jpg, bmp
-menuIcon			 | SetGlobalProperties		  | Image shown on the “More…” button | 35px | 35px | png, jpg, bmp
-cmdIcon				 | AddCommand				  | Image shown for commands in the "More…" menu | 35px | 35px | png, jpg, bmp
-appIcon 			 | SetAppIcon				  | Image shown as Icon in the "Mobile Apps" menu | 70px | 70px | png, jpg, bmp
-graphic 			 | Show 					  | Image shown on the basescreen as cover art | 185px | 185px | png, jpg, bmp
+softButtonImage		 | Show 					  | Image shown on softbuttons on the base screen | 70x70px | png, jpg, bmp
+choiceImage 		 | CreateInteractionChoiceSet | Image shown in the manual part of an performInteraction either big (ICON_ONLY) or small (LIST_ONLY) | 70x70px | png, jpg, bmp
+choiceSecondaryImage | CreateInteractionChoiceSet | Image shown on the right side of an entry in (LIST_ONLY) performInteraction	| 35x35px | png, jpg, bmp
+vrHelpItem			 | SetGlobalProperties		  | Image shown during voice interaction | 35x35px | png, jpg, bmp
+menuIcon			 | SetGlobalProperties		  | Image shown on the “More…” button | 35x35px | png, jpg, bmp
+cmdIcon				 | AddCommand				  | Image shown for commands in the "More…" menu | 35x35px | png, jpg, bmp
+appIcon 			 | SetAppIcon				  | Image shown as Icon in the "Mobile Apps" menu | 70x70px | png, jpg, bmp
+graphic 			 | Show 					  | Image shown on the basescreen as cover art | 185x185px | png, jpg, bmp
 
 ## System Capabilities
-Most head units provide features that your app can use: making and receiving phone calls, an embedded navigation system, video and audio streaming, as well as supporting app services. To find out if the head unit supports a feature as well as more information about the feature, use the @![iOS]`SDLSystemCapabilityManager`!@@![android, javaSE, javaEE]`SystemCapabilityManager`!@ to query the head unit for the desired capability. Querying for capabilities is only available on head units supporting RPC v4.5 or greater (except for DISPLAYS, which is backward compatible to SDL 1.0); if connecting to older head units, the query will return @![iOS]`nil`!@@![android, javaSE, javaEE]`null`!@.
+Most head units provide features that your app can use: making and receiving phone calls, an embedded navigation system, video and audio streaming, as well as supporting app services. To find out if the head unit supports a feature as well as more information about the feature, use the @![iOS]`SDLSystemCapabilityManager`!@@![android, javaSE, javaEE]`SystemCapabilityManager`!@ to query the head unit for the desired capability. Querying for capabilities is only available on head units supporting RPC v4.5 or greater; if connecting to older head units, the query will return @![iOS]`nil`!@@![android, javaSE, javaEE]`null`!@.
+
+!!! NOTE
+You can query for `DISPLAYS` on connections all the way back to RPC v1.0.
+!!!
 
 ### Querying for System Capabilities
 @![iOS]
@@ -106,7 +112,7 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.APP_S
 !@
 
 ### Subscribing to System Capability Updates
-In addition getting the current system capabilities, it is also possible to subscribe for updates when the head unit capabilities change. @![iOS]To get these notifications you must register using a `subscribeToCapabilityType:` method.!@@![android, javaSE, javaEE]Since this information must be queried from Core you must implement the `OnSystemCapabilityListener`.!@ This feature is only available on head units supporting RPC v.5.1 or greater (except for DISPLAYS, which is backward compatible to RPC v1.0).
+In addition getting the current system capabilities, it is also possible to subscribe for updates when the head unit capabilities change. @![iOS]To get these notifications you must register using a `subscribeToCapabilityType:` method.!@@![android, javaSE, javaEE]Since this information must be queried from Core you must implement the `OnSystemCapabilityListener`.!@ This feature is only available RPC v.5.1 or greater connections (except for DISPLAYS, which is backward compatible to RPC v1.0).
 
 @![iOS]
 #### Checking if the Head Unit Supports Subscriptions
