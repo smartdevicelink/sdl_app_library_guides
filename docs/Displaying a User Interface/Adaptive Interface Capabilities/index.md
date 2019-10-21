@@ -5,40 +5,42 @@ Since each car manufacturer has different user interface style guidelines, the n
 You may access these properties on the @![iOS]`SDLManager.systemCapabilityManager`!@@![android, javaSE, javaEE]`SdlManager.systemCapabilityManager`!@ instance.
 
 ## System Capability Manager Properties
-| Parameters  |  Description | Notes |
-| ------------- | ------------- |------------- |
-| @![iOS]displays!@@![android, javaSE, javaEE]`// TODO`!@ | Specifies display related information. The primary display will be the first element within the array. Windows within that display are different places that the app could be displayed (such as the main app window and various widget windows). | Check @![iOS]SDLDisplayCapability.h!@@![android, javaSE, javaEE]DisplayCapability.java!@ |
-| @![iOS]hmiZoneCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.HMI_ZONE!@ | Specifies HMI Zones in the vehicle. There may be a HMI available for back seat passengers as well as front seat passengers. | Check @![iOS]SDLHMIZoneCapabilities.h!@@![android, javaSE, javaEE]HmiZoneCapabilities.java!@ |
-| @![iOS]speechCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.SPEECH!@ | Contains information about TTS capabilities on the SDL platform. Platforms may support text, SAPI phonemes, LH PLUS phonemes, pre-recorded speech, and silence. | Check @![iOS]SDLSpeechCapabilities.h!@@![android, javaSE, javaEE]SpeechCapabilities.java!@ for more information |
-| prerecordedSpeechCapabilities | @![iOS]A list of pre-recorded sounds you can use in your app. Sounds may include a help, initial, listen, positive, or a negative jingle.!@@![android, javaSE, javaEE]Currently only available in the SDL_iOS library!@ | @![iOS]Check SDLPrerecordedSpeech.h for more information!@@![android, javaSE, javaEE]currently only available in the SDL_iOS library!@ |
-| @![iOS]vrCapability!@@![android, javaSE, javaEE]SystemCapabilityType.VOICE_RECOGNITION!@ | The voice-recognition capabilities of the connected SDL platform. The platform may be able to recognize spoken text in the current language. | Check @![iOS]SDLVRCapabilities.h!@@![android, javaSE, javaEE]VrCapabilities.java!@ for more information |
-| @![iOS]audioPassThruCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.AUDIO_PASSTHROUGH!@ | Describes the sampling rate, bits per sample, and audio types available. | Check @![iOS]SDLAudioPassThruCapabilities.h!@@![android, javaSE, javaEE]AudioPassThruCapabilities.java!@ for more information|
-| @![iOS]pcmStreamCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.PCM_STREAMING!@ | Describes different audio type configurations for the audio PCM stream service, e.g. {8kHz,8-bit,PCM}. | Check @![iOS]SDLAudioPassThruCapabilities.h!@@![android, javaSE, javaEE]AudioPassThruCapabilities.java!@ for more information|
-| @![iOS]hmiCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.HMI!@ | Returns whether or not the app can support built-in navigation and phone calls. | Check @![iOS]SDLHMICapabilities.h!@@![android, javaSE, javaEE]HMICapabilities.java!@ for more information |
-| @![iOS]appServicesCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.APP_SERVICES!@ | Describes the capabilities of app services including what service types are supported and the current state of services. | Check @![iOS]SDLAppServicesCapabilities.h!@@![android, javaSE, javaEE]AppServicesCapabilities.java!@ for more information |
-| @![iOS]navigationCapability!@@![android, javaSE, javaEE]SystemCapabilityType.NAVIGATION!@ | Describes the built-in vehicle navigation system's APIs. | Check @![iOS]SDLNavigationCapability.h!@@![android, javaSE, javaEE]NavigationCapability.java!@ for more information |
-| @![iOS]phoneCapability!@@![android, javaSE, javaEE]SystemCapabilityType.PHONE_CALL!@ | Describes the built-in phone calling capabilities of the IVI system. | Check @![iOS]SDLPhoneCapability.h!@@![android, javaSE, javaEE]PhoneCapability.java!@ for more information |
-| @![iOS]videoStreamingCapability!@@![android, javaSE, javaEE]SystemCapabilityType.VIDEO_STREAMING!@ | Describes the abilities of the head unit to video stream projection applications. | Check @![iOS]SDLVideoStreamingCapability.h!@@![android, javaSE, javaEE]VideoStreamingCapability.java!@ for more information |
-| @![iOS]remoteControlCapability!@@![android, javaSE, javaEE]SystemCapabilityType.REMOTE_CONTROL!@ | Describes the abilities of an app to control built-in aspects of the IVI system. | Check @![iOS]SDLRemoteControlCapabilities.h!@@![android, javaSE, javaEE]RemoteControlCapabilities.java!@ for more information |
+| Parameters  |  Description |
+| ------------- | ------------- |
+| @![iOS]displays!@@![android, javaSE, javaEE]`// TODO`!@ | Specifies display related information. The primary display will be the first element within the array. Windows within that display are different places that the app could be displayed (such as the main app window and various widget windows). |
+| @![iOS]hmiZoneCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.HMI_ZONE!@ | Specifies HMI Zones in the vehicle. There may be a HMI available for back seat passengers as well as front seat passengers. |
+| @![iOS]speechCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.SPEECH!@ | Contains information about TTS capabilities on the SDL platform. Platforms may support text, SAPI phonemes, LH PLUS phonemes, pre-recorded speech, and silence. |
+| prerecordedSpeechCapabilities | @![iOS]A list of pre-recorded sounds you can use in your app. Sounds may include a help, initial, listen, positive, or a negative jingle.!@@![android, javaSE, javaEE]Currently only available in the SDL_iOS library!@ |
+| @![iOS]vrCapability!@@![android, javaSE, javaEE]SystemCapabilityType.VOICE_RECOGNITION!@ | The voice-recognition capabilities of the connected SDL platform. The platform may be able to recognize spoken text in the current language. |
+| @![iOS]audioPassThruCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.AUDIO_PASSTHROUGH!@ | Describes the sampling rate, bits per sample, and audio types available. |
+| @![iOS]pcmStreamCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.PCM_STREAMING!@ | Describes different audio type configurations for the audio PCM stream service, e.g. {8kHz,8-bit,PCM}. |
+| @![iOS]hmiCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.HMI!@ | Returns whether or not the app can support built-in navigation and phone calls. |
+| @![iOS]appServicesCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.APP_SERVICES!@ | Describes the capabilities of app services including what service types are supported and the current state of services. |
+| @![iOS]navigationCapability!@@![android, javaSE, javaEE]SystemCapabilityType.NAVIGATION!@ | Describes the built-in vehicle navigation system's APIs. |
+| @![iOS]phoneCapability!@@![android, javaSE, javaEE]SystemCapabilityType.PHONE_CALL!@ | Describes the built-in phone calling capabilities of the IVI system. |
+| @![iOS]videoStreamingCapability!@@![android, javaSE, javaEE]SystemCapabilityType.VIDEO_STREAMING!@ | Describes the abilities of the head unit to video stream projection applications. |
+| @![iOS]remoteControlCapability!@@![android, javaSE, javaEE]SystemCapabilityType.REMOTE_CONTROL!@ | Describes the abilities of an app to control built-in aspects of the IVI system. |
 
 ### Deprecated Properties
 The following properties are deprecated on SDL @![iOS]iOS 6.4!@@![android, javaSE, javaEE]Android 4.10!@ because as of RPC v6.0 they are deprecated. However, these properties will still be filled with information. When connected on RPC <6.0, the information will be exactly the same as what is returned in the `RegisterAppInterfaceResponse` and `SetDisplayLayoutResponse`. However, if connected on RPC >6.0, the information will be converted from the newer-style display information, which means that some information will not be available.
 
-| @![iOS]displayCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.DISPLAY!@ | Information about the HMI display. This includes information about available templates, whether or not graphics are supported, and a list of all text fields and the max number of characters allowed in each text field. | Check @![iOS]SDLDisplayCapabilities.h!@@![android, javaSE, javaEE]DisplayCapabilities.java!@ for more information |
-| @![iOS]buttonCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.BUTTON!@ | A list of available buttons and whether the buttons support long, short and up-down presses. | Check @![iOS]SDLButtonCapabilities.h!@@![android, javaSE, javaEE]ButtonCapabilities.java!@ for more information |
-| @![iOS]softButtonCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.SOFTBUTTON!@ | A list of available soft buttons and whether the button support images. Also, information about whether the button supports long, short and up-down presses. | Check @![iOS]SDLSoftButtonCapabilities.h!@@![android, javaSE, javaEE]SoftButtonCapabilities.java!@ for more information |
-| @![iOS]presetBankCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.PRESET_BANK!@ | If returned, the platform supports custom on-screen presets. | Check @![iOS]SDLPresetBankCapabilities.h!@@![android, javaSE, javaEE]PresetBankCapabilities.java!@ for more information |
+| Parameters | Description |
+| ---------- | ----------- |
+| @![iOS]displayCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.DISPLAY!@ | Information about the HMI display. This includes information about available templates, whether or not graphics are supported, and a list of all text fields and the max number of characters allowed in each text field. |
+| @![iOS]buttonCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.BUTTON!@ | A list of available buttons and whether the buttons support long, short and up-down presses. |
+| @![iOS]softButtonCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.SOFTBUTTON!@ | A list of available soft buttons and whether the button support images. Also, information about whether the button supports long, short and up-down presses. |
+| @![iOS]presetBankCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.PRESET_BANK!@ | If returned, the platform supports custom on-screen presets. |
 
 ## The Register App Interface Response (RAIR) RPC
-The `RegisterAppInterface` response contains information about the display type, the type of images supported, the number of text fields supported, the HMI display language, and a lot of other useful properties. The table below has a list of properties beyond those available on the system capability manager returned by the `RegisterAppInterface` response. Each property is optional, so you may not get data for all the parameters in the following table.
+The `RegisterAppInterface` response contains information about the display type, the type of images supported, the number of text fields supported, the HMI display language, and many of other useful properties. The table below has a list of properties beyond those available on the system capability manager returned by the `RegisterAppInterface` response. Each property is optional, so you may not get data for all the parameters in the following table.
 
-| Parameters  |  Description | Notes |
-| ------------- | ------------- |------------- |
-| language | The currently active VR+TTS language on the module. | Check @![iOS]SDLLanguage.h!@@![android, javaSE, javaEE]Language.java!@ for more information |
-| vehicleType | The make, model, year, and the trim of the vehicle. | Check @![iOS]SDLVehicleType.h!@@![android, javaSE, javaEE]VehicleType.java!@ for more information |
-| supportedDiagModes | Specifies the white-list of supported diagnostic modes (0x00-0xFF) capable for DiagnosticMessage requests. If a mode outside this list is requested, it will be rejected. | Check @![iOS]SDLDiagnosticMessage.h!@@![android, javaSE, javaEE]DiagnosticMessage.java!@ for more information |
-| sdlVersion | The version of SmartDeviceLink core running on the connected head unit. | String |
-| systemSoftwareVersion | The software version of the connected system that implements SmartDeviceLink core. | String |
+| Parameters  |  Description |
+| ------------- | ------------- |
+| language | The currently active VR+TTS language on the module. |
+| vehicleType | The make, model, year, and the trim of the vehicle. |
+| supportedDiagModes | Specifies the white-list of supported diagnostic modes (0x00-0xFF) capable for DiagnosticMessage requests. If a mode outside this list is requested, it will be rejected. |
+| sdlVersion | The version of SmartDeviceLink core running on the connected head unit. |
+| systemSoftwareVersion | The software version of the connected system that implements SmartDeviceLink core. |
 
 ### Image Specifics
 #### Image File Types
