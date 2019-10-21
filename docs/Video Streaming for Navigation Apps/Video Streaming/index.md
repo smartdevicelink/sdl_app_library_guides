@@ -107,6 +107,9 @@ if !streamManager.sendVideoData(imageBuffer) {
 * For the best user experience, we recommend sending at least 15 frames per second.
 !@
 
+### Handling HMI Scaling 
+If the HMI scales the video stream, you will have to handle scaling the projected view, touches and haptic rectangles yourself (this is all handled for you behind the scenes in the `CarWindow` API). To find out if the HMI scales the video stream, you must for query and check the `SDLVideoStreamingCapability` for the `scale` property. Please check the [Adaptive Interface Capabilities](Displaying a User Interface/Adaptive Interface Capabilities) section for more information on how to query for this property using the system capability manager.  
+
 @![android]
 In order to stream video from an SDL app, we only need to manage a few things. For the most part, the library will handle the majority of logic needed to perform video streaming.
 
