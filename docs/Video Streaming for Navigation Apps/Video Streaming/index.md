@@ -45,13 +45,13 @@ To set an off-screen view controller all you have to do is instantiate a new `UI
 
 ##### Objective-C
 ```objc
-UIViewController *offScreenViewController = <#Aquire a UIViewController#>;
+UIViewController *offScreenViewController = <#Acquire a UIViewController#>;
 self.sdlManager.streamManager.rootViewController = offScreenViewController;
 ```
 
 ##### Swift
 ```swift
-let offScreenViewController = <#Aquire a UIViewController#>
+let offScreenViewController = <#Acquire a UIViewController#>
 sdlManager.streamManager?.rootViewController = offScreenViewController
 ```
 
