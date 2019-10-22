@@ -192,7 +192,7 @@ sdlSlider.sliderFooter = 45
 ```
 ##### Swift
 ```swift
-manager.send(request: slider, responseHandler: { (req, res, err) in
+manager.send(request: sdlSlider, responseHandler: { (req, res, err) in
     // Create a SDLSlider response object from the handler response
     guard let response = res as? SDLSliderResponse, response.resultCode == .success, let position = response.sliderPosition.intValue else { return }
 
