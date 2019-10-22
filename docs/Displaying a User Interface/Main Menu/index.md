@@ -8,8 +8,8 @@ You have two different options when creating menus. One is to simply add items t
 Every template has a main menu button. The position of this button varies between templates and cannot be removed from the template. Some OEMs may format certain templates to not display the main menu button if you have no menu items (such as the navigation map view).
 !!!
 
-## Setting a Menu Style
-Core v6.0+ supports displaying menu items as tiles or as a list depending on OEM. To see if the display supports menu tiles check @![iOS] `self.sdlManager.systemCapabilityManager.defaultMainWindowCapability'`s `menuLayoutsAvailable` !@@![android,javaEE,javaSE] `//ToDo - add info`!@ property. To set a menu layout please set the `screenManager`s  `menuConfiguration` property. The default layout is `list` if none is set.
+## Setting the Menu Layout
+If connected to a newer head unit (RPC v.6.0+) you may have the option to display menu items as a grid of tiles in addition to the default list layout. To find out if the display supports menu tiles, check the system capability manager's @![iOS]`defaultMainWindowCapability.menuLayoutsAvailable`!@@![android,javaEE,javaSE] `getDefaultMainWindowCapability().getMenuLayoutsAvailable()`!@ property after successfully connecting to the head unit. To set the menu layout using the screen manager, you will need to set the `screenManager`s `menuConfiguration` property.
 
 !!! Note
 If `menuConfiguration` is set after a menu already exists, sub-menu layouts will not be updated.  A new menu will have to be set to see the new sub-menu layout.
@@ -18,12 +18,12 @@ If `menuConfiguration` is set after a menu already exists, sub-menu layouts will
 @![iOS]
 ##### Objective-C
 ```objc
-SDLMenuConfiguration *menuConfiguration = [SDLMenuConfiguration alloc] initWithMainMenuLayout:<#MenuLayout#> defaultSubmenuLayout:<#MenuLayout#>];
-self.sdlManager.screenManager.menuConfiguration = menuConfiguration 
+SDLMenuConfiguration *menuConfiguration = [[SDLMenuConfiguration alloc] initWithMainMenuLayout:<#SDLMenuLayout#> defaultSubmenuLayout:<#SDLMenuLayout#>];
+self.sdlManager.screenManager.menuConfiguration = menuConfiguration;
 ```
 ##### Swift
 ```swift
-let menuConfiguration = SDLMenuConfiguration(mainMenuLayout: <#MenuLayout#>, defaultSubmenuLayout: <#MenuLayout#>)
+let menuConfiguration = SDLMenuConfiguration(mainMenuLayout: <#SDLMenuLayout#>, defaultSubmenuLayout: <#SDLMenuLayout#>)
 sdlManager.screenManager.menuConfiguration = menuConfiguration
 ```
 !@
@@ -79,7 +79,7 @@ sdlManager.getScreenManager().setMenu(Collections.singletonList(cell));
 !@
 
 ### Adding Submenus
-Adding a submenu is as simple as adding subcells to a @![iOS]`SDLMenuCell`!@ @![android, javaSE, javaEE]`SdlMenuCell`!@. The submenu is automatically displayed when selected by the user. Currently menus only support one layer of subcells. In Core v6.0+ it is possible to set individual submenus to use different layouts such as tiles or lists.
+Adding a submenu is as simple as adding subcells to a @![iOS]`SDLMenuCell`!@ @![android, javaSE, javaEE]`SdlMenuCell`!@. The submenu is automatically displayed when selected by the user. Currently menus only support one layer of subcells. In RPC v6.0+ it is possible to set individual submenus to use different layouts such as tiles or lists.
 
 @![iOS]
 ##### Objective-C
@@ -96,7 +96,7 @@ SDLMenuCell *cell = [[SDLMenuCell alloc] initWithTitle:<#NSString#> icon:<#SDLAr
 SDLMenuCell *submenuCell = [[SDLMenuCell alloc] initWithTitle:<#NSString#> icon:<#SDLArtwork?#> subCells:@[cell]];
 self.sdlManager.screenManager.menu = @[submenuCell];
 ```
-###### Core v6.0+
+###### RPC v6.0+
 ```objc
 // Create the inner menu cell
 SDLMenuCell *cell = [[SDLMenuCell alloc] initWithTitle:<#NSString#> icon:<#SDLArtwork#> voiceCommands:<#@[NSString]#> handler:^(SDLTriggerSource  _Nonnull triggerSource) {
@@ -105,7 +105,7 @@ SDLMenuCell *cell = [[SDLMenuCell alloc] initWithTitle:<#NSString#> icon:<#SDLAr
 }];
 
 // Create and set the submenu cell
-SDLMenuCell *submenuCell = [[SDLMenuCell alloc] initWithTitle:<#NSString#> icon:<#SDLArtwork?#> submenuLayout:<#Menu Layout#>, subCells:@[cell]];
+SDLMenuCell *submenuCell = [[SDLMenuCell alloc] initWithTitle:<#NSString#> icon:<#SDLArtwork?#> submenuLayout:<#SDLMenuLayout#>, subCells:@[cell]];
 self.sdlManager.screenManager.menu = @[submenuCell];
 ```
 
@@ -129,7 +129,7 @@ let cell = SDLMenuCell(title: <#String#>, icon: <#SDLArtwork?#>, voiceCommands: 
     <#Handle the cell's selection#>
 }
 
-let submenuCell = SDLMenuCell(title: <#String#>, icon: <#SDLArtwork?#>, submenuLayout: <#Menu Layout#>, subCells: [cell])
+let submenuCell = SDLMenuCell(title: <#String#>, icon: <#SDLArtwork?#>, submenuLayout: <#SDLMenuLayout#>, subCells: [cell])
 sdlManager.screenManager.menu = [submenuCell]
 ```
 !@
