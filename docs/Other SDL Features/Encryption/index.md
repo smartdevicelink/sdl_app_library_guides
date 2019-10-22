@@ -1,17 +1,21 @@
 # Encryption
-Some OEMs that you work with may want to encrypt messages being passed between your SDL app and the head unit. When you submit your app to the OEM for review, they will ask you to add a security library to your SDL app. It is also possible to encrypt messages even if the OEM does not require encryption. In this case you will have to work with the OEM in order to get a security library. 
+Some OEMs you work with may want to encrypt messages passed between your SDL app and the head unit. If this is the case, when you submit your app to the OEM for review, they will ask you to add a security library to your SDL app. It is also possible to encrypt messages even if the OEM does not require encryption. In this case you will have to work with the OEM to get a security library. 
 
 ## When Encryption is Needed
 ### OEM Required Encrypted RPCs
-Some OEMs may want to encrypt all RPCs being transmitted between your SDL app and SDL Core. Other OEMS may want to encrypt specific RPCs, such as those that access vehicle data. The library will handle encrypting and decrypting RPCs that the OEM requires be encrypted. 
+OEMs may want to encrypt all or some of the RPCs being transmitted between your SDL app and SDL Core. The library will handle encrypting and decrypting RPCs that are required to be encrypted. 
 
 ### OEM Required Encrypted Video and Audio 
-Some OEMs might want to encrypt video and audio streaming. Information on how to setup encrypted video and audio streaming can be found in [Video Streaming for Navigation Apps > Introduction](Video Streaming for Navigation Apps/Introduction). The library will handle encrypting the video and audio data sent to the head unit.
+Some OEMs might want to encrypt video and audio streaming. Information on how to set up encrypted video and audio streaming can be found in [Video Streaming for Navigation Apps > Introduction](Video Streaming for Navigation Apps/Introduction). The library will handle encrypting the video and audio data sent to the head unit.
 
 ### Optional Encryption
-You may want to encrypt some or all of the RPCs you send to the head unit even if the OEM does not require that they be protected. In that case you will have to manually configure the payload protection of every RPC that you send. If the OEM does not require that you use a security library, you will have to work with the OEM to get a security library in order for this feature to work. Please note that if you require that an RPC be encrypted but there is no security manager configured for the head unit the app is connected with then the RPC will not be sent by the library. 
+You may want to encrypt some or all of the RPCs you send to the head unit even if the OEM does not require that they be protected. In that case you will have to manually configure the payload protection status of every RPC that you send. Please note that if you require that an RPC be encrypted but there is no security manager configured for the head unit the app is connected with then the RPC will not be sent by the library. 
 
-### Setting the Encryption Configuration
+!!! IMPORTANT
+For optional encryption to work, you must work with each OEM to obtain their proprietary security library.
+!!!
+
+## Setting the Encryption Configuration
 @![iOS]
 ##### Objective-C
 ```objc
@@ -32,8 +36,8 @@ let config = SDLConfiguration(lifecycle: lifecycleConfig, lockScreen: .enabled()
 ```
 !@
 
-### Getting the Encryption Status
-Since it can take a few moments to setup the encryption manager, you must wait until you know that setup has completed before sending encrypted RPCs. If your RPC is sent before setup has completed, your RPC will not be sent. You can implement the !@[iOS]`SDLServiceEncryptionDelegate`!@@![android,javaSE,javaEE]`ServiceEncryptionListener`!@, which is set in !@[iOS]`SDLEncryptionConfiguration`!@@![android,javaSE,javaEE]`Builder.setSdlSecurity`!@, to get updates to the encryption manager state.
+## Getting the Encryption Status
+Since it can take a few moments to setup the encryption manager, you must wait until you know that setup has completed before sending encrypted RPCs. If your RPC is sent before setup has completed, your RPC will not be sent. You can implement the @![iOS]`SDLServiceEncryptionDelegate`!@@![android,javaSE,javaEE]`ServiceEncryptionListener`!@, which is set in @![iOS]`SDLEncryptionConfiguration`!@@![android,javaSE,javaEE]`Builder.setSdlSecurity`!@, to get updates to the encryption manager state.
 
 @![iOS]
 ##### Objective-C
@@ -68,7 +72,7 @@ ServiceEncryptionListener serviceEncryptionListener = new ServiceEncryptionListe
 ```
 !@
 
-### Setting Optional Encryption
+## Setting Optional Encryption
 If you want to encrypt a specific RPC, you must configure the payload protected status of the RPC before you send it to the head unit.
 
 @![iOS]
