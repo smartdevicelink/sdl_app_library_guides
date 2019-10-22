@@ -164,7 +164,7 @@ sdlSlider.sliderFooter = footers
 
 ### Cancel ID
  An ID for this specific slider to allow cancellation through the `CancelInteraction` RPC.
- @![iOS]
+@![iOS]
  ##### Objective-C
  ```objc
  sdlSlider.cancelID = @(45);
@@ -174,11 +174,11 @@ sdlSlider.sliderFooter = footers
  ```swift
  sdlSlider.sliderFooter = 45
  ```
- !@
+!@
 
- @![android,javaSE,javaEE]
+@![android,javaSE,javaEE]
  `TODO: add info`
- !@
+!@
 
 ## Dismissing a Slider (RPC 6.0+)
 You can dismiss a displayed slider before the timeout has elapsed by dismissing either a specific slider or the current slider.
