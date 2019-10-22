@@ -17,14 +17,14 @@ Currently, the remote control feature supports these modules:
 
 | Remote Control Modules | RPC Version  |
 | ---------              | -------  |
-| Climate                | SDL v4.5 |
-| Radio                  | SDL v4.5 |
-| Seat                   | SDL v5.0 |
-| Audio                  | SDL v5.0 |
-| Light                  | SDL v5.0 |
-| HMI Settings           | SDL v5.0 |
+| Climate                | v4.5+ |
+| Radio                  | v4.5+ |
+| Seat                   | v5.0+ |
+| Audio                  | v5.0+ |
+| Light                  | v5.0+ |
+| HMI Settings           | v5.0+ |
 
-The following table lists what control items are in each control module.
+The following table lists which items are in each control module.
 
 #### Climate
 
@@ -130,16 +130,10 @@ The remote control framework also allows mobile applications to send simulated b
 |             | REPEAT |
 
 ## Integration
-For remote control to work, the head unit must support SDL Core v.4.4 or newer. Also your app's @![iOS]`appType`!@ @![android, javaSE, javaEE]`appHMIType`!@ must include `REMOTE_CONTROL`.
-
-!!! Note
-When connected to pre-Core 6.0 systems only the main module of a module type can be controlled. The modules you may control will depend on the OEM.
-!!!
+For remote control to work, the head unit must support SDL RPC v.4.4+. In addition, your app's @![iOS]`appType` / `additionalAppTypes`!@@![android, javaSE, javaEE]`appHMIType`!@ must include `REMOTE_CONTROL`.
 
 ### Multiple Modules (RPC v6.0+)
-Multiple modules can exist for each module type starting in SDL v6.0. In previous SDL versions, only one module was available for each module type. A new struct `moduleInfo` (on the `XYZControlCapabilities` objects) was created to give developers the information they need to control a specific module and contains a unique `moduleId` for each module. When sending remote control RPCs to a v6.0+, the `moduleId` must be provided to control the desired module. If no `moduleId` is set, the HMI will use the default module of that module type. When connected to pre-6.0 systems, the `moduleInfo` struct will be @![iOS]`nil`!@@![android, javaSE, javaEE]`null`!@.
-
-The permissions to control a module is seat-based. Depending on which seat the user is sitting in they may or may not be able to control certain modules. For example, only the person sitting in the front passenger seat can control the front passenger seat module. Modules may also allow multiple users to access them, while some modules may only allow one user at a time. Access control for a module will depend on the OEM.
+Each module type can have multiple modules in RPC v6.0+. In previous versions, only one module was available for each module type. A specific module is controlled using the unique id assigned to the module. When sending remote control RPCs to a v6.0+, the `moduleInfo.moduleId` must be stored and provided to control the desired module. If no `moduleId` is set, the HMI will use the default module of that module type. When connected to <6.0 systems, the `moduleInfo` struct will be @![iOS]`nil`!@@![android, javaSE, javaEE]`null`!@, and only the default module will be available for control.
 
 ### Getting Remote Control Module Information
 Prior to using any remote control RPCs, you must check that the head unit has the remote control capability. As you will encounter head units that do *not* support remote control, or head units that do not give your application permission to read and write remote control data, this check is important.
@@ -171,7 +165,7 @@ sdlManager.systemCapabilityManager.subscribe(toCapabilityType: .remoteControl, w
 ```
 !@
 
-#### Getting Module Data Location and Service Areas (RPC v6.0+ Only)
+#### Getting Module Data Location and Service Areas (RPC v6.0+)
 With the saved remote control capabilities struct you can build a UI to display modules to the user by getting the location of the module and the area that it services. This will map to the grid you receive in **Setting the User's Seat** below.
 
 !!! Note
@@ -204,10 +198,8 @@ let climateModuleLocation = firstClimateModule.moduleInfo.location;
 ```
 !@
 
-### Setting The User's Seat (RPC v6.0+ only)
-The first step before attempting to take control of any module is to have the user select their seat location. Seat location may affect which modules the user is permitted to control depending on the OEMs rules. The default seat location is `Driver`. Seat location can be updated by setting the `userLocation` property in the @![iOS]`SDLSetGlobalProperties`!@@![android, javaSE, javaEE]`SetGlobalProperties`!@ RPC and sending it.
-
-You may wish to show the user a map or list of all available seats in your app in order to ask them where they are located. The following example is only meant to show you how to access the available data and not how to build your UI/UX. 
+### Setting The User's Seat (RPC v6.0+)
+Before you attempt to take control of any module, you should have your user select their seat location as this affects which modules they have permission to control. You may wish to show the user a map or list of all available seats in your app in order to ask them where they are located. The following example is only meant to show you how to access the available data and not how to build your UI/UX. 
 
 An array of seats can be found in the `seatLocationCapability`'s `seat` array. Each [iOS]`SDLSeatLocation`!@@![android, javaSE, javaEE]`SeatLocation`!@ object within the `seats` array will have a `grid` parameter. The `grid` will tell you the seat placement of that particular seat. This information can be very useful for creating a map or list for users to select from.
 
@@ -248,6 +240,8 @@ The `grid` system starts with the front left corner of the bottom level of the v
 | row=0   | driver's seat: {col=0, row=0, level=0, colspan=1, rowspan=1, levelspan=1} |   | front passenger's seat : {col=2, row=0, level=0, colspan=1, rowspan=1, levelspan=1} |
 | row=1   | rear-left seat : {col=0, row=1, level=0, colspan=1, rowspan=1, levelspan=1} | rear-middle seat :  {col=1, row=1, level=0, colspan=1, rowspan=1, levelspan=1} | rear-right seat : {col=2, row=1, level=0, colspan=1, rowspan=1, levelspan=1} |
 
+#### Updating the User's Seat Location
+
 When the user selects their seat, you must send an @![iOS]`SDLSetGlobalProperties`!@@![android, javaSE, javaEE]`SetGlobalProperties`!@ RPC with the appropriate `userLocation` property in order to update that user's location within the vehicle (The default seat location is `Driver`).
 
 @![iOS]
@@ -281,7 +275,7 @@ sdlManager.send(request: seatLocation, responseHandler: { (request, response, er
 ### Getting Module Data 
 Seat location does not affect the ability to get data from a module. Once you know you have permission to use the remote control feature and you have `moduleId`s (when connected to RPC v6.0+ systems), you can retrieve the data for any module. The following code is an example of how to subscribe to the data of a radio module. 
 
-When connected to < 6.0 head units, there can only be one module for each module type (e.g. there can only be one climate module, light module, radio module, etc.), so you will not need to pass a `moduleId`.
+When connected to head units that only support RPC versions older than v6.0, there can only be one module for each module type (e.g. there can only be one climate module, light module, radio module, etc.), so you will not need to pass a `moduleId`.
 
 #### Subscribing to Module Data
 You can either subscribe to module data or receive it one time. If you choose to subscribe to module data you will receive continuous updates on the vehicle data you have subscribed to.
@@ -445,7 +439,7 @@ sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
 
 Not only do you have the ability to get data from these modules, but, if you have the right permissions, you can also set module data.
 
-#### Getting Consent to Control a Module (6.0+ Only)
+#### Getting Consent to Control a Module (RPC v6.0+)
 Some OEMs may wish to ask the driver for consent before a user can control a module. The @![iOS]`SDLGetInteriorVehicleDataConsent`!@@![android, javaSE, javaEE]`GetInteriorVehicleDataConsent`!@ RPC will alert the driver for consent in some OEM head units if the module if not free (another user has control) and `allowMultipleAccess` (multiple users can access/set the data at the same time) is `true`. The `allowMultipleAccess` property is part of the `moduleInfo` in the module object.
 
 Check the `allowed` property in the @![iOS]`SDLGetInteriorVehicleDataConsentResponse`!@@![android, javaSE, javaEE]`GetInteriorVehicleDataConsentResponse`!@ to see what modules can be controlled. Note that the order of the `allowed` array is 1-1 with the `moduleIds` array you passed into the @![iOS]`SDLGetInteriorVehicleDataConsent`!@@![android, javaSE, javaEE]`GetInteriorVehicleDataConsent`!@ RPC.
@@ -485,7 +479,7 @@ sdlManager.send(request: getInteriorVehicleDataConsent , responseHandler: { (req
 !@
 
 #### Controlling a Module
-Below is an example of setting climate control data. It is likely that you will not need to set all the data as in the code example below. When connected to 6.0+ system, you must set the `moduleId` in @![iOS]`SDLSetInteriorVehicleData.moduleData`!@@![android, javaSE, javaEE]`SetInteriorVehicleData.setModuleData`!@. When connected to < 6.0 systems, there is only one module per module type, so you must only pass the type of the module you wish to control.
+Below is an example of setting climate control data. It is likely that you will not need to set all the data as in the code example below. When connected to RPC 6.0+ systems, you must set the `moduleId` in @![iOS]`SDLSetInteriorVehicleData.moduleData`!@@![android, javaSE, javaEE]`SetInteriorVehicleData.setModuleData`!@. When connected to < 6.0 systems, there is only one module per module type, so you must only pass the type of the module you wish to control.
 
 When you received module information above in **Getting Remote Control Module Information** on RPC v6.0+ systems, you received information on the `location` and `serviceArea` of the module. The permission area of a module depends on that `serviceArea`. The `location` of a module is like the `seats` array: it maps to the `grid` to tell you the physical location of a particular module. The `serviceArea` maps to the grid to show how far that module's scope reaches.
 
@@ -495,10 +489,11 @@ For example, a radio module usually serves all passengers in the vehicle, so its
 ##### Objective-C
 ###### RPC < v6.0
 ```objc
-SDLTemperature *temperature = [[SDLTemperature alloc] initWithUnit:SDLTemperatureUnitFahrenheit value:74.1];
-SDLClimateControlData *climateControlData = [[SDLClimateControlData alloc] initWithFanSpeed:@2 desiredTemperature:temperature acEnable:@YES circulateAirEnable:@NO autoModeEnable:@NO defrostZone:nil dualModeEnable:@NO acMaxEnable:@NO ventilationMode:SDLVentilationModeLower heatedSteeringWheelEnable:@YES heatedWindshieldEnable:@YES heatedRearWindowEnable:@YES heatedMirrorsEnable:@NO];
+SDLTemperature *temperature = [[SDLTemperature alloc] initWithUnit:<#Temp Unit#> value:<#Temp Value#>];
+SDLClimateControlData *climateControlData = [[SDLClimateControlData alloc] initWithFanSpeed:<#Fan Speed#> desiredTemperature:<#Desired Temperature#> acEnable:<#AC Enabled#> circulateAirEnable:<#Circulate Air Enabled#> autoModeEnable:<#Auto Mode Enabled#> defrostZone:<#Defrost Zone#> dualModeEnable:<#Dual Mode Enabled#> acMaxEnable:<#AC Max Enabled#> ventilationMode:<#Ventilation Mode#> heatedSteeringWheelEnable:<#Heated Steering Wheel Enabled#> heatedWindshieldEnable:<#Heated Windshield Enabled#> heatedRearWindowEnable:<#Heated Rear Window Enabled#> heatedMirrorsEnable:<#Heated Mirrors Enabled#> climateEnable:<#Climate System Enabled#>];
 SDLModuleData *moduleData = [[SDLModuleData alloc] initWithClimateControlData:climateControlData];
 SDLSetInteriorVehicleData *setInteriorVehicleData = [[SDLSetInteriorVehicleData alloc] initWithModuleData:moduleData];
+
 [self.sdlManager sendRequest:setInteriorVehicleData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if(!response.success) { return; }
 }];
@@ -506,8 +501,8 @@ SDLSetInteriorVehicleData *setInteriorVehicleData = [[SDLSetInteriorVehicleData 
 
 ###### RPC v6.0+
 ```objc
-SDLTemperature *temperature = [[SDLTemperature alloc] initWithUnit:SDLTemperatureUnitFahrenheit value:74.1];
-SDLClimateControlData *climateControlData = [[SDLClimateControlData alloc] initWithFanSpeed:@2 desiredTemperature:temperature acEnable:@YES circulateAirEnable:@NO autoModeEnable:@NO defrostZone:nil dualModeEnable:@NO acMaxEnable:@NO ventilationMode:SDLVentilationModeLower heatedSteeringWheelEnable:@YES heatedWindshieldEnable:@YES heatedRearWindowEnable:@YES heatedMirrorsEnable:@NO];
+SDLTemperature *temperature = [[SDLTemperature alloc] initWithUnit:<#Temp Unit#> value:<#Temp Value#>];
+SDLClimateControlData *climateControlData = [[SDLClimateControlData alloc] initWithFanSpeed:<#Fan Speed#> desiredTemperature:<#Desired Temperature#> acEnable:<#AC Enabled#> circulateAirEnable:<#Circulate Air Enabled#> autoModeEnable:<#Auto Mode Enabled#> defrostZone:<#Defrost Zone#> dualModeEnable:<#Dual Mode Enabled#> acMaxEnable:<#AC Max Enabled#> ventilationMode:<#Ventilation Mode#> heatedSteeringWheelEnable:<#Heated Steering Wheel Enabled#> heatedWindshieldEnable:<#Heated Windshield Enabled#> heatedRearWindowEnable:<#Heated Rear Window Enabled#> heatedMirrorsEnable:<#Heated Mirrors Enabled#> climateEnable:<#Climate System Enabled#>];
 SDLModuleData *moduleData = [[SDLModuleData alloc] initWithClimateControlData:climateControlData];
 moduleData.moduleId = @"<#ModuleID#>";
 SDLSetInteriorVehicleData *setInteriorVehicleData = [[SDLSetInteriorVehicleData alloc] initWithModuleData:moduleData];
@@ -519,8 +514,8 @@ SDLSetInteriorVehicleData *setInteriorVehicleData = [[SDLSetInteriorVehicleData 
 ##### Swift
 ###### RPC < v6.0
 ```swift
-let temperature = SDLTemperature(unit: .fahrenheit, value: 74.1)
-let climateControlData = SDLClimateControlData(fanSpeed: 2 as NSNumber, desiredTemperature: temperature, acEnable: true as NSNumber, circulateAirEnable: false as NSNumber, autoModeEnable: false as NSNumber, defrostZone: nil, dualModeEnable: false as NSNumber, acMaxEnable: false as NSNumber, ventilationMode: .lower, heatedSteeringWheelEnable: true as NSNumber, heatedWindshieldEnable: true as NSNumber, heatedRearWindowEnable: true as NSNumber, heatedMirrorsEnable: false as NSNumber)
+let temperature = SDLTemperature(unit: <#Temp Unit#>, value: <#Temp Value#>)
+let climateControlData = SDLClimateControlData(fanSpeed: <#Fan Speed#> as NSNumber, desiredTemperature: <#Desired Temperature#>, acEnable: <#AC Enabled#> as NSNumber, circulateAirEnable: <#Circulate Air Enabled#> as NSNumber, autoModeEnable: <#Auto Mode Enabled#> as NSNumber, defrostZone: <#Defrost Zone#>, dualModeEnable: <#Dual Mode Enabled#> as NSNumber, acMaxEnable: <#AC Max Enabled#> as NSNumber, ventilationMode: <#Ventilation Mode#>, heatedSteeringWheelEnable: <#Heated Steering Wheel Enabled#> as NSNumber, heatedWindshieldEnable: <#Heated Windshield Enabled#> as NSNumber, heatedRearWindowEnable: <Heated Rear Window Enabled#> as NSNumber, heatedMirrorsEnable: <#Heated Mirrors Enabled#> as NSNumber, climateEnable: <#Climate System Enabled#> as NSNumber)
 let moduleData = SDLModuleData(climateControlData: climateControlData)
 let setInteriorVehicleData = SDLSetInteriorVehicleData(moduleData: moduleData)
 
@@ -532,7 +527,7 @@ sdlManager.send(request: setInteriorVehicleData) { (request, response, error) in
 ###### RPC v6.0+
 ```swift
 let temperature = SDLTemperature(unit: .fahrenheit, value: 74.1)
-let climateControlData = SDLClimateControlData(fanSpeed: 2 as NSNumber, desiredTemperature: temperature, acEnable: true as NSNumber, circulateAirEnable: false as NSNumber, autoModeEnable: false as NSNumber, defrostZone: nil, dualModeEnable: false as NSNumber, acMaxEnable: false as NSNumber, ventilationMode: .lower, heatedSteeringWheelEnable: true as NSNumber, heatedWindshieldEnable: true as NSNumber, heatedRearWindowEnable: true as NSNumber, heatedMirrorsEnable: false as NSNumber)
+let climateControlData = SDLClimateControlData(fanSpeed: <#Fan Speed#> as NSNumber, desiredTemperature: <#Desired Temperature#>, acEnable: <#AC Enabled#> as NSNumber, circulateAirEnable: <#Circulate Air Enabled#> as NSNumber, autoModeEnable: <#Auto Mode Enabled#> as NSNumber, defrostZone: <#Defrost Zone#>, dualModeEnable: <#Dual Mode Enabled#> as NSNumber, acMaxEnable: <#AC Max Enabled#> as NSNumber, ventilationMode: <#Ventilation Mode#>, heatedSteeringWheelEnable: <#Heated Steering Wheel Enabled#> as NSNumber, heatedWindshieldEnable: <#Heated Windshield Enabled#> as NSNumber, heatedRearWindowEnable: <Heated Rear Window Enabled#> as NSNumber, heatedMirrorsEnable: <#Heated Mirrors Enabled#> as NSNumber, climateEnable: <#Climate System Enabled#> as NSNumber)
 let moduleData = SDLModuleData(climateControlData: climateControlData)
 moduleData.moduleId = "<#ModuleID#>"
 let setInteriorVehicleData = SDLSetInteriorVehicleData(moduleData: moduleData)
