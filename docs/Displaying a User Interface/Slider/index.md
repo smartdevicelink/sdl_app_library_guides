@@ -163,7 +163,7 @@ sdlSlider.sliderFooter = footers
 !@
 
 ### Cancel ID
- An ID for this specific slider to allow cancellation through the `CancelInteraction` RPC.
+An ID for this specific slider to allow cancellation through the `CancelInteraction` RPC.
 @![iOS]
  ##### Objective-C
  ```objc
