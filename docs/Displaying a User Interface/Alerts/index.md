@@ -313,7 +313,7 @@ sdlManager.sendRPC(cancelInteraction);
 ```
 !@
 
-### Dismissing Any Alert
+### Dismissing the Current Alert
 
 @![iOS]
 ##### Objective-C

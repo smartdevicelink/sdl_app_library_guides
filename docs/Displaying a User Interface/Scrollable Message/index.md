@@ -182,7 +182,7 @@ sdlManager.sendRPC(cancelInteraction);
 ```
 !@
 
-### Dismissing Current Scrollable Message
+### Dismissing the Current Scrollable Message
 
 @![iOS]
 ##### Objective-C

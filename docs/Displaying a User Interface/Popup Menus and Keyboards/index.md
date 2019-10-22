@@ -301,7 +301,7 @@ sdlManager.getScreenManager().presentKeyboard("Initial text", null, keyboardList
 !@
 
 ### Dismissing the Keyboard (RPC 6.0+)
-You can dismiss a displayed keyboard before the timeout has elapsed by sending a `CancelInteraction` request. If you presented the keyboard using the screen manager, you can dismiss the choice set by calling dismissKeyboard with the `cancelID` that was returned (if one was returned) when presenting.
+You can dismiss a displayed keyboard before the timeout has elapsed by sending a `CancelInteraction` request. If you presented the keyboard using the screen manager, you can dismiss the choice set by calling `dismissKeyboard` with the `cancelID` that was returned (if one was returned) when presenting.
 
 @![iOS]
 ##### Objective-C
