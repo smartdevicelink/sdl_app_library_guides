@@ -18,11 +18,19 @@ To get information on all services published on the system, as well as on change
 @![iOS]
 ##### Objective-C
 ```objc
+// sdl_ios v6.3+
+id subscribedObserver = [self.sdlManager.systemCapabilityManager subscribeToCapabilityType:SDLSystemCapabilityTypeAppServices withBlock:^(SDLSystemCapability * _Nonnull capability) {
+    NSArray<SDLAppServicesCapabilities *> *appServices = capability.appServicesCapabilities.appServices;
+
+    <#Use the app services records#>
+}];
+
+// Pre sdl_ios v6.3
 - (void)systemCapabilityDidUpdate:(SDLRPCNotificationNotification *)notification {
     SDLOnSystemCapabilityUpdated *updateNotification = notification.notification;
     SDLLogD(@"On System Capability updated: %@", updateNotification);
 
-    <#Code#>
+    <#Use the updated services records#>
 }
 
 - (void)setupAppServicesCapability {
@@ -45,11 +53,19 @@ To get information on all services published on the system, as well as on change
 
 ##### Swift
 ```swift
+// sdl_ios v6.3+
+let subscribedObserver = sdlManager.systemCapabilityManager.subscribe(toCapabilityType: .appServices) { (systemCapability) in
+    let appServices = systemCapability.appServicesCapabilities?.appServices
+
+    <#Use the app services records#>
+}
+
+// Pre sdl_ios v6.3
 @objc private func systemCapabilityDidUpdate(_ notification: SDLRPCNotificationNotification) {
     guard let capabilityNotification = notification.notification as? SDLOnSystemCapabilityUpdated else { return }
 
     SDLLog.d("OnSystemCapabilityUpdated: \(capabilityNotification)")
-    <#Code#>
+    <#Use the updated services records#>
 }
 
 private func setupAppServicesCapability() {
