@@ -245,7 +245,7 @@ sdlManager.getScreenManager().deleteChoices(<List of choices to delete>);
 !@
 
 ### Dismissing the Popup Menu (RPC 6.0+)
-You can dismiss a displayed choice set before the timeout has elapsed by sending a `CancelInteraction` request. If you presented the choice set using the screen manager, you can dismiss the choice set by calling `cancel` on the `SDLChoiceSet` object that you presented.
+You can dismiss a displayed choice set before the timeout has elapsed by sending a `CancelInteraction` request. If you presented the choice set using the screen manager, you can dismiss the choice set by calling `cancel` on the @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`ChoiceCell`!@ object that you presented.
 
 !!! NOTE
 If connected to older head units that do not support this feature, the cancel request will be ignored, and the choice set will persist on the screen until the timeout has elapsed or the user dismisses it by making a selection.
@@ -297,29 +297,6 @@ let cancelID = sdlManager.screenManager.presentKeyboard(withInitialText: <#Strin
 @![android, javaSE, javaEE]
 ```java
 sdlManager.getScreenManager().presentKeyboard("Initial text", null, keyboardListener);
-```
-!@
-
-### Dismissing the Keyboard (RPC 6.0+)
-You can dismiss a displayed keyboard before the timeout has elapsed by sending a `CancelInteraction` request. If you presented the keyboard using the screen manager, you can dismiss the choice set by calling `dismissKeyboard` with the `cancelID` that was returned (if one was returned) when presenting.
-
-@![iOS]
-##### Objective-C
-```objc
-// Use the saved cancelID from above to dismiss the keyboard
-[self.sdlManager.screenManager dismissKeyboardWithCancelID:cancelID];
-```
-
-##### Swift
-```swift
-// Use the saved cancelID from above to dismiss the keyboard
-sdlManager.screenManager.dismissKeyboard(withCancelID: cancelID)
-```
-!@
-
-@![android, javaSE, javaEE]
-```java
-// ToDo - add dismiss keyboard logic
 ```
 !@
 
@@ -459,6 +436,33 @@ KeyboardListener keyboardListener = new KeyboardListener() {
         // <#This is sent upon every event, such as keypresses, cancellations, and aborting#>
     }
 };
+```
+!@
+
+### Dismissing the Keyboard (RPC 6.0+)
+You can dismiss a displayed keyboard before the timeout has elapsed by sending a `CancelInteraction` request. If you presented the keyboard using the screen manager, you can dismiss the choice set by calling `dismissKeyboard` with the `cancelID` that was returned (if one was returned) when presenting.
+
+!!! NOTE
+If connected to older head units that do not support this feature, the cancel request will be ignored, and the choice set will persist on the screen until the timeout has elapsed or the user dismisses it by making a selection.
+!!!
+
+@![iOS]
+##### Objective-C
+```objc
+// Use the saved cancelID from above to dismiss the keyboard
+[self.sdlManager.screenManager dismissKeyboardWithCancelID:cancelID];
+```
+
+##### Swift
+```swift
+// Use the saved cancelID from above to dismiss the keyboard
+sdlManager.screenManager.dismissKeyboard(withCancelID: cancelID)
+```
+!@
+
+@![android, javaSE, javaEE]
+```java
+// ToDo - add dismiss keyboard logic
 ```
 !@
 
