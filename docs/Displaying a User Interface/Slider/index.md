@@ -173,6 +173,38 @@ sdlSlider.sliderFooter = 45
  `TODO: add info`
 !@
 
+## Show the Slider
+@![iOS]
+##### Objective-C
+```objc
+[manager sendRequest:sdlSlider withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+    if (!response || !response.success.boolValue) {
+        SDLLogE(@"Error getting the SDLSlider response");
+        return;
+    }
+
+    // Create a SDLSlider response object from the handler response
+    SDLSliderResponse *sdlSliderResponse = (SDLSliderResponse *)response;
+    NSUInteger position = sdlSliderResponse.sliderPosition.unsignedIntegerValue;
+
+    <#Use the slider position#>
+}];
+```
+##### Swift
+```swift
+manager.send(request: slider, responseHandler: { (req, res, err) in
+    // Create a SDLSlider response object from the handler response
+    guard let response = res as? SDLSliderResponse, response.resultCode == .success, let position = response.sliderPosition.intValue else { return }
+
+    <#Use the slider position#>
+})
+```
+!@
+
+@![android,javaSE,javaEE]
+ `TODO: add info`
+!@
+
 ## Dismissing a Slider (RPC 6.0+)
 You can dismiss a displayed slider before the timeout has elapsed by dismissing either a specific slider or the current slider.
 
@@ -185,7 +217,7 @@ If connected to older head units that do not support this feature, the cancel re
 @![iOS]
 ##### Objective-C
 ```objc
-// `cancelID` is the ID that you assigned when creating and sending the alert
+// `cancelID` is the ID that you assigned when creating the slider
 SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWithSliderCancelID:cancelID];
 [self.sdlManager sendRequest:cancelInteraction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if (![response.resultCode isEqualToEnum:SDLResultSuccess]) { return; }
@@ -195,7 +227,7 @@ SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWith
 
 ##### Swift
 ```swift
-// `cancelID` is the ID that you assigned when creating and sending the alert
+// `cancelID` is the ID that you assigned when creating the slider
 let cancelInteraction = SDLCancelInteraction(sliderCancelID: cancelID)
 sdlManager.send(request: cancelInteraction) { (request, response, error) in
     guard response?.resultCode == .success else { return }
@@ -206,7 +238,7 @@ sdlManager.send(request: cancelInteraction) { (request, response, error) in
 
 @![android,javaSE,javaEE]
 ```java
-// `cancelID` is the ID that you assigned when creating and sending the alert
+// `cancelID` is the ID that you assigned when creating the slider
 CancelInteraction cancelInteraction = new CancelInteraction(FunctionID.SLIDER.getId(), cancelID);
 cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
