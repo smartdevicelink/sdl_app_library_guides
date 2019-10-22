@@ -23,7 +23,6 @@ A slider popup with a static footer displays a single, optional, footer message 
 ```objc
 // Create the slider
 SDLSlider *sdlSlider = [[SDLSlider alloc] init];
-}];
 ```
 ##### Swift
 ```swift
@@ -66,7 +65,6 @@ The number of selectable items on a horizontal axis.
 ```objc
 // Must be a number between 2 and 26
 sdlSlider.numTicks = @(5);
-}];
 ```
 ##### Swift
 ```swift
@@ -86,7 +84,6 @@ The initial position of slider control (cannot exceed numTicks).
 ```objc
 // Must be a number between 1 and 26
 sdlSlider.position = @(1);
-}];
 ```
 ##### Swift
 ```swift
@@ -106,7 +103,6 @@ The header to display.
 ```objc
 // Max length 500 chars
 sdlSlider.sliderHeader = @"This is a Header";
-}];
 ```
 ##### Swift
 ```swift
@@ -126,7 +122,6 @@ The footer will have the same message across all positions of the slider.
 ```objc
 // Max length 500 chars
 sdlSlider.sliderFooter = @[@"Static Footer"];
-}];
 ```
 ##### Swift
 ```swift
@@ -148,7 +143,6 @@ This type of footer will have a different message displayed for each position of
 // Array length 1 - 26, Max length 500 chars
 NSArray<NSString *> *footers = @[@"Footer 1", @"Footer 2", @"Footer 3"];
 sdlSlider.sliderFooter = footers;
-}];
 ```
 ##### Swift
 ```swift
@@ -165,15 +159,14 @@ sdlSlider.sliderFooter = footers
 ### Cancel ID
 An ID for this specific slider to allow cancellation through the `CancelInteraction` RPC.
 @![iOS]
- ##### Objective-C
- ```objc
- sdlSlider.cancelID = @(45);
- }];
- ```
- ##### Swift
- ```swift
- sdlSlider.sliderFooter = 45
- ```
+##### Objective-C
+```objc
+sdlSlider.cancelID = @(45);
+```
+##### Swift
+```swift
+sdlSlider.sliderFooter = 45
+```
 !@
 
 @![android,javaSE,javaEE]
