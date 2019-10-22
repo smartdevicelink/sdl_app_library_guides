@@ -6,17 +6,17 @@ Some OEMs may want to encrypt messages passed between your SDL app and the head 
 OEMs may want to encrypt all or some of the RPCs being transmitted between your SDL app and SDL Core. The library will handle encrypting and decrypting RPCs that are required to be encrypted. 
 
 ### OEM Required Encrypted Video and Audio 
-Some OEMs might want to encrypt video and audio streaming. Information on how to set up encrypted video and audio streaming can be found in [Video Streaming for Navigation Apps > Introduction](Video Streaming for Navigation Apps/Introduction). The library will handle encrypting the video and audio data sent to the head unit.
+OEMs may want to encrypt video and audio streaming. Information on how to set up encrypted video and audio streaming can be found in [Video Streaming for Navigation Apps > Introduction](Video Streaming for Navigation Apps/Introduction). The library will handle encrypting the video and audio data sent to the head unit.
 
 ### Optional Encryption
-You may want to encrypt some or all of the RPCs you send to the head unit even if the OEM does not require that they be protected. In that case you will have to manually configure the payload protection status of every RPC that you send. Please note that if you require that an RPC be encrypted but there is no security manager configured for the head unit, then the RPC will not be sent by the library. 
+You may want to encrypt some or all of the RPCs you send to the head unit even if the OEM does not require that they be protected. In that case you will have to manually configure the payload protection status of every RPC that you send. Please note that if you require that an RPC be encrypted but there is no security manager configured for the connected head unit, then the RPC will not be sent by the library. 
 
 !!! IMPORTANT
 For optional encryption to work, you must work with each OEM to obtain their proprietary security library.
 !!!
 
 ## Creating the Encryption Configuration
-Each OEM that supports SDL will have their own proprietary security library. You must add all of the provided security libraries in the encryption configuration when you are setting up the SDL app. 
+Each OEM that supports SDL will have their own proprietary security library. You must add all required security libraries in the encryption configuration when you are configuring the SDL app. 
 
 @![iOS]
 ##### Objective-C
@@ -39,7 +39,7 @@ let config = SDLConfiguration(lifecycle: lifecycleConfig, lockScreen: .enabled()
 !@
 
 ## Getting the Encryption Status
-Since it can take a few moments to setup the encryption manager, you must wait until you know that setup has completed before sending encrypted RPCs. If your RPC is sent before setup has completed, your RPC will not be sent. You can implement the @![iOS]`SDLServiceEncryptionDelegate`!@@![android,javaSE,javaEE]`ServiceEncryptionListener`!@, which is set in @![iOS]`SDLEncryptionConfiguration`!@@![android,javaSE,javaEE]`Builder.setSdlSecurity`!@, to get updates to the encryption manager state.
+Since it can take a few moments to setup the encryption manager, you must wait until you know that setup has completed before sending encrypted RPCs. If your RPC is sent before set up has completed, your RPC will not be sent. You can implement the @![iOS]`SDLServiceEncryptionDelegate`!@@![android,javaSE,javaEE]`ServiceEncryptionListener`!@, which is set in @![iOS]`SDLEncryptionConfiguration`!@@![android,javaSE,javaEE]`Builder.setSdlSecurity`!@, to get updates to the encryption manager state.
 
 @![iOS]
 ##### Objective-C
