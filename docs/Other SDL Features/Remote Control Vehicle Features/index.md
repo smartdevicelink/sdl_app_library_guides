@@ -30,37 +30,37 @@ The following table lists which items are in each control module.
 
 | Control Item | RPC Item Name | Value Range | Type | Comments | RPC Version Changes |
 | --------------- | ------------ | ------------ | ------------ | ------------ | ------------ |
-| Climate Enable | climateEnable | on, off | Get/Set/Notification | Enabled to turn on the climate system, Disabled to turn off the climate system. All other climate items need climate enabled to work. | Since SDL v6.0 |
-| Current Cabin Temperature | currentTemperature | N/A | Get/Notification | Read only, value range depends on OEM | Since SDL v4.5 |
-| Desired Cabin Temperature | desiredTemperature | N/A | Get/Set/Notification | Value range depends on OEM | Since SDL v4.5 |
-| AC Setting | acEnable | on, off | Get/Set/Notification |  | Since SDL v4.5 |
-| AC MAX Setting | acMaxEnable | on, off  | Get/Set/Notification |  | Since SDL v4.5 |
-| Air Recirculation Setting | circulateAirEnable | on, off  | Get/Set/Notification |  | Since SDL v4.5 |
-| Auto AC Mode Setting | autoModeEnable | on, off | Get/Set/Notification |  | Since SDL v4.5 |
-| Defrost Zone Setting | defrostZone | front, rear, all, none  | Get/Set/Notification |  | Since SDL v4.5 |
-| Dual Mode Setting | dualModeEnable | on, off  | Get/Set/Notification |  | Since SDL v4.5 |
-| Fan Speed Setting | fanSpeed | 0%-100% | Get/Set/Notification |  | Since SDL v4.5 |
-| Ventilation Mode Setting | ventilationMode | upper, lower, both, none | Get/Set/Notification |  | Since SDL v4.5 |
-| Heated Steering Wheel Enabled | heatedSteeringWheelEnable | on, off | Get/Set/Notification | | Since SDL v5.0 |
-| Heated Windshield Enabled | heatedWindshieldEnable | on, off | Get/Set/Notification | | Since SDL v5.0 |
-| Heated Rear Window Enabled | heatedRearWindowEnable | on, off | Get/Set/Notification | | Since SDL v5.0 |
-| Heated Mirrors Enabled | heatedMirrorsEnable | on, off | Get/Set/Notification | | Since SDL v5.0 |
+| Climate Enable | climateEnable | on, off | Get/Set/Notification | Enabled to turn on the climate system, Disabled to turn off the climate system. All other climate items need climate enabled to work. | Since v6.0 |
+| Current Cabin Temperature | currentTemperature | N/A | Get/Notification | Read only, value range depends on OEM | Since v4.5 |
+| Desired Cabin Temperature | desiredTemperature | N/A | Get/Set/Notification | Value range depends on OEM | Since v4.5 |
+| AC Setting | acEnable | on, off | Get/Set/Notification |  | Since v4.5 |
+| AC MAX Setting | acMaxEnable | on, off  | Get/Set/Notification |  | Since v4.5 |
+| Air Recirculation Setting | circulateAirEnable | on, off  | Get/Set/Notification |  | Since v4.5 |
+| Auto AC Mode Setting | autoModeEnable | on, off | Get/Set/Notification |  | Since v4.5 |
+| Defrost Zone Setting | defrostZone | front, rear, all, none  | Get/Set/Notification |  | Since v4.5 |
+| Dual Mode Setting | dualModeEnable | on, off  | Get/Set/Notification |  | Since v4.5 |
+| Fan Speed Setting | fanSpeed | 0%-100% | Get/Set/Notification |  | Since v4.5 |
+| Ventilation Mode Setting | ventilationMode | upper, lower, both, none | Get/Set/Notification |  | Since v4.5 |
+| Heated Steering Wheel Enabled | heatedSteeringWheelEnable | on, off | Get/Set/Notification | | Since v5.0 |
+| Heated Windshield Enabled | heatedWindshieldEnable | on, off | Get/Set/Notification | | Since v5.0 |
+| Heated Rear Window Enabled | heatedRearWindowEnable | on, off | Get/Set/Notification | | Since v5.0 |
+| Heated Mirrors Enabled | heatedMirrorsEnable | on, off | Get/Set/Notification | | Since v5.0 |
 
 #### Radio
 
-| Control Item | RPC Item Name | Value Range | Type | Comments | Version Changes |
+| Control Item | RPC Item Name | Value Range | Type | Comments | RPC Version Changes |
 | --------------- | ------------ | ------------ | ------------ | ------------ | ------------ |
-| Radio Enabled | radioEnable | true,false  | Get/Set/Notification | Read only, all other radio control items need radio enabled to work | Since SDL v4.5 |
-| Radio Band | band | AM,FM,XM  | Get/Set/Notification | | Since SDL v4.5 |
-| Radio Frequency | frequencyInteger / frequencyFraction | 0-1710, 0-9 | Get/Set/Notification | Value range depends on band | Since SDL v4.5 |
-| Radio RDS Data | rdsData | RdsData struct | Get/Notification | Read only | Since SDL v4.5 |
-| Available HD Channels | availableHdChannels | Array size 0-8, values 0-7 | Get/Notification | Read only | Since SDL v6.0, replaces availableHDs |
-| Available HD Channels (DEPRECATED) | availableHDs | 1-7 (Deprecated in SDL v.6.0) (1-3 before SDL v.5.0) | Get/Notification | Read only | Since SDL v4.5, updated in v5.0, deprecated in v6.0 |
-| Current HD Channel | hdChannel | 0-7 (1-3 before SDL v.5.0) (1-7 between SDL v.5.0-6.0) | Get/Set/Notification |  | Since SDL v4.5, updated in SDL v5.0, updated in SDL v6.0 |
-| Radio Signal Strength | signalStrength | 0-100% | Get/Notification | Read only | Since SDL v4.5 |
-| Signal Change Threshold | signalStrengthThreshold | 0-100% | Get/Notification | read only | Since SDL v4.5 |
-| Radio State | state | Acquiring, acquired, multicast, not_found | Get/Notification | Read only | Since SDL v4.5 |
-| SIS Data | sisData | See SisData struct | Get/Notification | Read only | Since SDL v5.0 |
+| Radio Enabled | radioEnable | true,false  | Get/Set/Notification | Read only, all other radio control items need radio enabled to work | Since v4.5 |
+| Radio Band | band | AM,FM,XM  | Get/Set/Notification | | Since v4.5 |
+| Radio Frequency | frequencyInteger / frequencyFraction | 0-1710, 0-9 | Get/Set/Notification | Value range depends on band | Since v4.5 |
+| Radio RDS Data | rdsData | RdsData struct | Get/Notification | Read only | Since v4.5 |
+| Available HD Channels | availableHdChannels | Array size 0-8, values 0-7 | Get/Notification | Read only | Since v6.0, replaces availableHDs |
+| Available HD Channels (DEPRECATED) | availableHDs | 1-7 (Deprecated in v.6.0) (1-3 before v.5.0) | Get/Notification | Read only | Since v4.5, updated in v5.0, deprecated in v6.0 |
+| Current HD Channel | hdChannel | 0-7 (1-3 before v.5.0) (1-7 between v.5.0-6.0) | Get/Set/Notification |  | Since v4.5, updated in v5.0, updated in v6.0 |
+| Radio Signal Strength | signalStrength | 0-100% | Get/Notification | Read only | Since v4.5 |
+| Signal Change Threshold | signalStrengthThreshold | 0-100% | Get/Notification | read only | Since v4.5 |
+| Radio State | state | Acquiring, acquired, multicast, not_found | Get/Notification | Read only | Since v4.5 |
+| SIS Data | sisData | See SisData struct | Get/Notification | Read only | Since v5.0 |
 
 #### Seat
 
