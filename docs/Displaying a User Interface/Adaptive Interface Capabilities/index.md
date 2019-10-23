@@ -41,7 +41,7 @@ Below is a table with example image sizes. Check the `SystemCapabilityManager` f
 | ImageName | Used in RPC | Details | Size | Type |
 | -------------- | ---------------- | -------- | --------- | ------- |
 | softButtonImage      | Show 					    | Image shown on softbuttons on the base screen | 70x70px | png, jpg, bmp |
-| choiceImage          | CreateInteractionChoiceSet | Image shown in the manual part of an performInteraction either big (ICON_ONLY) or | small (LIST_ONLY) | 70x70px | png, jpg, bmp |
+| choiceImage          | CreateInteractionChoiceSet | Image shown in the manual part of an performInteraction either big (ICON_ONLY) or small (LIST_ONLY) | 70x70px | png, jpg, bmp |
 | choiceSecondaryImage | CreateInteractionChoiceSet | Image shown on the right side of an entry in (LIST_ONLY) performInteraction	| 35x35px | png, jpg, bmp |
 | vrHelpItem		   | SetGlobalProperties		| Image shown during voice interaction | 35x35px | png, jpg, bmp |
 | menuIcon			   | SetGlobalProperties		| Image shown on the “More…” button | 35x35px | png, jpg, bmp |
