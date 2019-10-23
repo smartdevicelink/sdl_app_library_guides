@@ -11,11 +11,11 @@ Currently, there is no high-level API support for publishing an app service, so 
 
 Using an app service is covered [in another guide](Other SDL Features/Using App Services).
 
-## App Service Types 
+## App Service Types
 Apps are able to declare that they provide an app service by publishing an app service manifest. Three types of app services are currently available and more will be made available over time. The currently available types are: Media, Navigation, and Weather. An app may publish multiple services (one for each of the different service types) if desired.
 
 ## Publishing an App Service
-Publishing a service is a multistep process. First, you need to create your app service manifest. Second, you will publish your app service. Third, you will publish the service data using `OnAppServiceData`. Fourth, you must listen for requests for data and respond accordingly. Fifth, if your app service supports handling of RPCs related to your service you must listen for these reqeusts and handle them accordingly. Sixth, optionally, you can support URI based app actions. Finally, when necessary, you can you can update or unpublish your app service manifest.
+Publishing a service is a multistep process. First, you need to create your app service manifest. Second, you will publish your app service. Third, you will publish the service data using `OnAppServiceData`. Fourth, you must listen for requests for data and respond accordingly. Fifth, if your app service supports handling of RPCs related to your service you must listen for these requests and handle them accordingly. Sixth, optionally, you can support URI based app actions. Finally, when necessary, you can you can update or unpublish your app service manifest.
 
 ### 1. Creating an App Service Manifest
 The first step to publishing an app service is to create an @![iOS]`SDLAppServiceManifest`!@ @![android,javaSE,javaEE]`AppServiceManifest`!@ object. There is a set of generic parameters you will need to fill out as well as service type specific parameters based on the app service type you are creating.
@@ -775,7 +775,7 @@ sdlManager.send(publishServiceRequest)
 ##### Java
 ```java
 AppServiceManifest manifest = new AppServiceManifest(AppServiceType.WEATHER);
-manifest.setWeatherServiceManifest();
+manifest.setWeatherServiceManifest("Updated weather service manifest");
 
 PublishAppService publishServiceRequest = new PublishAppService(manifest);
 sdlManager.sendRPC(publishServiceRequest);
