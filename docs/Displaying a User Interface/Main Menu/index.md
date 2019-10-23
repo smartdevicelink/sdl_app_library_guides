@@ -8,8 +8,8 @@ You have two different options when creating menus. One is to simply add items t
 Every template has a main menu button. The position of this button varies between templates and cannot be removed from the template. Some OEMs may format certain templates to not display the main menu button if you have no menu items (such as the navigation map view).
 !!!
 
-## Setting the Menu Layout
-If connected to a newer head unit (RPC v.6.0+) you may have the option to display menu items as a grid of tiles in addition to the default list layout. To find out if the display supports menu tiles, check the system capability manager's @![iOS]`defaultMainWindowCapability.menuLayoutsAvailable`!@@![android,javaEE,javaSE] `getDefaultMainWindowCapability().getMenuLayoutsAvailable()`!@ property after successfully connecting to the head unit. To set the menu layout using the screen manager, you will need to set the `screenManager`s `menuConfiguration` property.
+## Setting the Menu Layout (RPC v6.0+)
+On some newer head units, you may have the option to display menu items as a grid of tiles instead of the default list layout. To determine if the head unit supports the tiles layout, check the system capability manager's @![iOS]`defaultMainWindowCapability.menuLayoutsAvailable`!@@![android,javaEE,javaSE] `getDefaultMainWindowCapability().getMenuLayoutsAvailable()`!@ property after successfully connecting to the head unit. To set the menu layout using the screen manager, you will need to set the `screenManager`s `menuConfiguration` property.
 
 !!! Note
 If `menuConfiguration` is set after a menu already exists, sub-menu layouts will not be updated.  A new menu will have to be set to see the new sub-menu layout.
@@ -79,7 +79,7 @@ sdlManager.getScreenManager().setMenu(Collections.singletonList(cell));
 !@
 
 ### Adding Submenus
-Adding a submenu is as simple as adding subcells to a @![iOS]`SDLMenuCell`!@ @![android, javaSE, javaEE]`SdlMenuCell`!@. The submenu is automatically displayed when selected by the user. Currently menus only support one layer of subcells. In RPC v6.0+ it is possible to set individual submenus to use different layouts such as tiles or lists.
+Adding a submenu is as simple as adding subcells to a @![iOS]`SDLMenuCell`!@@![android, javaSE, javaEE]`SdlMenuCell`!@. The submenu is automatically displayed when selected by the user. Currently menus only support one layer of subcells. In RPC v6.0+ it is possible to set individual submenus to use different layouts such as tiles or lists.
 
 @![iOS]
 ##### Objective-C
@@ -128,7 +128,7 @@ sdlManager.getScreenManager().setMenu(Collections.singletonList(cell));
 ```
 !@
 
-### Artwork
+### Menu Item Artwork
 Artworks will be automatically handled when using the screen manager API. First, a "non-artwork" menu will be displayed, then, when the artworks have finished uploading, the "artwork-ified" menu will be displayed. If you are doing this manually with RPCs, you will have to upload artworks using the file manager yourself and send the correct menu when they are ready.
 
 ### Deleting and Changing Menu Items
