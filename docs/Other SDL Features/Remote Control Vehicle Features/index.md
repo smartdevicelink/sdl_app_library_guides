@@ -50,15 +50,15 @@ The following table lists which items are in each control module.
 
 | Control Item | RPC Item Name | Value Range | Type | Comments | RPC Version Changes |
 | --------------- | ------------ | ------------ | ------------ | ------------ | ------------ |
-| Radio Enabled | radioEnable | true,false  | Get/Set/Notification | Read only, all other radio control items need radio enabled to work | Since v4.5 |
-| Radio Band | band | AM,FM,XM  | Get/Set/Notification | | Since v4.5 |
+| Radio Enabled | radioEnable | true, false  | Get/Set/Notification | Read only, all other radio control items need radio enabled to work | Since v4.5 |
+| Radio Band | band | AM, FM, XM  | Get/Set/Notification | | Since v4.5 |
 | Radio Frequency | frequencyInteger / frequencyFraction | 0-1710, 0-9 | Get/Set/Notification | Value range depends on band | Since v4.5 |
 | Radio RDS Data | rdsData | RdsData struct | Get/Notification | Read only | Since v4.5 |
 | Available HD Channels | availableHdChannels | Array size 0-8, values 0-7 | Get/Notification | Read only | Since v6.0, replaces availableHDs |
-| Available HD Channels (DEPRECATED) | availableHDs | 1-7 (Deprecated in v.6.0) (1-3 before v.5.0) | Get/Notification | Read only | Since v4.5, updated in v5.0, deprecated in v6.0 |
+| Available HD Channels (DEPRECATED) | availableHDs | 1-7 (Deprecated in v6.0) (1-3 before v5.0) | Get/Notification | Read only | Since v4.5, updated in v5.0, deprecated in v6.0 |
 | Current HD Channel | hdChannel | 0-7 (1-3 before v.5.0) (1-7 between v.5.0-6.0) | Get/Set/Notification |  | Since v4.5, updated in v5.0, updated in v6.0 |
 | Radio Signal Strength | signalStrength | 0-100% | Get/Notification | Read only | Since v4.5 |
-| Signal Change Threshold | signalStrengthThreshold | 0-100% | Get/Notification | read only | Since v4.5 |
+| Signal Change Threshold | signalStrengthThreshold | 0-100% | Get/Notification | Read only | Since v4.5 |
 | Radio State | state | Acquiring, acquired, multicast, not_found | Get/Notification | Read only | Since v4.5 |
 | SIS Data | sisData | See SisData struct | Get/Notification | Read only | Since v5.0 |
 
@@ -130,10 +130,10 @@ The remote control framework also allows mobile applications to send simulated b
 |             | REPEAT |
 
 ## Integration
-For remote control to work, the head unit must support SDL RPC v.4.4+. In addition, your app's @![iOS]`appType` / `additionalAppTypes`!@@![android, javaSE, javaEE]`appHMIType`!@ must include `REMOTE_CONTROL`.
+For remote control to work, the head unit must support SDL RPC v4.4+. In addition, your app's @![iOS]`appType` / `additionalAppTypes`!@@![android, javaSE, javaEE]`appHMIType`!@ must include `REMOTE_CONTROL`.
 
 ### Multiple Modules (RPC v6.0+)
-Each module type can have multiple modules in RPC v6.0+. In previous versions, only one module was available for each module type. A specific module is controlled using the unique id assigned to the module. When sending remote control RPCs to a v6.0+, the `moduleInfo.moduleId` must be stored and provided to control the desired module. If no `moduleId` is set, the HMI will use the default module of that module type. When connected to <6.0 systems, the `moduleInfo` struct will be @![iOS]`nil`!@@![android, javaSE, javaEE]`null`!@, and only the default module will be available for control.
+Each module type can have multiple modules in RPC v6.0+. In previous versions, only one module was available for each module type. A specific module is controlled using the unique id assigned to the module. When sending remote control RPCs to a RPC v6.0+ head unit, the `moduleInfo.moduleId` must be stored and provided to control the desired module. If no `moduleId` is set, the HMI will use the default module of that module type. When connected to <6.0 systems, the `moduleInfo` struct will be @![iOS]`nil`!@@![android, javaSE, javaEE]`null`!@, and only the default module will be available for control.
 
 ### Getting Remote Control Module Information
 Prior to using any remote control RPCs, you must check that the head unit has the remote control capability. As you will encounter head units that do *not* support remote control, or head units that do not give your application permission to read and write remote control data, this check is important.
@@ -201,7 +201,7 @@ let climateModuleLocation = firstClimateModule.moduleInfo.location;
 ### Setting The User's Seat (RPC v6.0+)
 Before you attempt to take control of any module, you should have your user select their seat location as this affects which modules they have permission to control. You may wish to show the user a map or list of all available seats in your app in order to ask them where they are located. The following example is only meant to show you how to access the available data and not how to build your UI/UX. 
 
-An array of seats can be found in the `seatLocationCapability`'s `seat` array. Each [iOS]`SDLSeatLocation`!@@![android, javaSE, javaEE]`SeatLocation`!@ object within the `seats` array will have a `grid` parameter. The `grid` will tell you the seat placement of that particular seat. This information can be very useful for creating a map or list for users to select from.
+An array of seats can be found in the `seatLocationCapability`'s `seat` array. Each @![iOS]`SDLSeatLocation`!@@![android, javaSE, javaEE]`SeatLocation`!@ object within the `seats` array will have a `grid` parameter. The `grid` will tell you the seat placement of that particular seat. This information is useful for creating a seat location map from which users can select their seat.
 
 @![iOS]
 ##### Objective-C
@@ -293,7 +293,7 @@ Subscribing to the `OnInteriorVehicleData` notification must be done before send
     if (onInteriorVehicleData == nil) { return; }
 
     // This block will now be called whenever vehicle data changes
-    // NOTE: If you subscibe to multiple modules, all the data will be sent here. You will have to split it out based on `onInteriorVehicleData.moduleData.moduleType` yourself.
+    // NOTE: If you subscribe to multiple modules, all the data will be sent here. You will have to split it out based on `onInteriorVehicleData.moduleData.moduleType` yourself.
     <#Code#>
 }];
 ```
@@ -440,7 +440,7 @@ sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
 Not only do you have the ability to get data from these modules, but, if you have the right permissions, you can also set module data.
 
 #### Getting Consent to Control a Module (RPC v6.0+)
-Some OEMs may wish to ask the driver for consent before a user can control a module. The @![iOS]`SDLGetInteriorVehicleDataConsent`!@@![android, javaSE, javaEE]`GetInteriorVehicleDataConsent`!@ RPC will alert the driver for consent in some OEM head units if the module if not free (another user has control) and `allowMultipleAccess` (multiple users can access/set the data at the same time) is `true`. The `allowMultipleAccess` property is part of the `moduleInfo` in the module object.
+Some OEMs may wish to ask the driver for consent before a user can control a module. The @![iOS]`SDLGetInteriorVehicleDataConsent`!@@![android, javaSE, javaEE]`GetInteriorVehicleDataConsent`!@ RPC will alert the driver in some OEM head units if the module is not free (another user has control) and `allowMultipleAccess` (multiple users can access/set the data at the same time) is `true`. The `allowMultipleAccess` property is part of the `moduleInfo` in the module object.
 
 Check the `allowed` property in the @![iOS]`SDLGetInteriorVehicleDataConsentResponse`!@@![android, javaSE, javaEE]`GetInteriorVehicleDataConsentResponse`!@ to see what modules can be controlled. Note that the order of the `allowed` array is 1-1 with the `moduleIds` array you passed into the @![iOS]`SDLGetInteriorVehicleDataConsent`!@@![android, javaSE, javaEE]`GetInteriorVehicleDataConsent`!@ RPC.
 
@@ -459,7 +459,7 @@ SDLGetInteriorVehicleDataConsent *getInteriorVehicleDataConsent = [[SDLGetInteri
 ```
 ##### Swift
 ```swift
-let getInteriorVehicleDataConsent =  SDLGetInteriorVehicleDataConsent(moduleType: <#ModuleType#>, moduleIds: ["<#ModuleID#>", "<#ModuleID#>", "<#ModuleID#>"])
+let getInteriorVehicleDataConsent = SDLGetInteriorVehicleDataConsent(moduleType: <#ModuleType#>, moduleIds: ["<#ModuleID#>", "<#ModuleID#>", "<#ModuleID#>"])
 sdlManager.send(request: getInteriorVehicleDataConsent , responseHandler: { (request, response, error) in
     guard let res = response as? SDLGetInteriorVehicleDataConsentResponse else { return }
     guard let allowed = res.allowed else { return }
@@ -479,7 +479,7 @@ sdlManager.send(request: getInteriorVehicleDataConsent , responseHandler: { (req
 !@
 
 #### Controlling a Module
-Below is an example of setting climate control data. It is likely that you will not need to set all the data as in the code example below. When connected to RPC 6.0+ systems, you must set the `moduleId` in @![iOS]`SDLSetInteriorVehicleData.moduleData`!@@![android, javaSE, javaEE]`SetInteriorVehicleData.setModuleData`!@. When connected to < 6.0 systems, there is only one module per module type, so you must only pass the type of the module you wish to control.
+Below is an example of setting climate control data. It is likely that you will not need to set all the data as in the code example below. When connected to RPC v6.0+ systems, you must set the `moduleId` in @![iOS]`SDLSetInteriorVehicleData.moduleData`!@@![android, javaSE, javaEE]`SetInteriorVehicleData.setModuleData`!@. When connected to < v6.0 systems, there is only one module per module type, so you must only pass the type of the module you wish to control.
 
 When you received module information above in **Getting Remote Control Module Information** on RPC v6.0+ systems, you received information on the `location` and `serviceArea` of the module. The permission area of a module depends on that `serviceArea`. The `location` of a module is like the `seats` array: it maps to the `grid` to tell you the physical location of a particular module. The `serviceArea` maps to the grid to show how far that module's scope reaches.
 
@@ -630,7 +630,7 @@ When the user no longer needs control over a module, you should release the modu
 @![iOS]
 ##### Objective-C
 ```objc
-SDLReleaseInteriorVehicleDataModule * releaseInteriorVehicleDataModule = [[SDLReleaseInteriorVehicleDataModule alloc] initWithModuleType:<#ModuleType#> moduleId:@"<#ModuleID#>"];
+SDLReleaseInteriorVehicleDataModule *releaseInteriorVehicleDataModule = [[SDLReleaseInteriorVehicleDataModule alloc] initWithModuleType:<#ModuleType#> moduleId:@"<#ModuleID#>"];
 [self.sdlManager sendRequest:releaseInteriorVehicleDataModule withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if(!response.success) { return; }
     <#Module Was Released#>
