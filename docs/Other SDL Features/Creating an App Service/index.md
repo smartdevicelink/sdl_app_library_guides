@@ -11,8 +11,8 @@ Currently, there is no high-level API support for publishing an app service, so 
 
 Using an app service is covered [in another guide](Other SDL Features/Using App Services).
 
-## App Service Types
-Apps are able to declare that they provide an app service by publishing an app service manifest. Three types of app services are currently available, and more will be made available over time. The currently available types are: Media, Navigation, and Weather. An app may publish multiple services (one each for different service types), if desired.
+## App Service Types 
+Apps are able to declare that they provide an app service by publishing an app service manifest. Three types of app services are currently available and more will be made available over time. The currently available types are: Media, Navigation, and Weather. An app may publish multiple services (one for each of the different service types) if desired.
 
 ## Publishing an App Service
 Publishing a service is a several step process. First, create your app service manifest. Second, publish your app service using your manifest. Third, publish your service data using `OnAppServiceData`. Fourth, respond to `GetAppServiceData` requests. Fifth, you should support RPCs related to your service. Last, optionally, you can support URI based app actions.
@@ -300,7 +300,7 @@ sdlManager.fileManager.upload(file: artwork) { [weak self] (success, bytesAvaila
     guard success else { return }
 
     // Make sure the image is uploaded to the system before publishing your service
-    let coordinate = SDLLocationCoordinate(latitudeDegrees: 42, longitutdeDegrees: 43)
+    let coordinate = SDLLocationCoordinate(latitudeDegrees: 42, longitudeDegrees: 43)
     let location = SDLLocationDetails(coordinate: coordinate)
     let instruction = SDLNavigationInstruction(locationDetails: location, action: .turn)
     instruction.image = SDLImage(name: imageName, isTemplate: false)
