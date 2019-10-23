@@ -14,7 +14,7 @@ You should be aware of these four things when using images in your SDL app:
 To learn how to use images once they are uploaded, please see [Text, Images, and Buttons](Displaying a User Interface/Text Images and Buttons).
 
 ## Checking if Graphics are Supported
-Before uploading images to a head unit you should first check if the head unit supports graphics. If not, you should avoid uploading unnecessary image data. To check if graphics are supported, @![iOS]look at the `SDLManager`'s `systemCapabilityManager`'s ,`defaultMainWindowCapability` property once the `SDLManager` has started successfully.!@@![android,javaSE,javaEE] use the `getCapability()` method of a valid `SystemCapabilityManager` obtained from `sdlManager.getSystemCapabilityManager()` to find out the display capabilities of the head unit.!@
+Before uploading images to a head unit you should first check if the head unit supports graphics. If not, you should avoid uploading unnecessary image data. To check if graphics are supported, @![iOS]check the `SDLManager.systemCapabilityManager.defaultMainWindowCapability` property once the `SDLManager` has started successfully.!@@![android,javaSE,javaEE] check the `getCapability()` method of a valid `SystemCapabilityManager` obtained from `sdlManager.getSystemCapabilityManager()` to find out the display capabilities of the head unit.!@
 
 @![iOS]
 ##### Objective-C
