@@ -11,10 +11,6 @@ Every template has a main menu button. The position of this button varies betwee
 ## Setting the Menu Layout (RPC v6.0+)
 On some newer head units, you may have the option to display menu items as a grid of tiles instead of the default list layout. To determine if the head unit supports the tiles layout, check the `SystemCapabilityManager`'s @![iOS]`defaultMainWindowCapability.menuLayoutsAvailable`!@@![android,javaEE,javaSE] `getDefaultMainWindowCapability().getMenuLayoutsAvailable()`!@ property after successfully connecting to the head unit. To set the menu layout using the screen manager, you will need to set the `ScreenManager.menuConfiguration` property.
 
-!!! Note
-If `menuConfiguration` is set after a menu already exists, sub-menu layouts will not be updated.  A new menu will have to be set to see the new sub-menu layout.
-!!!
-
 @![iOS]
 ##### Objective-C
 ```objc
