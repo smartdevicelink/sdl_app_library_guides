@@ -166,7 +166,7 @@ sdlManager.systemCapabilityManager.subscribe(toCapabilityType: .remoteControl, w
 !@
 
 #### Getting Module Data Location and Service Areas (RPC v6.0+)
-With the saved remote control capabilities struct you can build a UI to display modules to the user by getting the location of the module and the area that it services. This will map to the grid you receive in [Setting the User's Seat](#-setting-the-user's-seat) below.
+With the saved remote control capabilities struct you can build a UI to display modules to the user by getting the location of the module and the area that it services. This will map to the grid you receive in [Setting the User's Seat](#setting-the-user's-seat) below.
 
 !!! Note
 This data is only available when connected to SDL RPC v6.0+ systems. On previous systems, only one module per module type was available, so the module's location didn't matter. You will not be able to build a custom UI for those cases and should use a generic UI instead.
