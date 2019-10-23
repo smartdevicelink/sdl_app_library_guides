@@ -110,6 +110,7 @@ sdlManager.screenManager.menu = [submenuCell]
 
 @![android, javaSE, javaEE]
 ```java
+// TODO: Modify example to add menulayout
 // Create the inner menu cell
 MenuCell innerCell = new MenuCell("inner menu cell", null, Collections.singletonList("inner menu cell"), new MenuSelectionListener() {
     @Override
@@ -123,8 +124,6 @@ MenuCell innerCell = new MenuCell("inner menu cell", null, Collections.singleton
 MenuCell cell = new MenuCell("cell", null, Collections.singletonList(innerCell));
 
 sdlManager.getScreenManager().setMenu(Collections.singletonList(cell));
-```
-```//ToDo add new example to set a menu layout.
 ```
 !@
 
