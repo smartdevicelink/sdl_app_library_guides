@@ -20,6 +20,7 @@ setGlobals.vrHelp = @[item1, item2];
 [self.sdlManager sendRequest:setGlobals withResponseHandler:^(SDLRPCRequest *request, SDLRPCResponse *response, NSError *error) {
     if (error != nil) {
         // Something went wrong
+        return;
     }
 
     // The help menu is updated
