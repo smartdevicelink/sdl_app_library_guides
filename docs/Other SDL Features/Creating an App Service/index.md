@@ -45,8 +45,6 @@ manifest.mediaServiceManifest = <#Code#> // Covered below
 !@
 
 @![android,javaSE,javaEE]
-
-##### Java
 ```java
 AppServiceManifest manifest = new AppServiceManifest(AppServiceType.MEDIA.toString());
 manifest.setServiceName("My Media App"); // Must be unique across app services.
@@ -77,8 +75,6 @@ manifest.mediaServiceManifest = mediaManifest
 !@
 
 @![android,javaSE,javaEE]
-
-##### Java
 ```java
 MediaServiceManifest mediaManifest = new MediaServiceManifest();
 manifest.setMediaServiceManifest(mediaManifest);
@@ -104,7 +100,6 @@ manifest.navigationServiceManifest = navigationManifest
 !@
 
 @![android,javaSE,javaEE]
-##### Java
 ```java
 NavigationServiceManifest navigationManifest = new NavigationServiceManifest();
 navigationManifest.setAcceptsWayPoints(true);
@@ -131,8 +126,6 @@ manifest.weatherServiceManifest = weatherManifest
 !@
 
 @![android,javaSE,javaEE]
-
-##### Java
 ```java
 WeatherServiceManifest weatherManifest = new WeatherServiceManifest();
 weatherManifest.setCurrentForecastSupported(true);
@@ -174,8 +167,6 @@ sdlManager.send(request: publishServiceRequest) { (req, res, err) in
 !@
 
 @![android,javaSE,javaEE]
-
-##### Java
 ```java
 PublishAppService publishServiceRequest = new PublishAppService();
 publishServiceRequest.setAppServiceManifest(manifest);
@@ -236,8 +227,6 @@ sdlManager.sendRPC(onAppData)
 !@
 
 @![android,javaSE,javaEE]
-
-##### Java
 ```java
 MediaServiceData mediaData = new MediaServiceData();
 mediaData.setMediaTitle("Some media title");
@@ -318,8 +307,6 @@ sdlManager.fileManager.upload(file: artwork) { [weak self] (success, bytesAvaila
 !@
 
 @![android,javaSE,javaEE]
-
-##### Java
 ```java
 final SdlArtwork navInstructionArt = new SdlArtwork("turn", FileType.GRAPHIC_PNG, R.drawable.turn, true);
 
@@ -412,8 +399,6 @@ private func updateWeatherService(shouldUseImage: Bool) {
 !@
 
 @![android,javaSE,javaEE]
-
-##### Java
 ```java
 final SdlArtwork weatherImage = new SdlArtwork("sun", FileType.GRAPHIC_PNG, R.drawable.sun, true);
 
@@ -622,14 +607,12 @@ sdlManager.subscribe(to: SDLDidReceiveButtonPressRequest, observer: self, select
 !@
 
 @![android,javaSE,javaEE]
-##### Java
 ```java
 AppServiceManifest manifest = new AppServiceManifest(AppServiceType.MEDIA.toString());
 ...
 manifest.setHandledRpcs(Collections.singletonList(FunctionID.BUTTON_PRESS.getId()));
 ```
 
-##### Java
 ```java
 sdlManager.addOnRPCRequestListener(FunctionID.BUTTON_PRESS, new OnRPCRequestListener() {
     @Override
@@ -720,7 +703,6 @@ sdlManager.subscribe(to: SDLDidReceivePerformAppServiceInteractionRequest, obser
 !@
 
 @![android,javaSE,javaEE]
-##### Java
 ```java
 // Perform App Services Interaction Request Listener
 sdlManager.addOnRPCRequestListener(FunctionID.PERFORM_APP_SERVICES_INTERACTION, new OnRPCRequestListener() {
@@ -797,7 +779,6 @@ sdlManager.send(unpublishAppService)
 !@
 
 @![android,javaSE,javaEE]
-##### Java
 ```java
 UnpublishAppService unpublishAppService = new UnpublishAppService("The serviceID of the service to unpublish");
 sdlManager.sendRPC(unpublishAppService);
