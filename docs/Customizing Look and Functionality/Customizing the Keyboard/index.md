@@ -11,7 +11,7 @@ SDLKeyboardProperties *keyboardConfig = [[SDLKeyboardProperties alloc] init];
 keyboardConfig.language = SDLLanguageHeIl; // Set to Israeli Hebrew
 keyboardConfig.keyboardLayout = SDLKeyboardLayoutAZERTY; // Set to AZERTY
 
-sdlManager.screenManager.keyboardConfiguration = keyboardConfig;
+self.sdlManager.screenManager.keyboardConfiguration = keyboardConfig;
 ```
 
 ##### Swift
