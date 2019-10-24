@@ -205,7 +205,7 @@ manager.send(request: sdlSlider, responseHandler: { (req, res, err) in
  `TODO: add info`
 !@
 
-## Dismissing a Slider (RPC 6.0+)
+## Dismissing a Slider (RPC v6.0+)
 You can dismiss a displayed slider before the timeout has elapsed by dismissing either a specific slider or the current slider.
 
 !!! NOTE

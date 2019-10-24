@@ -257,7 +257,7 @@ sdlManager.sendRPC(alert);
 ```
 !@
 
-## Dismissing the Alert (RPC 6.0+)
+## Dismissing the Alert (RPC v6.0+)
 You can dismiss a displayed alert before the timeout has elapsed. This feature is useful if you want to show users a loading screen while performing a task, such as searching for a list for nearby coffee shops. As soon as you have the search results, you can cancel the alert and show the results. 
 
 !!! NOTE

@@ -130,7 +130,7 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
 
 !@
 
-## Dismissing a Scrollable Message (RPC 6.0+)
+## Dismissing a Scrollable Message (RPC v6.0+)
 You can dismiss a displayed scrollable message before the timeout has elapsed. You can dismiss a specific scrollable message, or you can dismiss the scrollable message that is currently displayed.
 
 !!! NOTE
