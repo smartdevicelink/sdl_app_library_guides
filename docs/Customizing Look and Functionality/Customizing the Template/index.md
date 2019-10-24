@@ -9,7 +9,7 @@ You can change the template colors of the initial template layout in the `lifecy
 
 ![Template Coloring from Above](assets/template-colors-example.png)
 
-!@[iOS]
+@![iOS]
 ##### Objective-C
 ```objc
 SDLRGBColor *green = [[SDLRGBColor alloc] initWithRed:126 green:188 blue:121];
@@ -34,7 +34,7 @@ lifecycleConfiguration.nightColorScheme = SDLTemplateColorScheme(primaryRGBColor
 ```java
 // TODO
 ```
-@!
+!@
 
 !!! NOTE
 You may change the template coloring in the `lifecycleConfiguration` and the `SetDisplayLayout`, if connecting to a head unit with RPC v5.0+,  or with the `Show` request if connecting to RPC v6.0+. You may only change the template coloring once per template; that is, you cannot call `SetDisplayLayout` or `Show` for the template you are already on and expect the color scheme to update.
