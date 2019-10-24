@@ -60,7 +60,7 @@ The following table lists which items are in each control module.
 | Radio Signal Strength | signalStrength | 0-100% | Get/Notification | Read only | Since v4.5 |
 | Signal Change Threshold | signalStrengthThreshold | 0-100% | Get/Notification | Read only | Since v4.5 |
 | Radio State | state | Acquiring, acquired, multicast, not_found | Get/Notification | Read only | Since v4.5 |
-| SIS Data | sisData | See SisData struct | Get/Notification | Read only | Since v5.0 |
+| SIS Data | sisData | SisData struct | Get/Notification | Read only | Since v5.0 |
 
 #### Seat
 
@@ -84,7 +84,7 @@ The following table lists which items are in each control module.
 
 #### Audio
 
-|Control Item | RPC Item Name | Value Range | Type | Comments | Version Changes |
+|Control Item | RPC Item Name | Value Range | Type | Comments | RPC Version Changes |
 | --------------- | ------------ | ------------ | ------------ | ------------ | ------------ |
 | Audio Volume | volume | 0%-100% | Get/Set/Notification | The audio source volume level | Since SDL v5.0 |
 | Audio Source | source | PrimaryAudioSource enum | Get/Set/Notification | Defines one of the available audio sources | Since SDL v5.0 |
@@ -93,13 +93,13 @@ The following table lists which items are in each control module.
 
 #### Light
 
-| Control Item | RPC Item Name | Value Range | Type | Comments | Version Changes |
+| Control Item | RPC Item Name | Value Range | Type | Comments | RPC Version Changes |
 | --------------- | ------------ | ------------ | ------------ | ------------ | ------------ |
 | Light State | lightState | Array of LightState struct | Get/Set/Notification | | Since SDL v5.0 |
 
 #### HMI Settings
 
-| Control Item | RPC Item Name | Value Range | Type | Comments | Version Changes |
+| Control Item | RPC Item Name | Value Range | Type | Comments | RPC Version Changes |
 | --------------- | ------------ | ------------ | ------------ | ------------ | ------------ |
 | Display Mode | displayMode | Day, Night, Auto | Get/Set/Notification | Current display mode of the HMI display | Since SDL v5.0 |
 | Distance Unit | distanceUnit | Miles, Kilometers | Get/Set/Notification | Distance Unit used in the HMI (for maps/tracking distances) | Since SDL v5.0 |
