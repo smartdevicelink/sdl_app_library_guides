@@ -165,7 +165,7 @@ sdlSlider.cancelID = @(45);
 ```
 ##### Swift
 ```swift
-sdlSlider.sliderFooter = 45
+sdlSlider.cancelID = 45
 ```
 !@
 
