@@ -15,7 +15,7 @@ SDLFile *audioFile = [[SDLFile alloc] initWithFileURL:<#File location on disk#> 
 
 ##### Swift
 ```swift
-let audioFile = SDLFile(fileURL: <#File Location on disk#>, name: <#Audio file name#>, persistent: <#True if the file will be used beyond just this session#>)
+let audioFile = SDLFile(fileURL: <#File location on disk#>, name: <#Audio file name#>, persistent: <#True if the file will be used beyond just this session#>)
 sdlManager.fileManager.upload(file: audioFile) { (success, bytesAvailable, error) in
     <#audio file is ready if success is true#>
 }
@@ -36,7 +36,7 @@ sdlManager.getFileManager().uploadFile(audioFile, new CompletionListener() {
 
 For more information about uploading files, see the [Uploading Files guide](Other SDL Features/Uploading Files).
 
-## Using the Audio File in an Alert
+## Using the Audio File
 Now that the file is uploaded to the remote system, it can be used in various RPCs, such as `Speak`, `Alert`, and `AlertManeuver`. To use the audio file in an alert, you simply need to construct a @![iOS]`SDLTTSChunk`!@@![android, javaSE, javaEE]`TTSChunk`!@ referring to the file's name.
 
 @![iOS]

@@ -312,11 +312,24 @@ A logging configuration is used to define where and how often SDL will log. It w
 ```
 
 ##### Swift
-```objc
+```swift
 SDLLogConfiguration.default()
 ```
 
-### 9. Set the Configuration
+### 9. File Manager
+The file manager configuration allows you to configure retry behavior for uploading files and images. The default configuration attempts one re-upload, but will fail after that.
+
+##### Objective-C
+```objc
+[SDLFileManagerConfiguration defaultConfiguration];
+```
+
+##### Swift
+```swift
+SDLFileManagerConfiguration.default()
+```
+
+### 10. Set the Configuration
 The `SDLConfiguration` class is used to set the lifecycle, lock screen, logging, and optionally (dependent on if you are a Navigation or Projection app) streaming media configurations for the app. Use the lifecycle configuration settings above to instantiate a `SDLConfiguration` instance.
 
 ##### Objective-C
@@ -329,7 +342,7 @@ SDLConfiguration* configuration = [SDLConfiguration configurationWithLifecycle:l
 let configuration = SDLConfiguration(lifecycle: lifecycleConfiguration, lockScreen: .enabled(), logging: .default(), fileManager: .default())
 ```
 
-### 10. Create a SDLManager
+### 11. Create a SDLManager
 Now you can use the `SDLConfiguration` instance to instantiate the `SDLManager`.
 
 ##### Objective-C
