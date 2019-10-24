@@ -29,8 +29,8 @@ let darkGrey = SDLRGBColor(red: 57, green: 78, blue: 96)
 lifecycleConfiguration.dayColorScheme = SDLTemplateColorScheme(primaryRGBColor: green, secondaryRGBColor: grey, backgroundRGBColor: white)
 lifecycleConfiguration.nightColorScheme = SDLTemplateColorScheme(primaryRGBColor: green, secondaryRGBColor: grey, backgroundRGBColor: darkGrey)
 ```
-@!
-!@[android, javaSE, javaEE]
+!@
+@![android, javaSE, javaEE]
 ```java
 // TODO
 ```
