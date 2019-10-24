@@ -1,16 +1,16 @@
 # Multiple Transports (Protocol 5.1+)
-The multiple transports feature allows apps to carry their SDL session over multiple transports. The first transport that the app connects with is referred to as the primary transport and a transport connected at a later point is the secondary transport. For example, apps can register over bluetooth or USB as a primary transport, then connect over WiFi when necessary (ex. to allow video/audio streaming) as a secondary transport. This feature is supported on connections with protocol version 5.1.0+, which is supported on SDL @![android]Android 4.7+!@@![iOS]iOS 6.1+!@ and SDL Core 5.0+.
+The multiple transports feature allows apps to carry their SDL session over multiple transports. The first transport that the app connects with is referred to as the primary transport and a transport connected at a later point is the secondary transport. For example, apps can register over Bluetooth or USB as a primary transport, then connect over WiFi when necessary (ex. to allow video/audio streaming) as a secondary transport. This feature is supported on connections with protocol version 5.1+, which is supported on SDL @![android]Android 4.7+!@@![iOS]iOS 6.1+!@ and SDL Core 5.0+.
 
 ## Primary Transports
 On head units that support multiple transports, the primary transport will be used for RPC communication while the secondary transport will be used for high bandwidth services such as streaming video data for navigation applications. If no high-bandwidth secondary transport is present, the primary transport will be used for all needed services that the transport supports.
 
 @![iOS]
-The only primary transport available for iOS is IAP in production applications. 
+The only primary transport available for iOS in production applications is iAP. 
 !@
 
 @![android]
 ### Supporting specific primary transports
-Whether your app supports both bluetooth and/or USB connections is determined by what you set as acceptable primary transports. By default, both USB and bluetooth are supported and should be kept unless there is a specific reason otherwise. If you list multiple primary transports and one disconnects, if another included transport is available the app will automatically attempt to connect and register to it.
+Whether your app supports both Bluetooth and/or USB connections is determined by what you set as acceptable primary transports. By default, both USB and Bluetooth are supported and should be kept unless there is a specific reason otherwise. If you list multiple primary transports and one disconnects, if another included transport is available the app will automatically attempt to connect and register to it.
 
 ```java
 List<TransportType> multiplexPrimaryTransports = Arrays.asList(TransportType.USB, TransportType.BLUETOOTH);
@@ -18,7 +18,7 @@ MultiplexTransportConfig mtc = new MultiplexTransportConfig(this, APP_ID, Multip
 mtc.setPrimaryTransports(multiplexPrimaryTransports);
 ```
 
-If you only want to use bluetooth or USB, simply pass in a list with the one you want.
+If you only want to use Bluetooth or USB, simply pass in a list with the one you want.
 
 !!! Note
 For the best compatibility we suggest supporting both primary transports.
