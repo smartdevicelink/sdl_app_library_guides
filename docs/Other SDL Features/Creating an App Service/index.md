@@ -1,5 +1,5 @@
-# Creating an App Service
-App services is a powerful feature enabling both a new kind of vehicle-to-app communication and app-to-app communication via SDL. App services is available on head units supporting RPC v5.1+. 
+# Creating an App Service (RPC v5.1+)
+App services is a powerful feature enabling both a new kind of vehicle-to-app communication and app-to-app communication via SDL.
 
 App services are used to publish navigation, weather and media data (such as temperature, navigation waypoints, or the current playlist name). This data can then be used by both the vehicle head unit and, if the publisher of the app service desires, other SDL apps.
 
@@ -15,7 +15,7 @@ Using an app service is covered [in another guide](Other SDL Features/Using App 
 Apps are able to declare that they provide an app service by publishing an app service manifest. Three types of app services are currently available and more will be made available over time. The currently available types are: Media, Navigation, and Weather. An app may publish multiple services (one for each of the different service types) if desired.
 
 ## Publishing an App Service
-Publishing a service is a multistep process. First, you need to create your app service manifest. Second, you will publish your app service. Third, you will publish the service data using `OnAppServiceData`. Fourth, you must listen for requests for data and respond accordingly. Fifth, if your app service supports handling of RPCs related to your service you must listen for these requests and handle them accordingly. Sixth, optionally, you can support URI based app actions. Finally, if necessary, you can you can update or delete your app service manifest.
+Publishing a service is a multi-step process. First, you need to create your app service manifest. Second, you will publish your app service to the module. Third, you will publish the service data using `OnAppServiceData`. Fourth, you must listen for data requests and respond accordingly. Fifth, if your app service supports handling of RPCs related to your service you must listen for these RPC requests and handle them accordingly. Sixth, optionally, you can support URI-based app actions. Finally, if necessary, you can you can update or delete your app service manifest.
 
 ### 1. Creating an App Service Manifest
 The first step to publishing an app service is to create an @![iOS]`SDLAppServiceManifest`!@ @![android,javaSE,javaEE]`AppServiceManifest`!@ object. There is a set of generic parameters you will need to fill out as well as service type specific parameters based on the app service type you are creating.
@@ -748,7 +748,7 @@ sdlManager.addOnRPCRequestListener(FunctionID.PERFORM_APP_SERVICES_INTERACTION, 
 !@
 
 ## Updating Your Published App Service
-Once you have published your app service, you may decide to update the type of data provided in your app service. For example, you may want to give all-access to paid subscribers but provide limited information to free users. You can do this by updating the app service manifest. If desired, you can also delete your app service by unpublishing the service. 
+Once you have published your app service, you may decide to update its data. For example, if you have a free and paid tier with different amounts of data, you may need to upgrade or downgrade a user between these tiers and provide new data in your app service manifest. If desired, you can also delete your app service by unpublishing the service. 
 
 ### 7. Updating a Published App Service Manifest (RPC v6.0+)
 @![iOS]
@@ -772,7 +772,6 @@ sdlManager.send(publishServiceRequest)
 !@
 
 @![android,javaSE,javaEE]
-##### Java
 ```java
 AppServiceManifest manifest = new AppServiceManifest(AppServiceType.WEATHER);
 manifest.setWeatherServiceManifest("Updated weather service manifest");
