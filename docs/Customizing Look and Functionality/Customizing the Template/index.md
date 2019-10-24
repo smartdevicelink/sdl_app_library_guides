@@ -9,6 +9,7 @@ You can change the template colors of the initial template layout in the `lifecy
 
 ![Template Coloring from Above](assets/template-colors-example.png)
 
+!@[iOS]
 ##### Objective-C
 ```objc
 SDLRGBColor *green = [[SDLRGBColor alloc] initWithRed:126 green:188 blue:121];
@@ -28,6 +29,12 @@ let darkGrey = SDLRGBColor(red: 57, green: 78, blue: 96)
 lifecycleConfiguration.dayColorScheme = SDLTemplateColorScheme(primaryRGBColor: green, secondaryRGBColor: grey, backgroundRGBColor: white)
 lifecycleConfiguration.nightColorScheme = SDLTemplateColorScheme(primaryRGBColor: green, secondaryRGBColor: grey, backgroundRGBColor: darkGrey)
 ```
+@!
+!@[android, javaSE, javaEE]
+```java
+// TODO
+```
+@!
 
 !!! NOTE
 You may change the template coloring in the `lifecycleConfiguration` and the `SetDisplayLayout`, if connecting to a head unit with RPC v5.0+,  or with the `Show` request if connecting to RPC v6.0+. You may only change the template coloring once per template; that is, you cannot call `SetDisplayLayout` or `Show` for the template you are already on and expect the color scheme to update.
@@ -61,7 +68,6 @@ setLayout.dayColorScheme = SDLTemplateColorScheme(primaryRGBColor: green, second
 setLayout.nightColorScheme = SDLTemplateColorScheme(primaryRGBColor: green, secondaryRGBColor: grey, backgroundRGBColor: darkGrey)
 ```
 !@
-
 @![android, javaSE, javaEE]
 ```java
 // TODO
@@ -106,7 +112,6 @@ sdlManager.send(request: setGlobals) { (request, response, error) in
 }
 ```
 !@
-
 @![android, javaSE, javaEE]
 ```java
 // TODO
