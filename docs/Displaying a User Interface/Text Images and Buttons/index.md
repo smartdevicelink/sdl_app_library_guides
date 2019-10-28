@@ -10,6 +10,7 @@ The @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@ is 
 | textField2 | The text displayed on the second display line of a multi-line display |
 | textField3 | The text displayed on the third display line of a multi-line display |
 | textField4 | The text displayed on the bottom display line of a multi-line display |
+| title | The title of the displayed template |
 | mediaTrackTextField | The text displayed in the in the track field. This field is only valid for media applications |
 | primaryGraphic | The primary image in a template that supports images |
 | secondaryGraphic | The second image in a template that supports multiple images |
@@ -27,6 +28,7 @@ The @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@ is 
 
 self.sdlManager.screenManager.textField1 = @"<#Line 1 of Text#>";
 self.sdlManager.screenManager.textField2 = @"<#Line 2 of Text#>";
+self.sdlManager.screenManager.title = @"<#Title#>"
 self.sdlManager.screenManager.primaryGraphic = [SDLArtwork persistentArtworkWithImage:[UIImage imageNamed:@"<#Image Name#>"] asImageFormat:<#SDLArtworkImageFormat#>];
 SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"<#Soft Button Name#>" state:[[SDLSoftButtonState alloc] initWithStateName:@"<#Soft Button State Name#>" text:@"<#Button Text#>" artwork:<#SDLArtwork#>] handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     if (buttonPress == nil) { return; }
@@ -49,6 +51,7 @@ sdlManager.screenManager.beginUpdates()
 
 sdlManager.screenManager.textField1 = "<#Line 1 of Text#>"
 sdlManager.screenManager.textField2 = "<#Line 2 of Text#>"
+sdlManager.screenManager.title = "<#Title#>"
 sdlManager.screenManager.primaryGraphic = <#SDLArtwork#>
 sdlManager.screenManager.softButtonObjects = [<#SDLButtonObject#>, <#SDLButtonObject#>]
 
@@ -69,6 +72,7 @@ sdlManager.getScreenManager().setTextField1("Hello, this is MainField1.");
 sdlManager.getScreenManager().setTextField2("Hello, this is MainField2.");
 sdlManager.getScreenManager().setTextField3("Hello, this is MainField3.");
 sdlManager.getScreenManager().setTextField4("Hello, this is MainField4.");
+sdlManager.getScreenManager().setTitle("<#Title#>");
 sdlManager.getScreenManager().commit(new CompletionListener() {
 	@Override
 	public void onComplete(boolean success) {
@@ -86,6 +90,7 @@ After you have displayed text and graphics onto the screen, you may want to remo
 ```objc
 self.sdlManager.screenManager.textField1 = nil;
 self.sdlManager.screenManager.textField2 = nil;
+self.sdlManager.screenManager.title = nil;
 self.sdlManager.screenManager.primaryGraphic = nil;
 ```
 
@@ -93,6 +98,7 @@ self.sdlManager.screenManager.primaryGraphic = nil;
 ```swift
 sdlManager.screenManager.textField1 = nil
 sdlManager.screenManager.textField2 = nil
+sdlManager.screenManager.title = nil
 sdlManager.screenManager.primaryGraphic = nil
 ```
 !@
@@ -102,6 +108,7 @@ sdlManager.screenManager.primaryGraphic = nil
 sdlManager.getScreenManager().setTextField1(null);
 sdlManager.getScreenManager().setTextField2(null);
 sdlManager.getScreenManager().setPrimaryGraphic(null);
+sdlManager.getScreenManager().setTitle(null);
 ```
 !@
 
