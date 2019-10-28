@@ -115,7 +115,7 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
 !@
 
 ### Alert Icon
-An alert can include a custom or static (built-in) image that will be displayed within the alert. Before you add the image to the alert make sure the image is uploaded to the head unit using the @![iOS]`SDLFileManager`!@@![android,javaSE,javaEE]//TODO!@. If the image is already uploaded, you can set the `alertIcon` property.
+An alert can include a custom or static (built-in) image that will be displayed within the alert. Before you add the image to the alert make sure the image is uploaded to the head unit using the @![iOS]`SDLFileManager`!@@![android,javaSE,javaEE]FileManager!@. If the image is already uploaded, you can set the `alertIcon` property.
 
 ![Generic - Alert](assets/Generic_alertIcon.png)
 
@@ -132,7 +132,7 @@ alert.alertIcon = SDLImage(name: <#artworkName#>, isTemplate: true)
 
 @![android,javaSE,javaEE]
 ```java
-// TODO: Add example
+alert.setAlertIcon(new Image(<#artworkName#>, ImageType.DYNAMIC));
 ```
 !@
 
