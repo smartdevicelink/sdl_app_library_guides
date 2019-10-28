@@ -45,13 +45,13 @@ To set an off-screen view controller all you have to do is instantiate a new `UI
 
 ##### Objective-C
 ```objc
-UIViewController *offScreenViewController = <#Aquire a UIViewController#>;
+UIViewController *offScreenViewController = <#Acquire a UIViewController#>;
 self.sdlManager.streamManager.rootViewController = offScreenViewController;
 ```
 
 ##### Swift
 ```swift
-let offScreenViewController = <#Aquire a UIViewController#>
+let offScreenViewController = <#Acquire a UIViewController#>
 sdlManager.streamManager?.rootViewController = offScreenViewController
 ```
 
@@ -207,3 +207,7 @@ onRPCNotificationListenerMap.put(FunctionID.ON_HMI_STATUS, new OnRPCNotification
 builder.setRPCNotificationListeners(onRPCNotificationListenerMap);
 ```
 !@
+
+
+### Handling HMI Scaling (RPC v6.0+)
+If the HMI scales the video stream, you will have to handle scaling the projected view, touches and haptic rectangles yourself (this is all handled for you behind the scenes in the @![iOS]`CarWindow`!@ @![android]`VideoStreamManager`!@  API). To find out if the HMI scales the video stream, you must for query and check the @![iOS]`SDLVideoStreamingCapability`!@ @![android]`VideoStreamingCapability`!@ for the `scale` property. Please check the [Adaptive Interface Capabilities](Displaying a User Interface/Adaptive Interface Capabilities) section for more information on how to query for this property using the system capability manager.  
