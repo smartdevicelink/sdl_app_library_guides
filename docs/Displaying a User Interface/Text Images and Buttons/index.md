@@ -63,6 +63,7 @@ sdlManager.screenManager.endUpdates { (error) in
 !@
 
 @![android, javaSE, javaEE]
+
 ```java
 sdlManager.getScreenManager().beginTransaction();
 sdlManager.getScreenManager().setTextField1("Hello, this is MainField1.");
@@ -304,8 +305,25 @@ return SDLSoftButtonObject(name: "HighlightButton", states: [highlightOn, highli
 !@
 
 @![android,javaSE,javaEE]
+
 ```java
-`//ToDO add example`
+
+SoftButtonState softButtonState1 = new SoftButtonState("Soft Button State Name", "On", image1Artwork);
+softButtonState1.setHighlighted(true);
+SoftButtonState softButtonState2 = new SoftButtonState("Soft Button State Name 2", "Off", image2Artwork);
+softButtonState2.setHighlighted(false);
+SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Arrays.asList(softButtonState1, softButtonState2), softButtonState1.getName(), new SoftButtonObject.OnEventListener() {
+     @Override
+     public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
+          softButtonObject.transitionToNextState();
+     }
+
+     @Override
+     public void onEvent(SoftButtonObject softButtonObject, OnButtonEvent onButtonEvent) {
+
+     }
+});
+
 ```
 !@
 
