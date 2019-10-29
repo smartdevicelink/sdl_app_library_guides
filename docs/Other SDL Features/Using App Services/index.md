@@ -390,3 +390,82 @@ performAppServiceInteraction.setOnRPCResponseListener(new OnRPCResponseListener(
 sdlManager.sendRPC(performAppServiceInteraction);
 ```
 !@
+
+### 5. Getting a File from a Service Provider
+In some cases, a service may upload an image that can then be retrieved from the module. To get the image name you need to retrieve, you will need to have the `SDLAppServiceData` available (see point 2 above).
+
+@![iOS]
+##### Objective-C
+```objc
+SDLAppServiceData *data = <#Get the App Service Data#>;
+SDLWeatherData *weatherData = data.weatherServiceData; // Assuming this contains weather service data
+SDLImage *currentForecastImage = weatherData.currentForecast.weatherIcon;
+NSString *currentForecastImageName = currentForecastImage.value;
+SDLGetFile *getCurrentForecastImage = [[SDLGetFile alloc] initWithFileName:currentForecastImageName];
+
+__block NSUInteger imageDataLength = 0;
+__block NSUInteger imageDataLengthReceived = 0;
+NSMutableData *imageData = [[NSMutableData alloc] init];
+[self.sdlManager sendRequest:getCurrentForecastImage withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+    SDLGetFileResponse *getFileResponse = response;
+    if (getFileResponse == nil || !response.success) {
+        // Something went wrong, examine the resultCode and info
+        return;
+    }
+
+    NSData *rpcImageData = response.bulkData;
+    if (imageData == nil) {
+        // There's no image data
+        return;
+    }
+
+    [imageData appendData:rpcImageData];
+    imageDataLengthReceived += rpcImageData.length;
+    if (getFileResponse.offset == 0 && getFileResponse.length != nil) {
+        imageDataLength = getFileResponse.length.unsignedIntegerValue;
+    }
+
+    if (imageDataLengthReceived < imageDataLength) {
+        // Send additional GetFile requests to get the rest of the data using the offset parameter
+    } else {
+        // The file is complete, turn the file data into an image and use it.
+    }
+}];
+```
+
+##### Swift
+```swift
+let data: SDLAppServiceData = <#Get the App Service Data#>
+let weatherData: SDLWeatherServiceData = data.weatherServiceData
+guard let currentForecastImage = weatherData.currentForecast?.weatherIcon else {
+        // The image doesn't exist, exit early
+        return
+}
+let currentForecastImageName = currentForecastImage.value
+let getCurrentForecastImage = SDLGetFile(fileName: currentForecastImageName)
+
+let imageDataLength = 0
+let imageDataLengthReceived = 0
+var imageData = Data()
+sdlManager.send(request: getCurrentForecastImage) { (req, res, err) in
+    guard let response = res as? SDLGetFileResponse, response.success.boolValue == true, let rpcImageData = response.bulkData else {
+        // Something went wrong, examine the resultCode and info
+        return;
+    }
+
+    imageData.append(rpcImageData)
+    imageDataLengthReceived += rpcImageData.count
+    if response.offset?.intValue == 0, let rpcImageLength = response.length?.intValue {
+        imageDataLength = rpcImageLength
+    }
+
+    if imageDataLengthReceived < imageDataLength {
+        // Send additional GetFile requests to get the rest of the data using the offset parameter
+    }
+}
+```
+
+!@
+@![android, javaSE, javaEE]
+// TODO: Add information
+!@
