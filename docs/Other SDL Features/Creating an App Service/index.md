@@ -245,7 +245,7 @@ MediaServiceData mediaData = new MediaServiceData();
 mediaData.setMediaTitle("Some media title");
 mediaData.setMediaArtist("Some media artist");
 mediaData.setMediaAlbum("Some album");
-mediaData.setMediaImage(new Image("#<Image name>", ImageType.DYNAMIC));
+mediaData.setMediaImage(new Image("Some image", ImageType.DYNAMIC));
 mediaData.setPlaylistName("Some playlist");
 mediaData.setIsExplicit(true);
 mediaData.setTrackPlaybackProgress(45);
