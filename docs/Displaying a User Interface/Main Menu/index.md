@@ -26,7 +26,8 @@ sdlManager.screenManager.menuConfiguration = menuConfiguration
 
 @![android, javaSE, javaEE]
 ```java
- //ToDo - add example how to set layout for menu
+MenuConfiguration menuConfiguration = new MenuConfiguration(<#mainMenuLayout>, <#submenuLayout>);
+sdlManager.getScreenManager().setMenuConfiguration(menuConfiguration);
 ```
 !@
 
@@ -106,7 +107,6 @@ sdlManager.screenManager.menu = [submenuCell]
 
 @![android, javaSE, javaEE]
 ```java
-// TODO: Modify example to add menulayout
 // Create the inner menu cell
 MenuCell innerCell = new MenuCell("inner menu cell", null, Collections.singletonList("inner menu cell"), new MenuSelectionListener() {
     @Override
@@ -117,7 +117,7 @@ MenuCell innerCell = new MenuCell("inner menu cell", null, Collections.singleton
 });
 
 // Create and set the submenu cell
-MenuCell cell = new MenuCell("cell", null, Collections.singletonList(innerCell));
+MenuCell cell = new MenuCell("cell", MenuLayout.LIST, null, Collections.singletonList(innerCell));
 
 sdlManager.getScreenManager().setMenu(Collections.singletonList(cell));
 ```
