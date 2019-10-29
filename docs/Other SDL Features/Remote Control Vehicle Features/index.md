@@ -204,7 +204,10 @@ let climateModuleLocation = firstClimateModule.moduleInfo.location;
 
 @![android,javaEE,javaSE]
 ```java
-// ToDo - Add example
+ClimateControlCapabilities firstClimateModule = <#Remote Control Capabilities#>.getClimateControlCapabilities().get(0);
+
+String climateModuleId = firstClimateModule.getModuleInfo().getModuleId();
+Grid climateModuleLocation = firstClimateModule.getModuleInfo().getModuleLocation();
 ```
 !@
 
@@ -237,7 +240,22 @@ sdlManager.systemCapabilityManager.subscribe(toCapabilityType: .seatLocation, wi
 
 @![android,javaEE,javaSE]
 ```java
-// ToDo - Add example
+sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapabilityType.SEAT_LOCATION, new OnSystemCapabilityListener() {
+    @Override
+    public void onCapabilityRetrieved(Object capability) {
+        SeatLocationCapability seatLocationCapability = (SeatLocationCapability) capability;
+        if (seatLocationCapability.getSeatLocations() != null && seatLocationCapability.getSeatLocations().size() > 0){
+            List<SeatLocation> seats = seatLocationCapability.getSeatLocations();
+
+            <#Save seat location capabilities#>
+        }
+    }
+
+    @Override
+    public void onError(String info) {
+        <#Handle Error#>
+    }
+});
 ```
 !@
 
