@@ -392,13 +392,13 @@ sdlManager.sendRPC(performAppServiceInteraction);
 !@
 
 ### 5. Getting a File from a Service Provider
-In some cases, a service may upload an image that can then be retrieved from the module. To get the image name you need to retrieve, you will need to have the `SDLAppServiceData` available (see point 2 above).
+In some cases, a service may upload an image that can then be retrieved from the module. First, you will need to get the image name from the @![iOS]`SDLAppServiceData`!@@![android,javaSE,javaEE]`AppServiceData`!@ (see point 2 above). Then you will use the image name to retrieve the image data. 
 
 @![iOS]
 ##### Objective-C
 ```objc
 SDLAppServiceData *data = <#Get the App Service Data#>;
-SDLWeatherData *weatherData = data.weatherServiceData; // Assuming this contains weather service data
+SDLWeatherServiceData *weatherData = data.weatherServiceData;
 SDLImage *currentForecastImage = weatherData.currentForecast.weatherIcon;
 NSString *currentForecastImageName = currentForecastImage.value;
 SDLGetFile *getCurrentForecastImage = [[SDLGetFile alloc] initWithFileName:currentForecastImageName];
@@ -438,14 +438,14 @@ NSMutableData *imageData = [[NSMutableData alloc] init];
 let data: SDLAppServiceData = <#Get the App Service Data#>
 let weatherData: SDLWeatherServiceData = data.weatherServiceData
 guard let currentForecastImage = weatherData.currentForecast?.weatherIcon else {
-        // The image doesn't exist, exit early
-        return
+    // The image doesn't exist, exit early
+    return
 }
 let currentForecastImageName = currentForecastImage.value
 let getCurrentForecastImage = SDLGetFile(fileName: currentForecastImageName)
 
-let imageDataLength = 0
-let imageDataLengthReceived = 0
+var imageDataLength = 0
+var imageDataLengthReceived = 0
 var imageData = Data()
 sdlManager.send(request: getCurrentForecastImage) { (req, res, err) in
     guard let response = res as? SDLGetFileResponse, response.success.boolValue == true, let rpcImageData = response.bulkData else {
