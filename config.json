@@ -37,7 +37,7 @@
                 },
                 {  
                     "name":"Multiple Transports",
-                    "platforms": ["Android"]
+                    "platforms": ["Android", "iOS"]
                  },
                 {
                     "name": "Adapting to the Head Unit Language"
