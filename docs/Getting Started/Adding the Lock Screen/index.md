@@ -159,7 +159,8 @@ let lockScreenConfiguration = SDLLockScreenConfiguration.disabled()
 
 @![android]
 ```java
-lockScreenConfig.setEnabled(false);
+LockScreenConfig lockScreenConfig = new LockScreenConfig();
+lockScreenConfig.setDisplayMode(LockScreenConfig.DISPLAY_MODE_NEVER);
 ```
 !@
 
@@ -183,7 +184,8 @@ lockScreenConfiguration.displayMode = .always
 
 @![android]
 ```java
-// ToDo - add example
+LockScreenConfig lockScreenConfig = new LockScreenConfig();
+lockScreenConfig.setDisplayMode(LockScreenConfig.DISPLAY_MODE_ALWAYS);
 ```
 !@
 
@@ -206,6 +208,7 @@ lockScreenConfiguration.enableDismissGesture = false
 
 @![android]
 ```java
-// ToDo - add example
+LockScreenConfig lockScreenConfig = new LockScreenConfig();
+lockScreenConfig.enableDismissGesture(false);
 ```
 !@
