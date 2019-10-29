@@ -159,9 +159,19 @@ sdlManager.systemCapabilityManager.subscribe(toCapabilityType: .remoteControl, w
 ```
 !@
 
-@![java,javaEE,javaSE]
+@![android,javaEE,javaSE]
 ```java
-// ToDo - Add example
+sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.REMOTE_CONTROL, new OnSystemCapabilityListener() {
+    @Override
+    public void onCapabilityRetrieved(Object capability) {
+        RemoteControlCapabilities remoteControlCapabilities = (RemoteControlCapabilities) capability;
+    }
+
+    @Override
+    public void onError(String info) {
+        <# Handle Error #>
+    }
+});
 ```
 !@
 
@@ -192,7 +202,7 @@ let climateModuleLocation = firstClimateModule.moduleInfo.location;
 ```
 !@
 
-@![java,javaEE,javaSE]
+@![android,javaEE,javaSE]
 ```java
 // ToDo - Add example
 ```
@@ -225,7 +235,7 @@ sdlManager.systemCapabilityManager.subscribe(toCapabilityType: .seatLocation, wi
 ```
 !@
 
-@![java,javaEE,javaSE]
+@![android,javaEE,javaSE]
 ```java
 // ToDo - Add example
 ```
@@ -266,7 +276,7 @@ sdlManager.send(request: seatLocation, responseHandler: { (request, response, er
 ```
 !@
 
-@![java,javaEE,javaSE]
+@![android,javaEE,javaSE]
 ```java
 // ToDo - Add example
 ```
@@ -618,7 +628,7 @@ sdlManager.sendRPC(buttonPress);
 ```
 !@
 
-@![java,javaEE,javaSE]
+@![android,javaEE,javaSE]
 ```java
 // ToDo - Add example
 ```
