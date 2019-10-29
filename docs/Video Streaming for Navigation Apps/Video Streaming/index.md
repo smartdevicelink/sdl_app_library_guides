@@ -22,7 +22,7 @@ There are several customizations you can make to `CarWindow` to optimize it for 
 
 1. Choose how `CarWindow` captures and renders the screen using the `carWindowRenderingType` enum.
 2. By default, when using `CarWindow`, the `SDLTouchManager` will sync it's touch updates to the framerate. To disable this feature, set `SDLTouchManager.enableSyncedPanning` to `NO`.
-3. `CarWindow` hard-dictates the framerate of the app. To change the framerate and other parameters, update `SDLStreamingMediaConfiguration.customVideoEncoderSettings`.
+3. `CarWindow`'s settings dictate the framerate of the app. To change the framerate and other parameters, update `SDLStreamingMediaConfiguration.customVideoEncoderSettings`. These settings will override any settings received from the head unit.
 
     Below are the video encoder defaults:
 
