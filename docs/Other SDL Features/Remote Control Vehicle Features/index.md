@@ -168,7 +168,7 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.REMOT
     }
 
     @Override
-    public void onError(String info) {
+    public void onError(int correlationId, Result resultCode, String info) {
         <# Handle Error #>
     }
 });
@@ -252,7 +252,7 @@ sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapa
     }
 
     @Override
-    public void onError(String info) {
+    public void onError(int correlationId, Result resultCode, String info) {
         <#Handle Error#>
     }
 });
@@ -305,7 +305,7 @@ seatLocation.setOnRPCResponseListener(new OnRPCResponseListener() {
     }
 
     @Override
-    public void onError(String info) {
+    public void onError(int correlationId, Result resultCode, String info) {
         <#Handle Error#>
     }
 });
@@ -396,31 +396,7 @@ sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
 
 @![android, javaSE, javaEE]
 ```java
-// TODO: Update
 
-sdlManager.addOnRPCNotificationListener(FunctionID.ON_INTERIOR_VEHICLE_DATA, new OnRPCNotificationListener() {
-    @Override
-    public void onNotified(RPCNotification notification) {
-        OnInteriorVehicleData onInteriorVehicleData = (OnInteriorVehicleData) notification;
-        // Perform action based on notification
-    }
-});
-
-GetInteriorVehicleData interiorVehicleData = new GetInteriorVehicleData(ModuleType.RADIO);
-interiorVehicleData.setSubscribe(true);
-interiorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
-    @Override
-    public void onResponse(int correlationId, RPCResponse response) {
-        GetInteriorVehicleDataResponse getResponse = (GetInteriorVehicleDataResponse) response;
-        // This can now be used to retrieve data
-    }
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
-    }
-});
-
-sdlManager.sendRPC(interiorVehicleData);
 ```
 !@
 
@@ -471,7 +447,54 @@ sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
 
 @![android, javaEE, javaSE]
 ```java
-// ToDo - Add example
+sdlManager.addOnRPCNotificationListener(FunctionID.ON_INTERIOR_VEHICLE_DATA, new OnRPCNotificationListener() {
+    @Override
+    public void onNotified(RPCNotification notification) {
+        OnInteriorVehicleData onInteriorVehicleData = (OnInteriorVehicleData) notification;
+        if (onInteriorVehicleData != null){
+            // NOTE: If you subscribe to multiple modules, all the data will be sent here. You will have to
+            // split it out based on `onInteriorVehicleData.getModuleData().getModuleType()` yourself.
+            <#Code#>
+        }
+    }
+});
+```
+
+After you subscribe to the `InteriorVehicleDataNotification` you must also subscribe to the module you wish to receive updates for. Subscribing to a module will send a notification when that particular module is changed.
+
+###### RPC < v6.0
+```java
+GetInteriorVehicleData getInteriorVehicleData = new GetInteriorVehicleData(ModuleType.RADIO);
+getInteriorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        // This can now be used to retrieve data
+        <#Code#>
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        <#Handle Error#>
+    }
+});
+```
+
+###### RPC v6.0+
+```java
+GetInteriorVehicleData getInteriorVehicleData = new GetInteriorVehicleData(ModuleType.RADIO);
+getInteriorVehicleData.setModuleId(<#ModuleID#>);
+getInteriorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        // This can now be used to retrieve data
+        <#Code#>
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        <#Handle Error#>
+    }
+});
 ```
 !@
 
