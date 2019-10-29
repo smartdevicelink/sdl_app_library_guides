@@ -296,7 +296,19 @@ sdlManager.send(request: seatLocation, responseHandler: { (request, response, er
 
 @![android,javaEE,javaSE]
 ```java
-// ToDo - Add example
+SetGlobalProperties seatLocation = new SetGlobalProperties();
+seatLocation.setUserLocation(<#Selected Seat#>;);
+seatLocation.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        <#Seat location updated#>
+    }
+
+    @Override
+    public void onError(String info) {
+        <#Handle Error#>
+    }
+});
 ```
 !@
 
