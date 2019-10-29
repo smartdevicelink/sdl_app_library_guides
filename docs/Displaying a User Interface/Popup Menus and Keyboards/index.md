@@ -298,8 +298,9 @@ Using the `SDLKeyboardDelegate` involves two required methods (for handling the 
 }
 
 /// Optional Methods
-- (void)updateAutocompleteWithInput:(NSString *)currentInputText completionHandler:(SDLKeyboardAutocompleteCompletionHandler)completionHandler {
-    <#Check the input text and return a string with the current autocomplete text#>
+- (void)updateAutocompleteWithInput:(NSString *)currentInputText autoCompleteResultsHandler:(SDLKeyboardAutoCompleteResultsHandler)resultsHandler {
+    <#Check the input text and return an array of autocomplete results#>
+    resultsHandler(@[<#String results to be displayed#>]);
 }
 
 - (void)updateCharacterSetWithInput:(NSString *)currentInputText completionHandler:(SDLKeyboardCharacterSetCompletionHandler)completionHandler {
@@ -340,8 +341,9 @@ extension <#Class Name#>: SDLKeyboardDelegate {
     }
 
     /// Optional Methods
-    func updateAutocomplete(withInput currentInputText: String, completionHandler: @escaping SDLKeyboardAutocompleteCompletionHandler) {
-        <#Check the input text and return a string with the current autocomplete text#>
+    func updateAutocomplete(withInput currentInputText: String, autoCompleteResultsHandler resultsHandler: @escaping SDLKeyboardAutoCompleteResultsHandler) {
+        <#Check the input text and return an array of autocomplete results#>
+        resultsHandler([<#String results to be displayed#>]);
     }
 
     func updateCharacterSet(withInput currentInputText: String, completionHandler: @escaping SDLKeyboardCharacterSetCompletionHandler) {
@@ -395,7 +397,8 @@ KeyboardListener keyboardListener = new KeyboardListener() {
 
     @Override
     public void updateAutocompleteWithInput(String currentInputText, KeyboardAutocompleteCompletionListener keyboardAutocompleteCompletionListener) {
-        // <#Check the input text and return a string with the current autocomplete text#>
+        // <#Check the input text and return a list of autocomplete results#>
+        // keyboardAutocompleteCompletionListener.onUpdatedAutoCompleteList(<#String results to be displayed#>]);
     }
 
     @Override
