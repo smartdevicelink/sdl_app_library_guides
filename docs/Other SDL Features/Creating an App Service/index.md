@@ -1,4 +1,4 @@
-# Creating an App Service
+# Creating an App Service (RPC v5.1+)
 App services is a powerful feature enabling both a new kind of vehicle-to-app communication and app-to-app communication via SDL.
 
 App services are used to publish navigation, weather and media data (such as temperature, navigation waypoints, or the current playlist name). This data can then be used by both the vehicle head unit and, if the publisher of the app service desires, other SDL apps.
@@ -12,10 +12,10 @@ Currently, there is no high-level API support for publishing an app service, so 
 Using an app service is covered [in another guide](Other SDL Features/Using App Services).
 
 ## App Service Types
-Apps are able to declare that they provide an app service by publishing an app service manifest. Three types of app services are currently available, and more will be made available over time. The currently available types are: Media, Navigation, and Weather. An app may publish multiple services (one each for different service types), if desired.
+Apps are able to declare that they provide an app service by publishing an app service manifest. Three types of app services are currently available and more will be made available over time. The currently available types are: Media, Navigation, and Weather. An app may publish multiple services (one for each of the different service types) if desired.
 
 ## Publishing an App Service
-Publishing a service is a several step process. First, create your app service manifest. Second, publish your app service using your manifest. Third, publish your service data using `OnAppServiceData`. Fourth, respond to `GetAppServiceData` requests. Fifth, you should support RPCs related to your service. Last, optionally, you can support URI based app actions.
+Publishing a service is a multi-step process. First, you need to create your app service manifest. Second, you will publish your app service to the module. Third, you will publish the service data using `OnAppServiceData`. Fourth, you must listen for data requests and respond accordingly. Fifth, if your app service supports handling of RPCs related to your service you must listen for these RPC requests and handle them accordingly. Sixth, optionally, you can support URI-based app actions. Finally, if necessary, you can you update or delete your app service manifest.
 
 ### 1. Creating an App Service Manifest
 The first step to publishing an app service is to create an @![iOS]`SDLAppServiceManifest`!@ @![android,javaSE,javaEE]`AppServiceManifest`!@ object. There is a set of generic parameters you will need to fill out as well as service type specific parameters based on the app service type you are creating.
@@ -45,8 +45,6 @@ manifest.mediaServiceManifest = <#Code#> // Covered below
 !@
 
 @![android,javaSE,javaEE]
-
-##### Java
 ```java
 AppServiceManifest manifest = new AppServiceManifest(AppServiceType.MEDIA.toString());
 manifest.setServiceName("My Media App"); // Must be unique across app services.
@@ -77,8 +75,6 @@ manifest.mediaServiceManifest = mediaManifest
 !@
 
 @![android,javaSE,javaEE]
-
-##### Java
 ```java
 MediaServiceManifest mediaManifest = new MediaServiceManifest();
 manifest.setMediaServiceManifest(mediaManifest);
@@ -104,7 +100,6 @@ manifest.navigationServiceManifest = navigationManifest
 !@
 
 @![android,javaSE,javaEE]
-##### Java
 ```java
 NavigationServiceManifest navigationManifest = new NavigationServiceManifest();
 navigationManifest.setAcceptsWayPoints(true);
@@ -131,8 +126,6 @@ manifest.weatherServiceManifest = weatherManifest
 !@
 
 @![android,javaSE,javaEE]
-
-##### Java
 ```java
 WeatherServiceManifest weatherManifest = new WeatherServiceManifest();
 weatherManifest.setCurrentForecastSupported(true);
@@ -174,8 +167,6 @@ sdlManager.send(request: publishServiceRequest) { (req, res, err) in
 !@
 
 @![android,javaSE,javaEE]
-
-##### Java
 ```java
 PublishAppService publishServiceRequest = new PublishAppService();
 publishServiceRequest.setAppServiceManifest(manifest);
@@ -238,8 +229,6 @@ sdlManager.sendRPC(onAppData)
 !@
 
 @![android,javaSE,javaEE]
-
-##### Java
 ```java
 MediaServiceData mediaData = new MediaServiceData();
 mediaData.setMediaTitle("Some media title");
@@ -303,7 +292,7 @@ sdlManager.fileManager.upload(file: artwork) { [weak self] (success, bytesAvaila
     guard success else { return }
 
     // Make sure the image is uploaded to the system before publishing your service
-    let coordinate = SDLLocationCoordinate(latitudeDegrees: 42, longitutdeDegrees: 43)
+    let coordinate = SDLLocationCoordinate(latitudeDegrees: 42, longitudeDegrees: 43)
     let location = SDLLocationDetails(coordinate: coordinate)
     let instruction = SDLNavigationInstruction(locationDetails: location, action: .turn)
     instruction.image = SDLImage(name: imageName, isTemplate: false)
@@ -321,8 +310,6 @@ sdlManager.fileManager.upload(file: artwork) { [weak self] (success, bytesAvaila
 !@
 
 @![android,javaSE,javaEE]
-
-##### Java
 ```java
 final SdlArtwork navInstructionArt = new SdlArtwork("turn", FileType.GRAPHIC_PNG, R.drawable.turn, true);
 
@@ -415,8 +402,6 @@ private func updateWeatherService(shouldUseImage: Bool) {
 !@
 
 @![android,javaSE,javaEE]
-
-##### Java
 ```java
 final SdlArtwork weatherImage = new SdlArtwork("sun", FileType.GRAPHIC_PNG, R.drawable.sun, true);
 
@@ -625,14 +610,12 @@ sdlManager.subscribe(to: SDLDidReceiveButtonPressRequest, observer: self, select
 !@
 
 @![android,javaSE,javaEE]
-##### Java
 ```java
 AppServiceManifest manifest = new AppServiceManifest(AppServiceType.MEDIA.toString());
 ...
 manifest.setHandledRpcs(Collections.singletonList(FunctionID.BUTTON_PRESS.getId()));
 ```
 
-##### Java
 ```java
 sdlManager.addOnRPCRequestListener(FunctionID.BUTTON_PRESS, new OnRPCRequestListener() {
     @Override
@@ -723,7 +706,6 @@ sdlManager.subscribe(to: SDLDidReceivePerformAppServiceInteractionRequest, obser
 !@
 
 @![android,javaSE,javaEE]
-##### Java
 ```java
 // Perform App Services Interaction Request Listener
 sdlManager.addOnRPCRequestListener(FunctionID.PERFORM_APP_SERVICES_INTERACTION, new OnRPCRequestListener() {
@@ -749,3 +731,60 @@ sdlManager.addOnRPCRequestListener(FunctionID.PERFORM_APP_SERVICES_INTERACTION, 
 });
 ```
 !@
+
+## Updating Your Published App Service
+Once you have published your app service, you may decide to update its data. For example, if you have a free and paid tier with different amounts of data, you may need to upgrade or downgrade a user between these tiers and provide new data in your app service manifest. If desired, you can also delete your app service by unpublishing the service. 
+
+### 7. Updating a Published App Service Manifest (RPC v6.0+)
+@![iOS]
+##### Objective-C
+```objc
+SDLAppServiceManifest *manifest = [[SDLAppServiceManifest alloc] initWithAppServiceType:SDLAppServiceTypeWeather];
+manifest.weatherServiceManifest = <#Updated weather service manifest#>
+
+SDLPublishAppService *publishServiceRequest = [[SDLPublishAppService alloc] initWithAppServiceManifest:manifest];
+[self.sdlManager sendRequest:publishServiceRequest];
+```
+
+##### Swift
+```swift
+let manifest = SDLAppServiceManifest(appServiceType: .weather)
+manifest.weatherServiceManifest = <#Updated weather service manifest#>
+
+let publishServiceRequest = SDLPublishAppService(appServiceManifest: manifest)
+sdlManager.send(publishServiceRequest)
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+AppServiceManifest manifest = new AppServiceManifest(AppServiceType.WEATHER.toString());
+manifest.setWeatherServiceManifest("<#Updated weather service manifest>");
+
+PublishAppService publishServiceRequest = new PublishAppService(manifest);
+sdlManager.sendRPC(publishServiceRequest);
+```
+!@
+
+### 8. Unpublishing a Published App Service Manifest (RPC v6.0+)
+@![iOS]
+##### Objective-C
+```objc
+SDLUnpublishAppService *unpublishAppService = [[SDLUnpublishAppService alloc] initWithServiceID:@"<#The serviceID of the service to unpublish#>"];
+[self.sdlManager sendRequest:unpublishAppService];
+```
+
+##### Swift
+```swift
+let unpublishAppService = SDLUnpublishAppService(serviceID: "<#The serviceID of the service to unpublish#>")
+sdlManager.send(unpublishAppService)
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+UnpublishAppService unpublishAppService = new UnpublishAppService("<#The serviceID of the service to unpublish>");
+sdlManager.sendRPC(unpublishAppService);
+```
+!@
+
