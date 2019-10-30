@@ -35,4 +35,7 @@ sdlManager.getScreenManager().setKeyboardConfiguration(keyboardProperties);
 !@
 
 ## Other Properties
-While there are other keyboard properties available on @![iOS]`SDLKeyboardProperties`!@@![android, javaSE, javaEE]`KeyboardProperties`!@, these will be overridden by the screen manager. The `keypressMode` must be a specific configuration for the screen manager's callbacks to work properly. The `limitedCharacterList`, `autoCompleteText`, and `autoCompleteList` will be set on a per-keyboard basis in the @![iOS]`SDLKeyboardDelegate`!@@![android, javaSE, javaEE]`// TODO`!@ which is set on the @![iOS]`presentKeyboard` and `presentSearchableChoiceSet`!@@![android, javaSE, javaEE]`// TODO`!@ methods.
+@![iOS]While there are other keyboard properties available on `SDLKeyboardProperties`, these will be overridden by the screen manager. The `keypressMode` must be a specific configuration for the screen manager's callbacks to work properly. The `limitedCharacterList`, `autoCompleteText`, and `autoCompleteList` will be set on a per-keyboard basis in the `SDLKeyboardDelegate` which is set on the `presentKeyboard` and `presentSearchableChoiceSet` methods.!@
+
+
+@![android, javaSE, javaEE]While there are other keyboard properties available on `KeyboardProperties`, these will be overridden by the screen manager. The `keypressMode` must be a specific configuration for the screen manager's callbacks to work properly. The `limitedCharacterList`, `autoCompleteText`, and `autoCompleteList` will be set on a per-keyboard basis when calling `sdlManager.getScreenManager.presentKeyboard(...)`, should custom keyboard properties be set. !@

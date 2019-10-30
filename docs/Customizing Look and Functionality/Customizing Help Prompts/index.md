@@ -4,7 +4,7 @@ On some head units it is possible to display a customized help menu or speak a c
 ## Configuring the Help Menu
 You can customize the help menu with your own title and/or menu options. If you don't customize these options, then the head unit's default menu will be used.
 
-If you wish to use an image, you should check the @![iOS]`sdlManager.systemCapabilityManager.defaultMainWindowCapability.imageFields`!@@![android, javaSE, javaEE]`// TODO`!@ for an `imageField.name` of `vrHelpItem` to see if that image is supported. If `vrHelpItem` is in the `imageFields` array, then it can be used. You will then need to upload the image using the file manager before using it in the request. See the [Uploading Images](Other SDL Features/Uploading Images) section for more information.
+If you wish to use an image, you should check the @![iOS]`sdlManager.systemCapabilityManager.defaultMainWindowCapability.imageFields`!@@![android, javaSE, javaEE]`sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getImageFields();`!@ for an `imageField.name` of `vrHelpItem` to see if that image is supported. If `vrHelpItem` is in the `imageFields` array, then it can be used. You will then need to upload the image using the file manager before using it in the request. See the [Uploading Images](Other SDL Features/Uploading Images) section for more information.
 
 @![iOS]
 ##### Objective-C
