@@ -204,6 +204,7 @@ let climateModuleLocation = firstClimateModule.moduleInfo.location;
 
 @![android,javaEE,javaSE]
 ```java
+// Get the first climate module's information
 ClimateControlCapabilities firstClimateModule = <#Remote Control Capabilities#>.getClimateControlCapabilities().get(0);
 
 String climateModuleId = firstClimateModule.getModuleInfo().getModuleId();
@@ -411,6 +412,7 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_INTERIOR_VEHICLE_DATA, new
 ```
 
 After you subscribe to the `InteriorVehicleDataNotification` you must also subscribe to the module you wish to receive updates for. Subscribing to a module will send a notification when that particular module is changed.
+
 
 ###### RPC < v6.0
 ```java
@@ -675,6 +677,17 @@ ModuleData moduleData = new ModuleData(ModuleType.CLIMATE);
 moduleData.setClimateControlData(climateControlData);
 
 SetInteriorVehicleData setInteriorVehicleData = new SetInteriorVehicleData(moduleData);
+setInteriorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        <#Code#>
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        <#Handle Error#>
+    }
+});
 sdlManager.sendRPC(setInteriorVehicleData);
 ```
 
@@ -699,6 +712,17 @@ moduleData.setModuleId("<#ModuleID#>");
 moduleData.setClimateControlData(climateControlData);
 
 SetInteriorVehicleData setInteriorVehicleData = new SetInteriorVehicleData(moduleData);
+setInteriorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        <#Code#>
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        <#Handle Error#>
+    }
+});
 sdlManager.sendRPC(setInteriorVehicleData);
 ```
 !@
@@ -755,6 +779,17 @@ sdlManager.send(request: buttonPress) { (request, response, error) in
 ###### RPC < 6.0
 ```java
 ButtonPress buttonPress = new ButtonPress(ModuleType.RADIO, ButtonName.EJECT, ButtonPressMode.SHORT);
+buttonPress.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        <#Code#>
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        <#Handle Error#>
+    }
+});
 sdlManager.sendRPC(buttonPress);
 ```
 
@@ -762,6 +797,17 @@ sdlManager.sendRPC(buttonPress);
 ```java
 ButtonPress buttonPress = new ButtonPress(ModuleType.RADIO, ButtonName.EJECT, ButtonPressMode.SHORT);
 buttonPress.setModuleId("<#ModuleID#>");
+buttonPress.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        <#Code#>
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        <#Handle Error#>
+    }
+});
 sdlManager.sendRPC(buttonPress);
 ```
 !@
