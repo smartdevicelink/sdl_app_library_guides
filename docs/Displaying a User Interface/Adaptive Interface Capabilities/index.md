@@ -33,11 +33,14 @@ The following properties are deprecated on SDL @![iOS]iOS 6.4!@@![android, javaS
 ### Image Specifics
 Images may be formatted as PNG, JPEG, or BMP. You can find which image types are supported in @![iOS]`SDLManager.systemCapabilityManager.defaultMainWindowCapability.imageTypeSupported`!@@![android, javaSE, javaEE]`sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getImageFields();`!@. 
 
-Because the head unit connection is often relatively slow (especially over Bluetooth), you should take care about the size of your images to ensure that they are not much bigger than they need to be. If an image is uploaded that is larger than the supported size, that image will be scaled down by Core. All image sizes are available from the @![iOS]`SDLManager.systemCapabilityManager.defaultMainWindowCapability.imageFields[<#item#>].imageResolution`!@@![android, javaSE, javaEE]
+Because the head unit connection is often relatively slow (especially over Bluetooth), you should take care about the size of your images to ensure that they are not much bigger than they need to be. If an image is uploaded that is larger than the supported size, that image will be scaled down by Core. All image sizes are available from the @![iOS]`SDLManager.systemCapabilityManager.defaultMainWindowCapability.imageFields[<#item#>].imageResolution`!@
+@![android, javaSE, javaEE]
 ```java
 ImageField field = sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getImageFields().get(<#index#>);
 ImageResolution resolution = field.getImageResolution();
-```!@ property once the connection has started successfully.
+```
+!@ 
+property once the connection has started successfully.
 
 #### Example Image Sizes
 Below is a table with example image sizes. Check the `SystemCapabilityManager` for the exact image sizes desired by the system you are connecting to. The connected system should be able to scale down larger sizes, but if the image you are sending is much larger than desired, then performance will be impacted.
