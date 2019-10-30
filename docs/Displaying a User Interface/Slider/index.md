@@ -98,6 +98,7 @@ sdlSlider.sliderHeader = "This is a Header"
 
 @![android,javaSE,javaEE]
 ```java
+// Max length 500 chars
 slider.setSliderHeader("This is a Header");
 ```
 !@
@@ -210,6 +211,7 @@ slider.setOnRPCResponseListener(new OnRPCResponseListener() {
         Log.e(TAG, "onError: " + resultCode + " | Info: " + info);
     }
 });
+sdlManager.sendRPC(slider);
 ```
 !@
 
