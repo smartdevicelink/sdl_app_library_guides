@@ -37,8 +37,7 @@ Alert alert = new Alert();
 alert.setAlertText1("Line 1");
 alert.setAlertText2("Line 2");
 alert.setAlertText3("Line 3");
-
-//TODO: add cancel interaction information
+alert.setCancelID(<#Integer>);
 ```
 !@
 
@@ -82,11 +81,6 @@ alert.softButtons = [button1, button2]
 
 @![android,javaSE,javaEE]
 ```java
-Alert alert = new Alert();
-alert.setAlertText1("Line 1");
-alert.setAlertText2("Line 2");
-alert.setAlertText3("Line 3");
-
 // Soft buttons
 final int softButtonId = 123; // Set it to any unique ID
 SoftButton okButton = new SoftButton(SoftButtonType.SBT_TEXT, softButtonId);
@@ -244,7 +238,7 @@ alert.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
       if (response.getSuccess()){
-        Log.i(TAG, "Alert was dismissed successfully");
+        Log.i(TAG, "Alert was shown successfully");
       }
     }
 

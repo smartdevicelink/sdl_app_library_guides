@@ -265,7 +265,7 @@ choiceSet.cancel()
 
 @![android, javaSE, javaEE]
 ```java
-// ToDo - add cancel choice set
+choiceSet.cancel();
 ```
 !@
 
@@ -296,7 +296,7 @@ let cancelID = sdlManager.screenManager.presentKeyboard(withInitialText: <#Strin
 
 @![android, javaSE, javaEE]
 ```java
-sdlManager.getScreenManager().presentKeyboard("Initial text", null, keyboardListener);
+int cancelId = sdlManager.getScreenManager().presentKeyboard("Initial text", null, keyboardListener);
 ```
 !@
 
@@ -462,7 +462,7 @@ sdlManager.screenManager.dismissKeyboard(withCancelID: cancelID)
 
 @![android, javaSE, javaEE]
 ```java
-// ToDo - add dismiss keyboard logic
+sdlManager.getScreenManager().dismissKeyboard(cancelId);
 ```
 !@
 

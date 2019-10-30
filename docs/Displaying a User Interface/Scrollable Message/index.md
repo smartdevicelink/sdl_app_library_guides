@@ -105,6 +105,9 @@ scrollableMessage.setScrollableMessageBody(scrollableMessageText);
 scrollableMessage.setTimeout(50000);
 scrollableMessage.setSoftButtons(softButtonList);
 
+// Set cancelId
+scrollableMessage.setCancelID(<#Integer>);
+
 // Send the scrollable message
 sdlManager.sendRPC(scrollableMessage);
 ```

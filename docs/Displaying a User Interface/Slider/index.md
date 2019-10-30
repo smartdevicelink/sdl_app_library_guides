@@ -33,28 +33,7 @@ let sdlSlider = SDLSlider()
 
 @![android,javaSE,javaEE]
 ```java
-// TODO: Move to sections
-
-//Create a slider
-Slider slider = new Slider(5, 1, "This is a Header");
-
-List<String> footer = Collections.singletonList("Static Footer");
-slider.setSliderFooter(footer);
-slider.setOnRPCResponseListener(new OnRPCResponseListener() {
-    @Override
-    public void onResponse(int correlationId, RPCResponse response) {
-        SliderResponse sliderResponse = (SliderResponse) response;
-        Log.i(TAG, "Slider Position Set: "+ sliderResponse.getSliderPosition());
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
-    }
-});
-
-//Send Request
-sdlManager.sendRPC(slider);
+Slider slider = new Slider();
 ```
 !@
 
@@ -74,7 +53,10 @@ sdlSlider.numTicks = 5
 !@
 
 @![android,javaSE,javaEE]
-`TODO: add info`
+```java
+// Must be a number between 2 and 26
+slider.setNumTicks(5);
+```
 !@
 
 ### Position 
@@ -93,7 +75,10 @@ sdlSlider.position = 1
 !@
 
 @![android,javaSE,javaEE]
-`TODO: add info`
+```java
+// Must be a number between 1 and 26
+slider.setPosition(1);
+```
 !@
 
 ### Header 
@@ -112,7 +97,9 @@ sdlSlider.sliderHeader = "This is a Header"
 !@
 
 @![android,javaSE,javaEE]
-`TODO: add info`
+```java
+slider.setSliderHeader("This is a Header");
+```
 !@
 
 ### Static Footer
@@ -131,7 +118,10 @@ sdlSlider.sliderFooter = ["Static Footer"]
 !@
 
 @![android,javaSE,javaEE]
-`TODO: add info`
+```java
+// Max length 500 chars
+slider.setSliderFooter(Collections.singletonList("Static Footer"));
+```
 !@
 
 ### Dynamic Footer
@@ -153,7 +143,10 @@ sdlSlider.sliderFooter = footers
 !@
 
 @![android,javaSE,javaEE]
-`TODO: add info`
+```java
+// Array length 1 - 26, Max length 500 chars
+slider.setSliderFooter(Arrays.asList("Footer 1","Footer 2","Footer 3"));
+```
 !@
 
 ### Cancel ID
@@ -170,7 +163,9 @@ sdlSlider.cancelID = 45
 !@
 
 @![android,javaSE,javaEE]
- `TODO: add info`
+```java
+slider.setCancelID(45);
+```
 !@
 
 ## Show the Slider
@@ -202,7 +197,20 @@ manager.send(request: sdlSlider, responseHandler: { (req, res, err) in
 !@
 
 @![android,javaSE,javaEE]
- `TODO: add info`
+```java
+slider.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        SliderResponse sliderResponse = (SliderResponse) response;
+        Log.i(TAG, "Slider Position Set: " + sliderResponse.getSliderPosition());
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info) {
+        Log.e(TAG, "onError: " + resultCode + " | Info: " + info);
+    }
+});
+```
 !@
 
 ## Dismissing a Slider (RPC v6.0+)
