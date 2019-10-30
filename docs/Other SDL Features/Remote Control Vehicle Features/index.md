@@ -397,57 +397,6 @@ sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
 
 @![android, javaSE, javaEE]
 ```java
-
-```
-!@
-
-#### Getting One-Time Data
-To get data from a module without subscribing send a @![iOS]`SDLGetInteriorVehicleData`!@@![android, javaSE, javaEE]`GetInteriorVehicleData`!@ request with the `subscribe` flag set to `false`.
-
-@![iOS]
-##### Objective-C
-###### RPC < v6.0
-```objc
-SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData alloc] initWithModuleType:SDLModuleTypeRadio];
-[self.sdlManager sendRequest:getInteriorVehicleData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    SDLGetInteriorVehicleDataResponse *dataResponse = (SDLGetInteriorVehicleDataResponse *)response;
-    // This can now be used to retrieve data
-}];
-```
-
-###### RPC v6.0+
-```objc
-SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData alloc] initWithModuleType:SDLModuleTypeRadio moduleId:@"<#ModuleID#>"];
-[self.sdlManager sendRequest:getInteriorVehicleData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    SDLGetInteriorVehicleDataResponse *dataResponse = (SDLGetInteriorVehicleDataResponse *)response;
-    // This can now be used to retrieve data
-}];
-```
-
-##### Swift
-###### RPC < v6.0
-```swift
-let getInteriorVehicleData = SDLGetInteriorVehicleData(moduleType: .radio)
-sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
-    guard let response = res as? SDLGetInteriorVehicleDataResponse else { return }
-    // This can now be used to retrieve data
-    <#Code#>
-}
-```
-
-###### RPC v6.0+
-```objc
-let getInteriorVehicleData =  SDLGetInteriorVehicleData(moduleType: .radio, moduleId: <#ModuleID#>)
-sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
-    guard let response = res as? SDLGetInteriorVehicleDataResponse else { return }
-    // This can now be used to retrieve data
-    <#Code#>
-}
-```
-!@
-
-@![android, javaEE, javaSE]
-```java
 sdlManager.addOnRPCNotificationListener(FunctionID.ON_INTERIOR_VEHICLE_DATA, new OnRPCNotificationListener() {
     @Override
     public void onNotified(RPCNotification notification) {
@@ -498,6 +447,91 @@ getInteriorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
     }
 });
 sdlManager.sendRPC(getInteriorVehicleData);
+```
+!@
+
+#### Getting One-Time Data
+To get data from a module without subscribing send a @![iOS]`SDLGetInteriorVehicleData`!@@![android, javaSE, javaEE]`GetInteriorVehicleData`!@ request with the `subscribe` flag set to `false`.
+
+@![iOS]
+##### Objective-C
+###### RPC < v6.0
+```objc
+SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData alloc] initWithModuleType:SDLModuleTypeRadio];
+[self.sdlManager sendRequest:getInteriorVehicleData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+    SDLGetInteriorVehicleDataResponse *dataResponse = (SDLGetInteriorVehicleDataResponse *)response;
+    // This can now be used to retrieve data
+}];
+```
+
+###### RPC v6.0+
+```objc
+SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData alloc] initWithModuleType:SDLModuleTypeRadio moduleId:@"<#ModuleID#>"];
+[self.sdlManager sendRequest:getInteriorVehicleData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+    SDLGetInteriorVehicleDataResponse *dataResponse = (SDLGetInteriorVehicleDataResponse *)response;
+    // This can now be used to retrieve data
+}];
+```
+
+##### Swift
+###### RPC < v6.0
+```swift
+let getInteriorVehicleData = SDLGetInteriorVehicleData(moduleType: .radio)
+sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
+    guard let response = res as? SDLGetInteriorVehicleDataResponse else { return }
+    // This can now be used to retrieve data
+    <#Code#>
+}
+```
+
+###### RPC v6.0+
+```objc
+let getInteriorVehicleData =  SDLGetInteriorVehicleData(moduleType: .radio, moduleId: <#ModuleID#>)
+sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
+    guard let response = res as? SDLGetInteriorVehicleDataResponse else { return }
+    // This can now be used to retrieve data
+    <#Code#>
+}
+```
+!@
+
+@![android, javaEE, javaSE]
+
+###### RPC < v6.0
+```java
+GetInteriorVehicleData interiorVehicleData = new GetInteriorVehicleData(ModuleType.RADIO);
+interiorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        // This can now be used to retrieve data
+        <#Code#>
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        <#Handle Error#>
+    }
+});
+sdlManager.sendRPC(interiorVehicleData);
+```
+
+###### RPC 6.0+
+```java
+GetInteriorVehicleData interiorVehicleData = new GetInteriorVehicleData(ModuleType.RADIO);
+interiorVehicleData.setModuleId("<#ModuleID#>");
+interiorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        // This can now be used to retrieve data
+        <#Code#>
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        <#Handle Error#>
+    }
+});
+sdlManager.sendRPC(interiorVehicleData);
 ```
 !@
 
@@ -619,6 +653,7 @@ sdlManager.send(request: setInteriorVehicleData) { (request, response, error) in
 !@
 
 @![android, javaSE, javaEE]
+
 ###### RPC < v6.0
 ```java
 
@@ -716,11 +751,13 @@ sdlManager.send(request: buttonPress) { (request, response, error) in
 !@
 
 @![android, javaSE, javaEE]
+
 ###### RPC < 6.0
 ```java
 ButtonPress buttonPress = new ButtonPress(ModuleType.RADIO, ButtonName.EJECT, ButtonPressMode.SHORT);
 sdlManager.sendRPC(buttonPress);
 ```
+
 ###### RPC 6.0+
 ```java
 ButtonPress buttonPress = new ButtonPress(ModuleType.RADIO, ButtonName.EJECT, ButtonPressMode.SHORT);
