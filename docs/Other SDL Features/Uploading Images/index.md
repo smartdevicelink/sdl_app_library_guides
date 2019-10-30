@@ -49,20 +49,8 @@ sdlManager.start { [weak self] (success, error) in
 
 @![android,javaSE,javaEE]
 ```java
-// TODO: Update
-sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.DISPLAY, new OnSystemCapabilityListener(){
-
-   @Override
-   public void onCapabilityRetrieved(Object capability){
-      DisplayCapabilities dispCapability = (DisplayCapabilities) capability;
-      boolean graphicsSupported = dispCapability.getGraphicSupported();
-   }
-
-   @Override
-   public void onError(String info){
-      Log.i(TAG, "Capability could not be retrieved: "+ info);
-   }
- });
+List<ImageField> imageFields = sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getImageFields();
+boolean imagesSuported = (imageFields.size() > 0);
 ```
 !@
 

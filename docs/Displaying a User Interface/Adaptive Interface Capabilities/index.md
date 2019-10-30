@@ -1,12 +1,12 @@
 # Adaptive Interface Capabilities
 Since each car manufacturer has different user interface style guidelines, the number of lines of text, soft and hard buttons, and images supported will vary between different types of head units. The system will send information to your app about its capabilities for various user interface elements. You should use this information to create the user interface of your SDL app.
 
-You can access these properties on the @![iOS]`SDLManager.systemCapabilityManager`!@@![android, javaSE, javaEE]`SdlManager.systemCapabilityManager`!@ instance.
+You can access these properties on the @![iOS]`SDLManager.systemCapabilityManager`!@@![android, javaSE, javaEE]`sdlManager.getSystemCapabilityManager`!@ instance.
 
 ## System Capability Manager Properties
 | Parameters  |  Description |
 | ------------- | ------------- |
-| @![iOS]displays!@@![android, javaSE, javaEE]`// TODO`!@ | Specifies display related information. The primary display will be the first element within the array. Windows within that display are different places that the app could be displayed (such as the main app window and various widget windows). |
+| @![iOS]displays!@@![android, javaSE, javaEE]SystemCapabilityType.DISPLAYS!@ | Specifies display related information. The primary display will be the first element within the array. Windows within that display are different places that the app could be displayed (such as the main app window and various widget windows). |
 | @![iOS]hmiZoneCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.HMI_ZONE!@ | Specifies HMI Zones in the vehicle. There may be a HMI available for back seat passengers as well as front seat passengers. |
 | @![iOS]speechCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.SPEECH!@ | Contains information about TTS capabilities on the SDL platform. Platforms may support text, SAPI phonemes, LH PLUS phonemes, pre-recorded speech, and silence. |
 | prerecordedSpeechCapabilities | @![iOS]A list of pre-recorded sounds you can use in your app. Sounds may include a help, initial, listen, positive, or a negative jingle.!@@![android, javaSE, javaEE]Currently only available in the SDL_iOS library!@ |
@@ -31,9 +31,13 @@ The following properties are deprecated on SDL @![iOS]iOS 6.4!@@![android, javaS
 | @![iOS]presetBankCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.PRESET_BANK!@ | If returned, the platform supports custom on-screen presets. |
 
 ### Image Specifics
-Images may be formatted as PNG, JPEG, or BMP. You can find which image types are supported in @![iOS]`SDLManager.systemCapabilityManager.defaultMainWindowCapability.imageTypeSupported`!@@![android, javaSE, javaEE]`// TODO`!@. 
+Images may be formatted as PNG, JPEG, or BMP. You can find which image types are supported in @![iOS]`SDLManager.systemCapabilityManager.defaultMainWindowCapability.imageTypeSupported`!@@![android, javaSE, javaEE]`sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getImageFields();`!@. 
 
-Because the head unit connection is often relatively slow (especially over Bluetooth), you should take care about the size of your images to ensure that they are not much bigger than they need to be. If an image is uploaded that is larger than the supported size, that image will be scaled down by Core. All image sizes are available from the @![iOS]`SDLManager.systemCapabilityManager.defaultMainWindowCapability.imageFields[<#item#>].imageResolution`!@@![android, javaSE, javaEE]`// TODO`!@ property once the connection has started successfully.
+Because the head unit connection is often relatively slow (especially over Bluetooth), you should take care about the size of your images to ensure that they are not much bigger than they need to be. If an image is uploaded that is larger than the supported size, that image will be scaled down by Core. All image sizes are available from the @![iOS]`SDLManager.systemCapabilityManager.defaultMainWindowCapability.imageFields[<#item#>].imageResolution`!@@![android, javaSE, javaEE]
+```java
+ImageField field = sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getImageFields().get(<#index#>);
+ImageResolution resolution = field.getImageResolution();
+```!@ property once the connection has started successfully.
 
 #### Example Image Sizes
 Below is a table with example image sizes. Check the `SystemCapabilityManager` for the exact image sizes desired by the system you are connecting to. The connected system should be able to scale down larger sizes, but if the image you are sending is much larger than desired, then performance will be impacted.
