@@ -98,6 +98,20 @@
             ]
         },
         {
+            "name": "Customizing Look and Functionality",
+            "navigation": [
+                {
+                    "name": "Customizing the Template"
+                },
+                {
+                    "name": "Customizing the Keyboard"
+                },
+                {
+                    "name": "Customizing Help Prompts"
+                }
+            ]
+        },
+        {
             "name": "Speech and Audio",
             "navigation": [
                 {
