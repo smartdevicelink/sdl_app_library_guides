@@ -108,7 +108,7 @@ sdlManager.sendRPC(subscribeButtonRequest);
 
 ![Ford - Preset Soft Buttons List](assets/ford_sync_presetOptions.png)
 
-Preset buttons may not work in the same way as seen on the above screenshots on all head units. Some head units may have physical buttons on their console and these will trigger the subscribed button. You can check if an HMI supports subscribing to preset buttons, and how many, by calling the @![iOS] `SDLManager.systemCapabilityManager.displayCapabilities.numCustomPresetsAvailable`!@@![android,javaSE, javaEE] // TODO !@ property.
+Preset buttons may not work in the same way as seen on the above screenshots on all head units. Some head units may have physical buttons on their console and these will trigger the subscribed button. You can check if an HMI supports subscribing to preset buttons, and how many, by calling the @![iOS] `SDLManager.systemCapabilityManager.displayCapabilities.numCustomPresetsAvailable`!@ @![android,javaSE, javaEE] sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getNumCustomPresetsAvailable() !@.
 @![iOS]
 ##### Objective-C
 ```objc
@@ -149,7 +149,37 @@ self.sdlManager.send([preset1, preset2], progressHandler: nil, completionHandler
 !@
 
 @![android,javaSE,javaEE]
-```TODO: Add example```
+```java
+sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_EVENT, new OnRPCNotificationListener() {
+    @Override
+    public void onNotified(RPCNotification notification) {
+        OnButtonPress onButtonPressNotification = (OnButtonPress) notification;
+        switch (onButtonPressNotification.getButtonName()) {
+            case PRESET_1:
+                break;
+            case PRESET_2:
+                break;
+        }
+    }
+});
+
+sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNotificationListener() {
+    @Override
+    public void onNotified(RPCNotification notification) {
+        OnButtonPress onButtonPressNotification = (OnButtonPress) notification;
+        switch (onButtonPressNotification.getButtonName()) {
+            case PRESET_1:
+                break;
+            case PRESET_2:
+                break;
+        }
+    }
+});
+
+SubscribeButton preset1 = new SubscribeButton(ButtonName.PRESET_1);
+SubscribeButton preset2 = new SubscribeButton(ButtonName.PRESET_2);
+sdlManager.sendRPCs(Arrays.asList(preset1, preset2), null);
+```
 !@
 
 
