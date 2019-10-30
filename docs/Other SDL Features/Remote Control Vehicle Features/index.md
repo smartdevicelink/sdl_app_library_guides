@@ -309,6 +309,7 @@ seatLocation.setOnRPCResponseListener(new OnRPCResponseListener() {
         <#Handle Error#>
     }
 });
+sdlManager.sendRPC(seatLocation);
 ```
 !@
 
@@ -477,6 +478,7 @@ getInteriorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
         <#Handle Error#>
     }
 });
+sdlManager.sendRPC(getInteriorVehicleData);
 ```
 
 ###### RPC v6.0+
@@ -495,6 +497,7 @@ getInteriorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
         <#Handle Error#>
     }
 });
+sdlManager.sendRPC(getInteriorVehicleData);
 ```
 !@
 
@@ -537,7 +540,21 @@ sdlManager.send(request: getInteriorVehicleDataConsent , responseHandler: { (req
 
 @![android, javaEE, javaSE]
 ```java
-// ToDo - Add example
+GetInteriorVehicleDataConsent getInteriorVehicleDataConsent = new GetInteriorVehicleDataConsent(<#ModuleType#>,<#ModuleIDs#>,);
+getInteriorVehicleDataConsent.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        GetInteriorVehicleDataConsentResponse getInteriorVehicleDataConsentResponse = (GetInteriorVehicleDataConsentResponse) response;
+        List<Boolean> allowed = getInteriorVehicleDataConsentResponse.getAllowances();
+            <#Allowed is an array of true or false values#>
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        <#Handle Error#>
+    }
+});
+sdlManager.sendRPC(getInteriorVehicleDataConsent);
 ```
 !@
 
@@ -602,8 +619,8 @@ sdlManager.send(request: setInteriorVehicleData) { (request, response, error) in
 !@
 
 @![android, javaSE, javaEE]
+###### RPC < v6.0
 ```java
-// ToDo - Updated if needed
 
 Temperature temp = new Temperature(TemperatureUnit.FAHRENHEIT, 74.1f);
 
@@ -620,6 +637,30 @@ climateControlData.setVentilationMode(VentilationMode.BOTH);
 climateControlData.setDesiredTemperature(temp);
 
 ModuleData moduleData = new ModuleData(ModuleType.CLIMATE);
+moduleData.setClimateControlData(climateControlData);
+
+SetInteriorVehicleData setInteriorVehicleData = new SetInteriorVehicleData(moduleData);
+sdlManager.sendRPC(setInteriorVehicleData);
+```
+
+###### RPC 6.0+
+```java
+Temperature temp = new Temperature(TemperatureUnit.FAHRENHEIT, 74.1f);
+
+ClimateControlData climateControlData = new ClimateControlData();
+climateControlData.setAcEnable(true);
+climateControlData.setAcMaxEnable(true);
+climateControlData.setAutoModeEnable(false);
+climateControlData.setCirculateAirEnable(true);
+climateControlData.setCurrentTemperature(temp);
+climateControlData.setDefrostZone(DefrostZone.FRONT);
+climateControlData.setDualModeEnable(true);
+climateControlData.setFanSpeed(2);
+climateControlData.setVentilationMode(VentilationMode.BOTH);
+climateControlData.setDesiredTemperature(temp);
+
+ModuleData moduleData = new ModuleData(ModuleType.CLIMATE);
+moduleData.setModuleId("<#ModuleID#>");
 moduleData.setClimateControlData(climateControlData);
 
 SetInteriorVehicleData setInteriorVehicleData = new SetInteriorVehicleData(moduleData);
@@ -675,17 +716,19 @@ sdlManager.send(request: buttonPress) { (request, response, error) in
 !@
 
 @![android, javaSE, javaEE]
+###### RPC < 6.0
 ```java
 ButtonPress buttonPress = new ButtonPress(ModuleType.RADIO, ButtonName.EJECT, ButtonPressMode.SHORT);
 sdlManager.sendRPC(buttonPress);
 ```
-!@
-
-@![android,javaEE,javaSE]
+###### RPC 6.0+
 ```java
-// ToDo - Add example
+ButtonPress buttonPress = new ButtonPress(ModuleType.RADIO, ButtonName.EJECT, ButtonPressMode.SHORT);
+buttonPress.setModuleId("<#ModuleID#>");
+sdlManager.sendRPC(buttonPress);
 ```
 !@
+
 
 #### Releasing the Module (RPC v6.0+)
 When the user no longer needs control over a module, you should release the module so other users can control it. If you do not release the module, other users who would otherwise be able to control the module may be rejected from doing so.
@@ -712,6 +755,19 @@ sdlManager.send(request: releaseInteriorVehicleDataModule) { (request, response,
 
 @![android, javaEE, javaSE]
 ```java
-// ToDo - Add example
+ReleaseInteriorVehicleDataModule releaseInteriorVehicleDataModule = new ReleaseInteriorVehicleDataModule(<#ModuleType#>);
+releaseInteriorVehicleDataModule.setModuleId(<#ModuleID#>);
+releaseInteriorVehicleDataModule.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        <#Module Was Released#>
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        <#Handle Error#>
+    }
+});
+sdlManager.sendRPC(releaseInteriorVehicleDataModule);
 ```
 !@
