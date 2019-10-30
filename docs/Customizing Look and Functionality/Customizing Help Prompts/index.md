@@ -50,7 +50,28 @@ sdlManager.send(request: setGlobals) { (request, response, error) in
 
 @![android, javaSE, javaEE]
 ```java
-// TODO
+SetGlobalProperties setGlobalProperties = new SetGlobalProperties();
+setGlobalProperties.setVrHelpTitle("What Can I Say?");
+
+VrHelpItem item1 = new VrHelpItem("Show Artists", 1);
+item1.setImage(<#image#>); // a previously uploaded image or null
+
+VrHelpItem item2 = new VrHelpItem("Show Albums", 2);
+item2.setImage(<#image#>); // a previously uploaded image or null
+
+setGlobalProperties.setVrHelp(Arrays.asList(item1, item2));
+setGlobalProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        // The help menu is updated
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        <#Handle Error#>
+    }
+});
+sdlManager.sendRPC(setGlobalProperties);
 ```
 !@
 
@@ -91,7 +112,20 @@ sdlManager.send(request: setGlobals) { (request, response, error) in
 
 @![android, javaSE, javaEE]
 ```java
-// TODO
+SetGlobalProperties setGlobalProperties = new SetGlobalProperties();
+setGlobalProperties.setHelpPrompt(TTSChunkFactory.createSimpleTTSChunks("Your custom help prompt"));
+setGlobalProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        // The help prompt is updated
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        <#Handle Error#>
+    }
+});
+sdlManager.sendRPC(setGlobalProperties);
 ```
 !@
 
@@ -130,7 +164,20 @@ sdlManager.send(request: setGlobals) { (request, response, error) in
 
 @![android, javaSE, javaEE]
 ```java
-// TODO
+SetGlobalProperties setGlobalProperties = new SetGlobalProperties();
+setGlobalProperties.setTimeoutPrompt(TTSChunkFactory.createSimpleTTSChunks("Your custom help prompt"));
+setGlobalProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        // The timeout prompt is updated
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        <#Handle Error#>
+    }
+});
+sdlManager.sendRPC(setGlobalProperties);
 ```
 !@
 
@@ -181,6 +228,27 @@ sdlManager.send(request: resetGlobals) { (req, res, err) in
 
 @![android, javaSE, javaEE]
 ```java
-// TODO
+// Reset the help menu
+ResetGlobalProperties resetGlobalProperties = new ResetGlobalProperties(Arrays.asList(GlobalProperty.VRHELPITEMS, GlobalProperty.VRHELPTITLE));
+
+// Reset the menu icon and title
+ResetGlobalProperties resetGlobalProperties = new ResetGlobalProperties(Arrays.asList(GlobalProperty.MENUICON, GlobalProperty.MENUNAME));
+
+// Reset spoken prompts
+ResetGlobalProperties resetGlobalProperties = new ResetGlobalProperties(Arrays.asList(GlobalProperty.HELPPROMPT, GlobalProperty.TIMEOUTPROMPT));
+
+// To send any one of these, use the the typical format:
+resetGlobalProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        // The global properties are reset
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        <#Handle Error#>
+    }
+});
+sdlManager.sendRPC(resetGlobalProperties);
 ```
 !@
