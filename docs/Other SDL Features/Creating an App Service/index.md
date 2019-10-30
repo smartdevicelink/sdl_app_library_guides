@@ -15,7 +15,7 @@ Using an app service is covered [in another guide](Other SDL Features/Using App 
 Apps are able to declare that they provide an app service by publishing an app service manifest. Three types of app services are currently available and more will be made available over time. The currently available types are: Media, Navigation, and Weather. An app may publish multiple services (one for each of the different service types) if desired.
 
 ## Publishing an App Service
-Publishing a service is a multi-step process. First, you need to create your app service manifest. Second, you will publish your app service to the module. Third, you will publish the service data using `OnAppServiceData`. Fourth, you must listen for data requests and respond accordingly. Fifth, if your app service supports handling of RPCs related to your service you must listen for these RPC requests and handle them accordingly. Sixth, optionally, you can support URI-based app actions. Finally, if necessary, you can you can update or delete your app service manifest.
+Publishing a service is a multi-step process. First, you need to create your app service manifest. Second, you will publish your app service to the module. Third, you will publish the service data using `OnAppServiceData`. Fourth, you must listen for data requests and respond accordingly. Fifth, if your app service supports handling of RPCs related to your service you must listen for these RPC requests and handle them accordingly. Sixth, optionally, you can support URI-based app actions. Finally, if necessary, you can you update or delete your app service manifest.
 
 ### 1. Creating an App Service Manifest
 The first step to publishing an app service is to create an @![iOS]`SDLAppServiceManifest`!@ @![android,javaSE,javaEE]`AppServiceManifest`!@ object. There is a set of generic parameters you will need to fill out as well as service type specific parameters based on the app service type you are creating.
@@ -755,8 +755,8 @@ sdlManager.send(publishServiceRequest)
 
 @![android,javaSE,javaEE]
 ```java
-AppServiceManifest manifest = new AppServiceManifest(AppServiceType.WEATHER);
-manifest.setWeatherServiceManifest("Updated weather service manifest");
+AppServiceManifest manifest = new AppServiceManifest(AppServiceType.WEATHER.toString());
+manifest.setWeatherServiceManifest("<#Updated weather service manifest>");
 
 PublishAppService publishServiceRequest = new PublishAppService(manifest);
 sdlManager.sendRPC(publishServiceRequest);
@@ -780,7 +780,7 @@ sdlManager.send(unpublishAppService)
 
 @![android,javaSE,javaEE]
 ```java
-UnpublishAppService unpublishAppService = new UnpublishAppService("The serviceID of the service to unpublish");
+UnpublishAppService unpublishAppService = new UnpublishAppService("<#The serviceID of the service to unpublish>");
 sdlManager.sendRPC(unpublishAppService);
 ```
 !@
