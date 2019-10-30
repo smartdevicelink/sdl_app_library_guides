@@ -32,7 +32,23 @@ lifecycleConfiguration.nightColorScheme = SDLTemplateColorScheme(primaryRGBColor
 !@
 @![android, javaSE, javaEE]
 ```java
-// TODO
+// Set color schemes
+RGBColor green = new RGBColor(126, 188, 121);
+RGBColor white = new RGBColor(249, 251, 254);
+RGBColor grey = new RGBColor(186, 198, 210);
+RGBColor darkGrey = new RGBColor(57, 78, 96);
+
+TemplateColorScheme dayColorScheme = new TemplateColorScheme();
+dayColorScheme.setBackgroundColor(white);
+dayColorScheme.setPrimaryColor(green);
+dayColorScheme.setSecondaryColor(grey);
+builder.setDayColorScheme(dayColorScheme);
+
+TemplateColorScheme nightColorScheme = new TemplateColorScheme();
+nightColorScheme.setBackgroundColor(white);
+nightColorScheme.setPrimaryColor(green);
+nightColorScheme.setSecondaryColor(darkGrey);
+builder.setDayColorScheme(nightColorScheme);
 ```
 !@
 
@@ -70,7 +86,40 @@ setLayout.nightColorScheme = SDLTemplateColorScheme(primaryRGBColor: green, seco
 !@
 @![android, javaSE, javaEE]
 ```java
-// TODO
+// Set color schemes
+RGBColor green = new RGBColor(126, 188, 121);
+RGBColor white = new RGBColor(249, 251, 254);
+RGBColor grey = new RGBColor(186, 198, 210);
+RGBColor darkGrey = new RGBColor(57, 78, 96);
+
+TemplateColorScheme dayColorScheme = new TemplateColorScheme();
+dayColorScheme.setBackgroundColor(white);
+dayColorScheme.setPrimaryColor(green);
+dayColorScheme.setSecondaryColor(grey);
+builder.setDayColorScheme(dayColorScheme);
+
+TemplateColorScheme nightColorScheme = new TemplateColorScheme();
+nightColorScheme.setBackgroundColor(white);
+nightColorScheme.setPrimaryColor(green);
+nightColorScheme.setSecondaryColor(darkGrey);
+
+SetDisplayLayout setDisplayLayout = new SetDisplayLayout(PredefinedLayout.GRAPHIC_WITH_TEXT.toString());
+setDisplayLayout.setDayColorScheme(dayColorScheme);
+setDisplayLayout.setNightColorScheme(nightColorScheme);
+setDisplayLayout.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        if (response.getSuccess()){
+            // Success
+        }
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        // Handle error
+    }
+});
+sdlManager.sendRPC(setDisplayLayout);
 ```
 !@
 
@@ -114,6 +163,23 @@ sdlManager.send(request: setGlobals) { (request, response, error) in
 !@
 @![android, javaSE, javaEE]
 ```java
-// TODO
+SetGlobalProperties setGlobalProperties = new SetGlobalProperties();
+setGlobalProperties.setMenuTitle("customTitle");
+// The image must be uploaded before referencing the image name here
+setGlobalProperties.setMenuIcon(<#Image#>);
+setGlobalProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        if (response.getSuccess()){
+            // Success
+        }
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        // Handle error
+    }
+});
+sdlManager.sendRPC(setGlobalProperties);
 ```
 !@
