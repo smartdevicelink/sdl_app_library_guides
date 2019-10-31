@@ -1,5 +1,5 @@
 # Video Streaming Menu
-When building a video-streaming navigation application, you can choose to create a custom menu using your own UI or use the built-in SDL menu system. The SDL menu allows you to display a menu structure so users can select menu options or submenus. For more information about the SDL menu system, see [menus](https://smartdevicelink.com/en/guides/iOS/displaying-a-user-interface/main-menu/). It's recommended to use the built-in SDL menu system to have better performance, automatic driver distraction support - such as list limitations and text sizing, and more.
+When building a video-streaming navigation application, you can choose to create a custom menu using your own UI or use the built-in SDL menu system. The SDL menu allows you to display a menu structure so users can select menu options or submenus. For more information about the SDL menu system, see @![iOS][menus](https://smartdevicelink.com/en/guides/iOS/displaying-a-user-interface/main-menu/)!@ @![android, javaSE, javaEE] [menus](guides/android/displaying-a-user-interface/main-menu/) !@. It's recommended to use the built-in SDL menu system to have better performance, automatic driver distraction support - such as list limitations and text sizing, and more.
 
 To open the SDL built-in menu from your video streaming UI, see 'Opening the Built-In Menu' below.
 
