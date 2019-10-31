@@ -41,7 +41,7 @@ You can install this library using [Accio](https://github.com/JamitLabs/Accio), 
 2\. Add the following line to the dependencies array of your package file. We suggest always using the latest release of the SDL library. 
 
 ```swift
-.package(url: "https://github.com/smartdevicelink/sdl_ios.git", .upToNextMajor(from: "6.2.0"),
+.package(url: "https://github.com/smartdevicelink/sdl_ios.git", .upToNextMajor(from: "6.4.0"),
 ```
 
 !!! NOTE
@@ -89,11 +89,11 @@ and replace `{version}` with the desired release version in format of `x.x.x`. T
 
 ### Examples
 
-To compile release 4.9.0, use the following line:
+To compile release 4.10.0, use the following line:
 
 ```
 dependencies {
-    implementation 'com.smartdevicelink:sdl_android:4.9.0'
+    implementation 'com.smartdevicelink:sdl_android:4.10.0'
 }
 ```
 
@@ -132,11 +132,11 @@ and replace `{version}` with the desired release version in format of `x.x.x`. T
 
 ### Examples
 
-To compile release 4.9.0, use the following line:
+To compile release 4.10.0, use the following line:
 
 ```
 dependencies {
-    implementation 'com.smartdevicelink:sdl_java_se:4.9.0'
+    implementation 'com.smartdevicelink:sdl_java_se:4.10.0'
 }
 ```
 
