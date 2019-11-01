@@ -41,20 +41,18 @@ sdlManager.systemCapabilityManager.updateCapabilityType(.navigation) { (error, s
 
 @![android, javaSE, javaEE]
 ```java
-// TODO: Update for GetWayPoints
-
 sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.NAVIGATION, new OnSystemCapabilityListener() {
-	@Override
-	public void onCapabilityRetrieved(Object capability) {
-		NavigationCapability navCapability = (NavigationCapability) capability;
-		Boolean isNavigationSupported = navCapability.getSendLocationEnabled();
-	}
+    @Override
+    public void onCapabilityRetrieved(Object capability) {
+        NavigationCapability navCapability = (NavigationCapability) capability;
+        boolean isNavigationSupported = navCapability != null && navCapability.getWayPointsEnabled();
+    }
 
-	@Override
-	public void onError(String info) {
-		HMICapabilities hmiCapabilities = (HMICapabilities) sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.HMI);
-		Boolean isNavigationSupported = hmiCapabilities.isNavigationAvailable();
-	}
+    @Override
+    public void onError(String info) {
+        HMICapabilities hmiCapabilities = (HMICapabilities) sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.HMI);
+        boolean isNavigationSupported = hmiCapabilities.isNavigationAvailable();
+    }
 });
 ```
 !@
@@ -116,7 +114,33 @@ sdlManager.send(request: subscribeWaypoints) { (request, response, error) in
 @![android, javaSE, javaEE]
 ##### Java
 ```java
-// TODO
+// Create this method to receive the subscription callback
+sdlManager.addOnRPCNotificationListener(FunctionID.ON_WAY_POINT_CHANGE, new OnRPCNotificationListener() {
+    @Override
+    public void onNotified(RPCNotification notification) {
+        OnWayPointChange onWayPointChangeNotification = (OnWayPointChange) notification;
+        //<#Use the waypoint data#>
+    }
+});
+
+// After SDL has started your connection, at whatever point you want to subscribe, send the subscribe RPC
+SubscribeWayPoints subscribeWayPoints = new SubscribeWayPoints();
+subscribeWayPoints.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse rpcResponse) {
+        if (rpcResponse.getSuccess()){
+            // You are now subscribed!
+        } else {
+            // Handle the errors
+        }
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info) {
+        // Handle the errors
+    }
+});
+sdlManager.sendRPC(subscribeWayPoints);
 ```
 !@
 
@@ -163,7 +187,23 @@ sdlManager.send(request: unsubscribeWaypoints) { (request, response, error) in
 @![android, javaSE, javaEE]
 ##### Java
 ```java
-// TODO
+UnsubscribeWayPoints unsubscribeWayPoints = new UnsubscribeWayPoints();
+unsubscribeWayPoints.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse rpcResponse) {
+        if (rpcResponse.getSuccess()){
+            // You are now unsubscribed!
+        } else {
+            // Handle the errors
+        }
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info) {
+        // Handle the errors
+    }
+});
+sdlManager.sendRPC(unsubscribeWayPoints);
 ```
 !@
 
@@ -208,6 +248,23 @@ sdlManager.send(request: getWaypoints) { (request, response, error) in
 @![android, javaSE, javaEE]
 ##### Java
 ```java
-// TODO
+GetWayPoints getWayPoints = new GetWayPoints();
+getWayPoints.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse rpcResponse) {
+        if (rpcResponse.getSuccess()){
+            GetWayPointsResponse getWayPointsResponse = (GetWayPointsResponse) rpcResponse;
+                    <#SOAPBinding.Use the waypoint information#>
+        } else {
+            // Handle the errors
+        }
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info) {
+        // Handle the errors
+    }
+});
+sdlManager.sendRPC(getWayPoints);
 ```
 !@
