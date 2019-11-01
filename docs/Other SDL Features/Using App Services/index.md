@@ -477,7 +477,7 @@ if (weatherServiceData == null || weatherServiceData.getCurrentForecast() == nul
 String currentForecastImageName = weatherServiceData.getCurrentForecast().getWeatherIcon().getValue();
 
 GetFile getFile = new GetFile(currentForecastImageName);
-getFile.setAppServiceId(mediaServiceID);
+getFile.setAppServiceId(<#Service ID>);
 getFile.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
