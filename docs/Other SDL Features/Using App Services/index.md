@@ -467,5 +467,31 @@ sdlManager.send(request: getCurrentForecastImage) { (req, res, err) in
 
 !@
 @![android, javaSE, javaEE]
-// TODO: Add information
+```java
+AppServiceData appServiceData = <#Get the App Service Data#>;
+WeatherServiceData weatherServiceData = appServiceData.getWeatherServiceData();
+if (weatherServiceData == null || weatherServiceData.getCurrentForecast() == null || weatherServiceData.getCurrentForecast().getWeatherIcon() == null) {
+    // The image doesn't exist, exit early
+    return;
+}
+String currentForecastImageName = weatherServiceData.getCurrentForecast().getWeatherIcon().getValue();
+
+GetFile getFile = new GetFile(currentForecastImageName);
+getFile.setAppServiceId(mediaServiceID);
+getFile.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        GetFileResponse getFileResponse = (GetFileResponse) response;
+        byte[] fileData = getFileResponse.getBulkData();
+        SdlArtwork sdlArtwork = new SdlArtwork(fileName, FileType.GRAPHIC_PNG, fileData, false);
+        // Use the sdlArtwork 
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info) {
+        // Something went wrong, examine the resultCode and info
+    }
+});
+sdlManager.sendRPC(getFile);
+```
 !@
