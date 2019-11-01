@@ -138,25 +138,7 @@ let bytesAvailable = sdlManager.fileManager.bytesAvailable
 
 @![android, javaSE, javaEE]
 ```java
-ListFiles listFiles = new ListFiles();
-listFiles.setOnRPCResponseListener(new OnRPCResponseListener() {
-    @Override
-    public void onResponse(int correlationId, RPCResponse response) {
-        if(response.getSuccess()){
-            Integer spaceAvailable = ((ListFilesResponse) response).getSpaceAvailable();
-            Log.i("SdlService", "Space available on Core = " + spaceAvailable);
-        }else{
-            Log.i("SdlService", "Failed to request list of uploaded files.");
-        }
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
-    }
-});
-
-sdlManager.sendRPC(listFiles);
+int bytesAvailable = sdlManager.getFileManager().getBytesAvailable();
 ```
 !@
 

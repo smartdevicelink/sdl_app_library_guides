@@ -312,9 +312,7 @@ return SDLSoftButtonObject(name: "HighlightButton", states: [highlightOn, highli
 !@
 
 @![android,javaSE,javaEE]
-
 ```java
-
 SoftButtonState softButtonState1 = new SoftButtonState("Soft Button State Name", "On", image1Artwork);
 softButtonState1.setHighlighted(true);
 SoftButtonState softButtonState2 = new SoftButtonState("Soft Button State Name 2", "Off", image2Artwork);
