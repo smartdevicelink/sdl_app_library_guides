@@ -7,10 +7,11 @@ The initial configuration of the @![iOS]`SDLManager`!@@![android,javaSE,javaEE]`
 ### What if My App Does Not Support the Head Unit Language?
 If your app does not support the current head unit language, you should decide on a default language to use in your app. All text should be created using this default language. Unfortunately, your VR commands will probably not work as the VR system will not recognize your users' pronunciation.
 
-@![iOS]
-### Checking the Current Head Unit Language
-After starting the `SDLManager` you can check the `registerResponse` property for the head unit's `language` and `hmiDisplayLanguage`. The `language` property gives you the current VR system language; `hmiDisplayLanguage` the current display text language.
 
+### Checking the Current Head Unit Language
+After starting the `SDLManager` you can check the @![iOS]`registerResponse`!@@![android,javaSE,javaEE]`sdlManager.getRegisterAppInterfaceResponse()`!@ property for the head unit's `language` and `hmiDisplayLanguage`. The `language` property gives you the current VR system language; `hmiDisplayLanguage` the current display text language.
+
+@![iOS]
 ##### Objective-C
 ```objc
 SDLLanguage headUnitLanguage = self.sdlManager.registerResponse.language;
@@ -22,14 +23,27 @@ SDLLanguage headUnitHMIDisplayLanguage = self.sdlManager.registerResponse.hmiDis
 let headUnitLanguage = sdlManager.registerResponse?.language
 let headUnitHMIDisplayLanguage = sdlManager.registerResponse?.hmiDisplayLanguage
 ```
+!@
+@![android,javaSE,javaEE]
+```java
+Language headUnitLanguage = sdlManager.getRegisterAppInterfaceResponse().getLanguage();
+Language headUnitHMILanguage = sdlManager.getRegisterAppInterfaceResponse().getHmiDisplayLanguage();
+```
+!@
 
 ## Updating the SDL App Name
 To customize the app name for the head unit's current language, implement the following steps:
 
-1. Set the default `language` in the `SDLLifecycleConfiguration`.
+1. Set the default `language` in the @![iOS]`SDLLifecycleConfiguration`!@@![android,javaSE,javaEE]`Builder`!@.
+@![iOS]
 2. Add all languages your app supports to `languagesSupported` in the `SDLLifecycleConfiguration`.
 3. Implement the `SDLManagerDelegate`'s `managerShouldUpdateLifecycleToLanguage:` method. If the head unit's language is different from the default language and is a supported language, the method will be called with the head unit's current language. Return a `SDLLifecycleConfigurationUpdate` object with the new `appName` and/or `ttsName`.
+!@
+@![android,javaSE,javaEE]
+2. Implement the `sdlManagerListener`'s `managerShouldUpdateLifecycle` method. If the head unit's language is different from the default language and is a supported language, the method will be called with the head unit's current language. Return a `LifecycleConfigurationUpdate` with the new `appName` and/or `ttsName`.
+!@
 
+@![iOS]
 ##### Objective-C
 ```objc
 - (nullable SDLLifecycleConfigurationUpdate *)managerShouldUpdateLifecycleToLanguage:(SDLLanguage)language {
@@ -71,66 +85,23 @@ func managerShouldUpdateLifecycle(toLanguage language: SDLLanguage) -> SDLLifecy
 !@
 
 @![android,javaSE,javaEE]
-
-## Handling a Language Change
-When a user changes the language on a head unit, an `OnLanguageChange` notification will be sent from Core, causing your app will disconnect. In order for your app to automatically reconnect to the head unit, there are a few changes to make in the following files:
-
-* Local SDL Service
-* Local SDL Broadcast Receiver
-
-### SDL Service
-We want to tell our local SDL Broadcast Receiver to restart the service when an `OnLanguageChange` notification is received from Core . To do so, add a notification listener as follows:
-
 ```java
-sdlManager.addOnRPCNotificationListener(FunctionID.ON_LANGUAGE_CHANGE, new OnRPCNotificationListener() {
-    @Override
-    public void onNotified(RPCNotification notification) {
-        SdlService.this.stopSelf();
-        Intent intent = new Intent(TransportConstants.START_ROUTER_SERVICE_ACTION);
-        intent.putExtra(SdlReceiver.RECONNECT_LANG_CHANGE, true);
-        AndroidTools.sendExplicitBroadcast(context, intent, null);
+@Override
+public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language){
+    String appName;
+    switch (language) {
+        case ES_MX:
+            appName = APP_NAME_ES;
+            break;
+        case FR_CA:
+            appName = APP_NAME_FR;
+            break;
+        default:
+            return null;
     }
-});
-```
 
-### SDL Broadcast Receiver
-When the SDL Service's connection to core is closed, we want to tell our local SDL Broadcast Receiver to restart the SDL Service. To do this, first add a public `String` in your app's local SDL Broadcast Receiver class that can be included as an extra in a broadcast intent.
-
-`public static final String RECONNECT_LANG_CHANGE = "RECONNECT_LANG_CHANGE";`
-
-Then, override the `onReceive()` method of the local SDL Broadcast Receiver to call `onSdlEnabled()` when receiving that action:
-
-```java
-@Override
-public void onReceive(Context context, Intent intent) {
-	super.onReceive(context, intent); // Required if overriding this method
-
-	if (intent != null) {
-		String action = intent.getAction();
-		if (action != null){
-			if(action.equalsIgnoreCase(TransportConstants.START_ROUTER_SERVICE_ACTION)) {
-				if (intent.getBooleanExtra(RECONNECT_LANG_CHANGE, false)) {
-					onSdlEnabled(context, intent);
-				}
-			}
-		}
-	}
-}
-```
-
-!!! MUST
-Be sure to call `super.onReceive(context, intent);` at the start of the method!
-!!!
-
-!!! NOTE
-This guide also assumes your local SDL Broadcast Receiver implements the `onSdlEnabled()` method as follows:
-!!!
-
-```java
-@Override
-public void onSdlEnabled(Context context, Intent intent) {
-	intent.setClass(context, SdlService.class);
-	context.startService(intent);
+    return new LifecycleConfigurationUpdate(appName,null,TTSChunkFactory.createSimpleTTSChunks(appName), null);
 }
 ```
 !@
+

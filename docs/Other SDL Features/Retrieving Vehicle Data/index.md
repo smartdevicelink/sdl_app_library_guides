@@ -366,3 +366,96 @@ unsubscribeRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
 sdlManager.sendRPC(unsubscribeRequest);
 ```
 !@
+
+## OEM-Specific Vehicle Data
+OEM applications can access additional vehicle data published by their systems that is not available via the SDL vehicle data APIs. This data is accessed using the same SDL vehicle data RPCs, but instead of requesting a certain type of SDL-specified data,  you must request data using a custom vehicle data name. The type of object returned is up to the OEM and must be parsed manually.
+
+!!! NOTE
+This feature is only for OEM-created applications and is not permitted for 3rd-party use.
+!!!
+
+### Requesting One-Time OEM-Specific Vehicle Data
+Below is an example of requesting a custom piece of vehicle data with the name `OEM-X-Vehicle-Data`. To adapt this for subscriptions instead, you must look at the section **Subscribing to Vehicle Data** above and adapt the example for subscribing to custom vehicle data based on what you see in the examples below.
+
+@![iOS]
+##### Objective-C
+```objc
+SDLGetVehicleData *getCustomData = [[SDLGetVehicleData alloc] init];
+[getCustomData setOEMCustomVehicleData:@"OEM-X-Vehicle-Data" withVehicleDataState:YES];
+[self.sdlManager sendRequest:getCustomData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+    SDLGetVehicleDataResponse *vehicleDataResponse = (SDLGetVehicleDataResponse *)response;
+    SDLResult resultCode = vehicleDataResponse.resultCode;
+
+    if (![resultCode isEqualToEnum:SDLResultSuccess]) {
+        if ([resultCode isEqualToEnum:SDLResultDisallowed]) {
+            <#The app does not have permission to access this vehicle data#>
+        } else if ([resultCode isEqualToEnum:SDLResultRejected]) {
+            <#The app does not have permission to access this vehicle data because of the app state (i.e. app is closed or in background)#>
+        } else if ([resultCode isEqualToEnum:SDLResultVehicleDataNotAllowed]) {
+            <#The data is not available or responding on the system#>
+        } else if ([resultCode isEqualToEnum:SDLResultVehicleDataNotAvailable]) {
+            <#The user has turned off access to vehicle data, and it is globally unavailable to mobile applications#>
+        } else {
+            <#Some other error occurred#>
+        }
+        return;
+    }
+
+    <#OEMCustomVehicleDataType#> *customVehicleData = [vehicleDataResponse getOEMCustomVehicleData:@"OEM-X-Vehicle-Data"];
+    if (customVehicleData == nil) { return; }
+    <#Use the custom data#>
+}];
+```
+
+##### Swift
+```swift
+let getCustomData = SDLGetVehicleData()
+getCustomData.setOEMCustom("OEM-X-Vehicle-Data", withVehicleDataState: true)
+sdlManager.send(request: getCustomData) { (request, response, error) in
+    guard let response = response as? SDLGetVehicleDataResponse else { return }
+    guard response.resultCode == .success else {
+        switch response.resultCode {
+        case .disallowed:
+            <#The app does not have permission to access this vehicle data#>
+        case .rejected:
+            <#The app does not have permission to access this vehicle data because of the app state (i.e. app is closed or in background)#>
+        case .vehicleDataNotAllowed:
+            <#The data is not available or responding on the system#>
+        case .vehicleDataNotAvailable:
+            <#The user has turned off access to vehicle data, and it is globally unavailable to mobile applications#>
+        default:
+            <#Some other error occurred#>
+        }
+        return
+    }
+
+    guard let customVehicleData = response.getOEMCustomVehicleData("OEM-X-Vehicle-Data") as? <#OEMCustomVehicleDataType#> else { return }
+    <#Use the custom data#>
+}
+```
+!@
+
+@![android, javaSE, javaEE]
+
+```java
+
+GetVehicleData vdRequest = new GetVehicleData();
+vdRequest.setOEMCustomVehicleData("OEM-X-Vehicle-Data", true);
+vdRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
+        @Override
+        public void onResponse(int correlationId, RPCResponse response) {
+            if(response.getSuccess()){
+                Object CustomData = ((GetVehicleDataResponse) response).getOEMCustomVehicleData("OEM-X-Vehicle-Data");
+            }else{
+                Log.i("SdlService", "GetVehicleData was rejected.");
+            }
+        }
+
+        @Override
+        public void onError(int correlationId, Result resultCode, String info){
+            Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
+        }
+    });
+sdlManager.sendRPC(vdRequest);
+```
+!@

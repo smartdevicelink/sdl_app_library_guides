@@ -26,8 +26,9 @@ In order to create a navigation app an @![iOS]`appType`!@@![android,javaSE,javaE
 SDLLifecycleConfiguration* lifecycleConfig = [SDLLifecycleConfiguration defaultConfigurationWithAppName:@"<#App Name#>" fullAppId:@"<#App Id#>"];
 lifecycleConfig.appType = SDLAppHMITypeNavigation;
 
-SDLStreamingMediaConfiguration *streamingConfig = [SDLStreamingMediaConfiguration secureConfigurationWithSecurityManagers:@[OEMSecurityManager.class]];
-SDLConfiguration *config = [SDLConfiguration configurationWithLifecycle:lifecycleConfig lockScreen:[SDLLockScreenConfiguration enabledConfiguration] logging:[SDLLogConfiguration defaultConfiguration] streamingMedia:streamingConfig fileManager:[SDLFileManagerConfiguration defaultConfiguration]];
+SDLEncryptionConfiguration *encryptionConfig = [[SDLEncryptionConfiguration alloc] initWithSecurityManagers:@[OEMSecurityManager.self] delegate:self];
+SDLStreamingMediaConfiguration *streamingConfig = [SDLStreamingMediaConfiguration secureConfiguration];
+SDLConfiguration *config = [[SDLConfiguration alloc] initWithLifecycle:lifecycleConfig lockScreen:[SDLLockScreenConfiguration enabledConfiguration] logging:[SDLLogConfiguration defaultConfiguration] streamingMedia:streamingConfig fileManager:[SDLFileManagerConfiguration defaultConfiguration] encryption:encryptionConfig];
 ```
 
 ##### Swift
@@ -35,8 +36,9 @@ SDLConfiguration *config = [SDLConfiguration configurationWithLifecycle:lifecycl
 let lifecycleConfig = SDLLifecycleConfiguration(appName: "<#App Name#>", fullAppId: "<#App Id#>")
 lifecycleConfig.appType = .navigation
 
-let streamingConfig = SDLStreamingMediaConfiguration(securityManagers: [OEMSecurityManager.self])
-let config = SDLConfiguration(lifecycle: lifecycleConfig, lockScreen: .enabled(), logging: .default(), streamingMedia: streamingConfig, fileManager: .default())
+let encryptionConfig = SDLEncryptionConfiguration(securityManagers: [OEMSecurityManager.self], delegate: self)
+let streamingConfig = SDLStreamingMediaConfiguration.secure()
+let config = SDLConfiguration(lifecycle: lifecycleConfig, lockScreen: .enabled(), logging: .default(), streamingMedia: streamingConfig, fileManager: .default(), encryption: encryptionConfig)
 ```
 !@
 
@@ -49,8 +51,9 @@ hmiTypes.add(AppHMIType.NAVIGATION);
 builder.setAppTypes(hmiTypes);
 
 // Add security managers if Core requires secure video & audio streaming
-List<? extends SdlSecurityBase> securityManagers = new ArrayList();
-builder.setSdlSecurity(Arrays.asList(OEMSecurityManager1.class, OEMSecurityManager2.class));
+List<Class<? extends SdlSecurityBase>> secList = new ArrayList<>();
+secList.add(OEMSdlSecurity.class);
+builder.setSdlSecurity(secList, <# Optional serviceEncryptionListener>);
 
 MultiplexTransportConfig mtc = new MultiplexTransportConfig(this, APP_ID, MultiplexTransportConfig.FLAG_MULTI_SECURITY_OFF);
 mtc.setRequiresHighBandwidth(true);

@@ -1,4 +1,4 @@
-# Global Voice Commands
+# Setting Up Voice Commands
 Voice commands are global commands available anywhere on the head unit to users of your app. Once the user has opened your SDL app (i.e. your SDL app has left the HMI state of `NONE`) they have access to the voice commands you have setup. Your app will be notified when a voice command has been triggered even if the SDL app has been backgrounded.
 
 !!! NOTE
@@ -14,20 +14,20 @@ To create voice commands, you simply create and set @![iOS]`SDLVoiceCommand`!@ @
 @![iOS]
 ##### Objective-C
 ```objc
-// Create the voice command
-SDLVoiceCommand *voiceCommand = [[SDLVoiceCommand alloc] initWithVoiceCommands:<#(nonnull NSArray<NSString *> *)#> handler:<#^(void)handler#>];
+SDLVoiceCommand *voiceCommand = [[SDLVoiceCommand alloc] initWithVoiceCommands:@[<#NSString#>] handler:^{
+    <#Voice command selected#>
+}];
 
 self.sdlManager.screenManager.voiceCommands = @[voiceCommand];
 ```
 
 ##### Swift
 ```swift
-// Create the voice command
-let voiceCommand = SDLVoiceCommand(voiceCommands: <#[String]#>) {
-    <#code#>
+let voiceCommand = SDLVoiceCommand(voiceCommands: [<#String#>]) {
+    <#Voice command triggered#>
 }
 
-self.sdlManager.screenManager.voiceCommands = [voiceCommand]
+sdlManager.screenManager.voiceCommands = [voiceCommand]
 ```
 !@
 

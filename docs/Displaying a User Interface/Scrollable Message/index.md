@@ -37,7 +37,7 @@ SDLSoftButton *scrollableSoftButton2 = [[SDLSoftButton alloc] initWithType:SDLSo
 [softButtons addObject:scrollableSoftButton2];
 
 // Create SDLScrollableMessage Object
-SDLScrollableMessage *scrollableMessage = [[SDLScrollableMessage alloc] initWithMessage:scrollableMessageString timeout:scrollableMessageTimeout softButtons:[softButtons copy]];
+SDLScrollableMessage *scrollableMessage = [[SDLScrollableMessage alloc] initWithMessage:scrollableMessageString timeout:scrollableMessageTimeout softButtons:[softButtons copy] cancelID:<#UInt32#>];
 
 // Send the scrollable message
 [sdlManager sendRequest:scrollableMessage];
@@ -76,7 +76,7 @@ softButtons.append(scrollableSoftButton)
 softButtons.append(scrollableSoftButton2)
 
 // Create SDLScrollableMessage Object
-let scrollableMessage = SDLScrollableMessage(message: scrollableMessageText, timeout: scrollableTimeout, softButtons: softButtons)
+let scrollableMessage = SDLScrollableMessage(message: scrollableMessageText, timeout: scrollableTimeout, softButtons: softButtons, cancelID: <#UInt32#>)
 
 // Send the scrollable message
 sdlManager.send(scrollableMessage)
@@ -86,7 +86,6 @@ sdlManager.send(scrollableMessage)
 @![android,javaSE,javaEE]
 
 ```java
-
 // Create Message To Display
 String scrollableMessageText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Vestibulum mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare. Purus in massa tempor nec feugiat nisl pretium fusce id. Pharetra convallis posuere morbi leo urna molestie at elementum eu. Dictum sit amet justo donec enim diam.";
 		
@@ -106,9 +105,11 @@ scrollableMessage.setScrollableMessageBody(scrollableMessageText);
 scrollableMessage.setTimeout(50000);
 scrollableMessage.setSoftButtons(softButtonList);
 
+// Set cancelId
+scrollableMessage.setCancelID(<#Integer>);
+
 // Send the scrollable message
 sdlManager.sendRPC(scrollableMessage);
-
 ```
 
 To listen for `OnButtonPress` events for `SoftButton`s, we need to add a listener that listens for their Id's:
@@ -131,3 +132,97 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
 ```
 
 !@
+
+## Dismissing a Scrollable Message (RPC v6.0+)
+You can dismiss a displayed scrollable message before the timeout has elapsed. You can dismiss a specific scrollable message, or you can dismiss the scrollable message that is currently displayed.
+
+!!! NOTE
+If connected to older head units that do not support this feature, the cancel request will be ignored, and the scrollable message will persist on the screen until the timeout has elapsed or the user dismisses the message by selecting a button.
+!!!
+
+### Dismissing a Specific Scrollable Message
+
+@![iOS]
+##### Objective-C
+```objc
+// `cancelID` is the ID that you assigned when creating and sending the scrollable message
+SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWithScrollableMessageCancelID:cancelID];
+[self.sdlManager sendRequest:cancelInteraction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+    if (![response.resultCode isEqualToEnum:SDLResultSuccess]) { return; }
+    <#The scrollable message was canceled successfully#>
+}];
+```
+
+##### Swift
+```swift
+// `cancelID` is the ID that you assigned when creating and sending the alert
+let cancelInteraction = SDLCancelInteraction(scrollableMessageCancelID: cancelID)
+sdlManager.send(request: cancelInteraction) { (request, response, error) in
+    guard response?.resultCode == .success else { return }
+    <#The scrollable message was canceled successfully#>
+}
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+// `cancelID` is the ID that you assigned when creating and sending the alert
+CancelInteraction cancelInteraction = new CancelInteraction(FunctionID.SCROLLABLE_MESSAGE.getId(), cancelID);
+cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        if (response.getSuccess()){
+            Log.i(TAG, "Scrollable message was dismissed successfully");
+        }
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info) {
+        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
+    }
+});
+sdlManager.sendRPC(cancelInteraction);
+```
+!@
+
+### Dismissing the Current Scrollable Message
+
+@![iOS]
+##### Objective-C
+```objc
+SDLCancelInteraction *cancelInteraction = [SDLCancelInteraction scrollableMessage];
+[self.sdlManager sendRequest:cancelInteraction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+    if (![response.resultCode isEqualToEnum:SDLResultSuccess]) { return; }
+    <#The scrollable message was canceled successfully#>
+}];
+```
+
+##### Swift
+```swift
+let cancelInteraction = SDLCancelInteraction.scrollableMessage()
+sdlManager.send(request: cancelInteraction) { (request, response, error) in
+    guard response?.resultCode == .success else { return }
+    <#The scrollable message was canceled successfully#>
+}
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+CancelInteraction cancelInteraction = new CancelInteraction(FunctionID.SCROLLABLE_MESSAGE.getId());
+cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        if (response.getSuccess()){
+            Log.i(TAG, "Scrollable message was dismissed successfully");
+        }
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info) {
+        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
+    }
+});
+sdlManager.sendRPC(cancelInteraction);
+```
+!@  
