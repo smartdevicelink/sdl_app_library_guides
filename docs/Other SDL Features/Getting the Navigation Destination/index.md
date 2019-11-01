@@ -254,7 +254,7 @@ getWayPoints.setOnRPCResponseListener(new OnRPCResponseListener() {
     public void onResponse(int correlationId, RPCResponse rpcResponse) {
         if (rpcResponse.getSuccess()){
             GetWayPointsResponse getWayPointsResponse = (GetWayPointsResponse) rpcResponse;
-                    <#SOAPBinding.Use the waypoint information#>
+            <#Use the waypoint information#>
         } else {
             // Handle the errors
         }
