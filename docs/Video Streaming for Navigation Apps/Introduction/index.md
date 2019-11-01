@@ -51,8 +51,9 @@ hmiTypes.add(AppHMIType.NAVIGATION);
 builder.setAppTypes(hmiTypes);
 
 // Add security managers if Core requires secure video & audio streaming
-List<? extends SdlSecurityBase> securityManagers = new ArrayList();
-builder.setSdlSecurity(Arrays.asList(OEMSecurityManager1.class, OEMSecurityManager2.class));
+List<Class<? extends SdlSecurityBase>> secList = new ArrayList<>();
+secList.add(OEMSdlSecurity.class);
+builder.setSdlSecurity(secList, <# Optional serviceEncryptionListener>);
 
 MultiplexTransportConfig mtc = new MultiplexTransportConfig(this, APP_ID, MultiplexTransportConfig.FLAG_MULTI_SECURITY_OFF);
 mtc.setRequiresHighBandwidth(true);
