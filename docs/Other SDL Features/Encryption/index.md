@@ -36,7 +36,9 @@ let config = SDLConfiguration(lifecycle: lifecycleConfig, lockScreen: .enabled()
 
 @![android,javaSE,javaEE]
 ```java
-// TODO
+List<Class<? extends SdlSecurityBase>> secList = new ArrayList<>();
+secList.add(OEMSdlSecurity.class);
+builder.setSdlSecurity(secList, <# Optional serviceEncryptionListener>);
 ```
 !@
 
