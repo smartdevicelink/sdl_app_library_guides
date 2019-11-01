@@ -1,7 +1,7 @@
-## Main Screen Templates
+# Main Screen Templates
 Each head unit manufacturer supports a set of user interface templates. These templates determine the position and size of the text, images, and buttons on the screen. Once the app has connected successfully with an SDL enabled head unit, a list of supported templates is available on @![iOS]`SDLManager.systemCapabilityManager.displayCapabilities.templatesAvailable`!@ @![android, javaSE, javaEE]`((DisplayCapabilities) sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.DISPLAY)).getTemplatesAvailable()`!@.
 
-### Change the Template
+## Change the Template
 To change a template at any time, send a `SetDisplayLayout` RPC to Core.
 
 @![iOS]
@@ -51,7 +51,7 @@ sdlManager.sendRPC(setDisplayLayoutRequest);
 ```
 !@
 
-### Available Templates
+## Available Templates
 There are fifteen standard templates to choose from, however some head units may only support a subset of these templates. The following examples show how templates will appear on the [Generic HMI](https://github.com/smartdevicelink/generic_hmi) and [Ford's SYNC 3 HMI](https://developer.ford.com).
 
 #### Media

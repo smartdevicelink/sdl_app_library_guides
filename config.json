@@ -37,7 +37,7 @@
                 },
                 {  
                     "name":"Multiple Transports",
-                    "platforms": ["Android"]
+                    "platforms": ["Android", "iOS"]
                  },
                 {
                     "name": "Adapting to the Head Unit Language"
@@ -52,7 +52,6 @@
                 {
                     "name":"Proguard Guidelines",
                     "platforms": ["Android"]
-
                 },
                 {
                     "name": "Deploying to AWS",
@@ -82,9 +81,6 @@
                     "name": "Main Menu"
                 },
                 {
-                    "name": "Global Voice Commands"
-                },
-                {
                     "name": "Popup Menus and Keyboards"
                 },
                 {
@@ -98,6 +94,37 @@
                 },
                 {
                     "name": "Scrollable Message"
+                }
+            ]
+        },
+        {
+            "name": "Customizing Look and Functionality",
+            "navigation": [
+                {
+                    "name": "Customizing the Template"
+                },
+                {
+                    "name": "Customizing the Keyboard"
+                },
+                {
+                    "name": "Customizing Help Prompts"
+                }
+            ]
+        },
+        {
+            "name": "Speech and Audio",
+            "navigation": [
+                {
+                    "name": "Playing Spoken Feedback"
+                },
+                {
+                    "name": "Playing Audio Indications"
+                },
+                {
+                    "name": "Setting Up Voice Commands"
+                },
+                {
+                    "name": "Getting Microphone Audio"
                 }
             ]
         },
@@ -125,7 +152,7 @@
                 {
                     "name": "Setting the Navigation Destination"
                 },
-                {
+ 		{
                     "name": "Getting the Navigation Destination"
                 },
                 {
@@ -137,11 +164,14 @@
                 {
                     "name": "Uploading Images"
                 },
-                {
+ 		{
                     "name": "Playing Audio Indications"
                 },
                 {
                     "name": "Creating an OEM Cloud App Store"
+                },
+                {
+                    "name": "Encryption"
                 }
             ]
         },
@@ -167,6 +197,9 @@
                 },
                 {
                     "name": "Displaying Turn Directions"
+                },
+                {
+                    "name": "Menus"
                 }
             ]
         },
@@ -224,13 +257,23 @@
         },
         {
             "name": "Frequently Asked Questions",
-            "platforms": ["Android"],
+            "platforms": ["Android" ,"iOS"],
             "navigation": [
                 {
-                    "name": "SDL Notifications"
+                    "name": "React Native",
+                    "platforms": ["iOS"]
                 },
                 {
-                    "name": "Trusted Router Service"
+                    "name": "SDL Notifications",
+                    "platforms": ["Android"]
+                },
+                {
+                    "name": "Trusted Router Service",
+                    "platforms": ["Android"]
+                },
+                {
+                    "name": "Multiple Processes",
+                    "platforms": ["Android"]
                 }
             ]
         }

@@ -133,42 +133,82 @@ lockScreenConfig.setCustomView(customViewInt);
 !@
 
 ## Customizing the Lock Screen State
+In SDL @![iOS]iOS v6.4!@@![android] Android v4.10!@, a new parameter `displayMode` has been added to the @![iOS]`SDLLockScreenConfiguration`!@@![android]`LockScreenConfig`!@ to control the state of the lock screen and the older boolean parameters have been deprecated.
+
+| DisplayMode | Description |
+| --------------- | ------------- |
+| never | The lock screen should never be shown. This should almost always mean that you will build your own lock screen |
+| requiredOnly | The lock screen should only be shown when it is required by the head unit |
+| optionalOrRequired | The lock screen should be shown when required by the head unit or when the head unit says that its optional, but *not* in other cases, such as before the user has interacted with your app on the head unit |
+| always | The lock screen should always be shown after connection |
+
 ### Disabling the Lock Screen
-Please note that a lock screen will be required by most OEMs. You can disable the lock screen manager, but you will then be required to implement your own logic for showing and hiding the lock screen. This is not recommended as the @![iOS]`SDLLockScreenConfiguration` !@ @![android]`LockScreenConfig`!@ adheres to most OEM lock screen requirements. However, if you must create a lock screen manager from scratch, the library's lock screen manager can be disabled via the @![iOS]`SDLLockScreenConfiguration`!@ @![android]`LockScreenConfig`!@ as follows:
+Please note that a lock screen will be required by most OEMs. You can disable the lock screen manager, but you will then be required to implement your own logic for showing and hiding the lock screen. This is not recommended as the @![iOS]`SDLLockScreenConfiguration` !@@![android]`LockScreenConfig`!@ adheres to most OEM lock screen requirements. However, if you must create a lock screen manager from scratch, the library's lock screen manager can be disabled via the @![iOS]`SDLLockScreenConfiguration`!@@![android]`LockScreenConfig`!@ as follows:
 
 @![iOS]
 ##### Objective-C
 ```objc
-SDLLockScreenConfiguration *lockScreenConfiguration = [SDLLockScreenConfiguration enabledConfiguration];
-lockScreenConfiguration.enableAutomaticLockScreen = NO;
+SDLLockScreenConfiguration *lockScreenConfiguration = [SDLLockScreenConfiguration disabledConfiguration];
 ```
 
 ##### Swift
 ```swift
-let lockScreenConfiguration = SDLLockScreenConfiguration.enabledConfiguration()
-lockScreenConfiguration.enableAutomaticLockScreen = false
+let lockScreenConfiguration = SDLLockScreenConfiguration.disabled()
 ```
 !@
 
 @![android]
 ```java
-lockScreenConfig.setEnabled(false);
+LockScreenConfig lockScreenConfig = new LockScreenConfig();
+lockScreenConfig.setDisplayMode(LockScreenConfig.DISPLAY_MODE_NEVER);
 ```
 !@
 
-@![iOS]
+
 ### Making the Lock Screen Always On
 The lock screen manager is configured to dismiss the lock screen when it is safe to do so. To always have the lock screen visible when the device is connected to the head unit, simply update the lock screen configuration. 
 
+@![iOS]
 ##### Objective-C
 ```objc
 SDLLockScreenConfiguration *lockScreenConfiguration = [SDLLockScreenConfiguration enabledConfiguration];
-lockScreenConfiguration.showInOptionalState = YES;
+lockScreenConfiguration.displayMode = SDLLockScreenConfigurationDisplayModeAlways;
+```
+
+##### Swift
+```swift
+let lockScreenConfiguration = SDLLockScreenConfiguration.enabled()
+lockScreenConfiguration.displayMode = .always
+```
+!@
+
+@![android]
+```java
+LockScreenConfig lockScreenConfig = new LockScreenConfig();
+lockScreenConfig.setDisplayMode(LockScreenConfig.DISPLAY_MODE_ALWAYS);
+```
+!@
+
+### Enabling User Lockscreen Dismissal (Passenger Mode)
+Starting in RPC v6.0+ users may now have the ability to dismiss the lock screen by swiping the lock screen down. Not all OEMs support this new feature. A dismissable lock screen is enabled by default if the head unit enables the feature, but you can disable it manually as well. To disable this feature, set @![iOS]`SDLLockScreenConfiguration`s!@ @![android]`LockScreenConfig`s!@  `enableDismissGesture` to false.
+
+@![iOS]
+##### Objective-C
+```objc
+SDLLockScreenConfiguration *lockScreenConfiguration = [SDLLockScreenConfiguration enabledConfiguration];
+lockScreenConfiguration.enableDismissGesture = NO;
 ```
 
 ##### Swift
 ```swift
 let lockScreenConfiguration = SDLLockScreenConfiguration.enabledConfiguration()
-lockScreenConfiguration.showInOptionalState = true
+lockScreenConfiguration.enableDismissGesture = false
+```
+!@
+
+@![android]
+```java
+LockScreenConfig lockScreenConfig = new LockScreenConfig();
+lockScreenConfig.enableDismissGesture(false);
 ```
 !@
