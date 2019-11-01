@@ -34,6 +34,21 @@ The following properties are deprecated on SDL @![iOS]iOS 6.4!@@![android, javaS
 Images may be formatted as PNG, JPEG, or BMP. You can find which image types and resolutions are supported using the system capability manager.
 
 Since the head unit connection is often relatively slow (especially over Bluetooth), you should pay attention to the size of your images to ensure that they are not larger than they need to be. If an image is uploaded that is larger than the supported size, the image will be scaled down by Core.
+
+@![iOS]
+##### Objective-C
+```objc
+SDLImageField *field = self.sdlManager.systemCapabilityManager.defaultMainWindowCapability.imageFields[<#index#>]
+SDLImageResolution *resolution = field.imageResolution;
+```
+
+##### Swift
+```swift
+let field = sdlManager.systemCapabilityManager.defaultMainWindowCapability.imageFields[<#index#>]
+let resolution = field.imageResolution
+```
+!@
+
 @![android, javaSE, javaEE]
 ```java
 ImageField field = sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getImageFields().get(<#index#>);
