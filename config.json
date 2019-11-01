@@ -38,7 +38,7 @@
                 {  
                     "name":"Multiple Transports",
                     "platforms": ["Android", "iOS"]
-                 },
+                },
                 {
                     "name": "Adapting to the Head Unit Language"
                 },
@@ -152,7 +152,7 @@
                 {
                     "name": "Setting the Navigation Destination"
                 },
- 		{
+ 		        {
                     "name": "Getting the Navigation Destination"
                 },
                 {
@@ -164,7 +164,7 @@
                 {
                     "name": "Uploading Images"
                 },
- 		{
+ 		        {
                     "name": "Playing Audio Indications"
                 },
                 {
