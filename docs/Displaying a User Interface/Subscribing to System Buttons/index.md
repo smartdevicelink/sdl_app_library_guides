@@ -119,3 +119,86 @@ subscribeButtonRequest.setButtonName(ButtonName.OK);
 sdlManager.sendRPC(subscribeButtonRequest);
 ```
 !@
+
+
+## Preset Buttons
+
+![Ford - Preset Soft Button Menu Button](assets/ford_sync_presetMenu.png)
+
+![Ford - Preset Soft Buttons List](assets/ford_sync_presetOptions.png)
+
+Preset buttons may not work in the same way as seen on the above screenshots on all head units. Some head units may have physical buttons on their console and these will trigger the subscribed button. You can check if an HMI supports subscribing to preset buttons, and how many, by calling the @![iOS] `SDLManager.systemCapabilityManager.displayCapabilities.numCustomPresetsAvailable`!@ @![android,javaSE, javaEE] sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getNumCustomPresetsAvailable() !@.
+@![iOS]
+##### Objective-C
+```objc
+SDLSubscribeButton *preset1 = [[SDLSubscribeButton alloc] initWithButtonName:SDLButtonNamePreset1 handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
+    if (buttonPress == nil) { return; }
+    <#Button Selected#>
+}];
+
+SDLSubscribeButton *preset2 = [[SDLSubscribeButton alloc] initWithButtonName:SDLButtonNamePreset2 handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
+    if (buttonPress == nil) { return; }
+    <#Button Selected#>
+}];
+
+[self.sdlManager sendRequests:@[preset1, preset2] progressHandler:nil completionHandler:^(BOOL success) {
+    if(success) {
+        <#subscribe button sent successfully#>
+    }
+}];
+```
+
+##### Swift
+```swift
+let preset1 = SDLSubscribeButton(buttonName: .preset1, handler: { (buttonPress, buttonEvent) in
+    guard buttonPress != nil else { return }
+    <#subscribe button selected#>
+})
+
+let preset2 = SDLSubscribeButton(buttonName: .preset2, handler: { (buttonPress, buttonEvent) in
+    guard buttonPress != nil else { return }
+    <#subscribe button selected#>
+})
+
+self.sdlManager.send([preset1, preset2], progressHandler: nil, completionHandler: { (success) in
+    guard success else { return }
+    <#subscriptions sent#>
+})
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_EVENT, new OnRPCNotificationListener() {
+    @Override
+    public void onNotified(RPCNotification notification) {
+        OnButtonPress onButtonPressNotification = (OnButtonPress) notification;
+        switch (onButtonPressNotification.getButtonName()) {
+            case PRESET_1:
+                break;
+            case PRESET_2:
+                break;
+        }
+    }
+});
+
+sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNotificationListener() {
+    @Override
+    public void onNotified(RPCNotification notification) {
+        OnButtonPress onButtonPressNotification = (OnButtonPress) notification;
+        switch (onButtonPressNotification.getButtonName()) {
+            case PRESET_1:
+                break;
+            case PRESET_2:
+                break;
+        }
+    }
+});
+
+SubscribeButton preset1 = new SubscribeButton(ButtonName.PRESET_1);
+SubscribeButton preset2 = new SubscribeButton(ButtonName.PRESET_2);
+sdlManager.sendRPCs(Arrays.asList(preset1, preset2), null);
+```
+!@
+
+

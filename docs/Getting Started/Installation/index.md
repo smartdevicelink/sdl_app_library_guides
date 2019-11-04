@@ -41,11 +41,11 @@ You can install this library using [Accio](https://github.com/JamitLabs/Accio), 
 2\. Add the following line to the dependencies array of your package file. We suggest always using the latest release of the SDL library. 
 
 ```swift
-.package(url: "https://github.com/smartdevicelink/sdl_ios.git", .upToNextMajor(from: "6.4.0"),
+.package(url: "https://github.com/smartdevicelink/sdl_ios.git", .upToNextMajor(from: "6.4.0")),
 ```
 
 !!! NOTE
-Please see [package manifest format](https://github.com/apple/swift-package-manager/blob/master/Documentation/PackageDescriptionV4.md) to specify dependencies to a specific branch / version of SDL.
+Please see [package manifest format](https://github.com/apple/swift-package-manager/blob/master/Documentation/PackageDescription.md) to specify dependencies to a specific branch / version of SDL.
 !!!
 
 3\. Add `"SmartDeviceLink"` or `"SmartDeviceLinkSwift"` to the dependencies array in your target. Use `"SmartDeviceLink"`for Objective-C applications and `"SmartDeviceLinkSwift"` for Swift applications.
