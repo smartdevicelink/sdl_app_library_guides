@@ -390,3 +390,108 @@ performAppServiceInteraction.setOnRPCResponseListener(new OnRPCResponseListener(
 sdlManager.sendRPC(performAppServiceInteraction);
 ```
 !@
+
+### 5. Getting a File from a Service Provider
+In some cases, a service may upload an image that can then be retrieved from the module. First, you will need to get the image name from the @![iOS]`SDLAppServiceData`!@@![android,javaSE,javaEE]`AppServiceData`!@ (see point 2 above). Then you will use the image name to retrieve the image data. 
+
+@![iOS]
+##### Objective-C
+```objc
+SDLAppServiceData *data = <#Get the App Service Data#>;
+SDLWeatherServiceData *weatherData = data.weatherServiceData;
+SDLImage *currentForecastImage = weatherData.currentForecast.weatherIcon;
+NSString *currentForecastImageName = currentForecastImage.value;
+SDLGetFile *getCurrentForecastImage = [[SDLGetFile alloc] initWithFileName:currentForecastImageName];
+
+__block NSUInteger imageDataLength = 0;
+__block NSUInteger imageDataLengthReceived = 0;
+NSMutableData *imageData = [[NSMutableData alloc] init];
+[self.sdlManager sendRequest:getCurrentForecastImage withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+    SDLGetFileResponse *getFileResponse = response;
+    if (getFileResponse == nil || !response.success) {
+        // Something went wrong, examine the resultCode and info
+        return;
+    }
+
+    NSData *rpcImageData = response.bulkData;
+    if (imageData == nil) {
+        // There's no image data
+        return;
+    }
+
+    [imageData appendData:rpcImageData];
+    imageDataLengthReceived += rpcImageData.length;
+    if (getFileResponse.offset == 0 && getFileResponse.length != nil) {
+        imageDataLength = getFileResponse.length.unsignedIntegerValue;
+    }
+
+    if (imageDataLengthReceived < imageDataLength) {
+        // Send additional GetFile requests to get the rest of the data using the offset parameter
+    } else {
+        // The file is complete, turn the file data into an image and use it.
+    }
+}];
+```
+
+##### Swift
+```swift
+let data: SDLAppServiceData = <#Get the App Service Data#>
+let weatherData: SDLWeatherServiceData = data.weatherServiceData
+guard let currentForecastImage = weatherData.currentForecast?.weatherIcon else {
+    // The image doesn't exist, exit early
+    return
+}
+let currentForecastImageName = currentForecastImage.value
+let getCurrentForecastImage = SDLGetFile(fileName: currentForecastImageName)
+
+var imageDataLength = 0
+var imageDataLengthReceived = 0
+var imageData = Data()
+sdlManager.send(request: getCurrentForecastImage) { (req, res, err) in
+    guard let response = res as? SDLGetFileResponse, response.success.boolValue == true, let rpcImageData = response.bulkData else {
+        // Something went wrong, examine the resultCode and info
+        return;
+    }
+
+    imageData.append(rpcImageData)
+    imageDataLengthReceived += rpcImageData.count
+    if response.offset?.intValue == 0, let rpcImageLength = response.length?.intValue {
+        imageDataLength = rpcImageLength
+    }
+
+    if imageDataLengthReceived < imageDataLength {
+        // Send additional GetFile requests to get the rest of the data using the offset parameter
+    }
+}
+```
+
+!@
+@![android, javaSE, javaEE]
+```java
+AppServiceData appServiceData = <#Get the App Service Data#>;
+WeatherServiceData weatherServiceData = appServiceData.getWeatherServiceData();
+if (weatherServiceData == null || weatherServiceData.getCurrentForecast() == null || weatherServiceData.getCurrentForecast().getWeatherIcon() == null) {
+    // The image doesn't exist, exit early
+    return;
+}
+String currentForecastImageName = weatherServiceData.getCurrentForecast().getWeatherIcon().getValue();
+
+GetFile getFile = new GetFile(currentForecastImageName);
+getFile.setAppServiceId(<#Service ID>);
+getFile.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        GetFileResponse getFileResponse = (GetFileResponse) response;
+        byte[] fileData = getFileResponse.getBulkData();
+        SdlArtwork sdlArtwork = new SdlArtwork(fileName, FileType.GRAPHIC_PNG, fileData, false);
+        // Use the sdlArtwork 
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info) {
+        // Something went wrong, examine the resultCode and info
+    }
+});
+sdlManager.sendRPC(getFile);
+```
+!@

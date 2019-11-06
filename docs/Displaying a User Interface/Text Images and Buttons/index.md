@@ -10,6 +10,7 @@ The @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@ is 
 | textField2 | The text displayed on the second display line of a multi-line display |
 | textField3 | The text displayed on the third display line of a multi-line display |
 | textField4 | The text displayed on the bottom display line of a multi-line display |
+| title | The title of the displayed template |
 | mediaTrackTextField | The text displayed in the in the track field. This field is only valid for media applications |
 | primaryGraphic | The primary image in a template that supports images |
 | secondaryGraphic | The second image in a template that supports multiple images |
@@ -27,6 +28,7 @@ The @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@ is 
 
 self.sdlManager.screenManager.textField1 = @"<#Line 1 of Text#>";
 self.sdlManager.screenManager.textField2 = @"<#Line 2 of Text#>";
+self.sdlManager.screenManager.title = @"<#Title#>"
 self.sdlManager.screenManager.primaryGraphic = [SDLArtwork persistentArtworkWithImage:[UIImage imageNamed:@"<#Image Name#>"] asImageFormat:<#SDLArtworkImageFormat#>];
 SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"<#Soft Button Name#>" state:[[SDLSoftButtonState alloc] initWithStateName:@"<#Soft Button State Name#>" text:@"<#Button Text#>" artwork:<#SDLArtwork#>] handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     if (buttonPress == nil) { return; }
@@ -49,6 +51,7 @@ sdlManager.screenManager.beginUpdates()
 
 sdlManager.screenManager.textField1 = "<#Line 1 of Text#>"
 sdlManager.screenManager.textField2 = "<#Line 2 of Text#>"
+sdlManager.screenManager.title = "<#Title#>"
 sdlManager.screenManager.primaryGraphic = <#SDLArtwork#>
 sdlManager.screenManager.softButtonObjects = [<#SDLButtonObject#>, <#SDLButtonObject#>]
 
@@ -63,12 +66,14 @@ sdlManager.screenManager.endUpdates { (error) in
 !@
 
 @![android, javaSE, javaEE]
+
 ```java
 sdlManager.getScreenManager().beginTransaction();
 sdlManager.getScreenManager().setTextField1("Hello, this is MainField1.");
 sdlManager.getScreenManager().setTextField2("Hello, this is MainField2.");
 sdlManager.getScreenManager().setTextField3("Hello, this is MainField3.");
 sdlManager.getScreenManager().setTextField4("Hello, this is MainField4.");
+sdlManager.getScreenManager().setTitle("<#Title#>");
 sdlManager.getScreenManager().commit(new CompletionListener() {
 	@Override
 	public void onComplete(boolean success) {
@@ -86,6 +91,7 @@ After you have displayed text and graphics onto the screen, you may want to remo
 ```objc
 self.sdlManager.screenManager.textField1 = nil;
 self.sdlManager.screenManager.textField2 = nil;
+self.sdlManager.screenManager.title = nil;
 self.sdlManager.screenManager.primaryGraphic = nil;
 ```
 
@@ -93,6 +99,7 @@ self.sdlManager.screenManager.primaryGraphic = nil;
 ```swift
 sdlManager.screenManager.textField1 = nil
 sdlManager.screenManager.textField2 = nil
+sdlManager.screenManager.title = nil
 sdlManager.screenManager.primaryGraphic = nil
 ```
 !@
@@ -102,6 +109,7 @@ sdlManager.screenManager.primaryGraphic = nil
 sdlManager.getScreenManager().setTextField1(null);
 sdlManager.getScreenManager().setTextField2(null);
 sdlManager.getScreenManager().setPrimaryGraphic(null);
+sdlManager.getScreenManager().setTitle(null);
 ```
 !@
 
@@ -264,6 +272,66 @@ sdlManager.getScreenManager().setSoftButtonObjects(Collections.singletonList(sof
 ```
 !@
 
+### Highlighting the Soft Button
+
+##### Highlight On
+![Generic HMI](assets/ford_sync3_soft_button_highlight_on.png)
+
+##### Highlight Off
+![Generic HMI](assets/ford_sync3_soft_button_highlight_off.png)
+
+@![iOS]
+##### Objective-C
+```objc
+SDLSoftButtonState *highlightOn = [[SDLSoftButtonState alloc] initWithStateName:@"<#Soft Button State Name#>" text:@"On" artwork:<#SDLArtwork#>];
+highlightOn.highlighted = YES;
+
+SDLSoftButtonState *highlightOff = [[SDLSoftButtonState alloc] initWithStateName:@"<#Soft Button State Name#>" text:@"Off" artwork:<#SDLArtwork#>];
+highlightOff.highlighted = NO;
+
+__weak typeof(self) weakSelf = self;
+SDLSoftButtonObject *highlightButton = [[SDLSoftButtonObject alloc] initWithName:@"HighlightButton" states:@[highlightOn, highlightOff] initialStateName:highlightOn.name handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
+    if (buttonPress == nil) { return; }
+    SDLSoftButtonObject *transitionHighlight = [weakSelf.sdlManager.screenManager softButtonObjectNamed:@"HighlightButton"];
+    [transitionHighlight transitionToNextState];
+}];
+```
+##### Swift
+```swift
+let highlightOn = SDLSoftButtonState(stateName: "<#Soft Button State Name#>", text: "On", artwork: <#SDLArtwork#>)
+highlightOn.isHighlighted = true
+let highlightOff = SDLSoftButtonState(stateName: "<#Soft Button State Name#>", text: "Off", artwork: <#SDLArtwork#>)
+highlightOff.isHighlighted = false
+
+return SDLSoftButtonObject(name: "HighlightButton", states: [highlightOn, highlightOff], initialStateName: highlightOn.name) { [unowned self] (buttonPress, buttonEvent) in
+    guard buttonPress != nil else { return }
+    let transitionHighlight = self.sdlManager.screenManager.softButtonObjectNamed("HighlightButton")
+    transitionHighlight?.transitionToNextState()
+}
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+SoftButtonState softButtonState1 = new SoftButtonState("Soft Button State Name", "On", image1Artwork);
+softButtonState1.setHighlighted(true);
+SoftButtonState softButtonState2 = new SoftButtonState("Soft Button State Name 2", "Off", image2Artwork);
+softButtonState2.setHighlighted(false);
+SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Arrays.asList(softButtonState1, softButtonState2), softButtonState1.getName(), new SoftButtonObject.OnEventListener() {
+     @Override
+     public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
+          softButtonObject.transitionToNextState();
+     }
+
+     @Override
+     public void onEvent(SoftButtonObject softButtonObject, OnButtonEvent onButtonEvent) {
+
+     }
+});
+
+```
+!@
+
 ### Updating the Soft Button State
 When the soft button state needs to be updated, simply tell the `SoftButtonObject` to transition to the next state. If your button states do not cycle in a predictable order, you can also tell the soft button the state to transition to by passing the `stateName` of the new soft button state.
 
@@ -272,7 +340,7 @@ When the soft button state needs to be updated, simply tell the `SoftButtonObjec
 ```objc
 SDLSoftButtonState *softButtonState1 = [[SDLSoftButtonState alloc] initWithStateName:@"<#Soft Button State Name#>" text:@"<#Button Label Text#>" artwork:<#SDLArtwork#>];
 SDLSoftButtonState *softButtonState2 = [[SDLSoftButtonState alloc] initWithStateName:@"<#Soft Button State Name#>" text:@"<#Button Label Text#>" artwork:<#SDLArtwork#>];
-SDLSoftButtonObject *softButtonObject = [[SDLSoftButtonObject alloc] initWithName:@"<#Soft Button Object Name#>" states:@[softButtonState1, softButtonState2] initialStateName:@"<#Soft Button State Name#>" handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
+SDLSoftButtonObject *softButtonObject = [[SDLSoftButtonObject alloc] initWithName:@"<#Soft Button Object Name#>" states:@[softButtonState1, softButtonState2] initialStateName:<#Soft Button State#>.name handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     if (buttonPress == nil) { return; }
     <#Button Selected#>
 }];
@@ -287,7 +355,7 @@ SDLSoftButtonObject *retrievedSoftButtonObject = [self.sdlManager.screenManager 
 ```swift
 let softButtonState1 = SDLSoftButtonState(stateName: "<#Soft Button State Name#>", text: "<#Button Label Text#>", artwork: <#SDLArtwork#>)
 let softButtonState2 = SDLSoftButtonState(stateName: "<#Soft Button State Name#>", text: "<#Button Label Text#>", artwork: <#SDLArtwork#>)
-let softButtonObject = SDLSoftButtonObject(name: "<#Soft Button Object Name#>", states: [softButtonState1, softButtonState2], initialStateName: "") { (buttonPress, buttonEvent) in
+let softButtonObject = SDLSoftButtonObject(name: "<#Soft Button Object Name#>", states: [softButtonState1, softButtonState2], initialStateName: <#Soft Button State#>.name) { (buttonPress, buttonEvent) in
     guard buttonPress != nil else { return }
     <#Button Selected#>
 }

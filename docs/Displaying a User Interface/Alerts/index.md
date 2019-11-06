@@ -3,10 +3,6 @@ An alert is a pop-up window showing a short message with optional buttons. When 
 
 Depending the platform, an alert can have up to three lines of text, a progress indicator (e.g. a spinning wheel or hourglass), and up to four soft buttons.
 
-!!! NOTE
-The alert will persist on the screen until the timeout has elapsed, or the user dismisses the alert by selecting a button. There is no way to dismiss the alert programmatically other than to set the timeout length.
-!!!
-
 ## Alert Layouts
 ###### Alert With No Soft Buttons
 
@@ -26,12 +22,12 @@ If no soft buttons are added to an alert some OEMs may add a default "cancel" or
 @![iOS]
 ##### Objective-C
 ```objc
-SDLAlert *alert =  [[SDLAlert alloc] initWithAlertText1:@"<#Line 1#>" alertText2:@"<#Line 2#>" alertText3:@"<#Line 3#>"];
+SDLAlert *alert = [[SDLAlert alloc] initWithAlertText:<#NSString#> softButtons:<#[SDLSoftButton]#> playTone:<#BOOL#> ttsChunks:<#[SDLTTSChunk]#> alertIcon:<#SDLImage#> cancelID:<#UInt32#>];
 ```
 
 ##### Swift
 ```swift
-let alert = SDLAlert(alertText1: "<#Line 1#>", alertText2: "<#Line 2#>", alertText3: "<#Line 3#>")
+let alert = SDLAlert(alertText: <#String?#>, softButtons: <#[SDLSoftButton]?#>, playTone: <#Bool#>, ttsChunks: <#[SDLTTSChunk]?#>, alertIcon: <#SDLImage?#>, cancelID: <#UInt32#>)
 ```
 !@
 
@@ -41,6 +37,7 @@ Alert alert = new Alert();
 alert.setAlertText1("Line 1");
 alert.setAlertText2("Line 2");
 alert.setAlertText3("Line 3");
+alert.setCancelID(<#Integer>);
 ```
 !@
 
@@ -49,8 +46,6 @@ alert.setAlertText3("Line 3");
 @![iOS]
 ##### Objective-C
 ```objc
-SDLAlert *alert = [[SDLAlert alloc] initWithAlertText1:@"<#Line 1#>" alertText2:@"<#Line 2#>" alertText3:@"<#Line 3#>"];
-
 SDLSoftButton *button1 = [[SDLSoftButton alloc] initWithType:SDLSoftButtonTypeText text:@"<#Button Text#>" image:nil highlighted:false buttonId:<#Soft Button Id#> systemAction:SDLSystemActionDefaultAction handler:^(SDLOnButtonPress *_Nullable buttonPress, SDLOnButtonEvent *_Nullable buttonEvent) {
     if (buttonPress == nil) {
         return;
@@ -70,8 +65,6 @@ alert.softButtons = @[button1, button2];
 
 ##### Swift
 ```swift
-let alert = SDLAlert(alertText1: "<#Line 1#>", alertText2: "<#Line 2#>", alertText3: "<#Line 3#>")
-
 let button1 = SDLSoftButton(type: .text, text: <#Button Text#>, image: nil, highlighted: false, buttonId: <#Soft Button Id#>, systemAction: .defaultAction, handler: { buttonPress, buttonEvent in
     guard buttonPress != nil else { return }
     <#Button has been pressed#>
@@ -88,11 +81,6 @@ alert.softButtons = [button1, button2]
 
 @![android,javaSE,javaEE]
 ```java
-Alert alert = new Alert();
-alert.setAlertText1("Line 1");
-alert.setAlertText2("Line 2");
-alert.setAlertText3("Line 3");
-
 // Soft buttons
 final int softButtonId = 123; // Set it to any unique ID
 SoftButton okButton = new SoftButton(SoftButtonType.SBT_TEXT, softButtonId);
@@ -111,6 +99,28 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
           }
       }
 });
+```
+!@
+
+### Alert Icon
+An alert can include a custom or static (built-in) image that will be displayed within the alert. Before you add the image to the alert make sure the image is uploaded to the head unit using the @![iOS]`SDLFileManager`!@@![android,javaSE,javaEE]FileManager!@. If the image is already uploaded, you can set the `alertIcon` property.
+
+![Generic - Alert](assets/Generic_alertIcon.png)
+
+@![iOS]
+##### Objective-C
+```objc
+alert.alertIcon = [[SDLImage alloc] initWithName:<#artworkName#> isTemplate:YES];
+```
+##### Swift
+```swift
+alert.alertIcon = SDLImage(name: <#artworkName#>, isTemplate: true)
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+alert.setAlertIcon(new Image(<#artworkName#>, ImageType.DYNAMIC));
 ```
 !@
 
@@ -202,7 +212,6 @@ alert.setTtsChunks(Collections.singletonList(ttsChunk));
 ```
 !@
 
-
 ### Play Tone
 To play the alert tone when the alert appears and before the text-to-speech is spoken, set `playTone` to `true`.
 
@@ -231,7 +240,7 @@ alert.setPlayTone(true);
 ```objc
 [self.sdlManager sendRequest:alert withResponseHandler:^(SDLRPCRequest *request, SDLRPCResponse *response, NSError *error) {
     if (![response.resultCode isEqualToEnum:SDLResultSuccess]) { return; }
-    <#alert was dismissed successfully#>
+    <#Alert was shown successfully#>
 }];
 ```
 
@@ -239,7 +248,7 @@ alert.setPlayTone(true);
 ```swift
 sdlManager.send(request: alert) { (request, response, error) in
     guard response?.resultCode == .success else { return }
-    <#alert was dismissed successfully#>
+    <#Alert was shown successfully#>
 }
 ```
 !@
@@ -251,7 +260,7 @@ alert.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
       if (response.getSuccess()){
-        Log.i(TAG, "Alert was dismissed successfully");
+        Log.i(TAG, "Alert was shown successfully");
       }
     }
 
@@ -263,3 +272,101 @@ alert.setOnRPCResponseListener(new OnRPCResponseListener() {
 sdlManager.sendRPC(alert);
 ```
 !@
+
+## Dismissing the Alert (RPC v6.0+)
+You can dismiss a displayed alert before the timeout has elapsed. This feature is useful if you want to show users a loading screen while performing a task, such as searching for a list for nearby coffee shops. As soon as you have the search results, you can cancel the alert and show the results. 
+
+!!! NOTE
+If connected to older head units that do not support this feature, the cancel request will be ignored, and the alert will persist on the screen until the timeout has elapsed or the user dismisses the alert by selecting a button.
+!!!
+
+Please note that canceling the alert will only dismiss the displayed alert. If you have set the `ttsChunk` property, the speech will play in its entirety even when the displayed alert has been dismissed. If you know you will cancel an alert, consider setting a short `ttsChunk` like "searching" instead of "searching for coffee shops, please wait."
+
+There are two ways to dismiss an alert. The first way is to dismiss a specific alert using a unique `cancelID` assigned to the alert. The second way is to dismiss whichever alert is currently on-screen.
+
+### Dismissing a Specific Alert
+
+@![iOS]
+##### Objective-C
+```objc
+// `cancelID` is the ID that you assigned when creating and sending the alert
+SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWithAlertCancelID:cancelID];
+[self.sdlManager sendRequest:cancelInteraction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+    if (![response.resultCode isEqualToEnum:SDLResultSuccess]) { return; }
+    <#The alert was canceled successfully#>
+}];
+```
+
+##### Swift
+```swift
+// `cancelID` is the ID that you assigned when creating and sending the alert
+let cancelInteraction = SDLCancelInteraction(alertCancelID: cancelID)
+sdlManager.send(request: cancelInteraction) { (request, response, error) in
+    guard response?.resultCode == .success else { return }
+    <#The alert was canceled successfully#>
+}
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+// `cancelID` is the ID that you assigned when creating and sending the alert
+CancelInteraction cancelInteraction = new CancelInteraction(FunctionID.ALERT.getId(), cancelID);
+cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
+	@Override
+	public void onResponse(int correlationId, RPCResponse response) {
+		if (response.getSuccess()){
+			Log.i(TAG, "Alert was dismissed successfully");
+		}
+	}
+
+	@Override
+	public void onError(int correlationId, Result resultCode, String info) {
+		Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
+	}
+});
+sdlManager.sendRPC(cancelInteraction);
+```
+!@
+
+### Dismissing the Current Alert
+
+@![iOS]
+##### Objective-C
+```objc
+SDLCancelInteraction *cancelInteraction = [SDLCancelInteraction alert];
+[self.sdlManager sendRequest:cancelInteraction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+    if (![response.resultCode isEqualToEnum:SDLResultSuccess]) { return; }
+    <#The alert was canceled successfully#>
+}];
+```
+
+##### Swift
+```swift
+let cancelInteraction = SDLCancelInteraction.alert()
+sdlManager.send(request: cancelInteraction) { (request, response, error) in
+    guard response?.resultCode == .success else { return }
+    <#The alert was canceled successfully#>
+}
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+CancelInteraction cancelInteraction = new CancelInteraction(FunctionID.ALERT.getId());
+cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
+	@Override
+	public void onResponse(int correlationId, RPCResponse response) {
+		if (response.getSuccess()){
+			Log.i(TAG, "Alert was dismissed successfully");
+		}
+	}
+
+	@Override
+	public void onError(int correlationId, Result resultCode, String info) {
+		Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
+	}
+});
+sdlManager.sendRPC(cancelInteraction);
+```
+!@  

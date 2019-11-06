@@ -14,7 +14,7 @@ You should be aware of these four things when using images in your SDL app:
 To learn how to use images once they are uploaded, please see [Text, Images, and Buttons](Displaying a User Interface/Text Images and Buttons).
 
 ## Checking if Graphics are Supported
-Before uploading images to a head unit you should first check if the head unit supports graphics. If not, you should avoid uploading unnecessary image data. To check if graphics are supported, @![iOS]look at the `SDLManager`'s `systemCapabilityManager`'s ,`displayCapabilities` property once the `SDLManager` has started successfully.!@ @![android,javaSE,javaEE] use the `getCapability()` method of a valid `SystemCapabilityManager` obtained from `sdlManager.getSystemCapabilityManager()` to find out the display capabilities of the head unit.!@
+Before uploading images to a head unit you should first check if the head unit supports graphics. If not, you should avoid uploading unnecessary image data. To check if graphics are supported, @![iOS]check the `SDLManager.systemCapabilityManager.defaultMainWindowCapability` property once the `SDLManager` has started successfully.!@@![android,javaSE,javaEE] check the `getCapability()` method of a valid `SystemCapabilityManager` obtained from `sdlManager.getSystemCapabilityManager()` to find out the display capabilities of the head unit.!@
 
 @![iOS]
 ##### Objective-C
@@ -26,8 +26,8 @@ __weak typeof (self) weakSelf = self;
         return;
     }
 
-    SDLDisplayCapabilities *displayCapabilities = weakSelf.sdlManager.systemCapabilityManager.displayCapabilities;
-    BOOL graphicsSupported = (displayCapabilities != nil) ? displayCapabilities.graphicSupported.boolValue : NO;
+    SDLWindowCapability *mainWindowCapability = weakSelf.sdlManager.systemCapabilityManager.defaultMainWindowCapability;
+    BOOL graphicsSupported = (mainWindowCapability.imageFields.count > 0);
 }];
 ```
 
@@ -41,31 +41,20 @@ sdlManager.start { [weak self] (success, error) in
         return
     }
 
-    let displayCapabilities = self.sdlManager.systemCapabilityManager.displayCapabilities
-    let graphicsSupported = displayCapabilities != nil ? displayCapabilities?.graphicSupported.boolValue : false
+    let mainWindowCapability = self.sdlManager.systemCapabilityManager.defaultMainWindowCapability
+    let graphicsSupported = (mainWindowCapability.count > 0)
 }
 ```
 !@
 
 @![android,javaSE,javaEE]
 ```java
-sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.DISPLAY, new OnSystemCapabilityListener(){
-
-   @Override
-   public void onCapabilityRetrieved(Object capability){
-      DisplayCapabilities dispCapability = (DisplayCapabilities) capability;
-      boolean graphicsSupported = dispCapability.getGraphicSupported();
-   }
-
-   @Override
-   public void onError(String info){
-      Log.i(TAG, "Capability could not be retrieved: "+ info);
-   }
- });
+List<ImageField> imageFields = sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getImageFields();
+boolean imagesSuported = (imageFields.size() > 0);
 ```
 !@
 
-## Uploading an Image Using SDL FileManager
+## Uploading an Image Using the File Manager
 The @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE]`FileManager`!@ uploads files and keeps track of all the uploaded files names during a session. To send data with the @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE]`FileManager`!@, you need to create either a @![iOS]`SDLFile`!@ @![android, javaSE, javaEE]`SdlFile`!@ or @![iOS]`SDLArtwork`!@ @![android, javaSE, javaEE]`SdlArtwork`!@object. @![iOS]`SDLFile` objects are created with a local `NSURL` or `NSData`; `SDLArtwork` a `UIImage`.!@ @![android]Both `SdlFile`s and `SdlArtwork`s can be created with a `Uri`, `byte[]`, or `resourceId`.!@ @![javaSE, javaEE]Both `SdlFile`s and `SdlArtwork`s can be created with using `filePath`, or `byte[]`.!@
 
 

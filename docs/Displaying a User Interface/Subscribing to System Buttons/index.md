@@ -1,16 +1,35 @@
 # Subscribing to System Buttons
 Subscribe buttons are used to detect changes to hard buttons located in the car's center console or steering wheel. You can subscribe to the following hard buttons:
 
-| Button  | Template | Button Type |
-| ------------- | ------------- | ------------- |
-| Play / Pause | media template only | soft button and hard button |
-| Ok | media template only | soft button and hard button |
-| Seek left | media template only | soft button and hard button |
-| Seek right | media template only | soft button and hard button |
-| Tune up | media template only | hard button |
-| Tune down | media template only | hard button |
-| Preset 0-9 | any template | hard button |
-| Search | any template | hard button |
+| Button  | Template |
+| ------------- | ------------- |
+| Play / Pause | Media only |
+| Ok | Media only |
+| Seek left | Media only |
+| Seek right | Media only |
+| Tune up | Media only |
+| Tune down | Media only |
+| Preset 0-9 | Any |
+| Search | Any |
+| Center Location | NavigationFullscreenMap only |
+| Zoom In | NavigationFullscreenMap only |
+| Zoom Out | NavigationFullscreenMap only |
+| Pan Up | NavigationFullscreenMap only |
+| Pan Up-Right | NavigationFullscreenMap only |
+| Pan Right | NavigationFullscreenMap only |
+| Pan Down-Right | NavigationFullscreenMap only |
+| Pan Down | NavigationFullscreenMap only |
+| Pan Down-Left | NavigationFullscreenMap only |
+| Pan Left | NavigationFullscreenMap only |
+| Pan Up-Left | NavigationFullscreenMap only |
+| Toggle Tilt | NavigationFullscreenMap only |
+| Rotate Clockwise | NavigationFullscreenMap only |
+| Rotate Counter-Clockwise | NavigationFullscreenMap only |
+| Toggle Heading | NavigationFullscreenMap only |
+
+!!! NOTE
+`Media` is the default template for media apps and `NavigationFullscreenMap` is the default template for navigation apps.
+!!!
 
 ### Subscribe Buttons HMI
 In the screenshot below, the pause, seek left and seek right icons are subscribe buttons.
