@@ -239,7 +239,10 @@ alert.setPlayTone(true);
 ##### Objective-C
 ```objc
 [self.sdlManager sendRequest:alert withResponseHandler:^(SDLRPCRequest *request, SDLRPCResponse *response, NSError *error) {
-    if (![response.resultCode isEqualToEnum:SDLResultSuccess]) { return; }
+    if (!response.success.boolValue) { 
+        // Print out the error if there is one and return early
+        return;
+    }
     <#Alert was shown successfully#>
 }];
 ```
@@ -247,7 +250,7 @@ alert.setPlayTone(true);
 ##### Swift
 ```swift
 sdlManager.send(request: alert) { (request, response, error) in
-    guard response?.resultCode == .success else { return }
+    guard response?.success.boolValue == true else { return }
     <#Alert was shown successfully#>
 }
 ```
@@ -292,7 +295,10 @@ There are two ways to dismiss an alert. The first way is to dismiss a specific a
 // `cancelID` is the ID that you assigned when creating and sending the alert
 SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWithAlertCancelID:cancelID];
 [self.sdlManager sendRequest:cancelInteraction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    if (![response.resultCode isEqualToEnum:SDLResultSuccess]) { return; }
+    if (!response.success.boolValue) { 
+        // Print out the error if there is one and return early
+        return;
+    }
     <#The alert was canceled successfully#>
 }];
 ```
@@ -302,7 +308,7 @@ SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWith
 // `cancelID` is the ID that you assigned when creating and sending the alert
 let cancelInteraction = SDLCancelInteraction(alertCancelID: cancelID)
 sdlManager.send(request: cancelInteraction) { (request, response, error) in
-    guard response?.resultCode == .success else { return }
+    guard response?.success.boolValue == true else { return }
     <#The alert was canceled successfully#>
 }
 ```
@@ -336,7 +342,10 @@ sdlManager.sendRPC(cancelInteraction);
 ```objc
 SDLCancelInteraction *cancelInteraction = [SDLCancelInteraction alert];
 [self.sdlManager sendRequest:cancelInteraction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    if (![response.resultCode isEqualToEnum:SDLResultSuccess]) { return; }
+    if (!response.success.boolValue) { 
+        // Print out the error if there is one and return early
+        return;
+    }
     <#The alert was canceled successfully#>
 }];
 ```
@@ -345,7 +354,7 @@ SDLCancelInteraction *cancelInteraction = [SDLCancelInteraction alert];
 ```swift
 let cancelInteraction = SDLCancelInteraction.alert()
 sdlManager.send(request: cancelInteraction) { (request, response, error) in
-    guard response?.resultCode == .success else { return }
+    guard response?.success.boolValue == true else { return }
     <#The alert was canceled successfully#>
 }
 ```

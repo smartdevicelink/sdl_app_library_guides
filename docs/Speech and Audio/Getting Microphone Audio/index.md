@@ -161,7 +161,7 @@ To process the response received from an ended audio capture, @![iOS]use the `wi
     }
 
     SDLPerformAudioPassThruResponse *audioPassThruResponse = (SDLPerformAudioPassThruResponse *)response;
-    if (![audioPassThruResponse.resultCode isEqualToEnum:SDLResultSuccess]) {
+    if (!response.success.boolValue) {
         <#Cancel any usage of the audio data#>
         return;
     }
@@ -175,7 +175,7 @@ To process the response received from an ended audio capture, @![iOS]use the `wi
 sdlManager.send(request: audioPassThru) { (request, response, error) in
     guard let response = response else { return }
 
-    guard response.resultCode == .success else {
+    guard response?.success.boolValue == true else {
         <#Cancel any usage of the audio data#>
         return
     }

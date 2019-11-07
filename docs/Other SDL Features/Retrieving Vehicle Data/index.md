@@ -50,7 +50,7 @@ getGPSData.gps = @YES;
     SDLGetVehicleDataResponse *vehicleDataResponse = (SDLGetVehicleDataResponse *)response;
     SDLResult resultCode = vehicleDataResponse.resultCode;
 
-    if (![resultCode isEqualToEnum:SDLResultSuccess]) {
+     if (!vehicleDataResponse.success.boolValue) {
         if ([resultCode isEqualToEnum:SDLResultDisallowed]) {
             <#The app does not have permission to access this vehicle data#>
         } else if ([resultCode isEqualToEnum:SDLResultRejected]) {
@@ -77,7 +77,7 @@ let getGPSData = SDLGetVehicleData()
 getGPSData.gps = true as NSNumber
 sdlManager.send(request: getGPSData) { (request, response, error) in
     guard let response = response as? SDLGetVehicleDataResponse else { return }
-    guard response.resultCode == .success else {
+    guard response?.success.boolValue == true else {
         switch response.resultCode {
         case .disallowed:
             <#The app does not have permission to access this vehicle data#>
@@ -156,7 +156,7 @@ subscribeGPSData.gps = @YES;
 
 [self.sdlManager sendRequest:subscribeGPSData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     SDLSubscribeVehicleDataResponse *vehicleDataResponse = (SDLSubscribeVehicleDataResponse *)response;
-    if (![vehicleDataResponse.resultCode isEqualToEnum:SDLResultSuccess]) {
+    if (!vehicleDataResponse.success.boolValue) {
         if ([vehicleDataResponse.resultCode isEqualToEnum:SDLResultDisallowed]) {
             <#The app does not have permission to access this vehicle data#>
         } else if ([vehicleDataResponse.resultCode isEqualToEnum:SDLResultUserDisallowed]) {
@@ -187,7 +187,7 @@ subscribeGPSData.gps = true as NSNumber
 
 sdlManager.send(request: subscribeGPSData) { (request, response, error) in
     guard let response = response as? SDLSubscribeVehicleDataResponse else { return }
-    guard response.resultCode == .success else {
+    guard response?.success.boolValue == true else {
         switch response.resultCode {
         case .disallowed:
             <#The app does not have permission to access this vehicle data#>
@@ -289,7 +289,7 @@ unsubscribeGPSData.gps = @YES;
 [self.sdlManager sendRequest:unsubscribeGPSData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     SDLUnsubscribeVehicleDataResponse *vehicleDataResponse = (SDLUnsubscribeVehicleDataResponse*)response;
 
-    if (![vehicleDataResponse.resultCode isEqualToEnum:SDLResultSuccess]) {
+    if (!vehicleDataResponse.success.boolValue) {
         if ([vehicleDataResponse.resultCode isEqualToEnum:SDLResultDisallowed]) {
             <#The app does not have permission to access this vehicle data#>
         } else if ([vehicleDataResponse.resultCode isEqualToEnum:SDLResultUserDisallowed]) {
@@ -319,7 +319,7 @@ unsubscribeGPSData.gps = true as NSNumber
 sdlManager.send(request: unsubscribeGPSData) { (request, response, error) in
     guard let response = response as? SDLUnsubscribeVehicleDataResponse else { return }
 
-    guard response.resultCode == .success else {
+   guard response?.success.boolValue == true else {
         switch response.resultCode {
         case .disallowed:
             <#The app does not have permission to access this vehicle data#>
@@ -386,7 +386,7 @@ SDLGetVehicleData *getCustomData = [[SDLGetVehicleData alloc] init];
     SDLGetVehicleDataResponse *vehicleDataResponse = (SDLGetVehicleDataResponse *)response;
     SDLResult resultCode = vehicleDataResponse.resultCode;
 
-    if (![resultCode isEqualToEnum:SDLResultSuccess]) {
+    if (!vehicleDataResponse.success.boolValue) {
         if ([resultCode isEqualToEnum:SDLResultDisallowed]) {
             <#The app does not have permission to access this vehicle data#>
         } else if ([resultCode isEqualToEnum:SDLResultRejected]) {
@@ -413,7 +413,7 @@ let getCustomData = SDLGetVehicleData()
 getCustomData.setOEMCustom("OEM-X-Vehicle-Data", withVehicleDataState: true)
 sdlManager.send(request: getCustomData) { (request, response, error) in
     guard let response = response as? SDLGetVehicleDataResponse else { return }
-    guard response.resultCode == .success else {
+    guard response?.success.boolValue == true else {
         switch response.resultCode {
         case .disallowed:
             <#The app does not have permission to access this vehicle data#>

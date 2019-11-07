@@ -63,7 +63,7 @@ Speak speak = new Speak(ttsChunkList);
 ##### Objective-C
 ```objc
 [self.sdlManager sendRequest:speak withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    if (![response.resultCode isEqualToEnum:SDLResultSuccess]) {
+     if (!response.success.boolValue) { 
         if ([response.resultCode isEqualToEnum:SDLResultDisallowed]) {
             <#The app does not have permission to use the speech request#>
         } else if ([response.resultCode isEqualToEnum:SDLResultRejected]) {
@@ -84,7 +84,7 @@ Speak speak = new Speak(ttsChunkList);
 ```swift
 sdlManager.send(request: speech) { (request, response, error) in
     guard let response = response as? SDLSpeakResponse else { return }
-    guard response.resultCode == .success else {
+    guard response?.success.boolValue == true else {
         switch response.resultCode {
         case .disallowed:
             <#The app does not have permission to use the speech request#>

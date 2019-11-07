@@ -190,7 +190,7 @@ slider.setCancelID(45);
 ```swift
 manager.send(request: sdlSlider, responseHandler: { (req, res, err) in
     // Create a SDLSlider response object from the handler response
-    guard let response = res as? SDLSliderResponse, response.resultCode == .success, let position = response.sliderPosition.intValue else { return }
+    guard let response = res as? SDLSliderResponse, response.success.boolValue == true, let position = response.sliderPosition.intValue else { return }
 
     <#Use the slider position#>
 })
@@ -230,7 +230,10 @@ If connected to older head units that do not support this feature, the cancel re
 // `cancelID` is the ID that you assigned when creating the slider
 SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWithSliderCancelID:cancelID];
 [self.sdlManager sendRequest:cancelInteraction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    if (![response.resultCode isEqualToEnum:SDLResultSuccess]) { return; }
+    if (!response.success.boolValue) { 
+        // Print out the error if there is one and return early
+        return;
+    }
     <#The slider was canceled successfully#>
 }];
 ```
@@ -240,7 +243,7 @@ SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWith
 // `cancelID` is the ID that you assigned when creating the slider
 let cancelInteraction = SDLCancelInteraction(sliderCancelID: cancelID)
 sdlManager.send(request: cancelInteraction) { (request, response, error) in
-    guard response?.resultCode == .success else { return }
+    guard response?.success.boolValue == true else { return }
     <#The slider was canceled successfully#>
 }
 ```
@@ -274,7 +277,10 @@ sdlManager.sendRPC(cancelInteraction);
 ```objc
 SDLCancelInteraction *cancelInteraction = [SDLCancelInteraction slider];
 [self.sdlManager sendRequest:cancelInteraction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    if (![response.resultCode isEqualToEnum:SDLResultSuccess]) { return; }
+    if (!response.success.boolValue) { 
+        // Print out the error if there is one and return early
+        return;
+    }
     <#The slider was canceled successfully#>
 }];
 ```
@@ -283,7 +289,7 @@ SDLCancelInteraction *cancelInteraction = [SDLCancelInteraction slider];
 ```swift
 let cancelInteraction = SDLCancelInteraction.slider()
 sdlManager.send(request: cancelInteraction) { (request, response, error) in
-    guard response?.resultCode == .success else { return }
+    guard response?.success.boolValue == true else { return }
     <#The slider was canceled successfully#>
 }
 ```
