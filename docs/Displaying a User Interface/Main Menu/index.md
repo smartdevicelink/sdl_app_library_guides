@@ -34,7 +34,7 @@ sdlManager.getScreenManager().setMenuConfiguration(menuConfiguration);
 ## Adding Menu Items 
 The best way to create and update your menu is to the use the Screen Manager API. The screen manager contains two menu related properties: `menu`, and `voiceCommands`. Setting an array of @![iOS]`SDLMenuCell`!@@![android, javaSE, javaEE]`MenuCell`!@s into the `menu` property will automatically set and update your menu and submenus, while setting an array of @![iOS]`SDLVoiceCommand`!@@![android, javaSE, javaEE]`VoiceCommand`!@s into the `voiceCommands` property allows you to use "hidden" menu items that only contain voice recognition data. The user can then use the IVI system's voice engine to activate this command even though it will not be displayed within the main menu.
 
-To find out more information on how to create `voiceCommands` see the [related documentation](Displaying a User Interface/Global Voice Commands).
+To find out more information on how to create `voiceCommands` see the [related documentation](Speech and Audio/Setting Up Voice Commands/#creating-voice-commands).
 
 @![iOS]
 ##### Objective-C
