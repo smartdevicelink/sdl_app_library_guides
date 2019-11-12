@@ -191,7 +191,7 @@ alert.setTtsChunks(TTSChunkFactory.createSimpleTTSChunks("Text to Speak"));
 !@
 
 #### Sound File
-The `ttsChunks` parameter can also take a file to play/speak. For more information on how to upload the file please refer to the [Playing Audio Indications](Other SDL Features/Playing Audio Indications) guide.
+The `ttsChunks` parameter can also take a file to play/speak. For more information on how to upload the file please refer to the [Playing Audio Indications](Speech and Audio/Playing Audio Indications) guide.
 
 @![iOS]
 ##### Objective-C
