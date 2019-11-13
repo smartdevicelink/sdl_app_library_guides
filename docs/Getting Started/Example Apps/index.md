@@ -4,7 +4,7 @@ SDL provides two example apps: one written in Objective-C and one in Swift. Both
 
 The example apps are located in the [sdl_ios](https://github.com/smartdevicelink/sdl_ios) repository. To try them, you can download the repository and run the example app targets, or you may use `pod try SmartDeviceLink` with [CocoaPods](https://cocoapods.org) installed on your Mac.
 
-!!! NOTE
+!!! IMPORTANT
 If you download or clone the SDL repository in order to run the example apps, you must first obtain the BSON submodule. You can do so by running `git submodule init` and `git submodule update` in your terminal when in the main directory of the cloned repository.
 !!!
 
@@ -17,25 +17,26 @@ To connect the example app to production or debug hardware, make sure you are on
 
 ## Troubleshooting
 ### TCP Debug Transport
-1.  Make sure the correct IP address and port number is set in the `SDLLifecycleConfiguration`.
-2.  Make sure the device and the SDL emulator are on the same network.
-3.  If you are running an SDL Core emulator on a virtual machine, and you are using port forwarding to connect your device to the virtual machine, the IP address should be the IP address of your machine hosting the VM, not the IP address of the VM. The port number will be `12345`.
-4.  Make sure there is no firewall blocking the incoming port `12345` on the machine or VM running the SDL Core emulator. Also make sure your firewall allows that outgoing port.
-5.  Due to iOS background restrictions, when the app on the device is backgrounded, the app will be unable to communicate with the SDL emulator. This will work on IAP connections.
-6.  Audio will not play when using a TCP connection. Only IAP connections are currently able to play audio because this happens over the standard Bluetooth / USB system audio channel.
+1. Make sure the correct IP address and port number is set in the `SDLLifecycleConfiguration`.
+1. Make sure the device and the SDL emulator are on the same network.
+1. If you are running an SDL Core emulator on a virtual machine, and you are using port forwarding to connect your device to the virtual machine, the IP address should be the IP address of your machine hosting the VM, not the IP address of the VM. The port number will be `12345`.
+1. Make sure there is no firewall blocking the incoming port `12345` on the machine or VM running the SDL Core emulator. Also make sure your firewall allows that outgoing port.
+1. Your SDL app will not work when the device app is in the background, because the OS will terminate any background tasks after a short amount of time. This is not an issue with production IAP connections because Apple's External Accessory framework allows your app unlimited background time.
+1. If you have a media SDL app, audio will not play on the emulator. Only production IAP connections are currently able to play audio because this happens over the standard Bluetooth / USB system audio channel.
+1. You cannot connect to any of our open-source emulators using a USB cord or Bluetooth because Apple's (MFi Program)[https://mfi.apple.com/MFiWeb/getFAQ.action#4-6] is confidential and can not be used in open source projects.
 
 ### iAP Production Transport
-1.  Make sure to use the default `SDLLifecycleConfiguration`.
-2.  Make sure the [protocol](https://smartdevicelink.com/en/guides/iOS/getting-started/sdk-configuration/) strings have been added to the app.
-3.  Make sure you have enabled background [capabilities](https://smartdevicelink.com/en/guides/iOS/getting-started/sdk-configuration/) for your app.
-4.  If the head unit (emulators do not support IAP) does not support Bluetooth, an iAP connection requires a USB cord.
+1. Make sure to use the default `SDLLifecycleConfiguration`.
+1. Make sure the [protocol](https://smartdevicelink.com/en/guides/iOS/getting-started/sdk-configuration/) strings have been added to the app.
+1. Make sure you have enabled background [capabilities](https://smartdevicelink.com/en/guides/iOS/getting-started/sdk-configuration/) for your app.
+1. If the head unit (emulators do not support IAP) does not support Bluetooth, an iAP connection requires a USB cord.
 
 #### iAP Bluetooth Production Transport
 1. Bluetooth transport support is automatic when you support the iAP production transport. It cannot be turned on or off separately.
-2.  Make sure the head unit supports Bluetooth transport for iPhones. Currently, only some head units support Bluetooth.
-3.  Make sure to use the default `SDLLifecycleConfiguration`.
-4.  Make sure Bluetooth is turned on - both on the head unit hardware and your iPhone.
-5.  Ensure your iPhone is properly paired with the head unit. 
+1. Make sure the head unit supports Bluetooth transport for iPhones. Currently, only some head units support Bluetooth.
+1. Make sure to use the default `SDLLifecycleConfiguration`.
+1. Make sure Bluetooth is turned on - both on the head unit hardware and your iPhone.
+1. Ensure your iPhone is properly paired with the head unit. 
 !@
 
 @![android, javaSE, javaEE]
@@ -83,9 +84,9 @@ In the main Java folder of Hello Sdl Android, open up ```SdlService.java```
 In the top of this file, locate the variable declaration for ```DEV_MACHINE_IP_ADDRESS```. Change it to your Sdl Core's IP. Leave the ```TCP_PORT``` set to ```12345```.
 
 ```java
-	// TCP/IP transport config
-	private static final int TCP_PORT = 12345; // if using manticore, change to assigned port
-	private static final String DEV_MACHINE_IP_ADDRESS = "192.168.1.78"; // change to your IP
+// TCP/IP transport config
+private static final int TCP_PORT = 12345; // if using manticore, change to assigned port
+private static final String DEV_MACHINE_IP_ADDRESS = "192.168.1.78"; // change to your IP
 ```
 
 !!! NOTE
