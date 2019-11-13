@@ -50,7 +50,7 @@ getGPSData.gps = @YES;
     SDLGetVehicleDataResponse *vehicleDataResponse = (SDLGetVehicleDataResponse *)response;
     SDLResult resultCode = vehicleDataResponse.resultCode;
 
-     if (!vehicleDataResponse.success.boolValue) {
+    if (!vehicleDataResponse.success.boolValue) {
         if ([resultCode isEqualToEnum:SDLResultDisallowed]) {
             <#The app does not have permission to access this vehicle data#>
         } else if ([resultCode isEqualToEnum:SDLResultRejected]) {
@@ -319,7 +319,7 @@ unsubscribeGPSData.gps = true as NSNumber
 sdlManager.send(request: unsubscribeGPSData) { (request, response, error) in
     guard let response = response as? SDLUnsubscribeVehicleDataResponse else { return }
 
-   guard response?.success.boolValue == true else {
+    guard response?.success.boolValue == true else {
         switch response.resultCode {
         case .disallowed:
             <#The app does not have permission to access this vehicle data#>
