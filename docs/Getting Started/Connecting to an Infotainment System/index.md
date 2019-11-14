@@ -2,7 +2,7 @@
 In order to view your SDL app, you must connect your device to a head unit that supports SDL Core. If you do not have access to a head unit, we recommend using a web-based emulator called [Manticore](https://smartdevicelink.com/sign-in/?next=/resources/manticore/) for testing how your SDL app reacts to real-world vehicle events, on-screen interactions and voice recognition.
 
 @![iOS,android]
-You will have to manually configure a different type of connection based on whether you are connecting to a head unit or an emulator. When connecting to a head unit, you must configure !@@![iOS]an `iAP`!@ @![android]a `Multiplex`!@ @![iOS,android] connection. Likewise, when connecting to an emulator, a `TCP` connection must be configured.
+You will have to configure different connection types based on whether you are connecting to a head unit or an emulator. When connecting to a head unit, you must configure !@@![iOS]an `iAP`!@ @![android]a `Multiplex`!@ @![iOS,android] connection. Likewise, when connecting to an emulator, a `TCP` connection must be configured.
 !@
 
 @![iOS,android]
@@ -17,6 +17,7 @@ To connect to a virtual machine running the Ubuntu [SDL Core](https://github.com
 Once you launch an instance of Manticore, you will be given an IP address and port number that you can use to configure your TCP connection. 
 !@
 
+#### Setting the IP Address and Port
 @![iOS]
 ##### Objective-C
 ```objc
@@ -38,7 +39,7 @@ builder.setTransportType(new TCPTransportConfig(<IP ADDRESS>, <PORT>, false));
 @![iOS,android]
 ## Connecting to a Head Unit
 ### Production
-To connect your device directly to a production vehicle head unit or Test Development Kit (TDK), make sure to implement an @![iOS]an `iAP`!@@![android]a `Multiplex`!@ connection. Then connect the device to the head unit or TDK using a USB cord or, if the head unit supports it, Bluetooth.
+To connect your device directly to a production vehicle head unit or Test Development Kit (TDK), make sure to implement an !@@![iOS]an `iAP`!@@![android]a `Multiplex`!@@![iOS,android] connection. Then connect the device to the head unit or TDK using a USB cord or, if the head unit supports it, Bluetooth.
 !@
 
 @![iOS]
