@@ -77,7 +77,7 @@ To open your app, click on the SDL icon in the HMI.
 
 This is the main screen of your SDL app. If you get to this point, your SDL app is working.
 
-#### Troubleshooting 
+### Troubleshooting 
 If you are having issues with connecting to an emulator or head unit, please see our [troubleshooting tips](Getting Started/Example Apps) in the Example Apps section of the guide. 
 !@
 
