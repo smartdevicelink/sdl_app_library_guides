@@ -16,8 +16,7 @@ To connect to a virtual machine running the Ubuntu [SDL Core](https://github.com
 #### Manticore
 Once you launch an instance of Manticore, you will be given an IP address and port number that you can use to configure your TCP connection. 
 
-
-#### Setting the IP Address and Port
+### Setting the IP Address and Port
 !@
 @![iOS]
 ##### Objective-C
