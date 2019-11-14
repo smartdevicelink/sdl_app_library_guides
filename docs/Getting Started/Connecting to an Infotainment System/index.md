@@ -88,7 +88,7 @@ Your SDL !@@![javaSE]embedded!@@![javaEE]cloud!@@![javaSE,javaEE] app will only 
 
 ## Configuring the Connection
 ### Generic SDL Core
-To connect to your app to SDL Core you need to know the IP address of the machine that is running the cloud app. If needed, running `ifconfig` in the terminal will give you the current network configuration information. 
+To connect to your app to a local Ubuntu [SDL Core](https://github.com/smartdevicelink/sdl_core)-based emulator you need to know the IP address of the machine that is running the cloud app. If needed, running `ifconfig` in the terminal will give you the current network configuration information.
 
 #### Policy Table Configuration
 Once you know the IP address, you need to set the websocket `endpoint` and app `nicknames` for your SDL app in the policy table. This will let Core know where your instance of the SDL app is running. The websocket endpoint needs to include both the IP address and port: `ws://<ip address>:<port>/`.
