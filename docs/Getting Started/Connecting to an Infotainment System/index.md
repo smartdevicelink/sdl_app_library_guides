@@ -1,7 +1,5 @@
 # Connecting to an Infotainment System
-@![iOS, android, javaSE, javaEE]
-In order to view your SDL app, you must connect your device to a head unit that supports SDL Core. If you do not have access to a head unit, we recommend using a web-based emulator called [Manticore](https://smartdevicelink.com/sign-in/?next=/resources/manticore/) for testing how your SDL app reacts to real-world vehicle events, on-screen interactions and voice recognition. 
-!@
+In order to view your SDL app, you must connect your device to a head unit that supports SDL Core. If you do not have access to a head unit, we recommend using a web-based emulator called [Manticore](https://smartdevicelink.com/sign-in/?next=/resources/manticore/) for testing how your SDL app reacts to real-world vehicle events, on-screen interactions and voice recognition.
 
 @![iOS, android]
 You will have to manually configure a different type of connection based on whether you are connecting to a head unit or an emulator. When connecting to a head unit, you must configure @![iOS]an `iAP`!@@![android]a `Multiplex`!@ connection. Likewise, when connecting to an emulator, a `TCP` connection must to be configured. 
@@ -123,3 +121,34 @@ Once your SDL app is running, either locally in an IDE or on a server, you will 
 
 This is the main screen of your SDL app. If you get to this point, your SDL app is working.
 !@
+
+## How Do I Find Out What Features My Infotainment System Supports?
+New features are always being added to SDL Core, however, you or your users may be connecting to older head units that do not support the newest features. If your SDL app attempts to implement an unsupported feature, your request will simply be ignored by SDL Core.
+
+### How to Handle Unsupported Features
+When you are implementing a feature, you should always assume that some of the head units that your users are connecting to will not support the feature or that your user has disabled permission to use this feature on their head unit. The best way to deal with unsupported features is to handle unsuccessful responses to the requests you sent to SDL Core. 
+
+### Checking the RPC Spec Version
+When you connect successfully to a head unit, you can get the most current [RPC Spec](https://github.com/smartdevicelink/rpc_spec/blob/master/MOBILE_API.xml) version that both the head unit and your mobile SDL SDK support. If the feature you want to support was added in version less than or equal to the version returned by the head unit, then your head unit supports the feature. However, please remember that you may still need permission from the OEM to use the feature.  
+
+@![iOS]
+##### Objective-C
+```objc
+NSString *rpcSpecVersion = self.sdlManager.registerResponse.sdlMsgVersion.description;
+```
+
+##### Swift
+```swift
+let rpcSpecVersion = sdlManager.registerResponse.sdlMsgVersion.description
+```
+!@
+
+@![android]
+```java
+SdlMsgVersion rpcSpecVersion = sdlManager.getRegisterAppInterfaceResponse().getSdlMsgVersion();
+Log.i("RPC Spec Version",  rpcSpecVersion.getMajorVersion() + "." + rpcSpecVersion.getMinorVersion() + "." + rpcSpecVersion.getPatchVersion());
+```
+!@
+
+
+
