@@ -2,8 +2,10 @@
 In order to view your SDL app, you must connect your device to a head unit that supports SDL Core. If you do not have access to a head unit, we recommend using a web-based emulator called [Manticore](https://smartdevicelink.com/sign-in/?next=/resources/manticore/) for testing how your SDL app reacts to real-world vehicle events, on-screen interactions and voice recognition.
 
 @![iOS,android]
-You will have to manually configure a different type of connection based on whether you are connecting to a head unit or an emulator. When connecting to a head unit, you must configure !@@![iOS]an `iAP`!@ @![android]a `Multiplex`!@ @![iOS,android] connection. Likewise, when connecting to an emulator, a `TCP` connection must be configured.!@
+You will have to manually configure a different type of connection based on whether you are connecting to a head unit or an emulator. When connecting to a head unit, you must configure !@@![iOS]an `iAP`!@ @![android]a `Multiplex`!@ @![iOS,android] connection. Likewise, when connecting to an emulator, a `TCP` connection must be configured.
+!@
 
+@![iOS,android]
 ## Connecting to an Emulator
 To connect to an emulator such as [Manticore](https://smartdevicelink.com/sign-in/?next=/resources/manticore/) or a local Ubuntu [SDL Core](https://github.com/smartdevicelink/sdl_core)-based emulator you must implement a TCP connection when configuring your SDL app. 
 
@@ -13,6 +15,7 @@ To connect to a virtual machine running the Ubuntu [SDL Core](https://github.com
 
 #### Manticore
 Once you launch an instance of Manticore, you will be given an IP address and port number that you can use to configure your TCP connection. 
+!@
 
 @![iOS]
 ##### Objective-C
@@ -32,9 +35,11 @@ builder.setTransportType(new TCPTransportConfig(<IP ADDRESS>, <PORT>, false));
 ```
 !@
 
+@![iOS,android]
 ## Connecting to a Head Unit
 ### Production
 To connect your device directly to a production vehicle head unit or Test Development Kit (TDK), make sure to implement an @![iOS]an `iAP`!@@![android]a `Multiplex`!@ connection. Then connect the device to the head unit or TDK using a USB cord or, if the head unit supports it, Bluetooth.
+!@
 
 @![iOS]
 ##### Objective-C
@@ -60,6 +65,7 @@ builder.setTransportType(new MultiplexTransportConfig(context, <APP ID>));
 If you are testing with a vehicle head unit or TDK and wish to see realtime debug logs in the Xcode console, you should use [wireless debugging](https://developer.apple.com/videos/play/wwdc2017/404/).
 !@ 
 
+@![iOS,android]
 ## Running the SDL App
 Build and run the project in @![iOS]Xcode!@@![android]Android Studio!@, targeting the device or simulator that you want to test your app with. Your app should compile and launch on your device of choosing. If your connection configuration setup correctly, you should see your SDL app icon appear on the HMI screen:
 
@@ -70,10 +76,10 @@ To open your app, click on the SDL icon in the HMI.
 ![Generic - SDL App Main Screen](assets/Generic_non_media.png)
 
 This is the main screen of your SDL app. If you get to this point, your SDL app is working.
-!@
 
 #### Troubleshooting 
 If you are having issues with connecting to an emulator or head unit, please see our [troubleshooting tips](Getting Started/Example Apps) in the Example Apps section of the guide. 
+!@
 
 @![javaSE,javaEE]
 Your SDL @![javaSE]embedded!@@![javaEE]cloud!@ app will only work with head units that support RPC Spec v5.1+.
