@@ -34,9 +34,6 @@ builder.setTransportType(new TCPTransportConfig(<IP ADDRESS>, <PORT>, false));
 ```
 !@
 
-#### Troubleshooting 
-If you are having issues with connecting to an emulator, please see our [troubleshooting tips](Getting Started/Example Apps) in the Example Apps section of the guide. 
-
 ## Connecting to a Head Unit
 ### Production
 To connect your device directly to a production vehicle head unit or Test Development Kit (TDK), make sure to implement an @![iOS]an `iAP`!@@![android]a `Multiplex`!@ connection. Then connect the device to the head unit or TDK using a USB cord or, if the head unit supports it, Bluetooth.
@@ -66,21 +63,24 @@ If you are testing with a vehicle head unit or TDK and wish to see realtime debu
 !@ 
 
 ## Running the SDL App
-Build and run the project in @![iOS]Xcode!@@![android]Android Studio!@, targeting the device or simulator that you want to test your app with. Your app should compile and launch on your device of choosing. Soon after, you should see your SDL app icon appear on the HMI screen:
+Build and run the project in @![iOS]Xcode!@@![android]Android Studio!@, targeting the device or simulator that you want to test your app with. Your app should compile and launch on your device of choosing. If your connection configuration setup correctly, you should see your SDL app icon appear on the HMI screen:
 
-![HMI Apps](assets/hmi1.png)
+![Generic - SDL Apps Tab](assets/Generic_apps_screen.png)
 
-Click on the SDL icon in the HMI.
+To open your app, click on the SDL icon in the HMI.
 
-![HMI Apps](assets/hmi2.png)
+![Generic - SDL App Main Screen](assets/Generic_non_media.png)
 
-This is the main screen of your SDL app. If you get to this point, the project is working.
+This is the main screen of your SDL app. If you get to this point, your SDL app is working.
 !@
+
+#### Troubleshooting 
+If you are having issues with connecting to an emulator or head unit, please see our [troubleshooting tips](Getting Started/Example Apps) in the Example Apps section of the guide. 
 
 @![javaSE,javaEE]
 Your SDL @![javaSE]embedded!@@![javaEE]cloud!@ app will only work with head units that support RPC Spec v5.1+.
 
-## Configuring the SDL App Connection
+## Configuring the Connection
 ## Ubuntu SDL Core
 To connect to your app to SDL Core you need to know the IP address of the machine that is running the cloud app. If needed, running `ifconfig` in the terminal will give you the current network configuration information. 
 
@@ -110,16 +110,16 @@ For more information about policy tables please visit the [Policy Table](https:/
 ### Manticore
 If you are using Manticore, the app connection information can be easily added in the settings tab of the Manticore web page. Please note that Manticore needs to access your machine's IP address in order to be able to start a websocket connection with your app. If you are hosting the app on your local machine, you may need to do extra setup to make your machine publicly accessible.
 
-![Main Screen](assets/manticore1.png)
+![Manticore - Cloud and Embedded App Settings](assets/Manticore_cloud_embedded_app_settings.png)
 
 ## Running the SDL App
 Once you have a configured instance of Core running, you should see your SDL app name and icon appear on HMI. However, nothing will happen when you tap on your SDL app icon until you build and run your SDL app.
 
-![HMI Apps](assets/hmi1.png)
+![Generic - SDL Apps Tab](assets/Generic_apps_screen.png)
 
 Once your SDL app is running, either locally in an IDE or on a server, you will be able to launch the SDL app by clicking on the app icon in the HMI.
 
-![HMI Apps](assets/hmi2.png)
+![Generic - SDL App Main Screen](assets/Generic_non_media.png)
 
-This is the main screen of the  app. If you get to this point, the project is working.
+This is the main screen of your SDL app. If you get to this point, your SDL app is working.
 !@
