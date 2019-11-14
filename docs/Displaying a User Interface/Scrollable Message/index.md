@@ -148,7 +148,10 @@ If connected to older head units that do not support this feature, the cancel re
 // `cancelID` is the ID that you assigned when creating and sending the scrollable message
 SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWithScrollableMessageCancelID:cancelID];
 [self.sdlManager sendRequest:cancelInteraction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    if (![response.resultCode isEqualToEnum:SDLResultSuccess]) { return; }
+    if (!response.success.boolValue) { 
+        // Print out the error if there is one and return early
+        return;
+    }
     <#The scrollable message was canceled successfully#>
 }];
 ```
@@ -158,7 +161,7 @@ SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWith
 // `cancelID` is the ID that you assigned when creating and sending the alert
 let cancelInteraction = SDLCancelInteraction(scrollableMessageCancelID: cancelID)
 sdlManager.send(request: cancelInteraction) { (request, response, error) in
-    guard response?.resultCode == .success else { return }
+    guard response?.success.boolValue == true else { return }
     <#The scrollable message was canceled successfully#>
 }
 ```
@@ -192,7 +195,10 @@ sdlManager.sendRPC(cancelInteraction);
 ```objc
 SDLCancelInteraction *cancelInteraction = [SDLCancelInteraction scrollableMessage];
 [self.sdlManager sendRequest:cancelInteraction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    if (![response.resultCode isEqualToEnum:SDLResultSuccess]) { return; }
+    if (!response.success.boolValue) { 
+        // Print out the error if there is one and return early
+        return;
+    }
     <#The scrollable message was canceled successfully#>
 }];
 ```
@@ -201,7 +207,7 @@ SDLCancelInteraction *cancelInteraction = [SDLCancelInteraction scrollableMessag
 ```swift
 let cancelInteraction = SDLCancelInteraction.scrollableMessage()
 sdlManager.send(request: cancelInteraction) { (request, response, error) in
-    guard response?.resultCode == .success else { return }
+    guard response?.success.boolValue == true else { return }
     <#The scrollable message was canceled successfully#>
 }
 ```

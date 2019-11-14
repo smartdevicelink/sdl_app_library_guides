@@ -76,7 +76,7 @@ SDLSendLocation *sendLocation = [[SDLSendLocation alloc] initWithLongitude:-97.3
 
     SDLSendLocationResponse *sendLocation = (SDLSendLocationResponse *)response;
     SDLResult resultCode = sendLocation.resultCode;
-    if (![resultCode isEqualToEnum:SDLResultSuccess]) {
+    if (!sendLocation.success.boolValue) {
         if ([resultCode isEqualToEnum:SDLResultInvalidData]) {
             <#SendLocation was rejected. The request contained invalid data.#>
         } else if ([resultCode isEqualToEnum:SDLResultDisallowed]) {
@@ -101,7 +101,7 @@ sdlManager.send(request: sendLocation) { (request, response, error) in
         return
     }
 
-    guard response.resultCode == .success else {
+    guard response?.success.boolValue == true else {
         switch response.resultCode {
         case .invalidData:
             <#SendLocation was rejected. The request contained invalid data.#>
