@@ -38,7 +38,6 @@ builder.setTransportType(new TCPTransportConfig(<IP ADDRESS>, <PORT>, false));
 
 @![iOS,android]
 ## Connecting to a Head Unit
-### Production
 To connect your device directly to a production vehicle head unit or Test Development Kit (TDK), make sure to implement an !@@![iOS]an `iAP`!@@![android]a `Multiplex`!@@![iOS,android] connection. Then connect the device using a USB cord or, if the head unit supports it, Bluetooth.
 !@
 
