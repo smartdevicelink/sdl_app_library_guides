@@ -29,7 +29,7 @@ turnByTurn.turnIcon = turnIcon;
 
 __weak typeof(self) weakSelf = self;
 [self.sdlManager sendRequest:turnByTurn withResponseHandler:^(SDLRPCRequest *request, SDLRPCResponse *response, NSError *error) {
-    if (![response.resultCode isEqualToEnum:SDLResultSuccess]) {
+    if (!response.success.boolValue) {
         <#Error sending ShowConstantTBT#>
         return;
     }
@@ -37,7 +37,7 @@ __weak typeof(self) weakSelf = self;
     typeof(weakSelf) strongSelf = weakSelf;
     SDLAlertManeuver* alertManeuver = [[SDLAlertManeuver alloc] initWithTTS:@"In 3 miles turn right" softButtons:nil];
     [strongSelf.sdlManager sendRequest:alertManeuver withResponseHandler:^(SDLRPCRequest *request, SDLRPCResponse *response, NSError *error) {
-        if (![response.resultCode isEqualToEnum:SDLResultSuccess]) {
+        if (!response.success.boolValue) {
             <#Error sending AlertManeuver#>
             return;
         }
@@ -58,14 +58,14 @@ turnByTurn.navigationText2 = "3 mi"
 turnByTurn.turnIcon = turnIcon
 
 sdlManager.send(request: turnByTurn) { (request, response, error) in
-    guard response?.resultCode == .success else {
+    guard response?.success.boolValue == true else {
         <#Error sending ShowConstantTBT#>
         return
     }
 
     let alertManeuver = SDLAlertManeuver(tts: "In 3 miles turn right", softButtons: nil)
     self.sdlManager.send(request: alertManeuver, responseHandler: { (request, response, error) in
-        guard response?.resultCode == .success else { 
+        guard response?.success.boolValue == true else { 
             <#Error sending AlertManeuver#>
             return 
         }
@@ -131,7 +131,7 @@ SDLShowConstantTBT* clearTurnByTurn = [[SDLShowConstantTBT alloc] init];
 clearTurnByTurn.maneuverComplete = @YES;
 
 [self.sdlManager sendRequest:clearTurnByTurn withResponseHandler:^(SDLRPCRequest *request, SDLRPCResponse *response, NSError *error) {
-    if (![response.resultCode isEqualToEnum:SDLResultSuccess]) {
+    if (!response.success.boolValue) {
         <#Error sending TBT#>
         return;
     }
@@ -146,7 +146,7 @@ let clearTurnByTurn = SDLShowConstantTBT()
 clearTurnByTurn.maneuverComplete = true as NSNumber
 
 sdlManager.send(request: clearTurnByTurn) { (request, response, error) in
-    guard response?.resultCode == .success else {
+    guard response?.success.boolValue == true else {
         <#Error sending TBT#>
         return
     }

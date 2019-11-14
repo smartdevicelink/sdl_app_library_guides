@@ -35,7 +35,7 @@ SDLCloudAppProperties *properties = [[SDLCloudAppProperties alloc] initWithAppID
 properties.authToken = <#auth token#>;
 SDLSetCloudAppProperties *setCloud = [[SDLSetCloudAppProperties alloc] initWithProperties:properties];
 [self.sdlManager sendRequest:setCloud withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    if (!response || !response.success.boolValue) {
+    if (!response.success.boolValue) {
         SDLLogE(@"Error sending set cloud properties: Req %@, Res %@, err %@", request, response, error);
         return;
     }

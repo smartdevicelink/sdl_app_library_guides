@@ -9,9 +9,11 @@ To change a template at any time, send a `SetDisplayLayout` RPC to Core.
 ```objc
 SDLSetDisplayLayout* display = [[SDLSetDisplayLayout alloc] initWithPredefinedLayout:SDLPredefinedLayoutGraphicWithText];
 [self.sdlManager sendRequest:display withResponseHandler:^(SDLRPCRequest *request, SDLRPCResponse *response, NSError *error) {
-    if ([response.resultCode isEqualToEnum:SDLResultSuccess]) {
-      // The template has been set successfully
-    }
+     if (!response.success.boolValue) { 
+        // Print out the error if there is one and return early
+        return;
+     }
+     // The template has been set successfully
 }];
 ```
 
@@ -19,9 +21,8 @@ SDLSetDisplayLayout* display = [[SDLSetDisplayLayout alloc] initWithPredefinedLa
 ```swift
 let display = SDLSetDisplayLayout(predefinedLayout: .graphicWithText)
 sdlManager.send(request: display) { (request, response, error) in
-    if response?.resultCode == .success {
+    guard response?.success.boolValue == true else { return }
         // The template has been set successfully
-    }
 }
 ```
 !@
