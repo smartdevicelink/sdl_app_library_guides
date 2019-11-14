@@ -15,9 +15,10 @@ To connect to a virtual machine running the Ubuntu [SDL Core](https://github.com
 
 #### Manticore
 Once you launch an instance of Manticore, you will be given an IP address and port number that you can use to configure your TCP connection. 
-!@
+
 
 #### Setting the IP Address and Port
+!@
 @![iOS]
 ##### Objective-C
 ```objc
@@ -86,10 +87,10 @@ If you are having issues with connecting to an emulator or head unit, please see
 Your SDL !@@![javaSE]embedded!@@![javaEE]cloud!@@![javaSE,javaEE] app will only work with head units that support RPC Spec v5.1+.
 
 ## Configuring the Connection
-## Generic SDL Core
+### Generic SDL Core
 To connect to your app to SDL Core you need to know the IP address of the machine that is running the cloud app. If needed, running `ifconfig` in the terminal will give you the current network configuration information. 
 
-### Policy Table Configuration
+#### Policy Table Configuration
 Once you know the IP address, you need to set the websocket `endpoint` and app `nicknames` for your SDL app in the policy table. This will let Core know where your instance of the SDL app is running. The websocket endpoint needs to include both the IP address and port: `ws://<ip address>:<port>/`.
 
 ```json
