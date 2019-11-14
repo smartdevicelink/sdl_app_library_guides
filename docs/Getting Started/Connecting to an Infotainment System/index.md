@@ -10,7 +10,7 @@ You will have to configure different connection types based on whether you are c
 To connect to an emulator such as [Manticore](https://smartdevicelink.com/sign-in/?next=/resources/manticore/) or a local Ubuntu [SDL Core](https://github.com/smartdevicelink/sdl_core)-based emulator you must implement a TCP connection when configuring your SDL app. 
 
 ### Getting the IP Address and Port
-#### Ubuntu SDL Core
+#### Generic SDL Core
 To connect to a virtual machine running the Ubuntu [SDL Core](https://github.com/smartdevicelink/sdl_core)-based emulator, you will use the IP address of the Ubuntu OS and `12345` for the port. You may have to enable port forwarding on your virtual machine you want to connect using a real device instead of a simulated device. 
 
 #### Manticore
@@ -83,10 +83,10 @@ If you are having issues with connecting to an emulator or head unit, please see
 !@
 
 @![javaSE,javaEE]
-Your SDL @![javaSE]embedded!@@![javaEE]cloud!@ app will only work with head units that support RPC Spec v5.1+.
+Your SDL !@@![javaSE]embedded!@@![javaEE]cloud!@@![javaSE,javaEE] app will only work with head units that support RPC Spec v5.1+.
 
 ## Configuring the Connection
-## Ubuntu SDL Core
+## Generic SDL Core
 To connect to your app to SDL Core you need to know the IP address of the machine that is running the cloud app. If needed, running `ifconfig` in the terminal will give you the current network configuration information. 
 
 ### Policy Table Configuration
