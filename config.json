@@ -202,14 +202,6 @@
             "navigation": [
                 {
                     "name": "Configuring SDL Logging"
-                },
-                {
-                    "name": "Relay App",
-                    "platforms": ["iOS"]
-                },
-                {
-                    "name": "RPC Builder App",
-                    "platforms": ["iOS"]
                 }
             ]
         },
