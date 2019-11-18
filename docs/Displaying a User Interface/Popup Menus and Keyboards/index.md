@@ -1,10 +1,10 @@
 # Popup Menus and Keyboards
 SDL supports modal menus and keyboards. The user can respond to the list of menu options via touch, voice (if voice recognition supported by the head unit), or keyboard input.
 
-There are several UX considerations to take into account when designing your menus. The main menu should should not be updated very often and should act as navigation for your app. Popup menus should be used to present a selection of options to your user. They can also be used to show a keyboard that lets your user perform a search or provide user input. 
+There are several UX considerations to take into account when designing your menus. The main menu should not be updated very often and should act as navigation for your app. Popup menus should be used to present a selection of options to your user. They can also be used to show a keyboard that lets your user perform a search or provide user input. 
 
 ## Presenting a Popup Menu
-Presenting a popup menu is similiar to presenting a modal view to request input from your user. It is possible to chain together menus to drill down, however, it is recommended to do so judiciously. Requesting too much input from a driver while they are driving is distracting and may result in your app being rejected by OEMs.
+Presenting a popup menu is similar to presenting a modal view to request input from your user. It is possible to chain together menus to drill down, however, it is recommended to do so judiciously. Requesting too much input from a driver while they are driving is distracting and may result in your app being rejected by OEMs.
 
 | Layout Mode                | Formatting Description |
 | -------------------------- | ---------------------- |
