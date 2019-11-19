@@ -106,11 +106,10 @@ For TCP, you may use the built-in Android emulator or an Android phone on the sa
 Make sure SDL Core and the HMI are running prior to running Hello Sdl Android
 !!!
 
-To know more about how to connect the app to the infotainment system, please check the [Connecting to an Infotainment System
-guide](Getting Started/Connecting to an Infotainment System)
+To find out more about how to connect the app to the infotainment system, please check the [Connecting to an Infotainment System](Getting Started/Connecting to an Infotainment System) guide.
 
 ### Troubleshooting
-Sometimes things don't always go as planned, and so this section exists. If your app compiles and does NOT show up on the HMI, there are a few things to check out.
+If your app compiles and but does not show up on the HMI, there are a few things you should check:
 
 #### TCP
 1. Make sure that you have changed the IP in `SdlService.java` to match the machine running SDL Core. Being on the same network is also important.
