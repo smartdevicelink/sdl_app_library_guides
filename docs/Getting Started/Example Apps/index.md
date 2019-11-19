@@ -4,7 +4,7 @@ SDL provides two example apps: one written in Objective-C and one in Swift. Both
 
 The example apps are located in the [sdl_ios](https://github.com/smartdevicelink/sdl_ios) repository. To try them, you can download the repository and run the example app targets, or you may use `pod try SmartDeviceLink` with [CocoaPods](https://cocoapods.org) installed on your Mac.
 
-!!! IMPORTANT
+!!! MUST
 If you download or clone the SDL repository in order to run the example apps, you must first obtain the BSON submodule. You can do so by running `git submodule init` and `git submodule update` in your terminal when in the main directory of the cloned repository.
 !!!
 
