@@ -1,7 +1,7 @@
 # Popup Menus
 SDL supports modal menus. The user can respond to the list of menu options via touch, voice (if voice recognition is supported by the head unit), or by keyboard input to search or filter the menu.
 
-There are several UX considerations to take into account when designing your menus. The main menu should not be updated often and should act as navigation for your app. Popup menus should be used to present a selection of options to your user. They can also be used to show a keyboard that lets your user perform a search or provide text and voice input. See the [Keyboards](Displaying a User Interface/Keyboards) guide for information on how to implement a keyboard popup.
+There are several UX considerations to take into account when designing your menus. The main menu should not be updated often and should act as navigation for your app. Popup menus should be used to present a selection of options to your user. They can also be used to show a keyboard that lets your user perform a search or provide text and voice input. See the [Popup Keyboards](Displaying a User Interface/Popup Keyboards) guide for information on how to implement a keyboard popup.
 
 ## Presenting a Popup Menu
 Presenting a popup menu is similiar to presenting a modal view to request input from your user. It is possible to chain together menus to drill down, however, it is recommended to do so judiciously. Requesting too much input from a driver while they are driving is distracting and may result in your app being rejected by OEMs.
@@ -200,7 +200,7 @@ sdlManager.getScreenManager().presentChoiceSet(choiceSet, InteractionMode.MANUAL
 !@
 
 ### Presenting a Searchable Menu
-In addition to presenting a standard menu, you can also present a "searchable" menu, that is, a menu with a keyboard input box at the top. For more information on implementing the keyboard callbacks, see the [Keyboards](Displaying a User Interface/Keyboards) guide.
+In addition to presenting a standard menu, you can also present a "searchable" menu, that is, a menu with a keyboard input box at the top. For more information on implementing the keyboard callbacks, see the [Popup Keyboards](Displaying a User Interface/Popup Keyboards) guide.
 
 ##### Menu with Search
 ![SYNC 3 - Menu with Search Interaction Layout](assets/SYNC3_popup_menu_with_search.jpg)
@@ -268,3 +268,7 @@ choiceSet.cancel()
 choiceSet.cancel();
 ```
 !@
+
+## Using RPCs
+If you don't want to use the @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@, you can do this manually using the `Choice`, `CreateInteractionChoiceSet`, and `PerformInteraction` RPC requests. You will need to create `Choice`s, bundle them into `CreateInteractionChoiceSet`s, and then present those choice sets via a `PerformInteraction` request. As this is no longer a recommended course of action, we will leave it to you to figure out how to manually do it.
+
