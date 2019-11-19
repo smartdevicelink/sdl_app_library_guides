@@ -90,14 +90,14 @@ private static final String DEV_MACHINE_IP_ADDRESS = "192.168.1.78"; // change t
 ```
 
 !!! NOTE
-if you do not change the target IP address, the application will not connect to SDL Core or show up on the HMI
+If you do not change the target IP address, the application will not connect to SDL Core or show up on the HMI.
 !!!
 
 ### Configure for Bluetooth
 Right out of the box, all you need to do to run Bluetooth is to select the ```multi_sec_offDebug``` (Multiplexing) build flavor.
 
 ### Configure for USB (AOA)
-To connect to an SDL Core instance or TDK via USB transport, select the ```multi_sec_offDebug ``` (Multiplexing) build flavor. There is more information for USB transport under [Getting Started - Using AOA Protocol](Getting Started/Using AOA Protocol).
+To connect to an SDL Core instance or TDK via USB transport, select the ```multi_sec_offDebug ``` (Multiplexing) build flavor. There is more information about the USB transport in the [Using AOA Protocol](Getting Started/Using AOA Protocol) section.
 
 ## Building the Project
 For TCP, you may use the built-in Android emulator or an Android phone on the same network as SDL Core. For Bluetooth, you will need an Android phone that is paired to a TDK or head unit via Bluetooth.
