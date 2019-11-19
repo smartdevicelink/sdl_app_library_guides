@@ -21,9 +21,9 @@ To connect the example app to production or debug hardware, make sure you are on
 1. Make sure the device and the SDL emulator are on the same network.
 1. If you are running an SDL Core emulator on a virtual machine, and you are using port forwarding to connect your device to the virtual machine, the IP address should be the IP address of your machine hosting the VM, not the IP address of the VM. The port number will be `12345`.
 1. Make sure there is no firewall blocking the incoming port `12345` on the machine or VM running the SDL Core emulator. Also make sure your firewall allows that outgoing port.
-1. Your SDL app will not work when the device app is in the background, because the OS will terminate any background tasks after a short amount of time. This is not an issue with production IAP connections because Apple's External Accessory framework allows your app unlimited background time.
+1. Your SDL app will not work when the device app is in the background, because the OS will terminate background tasks after a short amount of time. This is not an issue with production IAP connections because Apple's External Accessory framework allows your app unlimited background time.
 1. If you have a media SDL app, audio will not play on the emulator. Only production IAP connections are currently able to play audio because this happens over the standard Bluetooth / USB system audio channel.
-1. You cannot connect to any of our open-source emulators using a USB cord or Bluetooth because Apple's (MFi Program)[https://mfi.apple.com/MFiWeb/getFAQ.action#4-6] is confidential and can not be used in open source projects.
+1. You cannot connect to any of our open-source emulators using a USB cord or Bluetooth because Apple's [MFi Program](https://mfi.apple.com/MFiWeb/getFAQ.action#4-6) is confidential and can not be used in open source projects.
 
 ### iAP Production Transport
 1. Make sure to use the default `SDLLifecycleConfiguration`.
@@ -40,7 +40,7 @@ To connect the example app to production or debug hardware, make sure you are on
 !@
 
 @![android, javaSE, javaEE]
-In this guide we take you through the steps to get our sample project, Hello Sdl, running and connected to Sdl Core as well as showing up on HMI.
+In this guide we take you through the steps to get our sample project, Hello Sdl, running and connected to SDL Core as well as showing up on HMI.
 !@
 
 @![android]
@@ -81,7 +81,7 @@ For TCP to work, you will have to know the IP address of your machine that is ru
 
 In the main Java folder of Hello Sdl Android, open up ```SdlService.java```
 
-In the top of this file, locate the variable declaration for ```DEV_MACHINE_IP_ADDRESS```. Change it to your Sdl Core's IP. Leave the ```TCP_PORT``` set to ```12345```.
+In the top of this file, locate the variable declaration for ```DEV_MACHINE_IP_ADDRESS```. Change it to your SDL Core's IP. Leave the ```TCP_PORT``` set to ```12345```.
 
 ```java
 // TCP/IP transport config
@@ -90,7 +90,7 @@ private static final String DEV_MACHINE_IP_ADDRESS = "192.168.1.78"; // change t
 ```
 
 !!! NOTE
-if you do not change the target IP address, the application will not connect to Sdl Core or show up on the HMI
+if you do not change the target IP address, the application will not connect to SDL Core or show up on the HMI
 !!!
 
 ### Configure for Bluetooth
@@ -113,13 +113,13 @@ guide](Getting Started/Connecting to an Infotainment System)
 Sometimes things don't always go as planned, and so this section exists. If your app compiles and does NOT show up on the HMI, there are a few things to check out.
 
 #### TCP
-1. Make sure that you have changed the IP in ```SdlService.java``` to match the machine running Sdl Core. Being on the same network is also important.
-2. If you are sure that the IP is correct and it is still not showing up, make sure the Build Flavor that is running is ```tcpDebug```.
-3. If the two above dont work, make sure there is no firewall blocking the incoming port ```12345``` on the machine or VM running SDL Core. In the same breath, make sure your firewall allows that outgoing port.
+1. Make sure that you have changed the IP in `SdlService.java` to match the machine running SDL Core. Being on the same network is also important.
+2. If you are sure that the IP is correct and it is still not showing up, make sure the Build Flavor that is running is `tcpDebug`.
+3. If the two above don't work, make sure there is no firewall blocking the incoming port `12345` on the machine or VM running SDL Core. In the same breath, make sure your firewall allows that outgoing port.
 4. There are different network configurations needed for different virtualization software (virtualbox, vmware, etc). Make sure yours is set up correctly. Or use [Manticore](https://smartdevicelink.com/resources/manticore/).
 
 #### Bluetooth
-1. Make sure the build flavor ```multi_sec_offDebug ``` is selected.
+1. Make sure the build flavor `multi_sec_offDebug` is selected.
 2. Ensure your phone is properly paired with the TDK
 3. Make sure Bluetooth is turned on - on Both the TDK and your phone
 4. Make sure apps are enabled on the TDK (in settings)
