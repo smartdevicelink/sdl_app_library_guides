@@ -174,21 +174,21 @@ In order to instantiate the `SDLManager` class, you must first configure an `SDL
 There are two different ways to connect your app to a SDL Core: with a TCP (Wi-Fi) network connection or with an iAP (USB / Bluetooth) network connection. Use TCP for debugging and use iAP for production level apps.
 
 ##### iAP
-##### Objective-C
+###### Objective-C
 ```objc
 SDLLifecycleConfiguration* lifecycleConfiguration = [SDLLifecycleConfiguration defaultConfigurationWithAppName:@"<#App Name#>" fullAppId:@"<#App Id#>"];
 ```
-##### Swift
+###### Swift
 ```swift
 let lifecycleConfiguration = SDLLifecycleConfiguration(appName:"<#App Name#>", fullAppId: "<#App Id#>")
 ```
 
 ##### TCP
-##### Objective-C
+###### Objective-C
 ```objc
 SDLLifecycleConfiguration* lifecycleConfiguration = [SDLLifecycleConfiguration debugConfigurationWithAppName:@"<#App Name#>" fullAppId:@"<#App Id#>" ipAddress:@"<#IP Address#>" port:<#Port#>];
 ```
-##### Swift
+###### Swift
 ```swift
 let lifecycleConfiguration = SDLLifecycleConfiguration(appName: "<#App Name#>", fullAppId: "<#App Id#>", ipAddress: "<#IP Address#>", port: <#Port#>)
 ```

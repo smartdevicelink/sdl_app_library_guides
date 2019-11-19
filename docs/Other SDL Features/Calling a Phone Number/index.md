@@ -68,7 +68,7 @@ SDLDialNumber *dialNumber = [[SDLDialNumber alloc] initWithNumber: @"1238675309"
 
     SDLDialNumberResponse* dialNumber = (SDLDialNumberResponse *)response;
     SDLResult *resultCode = dialNumber.resultCode;
-    if (![resultCode isEqualToEnum:SDLResultSuccess]) {
+    if (!resultCode.success.boolValue) {
 		if ([resultCode isEqualToEnum:SDLResultRejected]) {
 	        <#DialNumber was rejected. Either the call was sent and cancelled or there is no device connected#>
 	    } else if ([resultCode isEqualToEnum:SDLResultDisallowed]) {
@@ -93,7 +93,7 @@ sdlManager.send(request: dialNumber) { (request, response, error) in
         return
     }
 
-    guard response.resultCode == .success else {
+    guard response?.success.boolValue == true else {
         switch response.resultCode {
         case .rejected:
             <#DialNumber was rejected. Either the call was sent and cancelled or there is no device connected#>
