@@ -1,11 +1,13 @@
 # Finding Supported Features
-New features are always being added to SDL Core, however, you or your users may be connecting to older head units that do not support the newest features. If your SDL app attempts to send an unsupported RPC, your request will simply be ignored by SDL Core.
+New features are always being added to SDL, however, you or your users may be connecting to modules that do not support the newest features. If your SDL app attempts to use an unsupported feature, your request will be ignored.
 
 ### How to Handle Unsupported Features
-When you are implementing a feature, you should always assume that some of the head units that your users are connecting to will not support the feature or that your user may have disabled permission to use this feature on their head unit. The best way to deal with unsupported features is to handle unsuccessful responses to the requests you send to SDL Core. 
+When you are implementing a feature, you should always assume that some modules your users are connecting to will not support the feature or that your user may have disabled your permission to use this feature on their head unit. The best way to deal with unsupported features is to check if the feature is available before attempting to use it and handling error responses.
 
 ### Checking if a Feature is Supported
-When you connect successfully to a head unit, you can get the most current [RPC Spec](https://github.com/smartdevicelink/rpc_spec/blob/master/MOBILE_API.xml) version that both the head unit and your mobile SDL SDK support. If the feature you want to support was added in a version less than or equal to the version returned by the head unit, then your head unit may support the feature.
+When you connect successfully to a head unit, SDL will automatically negotiate the maximum SDL RPC version supported by both the module and your SDL SDK. If the feature you want to support was added in a version less than or equal to the version returned by the head unit, then your head unit may support the feature. Remember that the module may still disable the feature, or the user may still have disabled permissions for the feature in some cases.
+
+Throughout these guides you may see headers that contain text like "RPC 6.0+". That means that if the negotiated version is 6.0 or greater, then SDL supports the feature but the above caveats may still apply.
 
 @![iOS]
 ##### Objective-C
@@ -24,4 +26,3 @@ let rpcSpecVersion = sdlManager.registerResponse.sdlMsgVersion
 SdlMsgVersion rpcSpecVersion = sdlManager.getRegisterAppInterfaceResponse().getSdlMsgVersion();
 ```
 !@
-
