@@ -2,7 +2,7 @@
 @![iOS]
 SDL provides two example apps: one written in Objective-C and one in Swift. Both implement the same features.
 
-The example apps are located in the [sdl_ios](https://github.com/smartdevicelink/sdl_ios) repository. To try them, you can download the repository and run the example app targets, or you may use `pod try SmartDeviceLink` with [CocoaPods](https://cocoapods.org) installed on your Mac.
+The example apps are located in the [sdl_ios](https://github.com/smartdevicelink/sdl_ios) repository. To try them, you can download the repository and run the example app targets, or you can use `pod try SmartDeviceLink` with [CocoaPods](https://cocoapods.org) installed on your Mac.
 
 !!! NOTE
 If you download or clone the SDL repository in order to run the example apps, you must first obtain the BSON submodule. You can do so by running `git submodule init` and `git submodule update` in your terminal when in the main directory of the cloned repository.
@@ -11,14 +11,14 @@ If you download or clone the SDL repository in order to run the example apps, yo
 The example apps implement soft buttons, template text and images, a main menu and submenu, vehicle data, popup menus, voice commands, and capturing in-car audio.
 
 ## Connecting to Hardware
-To connect the example app to [Manticore](https://smartdevicelink.com/resources/manticore/) or another emulator, make sure you are on the `TCP Debug` tab and type in the IP address and port, then press "Connect". The button will turn green when you are connected.
+To connect the example app to [Manticore](https://smartdevicelink.com/resources/manticore/) or another emulator, make sure you are on the `TCP Debug` tab of the example app. Then type in the IP address and port number and press the "Connect" button. The button will turn green when you are connected.
 
-To connect the example app to production or debug hardware, make sure you are on the `iAP` tab and press "Connect". The button will turn green when you are connected.
+To connect the example app to production or debug hardware, make sure you are on the `iAP` tab of the example app and press "Connect". The button will turn green when you are connected.
 
 ## Troubleshooting
 ### TCP Debug Transport
 1. Make sure the correct IP address and port number is set in the `SDLLifecycleConfiguration`.
-1. Make sure the device and the SDL emulator are on the same network.
+1. Make sure the device and the SDL Core emulator are on the same network.
 1. If you are running an SDL Core emulator on a virtual machine, and you are using port forwarding to connect your device to the virtual machine, the IP address should be the IP address of your machine hosting the VM, not the IP address of the VM. The port number will be `12345`.
 1. Make sure there is no firewall blocking the incoming port `12345` on the machine or VM running the SDL Core emulator. Also make sure your firewall allows that outgoing port.
 1. Your SDL app will not work when the device app is in the background, because the OS will terminate background tasks after a short amount of time. This is not an issue with production IAP connections because Apple's External Accessory framework allows your app unlimited background time.
