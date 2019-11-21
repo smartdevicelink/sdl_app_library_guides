@@ -2,7 +2,7 @@
 In order to view your SDL app, you must connect your device to a head unit that supports SDL Core. If you do not have access to a head unit, we recommend using the [Manticore web-based emulator](https://smartdevicelink.com/sign-in/?next=/resources/manticore/) for testing how your SDL app reacts to real-world vehicle events, on-screen interactions and voice recognition.
 
 @![iOS,android]
-You will have to configure different connection types based on whether you are connecting to a head unit or an emulator. When connecting to a head unit, you must configure !@@![iOS]an `iAP`!@@![android]a `Multiplex`!@ @![iOS,android] connection. Likewise, when connecting to an emulator, a `TCP` connection must be configured.
+You will have to configure different connection types based on whether you are connecting to a head unit or an emulator. When connecting to a head unit, you must configure !@@![iOS]an `iAP`!@@![android]a `Multiplex`!@@![iOS,android] connection. Likewise, when connecting to an emulator, a `TCP` connection must be configured.
 !@
 
 @![iOS,android]

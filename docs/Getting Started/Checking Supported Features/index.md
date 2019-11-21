@@ -1,4 +1,4 @@
-# Finding Supported Features
+# Checking Supported Features
 New features are always being added to SDL, however, you or your users may be connecting to modules that do not support the newest features. If your SDL app attempts to use an unsupported feature, your request will be ignored.
 
 ### How to Handle Unsupported Features
