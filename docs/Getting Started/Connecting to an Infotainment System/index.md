@@ -11,7 +11,7 @@ To connect to an emulator such as [Manticore](https://smartdevicelink.com/resour
 
 ### Getting the IP Address and Port
 #### Generic SDL Core
-To connect to a virtual machine running the Ubuntu [SDL Core](https://github.com/smartdevicelink/sdl_core)-based emulator, you will use the IP address of the Ubuntu OS and `12345` for the port. You may have to enable port forwarding on your virtual machine you want to connect using a real device instead of a simulated device. 
+To connect to a virtual machine running the Ubuntu [SDL Core](https://github.com/smartdevicelink/sdl_core)-based emulator, you will use the IP address of the Ubuntu OS and `12345` for the port. You may have to enable port forwarding on your virtual machine if you want to connect using a real device instead of a simulated device. 
 
 #### Manticore
 Once you launch an instance of Manticore, you will be given an IP address and port number that you can use to configure your TCP connection. 
@@ -38,7 +38,7 @@ builder.setTransportType(new TCPTransportConfig(<IP ADDRESS>, <PORT>, false));
 
 @![iOS,android]
 ## Connecting to a Head Unit
-To connect your device directly to a production vehicle head unit or Test Development Kit (TDK), make sure to implement an !@@![iOS]an `iAP`!@@![android]a `Multiplex`!@@![iOS,android] connection. Then connect the device using a USB cord or, if the head unit supports it, Bluetooth.
+To connect your device directly to a production vehicle head unit or Test Development Kit (TDK), make sure to implement !@@![iOS]an `iAP`!@@![android]a `Multiplex`!@@![iOS,android] connection. Then connect the device using a USB cord or, if the head unit supports it, Bluetooth.
 !@
 
 @![iOS]
@@ -67,7 +67,7 @@ If you are testing with a vehicle head unit or TDK and wish to see realtime debu
 
 @![iOS,android]
 ## Running the SDL App
-Build and run the project in !@@![iOS]Xcode!@@![android]Android Studio!@@![iOS,android], targeting the device or simulator that you want to test your app with. Your app should compile and launch on your device of choosing. If your connection configuration setup correctly, you should see your SDL app icon appear on the HMI screen:
+Build and run the project in !@@![iOS]Xcode!@@![android]Android Studio!@@![iOS,android], targeting the device or simulator that you want to test your app with. Your app should compile and launch on your device of choosing. If your connection configuration is setup correctly, you should see your SDL app icon appear on the HMI screen:
 
 ![Generic - SDL Apps Tab](assets/Generic_apps_screen.png)
 
