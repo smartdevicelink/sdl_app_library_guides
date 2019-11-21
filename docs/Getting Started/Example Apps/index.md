@@ -40,64 +40,52 @@ To connect the example app to production or debug hardware, make sure you are on
 !@
 
 @![android, javaSE, javaEE]
-In this guide we take you through the steps to get our sample project, Hello Sdl, running and connected to SDL Core as well as showing up on HMI.
+This guide takes you through the steps needed to get the sample project, Hello Sdl, connected a module.
 !@
 
 @![android]
-First, make sure you download or clone the latest release from [GitHub](https://github.com/smartdevicelink/sdl_java_suite). The Hello Sdl Android app is a package within the SDL Android library.
+First, download or clone the latest release from [GitHub](https://github.com/smartdevicelink/sdl_java_suite). The Hello Sd Android app is a package within the SDL Android library.
 
-Open the the `sdl_java_suite/android` project using "Open an existing Android Studio project" in [Android Studio](https://developer.android.com/studio/index.html). We will exclusively use Android Studio as it is the current supported platform for Android development.
+Open the the `sdl_java_suite/android` project using "Open an existing Android Studio project" in [Android Studio](https://developer.android.com/studio/index.html). We will use Android Studio throughout this guide as it is the official IDE for Android development.
 
 ## Getting Started
-If you are not using a production head unit for development, we recommend using [SDL Core](https://github.com/smartdevicelink/sdl_core) and this [Generic HMI](https://github.com/smartdevicelink/generic_hmi) for testing. 
+If you are not using a production head unit for development, we recommend using [SDL Core](https://github.com/smartdevicelink/sdl_core) and [Generic HMI](https://github.com/smartdevicelink/generic_hmi) for testing. 
 
-If you don't want to set up a virtual machine for testing, we offer [Manticore](https://smartdevicelink.com/resources/manticore/), which is a free service that allows you to test your apps via TCP/IP in the cloud.
-
-!!! NOTE
-SDL Core and an HMI or Manticore are needed to run Hello Sdl Android and to ensure that it connects
-!!!
+If you don't want to set up a virtual machine for testing, we recommend using the [Manticore web-based emulator](https://smartdevicelink.com/resources/manticore/) for testing how your SDL app reacts to real-world vehicle events, on-screen interactions and voice recognition.
 
 ### Build Flavors
 Hello Sdl Android has been built with different **build flavors**.
 
-To access the Build Variant menu to choose your flavor, click on the menu ```Build``` then ```Select Build Variant```. A small window will appear on the bottom left of your IDE window that allows you to choose a flavor.
+To access the **Build Variant** menu to choose your flavor, click on the menu **Build** then **Select Build Variant`**. A small window will appear on the bottom left of your IDE that allows you to choose a flavor.
 
-There are many flavors to choose from and for now we will only be concerned with the debug versions.
+There are many flavors to choose from but for now we will only be concerned with the debug versions. Versions available include:
 
-Versions Include:
-
-* `multi` - Multiplexing (Bluetooth, USB, TCP (as secondary transport))
+* `multi` - Multiplexing - Bluetooth, USB, TCP (as secondary transport)
 * `multi_high_bandwidth` - Multiplexing for apps that require a high bandwidth transport
-* `tcp` - Transmission Control Protocol - used only for debugging purposes
+* `tcp` - Transmission Control Protocol - Used only for debugging purposes
 
-We will mainly be dealing with `multi` (if using a TDK) or `tcp` (if connecting to SDL Core via a virtual machine or your localhost, or to Manticore)
+You will mainly be dealing with `multi` (if using a TDK) or `tcp` (if connecting to SDL Core or Manticore)
 
 ## Transports
 
 ### Configure for TCP
-If you aren't using a TDK or head unit, you can connect to SDL core via a virtual machine or to your localhost. To do this we will use the flavor ```tcpDebug```.
+If you aren't using a TDK or head unit, you can connect to SDL Core via a virtual machine or to your localhost. To do this we will use the flavor `tcpDebug`.
 
-For TCP to work, you will have to know the IP address of your machine that is running Sdl Core. If you don't know what it is, running ```ifconfig``` in a linux terminal will usually let you see it for the interface you are connected with to your network. We have to modify the IP address in Hello Sdl Android to let it know where your instance of SDL Core is running.
+For TCP to work, you need to know the IP address of the machine running SDL Core. If needed, you can get the IP address by running `ifconfig` in the terminal of the machine. Then, you must update the IP address in Hello Sdl Android to let it know where your instance of SDL Core is running.
 
-In the main Java folder of Hello Sdl Android, open up ```SdlService.java```
+1. In the main Java folder of Hello Sdl Android, open up `SdlService.java`.
+1. At the top of this file, locate the variable declaration for `DEV_MACHINE_IP_ADDRESS`. Change it to your SDL Core's IP. Set the `TCP_PORT` to `12345`.
 
-In the top of this file, locate the variable declaration for ```DEV_MACHINE_IP_ADDRESS```. Change it to your SDL Core's IP. Leave the ```TCP_PORT``` set to ```12345```.
-
-```java
-// TCP/IP transport config
-private static final int TCP_PORT = 12345; // if using manticore, change to assigned port
-private static final String DEV_MACHINE_IP_ADDRESS = "192.168.1.78"; // change to your IP
-```
-
-!!! NOTE
-If you do not change the target IP address, the application will not connect to SDL Core or show up on the HMI.
-!!!
+    ```java
+    private static final int TCP_PORT = 12345; // if using Manticore, change to assigned port
+    private static final String DEV_MACHINE_IP_ADDRESS = "192.168.1.78"; // change to your IP
+    ```
 
 ### Configure for Bluetooth
-Right out of the box, all you need to do to run Bluetooth is to select the ```multi_sec_offDebug``` (Multiplexing) build flavor.
+Right out of the box, all you need to do to run Bluetooth is to select the `multi_sec_offDebug` (Multiplexing) build flavor.
 
 ### Configure for USB (AOA)
-To connect to an SDL Core instance or TDK via USB transport, select the ```multi_sec_offDebug ``` (Multiplexing) build flavor. There is more information about the USB transport in the [Using AOA Protocol](Getting Started/Using AOA Protocol) section.
+To connect to a SDL Core instance or TDK via USB transport, select the `multi_sec_offDebug ` (Multiplexing) build flavor. You can find more information about the USB transport in the [Using AOA Protocol](Getting Started/Using AOA Protocol) section.
 
 ## Building the Project
 For TCP, you may use the built-in Android emulator or an Android phone on the same network as SDL Core. For Bluetooth, you will need an Android phone that is paired to a TDK or head unit via Bluetooth.
@@ -114,18 +102,18 @@ If your app compiles and but does not show up on the HMI, there are a few things
 #### TCP
 1. Make sure that you have changed the IP in `SdlService.java` to match the machine running SDL Core. Being on the same network is also important.
 2. If you are sure that the IP is correct and it is still not showing up, make sure the Build Flavor that is running is `tcpDebug`.
-3. If the two above don't work, make sure there is no firewall blocking the incoming port `12345` on the machine or VM running SDL Core. In the same breath, make sure your firewall allows that outgoing port.
+3. If the two above don't work, make sure there is no firewall blocking the incoming port `12345` on the machine or VM running SDL Core. Also, make sure your firewall allows that outgoing port.
 4. There are different network configurations needed for different virtualization software (virtualbox, vmware, etc). Make sure yours is set up correctly. Or use [Manticore](https://smartdevicelink.com/resources/manticore/).
 
 #### Bluetooth
 1. Make sure the build flavor `multi_sec_offDebug` is selected.
 2. Ensure your phone is properly paired with the TDK
-3. Make sure Bluetooth is turned on - on Both the TDK and your phone
+3. Make sure Bluetooth is turned on - on both the TDK and your phone
 4. Make sure apps are enabled on the TDK (in settings)
 !@
 
 @![javaSE]
-First, make sure you download or clone the latest release from [GitHub](https://github.com/smartdevicelink/sdl_java_suite). It is a [project](https://github.com/smartdevicelink/sdl_java_suite/tree/master/hello_sdl_java) within the SDL Java Suite root directory. Then, open the Hello Sdl project in [IntelliJ IDEA](https://www.jetbrains.com/idea/) and wait for it to finish loading.
+First, make sure you download or clone the latest release from [GitHub](https://github.com/smartdevicelink/sdl_java_suite). It is a [project](https://github.com/smartdevicelink/sdl_java_suite/tree/master/hello_sdl_java) within the SDL Java Suite root directory. Then, open the Hello Sdl Android project in [IntelliJ IDEA](https://www.jetbrains.com/idea/) and wait for it to finish loading.
 !@
 
 @![javaEE]
