@@ -77,16 +77,16 @@ To connect the example app to production or debug hardware via Bluetooth or USB,
 
 If using the Bluetooth transport, make sure to first pair your Android phone to the hardware before attempting to connect your SDL app.
 
-### Troubleshooting
+## Troubleshooting
 If your app compiles and but does not show up on the HMI, there are a few things you should check:
 
-#### TCP
+### TCP Debug Transport
 1. Make sure that you have changed the IP in `SdlService.java` to match the machine running SDL Core. Being on the same network is also important.
 2. If you are sure that the IP is correct and it is still not showing up, make sure the Build Flavor that is running is `tcpDebug`.
 3. If the two above don't work, make sure there is no firewall blocking the incoming port `12345` on the machine or VM running SDL Core. Also, make sure your firewall allows that outgoing port.
 4. There are different network configurations needed for different virtualization software (virtualbox, vmware, etc). Make sure yours is set up correctly. Or use [Manticore](https://smartdevicelink.com/resources/manticore/).
 
-#### Bluetooth
+### Bluetooth
 1. Make sure the build flavor `multi_sec_offDebug` is selected.
 2. Ensure your phone is properly paired with the TDK
 3. Make sure Bluetooth is turned on - on both the TDK and your phone
