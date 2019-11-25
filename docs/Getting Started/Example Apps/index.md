@@ -42,20 +42,17 @@ If your app compiles and but does not show up on the HMI, there are a few things
 !@
 
 @![android, javaSE, javaEE]
-This guide takes you through the steps needed to get the sample project, Hello Sdl, connected a module.
+This guide takes you through the steps needed to get the sample project, _Hello Sdl_, connected a module.
 !@
 
 @![android]
-First, download or clone the latest release from [GitHub](https://github.com/smartdevicelink/sdl_java_suite). The Hello Sdl Android app is a package within the SDL Android library.
-
-Open the the `sdl_java_suite/android` project using "Open an existing Android Studio project" in [Android Studio](https://developer.android.com/studio/index.html). We will use Android Studio throughout this guide as it is the official IDE for Android development.
+### Getting the Example App
+To get the example app, download or clone the latest release from [GitHub](https://github.com/smartdevicelink/sdl_java_suite). The _Hello Sdl Android_ app is a package within the SDL Android library. Then, open the the `sdl_java_suite/android` project using "Open an existing Android Studio project" in [Android Studio](https://developer.android.com/studio/index.html). We will use Android Studio throughout this guide as it is the official IDE for Android development.
 
 ### Build Flavors
-Hello Sdl Android has been built with different **build flavors**.
+_Hello Sdl Android_ has been built with different **build flavors** that allow you to quickly connect your SDL app to an emulator or hardware. You can choose your flavor in the **Build Variant** menu. To open the menu, click on **Build > Select Build Variant**. A small window will appear on the bottom left of your IDE that allows you to choose a flavor.
 
-To access the **Build Variant** menu to choose your flavor, click on the menu **Build** then **Select Build Variant`**. A small window will appear on the bottom left of your IDE that allows you to choose a flavor.
-
-There are many flavors to choose from but for now we will only be concerned with the debug versions. Types of build variants include:
+There are many flavors to choose from but for now we will only be concerned with the debug versions:
 
 * `multi` - Multiplexing - Bluetooth, USB, TCP (as secondary transport)
 * `multi_high_bandwidth` - Multiplexing for apps that require a high bandwidth transport
@@ -65,11 +62,10 @@ You will mainly be dealing with `multi` build variants if connecting to TDK, or 
 
 ## Connecting to an Infotainment System
 ### Emulator
-To connect the example app to [Manticore](https://smartdevicelink.com/resources/manticore/) or another emulator, make sure you are using `tcpDebug` build flavor. You must update the IP address and port number in the Hello Sdl Android project so it knows where your emulator is running.
+To connect the example app to [Manticore](https://smartdevicelink.com/resources/manticore/) or another emulator, make sure you are using `tcpDebug` build flavor. You must update the IP address and port number in the _Hello Sdl Android_ project so it knows where your emulator is running.
 
-1. In the main Java folder of Hello Sdl Android, open up `SdlService.java`.
+1. In the main Java folder of _Hello Sdl Android_, open up `SdlService.java`.
 1. At the top of this file, locate the variable declaration for `DEV_MACHINE_IP_ADDRESS` and change it to your SDL Core's IP address. Set the `TCP_PORT` to your SDL Core's port number.
-
     ```java
     private static final String DEV_MACHINE_IP_ADDRESS = "192.168.1.78"; // Update
     private static final int TCP_PORT = 12345; // Update
@@ -80,7 +76,7 @@ Please check the [Connecting to an Infotainment System](Getting Started/Connecti
 ### Bluetooth and USB (AOA)
 To connect the example app to production or debug hardware via Bluetooth or USB, all you need to do to is select the `multi_sec_offDebug` build flavor. You can find more information about the USB transport in the [Using AOA Protocol](Getting Started/Using AOA Protocol) section. 
 
-To connect to the hardware via Bluetooth, you will first need to pair your Android phone to the hardware via Bluetooth before attempting to connect your SDL app to the hardware.
+If using the Bluetooth transport, make sure to first pair your Android phone to the hardware before attempting to connect your SDL app.
 
 ### Troubleshooting
 If your app compiles and but does not show up on the HMI, there are a few things you should check:
@@ -99,7 +95,7 @@ If your app compiles and but does not show up on the HMI, there are a few things
 !@
 
 @![javaSE]
-First, make sure you download or clone the latest release from [GitHub](https://github.com/smartdevicelink/sdl_java_suite). It is a [project](https://github.com/smartdevicelink/sdl_java_suite/tree/master/hello_sdl_java) within the SDL Java Suite root directory. Then, open the Hello Sdl Android project in [IntelliJ IDEA](https://www.jetbrains.com/idea/) and wait for it to finish loading.
+First, make sure you download or clone the latest release from [GitHub](https://github.com/smartdevicelink/sdl_java_suite). It is a [project](https://github.com/smartdevicelink/sdl_java_suite/tree/master/hello_sdl_java) within the SDL Java Suite root directory. Then, open the _Hello Sdl_ project in [IntelliJ IDEA](https://www.jetbrains.com/idea/) and wait for it to finish loading.
 !@
 
 @![javaEE]
