@@ -9,7 +9,7 @@ If you download or clone the SDL repository in order to run the example apps, yo
 !!!
 
 The example apps implement soft buttons, template text and images, a main menu and submenu, vehicle data, popup menus, voice commands, and capturing in-car audio.
-@!@
+@!
 
 @![android, javaSE, javaEE]
 This guide takes you through the steps needed to get the sample project, _Hello Sdl_, connected a module.
@@ -19,7 +19,7 @@ This guide takes you through the steps needed to get the sample project, _Hello 
 To get the example app, download or clone the [sdl_java_suite](https://github.com/smartdevicelink/sdl_java_suite). The _Hello Sdl Android_ app is a package within the SDL Android library. Open the the `sdl_java_suite/android` project using "Open an existing Android Studio project" in [Android Studio](https://developer.android.com/studio/index.html). We will use Android Studio throughout this guide as it is the official IDE for Android development.
 !@
 
-!@[iOS,android]
+@![iOS,android]
 ## Connecting to an Infotainment System
 !@
 
