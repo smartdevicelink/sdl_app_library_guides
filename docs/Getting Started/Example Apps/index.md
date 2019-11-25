@@ -50,9 +50,9 @@ This guide takes you through the steps needed to get the sample project, _Hello 
 To get the example app, download or clone the [sdl_java_suite](https://github.com/smartdevicelink/sdl_java_suite). The _Hello Sdl Android_ app is a package within the SDL Android library. Open the the `sdl_java_suite/android` project using "Open an existing Android Studio project" in [Android Studio](https://developer.android.com/studio/index.html). We will use Android Studio throughout this guide as it is the official IDE for Android development.
 
 ### Build Flavors
-_Hello Sdl Android_ has been built with different build flavors that allow you to quickly connect your SDL app to an emulator or hardware. You can choose your flavor in the **Build Variant** menu. To open the menu, click on **Build > Select Build Variant**. A small window will appear on the bottom left of your IDE that allows you to choose a flavor.
+_Hello Sdl Android_ has been built with different build flavors that allow you to quickly connect the app to an emulator or hardware. You can choose your flavor in the **Build Variant** menu. To open the menu, select **Build > Select Build Variant**. A small window will appear on the bottom left of your IDE that allows you to choose a flavor.
 
-There are many flavors to choose from but for now we will only be concerned with the debug versions:
+There are many flavors to choose from but for now we will only be concerned with the debug build variants:
 
 * `multi` - Multiplexing - Bluetooth, USB, TCP (as secondary transport)
 * `multi_high_bandwidth` - Multiplexing for apps that require a high bandwidth transport
@@ -62,20 +62,18 @@ You will mainly be dealing with `multi` build variants if connecting to TDK, or 
 
 ## Connecting to an Infotainment System
 ### Emulator
-To connect the example app to [Manticore](https://smartdevicelink.com/resources/manticore/) or another emulator, make sure you are using `tcpDebug` build flavor. You must update the IP address and port number in the _Hello Sdl Android_ project so it knows where your emulator is running.
+To connect the example app to [Manticore](https://smartdevicelink.com/resources/manticore/) or another emulator, make sure you are using `tcpDebug` build flavor. You must update the IP address and port number in the _Hello Sdl Android_ project so it knows where your emulator is running. Please check the [Connecting to an Infotainment System](Getting Started/Connecting to an Infotainment System) guide for more detailed instructions on how to get the emulator's IP address and port number.
 
 1. In the main Java folder of _Hello Sdl Android_, open up `SdlService.java`.
-1. At the top of this file, locate the variable declaration for `DEV_MACHINE_IP_ADDRESS` and change it to your SDL Core's IP address. Set the `TCP_PORT` to your SDL Core's port number.
+1. At the top of this file, locate the variable declaration for `DEV_MACHINE_IP_ADDRESS` and change it to your emulator's IP address. Set the `TCP_PORT` to your emulator's port number.
 
-        ```java
         private static final String DEV_MACHINE_IP_ADDRESS = "192.168.1.78"; // Update
         private static final int TCP_PORT = 12345; // Update
-        ```
 
-Please check the [Connecting to an Infotainment System](Getting Started/Connecting to an Infotainment System) guide for more detailed instructions on how to get the emulator's IP address and port number.
+1. Make sure the emulator is running, then build and run the app on a real device or a simulated device. The SDL app should show up on the HMI.   
 
-### Bluetooth and USB (AOA)
-To connect the example app to production or debug hardware via Bluetooth or USB, all you need to do to is select the `multi_sec_offDebug` build flavor. You can find more information about the USB transport in the [Using AOA Protocol](Getting Started/Using AOA Protocol) section. 
+### Bluetooth and USB
+To connect the example app to production or debug hardware via Bluetooth or USB, all you need to do to is select the `multi_sec_offDebug` build flavor and then run the app on a real Android device. You can find more information about the USB transport in the [Using AOA Protocol](Getting Started/Using AOA Protocol) guide. 
 
 If using the Bluetooth transport, make sure to first pair your Android phone to the hardware before attempting to connect your SDL app.
 
