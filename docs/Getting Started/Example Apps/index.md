@@ -11,7 +11,7 @@ If you download or clone the SDL repository in order to run the example apps, yo
 The example apps implement soft buttons, template text and images, a main menu and submenu, vehicle data, popup menus, voice commands, and capturing in-car audio.
 @!
 
-@![android, javaSE, javaEE]
+@![android,javaSE,javaEE]
 This guide takes you through the steps needed to get the sample project, _Hello Sdl_, connected a module.
 !@
 
