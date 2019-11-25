@@ -9,7 +9,7 @@ If you download or clone the SDL repository in order to run the example apps, yo
 !!!
 
 The example apps implement soft buttons, template text and images, a main menu and submenu, vehicle data, popup menus, voice commands, and capturing in-car audio.
-@!
+!@
 
 @![android,javaSE,javaEE]
 This guide takes you through the steps needed to get the sample project, _Hello Sdl_, connected a module.
@@ -115,7 +115,7 @@ The [Hello Sdl JavaEE](https://github.com/smartdevicelink/sdl_java_suite/tree/ma
 !@
 
 @![javaSE,javaEE]
-## Connecting to Head Unit 
+## Connecting to an Infotainment System 
 To connect the sample app to the infotainment system, please follow the instructions in the [Connecting to an Infotainment System guide](Getting Started/Connecting to an Infotainment System)
 !@
 
