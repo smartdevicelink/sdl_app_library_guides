@@ -83,10 +83,9 @@ If your app compiles and but does not show up on the HMI, there are a few things
 1. Make sure you have enabled background [capabilities](https://smartdevicelink.com/en/guides/iOS/getting-started/sdk-configuration/) for your app.
 1. If the head unit (emulators do not support IAP) does not support Bluetooth, an iAP connection requires a USB cord.
 
-### iAP Bluetooth Production Transport
+#### iAP Bluetooth Production Transport
 1. Bluetooth transport support is automatic when you support the iAP production transport. It cannot be turned on or off separately.
 1. Make sure the head unit supports Bluetooth transport for iPhones. Currently, only some head units support Bluetooth.
-1. Make sure to use the default `SDLLifecycleConfiguration`.
 1. Make sure Bluetooth is turned on - both on the head unit hardware and your iPhone.
 1. Ensure your iPhone is properly paired with the head unit. 
 !@
