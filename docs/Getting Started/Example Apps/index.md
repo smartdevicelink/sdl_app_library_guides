@@ -19,7 +19,10 @@ This guide takes you through the steps needed to get the sample project, _Hello 
 To get the example app, download or clone the [sdl_java_suite](https://github.com/smartdevicelink/sdl_java_suite). The _Hello Sdl Android_ app is a package within the SDL Android library. Open the the `sdl_java_suite/android` project using "Open an existing Android Studio project" in [Android Studio](https://developer.android.com/studio/index.html). We will use Android Studio throughout this guide as it is the official IDE for Android development.
 !@
 
+!@[iOS,android]
 ## Connecting to an Infotainment System
+!@
+
 @![iOS]
 To connect the example app to [Manticore](https://smartdevicelink.com/resources/manticore/) or another emulator, make sure you are on the `TCP Debug` tab of the example app. Then type in the IP address and port number and press the "Connect" button. The button will turn green when you are connected. Please check the [Connecting to an Infotainment System](Getting Started/Connecting to an Infotainment System) guide for more detailed instructions on how to get the emulator's IP address and port number.
 
@@ -56,8 +59,10 @@ To connect the example app to production or debug hardware via Bluetooth or USB,
 If using the Bluetooth transport, make sure to first pair your Android phone to the hardware before attempting to connect your SDL app.
 !@
 
+@![iOS,android]
 ## Troubleshooting
 If your app compiles and but does not show up on the HMI, there are a few things you should check:
+!@
 
 @![iOS]
 ### TCP Debug Transport
