@@ -29,7 +29,8 @@ You need a real device to connect the example app to production or debug hardwar
 
 If using the Bluetooth (BT) transport, make sure to first pair your phone to the hardware before attempting to connect your SDL app. If using the USB transport, you will need to connect your phone to the hardware using a USB cord. 
 
-If the hardware supports both BT and USB transports, only one transport will be supported at once. If your phone is connected via BT and you then connect the phone to the head unit via a USB cord, the library will close the BT session and open a new session over USB. Likewise, if the USB cord is disconnected, the library will close the USB session and open a BT session.
+If the hardware supports both BT and USB transports, only one transport will be supported at once. If your phone is connected via BT and you then connect the phone to the head unit via a USB cord, the library will close the BT session and open a new session over USB. Likewise, when the USB cord is disconnected, the library will close the USB session and open session over BT.
+!@
 
 @![android]
 ### Build Flavors
