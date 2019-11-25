@@ -21,9 +21,10 @@ To get the example app, download or clone the [sdl_java_suite](https://github.co
 
 @![iOS]
 ## Connecting to an Infotainment System
-
+### Emulator
 To connect the example app to [Manticore](https://smartdevicelink.com/resources/manticore/) or another emulator, make sure you are on the `TCP Debug` tab of the example app. Then type in the IP address and port number and press the "Connect" button. The button will turn green when you are connected. Please check the [Connecting to an Infotainment System](Getting Started/Connecting to an Infotainment System) guide for more detailed instructions on how to get the emulator's IP address and port number.
 
+### Head Unit
 To connect the example app to production or debug hardware, make sure you are on the `iAP` tab of the example app and press "Connect". The button will turn green when you are connected.
 !@
 
@@ -51,7 +52,7 @@ To connect the example app to [Manticore](https://smartdevicelink.com/resources/
 
 1. Make sure the emulator is running, then build and run the app on a real device or a simulated device. The SDL app should show up on the HMI.   
 
-### Bluetooth and USB
+### Head Unit
 To connect the example app to production or debug hardware via Bluetooth or USB, all you need to do to is select the `multi_sec_offDebug` build flavor and then run the app on a real Android device. You can find more information about the USB transport in the [Using AOA Protocol](Getting Started/Using AOA Protocol) guide. 
 
 If using the Bluetooth transport, make sure to first pair your Android phone to the hardware before attempting to connect your SDL app.
@@ -78,7 +79,7 @@ If your app compiles and but does not show up on the HMI, there are a few things
 1. Make sure you have enabled background [capabilities](https://smartdevicelink.com/en/guides/iOS/getting-started/sdk-configuration/) for your app.
 1. If the head unit (emulators do not support IAP) does not support Bluetooth, an iAP connection requires a USB cord.
 
-#### iAP Bluetooth Production Transport
+### iAP Bluetooth Production Transport
 1. Bluetooth transport support is automatic when you support the iAP production transport. It cannot be turned on or off separately.
 1. Make sure the head unit supports Bluetooth transport for iPhones. Currently, only some head units support Bluetooth.
 1. Make sure to use the default `SDLLifecycleConfiguration`.
