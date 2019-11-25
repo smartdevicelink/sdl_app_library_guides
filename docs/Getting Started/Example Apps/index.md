@@ -47,10 +47,10 @@ This guide takes you through the steps needed to get the sample project, _Hello 
 
 @![android]
 ### Getting the Example App
-To get the example app, download or clone the latest release from [GitHub](https://github.com/smartdevicelink/sdl_java_suite). The _Hello Sdl Android_ app is a package within the SDL Android library. Then, open the the `sdl_java_suite/android` project using "Open an existing Android Studio project" in [Android Studio](https://developer.android.com/studio/index.html). We will use Android Studio throughout this guide as it is the official IDE for Android development.
+To get the example app, download or clone the [sdl_java_suite](https://github.com/smartdevicelink/sdl_java_suite). The _Hello Sdl Android_ app is a package within the SDL Android library. Open the the `sdl_java_suite/android` project using "Open an existing Android Studio project" in [Android Studio](https://developer.android.com/studio/index.html). We will use Android Studio throughout this guide as it is the official IDE for Android development.
 
 ### Build Flavors
-_Hello Sdl Android_ has been built with different **build flavors** that allow you to quickly connect your SDL app to an emulator or hardware. You can choose your flavor in the **Build Variant** menu. To open the menu, click on **Build > Select Build Variant**. A small window will appear on the bottom left of your IDE that allows you to choose a flavor.
+_Hello Sdl Android_ has been built with different build flavors that allow you to quickly connect your SDL app to an emulator or hardware. You can choose your flavor in the **Build Variant** menu. To open the menu, click on **Build > Select Build Variant**. A small window will appear on the bottom left of your IDE that allows you to choose a flavor.
 
 There are many flavors to choose from but for now we will only be concerned with the debug versions:
 
@@ -66,10 +66,11 @@ To connect the example app to [Manticore](https://smartdevicelink.com/resources/
 
 1. In the main Java folder of _Hello Sdl Android_, open up `SdlService.java`.
 1. At the top of this file, locate the variable declaration for `DEV_MACHINE_IP_ADDRESS` and change it to your SDL Core's IP address. Set the `TCP_PORT` to your SDL Core's port number.
-    ```java
-    private static final String DEV_MACHINE_IP_ADDRESS = "192.168.1.78"; // Update
-    private static final int TCP_PORT = 12345; // Update
-    ```
+
+        ```java
+        private static final String DEV_MACHINE_IP_ADDRESS = "192.168.1.78"; // Update
+        private static final int TCP_PORT = 12345; // Update
+        ```
 
 Please check the [Connecting to an Infotainment System](Getting Started/Connecting to an Infotainment System) guide for more detailed instructions on how to get the emulator's IP address and port number.
 
