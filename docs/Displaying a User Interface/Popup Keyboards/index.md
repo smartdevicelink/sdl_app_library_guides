@@ -32,7 +32,7 @@ int cancelId = sdlManager.getScreenManager().presentKeyboard("Initial text", nul
 
 @![iOS]
 ### Implementing the Keyboard Delegate
-Using the `SDLKeyboardDelegate` involves two required methods (for handling the user's input and the keyboard's unexpected abort), as well as several optional methods for additional functionality.
+Using the `SDLKeyboardDelegate` is required for popup keyboards and popup menus with search. It involves two required methods (for handling the user's input and the keyboard's unexpected abort), as well as several optional methods for additional functionality.
 
 ##### Objective-C
 ```objc
