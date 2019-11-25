@@ -19,11 +19,9 @@ This guide takes you through the steps needed to get the sample project, _Hello 
 To get the example app, download or clone the [sdl_java_suite](https://github.com/smartdevicelink/sdl_java_suite). The _Hello Sdl Android_ app is a package within the SDL Android library. Open the the `sdl_java_suite/android` project using "Open an existing Android Studio project" in [Android Studio](https://developer.android.com/studio/index.html). We will use Android Studio throughout this guide as it is the official IDE for Android development.
 !@
 
-@![iOS,android]
-## Connecting to an Infotainment System
-!@
-
 @![iOS]
+## Connecting to an Infotainment System
+
 To connect the example app to [Manticore](https://smartdevicelink.com/resources/manticore/) or another emulator, make sure you are on the `TCP Debug` tab of the example app. Then type in the IP address and port number and press the "Connect" button. The button will turn green when you are connected. Please check the [Connecting to an Infotainment System](Getting Started/Connecting to an Infotainment System) guide for more detailed instructions on how to get the emulator's IP address and port number.
 
 To connect the example app to production or debug hardware, make sure you are on the `iAP` tab of the example app and press "Connect". The button will turn green when you are connected.
@@ -116,7 +114,7 @@ The [Hello Sdl JavaEE](https://github.com/smartdevicelink/sdl_java_suite/tree/ma
 
 @![javaSE,javaEE]
 ## Connecting to an Infotainment System 
-To connect the sample app to the infotainment system, please follow the instructions in the [Connecting to an Infotainment System guide](Getting Started/Connecting to an Infotainment System)
+To connect the sample app to the infotainment system, please follow the instructions in the [Connecting to an Infotainment System](Getting Started/Connecting to an Infotainment System) guide
 !@
 
 
