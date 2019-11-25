@@ -22,11 +22,14 @@ To get the example app, download or clone the [sdl_java_suite](https://github.co
 @![iOS]
 ## Connecting to an Infotainment System
 ### Emulator
-To connect the example app to [Manticore](https://smartdevicelink.com/resources/manticore/) or another emulator, make sure you are on the `TCP Debug` tab of the example app. Then type in the IP address and port number and press the "Connect" button. The button will turn green when you are connected. Please check the [Connecting to an Infotainment System](Getting Started/Connecting to an Infotainment System) guide for more detailed instructions on how to get the emulator's IP address and port number.
+You can use a simulated or a real device to connect the example app to an emulator. To connect the example app to [Manticore](https://smartdevicelink.com/resources/manticore/) or another emulator, make sure you are on the `TCP Debug` tab of the example app. Then type in the IP address and port number and press the "Connect" button. The button will turn green when you are connected. Please check the [Connecting to an Infotainment System](Getting Started/Connecting to an Infotainment System) guide for more detailed instructions on how to get the emulator's IP address and port number.
 
 ### Head Unit
-To connect the example app to production or debug hardware, make sure you are on the `iAP` tab of the example app and press "Connect". The button will turn green when you are connected.
-!@
+You need a real device to connect the example app to production or debug hardware. After building the running the app, make sure you are on the `iAP` tab of the example app and press "Connect". The button will turn green when you are connected.
+
+If using the Bluetooth (BT) transport, make sure to first pair your phone to the hardware before attempting to connect your SDL app. If using the USB transport, you will need to connect your phone to the hardware using a USB cord. 
+
+If the hardware supports both BT and USB transports, only one transport will be supported at once. If your phone is connected via BT and you then connect the phone to the head unit via a USB cord, the library will close the BT session and open a new session over USB. Likewise, if the USB cord is disconnected, the library will close the USB session and open a BT session.
 
 @![android]
 ### Build Flavors
