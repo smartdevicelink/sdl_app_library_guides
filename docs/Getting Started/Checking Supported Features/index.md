@@ -5,7 +5,7 @@ New features are always being added to SDL, however, you or your users may be co
 When you are implementing a feature, you should always assume that some modules your users are connecting to will not support the feature or that your user may have disabled your permission to use this feature on their head unit. The best way to deal with unsupported features is to check if the feature is available before attempting to use it and to handle error responses.
 
 #### Checking if Feature is Supported
-The easiest way to check if a feature is supported is to query the library's System Capability manager. For more details on how get this information please see the [Displaying a User Interface/Adaptive Interface Capabilities](Displaying a User Interface/Adaptive Interface Capabilities) guide. 
+The easiest way to check if a feature is supported is to query the library's System Capability manager. For more details on how get this information please see the [Adaptive Interface Capabilities](Displaying a User Interface/Adaptive Interface Capabilities) guide. 
 
 #### Handling Error Responses
 @![iOS]
