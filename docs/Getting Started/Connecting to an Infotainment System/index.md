@@ -44,7 +44,7 @@ To connect your device directly to a production vehicle head unit or Test Develo
 @![iOS]
 ##### Objective-C
 ```objc
-SDLLifecycleConfiguration* lifecycleConfiguration = [SDLLifecycleConfiguration defaultConfigurationWithAppName:@"<#App Name#>" fullAppId:@"<#App Id#>"];
+SDLLifecycleConfiguration *lifecycleConfiguration = [SDLLifecycleConfiguration defaultConfigurationWithAppName:@"<#App Name#>" fullAppId:@"<#App Id#>"];
 ```
 
 ##### Swift
@@ -127,4 +127,3 @@ Once your SDL app is running, either locally in an IDE or on a server, you will 
 
 This is the main screen of your SDL app. If you get to this point, your SDL app is working.
 !@
-
