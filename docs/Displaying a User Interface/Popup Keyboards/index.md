@@ -1,7 +1,10 @@
 # Popup Keyboards
 
-## Presenting a Keyboard
 Presenting a keyboard or a popup menu with a search field requires you to implement the @![iOS]`SDLKeyboardDelegate`!@@![android, javaSE, javaEE]`KeyboardListener`!@. Note that the `initialText` in the keyboard case often acts as "placeholder text" and not as true initial text.
+
+## Presenting a Keyboard
+
+You should present a keyboard to users when your app contains a large list a user can select from. For example, if your app is a music player app you may want to give the user a way to search for a song or album.  A keyboard can also be useful in an app that displays nearby gas stations.  
 
 !!! NOTE
 Keyboards are unavailable for use in many countries when the driver is distracted. This is often when the vehicle is moving above a certain speed, such as 5 miles per hour.

@@ -12,7 +12,6 @@ Presenting a popup menu is similar to presenting a modal view to request input f
 | Present Searchable as Icon | A grid of buttons with images along with a search field in the HMI |
 | Present as List            | A vertical list  of text |
 | Present Searchable as List | A vertical list of text with a search field in the HMI |
-| Present Keyboard           | A keyboard shows up immediately in the HMI |
 
 ### Creating Cells
 An @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`ChoiceCell`!@ is similar to a @![iOS]`UITableViewCell`!@ @![android, javaSE, javaEE]`RecyclerView`!@ without the ability to configure your own UI. We provide several properties on the @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`ChoiceCell`!@ to set your data, but the layout itself is determined by the manufacturer of the head unit.
