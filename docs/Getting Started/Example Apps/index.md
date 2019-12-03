@@ -48,13 +48,15 @@ You will mainly be dealing with `multi` build variants if connecting to TDK, or 
 ### Emulator
 You can use a simulated or a real device to connect the example app to an emulator. To connect the example app to [Manticore](https://smartdevicelink.com/resources/manticore/) or another emulator, make sure you are using `tcpDebug` build flavor. You must update the IP address and port number in the _Hello Sdl Android_ project so it knows where your emulator is running. Please check the [Connecting to an Infotainment System](Getting Started/Connecting to an Infotainment System) guide for more detailed instructions on how to get the emulator's IP address and port number.
 
-1. In the main Java folder of _Hello Sdl Android_, open up `SdlService.java`.
-1. At the top of this file, locate the variable declaration for `DEV_MACHINE_IP_ADDRESS` and change it to your emulator's IP address. Set the `TCP_PORT` to your emulator's port number.
+1\. In the main Java folder of _Hello Sdl Android_, open up `SdlService.java`.
+1\. At the top of this file, locate the variable declaration for `DEV_MACHINE_IP_ADDRESS` and change it to your emulator's IP address. Set the `TCP_PORT` to your emulator's port number.
 
-        private static final String DEV_MACHINE_IP_ADDRESS = "192.168.1.78"; // Update
-        private static final int TCP_PORT = 12345; // Update
+```java
+private static final String DEV_MACHINE_IP_ADDRESS = "192.168.1.78"; // Update
+private static final int TCP_PORT = 12345; // Update
+```
 
-1. Make sure the emulator is running, then build and run the app on a real device or a simulated device. The SDL app should show up on the HMI.   
+1\. Make sure the emulator is running, then build and run the app on a real device or a simulated device. The SDL app should show up on the HMI.   
 
 ### Head Unit
 You need a real device to connect the example app to production or debug hardware. To connect the example app via Bluetooth or USB, all you need to do to is select the `multi_sec_offDebug` build flavor and then run the app on an Android device. You can find more information about the USB transport in the [Using AOA Protocol](Getting Started/Using AOA Protocol) guide. 
