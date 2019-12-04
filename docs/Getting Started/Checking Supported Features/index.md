@@ -6,7 +6,7 @@ When you are implementing a feature you should always assume that some modules y
 ### Checking the System Capability Manager
 The easiest way to check if a feature is supported is to query the library's System Capability Manager. For more details on how get this information please see the [Adaptive Interface Capabilities](Displaying a User Interface/Adaptive Interface Capabilities) guide.
 
-#### Handling Error Responses
+### Handling Error Responses
 When you are trying to use a feature, you can watch for an error response to the request you sent to the module. If the response contains an error, you may be able to check the `result` enum to determine if the feature is disabled. If the response that comes back is of the type `GenericResponse`, the module doesn't understand your request.
 
 @![iOS]
