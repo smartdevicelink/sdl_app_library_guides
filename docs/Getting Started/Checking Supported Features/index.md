@@ -1,13 +1,14 @@
 # Checking Supported Features
 New features are always being added to SDL, however, you or your users may be connecting to modules that do not support the newest features. If your SDL app attempts to use an unsupported feature your request will be ignored.
 
-### How to Handle Unsupported Features
 When you are implementing a feature, you should always assume that some modules your users are connecting to will not support the feature or that your user may have disabled your permission to use this feature on their head unit. The best way to deal with unsupported features is to check if the feature is available before attempting to use it and to handle error responses.
 
-#### Checking if Feature is Supported
-The easiest way to check if a feature is supported is to query the library's System Capability manager. For more details on how get this information please see the [Adaptive Interface Capabilities](Displaying a User Interface/Adaptive Interface Capabilities) guide. 
+### Checking the System Capability Manager
+The easiest way to check if a feature is supported is to query the library's System Capability Manager. For more details on how get this information please see the [Adaptive Interface Capabilities](Displaying a User Interface/Adaptive Interface Capabilities) guide.
 
 #### Handling Error Responses
+When you are trying to actually use a feature, if you are sending RPCs, you can check the response. If the response contains an error, you may be able to check the `result` enum and determine if the feature is disabled. If the response that comes back is of the type `GenericResponse`, the head unit doesn't understand the request that you sent.
+
 @![iOS]
 ##### Objective-C
 ```objc
@@ -57,7 +58,7 @@ sdlManager.sendRPC(<#Your Request#>);
 !@
 
 ### Checking if a Feature is Supported
-When you connect successfully to a head unit, SDL will automatically negotiate the maximum SDL RPC version supported by both the module and your SDL SDK. If the feature you want to support was added in a version less than or equal to the version returned by the head unit, then your head unit may support the feature. Remember that the module may still disable the feature, or the user may still have disabled permissions for the feature in some cases.
+When you connect successfully to a head unit, SDL will automatically negotiate the maximum SDL RPC version supported by both the module and your SDL SDK. If the feature you want to support was added in a version less than or equal to the version returned by the head unit, then your head unit may support the feature. Remember that the module may still disable the feature, or the user may still have disabled permissions for the feature in some cases. It's best to check if the feature is supported through the System Capability Manager first, but you may also check the negotiated version to know if the head unit was built before the feature was designed.
 
 Throughout these guides you may see headers that contain text like "RPC 6.0+". That means that if the negotiated version is 6.0 or greater, then SDL supports the feature but the above caveats may still apply.
 
