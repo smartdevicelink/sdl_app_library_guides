@@ -1,13 +1,13 @@
 # Checking Supported Features
-New features are always being added to SDL, however, you or your users may be connecting to modules that do not support the newest features. If your SDL app attempts to use an unsupported feature your request will be ignored.
+New features are always being added to SDL, however, you or your users may be connecting to modules that do not support the newest features. If your SDL app attempts to use an unsupported feature your request will be ignored by the module.
 
-When you are implementing a feature, you should always assume that some modules your users are connecting to will not support the feature or that your user may have disabled your permission to use this feature on their head unit. The best way to deal with unsupported features is to check if the feature is available before attempting to use it and to handle error responses.
+When you are implementing a feature you should always assume that some modules your users are connecting to will not support the feature or that your user may have disabled your permission to use this feature on their head unit. The best way to deal with unsupported features is to check if the feature is available before attempting to use it and to handle error responses.
 
 ### Checking the System Capability Manager
 The easiest way to check if a feature is supported is to query the library's System Capability Manager. For more details on how get this information please see the [Adaptive Interface Capabilities](Displaying a User Interface/Adaptive Interface Capabilities) guide.
 
 #### Handling Error Responses
-When you are trying to actually use a feature, if you are sending RPCs, you can check the response. If the response contains an error, you may be able to check the `result` enum and determine if the feature is disabled. If the response that comes back is of the type `GenericResponse`, the head unit doesn't understand the request that you sent.
+When you are trying to use a feature, you can watch for an error response to the request you sent to the module. If the response contains an error, you may be able to check the `result` enum to determine if the feature is disabled. If the response that comes back is of the type `GenericResponse`, the module doesn't understand your request.
 
 @![iOS]
 ##### Objective-C
