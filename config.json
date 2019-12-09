@@ -81,7 +81,10 @@
                     "name": "Main Menu"
                 },
                 {
-                    "name": "Popup Menus and Keyboards"
+                    "name": "Popup Menus"
+                },
+                {
+                    "name": "Popup Keyboards"
                 },
                 {
                     "name": "Alerts"
