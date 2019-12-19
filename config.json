@@ -72,10 +72,13 @@
                     "name": "Main Screen Templates"
                 },
                 {
-                    "name": "Text Images and Buttons"
+                    "name": "Template Text"
                 },
                 {
-                    "name": "Subscribing to System Buttons"
+                    "name": "Template Images"
+                },
+                {
+                    "name": "Template Buttons"
                 },
                 {
                     "name": "Main Menu"
