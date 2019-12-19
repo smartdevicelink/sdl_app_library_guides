@@ -16,6 +16,7 @@ The @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@ is 
 | textField2Type | The type of data provided in `textField2` |
 | textField3Type | The type of data provided in `textField3` |
 | textField4Type | The type of data provided in `textField4` |
+| title | The title of the displayed template |
 
 @![iOS]
 ##### Objective-C
