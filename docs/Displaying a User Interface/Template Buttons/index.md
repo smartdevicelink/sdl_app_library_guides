@@ -9,54 +9,6 @@ You can easily display and update text, images, and buttons using the  @![iOS]`S
 |:--------------------------------------------|:--------------|
 | softButtonObjects | An array of buttons. Each template supports a different number of soft buttons |
 
-### Showing Soft Buttons
-@![iOS]
-##### Objective-C
-```objc
-[self.sdlManager.screenManager beginUpdates];
-
-self.sdlManager.screenManager.softButtonObjects = @[<#SDLButtonObject#>, <#SDLButtonObject#>];
-
-[self.sdlManager.screenManager endUpdatesWithCompletionHandler:^(NSError * _Nullable error) {
-    if (error != nil) {
-        <#Error Updating UI#>
-    } else {
-        <#Update to UI was Successful#>
-    }
-}];
-```
-
-##### Swift
-```swift
-sdlManager.screenManager.beginUpdates()
-
-sdlManager.screenManager.softButtonObjects = [<#SDLButtonObject#>, <#SDLButtonObject#>]
-
-sdlManager.screenManager.endUpdates { (error) in
-    if error != nil {
-        <#Error Updating UI#>
-    } else {
-        <#Update to UI was Successful#>
-    }
-}
-```
-!@
-
-@![android, javaSE, javaEE]
-```java
-sdlManager.getScreenManager().beginTransaction();
-
-// TODO 
-
-sdlManager.getScreenManager().commit(new CompletionListener() {
-	@Override
-	public void onComplete(boolean success) {
-		Log.i(TAG, "ScreenManager update complete: " + success);
-	}
-});
-```
-!@
-
 ### Creating Soft Buttons
 To create a soft button using the `ScreenManager`, you only need to create a custom name for the button and provide the text for the button's label and/or an image for the button's icon. If your button cycles between different states (e.g. a button used to set the repeat state of a song playlist can have three states: repeat-off, repeat-one, and repeat-all) you can upload all the states on initialization. 
 
@@ -274,12 +226,14 @@ SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Arr
 ```
 !@
 
-### Updating the Soft Button State
+### Showing and Updating Soft Buttons
 When the soft button state needs to be updated, simply tell the `SoftButtonObject` to transition to the next state. If your button states do not cycle in a predictable order, you can also tell the soft button the state to transition to by passing the `stateName` of the new soft button state.
 
 @![iOS]
 ##### Objective-C
 ```objc
+[self.sdlManager.screenManager beginUpdates];
+
 SDLSoftButtonState *softButtonState1 = [[SDLSoftButtonState alloc] initWithStateName:@"<#Soft Button State Name#>" text:@"<#Button Label Text#>" artwork:<#SDLArtwork#>];
 SDLSoftButtonState *softButtonState2 = [[SDLSoftButtonState alloc] initWithStateName:@"<#Soft Button State Name#>" text:@"<#Button Label Text#>" artwork:<#SDLArtwork#>];
 SDLSoftButtonObject *softButtonObject = [[SDLSoftButtonObject alloc] initWithName:@"<#Soft Button Object Name#>" states:@[softButtonState1, softButtonState2] initialStateName:<#Soft Button State#>.name handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
@@ -288,6 +242,14 @@ SDLSoftButtonObject *softButtonObject = [[SDLSoftButtonObject alloc] initWithNam
 }];
 self.sdlManager.screenManager.softButtonObjects = @[softButtonObject];
 
+[self.sdlManager.screenManager endUpdatesWithCompletionHandler:^(NSError * _Nullable error) {
+    if (error != nil) {
+        <#Error Updating UI#>
+    } else {
+        <#Update to UI was Successful#>
+    }
+}];
+
 // Transition to a new state
 SDLSoftButtonObject *retrievedSoftButtonObject = [self.sdlManager.screenManager softButtonObjectNamed:@"<#Soft Button Object Name#>"];
 [retrievedSoftButtonObject transitionToNextState];
@@ -295,12 +257,23 @@ SDLSoftButtonObject *retrievedSoftButtonObject = [self.sdlManager.screenManager 
 
 ##### Swift
 ```swift
+sdlManager.screenManager.beginUpdates()
+
 let softButtonState1 = SDLSoftButtonState(stateName: "<#Soft Button State Name#>", text: "<#Button Label Text#>", artwork: <#SDLArtwork#>)
 let softButtonState2 = SDLSoftButtonState(stateName: "<#Soft Button State Name#>", text: "<#Button Label Text#>", artwork: <#SDLArtwork#>)
 let softButtonObject = SDLSoftButtonObject(name: "<#Soft Button Object Name#>", states: [softButtonState1, softButtonState2], initialStateName: <#Soft Button State#>.name) { (buttonPress, buttonEvent) in
     guard buttonPress != nil else { return }
     <#Button Selected#>
 }
+
+sdlManager.screenManager.endUpdates { (error) in
+    if error != nil {
+        <#Error Updating UI#>
+    } else {
+        <#Update to UI was Successful#>
+    }
+}
+
 sdlManager.screenManager.softButtonObjects = [softButtonObject]
 
 // Transition to a new state
@@ -311,6 +284,8 @@ retrievedSoftButtonObject?.transitionToNextState()
 
 @![android, javaSE, javaEE]
 ```java
+sdlManager.getScreenManager().beginTransaction();
+
 SoftButtonState state1 = new SoftButtonState("<#State1 Name#>", "<#Button1 Label Text#>", image1Artwork);
 SoftButtonState state2 = new SoftButtonState("<#State2 Name#>", "<#Button2 Label Text#>", image2Artwork);
 
@@ -325,6 +300,13 @@ SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Arr
 });
 
 sdlManager.getScreenManager().setSoftButtonObjects(Collections.singletonList(softButtonObject));
+
+sdlManager.getScreenManager().commit(new CompletionListener() {
+	@Override
+	public void onComplete(boolean success) {
+		Log.i(TAG, "ScreenManager update complete: " + success);
+	}
+});
 
 // Transition to a new state
 SoftButtonObject retrievedSoftButtonObject = sdlManager.getScreenManager().getSoftButtonObjectByName("softButtonObject");
