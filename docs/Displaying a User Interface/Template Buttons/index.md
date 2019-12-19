@@ -1,5 +1,5 @@
 # Template Buttons
-This guide shows you how to show and react to custom soft buttons and system buttons. Custom soft buttons can have custom text and/or images and can be created using the Screen Manager API. System buttons are used to detect changes to hard buttons located in the car's center console or steering wheel. Depending on the template designer, a system button might also show up as part of your template, however the text and image of the system button can not be edited.     
+This guide shows you how to show and react to two types of buttons: soft and system buttons. The text and images of soft buttons can be customized and are part of your SDL app's UI. System buttons are used to detect changes to hard buttons located in the car's center console or steering wheel. Depending on the OEM, a system button that you have subscribed to might also show up as part of your template, however the text and image of system buttons can not be edited.     
 
 ## Custom Soft Buttons
 The @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@ is a manager for easily creating text, images and soft buttons for your SDL app. To update the UI, simply give the manager the new UI data and sandwich the update between the manager's @![iOS]`beginUpdates`!@ @![android, javaSE, javaEE]`beginTransaction()`!@ and @![iOS]`endUpdatesWithCompletionHandler:`!@ @![android, javaSE, javaEE]`commit()`!@ methods.
@@ -393,7 +393,7 @@ In the screenshot below, the pause, seek left and seek right icons are subscribe
 There is no way to customize a subscribe button's image or text.
 !!!
 
-## Audio-Related Buttons
+### Audio-Related Buttons
 The play/pause, seek left, seek right, tune up, and tune down subscribe buttons can only be used in the `MEDIA` template. Depending on the manufacturer of the head unit, the subscribe button might also show up as a soft button in the media template. For example, the SYNC 3 HMI will add the ok, seek right, and seek left soft buttons to the media template when you subscribe to those buttons. You will automatically be assigned the media template if you set your app's `appType` to `MEDIA`.
 
 !!! NOTE
@@ -475,7 +475,7 @@ sdlManager.sendRPC(subscribeButtonRequest);
 !@
 
 
-## Preset Buttons
+### Preset Buttons
 
 ![Ford - Preset Soft Button Menu Button](assets/ford_sync_presetMenu.png)
 
