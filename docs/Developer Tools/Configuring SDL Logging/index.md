@@ -59,7 +59,7 @@ Targets are the output locations where the log will appear. By default, in both 
 The Apple System Logger target, `SDLLogTargetAppleSystemLogger`, is the default log target for both default and debug configurations on devices running iOS 9 or older. This will log to the Xcode console and the device console.
 
 #### OS Log Target
-The OSLog target, `SDLLogTargetOSLog`, is the default log target in both default and debug configurations for devices running iOS 10 or newer. For more information on this logging system see [Apple's documentation](https://developer.apple.com/reference/os/logging). SDL's OSLog target will take advantage of subsystems and levels to allow you powerful runtime filtering capabilities through MacOS Console app with a connected device.
+The OSLog target, `SDLLogTargetOSLog`, is the default log target in both default and debug configurations for devices running iOS 10 or newer. For more information on this logging system see [Apple's documentation](https://developer.apple.com/reference/os/logging). SDL's OSLog target will take advantage of subsystems and levels to allow you powerful runtime filtering capabilities through the MacOS Console app with a connected device.
 
 #### File Target
 The File target, `SDLLogTargetFile`, allows you to log messages to a rolling set of files which will be stored on the device, specifically in the `Documents/smartdevicelink/log/` folder. The file names will be timestamped with the start time.
