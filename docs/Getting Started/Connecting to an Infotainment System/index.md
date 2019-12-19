@@ -114,7 +114,7 @@ Even though you see the app appears on HMI, you still cannot lunch the app at th
 !!!
 
 ## Running the App
-After setting the app information in SDL Core, you can run the project in IntelliJ IDEA. The cloud should compile and launch on your your machine. After that, you can click on the app icon in the HMI.
+After setting the app information in SDL Core, you can run the project in IntelliJ IDEA. The cloud should compile and launch on your machine. After that, you can click on the app icon in the HMI.
 
 ![HMI Apps](assets/hmi2.png)
 
