@@ -2,8 +2,9 @@
 This guide shows you how to show and react to two types of buttons: soft and system buttons. The text and images of soft buttons can be customized and are part of your SDL app's UI. System buttons are used to detect changes to hard buttons located in the car's center console or steering wheel. Depending on the OEM, a system button that you have subscribed to might also show up as part of your template, however the text and image of system buttons can not be edited.     
 
 ## Custom Soft Buttons
-The @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@ is a manager for easily creating text, images and soft buttons for your SDL app. To update the UI, simply give the manager the new UI data and sandwich the update between the manager's @![iOS]`beginUpdates`!@ @![android, javaSE, javaEE]`beginTransaction()`!@ and @![iOS]`endUpdatesWithCompletionHandler:`!@ @![android, javaSE, javaEE]`commit()`!@ methods.
+You can easily display and update text, images, and buttons using the  @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@. To update the UI, simply give the manager your new data and sandwich the update between the manager's @![iOS]`beginUpdates`!@ @![android, javaSE, javaEE]`beginTransaction()`!@ and @![iOS]`endUpdatesWithCompletionHandler:`!@ @![android, javaSE, javaEE]`commit()`!@ methods.
 
+### Available Template Soft Button Fields
 | SDLScreenManager Parameter Name | Description |
 |:--------------------------------------------|:--------------|
 | softButtonObjects | An array of buttons. Each template supports a different number of soft buttons |
