@@ -15,6 +15,7 @@ The @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@ is 
 | textField4Type | The type of data provided in `textField4` |
 | title | The title of the displayed template |
 
+### Showing Text
 @![iOS]
 ##### Objective-C
 ```objc
@@ -89,6 +90,3 @@ sdlManager.getScreenManager().setTextField1(null);
 sdlManager.getScreenManager().setTextField2(null);
 ```
 !@
-
-## Using RPCs
-If you don't want to use the screen manager, you can just send raw `Show` RPC requests to Core.

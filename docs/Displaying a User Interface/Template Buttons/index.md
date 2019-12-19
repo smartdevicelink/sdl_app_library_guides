@@ -1,5 +1,5 @@
 # Template Buttons
-This guide shows you how to show and react to custom and system buttons.
+This guide shows you how to show and react to custom soft buttons and system buttons. Custom soft buttons can have custom text and/or images and can be created using the Screen Manager API. System buttons are used to detect changes to hard buttons located in the car's center console or steering wheel. Depending on the template designer, a system button might also show up as part of your template, however the text and image of the system button can not be edited.     
 
 ## Custom Soft Buttons
 The @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@ is a manager for easily creating text, images and soft buttons for your SDL app. To update the UI, simply give the manager the new UI data and sandwich the update between the manager's @![iOS]`beginUpdates`!@ @![android, javaSE, javaEE]`beginTransaction()`!@ and @![iOS]`endUpdatesWithCompletionHandler:`!@ @![android, javaSE, javaEE]`commit()`!@ methods.
@@ -8,6 +8,7 @@ The @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@ is 
 |:--------------------------------------------|:--------------|
 | softButtonObjects | An array of buttons. Each template supports a different number of soft buttons |
 
+### Showing Soft Buttons
 @![iOS]
 ##### Objective-C
 ```objc
@@ -41,7 +42,6 @@ sdlManager.screenManager.endUpdates { (error) in
 !@
 
 @![android, javaSE, javaEE]
-
 ```java
 sdlManager.getScreenManager().beginTransaction();
 
@@ -56,13 +56,12 @@ sdlManager.getScreenManager().commit(new CompletionListener() {
 ```
 !@
 
-## Soft Button Objects
-To create a soft button using the `ScreenManager`, you only need to create a custom name for the button and provide the text for the button's label and/or an image for the button's icon. If your button cycles between different states (e.g. a button used to set the repeat state of a song playlist can have three states: repeat-off, repeat-one, and repeat-all) you can upload all the states on initialization. Soft Buttons can contain images, text or both.
+### Creating Soft Buttons
+To create a soft button using the `ScreenManager`, you only need to create a custom name for the button and provide the text for the button's label and/or an image for the button's icon. If your button cycles between different states (e.g. a button used to set the repeat state of a song playlist can have three states: repeat-off, repeat-one, and repeat-all) you can upload all the states on initialization. 
+
+There are three different ways to create a soft button: with just text, with just an image, or with both text and images. If creating a button with an image, we recommend that you template the image so its color works well with both the day and night modes of the head unit. For more information on templating images please see the [Template Images](Displaying a User Interface/Template Images) guide. 
 
 ![Generic HMI](assets/Generic_non_media.png)
-
-### Soft Button Formats
-There are three different ways to create a soft button: with just text, with just an image, or with both text and images. If creating a button with an image, we recommend that you template the image so its color works well with both the day and night modes of the head unit. For more information on templating images please see the [Template Images](Displaying a User Interface/Template Images) guide. 
 
 #### Text Only Soft Buttons
 @![iOS]
@@ -214,7 +213,7 @@ sdlManager.getScreenManager().setSoftButtonObjects(Collections.singletonList(sof
 ```
 !@
 
-### Highlighting a Soft Button
+#### Highlighting a Soft Button
 When a button is highlighted, the background color will change to indicate that it has been selected. 
 
 ##### Highlight On
@@ -325,7 +324,6 @@ SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Arr
 });
 
 sdlManager.getScreenManager().setSoftButtonObjects(Collections.singletonList(softButtonObject));
-
 
 // Transition to a new state
 SoftButtonObject retrievedSoftButtonObject = sdlManager.getScreenManager().getSoftButtonObjectByName("softButtonObject");
@@ -483,7 +481,8 @@ sdlManager.sendRPC(subscribeButtonRequest);
 
 ![Ford - Preset Soft Buttons List](assets/ford_sync_presetOptions.png)
 
-Preset buttons may not work in the same way as seen on the above screenshots on all head units. Some head units may have physical buttons on their console and these will trigger the subscribed button. You can check if an HMI supports subscribing to preset buttons, and how many, by calling the @![iOS] `SDLManager.systemCapabilityManager.displayCapabilities.numCustomPresetsAvailable`!@ @![android,javaSE, javaEE] sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getNumCustomPresetsAvailable() !@.
+Preset buttons may not work in the same way as seen on the above screenshots on all head units. Some head units may have physical buttons on their console and these will trigger the subscribed button. You can check if an HMI supports subscribing to preset buttons, and how many, by calling the @![iOS] `SDLManager.systemCapabilityManager.displayCapabilities.numCustomPresetsAvailable`!@ @![android,javaSE, javaEE]`sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getNumCustomPresetsAvailable()`!@.
+
 @![iOS]
 ##### Objective-C
 ```objc

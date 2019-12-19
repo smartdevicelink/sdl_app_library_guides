@@ -6,6 +6,7 @@ The @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@ is 
 | primaryGraphic | The primary image in a template that supports images |
 | secondaryGraphic | The second image in a template that supports multiple images |
 
+### Showing Images
 @![iOS]
 ##### Objective-C
 ```objc
@@ -139,6 +140,3 @@ SdlArtwork sdlArtwork = new SdlArtwork(StaticIconName.ALBUM);
 sdlManager.getScreenManager().setPrimaryGraphic(sdlArtwork);
 ```
 !@
-
-## Using RPCs
-If you don't want to use the screen manager, you can just send raw `Show` RPC requests to Core.
