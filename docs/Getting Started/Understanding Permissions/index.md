@@ -213,7 +213,7 @@ UUID listenerId = sdlManager.getPermissionManager().addListener(permissionElemen
 !@
 
 ### Stopping Observation of Permissions
-When you set up the @![iOS]observer!@ @![android,javaSE,javaEE]listener!@, you will get an unique id back. Use this id to unsubscribe to the permissions at a later date.
+When you set up the @![iOS]observer!@ @![android,javaSE,javaEE]listener!@, you will get a unique id back. Use this id to unsubscribe to the permissions at a later date.
 
 @![iOS]
 ##### Objective-C
