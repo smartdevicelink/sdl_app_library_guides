@@ -1,5 +1,5 @@
 # Template Text
-This guide covers presenting text on the screen when using a template.
+This guide shows you how to present text on the screen.
 
 ## Template Text Fields
 The @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@ is a manager for easily creating text, images and soft buttons for your SDL app. To update the UI, simply give the manager the new UI data and sandwich the update between the manager's @![iOS]`beginUpdates`!@ @![android, javaSE, javaEE]`beginTransaction()`!@ and @![iOS]`endUpdatesWithCompletionHandler:`!@ @![android, javaSE, javaEE]`commit()`!@ methods.
@@ -69,7 +69,7 @@ sdlManager.getScreenManager().commit(new CompletionListener() {
 !@
 
 ### Removing Text
-Once you have displayed text on the screen, you may want to remove it at some point. In order to do so, you only need to set the screen manager property to @![iOS]`nil`!@ @![android, javaSE, javaEE]`null`!@.
+To remove text from the screen you just need to set the screen manager property to @![iOS]`nil`!@ @![android, javaSE, javaEE]`null`!@.
 
 @![iOS]
 ##### Objective-C
