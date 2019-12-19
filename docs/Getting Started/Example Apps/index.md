@@ -39,7 +39,7 @@ To connect the example app to production or debug hardware, make sure you are on
 !@
 
 @![android, javaSE, javaEE]
-In this guide we take you through the steps to get our sample project, Hello Sdl, running and connected to Sdl Core as well as showing up on HMI.
+In this guide we take you through the steps to get our sample project, Hello Sdl, running and connected to SDL Core as well as showing up on HMI.
 !@
 
 @![android]
@@ -76,11 +76,11 @@ We will mainly be dealing with `multi` (if using a TDK) or `tcp` (if connecting 
 ### Configure for TCP
 If you aren't using a TDK or head unit, you can connect to SDL core via a virtual machine or to your localhost. To do this we will use the flavor ```tcpDebug```.
 
-For TCP to work, you will have to know the IP address of your machine that is running Sdl Core. If you don't know what it is, running ```ifconfig``` in a linux terminal will usually let you see it for the interface you are connected with to your network. We have to modify the IP address in Hello Sdl Android to let it know where your instance of SDL Core is running.
+For TCP to work, you will have to know the IP address of your machine that is running SDL Core. If you don't know what it is, running ```ifconfig``` in a linux terminal will usually let you see it for the interface you are connected with to your network. We have to modify the IP address in Hello Sdl Android to let it know where your instance of SDL Core is running.
 
 In the main Java folder of Hello Sdl Android, open up ```SdlService.java```
 
-In the top of this file, locate the variable declaration for ```DEV_MACHINE_IP_ADDRESS```. Change it to your Sdl Core's IP. Leave the ```TCP_PORT``` set to ```12345```.
+In the top of this file, locate the variable declaration for ```DEV_MACHINE_IP_ADDRESS```. Change it to your SDL Core's IP. Leave the ```TCP_PORT``` set to ```12345```.
 
 ```java
 	// TCP/IP transport config
@@ -89,7 +89,7 @@ In the top of this file, locate the variable declaration for ```DEV_MACHINE_IP_A
 ```
 
 !!! NOTE
-if you do not change the target IP address, the application will not connect to Sdl Core or show up on the HMI
+if you do not change the target IP address, the application will not connect to SDL Core or show up on the HMI
 !!!
 
 ### Configure for Bluetooth
@@ -112,7 +112,7 @@ guide](Getting Started/Connecting to an Infotainment System)
 Sometimes things don't always go as planned, and so this section exists. If your app compiles and does NOT show up on the HMI, there are a few things to check out.
 
 #### TCP
-1. Make sure that you have changed the IP in ```SdlService.java``` to match the machine running Sdl Core. Being on the same network is also important.
+1. Make sure that you have changed the IP in ```SdlService.java``` to match the machine running SDL Core. Being on the same network is also important.
 2. If you are sure that the IP is correct and it is still not showing up, make sure the Build Flavor that is running is ```tcpDebug```.
 3. If the two above dont work, make sure there is no firewall blocking the incoming port ```12345``` on the machine or VM running SDL Core. In the same breath, make sure your firewall allows that outgoing port.
 4. There are different network configurations needed for different virtualization software (virtualbox, vmware, etc). Make sure yours is set up correctly. Or use [Manticore](https://smartdevicelink.com/resources/manticore/).
