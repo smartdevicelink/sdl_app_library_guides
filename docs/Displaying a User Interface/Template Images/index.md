@@ -1,10 +1,7 @@
 # Template Images
-This guide shows you how to present images on the screen.
-
-## Template Image Fields
 The @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@ is a manager for easily creating text, images and soft buttons for your SDL app. To update the UI, simply give the manager the new UI data and sandwich the update between the manager's @![iOS]`beginUpdates`!@ @![android, javaSE, javaEE]`beginTransaction()`!@ and @![iOS]`endUpdatesWithCompletionHandler:`!@ @![android, javaSE, javaEE]`commit()`!@ methods.
 
-| SDLScreenManager Parameter Name | Description |
+| Screen Manager Image Parameter Name | Description |
 |:--------------------------------------------|:--------------|
 | primaryGraphic | The primary image in a template that supports images |
 | secondaryGraphic | The second image in a template that supports multiple images |

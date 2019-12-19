@@ -1,10 +1,7 @@
 # Template Text
-This guide shows you how to present text on the screen.
-
-## Template Text Fields
 The @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@ is a manager for easily creating text, images and soft buttons for your SDL app. To update the UI, simply give the manager the new UI data and sandwich the update between the manager's @![iOS]`beginUpdates`!@ @![android, javaSE, javaEE]`beginTransaction()`!@ and @![iOS]`endUpdatesWithCompletionHandler:`!@ @![android, javaSE, javaEE]`commit()`!@ methods.
 
-| SDLScreenManager Parameter Name | Description |
+| Screen Manager Text Parameter Name | Description |
 |:--------------------------------------------|:--------------|
 | textField1 | The text displayed in a single-line display, or in the upper display line of a multi-line display |
 | textField2 | The text displayed on the second display line of a multi-line display |
