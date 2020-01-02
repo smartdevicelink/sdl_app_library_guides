@@ -68,7 +68,7 @@ Below is a table with example image sizes. Check the `SystemCapabilityManager` f
 | menuIcon			   | SetGlobalProperties		| Image shown on the “More…” button | 35x35px | png, jpg, bmp |
 | cmdIcon			   | AddCommand				    | Image shown for commands in the "More…" menu | 35x35px | png, jpg, bmp |
 | appIcon 			   | SetAppIcon				    | Image shown as Icon in the "Mobile Apps" menu | 70x70px | png, jpg, bmp |
-| graphic 			   | Show 					    | Image shown on the basescreen as cover art | 185x185px | png, jpg, bmp |
+| graphic 			   | Show 					    | Image shown on the base screen as cover art | 185x185px | png, jpg, bmp |
 
 ## Querying for System Capabilities
 Most head units provide features that your app can use: making and receiving phone calls, an embedded navigation system, video and audio streaming, as well as supporting app services. To find out if the head unit supports a feature as well as more information about the feature, use the @![iOS]`SDLSystemCapabilityManager`!@@![android, javaSE, javaEE]`SystemCapabilityManager`!@ to query the head unit for the desired capability. If a capability is unavailable, the query will return @![iOS]`nil`!@@![android, javaSE, javaEE]`null`!@.

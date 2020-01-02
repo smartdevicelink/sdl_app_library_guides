@@ -93,7 +93,7 @@ self.sdlManager.screenManager.softButtonObjects = [softButton];
 
 #### Create the EventEmitter Bridge Class
 
-Create the class that will be the listener for the notiification you created above. This class will be sending and receiving messages from your JavaScript code (React Native). The required `supportedEvents` method returns an array of supported event names. Sending an event name that is not included in the array will result in an error. An "event" is sending a message from native code to React Native code.
+Create the class that will be the listener for the notification you created above. This class will be sending and receiving messages from your JavaScript code (React Native). The required `supportedEvents` method returns an array of supported event names. Sending an event name that is not included in the array will result in an error. An "event" is sending a message from native code to React Native code.
 
 ##### Objective-C
 ###### SDLEventEmitter.h

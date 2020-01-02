@@ -190,7 +190,7 @@ lockScreenConfig.setDisplayMode(LockScreenConfig.DISPLAY_MODE_ALWAYS);
 !@
 
 ### Enabling User Lockscreen Dismissal (Passenger Mode)
-Starting in RPC v6.0+ users may now have the ability to dismiss the lock screen by swiping the lock screen down. Not all OEMs support this new feature. A dismissable lock screen is enabled by default if the head unit enables the feature, but you can disable it manually as well. To disable this feature, set @![iOS]`SDLLockScreenConfiguration`s!@ @![android]`LockScreenConfig`s!@  `enableDismissGesture` to false.
+Starting in RPC v6.0+ users may now have the ability to dismiss the lock screen by swiping the lock screen down. Not all OEMs support this new feature. A dismissible lock screen is enabled by default if the head unit enables the feature, but you can disable it manually as well. To disable this feature, set @![iOS]`SDLLockScreenConfiguration`s!@ @![android]`LockScreenConfig`s!@  `enableDismissGesture` to false.
 
 @![iOS]
 ##### Objective-C

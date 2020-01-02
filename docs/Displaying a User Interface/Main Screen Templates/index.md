@@ -83,7 +83,7 @@ There are fifteen standard templates to choose from, however some head units may
 ![SYNC 3 - Graphic with Text and Soft Buttons](assets/SYNC3HMI/SYNC3_graphic_with_text_and_soft_buttons.jpg)
 
 #### Text and Soft Buttons with Graphic
-![SYNC 3 Text and Softbuttons with Graphic](assets/SYNC3HMI/SYNC3_text_and_soft_buttons_with_graphic.jpg)
+![SYNC 3 Text and Soft Buttons with Graphic](assets/SYNC3HMI/SYNC3_text_and_soft_buttons_with_graphic.jpg)
 
 #### Graphic with Text Buttons
 ![Generic - Graphic with Text Buttons](assets/GenericHMI/Generic_graphic_with_text_buttons.png)

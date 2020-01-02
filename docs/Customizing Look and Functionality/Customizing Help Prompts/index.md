@@ -237,7 +237,7 @@ ResetGlobalProperties resetGlobalProperties = new ResetGlobalProperties(Arrays.a
 // Reset spoken prompts
 ResetGlobalProperties resetGlobalProperties = new ResetGlobalProperties(Arrays.asList(GlobalProperty.HELPPROMPT, GlobalProperty.TIMEOUTPROMPT));
 
-// To send any one of these, use the the typical format:
+// To send any one of these, use the typical format:
 resetGlobalProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
