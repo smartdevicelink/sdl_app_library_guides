@@ -2,15 +2,15 @@
 This guide shows you how to show and react to two types of buttons: soft and system buttons. The text and images of soft buttons can be customized and are part of your SDL app's UI. System buttons are used to detect changes to hard buttons located in the car's center console or steering wheel. Depending on the OEM, a system button that you have subscribed to might also show up as part of your template, however the text and image of system buttons can not be edited.     
 
 ## Custom Soft Buttons
-You can easily display and update text, images, and buttons using the  @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@. To update the UI, simply give the manager your new data and sandwich the update between the manager's @![iOS]`beginUpdates`!@ @![android, javaSE, javaEE]`beginTransaction()`!@ and @![iOS]`endUpdatesWithCompletionHandler:`!@ @![android, javaSE, javaEE]`commit()`!@ methods.
+You can easily display and update text, images, and buttons using the @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@. To update the UI, simply give the manager your new data and sandwich the update between the manager's @![iOS]`beginUpdates`!@ @![android, javaSE, javaEE]`beginTransaction()`!@ and @![iOS]`endUpdatesWithCompletionHandler:`!@ @![android, javaSE, javaEE]`commit()`!@ methods.
 
 ### Available Template Soft Button Fields
-| SDLScreenManager Parameter Name | Description |
+| @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@ Parameter Name | Description |
 |:--------------------------------------------|:--------------|
 | softButtonObjects | An array of buttons. Each template supports a different number of soft buttons |
 
 ### Creating Soft Buttons
-To create a soft button using the `ScreenManager`, you only need to create a custom name for the button and provide the text for the button's label and/or an image for the button's icon. If your button cycles between different states (e.g. a button used to set the repeat state of a song playlist can have three states: repeat-off, repeat-one, and repeat-all) you can upload all the states on initialization. 
+To create a soft button using the @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@, you only need to create a custom name for the button and provide the text for the button's label and/or an image for the button's icon. If your button cycles between different states (e.g. a button used to set the repeat state of a song playlist can have three states: repeat-off, repeat-one, and repeat-all) you can upload all the states on initialization. 
 
 There are three different ways to create a soft button: with just text, with just an image, or with both text and images. If creating a button with an image, we recommend that you template the image so its color works well with both the day and night modes of the head unit. For more information on templating images please see the [Template Images](Displaying a User Interface/Template Images) guide. 
 
