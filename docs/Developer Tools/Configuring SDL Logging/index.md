@@ -66,7 +66,7 @@ The File target, `SDLLogTargetFile`, allows you to log messages to a rolling set
 
 To access the file, you can either access it from runtime on the device (for example, to attach it to an email that the user sends), or if you have access to the device, you can access them via iTunes (pre-Catalina) or the MacOS Finder (post-Catalina). To access the files on the device you must make the following small modifications to your app:
 
-##### MacOS Catalina
+##### MacOS Catalina or Later
 1. Add the key `UIFileSharingEnabled` to your `info.plist`. Set the value to `YES`.
 1. Connect the device to a MacOS computer.
 1. Open the Finder, click on the device in the sidebar, then click on "Files" > "Your App Name"
