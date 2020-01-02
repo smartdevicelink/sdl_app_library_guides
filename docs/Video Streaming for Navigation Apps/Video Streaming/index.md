@@ -44,7 +44,7 @@ If you are using off-screen rendering, it is recommended that your on-screen vie
 !!!
 
 #### Off-Screen
-To set an off-screen view controller all you have to do is instantiate a new `UIViewController` class and use it to set the `rootViewController`. 
+To set an off-screen view controller all you have to do is instantiate a new `UIViewController` class and use it to set the `rootViewController`.
 
 ##### Objective-C
 ```objc
