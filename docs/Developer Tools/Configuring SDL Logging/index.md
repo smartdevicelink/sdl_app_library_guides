@@ -69,7 +69,7 @@ To access the file, you can either access it from runtime on the device (for exa
 ##### MacOS Catalina or Later
 1. Add the key `UIFileSharingEnabled` to your `info.plist`. Set the value to `YES`.
 1. Connect the device to a MacOS computer.
-1. Open the Finder, click on the device in the sidebar, then click on "Files" > "Your App Name"
+1. Open the Finder, click on the device in the sidebar, then click on "Files" > "Your App Name".
 1. You should see a folder called "smartdevicelink". Drag and drop the folder to your desktop (or somewhere in your file system). When you open the folder on your computer, you will see the log files for each session (default maxes out at 3).
 
 ##### MacOS Pre-Catalina
