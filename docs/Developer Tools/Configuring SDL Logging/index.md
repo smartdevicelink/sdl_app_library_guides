@@ -1,6 +1,6 @@
 # Configuring SDL Logging
 @![iOS]
-Starting at SDL iOS v5.0 and above, a new powerful built-in logging framework was designed to make debugging easier. It provides many of the features common to other 3rd party logging frameworks for iOS and can be used by your own app as well. We recommend that your app's integration with SDL provide logging using this framework rather than any other 3rd party framework your app may be using or `NSLog`. This will consolidate all SDL related logs in a common format and to common destinations.
+A powerful built-in logging framework is available to make debugging your SDL app easier. It provides many of the features common to other 3rd party logging frameworks for iOS and can be used by your own app as well. We recommend that your app's integration with SDL provide logging using this framework rather than any other 3rd party framework your app may be using or `NSLog`. This will consolidate all SDL related logs in a common format and to common destinations.
 
 SDL will configure its logging into a production-friendly configuration by default. If you wish to use a debug or a custom configuration, then you will have to specify this yourself. `SDLConfiguration` allows you to pass a `SDLLogConfiguration` with custom values. A few of these values will be covered in this section, the others are in their own sections below.
 
@@ -59,19 +59,28 @@ Targets are the output locations where the log will appear. By default, in both 
 The Apple System Logger target, `SDLLogTargetAppleSystemLogger`, is the default log target for both default and debug configurations on devices running iOS 9 or older. This will log to the Xcode console and the device console.
 
 #### OS Log Target
-The OSLog target, `SDLLogTargetOSLog`, is the default log target in both default and debug configurations for devices running iOS 10 or newer. For more information on this logging system see [Apple's documentation](https://developer.apple.com/reference/os/logging). SDL's OSLog target will take advantage of subsystems and levels to allow you powerful runtime filtering capabilities through MacOS Sierra's Console app with a connected device.
+The OSLog target, `SDLLogTargetOSLog`, is the default log target in both default and debug configurations for devices running iOS 10 or newer. For more information on this logging system see [Apple's documentation](https://developer.apple.com/reference/os/logging). SDL's OSLog target will take advantage of subsystems and levels to allow you powerful runtime filtering capabilities through the MacOS Console app with a connected device.
 
 #### File Target
-The File target, `SDLLogTargetFile`, allows you to log messages to a rolling set of files (default 3) which will be stored on the device, specifically in the `Documents/smartdevicelink/log/` folder. The file names will be timestamped with the start time.
+The File target, `SDLLogTargetFile`, allows you to log messages to a rolling set of files which will be stored on the device, specifically in the `Documents/smartdevicelink/log/` folder. The file names will be timestamped with the start time.
 
-To access the file, you can either access it from runtime on the device (for example, to attach it to an email that the user sends), or if you have access to the device, you can access them via iTunes as well with small modifications to your app:
+To access the file, you can either access it from runtime on the device (for example, to attach it to an email that the user sends), or if you have access to the device, you can access them via iTunes (pre-Catalina) or the MacOS Finder (post-Catalina). To access the files on the device you must make the following small modifications to your app:
 
+##### MacOS Catalina or Later
 1. Add the key `UIFileSharingEnabled` to your `info.plist`. Set the value to `YES`.
-2. Connect the device to a computer that has iTunes installed.
-3. Open iTunes, click on the icon for the device, then click on "File Sharing" > "(Your App Name)"
-4. You should see a folder called "smartdevicelink". Select the file and click save. When you open the folder on your computer, you will see the log files for each session (default maxes out at 3).
+1. Connect the device to a MacOS computer.
+1. Open the Finder, click on the device in the sidebar, then click on "Files" > "Your App Name".
+1. You should see a folder called "smartdevicelink". Drag and drop the folder to your desktop (or somewhere in your file system). When you open the folder on your computer, you will see the log files for each session (default maxes out at 3).
 
-You should not keep this info.plist key when you submit your app to Apple.
+##### MacOS Pre-Catalina
+1. Add the key `UIFileSharingEnabled` to your `info.plist`. Set the value to `YES`.
+1. Connect the device to a computer that has iTunes installed.
+1. Open iTunes, click on the icon for the device, then click on "File Sharing" > "Your App Name".
+1. You should see a folder called "smartdevicelink". Select the folder and click "Save". When you open the folder on your computer, you will see the log files for each session (default maxes out at 3).
+
+##### File Logging and Production Releases
+1. You should remove the file sharing enabled info.plist key before submitting your app to Apple.
+1. If you are testing an archive build, you will only be able to view error and warning logs if the build configuration was set to "release". To get debug and/or verbose logs you must create the archive build with the build configuration set to "debug". 
 
 #### Custom Log Targets
 The protocol all log targets conform to, `SDLLogTarget`, is public. If you wish to make a custom log target in order to, for example, log to a server, it should be fairly easy to do so. If it can be used by other developers and is not specific to your app, then submit it back to the SmartDeviceLink iOS library project! If you want to add targets *in addition* to the default target that will output to the console:
