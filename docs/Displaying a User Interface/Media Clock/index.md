@@ -1,7 +1,7 @@
 # Media Clock
 The media clock is used by media apps to present the current timing information of a playing media item such as a song, podcast, or audiobook.
 
-The media clock constists of three parts: the progress bar, a current position label and a remaining time label. In addition you may want to update the play/pause button icon to reflect the current state of the audio. 
+The media clock consists of three parts: the progress bar, a current position label and a remaining time label. In addition you may want to update the play/pause button icon to reflect the current state of the audio. 
 
 !!! NOTE
 Ensure your app has an `appType` of media and you are using the media template before implementing this feature.
@@ -138,6 +138,6 @@ sdlManager.sendRPC(mediaClock);
 !@
 
 ## Updating the Audio Indicator
-The audio indicator is, essentially, the play / pause button. As of library v.@![iOS]6.1!@ @![android, javaSE, javaEE]4.7!@, when connected to an SDL v5.0+ head unit, you can tell the system what icon to display on the play / pause button to correspond with how your app works. For example, if audio is currently playing you can update the the play/pause button to show the pause icon. On older head units, the audio indicator shows an icon with both the play and pause indicators and the icon can not be updated. 
+The audio indicator is, essentially, the play / pause button. As of library v.@![iOS]6.1!@ @![android, javaSE, javaEE]4.7!@, when connected to an SDL v5.0+ head unit, you can tell the system what icon to display on the play / pause button to correspond with how your app works. For example, if audio is currently playing you can update the play/pause button to show the pause icon. On older head units, the audio indicator shows an icon with both the play and pause indicators and the icon can not be updated. 
 
 For example, a radio app will probably want two button states: play and stop. A music app, in contrast, will probably want a play and pause button. If you don't send any audio indicator information, a play / pause button will be displayed.

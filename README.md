@@ -2,7 +2,7 @@
 The iOS and Java Suite (Android, JavaEE, and JavaSE) guides are located on the [SDL Developer Portal](https://smartdevicelink.com/en/guides/iOS/getting-started/installation/).
 
 ## Overview
-Since both the iOS and Java Suite guides provide almost the same instructions and information, the content of each section should be written as generically as possible. This allows the the guides to be written once for all platforms with little modification needed. If a guide is specific to one platform or has content specific to one platform, like code snippets, the content should be separated out using custom platform tags.
+Since both the iOS and Java Suite guides provide almost the same instructions and information, the content of each section should be written as generically as possible. This allows the guides to be written once for all platforms with little modification needed. If a guide is specific to one platform or has content specific to one platform, like code snippets, the content should be separated out using custom platform tags.
 
 Guide documents are formatted using a custom SDL markdown format. All guides get created as directories inside this repository. Each directory gets a link in the left-hand sidebar on [smartdevicelink.com](https://smartdevicelink.com). Guides do not currently support multiple pages or sub-directories.
 

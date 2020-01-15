@@ -579,7 +579,7 @@ The SDL Java library supports Java 7 and above.
 
 @![android,javaSE,javaEE]
 ## SmartDeviceLink Service
-A SmartDeviceLink Service should be created to manage the lifecycle of the SDL session. The `SdlService` should build and start an instance of the `SdlManager` which will automatically connect with a headunit when available. This `SdlManager` will handle sending and receiving messages to and from SDL after it is connected.
+A SmartDeviceLink Service should be created to manage the lifecycle of the SDL session. The `SdlService` should build and start an instance of the `SdlManager` which will automatically connect with a head unit when available. This `SdlManager` will handle sending and receiving messages to and from SDL after it is connected.
 
 Create a new service and name it appropriately, for this guide we are going to call it `SdlService`.
 !@
@@ -862,7 +862,7 @@ Make sure this local class `SdlRouterService.java` is in the same package of `Sd
 If you created the service using the Android Studio template then the service should have been added to your `AndroidManifest.xml` otherwise the service needs to be added in the manifest. Because we want our service to be seen by other SDL enabled apps, we need to set `android:exported="true"`. The system may issue a lint warning because of this, so we can suppress that using `tools:ignore="ExportedService"`.
 
 !!! MUST
-The `SdlRouterService` must be placed in a separate process with the name `com.smartdevicelink.router`. If it is not in that process during it's start up it will stop itself.
+The `SdlRouterService` must be placed in a separate process with the name `com.smartdevicelink.router`. If it is not in that process during its start up it will stop itself.
 !!!
 
 ### Intent Filter
@@ -986,7 +986,7 @@ public class SdlReceiver extends SdlBroadcastReceiver {
 }
 ```
 
-We want to start the `SdlManager` when an SDL connection is made via the `SdlRouterService`. We do this by taking action in the onSdlEnabled method:
+We want to start the `SdlManager` when an SDL connection is made via the `SdlRouterService`. We do this by taking action in the `onSdlEnabled` method:
 
 !!! MUST
 Apps must start their service in the foreground as of Android Oreo (API 26).

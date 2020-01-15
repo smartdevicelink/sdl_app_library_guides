@@ -238,8 +238,8 @@ mediaData.setMediaImage(new Image("Some image", ImageType.DYNAMIC));
 mediaData.setPlaylistName("Some playlist");
 mediaData.setIsExplicit(true);
 mediaData.setTrackPlaybackProgress(45);
-mediaData.setQueuePlaybackDuration(90);
-mediaData.setTrackPlaybackProgress(45);
+mediaData.setTrackPlaybackDuration(90);
+mediaData.setQueuePlaybackProgress(45);
 mediaData.setQueuePlaybackDuration(150);
 mediaData.setQueueCurrentTrackNumber(2);
 mediaData.setQueueTotalTrackCount(3);
@@ -658,7 +658,7 @@ In order to support actions through SDL services, you will need to observe and r
     // The app id of the service consumer app that sent you this message
     NSString *originAppId = interactionRequest.originApp;
 
-    // The URL sent by the consumer. This must be something you understand, e.g. a URL scheme call. For example, if you were Youtube, it could be a URL to play a specific video. If you were a music app, it could be a URL to play a specific song, activate shuffle / repeat, etc.
+    // The URL sent by the consumer. This must be something you understand, e.g. a URL scheme call. For example, if you were YouTube, it could be a URL to play a specific video. If you were a music app, it could be a URL to play a specific song, activate shuffle / repeat, etc.
     NSURLComponents *interactionURLComponents = [NSURLComponents componentsWithString:interactionRequest.serviceUri];
 
     // A result you want to send to the consumer app.
@@ -688,7 +688,7 @@ sdlManager.subscribe(to: SDLDidReceivePerformAppServiceInteractionRequest, obser
     // The app id of the service consumer app that sent you this message
     let originAppId = interactionRequest.originApp
 
-    // The URL sent by the consumer. This must be something you understand, e.g. a URL scheme call. For example, if you were Youtube, it could be a URL to play a specific video. If you were a music app, it could be a URL to play a specific song, activate shuffle / repeat, etc.
+    // The URL sent by the consumer. This must be something you understand, e.g. a URL scheme call. For example, if you were YouTube, it could be a URL to play a specific video. If you were a music app, it could be a URL to play a specific song, activate shuffle / repeat, etc.
     let interactionURLComponents = URLComponents(string: interactionRequest.serviceUri)
 
     // A result you want to send to the consumer app.
