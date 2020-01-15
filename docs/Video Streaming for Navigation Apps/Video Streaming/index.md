@@ -3,7 +3,7 @@
 To stream video from a SDL app use the `SDLStreamingMediaManager` class. A reference to this class is available from the `SDLManager`. You can choose to create your own video streaming manager or you can use the `CarWindow` API to easily stream video to the head unit.
 
 !!! NOTE
-Due to an iOS limitation, video can not be streamed when the app on the phone is backgrounded or when the phone is sleeping/locked. Text will automatically be displayed telling the user that they must bring the application to the foreground.
+Due to an iOS limitation, video can not be streamed when the app on the phone is in the background or the screen is off. Text will automatically be displayed telling the user that they must bring the application to the foreground.
 !!!
 
 ### Transports for Video Streaming
@@ -24,15 +24,14 @@ There are several customizations you can make to `CarWindow` to optimize it for 
 2. By default, when using `CarWindow`, the `SDLTouchManager` will sync its touch updates to the framerate. To disable this feature, set `SDLTouchManager.enableSyncedPanning` to `NO`.
 3. `CarWindow`'s settings dictate the framerate of the app. To change the framerate and other parameters, update `SDLStreamingMediaConfiguration.customVideoEncoderSettings`. These settings will override any settings received from the head unit.
 
-    Below are the video encoder defaults:
+Below are the video encoder defaults:
 
-        @{
-            (__bridge NSString *)kVTCompressionPropertyKey_ProfileLevel: (__bridge NSString *)kVTProfileLevel_H264_Baseline_AutoLevel,
-            (__bridge NSString *)kVTCompressionPropertyKey_RealTime: @YES,
-            (__bridge NSString *)kVTCompressionPropertyKey_ExpectedFrameRate: @15,
-            (__bridge NSString *)kVTCompressionPropertyKey_AverageBitRate: @600000
-        };
-
+    @{
+        (__bridge NSString *)kVTCompressionPropertyKey_ProfileLevel: (__bridge NSString *)kVTProfileLevel_H264_Baseline_AutoLevel,
+        (__bridge NSString *)kVTCompressionPropertyKey_RealTime: @YES,
+        (__bridge NSString *)kVTCompressionPropertyKey_ExpectedFrameRate: @15,
+        (__bridge NSString *)kVTCompressionPropertyKey_AverageBitRate: @600000
+    };
 
 ### Showing a New View Controller
 Simply update `sdlManager.streamManager.rootViewController` to the new view controller. This will also update the [haptic parser](Video Streaming for Navigation Apps/Supporting Haptic Input).
@@ -40,8 +39,12 @@ Simply update `sdlManager.streamManager.rootViewController` to the new view cont
 ### Mirroring the Device Screen vs. Off-Screen UI
 It is recommended that you use an off-screen view controller for your UI. This view controller will appear on-screen in the car, while remaining off-screen on the device. It is possible to mirror your device screen, however we strongly recommend against this course of action.
 
+!!! NOTE
+If you are using off-screen rendering, it is recommended that your on-screen view controller not rotate. If it does, the lock screen will also rotate. Nothing will break in this case, but the UI won't look good if it rotates while your app is streaming.
+!!!
+
 #### Off-Screen
-To set an off-screen view controller all you have to do is instantiate a new `UIViewController` class and use it to set the `rootViewController`. 
+To set an off-screen view controller all you have to do is instantiate a new `UIViewController` class and use it to set the `rootViewController`.
 
 ##### Objective-C
 ```objc
