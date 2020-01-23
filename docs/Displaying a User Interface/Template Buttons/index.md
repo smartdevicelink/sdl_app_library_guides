@@ -458,81 +458,50 @@ Before library v.@![iOS]6.1!@@![android, javaSE, javaEE]4.7!@ and RPC v5.0, `Ok`
 ##### Objective-C
 ```objc
 SDLSubscribeButton *subscribeButton = [[SDLSubscribeButton alloc] initWithButtonName:SDLButtonNamePlayPause handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
-    <#subscribe button selected#>
+    if (buttonPress == nil) { return; }
+    <#Subscribe button selected#>
 }];
-[manager sendRequest:subscribeButton withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    if (error != nil) { return; }
-    <#subscribe button sent successfully#>
+[self.sdlManager sendRequest:subscribeButton withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+    if (!response.success.boolValue) { return; }
+    <#Subscribe button sent successfully#>
 }];
 ```
 
 ##### Swift
 ```swift
-let subscribeButton = SDLSubscribeButton(buttonName: .ok) { (buttonPress, buttonEvent) in
-    <#subscribe button selected#>
+let subscribeButton = SDLSubscribeButton(buttonName: .playPause) { (buttonPress, buttonEvent) in
+    if (buttonPress == nil) { return; }
+    <#Subscribe button selected#>
 }
 sdlManager.send(request: subscribeButton) { (request, response, error) in
-    guard error == nil else { return }
-    <#subscribe button sent successfully#>
+    guard response?.success.boolValue == true else { return }
+    <#Subscribe button sent successfully#>
 }
 ```
 !@
 
 @![android, javaSE, javaEE]
 ```java
-sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_EVENT, new OnRPCNotificationListener() {
-    @Override
-    public void onNotified(RPCNotification notification) {
-        OnButtonPress onButtonPressNotification = (OnButtonPress) notification;
-        switch (onButtonPressNotification.getButtonName()) {
-            case OK:
-                break;
-            case PLAY_PAUSE:
-                break;
-            case SEEKLEFT:
-                break;
-            case SEEKRIGHT:
-                break;
-            case TUNEUP:
-                break;
-            case TUNEDOWN:
-                break;
-        }
-    }
-});
-
 sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNotificationListener() {
     @Override
     public void onNotified(RPCNotification notification) {
         OnButtonPress onButtonPressNotification = (OnButtonPress) notification;
         switch (onButtonPressNotification.getButtonName()) {
-            case OK:
-                break;
             case PLAY_PAUSE:
-                break;
-            case SEEKLEFT:
-                break;
-            case SEEKRIGHT:
-                break;
-            case TUNEUP:
-                break;
-            case TUNEDOWN:
+                <#PLAY_PAUSE subscribe button selected#>
                 break;
         }
     }
 });
 
 SubscribeButton subscribeButtonRequest = new SubscribeButton();
-subscribeButtonRequest.setButtonName(ButtonName.OK);
+subscribeButtonRequest.setButtonName(ButtonName.PLAY_PAUSE);
 sdlManager.sendRPC(subscribeButtonRequest);
 ```
 !@
 
-
 ### Preset Buttons
-
 ![Ford - Preset Soft Button Menu Button](assets/ford_sync_presetMenu.png)
-
 ![Ford - Preset Soft Buttons List](assets/ford_sync_presetOptions.png)
 
 Preset buttons may not work in the same way as seen on the above screenshots on all head units. Some head units may have physical buttons on their console and these will trigger the subscribed button. You can check if an HMI supports subscribing to preset buttons, and how many, by calling the @![iOS] `SDLManager.systemCapabilityManager.defaultMainWindowCapability.numCustomPresetsAvailable`!@ @![android,javaSE, javaEE]`SdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getNumCustomPresetsAvailable()`!@.
@@ -542,18 +511,17 @@ Preset buttons may not work in the same way as seen on the above screenshots on 
 ```objc
 SDLSubscribeButton *preset1 = [[SDLSubscribeButton alloc] initWithButtonName:SDLButtonNamePreset1 handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     if (buttonPress == nil) { return; }
-    <#Button Selected#>
+    <#Subscribe button selected#>
 }];
 
 SDLSubscribeButton *preset2 = [[SDLSubscribeButton alloc] initWithButtonName:SDLButtonNamePreset2 handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     if (buttonPress == nil) { return; }
-    <#Button Selected#>
+    <#Subscribe button selected#>
 }];
 
 [self.sdlManager sendRequests:@[preset1, preset2] progressHandler:nil completionHandler:^(BOOL success) {
-    if(success) {
-        <#subscribe button sent successfully#>
-    }
+    if (!success) { return; }
+    <#Subscribe buttons sent successfully#>
 }];
 ```
 
@@ -561,44 +529,33 @@ SDLSubscribeButton *preset2 = [[SDLSubscribeButton alloc] initWithButtonName:SDL
 ```swift
 let preset1 = SDLSubscribeButton(buttonName: .preset1, handler: { (buttonPress, buttonEvent) in
     guard buttonPress != nil else { return }
-    <#subscribe button selected#>
+    <#Subscribe button selected#>
 })
 
 let preset2 = SDLSubscribeButton(buttonName: .preset2, handler: { (buttonPress, buttonEvent) in
     guard buttonPress != nil else { return }
-    <#subscribe button selected#>
+    <#Subscribe button selected#>
 })
 
 self.sdlManager.send([preset1, preset2], progressHandler: nil, completionHandler: { (success) in
     guard success else { return }
-    <#subscriptions sent#>
+    <#Subscribe buttons sent successfully#>
 })
 ```
 !@
 
 @![android,javaSE,javaEE]
 ```java
-sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_EVENT, new OnRPCNotificationListener() {
-    @Override
-    public void onNotified(RPCNotification notification) {
-        OnButtonPress onButtonPressNotification = (OnButtonPress) notification;
-        switch (onButtonPressNotification.getButtonName()) {
-            case PRESET_1:
-                break;
-            case PRESET_2:
-                break;
-        }
-    }
-});
-
 sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNotificationListener() {
     @Override
     public void onNotified(RPCNotification notification) {
         OnButtonPress onButtonPressNotification = (OnButtonPress) notification;
         switch (onButtonPressNotification.getButtonName()) {
             case PRESET_1:
+                <#PRESET_1 subscribe button selected#>
                 break;
             case PRESET_2:
+                <#PRESET_2 subscribe button selected#>
                 break;
         }
     }
