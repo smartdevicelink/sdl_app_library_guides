@@ -103,7 +103,7 @@ The default lock screen handles retrieving and setting the OEM logo from head un
 ##### Objective-C
 ```objc
 SDLLockScreenConfiguration *lockScreenConfiguration = [SDLLockScreenConfiguration enabledConfiguration];
-lockScreenConfiguration.showDeviceLogo = NO
+lockScreenConfiguration.showDeviceLogo = NO;
 ```
 
 ##### Swift
