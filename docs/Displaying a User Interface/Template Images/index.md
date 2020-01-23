@@ -88,20 +88,20 @@ In the screenshots below, the shuffle and repeat icons have been templated. In n
 @![iOS]
 ##### Objective-C
 ```objc
-UIImage *image = [[UIImage imageNamed:@"<#String#>"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+UIImage *image = [[UIImage imageNamed:@"<#ArtworkName#>"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 SDLArtwork *artwork = [SDLArtwork artworkWithImage:image asImageFormat:SDLArtworkImageFormatPNG];
 ```
 
 ##### Swift
 ```swift
-let image = UIImage(named: "<#String#>")?.withRenderingMode(.alwaysTemplate)
+let image = UIImage(named: "<#ArtworkName#>")?.withRenderingMode(.alwaysTemplate)
 let artwork = SDLArtwork(image: image, persistent: true, as: .PNG)
 ```
 !@
 
 @![android, javaSE, javaEE]
 ```java
-SdlArtwork image = new SdlArtwork("ArtworkName", FileType.GRAPHIC_PNG, R.drawable.artworkName, true);
+SdlArtwork image = new SdlArtwork("<#ArtworkName#>", FileType.GRAPHIC_PNG, <#R.drawable.artworkName#>, true);
 image.setTemplateImage(true);
 ```
 !@
