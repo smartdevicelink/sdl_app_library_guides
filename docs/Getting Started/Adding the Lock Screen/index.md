@@ -114,10 +114,8 @@ lockScreenConfiguration.showDeviceLogo = false
 !@
 
 @![android]
-This sets whether or not to show the connected device's logo on the default lock screen. The logo will come from the connected hardware if set by the manufacturer. When using a custom view, the custom layout will have to handle the logic to display the device logo. The default setting is false, but some OEM partners may require it.
-In your `LockScreenConfig` object, you can set the boolean of whether or not you want the device logo shown, if available:
 ```java
-lockScreenConfig.showDeviceLogo(true);
+lockScreenConfig.showDeviceLogo(false);
 ```
 !@
 
