@@ -79,10 +79,13 @@ ServiceEncryptionListener serviceEncryptionListener = new ServiceEncryptionListe
 !@
 
 ## Setting Optional Encryption
-If you want to encrypt a specific RPC, you must configure the payload protected status of the RPC before you send it to the head unit.
+If you want to encrypt a specific RPC, you must configure the payload protected status of the RPC before you send it to the head unit. Before sending RPCs with encryption you should call `startRPCEncryption` on the `sdlManager`.  The best place to put `startRPCEncryption` is in the successful callback of  `startWithReadyHandler`.
 
 @![iOS]
 ##### Objective-C
+```objc
+[self.sdlManger startRPCEncryption];
+```
 ```objc
 SDLGetVehicleData *getVehicleData = [[SDLGetVehicleData alloc] init];
 getVehicleData.gps = @YES;
@@ -92,6 +95,9 @@ getVehicleData.payloadProtected = @YES;
 ```
 
 ##### Swift
+```swift
+self.sdlManger.startRPCEncryption()
+```
 ```swift
 let getVehicleData = SDLGetVehicleData()
 getVehicleData.gps = true as NSNumber
