@@ -4,7 +4,7 @@ New features are always being added to SDL, however, you or your users may be co
 When you are implementing a feature you should always assume that some modules your users connect to will not support the feature or that the user may have disabled permissions for this feature on their head unit. The best way to deal with unsupported features is to check if the feature is available before attempting to use it and to handle error responses.
 
 ### Checking the System Capability Manager
-The easiest way to check if a feature is supported is to query the library's System Capability Manager. For more details on how get this information please see the [Adaptive Interface Capabilities](Displaying a User Interface/Adaptive Interface Capabilities) guide.
+The easiest way to check if a feature is supported is to query the library's System Capability Manager. For more details on how get this information, please see the [Adaptive Interface Capabilities](Displaying a User Interface/Adaptive Interface Capabilities) guide.
 
 ### Handling Error Responses
 When you are trying to use a feature, you can watch for an error response to the request you sent to the module. If the response contains an error, you may be able to check the `result` enum to determine if the feature is disabled. If the response that comes back is of the type `GenericResponse`, the module doesn't understand your request.
