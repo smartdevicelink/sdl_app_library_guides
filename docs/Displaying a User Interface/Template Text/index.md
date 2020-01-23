@@ -1,7 +1,7 @@
 # Template Text
 You can easily display and update text, images, and buttons using the  @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@. To update the UI, simply give the manager your new data and sandwich the update between the manager's @![iOS]`beginUpdates`!@ @![android, javaSE, javaEE]`beginTransaction()`!@ and @![iOS]`endUpdatesWithCompletionHandler`!@ @![android, javaSE, javaEE]`commit()`!@ methods.
 
-### Template Text Fields
+### Text Fields
 | @![iOS]SDLScreenManager!@ @![android, javaSE, javaEE]`ScreenManager!@ Parameter Name | Description |
 |:--------------------------------------------|:--------------|
 | textField1 | The text displayed in a single-line display, or in the upper display line of a multi-line display |
@@ -65,7 +65,7 @@ sdlManager.getScreenManager().commit(new CompletionListener() {
 !@
 
 ### Removing Text
-To remove text from the screen you just need to set the screen manager property to @![iOS]`nil`!@ @![android, javaSE, javaEE]`null`!@.
+To remove text from the screen simply set the screen manager property to @![iOS]`nil`!@ @![android, javaSE, javaEE]`null`!@.
 
 @![iOS]
 ##### Objective-C

@@ -4,7 +4,7 @@ This guide shows you how to show and react to two types of buttons: soft and sub
 ## Custom Soft Buttons
 You can easily display and update text, images, and buttons using the @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@. To update the UI, simply give the manager your new data and sandwich the update between the manager's @![iOS]`beginUpdates`!@ @![android, javaSE, javaEE]`beginTransaction()`!@ and @![iOS]`endUpdatesWithCompletionHandler`!@ @![android, javaSE, javaEE]`commit()`!@ methods.
 
-### Template Soft Button Fields
+### Soft Button Fields
 | @![iOS]SDLScreenManager!@ @![android, javaSE, javaEE]`ScreenManager!@ Parameter Name | Description |
 |:--------------------------------------------|:--------------|
 | softButtonObjects | An array of buttons. Each template supports a different number of soft buttons |
