@@ -113,7 +113,7 @@ Static icons are pre-existing images on the remote system that you may reference
 ##### Objective-C
 ```objc
 SDLArtwork *staticIconArt = [[SDLArtwork alloc] initWithStaticIcon:SDLStaticIconNameAlbum];;
-SDLSoftButtonState *softButtonState1 = [[SDLSoftButtonState alloc] initWithStateName:@"<#Soft Button State Name#>" text:@"<#Button Label Text#>" artwork:staticIconArt];
+SDLSoftButtonState *softButtonState = [[SDLSoftButtonState alloc] initWithStateName:@"<#Soft Button State Name#>" text:@"<#Button Label Text#>" artwork:staticIconArt];
 
 <#Set the state into an `SDLSoftButtonObject` and then set the screen manager's array of soft buttons#>
 ```
@@ -121,7 +121,7 @@ SDLSoftButtonState *softButtonState1 = [[SDLSoftButtonState alloc] initWithState
 ##### Swift
 ```swift
 let staticIconArt = SDLArtwork(staticIcon: .album)
-let softButtonState1 = SDLSoftButtonState(stateName: "<#Soft Button State Name#>", text: "<#Button Label Text#>", artwork: staticIconArt)
+let softButtonState = SDLSoftButtonState(stateName: "<#Soft Button State Name#>", text: "<#Button Label Text#>", artwork: staticIconArt)
 
 <#Set the state into an `SDLSoftButtonObject` and then set the screen manager's array of soft buttons#>
 ```
@@ -129,8 +129,8 @@ let softButtonState1 = SDLSoftButtonState(stateName: "<#Soft Button State Name#>
 
 @![android, javaSE, javaEE]
 ```java
-SdlArtwork sdlArtwork = new SdlArtwork(StaticIconName.ALBUM);
-sdlManager.getScreenManager().setPrimaryGraphic(sdlArtwork);
+SdlArtwork staticIconArt = new SdlArtwork(StaticIconName.ALBUM);
+SoftButtonState softButtonState = new SoftButtonState("<#Soft Button State Name#>", "<#Button Label Text#>", staticIconArt);
 
 <#Set the state into an `SoftButtonObject` and then set the screen manager's array of soft buttons#>
 ```
