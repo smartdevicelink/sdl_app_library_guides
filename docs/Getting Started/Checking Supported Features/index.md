@@ -1,7 +1,7 @@
 # Checking Supported Features
 New features are always being added to SDL, however, you or your users may be connecting to modules that do not support the newest features. If your SDL app attempts to use an unsupported feature your request will be ignored by the module.
 
-When you are implementing a feature you should always assume that some modules your users are connecting to will not support the feature or that your user may have disabled your permission to use this feature on their head unit. The best way to deal with unsupported features is to check if the feature is available before attempting to use it and to handle error responses.
+When you are implementing a feature you should always assume that some modules your users connect to will not support the feature or that the user may have disabled permissions for this feature on their head unit. The best way to deal with unsupported features is to check if the feature is available before attempting to use it and to handle error responses.
 
 ### Checking the System Capability Manager
 The easiest way to check if a feature is supported is to query the library's System Capability Manager. For more details on how get this information please see the [Adaptive Interface Capabilities](Displaying a User Interface/Adaptive Interface Capabilities) guide.
