@@ -85,7 +85,7 @@ sdlManager.getScreenManager().commit(new CompletionListener() {
 !@
 
 #### Image Only Soft Buttons
-You can use the ![iOS]`SDLSystemCapabilityManager`!@@![android,javaSE,javaEE]`SystemCapabilityManager`!@ to check if the HMI supports soft buttons with images. If you send image-only buttons to a HMI that does not support images, then your buttons will be rejected by the head unit. 
+You can use the @![iOS]`SDLSystemCapabilityManager`!@@![android,javaSE,javaEE]`SystemCapabilityManager`!@ to check if the HMI supports soft buttons with images. If you send image-only buttons to a HMI that does not support images, then your buttons will be rejected by the head unit. 
 
 @![iOS]
 ##### Objective-C
