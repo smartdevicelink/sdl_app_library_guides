@@ -107,7 +107,7 @@ image.setTemplateImage(true);
 !@
 
 ## Static Icons
-Static icons are pre-existing images on the remote system that you may reference and use in your own application. Static icons are fully supported by the screen manager via an @![iOS]`SDLArtwork`!@ @![android, javaSE, javaEE]`SdlArtwork`!@ initializer. Static icons can be used in primary and secondary graphic fields, soft button image fields, and menu icon fields.
+Static icons are pre-existing images on the remote system that you may reference and use in your own application. Each OEM will design their own custom static icons but you can get an overview of the available icons from the icons designed for the the open source [Generic HMI](https://smartdevicelink.com/en/guides/sdl-overview-guides/user-interface/static-icons/). Static icons are fully supported by the screen manager via an @![iOS]`SDLArtwork`!@ @![android, javaSE, javaEE]`SdlArtwork`!@ initializer. Static icons can be used in primary and secondary graphic fields, soft button image fields, and menu icon fields.
 
 @![iOS]
 ##### Objective-C
