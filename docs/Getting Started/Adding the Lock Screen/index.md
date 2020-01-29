@@ -97,7 +97,7 @@ lockScreenConfig.setAppIcon(appIconInt); // For example, R.drawable.lockscreen i
 !@
 
 ### Showing the OEM Logo
-The default lock screen handles retrieving and setting the OEM logo from head units that support this feature. This feature can disabled on the default lock screen by setting `showDeviceLogo` to false. 
+The default lock screen handles retrieving and setting the OEM logo from head units that support this feature. This feature can be disabled on the default lock screen by setting `showDeviceLogo` to false. 
 
 @![iOS]
 ##### Objective-C
