@@ -112,7 +112,7 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.APP_S
 !@
 
 ### Subscribing to System Capabilities
-In addition getting the current system capabilities, it is also possible to subscribe for updates when the head unit capabilities change. @![iOS]To get these notifications you must register using a `subscribeToCapabilityType:` method.!@@![android, javaSE, javaEE]Since this information must be queried from Core you should add a listener using `addOnSystemCapabilityListener()` method.!@ This feature is only available RPC v5.1 or greater connections (except for DISPLAYS, which is backward compatible to RPC v1.0).
+In addition getting the current system capabilities, it is also possible to subscribe for updates when the head unit capabilities change. To get these notifications you must register using @![iOS]a `subscribeToCapabilityType:` method.!@@![android, javaSE, javaEE]the `addOnSystemCapabilityListener()` method.!@ This feature is only available RPC v5.1 or greater connections (except for DISPLAYS, which is backward compatible to RPC v1.0). However, if you @![iOS]subscribe!@@![android, javaSE, javaEE]add a listener!@ on < RPC 5.1 and then force update using @![iOS]`updateCapabilityType:withCompletionHandler:`!@@![android, javaSE, javaEE]`getCapability(type, listener, forceUpdate)` with `forceUpdate` set to true!@ available @![iOS]observers!@@![android, javaSE, javaEE]listeners!@ will then update.
 
 #### Checking if the Head Unit Supports Subscriptions
 @![iOS]
