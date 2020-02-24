@@ -117,7 +117,7 @@ If you are using Manticore, the app connection information can be easily added i
 ![Manticore - Cloud and Embedded App Settings](assets/Manticore_cloud_embedded_app_settings.png)
 
 ## Running the SDL App
-Once you have a configured instance of Core running, you should see your SDL app name appear on HMI. However, nothing will happen when you tap on your SDL app icon until you build and run your SDL app.
+Once you have a configured instance of Core running, you should see your SDL app name appear on HMI in a box. However, nothing will happen when you tap on your SDL app icon until you build and run your SDL app.
 
 ![Generic - SDL Apps Tab](assets/Generic_apps_screen.png)
 
