@@ -68,6 +68,33 @@ sdlManager.start();
 When compiling your app for production, make sure to include all possible OEM security managers that you wish to support.
 !!!
 
+@![iOS]
+### Preventing Device Sleep
+When building a navigation app, you should ensure that the device never sleeps while your app is in the foreground of the device and is in an HMI level other than `NONE`. If your device sleeps, it will be unable to stream video data. To do so, implement the following `SDLManagerDelegate` method.
+
+##### Objective-C
+```objc
+- (void)hmiLevel:(SDLHMILevel)oldLevel didChangeToLevel:(SDLHMILevel)newLevel {
+    if (![newLevel isEqualToEnum:SDLHMILevelNone]) {
+        [UIApplication sharedApplication].idleTimerDisabled = YES;
+    } else {
+        [UIApplication sharedApplication].idleTimerDisabled = NO;
+    }
+}
+```
+
+##### Swift
+```swift
+func hmiLevel(_ oldLevel: SDLHMILevel, didChangeToLevel newLevel: SDLHMILevel) {
+    if newLevel != .none {
+        UIApplication.shared.isIdleTimerDisabled = true
+    } else {
+        UIApplication.shared.isIdleTimerDisabled = false
+    }
+}
+```
+!@
+
 ## Keyboard Input
 To present a keyboard (such as for searching for navigation destinations), you should use the @![iOS]`SDLScreenManager`!@@![android]`ScreenManager`!@'s keyboard presentation feature. For more information, see the [Popup Menus and Keyboards](Displaying a User Interface/Popup Menus and Keyboards) guide.
 
