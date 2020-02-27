@@ -1,88 +1,98 @@
 # Connecting to an Infotainment System
+In order to view your SDL app, you must connect your device to a head unit that supports SDL Core. If you do not have access to a head unit, we recommend using the [Manticore web-based emulator](https://smartdevicelink.com/resources/manticore/) for testing how your SDL app reacts to real-world vehicle events, on-screen interactions and voice recognition.
 
+@![iOS,android]
+You will have to configure different connection types based on whether you are connecting to a head unit or an emulator. When connecting to a head unit, you must configure !@@![iOS]an `iAP`!@@![android]a `Multiplex`!@@![iOS,android] connection. Likewise, when connecting to an emulator, a `TCP` connection must be configured.
+!@
+
+@![iOS,android]
+## Connecting to an Emulator
+To connect to an emulator such as [Manticore](https://smartdevicelink.com/resources/manticore/) or a local Ubuntu [SDL Core](https://github.com/smartdevicelink/sdl_core)-based emulator you must implement a TCP connection when configuring your SDL app. 
+
+### Getting the IP Address and Port
+#### Generic SDL Core
+To connect to a virtual machine running the Ubuntu [SDL Core](https://github.com/smartdevicelink/sdl_core)-based emulator, you will use the IP address of the Ubuntu OS and `12345` for the port. You may have to enable port forwarding on your virtual machine if you want to connect using a real device instead of a simulated device. 
+
+#### Manticore
+Once you launch an instance of Manticore, you will be given an IP address and port number that you can use to configure your TCP connection. 
+
+### Setting the IP Address and Port
+!@
 @![iOS]
-To connect to an emulator, such as Manticore or a local Ubuntu SDL Core-based emulator, make sure to implement a TCP (`debug`) connection. The emulator and app should be on the same network (i.e. remember to set the correct IP address and port number in the `SDLLifecycleConfiguration`). The IP will most likely be the IP address of the operating system running the emulator. The port will most likely be `12345`.
-
-!!! IMPORTANT
-Known issues due to using a TCP connection:
-
-* When app is in the background mode, the app will be unable to communicate with SDL Core. This will work on IAP connections.
-* Audio will not play on the emulator. Only IAP connections are currently able to play audio because this happens over the standard Bluetooth / USB system audio channel.
-* You cannot connect to an emulator using a USB connection due to Apple limitations with IAP connections.
-!!!
-
-## Connecting with a Vehicle Head Unit or a Development Kit (TDK)
-### Production
-To connect your iOS device directly to a vehicle head unit or TDK, make sure to implement an iAP (`default`) connection in the `SDLLifecycleConfiguration`. Then connect the iOS device to the head unit or TDK using a USB cord or Bluetooth if the head unit supports it.
-
-### Debugging
-If you are testing with a vehicle head unit or TDK and wish to see debug logs in Xcode while the app is running, you must either use another app called the [relay app](https://github.com/smartdevicelink/relay_app_ios) to help you connect to the device, or you may use [Xcode 9 / iOS 11 wireless debugging](https://developer.apple.com/videos/play/wwdc2017/404/). When using the relay app, make sure to implement a TCP connection, if using iOS 11 wireless debugging, implement a IAP connection. Please see the [guide](Developer Tools/Relay App) for the relay app to learn how to set up the connection between the device, the relay app and your app.
-
-!!! NOTE
-The same issues apply when connecting the relay app with a TDK or head unit as do when connecting to SDL Core. Please see the issues above, under the *Connect with an Emulator* heading.
-!!!
+##### Objective-C
+```objc
+SDLLifecycleConfiguration *lifecycleConfiguration = [SDLLifecycleConfiguration debugConfigurationWithAppName:@"<#App Name#>" fullAppId:@"<#App Id#>" ipAddress:@"<#IP Address#>" port:<#Port#>];
+```
+##### Swift
+```swift
+let lifecycleConfiguration = SDLLifecycleConfiguration(appName: "<#App Name#>", fullAppId: "<#App Id#>", ipAddress: "<#IP Address#>", port: <#Port#>)
+```
 !@
 
 @![android]
-To connect to an emulator, such as Manticore or a local Ubuntu SDL Core-based emulator, make sure to use `TCPTransportConfig`. The emulator and app should be on the same network (i.e. remember to set the correct IP address and port number). The IP will most likely be the IP address of the operating system running the emulator. The port will most likely be `12345`.
-
 ```java
 // Set the SdlManager.Builder transport
 builder.setTransportType(new TCPTransportConfig(<IP ADDRESS>, <PORT>, false));
 ```
+!@
 
-## Connecting with a Vehicle Head Unit or a Development Kit (TDK)
-To connect your device directly to a vehicle head unit or TDK, make sure to use `MultiplexTransportConfig`. Then connect the device to the head unit or TDK using a USB cord or Bluetooth if the head unit supports it.
+@![iOS,android]
+## Connecting to a Head Unit
+To connect your device directly to a production vehicle head unit or Test Development Kit (TDK), make sure to implement !@@![iOS]an `iAP`!@@![android]a `Multiplex`!@@![iOS,android] connection. Then connect the device using a USB cord or, if the head unit supports it, Bluetooth.
+!@
 
+@![iOS]
+##### Objective-C
+```objc
+SDLLifecycleConfiguration *lifecycleConfiguration = [SDLLifecycleConfiguration defaultConfigurationWithAppName:@"<#App Name#>" fullAppId:@"<#App Id#>"];
+```
 
+##### Swift
+```swift
+let lifecycleConfiguration = SDLLifecycleConfiguration(appName:"<#App Name#>", fullAppId: "<#App Id#>")
+```
+!@
+
+@![android]
 ```java
 // Set the SdlManager.Builder transport
 builder.setTransportType(new MultiplexTransportConfig(context, <APP ID>));
 ```
+!@
 
-Run the project in Android Studio, targeting the device you want Sdl Android installed on. Sdl Android should compile and launch on your device of choosing. Following this, you should see an application appears on the TDK or HMI:
+@![iOS]
+### Viewing Realtime Logs
+If you are testing with a vehicle head unit or TDK and wish to see realtime debug logs in the Xcode console, you should use [wireless debugging](https://developer.apple.com/videos/play/wwdc2017/404/).
+!@ 
 
-![HMI Apps](assets/hmi1.png)
+@![iOS,android]
+## Running the SDL App
+Build and run the project in !@@![iOS]Xcode!@@![android]Android Studio!@@![iOS,android], targeting the device or simulator that you want to test your app with. Your app should compile and launch on your device of choosing. If your connection configuration is setup correctly, you should see your SDL app icon appear on the HMI screen:
 
-Click on the Sdl icon in the HMI.
+![Generic - SDL Apps Tab](assets/Generic_apps_screen.png)
 
-![HMI Apps](assets/hmi2.png)
+To open your app, click on your app's icon in the HMI.
 
-This is the main screen of your Sdl app. If you get to this point, the project is working.
+![Generic - SDL App Main Screen](assets/Generic_non_media.png)
+
+This is the main screen of your SDL app. If you get to this point, your SDL app is working.
+
+### Troubleshooting 
+If you are having issues with connecting to an emulator or head unit, please see our [troubleshooting tips](Getting Started/Example Apps) in the Example Apps section of the guide. 
 !@
 
 @![javaSE,javaEE]
-## Getting Started
-We assume that you have [SDL Core](https://github.com/smartdevicelink/sdl_core) (We recommend Ubuntu 16.04) and an [HMI](https://github.com/smartdevicelink/generic_hmi) set up prior to this point. Most people getting started with this tutorial will be using Sdl Core and our Generic HMI. If you don't want to set up a virtual machine for testing, we offer [Manticore](https://smartdevicelink.com/resources/manticore/), which is a free service that allows you to test your apps in the cloud.
+Your SDL !@@![javaSE]embedded!@@![javaEE]cloud!@@![javaSE,javaEE] app will only work with head units that support RPC Spec v5.1+.
 
-!!! NOTE
-Sdl Core and an HMI or Manticore are needed to run the cloud app to ensure that it connects.
-!!!
+## Configuring the Connection
+### Generic SDL Core
+To connect to your app to a local Ubuntu [SDL Core](https://github.com/smartdevicelink/sdl_core)-based emulator you need to know the IP address of the machine that is running the cloud app. If needed, running `ifconfig` in the terminal will give you the current network configuration information.
 
-## Configuring Core
-To let Sdl Core connect to your app, first you will have to know the IP address of the machine that is running the cloud app. If you don't know what it is, running ```ifconfig``` in the terminal will usually let you see it for the interface you are connected with to your network.
+#### Policy Table Configuration
+Once you know the IP address, you need to set the websocket `endpoint` and app `nicknames` for your SDL app in the policy table. This will let Core know where your instance of the SDL app is running. The websocket endpoint needs to include both the IP address and port: `ws://<ip address>:<port>/`.
 
-After getting the IP address, you will have to set App ID, App Websocket Endpoint, and App Nicknames in Sdl Core to let it know where your instance of cloud app is running.
-
-!!! NOTE
-The App Websocket Endpoint contains the IP Address and port as the following: `ws://<ip address>:<port>/`.
-!!!
-
-
-### Manticore
-If you are using Manticore, the app information can be easily set in the settings tab:
-
-![Main Screen](assets/manticore1.png)
-
-!!! NOTE
-Manticore needs to access you machine's IP address to be able to start a websocket connection with your app. If you are hosting the app on your local machine, you may need to do extra setup to make your machine publicly accessible. The other solution is to setup Core and HMI on your machine instead of using Manticore so Core can access your local IP address.
-!!!
-
-### Sdl Core and Generic HMI
-If you are using Sdl Core and Generic HMI, you will have to add a policy table entry as the following one to the existing entries:
-
-```JSON
- "8678309": {
+```json
+ "<Your SDL App ID>": {
      "keep_context": false,
      "steal_focus": false,
      "priority": "NONE",
@@ -99,24 +109,21 @@ If you are using Sdl Core and Generic HMI, you will have to add a policy table e
  }
 ```
 
-Fore more information about policy tables please visit [Plicy Tables Guides](https://smartdevicelink.com/en/guides/sdl-server/api-reference-documentation/policy-table/overview).
+For more information about policy tables please visit the [Policy Table](https://smartdevicelink.com/en/guides/sdl-server/api-reference-documentation/policy-table/overview) guide.
 
-!!! NOTE
-Don't forget to replace `ws://<ip address>:<port>` with your own IP address and app port. Also `<app name>` should be replaced with the actual app name.
-!!!
+### Manticore
+If you are using Manticore, the app connection information can be easily added in the settings tab of the Manticore web page. Please note that Manticore needs to access your machine's IP address in order to be able to start a websocket connection with your app. If you are hosting the app on your local machine, you may need to do extra setup to make your machine publicly accessible.
 
-Following this, you should see an application appears on HMI as in the following screenshot:
+![Manticore - Cloud and Embedded App Settings](assets/Manticore_cloud_embedded_app_settings.png)
 
-![HMI Apps](assets/hmi1.png)
+## Running the SDL App
+Once you have a configured instance of Core running, you should see your SDL app name and icon appear on HMI. However, nothing will happen when you tap on your SDL app icon until you build and run your SDL app.
 
-!!! NOTE
-Even though you see the app appears on HMI, you still cannot lunch the app at this point. You will have to run the app from IntelliJ IDEA first as described next.
-!!!
+![Generic - SDL Apps Tab](assets/Generic_apps_screen.png)
 
-## Running the App
-After setting the app information in Sdl Core, you can run the project in IntelliJ IDEA. The cloud should compile and launch on your your machine. After that, you can click on the app icon in the HMI.
+Once your SDL app is running, either locally in an IDE or on a server, you will be able to launch the SDL app by clicking on the app icon in the HMI.
 
-![HMI Apps](assets/hmi2.png)
+![Generic - SDL App Main Screen](assets/Generic_non_media.png)
 
-This is the main screen of the  app. If you get to this point, the project is working.
+This is the main screen of your SDL app. If you get to this point, your SDL app is working.
 !@

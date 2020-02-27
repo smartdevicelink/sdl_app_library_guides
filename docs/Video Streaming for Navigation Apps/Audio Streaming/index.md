@@ -94,7 +94,7 @@ Once the audio stream is connected, data may be easily passed to the Head Unit. 
 ##### Objective-C
 ```objective-c
 
-NSData* audioData = <#Acquire Audio Data#>;
+NSData *audioData = <#Acquire Audio Data#>;
 
 if (![self.sdlManager.streamManager sendAudioData:audioData]) {
     <#Could not send audio data#>

@@ -2,7 +2,7 @@
 
 When connecting to Core via Multiplex transport, your SDL app will use a Router Service housed within your app or another SDL enabled app.
 
-To help ensure the validility of the Router Service, you can select the security level explicity when you create your Multiplex transport in your app's SdlService:
+To help ensure the validity of the Router Service, you can select the security level explicitly when you create your Multiplex transport in your app's SdlService:
 
 ```java
 int securityLevel = FLAG_MULTI_SECURITY_MED;

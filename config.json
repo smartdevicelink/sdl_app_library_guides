@@ -46,6 +46,9 @@
                     "name": "Understanding Permissions"
                 },
                 {
+                    "name": "Checking Supported Features"
+                },
+                {
                     "name": "Setting Security Level for Multiplexing",
                     "platforms": ["Android"]
                 },

@@ -97,15 +97,25 @@ lockScreenConfig.setAppIcon(appIconInt); // For example, R.drawable.lockscreen i
 !@
 
 ### Showing the OEM Logo
+The default lock screen handles retrieving and setting the OEM logo from head units that support this feature. This feature can be disabled on the default lock screen by setting `showDeviceLogo` to false. 
+
 @![iOS]
-The default lock screen handles retrieving and setting the OEM logo from head units that support this feature. Currently this feature can not be disabled on the default lock screen.
+##### Objective-C
+```objc
+SDLLockScreenConfiguration *lockScreenConfiguration = [SDLLockScreenConfiguration enabledConfiguration];
+lockScreenConfiguration.showDeviceLogo = NO;
+```
+
+##### Swift
+```swift
+let lockScreenConfiguration = SDLLockScreenConfiguration.enabled()
+lockScreenConfiguration.showDeviceLogo = false
+```
 !@
 
 @![android]
-This sets whether or not to show the connected device's logo on the default lock screen. The logo will come from the connected hardware if set by the manufacturer. When using a custom view, the custom layout will have to handle the logic to display the device logo. The default setting is false, but some OEM partners may require it.
-In your `LockScreenConfig` object, you can set the boolean of whether or not you want the device logo shown, if available:
 ```java
-lockScreenConfig.showDeviceLogo(true);
+lockScreenConfig.showDeviceLogo(false);
 ```
 !@
 
@@ -190,7 +200,7 @@ lockScreenConfig.setDisplayMode(LockScreenConfig.DISPLAY_MODE_ALWAYS);
 !@
 
 ### Enabling User Lockscreen Dismissal (Passenger Mode)
-Starting in RPC v6.0+ users may now have the ability to dismiss the lock screen by swiping the lock screen down. Not all OEMs support this new feature. A dismissable lock screen is enabled by default if the head unit enables the feature, but you can disable it manually as well. To disable this feature, set @![iOS]`SDLLockScreenConfiguration`s!@ @![android]`LockScreenConfig`s!@  `enableDismissGesture` to false.
+Starting in RPC v6.0+ users may now have the ability to dismiss the lock screen by swiping the lock screen down. Not all OEMs support this new feature. A dismissible lock screen is enabled by default if the head unit enables the feature, but you can disable it manually as well. To disable this feature, set @![iOS]`SDLLockScreenConfiguration`s!@ @![android]`LockScreenConfig`s!@  `enableDismissGesture` to false.
 
 @![iOS]
 ##### Objective-C
