@@ -21,7 +21,6 @@ There are three different ways to create a soft button: with just text, with jus
 ##### Objective-C
 ```objc
 SDLSoftButtonState *textState = [[SDLSoftButtonState alloc] initWithStateName:@"<#State Name#>" text:@"<#Button Label Text#>" image:nil];
-
 SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"<#Button Name#>" state:textState handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     if (buttonPress == nil) { return; }
     <#Button selected#>
@@ -41,7 +40,6 @@ self.sdlManager.screenManager.softButtonObjects =  @[softButton];
 ##### Swift
 ```swift
 let textState = SDLSoftButtonState(stateName: "<#State Name#>", text: "<#Button Label Text#>", image: nil)
-
 let softButton = SDLSoftButtonObject(name: "<#Button Name#>", state: textState) { (buttonPress, buttonEvent) in
     guard buttonPress != nil else { return }
     <#Button selected#>
@@ -106,13 +104,12 @@ boolean imageSupported = (!softButtonCapabilitiesList.isEmpty()) ? softButtonCap
 ```
 !@
  
-Once you know that the HMI supports images in soft buttons, then you can create and send the image-only soft buttons. 
+Once you know that the HMI supports images in soft buttons you can create and send the image-only soft buttons. 
 
 @![iOS]
 ##### Objective-C
 ```objc
 SDLSoftButtonState *imageState = [[SDLSoftButtonState alloc] initWithStateName:@"<#State Name#>" text:nil image:[[UIImage imageNamed:@"<#Image Name#>"] imageWithRenderingMode:<#UIImageRenderingMode#>]];
-
 SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"<#Button Name#>" state:imageState handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     if (buttonPress == nil) { return; }
     <#Button selected#>
@@ -131,9 +128,7 @@ self.sdlManager.screenManager.softButtonObjects =  @[softButton];
 
 ##### Swift
 ```swift
-// If the HMI supports images, create a soft button with an image
 let imageState = SDLSoftButtonState(stateName: "State Name", text: "<#State Name#>", image: UIImage(named:"<#Image Name#>")?.withRenderingMode(<#RenderingMode#>))
-
 let softButton = SDLSoftButtonObject(name: "<#Button Name#>", state: imageState) { (buttonPress, buttonEvent) in
     guard buttonPress != nil else { return }
     <#Button selected#>
@@ -180,7 +175,6 @@ sdlManager.getScreenManager().commit(new CompletionListener() {
 ##### Objective-C
 ```objc
 SDLSoftButtonState *state = [[SDLSoftButtonState alloc] initWithStateName:@"<#State Name#>" text:@"<#Button Label Text#>" image:[[UIImage imageNamed:@"<#Image Name#>"] imageWithRenderingMode:<#UIImageRenderingMode#>]];
-
 SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"<#Button Name#>" state:state handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     if (buttonPress == nil) { return; }
     <#Button selected#>
@@ -200,7 +194,6 @@ self.sdlManager.screenManager.softButtonObjects =  @[softButton];
 ##### Swift
 ```swift
 let state = SDLSoftButtonState(stateName: "<#State Name#>", text: "<#Button Label Text#>", image: UIImage(named:"<#Image Name#>")?.withRenderingMode(<#RenderingMode#>))
-
 let softButton = SDLSoftButtonObject(name: "<#Button Name#>", state: state) { (buttonPress, buttonEvent) in
     guard buttonPress != nil else { return }
     <#Button selected#>
@@ -243,7 +236,7 @@ sdlManager.getScreenManager().commit(new CompletionListener() {
 !@
 
 #### Highlighting a Soft Button
-When a button is highlighted, its background color will change to indicate that it has been selected. 
+When a button is highlighted its background color will change to indicate that it has been selected. 
 
 ##### Highlight On
 ![Generic HMI](assets/ford_sync3_soft_button_highlight_on.png)
