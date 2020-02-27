@@ -79,15 +79,31 @@ ServiceEncryptionListener serviceEncryptionListener = new ServiceEncryptionListe
 !@
 
 ## Setting Optional Encryption
-If you want to encrypt a specific RPC, you must configure the payload protected status of the RPC before you send it to the head unit. Before sending RPCs with optional encryption you must call `startRPCEncryption` on the `sdlManager`. The best place to put `startRPCEncryption` is in the successful callback of @![iOS]`startWithReadyHandler`.!@@![android]the `SdlManagerListener`'s `onStart` method.!@
+If you want to encrypt a specific RPC, you must configure the payload protected status of the RPC before you send it to the head unit. In order to send RPCs with optional encryption you must call `startRPCEncryption` on the `sdlManager` to make sure the encryption manager gets started correctly. The best place to put `startRPCEncryption` is in the successful callback of @![iOS]`startWithReadyHandler`.!@@![android]the `SdlManagerListener`'s `onStart` method.!@
 
 @![iOS]
 ##### Objective-C
 ```objc
-// First, start the encryption manager
 [self.sdlManger startRPCEncryption];
+```
 
-// Once you know the encryption manager has started successfully, send your encrypted requests
+##### Swift
+```swift
+self.sdlManger.startRPCEncryption()
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+sdlManager.startRPCEncryption();
+```
+!@
+
+Then, once you know the encryption manger has started successfully via encryption manager state updates to your @![iOS]`SDLServiceEncryptionDelegate`!@@![android,javaSE,javaEE]`ServiceEncryptionListener`!@ object, you can start to send encrypted RPCs by setting @![iOS]`payloadProtected`!@@![android,javaSE,javaEE]`setPayloadProtected`!@ to `true`.  
+
+@![iOS]
+##### Objective-C
+```objc
 SDLGetVehicleData *getVehicleData = [[SDLGetVehicleData alloc] init];
 getVehicleData.gps = @YES;
 getVehicleData.payloadProtected = @YES;
@@ -97,10 +113,6 @@ getVehicleData.payloadProtected = @YES;
 
 ##### Swift
 ```swift
-// First, start the encryption manager
-self.sdlManger.startRPCEncryption()
-
-// Once you know the encryption manager has started successfully, send your encrypted requests
 let getVehicleData = SDLGetVehicleData()
 getVehicleData.gps = true as NSNumber
 getVehicleData.isPayloadProtected = true
@@ -111,10 +123,6 @@ sdlManager.send(getVehicleData)
 
 @![android,javaSE,javaEE]
 ```java
-// First, start the encryption manager
-sdlManager.startRPCEncryption();
-
-// Once you know the encryption manager has started successfully, send your encrypted requests
 GetVehicleData getVehicleData = new GetVehicleData();
 getVehicleData.setGps(true);
 getVehicleData.setPayloadProtected(true);
