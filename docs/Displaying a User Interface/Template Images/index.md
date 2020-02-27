@@ -1,8 +1,8 @@
 # Template Images
-You can easily display text, images, and buttons using the  @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@. To update the UI, simply give the manager your new data and sandwich the update between the manager's @![iOS]`beginUpdates`!@ @![android, javaSE, javaEE]`beginTransaction()`!@ and @![iOS]`endUpdatesWithCompletionHandler`!@ @![android, javaSE, javaEE]`commit()`!@ methods.
+You can easily display text, images, and buttons using the  @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@. To update the UI, simply give the manager your new data and sandwich the update between the manager's @![iOS]`beginUpdates`!@@![android, javaSE, javaEE]`beginTransaction()`!@ and @![iOS]`endUpdatesWithCompletionHandler`!@@![android, javaSE, javaEE]`commit()`!@ methods.
 
 ### Image Fields
-| @![iOS]SDLScreenManager!@ @![android, javaSE, javaEE]ScreenManager!@ Parameter Name  | Description |
+| @![iOS]SDLScreenManager!@@![android, javaSE, javaEE]ScreenManager!@ Parameter Name  | Description |
 |:--------------------------------------------|:--------------|
 | primaryGraphic | The primary image in a template that supports images |
 | secondaryGraphic | The second image in a template that supports multiple images |
@@ -51,7 +51,7 @@ sdlManager.getScreenManager().commit(new CompletionListener() {
 !@
 
 ### Removing Images
-To remove an image from the screen you just need to set the screen manager property to @![iOS]`nil`!@ @![android, javaSE, javaEE]`null`!@.
+To remove an image from the screen you just need to set the screen manager property to @![iOS]`nil`!@@![android, javaSE, javaEE]`null`!@.
 
 @![iOS]
 ##### Objective-C
@@ -107,7 +107,7 @@ image.setTemplateImage(true);
 !@
 
 ## Static Icons
-Static icons are pre-existing images on the remote system that you may reference and use in your own application. Each OEM will design their own custom static icons but you can get an overview of the available icons from the icons designed for the the open source [Generic HMI](https://smartdevicelink.com/en/guides/sdl-overview-guides/user-interface/static-icons/). Static icons are fully supported by the screen manager via an @![iOS]`SDLArtwork`!@ @![android, javaSE, javaEE]`SdlArtwork`!@ initializer. Static icons can be used in primary and secondary graphic fields, soft button image fields, and menu icon fields.
+Static icons are pre-existing images on the remote system that you may reference and use in your own application. Each OEM will design their own custom static icons but you can get an overview of the available icons from the icons designed for the the open source [Generic HMI](https://smartdevicelink.com/en/guides/sdl-overview-guides/user-interface/static-icons/). Static icons are fully supported by the screen manager via an @![iOS]`SDLArtwork`!@@![android, javaSE, javaEE]`SdlArtwork`!@ initializer. Static icons can be used in primary and secondary graphic fields, soft button image fields, and menu icon fields.
 
 @![iOS]
 ##### Objective-C
