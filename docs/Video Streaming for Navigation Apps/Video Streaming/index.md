@@ -3,7 +3,7 @@
 To stream video from a SDL app use the `SDLStreamingMediaManager` class. A reference to this class is available from the `SDLManager`. You can choose to create your own video streaming manager or you can use the `CarWindow` API to easily stream video to the head unit.
 
 !!! NOTE
-Due to an iOS limitation, video can not be streamed when the app on the phone is in the background or the screen is off. Text will automatically be displayed telling the user that they must bring the application to the foreground.
+Due to an iOS limitation, video can not be streamed when the app on the phone is in the background or the screen is off. Text will automatically be displayed telling the user that they must bring the application to the foreground. This text can be disabled by setting the `SDLStreamingMediaManager`'s  `showVideoBackgroundDisplay` property to `false`.
 !!!
 
 ### Transports for Video Streaming
