@@ -134,6 +134,11 @@ SDLLockScreenConfiguration *lockScreenConfiguration = [SDLLockScreenConfiguratio
 let lockScreenViewController = <# Initialize Your View Controller #>
 let lockScreenConfiguration = SDLLockScreenConfiguration.enabledConfiguration(with: lockScreenViewController)
 ```
+
+!!! NOTE
+As of iOS 13, presented `UIViewController`'s are now dismissible by swiping down on the phone screen. Unless the OEM has enabled Passenger Mode, lock screens should not be dismissible by the user. To prevent this, set the `modalPresentationStyle` property of your custom lock screen `UIViewController` to `UIModalPresentationFullScreen`. Not doing so may result in your app being rejected by OEMs.
+!!!
+
 !@
 
 @![android]
