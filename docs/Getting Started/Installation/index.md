@@ -2,7 +2,7 @@
 In order to build your app on a SmartDeviceLink (SDL) Core, the SDL software development kit (SDK) must be installed in your app. The following steps will guide you through adding the SDL SDK to your workspace and configuring the environment.
 
 !!! NOTE
-The SDL SDK is currently supported on @![iOS]`iOS 8.0`.!@@![android] `Android 2.2 (Froyo)`!@@![javaSE, javaEE] `Java 7 (1.7)`!@ and above.
+The SDL SDK is currently supported on @![iOS]`iOS 8.0`!@@![android] `Android 2.2 (Froyo)`!@@![javaSE, javaEE] `Java 7 (1.7)`!@ and above.
 !!!
 
 ## Install SDL SDK
