@@ -120,7 +120,7 @@ lockScreenConfig.showDeviceLogo(false);
 !@
 
 ## Creating a Custom Lock Screen
-If you would like to use your own lock screen instead of the one provided by the library, but still use the logic we provide, you can use a new initializer within @![iOS]`SDLLockScreenConfiguration`. As of iOS 13, presented `UIViewController`s are now dismissible by swiping down on the phone screen. Unless the OEM has enabled Passenger Mode, lock screens should not be dismissible by the user. To prevent this, set the `modalPresentationStyle` property of your custom lock screen `UIViewController` to `UIModalPresentationFullScreen`. Not doing so may result in your app being rejected by OEMs.!@ @![android]`LockScreenConfig`!@:
+If you would like to use your own lock screen instead of the one provided by the library, but still use the logic we provide, you can use a new initializer within @![iOS]`SDLLockScreenConfiguration`. As of iOS 13, presented `UIViewController`s are now dismissible by swiping down on the phone screen. Unless the OEM has enabled Passenger Mode, lock screens should not be dismissible by the user. To prevent this, set the `modalPresentationStyle` property of your custom lock screen `UIViewController` to `full screen`. Not doing so may result in your app being rejected by OEMs.!@ @![android]`LockScreenConfig`:!@
 
 @![iOS]
 ##### Objective-C
