@@ -497,7 +497,7 @@ sdlManager.sendRPC(subscribeButtonRequest);
 ![Ford - Preset Soft Button Menu Button](assets/ford_sync_presetMenu.png)
 ![Ford - Preset Soft Buttons List](assets/ford_sync_presetOptions.png)
 
-Preset buttons may not work in the same way as seen on the above screenshots on all head units. Some head units may have physical buttons on their console and these will trigger the subscribed button. You can check if an HMI supports subscribing to preset buttons, and how many, by calling the @![iOS] `SDLManager.systemCapabilityManager.defaultMainWindowCapability.numCustomPresetsAvailable`!@@![android,javaSE, javaEE]`SdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getNumCustomPresetsAvailable()`!@.
+Preset buttons may not work in the same way as seen on the above screenshots on all head units. Some head units may have physical buttons on their console and these will trigger the subscribed button. You can check if a HMI supports subscribing to preset buttons, and how many, by calling the @![iOS] `SDLManager.systemCapabilityManager.defaultMainWindowCapability.numCustomPresetsAvailable`!@@![android,javaSE, javaEE]`SdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getNumCustomPresetsAvailable()`!@.
 
 @![iOS]
 ##### Objective-C
