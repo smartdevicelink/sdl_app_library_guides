@@ -128,7 +128,7 @@ self.sdlManager.screenManager.softButtonObjects = @[softButton];
 
 ##### Swift
 ```swift
-let imageState = SDLSoftButtonState(stateName: "State Name", text: "<#State Name#>", image: UIImage(named:"<#Image Name#>")?.withRenderingMode(<#RenderingMode#>))
+let imageState = SDLSoftButtonState(stateName: "State Name", text: nil, image: UIImage(named:"<#Image Name#>")?.withRenderingMode(<#RenderingMode#>))
 let softButton = SDLSoftButtonObject(name: "<#Button Name#>", state: imageState) { (buttonPress, buttonEvent) in
     guard buttonPress != nil else { return }
     <#Button selected#>
