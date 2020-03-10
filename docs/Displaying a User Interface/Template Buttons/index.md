@@ -27,7 +27,7 @@ SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"<#
 }];
 
 [self.sdlManager.screenManager beginUpdates];
-self.sdlManager.screenManager.softButtonObjects =  @[softButton];
+self.sdlManager.screenManager.softButtonObjects = @[softButton];
 [self.sdlManager.screenManager endUpdatesWithCompletionHandler:^(NSError * _Nullable error) {
     if (error != nil) {
         <#Error Updating UI#>
@@ -116,7 +116,7 @@ SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"<#
 }];
 
 [self.sdlManager.screenManager beginUpdates];
-self.sdlManager.screenManager.softButtonObjects =  @[softButton];
+self.sdlManager.screenManager.softButtonObjects = @[softButton];
 [self.sdlManager.screenManager endUpdatesWithCompletionHandler:^(NSError * _Nullable error) {
     if (error != nil) {
         <#Error Updating UI#>
@@ -181,7 +181,7 @@ SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"<#
 }];
 
 [self.sdlManager.screenManager beginUpdates];
-self.sdlManager.screenManager.softButtonObjects =  @[softButton];
+self.sdlManager.screenManager.softButtonObjects = @[softButton];
 [self.sdlManager.screenManager endUpdatesWithCompletionHandler:^(NSError * _Nullable error) {
     if (error != nil) {
         <#Error Updating UI#>
