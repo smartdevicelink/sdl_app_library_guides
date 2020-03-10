@@ -112,7 +112,7 @@ Static icons are pre-existing images on the remote system that you may reference
 @![iOS]
 ##### Objective-C
 ```objc
-SDLArtwork *staticIconArt = [[SDLArtwork alloc] initWithStaticIcon:SDLStaticIconNameAlbum];;
+SDLArtwork *staticIconArt = [[SDLArtwork alloc] initWithStaticIcon:SDLStaticIconNameAlbum];
 SDLSoftButtonState *softButtonState = [[SDLSoftButtonState alloc] initWithStateName:@"<#Soft Button State Name#>" text:@"<#Button Label Text#>" artwork:staticIconArt];
 
 <#Set the state into an `SDLSoftButtonObject` and then set the screen manager's array of soft buttons#>
