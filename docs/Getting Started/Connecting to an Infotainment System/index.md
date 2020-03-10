@@ -89,7 +89,7 @@ Your SDL !@@![javaSE]embedded!@@![javaEE]cloud!@@![javaSE,javaEE] app will only 
 To connect to your app to a local Ubuntu [SDL Core](https://github.com/smartdevicelink/sdl_core)-based emulator you need to know the IP address of the machine that is running the cloud app. If needed, running `ifconfig` in the terminal will give you the current network configuration information.
 
 #### Policy Table Configuration
-Once you know the IP address, you need to set the websocket `endpoint` and app `nicknames` for your SDL app in the policy table. This will let Core know where your instance of the SDL app is running. The websocket endpoint needs to include both the IP address and port: `ws://<ip address>:<port>/`.
+Once you know the IP address, you need to set the websocket `endpoint` and app `nicknames` for your SDL app in the policy table under the ["app_policies"](https://smartdevicelink.com/en/guides/sdl-server/api-reference-documentation/policy-table/application-policies) section. This will let Core know where your instance of the SDL app is running. The websocket endpoint needs to include both the IP address and port: `ws://<ip address>:<port>/`.
 
 ```json
  "<Your SDL App ID>": {
@@ -117,7 +117,7 @@ If you are using Manticore, the app connection information can be easily added i
 ![Manticore - Cloud and Embedded App Settings](assets/Manticore_cloud_embedded_app_settings.png)
 
 ## Running the SDL App
-Once you have a configured instance of Core running, you should see your SDL app name and icon appear on HMI. However, nothing will happen when you tap on your SDL app icon until you build and run your SDL app.
+Once you have a configured instance of Core running, you should see your SDL app name appear in a box on HMI. However, nothing will happen when you tap on the box until you build and run your SDL app.
 
 ![Generic - SDL Apps Tab](assets/Generic_apps_screen.png)
 

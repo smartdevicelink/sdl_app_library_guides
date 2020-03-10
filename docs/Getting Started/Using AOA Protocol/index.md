@@ -49,6 +49,15 @@ The SDL Android library houses a `USBAccessoryAttachmentActivity` that you need 
 The accessory_filter.xml file is included with the SDL Android Library 
 !!!
 
+## Media Apps
+
+Media applications do not register over AOA since by default there are no audio streaming methods available.
+To get media applications to register, when creating the connection you need to set flag requiresAudioSupport to false:
+
+```java
+MultiplexTransportConfig multiplexTransportConfig = new MultiplexTransportConfig(getBaseContext(), APP_ID, MultiplexTransportConfig.FLAG_MULTI_SECURITY_OFF);
+multiplexTransportConfig.setRequiresAudioSupport(false);
+```
 
 ## SmartDeviceLink Service
 
