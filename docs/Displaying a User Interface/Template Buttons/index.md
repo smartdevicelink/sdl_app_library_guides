@@ -268,7 +268,7 @@ highlightOn.isHighlighted = true
 let highlightOff = SDLSoftButtonState(stateName: "<#Soft Button State Name#>", text: "Off", artwork: <#SDLArtwork#>)
 highlightOff.isHighlighted = false
 
-return SDLSoftButtonObject(name: "HighlightButton", states: [highlightOn, highlightOff], initialStateName: highlightOn.name) { [unowned self] (buttonPress, buttonEvent) in
+let highlightButton = SDLSoftButtonObject(name: "HighlightButton", states: [highlightOn, highlightOff], initialStateName: highlightOn.name) { (buttonPress, buttonEvent) in
     guard buttonPress != nil else { return }
     let transitionHighlight = self.sdlManager.screenManager.softButtonObjectNamed("HighlightButton")
     transitionHighlight?.transitionToNextState()
