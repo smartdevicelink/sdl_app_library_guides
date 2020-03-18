@@ -1,11 +1,11 @@
-# Template System Buttons
+# Template Subscribe Buttons
 This guide shows you how to subscribe and react to "subscription buttons." Subscription buttons are used to detect when your user has interacted with buttons located in the car's center console or steering wheel or built-in buttons on the template. A subscription button may also show up as part of your template however the text and/or image used in the button is determined by the template and is not customizable. 
 
 In the screenshot below, the pause, seek left and seek right icons are subscribe buttons. Once subscribed, for example, to the seek left button, you will be notified when the user selects the seek left button on the HMI or when they select the seek left button on the car's center console and/or steering wheel. 
 
 ![Generic - Media Template with subscribe buttons](assets/Generic_template_media_light.png)
 
-## Subscribing to System Buttons
+## Subscribing to Subscribe Buttons
 Please note that you can only successfully subscribe to certain buttons depending on your app type. Audio related buttons can only be used with the `MEDIA` app type and navigation related buttons can only be used with the `NAVIGATION` app type.
 
 | Button  | App Type | RPC Version |
