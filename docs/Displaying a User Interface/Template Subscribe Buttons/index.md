@@ -1,5 +1,5 @@
 # Template Subscribe Buttons
-This guide shows you how to subscribe and react to "subscription buttons." Subscription buttons are used to detect when your user has interacted with buttons located in the car's center console or steering wheel or built-in buttons on the template. A subscription button may also show up as part of your template however the text and/or image used in the button is determined by the template and is not customizable. 
+This guide shows you how to subscribe and react to "subscribe" buttons. Subscribe buttons are used to detect when the user has interacted with buttons located in the car's center console or steering wheel. A subscription button may also show up as part of your template however the text and/or image used in the button is determined by the template and is not customizable. 
 
 In the screenshot below, the pause, seek left and seek right icons are subscribe buttons. Once subscribed, for example, to the seek left button, you will be notified when the user selects the seek left button on the HMI or when they select the seek left button on the car's center console and/or steering wheel. 
 
@@ -37,7 +37,7 @@ Please note that you can only successfully subscribe to certain buttons dependin
 ### Audio-Related Buttons
 The play/pause, seek left, seek right, tune up, and tune down subscribe buttons can only be used if the app type is `MEDIA`. Depending on the OEM, the subscribed button could show up as a soft button in the `MEDIA` template (a `MEDIA` app will automatically be assigned the `MEDIA` template), work as a hard button on the car console or steering wheel, or both. For example, the SYNC 3 HMI will add the play/pause, seek right, and seek left soft buttons to the media template when you subscribe to those buttons. However, when you subscribe to the tune up and tune down buttons, there will be no button on the HMI but you will be notified when the user turns the tune dial on the center console.
 
-If desired, you can toggle the play/pause button image between a play, stop and pause icon by updating the audio playing state as described in the [Media Clock](Displaying a User Interface/Media Clock) guide. 
+If desired, you can toggle the play/pause button image between a play, stop and pause icon by updating the audio streaming state as described in the [Media Clock](Displaying a User Interface/Media Clock) guide. 
 
 !!! NOTE
 Before library v.@![iOS]6.1!@@![android, javaSE, javaEE]4.7!@ and RPC v5.0, `Ok` and `PlayPause` were combined into `Ok`. Subscribing to `Ok` will, in v@![iOS]6.1+!@@![android, javaSE, javaEE]4.7+!@, also subscribe you to `PlayPause`. This means that for the time being, *you should not simultaneously subscribe to `Ok` and `PlayPause`*. In a future major version, this will change. For now, only subscribe to either `Ok` or `PlayPause` and the library will execute the right action based on the connected head unit.
@@ -59,7 +59,7 @@ SDLSubscribeButton *subscribeButton = [[SDLSubscribeButton alloc] initWithButton
 ##### Swift
 ```swift
 let subscribeButton = SDLSubscribeButton(buttonName: .playPause) { (buttonPress, buttonEvent) in
-    if (buttonPress == nil) { return; }
+    guard let buttonPress = buttonPress else { return }
     <#Subscribe button selected#>
 }
 sdlManager.send(request: subscribeButton) { (request, response, error) in
@@ -121,12 +121,12 @@ SDLSubscribeButton *preset2 = [[SDLSubscribeButton alloc] initWithButtonName:SDL
 ##### Swift
 ```swift
 let preset1 = SDLSubscribeButton(buttonName: .preset1, handler: { (buttonPress, buttonEvent) in
-    guard buttonPress != nil else { return }
+    guard let buttonPress = buttonPress else { return }
     <#Subscribe button selected#>
 })
 
 let preset2 = SDLSubscribeButton(buttonName: .preset2, handler: { (buttonPress, buttonEvent) in
-    guard buttonPress != nil else { return }
+    guard let buttonPress = buttonPress else { return }
     <#Subscribe button selected#>
 })
 
