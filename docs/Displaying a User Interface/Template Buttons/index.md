@@ -1,5 +1,5 @@
 # Template Buttons
-This guide shows you how to show and react to "soft buttons". The text and images of soft buttons can be customized and are part of your SDL app's template UI.
+This guide shows you how to show and react to "soft" buttons. The text and images of soft buttons can be customized and are part of your SDL app's template UI.
 
 ## Soft Buttons
 You can easily display text, images, and buttons using the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@. To update the UI, simply give the manager your new data and (optionally) sandwich the update between the manager's @![iOS]`beginUpdates`!@@![android, javaSE, javaEE]`beginTransaction()`!@ and @![iOS]`endUpdatesWithCompletionHandler`!@@![android, javaSE, javaEE]`commit()`!@ methods.
@@ -20,38 +20,35 @@ There are three different ways to create a soft button: with only text, with onl
 @![iOS]
 ##### Objective-C
 ```objc
-SDLSoftButtonState *textState = [[SDLSoftButtonState alloc] initWithStateName:@"<#State Name#>" text:@"<#Button Label Text#>" image:nil];
-SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"<#Button Name#>" state:textState handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
-    if (buttonPress == nil) { return; }
+SDLSoftButtonObject *textSoftButton = [[SDLSoftButtonObject alloc] initWithName:@"<#Button Name#>" text:@"<#Button Label Text#>" artwork:nil handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     <#Button selected#>
 }];
 
 [self.sdlManager.screenManager beginUpdates];
-self.sdlManager.screenManager.softButtonObjects = @[softButton];
+self.sdlManager.screenManager.softButtonObjects = @[textSoftButton];
 [self.sdlManager.screenManager endUpdatesWithCompletionHandler:^(NSError * _Nullable error) {
     if (error != nil) {
-        <#Error Updating UI#>
+        <#Error updating UI#>
     } else {
-        <#Update to UI was Successful#>
+        <#Update to UI was successful#>
     }
 }];
 ```
 
 ##### Swift
 ```swift
-let textState = SDLSoftButtonState(stateName: "<#State Name#>", text: "<#Button Label Text#>", image: nil)
-let softButton = SDLSoftButtonObject(name: "<#Button Name#>", state: textState) { (buttonPress, buttonEvent) in
-    guard buttonPress != nil else { return }
+let textSoftButton = SDLSoftButtonObject(name: "<#Button Name#>", text: "<#Button Label Text#>", artwork: nil) { (buttonPress, buttonEvent) in
+    guard let buttonPress = buttonPress else { return }
     <#Button selected#>
 }
 
 sdlManager.screenManager.beginUpdates()
-sdlManager.screenManager.softButtonObjects = [softButton]
+sdlManager.screenManager.softButtonObjects = [textSoftButton]
 sdlManager.screenManager.endUpdates { (error) in
     if error != nil {
-        <#Error Updating UI#>
+        <#Error updating UI#>
     } else {
-        <#Update to UI was Successful#>
+        <#Update to UI was successful#>
     }
 }
 ```
@@ -83,7 +80,7 @@ sdlManager.getScreenManager().commit(new CompletionListener() {
 !@
 
 #### Image Only Soft Buttons
-You can use the @![iOS]`SDLSystemCapabilityManager`!@@![android,javaSE,javaEE]`SystemCapabilityManager`!@ to check if the HMI supports soft buttons with images. If you send image-only buttons to a HMI that does not support images, then your buttons will be rejected by the head unit. 
+You can use the @![iOS]`SDLSystemCapabilityManager`!@@![android,javaSE,javaEE]`SystemCapabilityManager`!@ to check if the HMI supports soft buttons with images. If you send image-only buttons to a HMI that does not support images, then your buttons will be rejected by the head unit. If all your soft buttons have text in addition to images, the library will send the text-only buttons if the head unit does not support images.
 
 @![iOS]
 ##### Objective-C
@@ -109,38 +106,36 @@ Once you know that the HMI supports images in soft buttons you can create and se
 @![iOS]
 ##### Objective-C
 ```objc
-SDLSoftButtonState *imageState = [[SDLSoftButtonState alloc] initWithStateName:@"<#State Name#>" text:nil image:[[UIImage imageNamed:@"<#Image Name#>"] imageWithRenderingMode:<#UIImageRenderingMode#>]];
-SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"<#Button Name#>" state:imageState handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
+SDLSoftButtonObject *imageSoftButton = [[SDLSoftButtonObject alloc] initWithName:@"<#Button Name#>" text:nil artwork:<#SDLArtwork#> handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     if (buttonPress == nil) { return; }
     <#Button selected#>
 }];
 
 [self.sdlManager.screenManager beginUpdates];
-self.sdlManager.screenManager.softButtonObjects = @[softButton];
+self.sdlManager.screenManager.softButtonObjects = @[imageSoftButton];
 [self.sdlManager.screenManager endUpdatesWithCompletionHandler:^(NSError * _Nullable error) {
     if (error != nil) {
-        <#Error Updating UI#>
+        <#Error updating UI#>
     } else {
-        <#Update to UI was Successful#>
+        <#Update to UI was successful#>
     }
 }];
 ```
 
 ##### Swift
 ```swift
-let imageState = SDLSoftButtonState(stateName: "State Name", text: nil, image: UIImage(named:"<#Image Name#>")?.withRenderingMode(<#RenderingMode#>))
-let softButton = SDLSoftButtonObject(name: "<#Button Name#>", state: imageState) { (buttonPress, buttonEvent) in
-    guard buttonPress != nil else { return }
+let imageSoftButton = SDLSoftButtonObject(name: "<#Button Name#>", text: nil, artwork: <#SDLArtwork#>) { (buttonPress, buttonEvent) in
+    guard let buttonPress = buttonPress else { return }
     <#Button selected#>
 }
 
 sdlManager.screenManager.beginUpdates()
-sdlManager.screenManager.softButtonObjects = [softButton]
+sdlManager.screenManager.softButtonObjects = [imageSoftButton]
 sdlManager.screenManager.endUpdates { (error) in
     if error != nil {
-        <#Error Updating UI#>
+        <#Error updating UI#>
     } else {
-        <#Update to UI was Successful#>
+        <#Update to UI was successful#>
     }
 }
 ```
@@ -148,8 +143,8 @@ sdlManager.screenManager.endUpdates { (error) in
 
 @![android, javaSE, javaEE]
 ```java
-SoftButtonState state = new SoftButtonState("<#State Name#>", null, <#SdlArtwork#>);
-SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Collections.singletonList(state), state.getName(), new SoftButtonObject.OnEventListener() {
+SoftButtonState imageState = new SoftButtonState("<#State Name#>", null, <#SdlArtwork#>);
+SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Collections.singletonList(imageState), imageState.getName(), new SoftButtonObject.OnEventListener() {
     @Override
     public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
     }
@@ -174,38 +169,36 @@ sdlManager.getScreenManager().commit(new CompletionListener() {
 @![iOS]
 ##### Objective-C
 ```objc
-SDLSoftButtonState *state = [[SDLSoftButtonState alloc] initWithStateName:@"<#State Name#>" text:@"<#Button Label Text#>" image:[[UIImage imageNamed:@"<#Image Name#>"] imageWithRenderingMode:<#UIImageRenderingMode#>]];
-SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"<#Button Name#>" state:state handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
+SDLSoftButtonObject *textAndImageSoftButton = [[SDLSoftButtonObject alloc] initWithName:@"<#Button Name#>" text:@"<#Button Label Text#>" artwork:<#SDLArtwork#> handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     if (buttonPress == nil) { return; }
     <#Button selected#>
 }];
 
 [self.sdlManager.screenManager beginUpdates];
-self.sdlManager.screenManager.softButtonObjects = @[softButton];
+self.sdlManager.screenManager.softButtonObjects = @[textAndImageSoftButton];
 [self.sdlManager.screenManager endUpdatesWithCompletionHandler:^(NSError * _Nullable error) {
     if (error != nil) {
-        <#Error Updating UI#>
+        <#Error updating UI#>
     } else {
-        <#Update to UI was Successful#>
+        <#Update to UI was successful#>
     }
 }];
 ```
 
 ##### Swift
 ```swift
-let state = SDLSoftButtonState(stateName: "<#State Name#>", text: "<#Button Label Text#>", image: UIImage(named:"<#Image Name#>")?.withRenderingMode(<#RenderingMode#>))
-let softButton = SDLSoftButtonObject(name: "<#Button Name#>", state: state) { (buttonPress, buttonEvent) in
-    guard buttonPress != nil else { return }
+let textAndImageSoftButton = SDLSoftButtonObject(name: "<#Button Name#>", text: "<#Button Label Text#>", artwork: <#SDLArtwork#>) { (buttonPress, buttonEvent) in
+    guard let buttonPress = buttonPress else { return }
     <#Button selected#>
 }
 
 sdlManager.screenManager.beginUpdates()
-sdlManager.screenManager.softButtonObjects = [softButton]
+sdlManager.screenManager.softButtonObjects = [textAndImageSoftButton]
 sdlManager.screenManager.endUpdates { (error) in
     if error != nil {
-        <#Error Updating UI#>
+        <#Error updating UI#>
     } else {
-        <#Update to UI was Successful#>
+        <#Update to UI was successful#>
     }
 }
 ```
@@ -213,8 +206,8 @@ sdlManager.screenManager.endUpdates { (error) in
 
 @![android, javaSE, javaEE]
 ```java
-SoftButtonState state = new SoftButtonState("<#State Name#>", "<#Button Label Text#>", <#SdlArtwork#>);
-SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Collections.singletonList(state), state.getName(), new SoftButtonObject.OnEventListener() {
+SoftButtonState textAndImageState = new SoftButtonState("<#State Name#>", "<#Button Label Text#>", <#SdlArtwork#>);
+SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Collections.singletonList(textAndImageState), textAndImageState.getName(), new SoftButtonObject.OnEventListener() {
     @Override
     public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
     }
@@ -269,7 +262,7 @@ let highlightOff = SDLSoftButtonState(stateName: "<#Soft Button State Name#>", t
 highlightOff.isHighlighted = false
 
 let highlightButton = SDLSoftButtonObject(name: "HighlightButton", states: [highlightOn, highlightOff], initialStateName: highlightOn.name) { (buttonPress, buttonEvent) in
-    guard buttonPress != nil else { return }
+    guard let buttonPress = buttonPress else { return }
     let transitionHighlight = self.sdlManager.screenManager.softButtonObjectNamed("HighlightButton")
     transitionHighlight?.transitionToNextState()
 }
@@ -312,9 +305,9 @@ SDLSoftButtonObject *softButtonObject = [[SDLSoftButtonObject alloc] initWithNam
 self.sdlManager.screenManager.softButtonObjects = @[softButtonObject];
 [self.sdlManager.screenManager endUpdatesWithCompletionHandler:^(NSError * _Nullable error) {
     if (error != nil) {
-        <#Error Updating UI#>
+        <#Error updating UI#>
     } else {
-        <#Update to UI was Successful#>
+        <#Update to UI was successful#>
     }
 }];
 
@@ -328,7 +321,7 @@ SDLSoftButtonObject *retrievedSoftButtonObject = [self.sdlManager.screenManager 
 let softButtonState1 = SDLSoftButtonState(stateName: "<#Soft Button State Name#>", text: "<#Button Label Text#>", artwork: <#SDLArtwork#>)
 let softButtonState2 = SDLSoftButtonState(stateName: "<#Soft Button State Name#>", text: "<#Button Label Text#>", artwork: <#SDLArtwork#>)
 let softButtonObject = SDLSoftButtonObject(name: "<#Soft Button Object Name#>", states: [softButtonState1, softButtonState2], initialStateName: <#Soft Button State#>.name) { (buttonPress, buttonEvent) in
-    guard buttonPress != nil else { return }
+    guard let buttonPress = buttonPress else { return }
     <#Button Selected#>
 }
 
@@ -336,9 +329,9 @@ sdlManager.screenManager.beginUpdates()
 sdlManager.screenManager.softButtonObjects = [softButtonObject]
 sdlManager.screenManager.endUpdates { (error) in
     if error != nil {
-        <#Error Updating UI#>
+        <#Error updating UI#>
     } else {
-        <#Update to UI was Successful#>
+        <#Update to UI was successful#>
     }
 }
 
