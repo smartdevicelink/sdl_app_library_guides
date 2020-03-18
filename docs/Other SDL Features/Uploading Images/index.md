@@ -1,7 +1,7 @@
 # Uploading Images
 
 !!! NOTE
-If you use the [@![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@](Displaying a User Interface/Template Images), image uploading for template graphics, soft buttons, and menu items is handled for you behind the scenes. However, you will still need to manually upload your images if you need images in an alert, VR help lists, turn-by-turn directions or other features not currently covered by the @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@.
+If you use the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@, [image uploading for template graphics](Displaying a User Interface/Template Images), [soft buttons](Displaying a User Interface/Template Buttons), and [menu items](Displaying a User Interface/Main Menu) is handled for you behind the scenes. However, you will still need to manually upload your images if you need images in an alert, VR help lists, turn-by-turn directions, or other features not currently covered by the @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@.
 !!!
 
 You should be aware of these four things when using images in your SDL app:

@@ -1,5 +1,5 @@
 # Template Text
-You can easily display text, images, and buttons using the  @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@. To update the UI, simply give the manager your new data and sandwich the update between the manager's @![iOS]`beginUpdates`!@@![android, javaSE, javaEE]`beginTransaction()`!@ and @![iOS]`endUpdatesWithCompletionHandler`!@@![android, javaSE, javaEE]`commit()`!@ methods.
+You can easily display text, images, and buttons using the  @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@. To update the UI, simply give the manager your new data and (optionally) sandwich the update between the manager's @![iOS]`beginUpdates`!@@![android, javaSE, javaEE]`beginTransaction()`!@ and @![iOS]`endUpdatesWithCompletionHandler`!@@![android, javaSE, javaEE]`commit()`!@ methods.
 
 ### Text Fields
 | @![iOS]SDLScreenManager!@@![android, javaSE, javaEE]ScreenManager!@ Parameter Name | Description |
@@ -8,15 +8,15 @@ You can easily display text, images, and buttons using the  @![iOS]`SDLScreenMan
 | textField2 | The text displayed on the second display line of a multi-line display |
 | textField3 | The text displayed on the third display line of a multi-line display |
 | textField4 | The text displayed on the bottom display line of a multi-line display |
-| mediaTrackTextField | The text displayed in the in the track field. This field is only valid for media applications |
-| textAlignment | The text justification for the text fields. The text alignment can be left, center, or right  |
-| textField1Type | The type of data provided in `textField1` |
-| textField2Type | The type of data provided in `textField2` |
-| textField3Type | The type of data provided in `textField3` |
-| textField4Type | The type of data provided in `textField4` |
+| mediaTrackTextField | The text displayed in the in the track field; this field is only valid for media applications |
+| textAlignment | The text justification for the text fields; the text alignment can be left, center, or right  |
+| textField1Type | The type of data provided in textField1 |
+| textField2Type | The type of data provided in textField2 |
+| textField3Type | The type of data provided in textField3 |
+| textField4Type | The type of data provided in textField4 |
 | title | The title of the displayed template |
 
-### Showing Text
+## Showing Text
 @![iOS]
 ##### Objective-C
 ```objc
@@ -48,7 +48,6 @@ sdlManager.screenManager.endUpdates { (error) in
 !@
 
 @![android, javaSE, javaEE]
-
 ```java
 sdlManager.getScreenManager().beginTransaction();
 sdlManager.getScreenManager().setTextField1("Line 1 of Text");

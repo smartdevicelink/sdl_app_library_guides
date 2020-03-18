@@ -1,8 +1,8 @@
 # Template Buttons
-This guide shows you how to show and react to two types of buttons: soft and subscribe buttons. The text and images of soft buttons can be customized and are part of your SDL app's UI. Subscribe buttons are used to detect changes to hard buttons located in the car's center console or steering wheel. Depending on the OEM, a subscribe button might also show up as part of your template, however you will not be able to edit the text or image of the button.     
+This guide shows you how to show and react to two types of buttons: "soft buttons" and "subscription buttons". The text and images of soft buttons can be customized and are part of your SDL app's template UI. Subscription buttons are used to detect changes to hard buttons located in the car's center console or steering wheel. Depending on the OEM, a subscription button might also show up as part of your template, however you will not be able to edit the text or image of the button.
 
-## Custom Soft Buttons
-You can easily display text, images, and buttons using the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@. To update the UI, simply give the manager your new data and sandwich the update between the manager's @![iOS]`beginUpdates`!@@![android, javaSE, javaEE]`beginTransaction()`!@ and @![iOS]`endUpdatesWithCompletionHandler`!@@![android, javaSE, javaEE]`commit()`!@ methods.
+## Soft Buttons
+You can easily display text, images, and buttons using the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@. To update the UI, simply give the manager your new data and (optionally) sandwich the update between the manager's @![iOS]`beginUpdates`!@@![android, javaSE, javaEE]`beginTransaction()`!@ and @![iOS]`endUpdatesWithCompletionHandler`!@@![android, javaSE, javaEE]`commit()`!@ methods.
 
 ### Soft Button Fields
 | @![iOS]SDLScreenManager!@@![android, javaSE, javaEE]ScreenManager!@ Parameter Name | Description |
@@ -10,9 +10,9 @@ You can easily display text, images, and buttons using the @![iOS]`SDLScreenMana
 | softButtonObjects | An array of buttons. Each template supports a different number of soft buttons |
 
 ### Creating Soft Buttons
-To create a soft button using the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@, you only need to create a custom name for the button and provide the text for the button's label and/or an image for the button's icon. If your button cycles between different states (e.g. a button used to set the repeat state of a song playlist can have three states: repeat-off, repeat-one, and repeat-all) you can upload all the states on initialization. 
+To create a soft button using the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@, you only need to create a custom name for the button and provide the text for the button's label and/or an image for the button's icon. If your button cycles between different states (e.g. a button used to set the repeat state of a song playlist can have three states: repeat-off, repeat-one, and repeat-all), you can create all the states on initialization. 
 
-There are three different ways to create a soft button: with just text, with just an image, or with both text and images. If creating a button with an image, we recommend that you template the image so its color works well with both the day and night modes of the head unit. For more information on templating images please see the [Template Images](Displaying a User Interface/Template Images) guide. 
+There are three different ways to create a soft button: with only text, with only an image, or with both text and an image. If creating a button with an image, we recommend that you template the image so its color works well with both the day and night modes of the head unit. For more information on templating images please see the [Template Images](Displaying a User Interface/Template Images) guide. 
 
 ![Generic HMI](assets/Generic_non_media.png)
 
@@ -296,7 +296,7 @@ SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Arr
 !@
 
 ### Showing and Updating Soft Buttons
-When the soft button state needs to be updated, simply tell the `SoftButtonObject` to transition to the next state. If your button states do not cycle in a predictable order, you can also tell the soft button the state to transition to by passing the `stateName` of the new soft button state.
+When the soft button state needs to be updated, simply tell the `SoftButtonObject` to transition to the next state. If your button states do not cycle in a predictable order, you can also tell the soft button which state to transition to by passing the `stateName` of the new soft button state.
 
 @![iOS]
 ##### Objective-C
@@ -400,7 +400,7 @@ sdlManager.getScreenManager().setSoftButtonObjects(Collections.EMPTY_LIST);
 !@
 
 ## Subscribing to System Buttons
-Subscribe buttons are used to detect when your user has interacted with buttons located in the car's center console or steering wheel. You can subscribe to the following buttons:
+Subscription buttons are used to detect when your user has interacted with buttons located in the car's center console or steering wheel – or built-in buttons on the template, depending on the OEM. You can subscribe to the following buttons:
 
 | Button  | Template |
 | ------------- | ------------- |
@@ -441,7 +441,7 @@ There is no way to customize a subscribe button's image or text.
 !!!
 
 ### Audio-Related Buttons
-The play/pause, seek left, seek right, tune up, and tune down subscribe buttons can only be used in the `MEDIA` template. Depending on the manufacturer of the head unit, the subscribe button might also show up as a soft button in the media template. For example, the SYNC 3 HMI will add the ok, seek right, and seek left soft buttons to the media template when you subscribe to those buttons. You will automatically be assigned the media template if you set your app's `appType` to `MEDIA`.
+The play/pause, seek left, seek right, tune up, and tune down subscribe buttons can only be used in the `MEDIA` template. Depending on the head unit's OEM, the subscribed button could show up as a soft button in the media template, work as a hard button on the car console or steering wheel, or both. For example, the SYNC 3 HMI will add the play/pause, seek right, and seek left soft buttons to the media template when you subscribe to those buttons. However, it will only allow tune up and tune down to occur using the tune dial on the center console. You will automatically be assigned the media template if you set your app's `appType` to `MEDIA`.
 
 !!! NOTE
 Before library v.@![iOS]6.1!@@![android, javaSE, javaEE]4.7!@ and RPC v5.0, `Ok` and `PlayPause` were combined into `Ok`. Subscribing to `Ok` will, in v@![iOS]6.1+!@@![android, javaSE, javaEE]4.7+!@, also subscribe you to `PlayPause`. This means that for the time being, *you should not simultaneously subscribe to `Ok` and `PlayPause`*. In a future major version, this will change. For now, only subscribe to either `Ok` or `PlayPause` and the library will execute the right action based on the connected head unit.
