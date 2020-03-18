@@ -18,6 +18,7 @@ There are three different ways to create a soft button: with only text, with onl
 ##### Objective-C
 ```objc
 SDLSoftButtonObject *textSoftButton = [[SDLSoftButtonObject alloc] initWithName:@"<#Button Name#>" text:@"<#Button Label Text#>" artwork:nil handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
+    if (buttonPress == nil) { return; }
     <#Button selected#>
 }];
 
