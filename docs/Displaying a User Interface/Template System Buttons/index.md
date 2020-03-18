@@ -9,7 +9,7 @@ In the screenshot below, the pause, seek left and seek right icons are subscribe
 Please note that you can only successfully subscribe to certain buttons depending on your app type. Audio related buttons can only be used with the `MEDIA` app type and navigation related buttons can only be used with the `NAVIGATION` app type.
 
 | Button  | App Type | RPC Version |
-| ------------- | ------------- |
+| ------------- | ------------- | ------------- |
 | Ok | All | v1.0+ |
 | Preset 0-9 | All | v1.0+ |
 | Search | All | v1.0+ |
