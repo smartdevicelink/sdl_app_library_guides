@@ -1,4 +1,4 @@
-# Template Subscribe Buttons
+# Template Subscription Buttons
 This guide shows you how to subscribe and react to "subscribe" buttons. Subscribe buttons are used to detect when the user has interacted with buttons located in the car's center console or steering wheel. A subscription button may also show up as part of your template however the text and/or image used in the button is determined by the template and is not customizable. 
 
 In the screenshot below, the pause, seek left and seek right icons are subscribe buttons. Once subscribed, for example, to the seek left button, you will be notified when the user selects the seek left button on the HMI or when they select the seek left button on the car's center console and/or steering wheel. 
