@@ -96,7 +96,24 @@ All app types can subscribe to preset buttons. Depending on the OEM, the preset 
 ![Ford - Preset Soft Buttons List](assets/ford_sync_presetOptions.png)
 
 #### Checking if Preset Buttons are Supported
-You can check if a HMI supports subscribing to preset buttons, and how many, by calling the @![iOS] `SDLManager.systemCapabilityManager.defaultMainWindowCapability.numCustomPresetsAvailable`!@@![android,javaSE, javaEE]`SdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getNumCustomPresetsAvailable()`!@.
+You can check if a HMI supports subscribing to preset buttons, and if so, how many preset buttons are supported, by checking the system capability manager.
+
+@![iOS]
+##### Objective-C
+```objc
+NSInteger numberOfCustomPresetsAvailable = self.sdlManager.systemCapabilityManager.defaultMainWindowCapability.numCustomPresetsAvailable.integerValue;
+```
+
+##### Swift
+```swift
+let numberOfCustomPresetsAvailable = sdlManager.systemCapabilityManager.defaultMainWindowCapability.numCustomPresetsAvailable as? NSInteger
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+Integer numOfCustomPresetsAvailable = sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getNumCustomPresetsAvailable();
+!@
 
 #### Subscribing to Preset Buttons
 @![iOS]
