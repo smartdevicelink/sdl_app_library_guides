@@ -286,7 +286,7 @@ SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Arr
 ```
 !@
 
-### Showing and Updating Soft Buttons
+### Updating Soft Button States
 When the soft button state needs to be updated, simply tell the `SoftButtonObject` to transition to the next state. If your button states do not cycle in a predictable order, you can also tell the soft button which state to transition to by passing the `stateName` of the new soft button state.
 
 @![iOS]

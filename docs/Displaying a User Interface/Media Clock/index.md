@@ -137,7 +137,7 @@ sdlManager.sendRPC(mediaClock);
 ```
 !@
 
-## Updating the Audio Indicator
-The audio indicator is, essentially, the play / pause button. When connected to a head unit supporting RPC v5.0+, you can tell the system what icon to display on the play / pause button to correspond with how your app works. For example, if audio is currently playing you can update the play/pause button to show the pause icon. On older head units, the audio indicator shows an icon with both the play and pause indicators and the icon can not be updated. 
+## Updating the Audio Indicator (RPC 5.0+)
+The audio indicator is, essentially, the play / pause button. You can tell the system which icon to display on the play / pause button to correspond with how your app works. For example, if audio is currently playing you can update the play/pause button to show the pause icon. On older head units, the audio indicator shows an icon with both the play and pause indicators and the icon can not be updated.
 
 For example, a radio app will probably want two button states: play and stop. A music app, in contrast, will probably want a play and pause button. If you don't send any audio indicator information, a play / pause button will be displayed.

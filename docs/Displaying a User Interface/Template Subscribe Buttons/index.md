@@ -5,7 +5,7 @@ In the screenshot below, the pause, seek left and seek right icons are subscribe
 
 ![Generic - Media Template with subscribe buttons](assets/Generic_template_media_light.png)
 
-## Subscribing to Subscribe Buttons
+## Subscribing to Buttons
 Please note that you can only successfully subscribe to certain buttons depending on your app type. Audio related buttons can only be used with the `MEDIA` app type and navigation related buttons can only be used with the `NAVIGATION` app type.
 
 | Button  | App Type | RPC Version |
@@ -161,7 +161,7 @@ sdlManager.sendRPCs(Arrays.asList(preset1, preset2), null);
 !@
 
 ### Navigation Buttons
-Head units supporting RPC v6.0+ may support subscription buttons that allow your user to drag and scale the map using hard buttons located on car's center console or steering wheel. Subscriptions to navigation buttons will only succeed if your app's type is `NAVIGATION`.
+Head units supporting RPC v6.0+ may support subscription buttons that allow your user to drag and scale the map using hard buttons located on car's center console or steering wheel. Subscriptions to navigation buttons will only succeed if your app's type is `NAVIGATION`. If subscribing to these buttons succeeds, you can remove any buttons of your own from your map screen. If subscribing to these buttons fails, you can display buttons of your own on your map screen.
 
 #### Subscribing to Navigation Buttons
 @![iOS]
