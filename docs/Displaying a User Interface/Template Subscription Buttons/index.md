@@ -191,7 +191,7 @@ SDLSubscribeButton *navPanUpButton = [[SDLSubscribeButton alloc] initWithButtonN
 
 [self.sdlManager sendRequest:navPanUpButton withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if (!response.success.boolValue) { return; }
-    <#Subscribe buttons sent successfully#>
+    <#Subscribe button sent successfully#>
 }];
 ```
 
@@ -204,7 +204,7 @@ let navPanUpButton = SDLSubscribeButton(buttonName: .navPanUp) { (buttonPress, b
 
 sdlManager.send(request: navPanUpButton) { (request, response, error) in
     guard response?.success.boolValue == true else { return }
-    <#Subscribe buttons sent successfully#>
+    <#Subscribe button sent successfully#>
 }
 ```
 !@
