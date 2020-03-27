@@ -113,6 +113,7 @@ let numberOfCustomPresetsAvailable = sdlManager.systemCapabilityManager.defaultM
 @![android,javaSE,javaEE]
 ```java
 Integer numOfCustomPresetsAvailable = sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getNumCustomPresetsAvailable();
+```
 !@
 
 #### Subscribing to Preset Buttons
