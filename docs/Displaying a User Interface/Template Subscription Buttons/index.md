@@ -1,12 +1,12 @@
 # Template Subscription Buttons
-This guide shows you how to subscribe and react to "subscribe" buttons. Subscribe buttons are used to detect when the user has interacted with buttons located in the car's center console or steering wheel. A subscription button may also show up as part of your template however the text and/or image used in the button is determined by the template and is not customizable. 
+This guide shows you how to subscribe and react to "subscription" buttons. Subscription buttons are used to detect when the user has interacted with buttons located in the car's center console or steering wheel. A subscription button may also show up as part of your template, however, the text and/or image used in the button is determined by the template and is (usually) not customizable. 
 
-In the screenshot below, the pause, seek left and seek right icons are subscribe buttons. Once subscribed, for example, to the seek left button, you will be notified when the user selects the seek left button on the HMI or when they select the seek left button on the car's center console and/or steering wheel. 
+In the screenshot below, the pause, seek left and seek right icons are subscription buttons. Once subscribed to, for example, the seek left button, you will be notified when the user selects the seek left button on the HMI or when they select the seek left button on the car's center console and/or steering wheel. 
 
 ![Generic - Media Template with subscribe buttons](assets/Generic_template_media_light.png)
 
-## Subscribing to Buttons
-Please note that you can only successfully subscribe to certain buttons depending on your app type. Audio related buttons can only be used with the `MEDIA` app type and navigation related buttons can only be used with the `NAVIGATION` app type.
+## Subscribing to Subscription Buttons
+Please note that you can only successfully subscribe to certain buttons depending on your app type. Audio-related buttons can only be used with the `MEDIA` app type and navigation-related buttons can only be used with the `NAVIGATION` app type.
 
 | Button  | App Type | RPC Version |
 | ------------- | ------------- | ------------- |
@@ -35,9 +35,9 @@ Please note that you can only successfully subscribe to certain buttons dependin
 | Toggle Heading | Navigation only | v6.0+ |
 
 ### Audio-Related Buttons
-The play/pause, seek left, seek right, tune up, and tune down subscribe buttons can only be used if the app type is `MEDIA`. Depending on the OEM, the subscribed button could show up as a soft button in the `MEDIA` template (a `MEDIA` app will automatically be assigned the `MEDIA` template), work as a hard button on the car console or steering wheel, or both. For example, the SYNC 3 HMI will add the play/pause, seek right, and seek left soft buttons to the media template when you subscribe to those buttons. However, when you subscribe to the tune up and tune down buttons, there will be no button on the HMI but you will be notified when the user turns the tune dial on the center console.
+The play/pause, seek left, seek right, tune up, and tune down subscribe buttons can only be used if the app type is `MEDIA`. Depending on the OEM, the subscribed button could show up as an on-screen button in the `MEDIA` template, work as a physical button on the car console or steering wheel, or both. For example, Ford's SYNC 3 HMI will add the play/pause, seek right, and seek left soft buttons to the media template when you subscribe to those buttons. However, those buttons will also trigger when the user uses the seek left / seek right buttons on the steering wheel.
 
-If desired, you can toggle the play/pause button image between a play, stop and pause icon by updating the audio streaming state as described in the [Media Clock](Displaying a User Interface/Media Clock) guide. 
+If desired, you can toggle the play/pause button image between a play, stop, or pause icon by updating the audio streaming state as described in the [Media Clock](Displaying a User Interface/Media Clock) guide. 
 
 !!! NOTE
 Before library v.@![iOS]6.1!@@![android, javaSE, javaEE]4.7!@ and RPC v5.0, `Ok` and `PlayPause` were combined into `Ok`. Subscribing to `Ok` will, in v@![iOS]6.1+!@@![android, javaSE, javaEE]4.7+!@, also subscribe you to `PlayPause`. This means that for the time being, *you should not simultaneously subscribe to `Ok` and `PlayPause`*. In a future major version, this will change. For now, only subscribe to either `Ok` or `PlayPause` and the library will execute the right action based on the connected head unit.
