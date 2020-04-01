@@ -646,7 +646,7 @@ The sample code checks if the OS is of Android Oreo or newer to start a foregrou
 !!!
 
 !!! NOTE
-Android 10 has [restrictions](https://developer.android.com/guide/components/activities/background-starts) on starting activities from the background. So developers should use foreground service and not an activity to host the SDL implementation.
+Android 10 has [restrictions](https://developer.android.com/guide/components/activities/background-starts) on starting activities from the background. Sdl apps should use a foreground service and not an activity to host the SDL implementation.
 !!!
 
 ### Exiting the Foreground
