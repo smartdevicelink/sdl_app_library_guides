@@ -645,6 +645,10 @@ public void onCreate() {
 The sample code checks if the OS is of Android Oreo or newer to start a foreground service. It is up to the app developer if they wish to start the notification in previous versions.
 !!!
 
+!!! NOTE
+Android 10 has [restrictions](https://developer.android.com/guide/components/activities/background-starts) on starting activities from the background. So developers should use foreground service and not an activity to host the SDL implementation.
+!!!
+
 ### Exiting the Foreground
 It's important that you don't leave your notification in the notification tray as it is very confusing to users. So in the `onDestroy` method in your service, simply call the `stopForeground` method.
 
