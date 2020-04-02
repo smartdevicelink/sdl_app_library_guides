@@ -581,6 +581,12 @@ The SDL Java library supports Java 7 and above.
 ## SmartDeviceLink Service
 A SmartDeviceLink Service should be created to manage the lifecycle of the SDL session. The `SdlService` should build and start an instance of the `SdlManager` which will automatically connect with a head unit when available. This `SdlManager` will handle sending and receiving messages to and from SDL after it is connected.
 
+@![android]
+!!! NOTE
+Please be aware that using an Activity to host the SDL implementation will not work. Android 10 has [restrictions](https://developer.android.com/guide/components/activities/background-starts) on starting activities from the background and that is how the SDL library will start the supplied component. SDL apps should only use a foreground service to host the SDL implementation.
+!!!
+!@
+
 Create a new service and name it appropriately, for this guide we are going to call it `SdlService`.
 !@
 
@@ -644,6 +650,7 @@ public void onCreate() {
 !!! NOTE
 The sample code checks if the OS is of Android Oreo or newer to start a foreground service. It is up to the app developer if they wish to start the notification in previous versions.
 !!!
+
 
 ### Exiting the Foreground
 It's important that you don't leave your notification in the notification tray as it is very confusing to users. So in the `onDestroy` method in your service, simply call the `stopForeground` method.
