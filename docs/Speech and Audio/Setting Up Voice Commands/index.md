@@ -2,10 +2,10 @@
 Voice commands are global commands available anywhere on the head unit to users of your app. Once the user has opened your SDL app (i.e. your SDL app has left the HMI state of `NONE`) they have access to the voice commands you have setup. Your app will be notified when a voice command has been triggered even if the SDL app has been backgrounded.
 
 !!! NOTE
-The head unit manufacturer will determine how these voice commands are triggered and some head units will not support voice commands.
+The head unit manufacturer will determine how these voice commands are triggered, and some head units will not support voice commands.
 !!!
 
-You have the ability to create voice command shortcuts to your [Main Menu](Displaying a User Interface/Main Menu) cells which we highly recommended that you implement. Global voice commands should be created for functions that you wish to make available as voice commands that are **not** available as menu cells. We recommend creating global voice commands for common actions such as the actions performed by your [Soft Buttons](Displaying a User Interface/Text Images and Buttons).
+You have the ability to create voice command shortcuts to your [Main Menu](Displaying a User Interface/Main Menu) cells which we highly recommended that you implement. Global voice commands should be created for functions that you wish to make available as voice commands that are **not** available as menu cells. We recommend creating global voice commands for common actions such as the actions performed by your [Soft Buttons](Displaying a User Interface/Template Custom Buttons).
 
 
 ## Creating Voice Commands

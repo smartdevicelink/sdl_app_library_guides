@@ -1,7 +1,7 @@
 # Uploading Images
 
 !!! NOTE
-If you are looking to upload images for use in template graphics, soft buttons, or the menu, you can use the [ScreenManager](Displaying a User Interface/Text Images and Buttons). Other situations, such as VR help lists and turn by turn directions, are not currently covered by the `ScreenManager`.
+If you use the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@, [image uploading for template graphics](Displaying a User Interface/Template Images), [soft buttons](Displaying a User Interface/Template Custom Buttons), and [menu items](Displaying a User Interface/Main Menu) is handled for you behind the scenes. However, you will still need to manually upload your images if you need images in an alert, VR help lists, turn-by-turn directions, or other features not currently covered by the @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@.
 !!!
 
 You should be aware of these four things when using images in your SDL app:
@@ -10,8 +10,6 @@ You should be aware of these four things when using images in your SDL app:
 2. You must upload images from your mobile device to the head unit before using them in a template.
 3. Persistent images are stored on a head unit between sessions. Ephemeral images are destroyed when a session ends (i.e. when the user turns off their vehicle).
 4. Images can not be uploaded when the app's `hmiLevel` is `NONE`. For more information about permissions, please review [Understanding Permissions](Getting Started/Understanding Permissions).
-
-To learn how to use images once they are uploaded, please see [Text, Images, and Buttons](Displaying a User Interface/Text Images and Buttons).
 
 ## Checking if Graphics are Supported
 Before uploading images to a head unit you should first check if the head unit supports graphics. If not, you should avoid uploading unnecessary image data. To check if graphics are supported, @![iOS]check the `SDLManager.systemCapabilityManager.defaultMainWindowCapability` property once the `SDLManager` has started successfully.!@@![android,javaSE,javaEE] check the `getCapability()` method of a valid `SystemCapabilityManager` obtained from `sdlManager.getSystemCapabilityManager()` to find out the display capabilities of the head unit.!@
