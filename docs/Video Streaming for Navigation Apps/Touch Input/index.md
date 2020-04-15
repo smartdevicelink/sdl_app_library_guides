@@ -59,8 +59,7 @@ Points that are provided via these callbacks are in the head unit's coordinate s
 !!!
 
 ### Implementing onTouchEvent Yourself
-
-If apps want to have access to the raw touch data, the `SDLDidReceiveTouchEventNotification` notification can be evaluated. This callback will be fired for every touch of the user and contains the following data:
+If you want access to the raw touch data, you can subscribe to the touch event notifications. The notification will contain the following data:
 
 ##### Type
 Touch Type   | What does this mean?
@@ -78,6 +77,7 @@ timeStamp    | Timestamp of the head unit time. Can be used to compare time pass
 coord        | X and Y coordinates in the head unit coordinate system. (0, 0) is the top left.
 
 #### Example
+Please note that if you are integrating an sdl_ios version less than v6.3, the following example code will not work. We recommend updating to the latest release version.
 
 ##### Objective-C
 ```objc
