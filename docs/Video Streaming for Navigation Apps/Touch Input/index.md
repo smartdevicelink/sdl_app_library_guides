@@ -81,11 +81,7 @@ coord        | X and Y coordinates in the head unit coordinate system. (0, 0) is
 
 ##### Objective-C
 ```objc
-// sdl_ios v6.3+
 [self.sdlManager subscribeToRPC:SDLDidReceiveTouchEventNotification withObserver:self selector:@selector(touchEventAvailable:)];
-
-// Pre sdl_ios v6.3
-[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(touchEventAvailable:) name:SDLDidReceiveTouchEventNotification object:nil];
 
 - (void)touchEventAvailable:(SDLRPCNotificationNotification *)notification {
     if (![notification.notification isKindOfClass:SDLOnTouchEvent.class]) {
@@ -100,11 +96,7 @@ coord        | X and Y coordinates in the head unit coordinate system. (0, 0) is
 
 ##### Swift
 ```swift
-// sdl_ios v6.3+
 sdlManager.subscribe(to: .SDLDidReceiveTouchEvent, observer: self, selector: #selector(touchEventAvailable(_:)))
-
-// Pre sdl_ios v6.3
-NotificationCenter.default.addObserver(self, selector: #selector(touchEventAvailable(_:)), name: .SDLDidReceiveTouchEvent, object: nil)
 
 // On Receive
 @objc private func touchEventAvailable(_ notification: SDLRPCNotificationNotification) {
