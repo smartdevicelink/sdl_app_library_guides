@@ -18,65 +18,19 @@ To get information on all services published on the system, as well as on change
 @![iOS]
 ##### Objective-C
 ```objc
-// sdl_ios v6.3+
 id subscribedObserver = [self.sdlManager.systemCapabilityManager subscribeToCapabilityType:SDLSystemCapabilityTypeAppServices withBlock:^(SDLSystemCapability * _Nonnull capability) {
     NSArray<SDLAppServicesCapabilities *> *appServices = capability.appServicesCapabilities.appServices;
 
     <#Use the app services records#>
 }];
-
-// Pre sdl_ios v6.3
-- (void)systemCapabilityDidUpdate:(SDLRPCNotificationNotification *)notification {
-    SDLOnSystemCapabilityUpdated *updateNotification = notification.notification;
-    SDLLogD(@"On System Capability updated: %@", updateNotification);
-
-    <#Use the updated services records#>
-}
-
-- (void)setupAppServicesCapability {
-    [self.sdlManager subscribeToRPC:SDLDidReceiveSystemCapabilityUpdatedNotification withObserver:self selector:@selector(systemCapabilityDidUpdate:)];
-
-    SDLGetSystemCapability *getAppServices = [[SDLGetSystemCapability alloc] initWithType:SDLSystemCapabilityTypeAppServices subscribe:YES];
-    [self.sdlManager sendRequest:getAppServices withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-        if (!response || !response.success.boolValue) {
-            SDLLogE(@"Error sending get system capability: Req %@, Res %@, err %@", request, response, error);
-            return;
-        }
-
-        SDLAppServicesCapabilities *serviceRecord = response.systemCapability.appServicesCapabilities
-        SDLLogD(@"Get system capability app service response: %@, serviceRecord %@", response, serviceRecord);
-        
-        <#Use the service record#>
-    }];
-}
 ```
 
 ##### Swift
 ```swift
-// sdl_ios v6.3+
 let subscribedObserver = sdlManager.systemCapabilityManager.subscribe(toCapabilityType: .appServices) { (systemCapability) in
     let appServices = systemCapability.appServicesCapabilities?.appServices
 
     <#Use the app services records#>
-}
-
-// Pre sdl_ios v6.3
-@objc private func systemCapabilityDidUpdate(_ notification: SDLRPCNotificationNotification) {
-    guard let capabilityNotification = notification.notification as? SDLOnSystemCapabilityUpdated else { return }
-
-    SDLLog.d("OnSystemCapabilityUpdated: \(capabilityNotification)")
-    <#Use the updated services records#>
-}
-
-private func setupAppServicesCapability() {
-    Notification.default.addObserver(self, selector: #selector(systemCapabilityDidUpdate(_:)), name: .SDLDidReceiveSystemCapabilityUpdated, object: nil)
-
-    let getAppServices = SDLGetSystemCapability(type: .appServices, subscribe: true)
-    sdlManager.send(request: getAppServices) { (req, res, err) in
-        guard let response = res as? SDLGetSystemCapabilityResponse, let serviceRecord = response.systemCapability.appServicesCapabilities, response.success.boolValue == true, err == nil else { return }
-
-        <#Use the service record#>
-    }
 }
 ```
 !@

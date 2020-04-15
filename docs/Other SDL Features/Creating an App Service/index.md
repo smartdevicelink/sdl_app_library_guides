@@ -313,7 +313,8 @@ sdlManager.fileManager.upload(file: artwork) { [weak self] (success, bytesAvaila
 ```java
 final SdlArtwork navInstructionArt = new SdlArtwork("turn", FileType.GRAPHIC_PNG, R.drawable.turn, true);
 
-sdlManager.getFileManager().uploadFile(navInstructionArt, new CompletionListener() { // We have to send the image to the system before it's used in the app service.
+// We have to send the image to the system before it's used in the app service.
+sdlManager.getFileManager().uploadFile(navInstructionArt, new CompletionListener() {
     @Override
     public void onComplete(boolean success) {
         if (success){
@@ -405,7 +406,8 @@ private func updateWeatherService(shouldUseImage: Bool) {
 ```java
 final SdlArtwork weatherImage = new SdlArtwork("sun", FileType.GRAPHIC_PNG, R.drawable.sun, true);
 
-sdlManager.getFileManager().uploadFile(weatherImage, new CompletionListener() { // We have to send the image to the system before it's used in the app service.
+// We have to send the image to the system before it's used in the app service.
+sdlManager.getFileManager().uploadFile(weatherImage, new CompletionListener() { 
     @Override
     public void onComplete(boolean success) {
         if (success) {
@@ -441,100 +443,54 @@ If you choose to make your app service available to other apps, you will have to
 Handling app service subscribers is a two step process. First, you must @![iOS]register for notifications from!@ @![android,javaSE,javaEE]setup listeners for!@ the subscriber. Then, when you get a request, you will either have to send a response to the subscriber with the app service data or if you have no data to send, send a response with a relevant failure result code.
 
 #### Listening for Requests
-First, you will need to @![iOS]register for notification of!@ @![android,javaSE,javaEE]setup a listener for!@ a `GetAppServiceDataRequest`.
+First, you will need to @![iOS]register for notification of!@ @![android,javaSE,javaEE]setup a listener for!@ a `GetAppServiceDataRequest`. Second, you need to respond to the request with your app service data. This means that you will need to store your current service data after your most recent update using `OnAppServiceData` (see the section Updating Your Service Data).
 
 @![iOS]
 ##### Objective-C
 ```objc
-// sdl_ios v6.3+
 [self.sdlManager subscribeToRPC:SDLDidReceiveGetAppServiceDataRequest withBlock:^(__kindof SDLRPCMessage * _Nonnull message) {
     SDLGetAppServiceData *getAppServiceRequest = message;
 
-    <#Use the request#>
-}];
-
-// Pre sdl_ios v6.3
-[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appServiceDataRequestReceived:) name:SDLDidReceiveGetAppServiceDataRequest object:nil];
-```
-
-##### Swift
-```swift
-// sdl_ios v6.3+
-sdlManager.subscribe(to: SDLDidReceiveGetAppServiceDataRequest) { (message) in
-    guard let getAppServiceRequest = message as? SDLGetAppServiceData else { return }
-
-    <#Use the request#>
-}
-
-// Pre sdl_ios v6.3
-NotificationCenter.default.addObserver(self, selector: #selector(appServiceDataRequestReceived(_:)), name: SDLDidReceiveGetAppServiceDataRequest, object: nil)
-```
-!@
-
-@![android,javaSE,javaEE]
-```java
-// Get App Service Data Request Listener
-sdlManager.addOnRPCRequestListener(FunctionID.GET_APP_SERVICE_DATA, new OnRPCRequestListener() {
-    @Override
-    public void onRequest(RPCRequest request) {
-        <#Handle Request#>
-    }
-});
-```
-!@
-
-#### Sending a Response to Subscribers
-Second, you need to respond to the request when you receive it with your app service data. This means that you will need to store your current service data after your most recent update using `OnAppServiceData` (see the section Updating Your Service Data).
-
-@![iOS]
-##### Objective-C
-```objc
-- (void)appServiceDataRequestReceived:(SDLRPCRequestNotification *)request {
-    SDLGetAppServiceData *getAppServiceData = (SDLGetAppServiceData *)request.request;
-
     // Send a response
     SDLGetAppServiceDataResponse *response = [[SDLGetAppServiceDataResponse alloc] initWithAppServiceData:<#Your App Service Data#>];
-    response.correlationID = getAppServiceData.correlationID;
+    response.correlationID = getAppServiceRequest.correlationID;
     response.success = @YES;
-    response.resultCode = SDLResultCodeSuccess;
+    response.resultCode = SDLResultSuccess;
     response.info = @"<#Use to provide more information about an error#>";
-
     [self.sdlManager sendRPC:response];
-}
+}];
 ```
 
 ##### Swift
 ```swift
-@objc func appServiceDataRequestReceived(_ request: SDLRPCRequestNotification) {
-    guard let getAppServiceData = request.request as? SDLGetAppServiceData else { return }
-
+sdlManager.subscribe(to: SDLDidReceiveGetAppServiceDataRequest) { [weak self] (message) in
+    guard let getAppServiceRequest = message as? SDLGetAppServiceData else { return }
+    
     // Send a response
     let response = SDLGetAppServiceDataResponse(appServiceData: <#Your App Service Data#>)
-    response.correlationID = getAppServiceData.correlationID
+    response.correlationID = getAppServiceRequest.correlationID
     response.success = true as NSNumber
     response.resultCode = .success
     response.info = "<#Use to provide more information about an error#>"
-
-    sdlManager.sendRPC(response)
+    self?.sdlManager.sendRPC(response)
 }
 ```
 !@
 
 @![android,javaSE,javaEE]
 ```java
-// Get App Service Data Request Listener
 sdlManager.addOnRPCRequestListener(FunctionID.GET_APP_SERVICE_DATA, new OnRPCRequestListener() {
     @Override
     public void onRequest(RPCRequest request) {
         GetAppServiceData getAppServiceData = (GetAppServiceData) request;
 
+         // Send a response
         GetAppServiceDataResponse response = new GetAppServiceDataResponse();
         response.setSuccess(true);
         response.setCorrelationID(getAppServiceData.getCorrelationID());
         response.setResultCode(Result.SUCCESS);
         response.setInfo("<#Use to provide more information about an error#>");
         response.setServiceData(<#Your App Service Data#>);
-
         sdlManager.sendRPC(response);
     }
 });
