@@ -85,6 +85,12 @@ let navigationSupported = sdlManager.systemCapabilityManager.isCapabilitySupport
 ```
 !@
 
+@![android, javaSE, javaEE]
+```java
+// TODO
+```
+!@
+
 ## Manual Querying for System Capabilities (RPC v5.0-)
 Most head units provide features that your app can use: making and receiving phone calls, an embedded navigation system, video and audio streaming, as well as supporting app services. To pull information about this capability, use the @![iOS]`SDLSystemCapabilityManager`!@@![android, javaSE, javaEE]`SystemCapabilityManager`!@ to query the head unit for the desired capability. If a capability is unavailable, the query will return @![iOS]`nil`!@@![android, javaSE, javaEE]`null`!@.
 
@@ -131,14 +137,14 @@ In addition getting the current system capabilities, it is also possible to subs
 
 @![iOS]
 !!! NOTE
-If `supportsSubscriptions == NO`, you can still subscribe to capabilities, however, you must manually poll for new capability updates using `updateCapabilityType:completionHandler:`. All subscriptions will be automatically updated when that method returns a new value.
+If @![iOS]`supportsSubscriptions == NO`!@@![android, javaSE, javaEE]`//TODO`!@, you can still subscribe to capabilities, however, you must manually poll for new capability updates using @![iOS]`updateCapabilityType:completionHandler:`!@@![android, javaSE, javaEE]`//TODO`!@. All subscriptions will be automatically updated when that method returns a new value.
 
 The `DISPLAYS` type can be subscribed on all SDL versions.
 !!!
 !@
 
-@![iOS]
 #### Checking if the Head Unit Supports Subscriptions
+@![iOS]
 ##### Objective-C
 ```objc
 BOOL supportsSubscriptions = self.sdlManager.systemCapabilityManager.supportsSubscriptions;
@@ -146,6 +152,11 @@ BOOL supportsSubscriptions = self.sdlManager.systemCapabilityManager.supportsSub
 ##### Swift
 ```swift
 let supportsSubscriptions = sdlManager.systemCapabilityManager.supportsSubscriptions;
+```
+!@
+@![android, javaSE, javaEE]
+```java
+// TODO
 ```
 !@
 
