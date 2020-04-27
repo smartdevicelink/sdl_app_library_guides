@@ -588,7 +588,7 @@ Please be aware that using an Activity to host the SDL implementation will not w
 !@
 
 Create a new service and name it appropriately, for this guide we are going to call it `SdlService`.
-!@
+
 
 @![android]
 ```java
@@ -670,14 +670,12 @@ public void onDestroy(){
 ```
 !@
 
-@![android,javaSE,javaEE]
 ### Implementing SDL Manager
 In order to correctly connect to an SDL enabled head unit developers need to implement methods for the proper creation and disposing of an `SdlManager` in our `SdlService`.
 
 !!! NOTE
 An instance of SdlManager cannot be reused after it is closed and properly disposed of. Instead, a new instance must be created. Only one instance of SdlManager should be in use at any given time.
 !!!
-!@
 
 @![android]
 ```java
@@ -814,7 +812,6 @@ The `sdlManager` must be shutdown properly if this class is shutting down in the
 !!!
 !@
 
-@![android,javaSE,javeEE]
 ## SdlManager Builder options
 
 
@@ -836,7 +833,6 @@ SdlManager.Builder builder = new SdlManager.Builder(this, APP_ID, APP_NAME, list
 builder.setTransportType(transport);
 ```
 !!!
-!@
 
 @![javaSE, javaEE]
 1. AppID - ID of applicaiton
@@ -960,8 +956,6 @@ The desired language to be used on display/HMI of connected module can be set.
 builder.setLanguage(Language.EN_US)
 ```
 
-
-@![android,javaSE,javaEE]
 ### Listening for RPC notifications and events
 
 We can listen for specific events using `SdlManager`'s builder `setRPCNotificationListeners`. The following example shows how to listen for HMI Status notifications. Additional listeners can be added for specific RPCs by using their corresponding `FunctionID` in place of the `ON_HMI_STATUS` in the following example and casting the `RPCNotification` object to the correct type.
@@ -981,7 +975,6 @@ onRPCNotificationListenerMap.put(FunctionID.ON_HMI_STATUS, new OnRPCNotification
 });
 builder.setRPCNotificationListeners(onRPCNotificationListenerMap);
 ```
-!@
 
 @![android]
 ## SmartDeviceLink Router Service
