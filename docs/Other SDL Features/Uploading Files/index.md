@@ -239,9 +239,9 @@ sdlManager.getFileManager().deleteRemoteFilesWithNames(remoteFiles, new Multiple
 
 @![android, javaSE, javaEE]
 ```java
-            FileManagerConfig fileManagerConfig = new FileManagerConfig();
-            fileManagerConfig.setArtworkRetryCount(2);
-            fileManagerConfig.setFileRetryCount(2);
+FileManagerConfig fileManagerConfig = new FileManagerConfig();
+fileManagerConfig.setArtworkRetryCount(2);
+fileManagerConfig.setFileRetryCount(2);
 ```
 
 !@

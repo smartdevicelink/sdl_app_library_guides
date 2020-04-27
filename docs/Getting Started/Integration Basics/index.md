@@ -721,9 +721,12 @@ public class SdlService extends Service {
 
             // The manager builder sets options for your session
             SdlManager.Builder builder = new SdlManager.Builder(this, APP_ID, APP_NAME, listener);
+            builder.setShortAppName(shortAppName);
             builder.setAppTypes(appType);
             builder.setTransportType(transport);
             builder.setAppIcon(appIcon);
+            builder.setFileManagerConfig(fileManagerConfig);
+            builder.setLockScreenConfig(lockScreenConfig);
             sdlManager = builder.build();
             sdlManager.start();
         }
@@ -794,9 +797,11 @@ public class SdlService {
 
             // The manager builder sets options for your session
             SdlManager.Builder builder = new SdlManager.Builder(APP_ID, APP_NAME, listener);
+            builder.setShortAppName(shortAppName);
             builder.setAppTypes(appType);
             builder.setTransportType(transport);
             builder.setAppIcon(appIcon);
+            builder.setFileManagerConfig(fileManagerConfig);
             sdlManager = builder.build();
             sdlManager.start();
         }
@@ -808,6 +813,60 @@ public class SdlService {
 !!! IMPORTANT
 The `sdlManager` must be shutdown properly if this class is shutting down in the respective method using the method `sdlManager.dispose()`.
 !!!
+!@
+
+@![android,javaSE,javeEE]
+### Options to set for SDLManager
+
+### Short App Name (optional)
+This is a shortened version of your app name that is substituted when the full app name will not be visible due to character count constraints. You will want to make this as short as possible.
+
+### App Icon
+This is a custom icon for your application. Please refer to [Adaptive Interface Capabilities](Displaying a User Interface/Adaptive Interface Capabilities) for icon sizes.
+
+### App Type (optional)
+The app type is used by car manufacturers to decide how to categorize your app. Each car manufacturer has a different categorization system. For example, if you set your app type as media, your app will also show up in the audio tab as well as the apps tab of Ford’s SYNC3 head unit. The app type options are: default, communication, media (i.e. music/podcasts/radio), messaging, navigation, projection, information, and social.
+
+!!! NOTE
+Navigation and projection applications both use video and audio byte streaming. However, navigation apps require special permissions from OEMs, and projection apps are only for internal use by OEMs.
+!!!
+
+#### Additional App Types
+If one app type doesn't cover your full app use-case, you can add additional `AppHMIType`s as well.
+
+### Template Coloring
+You can customize the color scheme of your templates. For more information, see the [Customizing the Template guide](Customizing Look and Functionality/Customizing the Template) section.
+
+### Determine SDL Support
+You have the ability to determine a minimum SDL protocol and minimum SDL RPC version that your app supports. We recommend not setting these values until your app is ready for production. The OEMs you support will help you configure the correct `minimumProtocolVersion` and `minimumRPCVersion` during the application review process.
+
+If a head unit is blocked by protocol version, your app icon will never appear on the head unit's screen. If you configure your app to block by RPC version, it will appear and then quickly disappear. So while blocking with `minimumProtocolVersion` is preferable, `minimumRPCVersion` allows you more granular control over which RPCs will be present.
+
+@![android]
+### Lock Screen 
+A lock screen is used to prevent the user from interacting with the app on the smartphone while they are driving. When the vehicle starts moving, the lock screen is activated. Similarly, when the vehicle stops moving, the lock screen is removed. You must implement a lock screen in your app for safety reasons. Any application without a lock screen will not get approval for release to the public.
+
+The SDL SDK can take care of the lock screen implementation for you, automatically using your app logo and the connected vehicle logo. If you do not want to use the default lock screen, you can implement your own custom lock screen.
+
+```java
+LockScreenConfig lockScreenConfig = new LockScreenConfig();
+```
+
+For more information, please refer to the [Adding the Lock Screen](Getting Started/Adding the Lock Screen) section, for this guide we will be using `SDLLockScreenConfiguration`'s basic `enabledConfiguration`.
+!@
+
+### Logging
+A logging configuration is used to define where and how often SDL will log. It will also allow you to set your own logging modules and filters. For more information about setting up logging, see [the logging guide](Developer Tools/Configuring SDL Logging).
+
+## File Manager Configuration (optional)
+The file manager configuration allows you to configure retry behavior for uploading files and images. The default configuration attempts one re-upload, but will fail after that.
+
+```java
+FileManagerConfig fileManagerConfig = new FileManagerConfig();
+fileManagerConfig.setArtworkRetryCount(2);
+fileManagerConfig.setFileRetryCount(2);
+```
+
 !@
 
 @![android,javaSE,javaEE]
