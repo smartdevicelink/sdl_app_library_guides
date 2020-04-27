@@ -355,7 +355,7 @@ self.sdlManager = [[SDLManager alloc] initWithConfiguration:configuration delega
 sdlManager = SDLManager(configuration: configuration, delegate: self)
 ```
 
-### 11. Start the SDLManager
+### 12. Start the SDLManager
 The manager should be started as soon as possible in your application's lifecycle. We suggest doing this in the `didFinishLaunchingWithOptions()` method in your `AppDelegate` class. Once the manager has been initialized, it will immediately start watching for a connection with the remote system. The manager will passively search for a connection with a SDL Core during the entire lifespan of the app. If the manager detects a connection with a SDL Core, the `startWithReadyHandler` will be called.
 
 Create a new function in the `ProxyManager` class called `connect`.
