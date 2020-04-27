@@ -816,7 +816,7 @@ The `sdlManager` must be shutdown properly if this class is shutting down in the
 !@
 
 @![android,javaSE,javeEE]
-### Options to set for SDLManager
+#### Options to set for SDLManager
 
 ### Short App Name (optional)
 This is a shortened version of your app name that is substituted when the full app name will not be visible due to character count constraints. You will want to make this as short as possible.
@@ -837,10 +837,16 @@ If one app type doesn't cover your full app use-case, you can add additional `Ap
 ### Template Coloring
 You can customize the color scheme of your templates. For more information, see the [Customizing the Template guide](Customizing Look and Functionality/Customizing the Template) section.
 
-### Determine SDL Support
-You have the ability to determine a minimum SDL protocol and minimum SDL RPC version that your app supports. We recommend not setting these values until your app is ready for production. The OEMs you support will help you configure the correct `minimumProtocolVersion` and `minimumRPCVersion` during the application review process.
+### Determining SDL Support
+You have the ability to determine a minimum SDL protocol and a minimum SDL RPC version that your app supports. We recommend not setting these values until your app is ready for production. The OEMs you support will help you configure the correct `minimumProtocolVersion` and `minimumRPCVersion` during the application review process.
 
 If a head unit is blocked by protocol version, your app icon will never appear on the head unit's screen. If you configure your app to block by RPC version, it will appear and then quickly disappear. So while blocking with `minimumProtocolVersion` is preferable, `minimumRPCVersion` allows you more granular control over which RPCs will be present.
+
+
+```java
+builder.setMinimumProtocolVersion(new Version("3.0.0"));
+builder.setMinimumRPCVersion(new Version("4.0.0"));
+```
 
 @![android]
 ### Lock Screen 
