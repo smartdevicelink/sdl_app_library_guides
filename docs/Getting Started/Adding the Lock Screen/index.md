@@ -97,6 +97,11 @@ lockScreenConfig.setAppIcon(appIconInt); // For example, R.drawable.lockscreen i
 !@
 
 ### Showing the OEM Logo
+
+@![iOS]
+![Custom Lock Screen](assets/OEMLogoLockScreen.png)
+!@
+
 The default lock screen handles retrieving and setting the OEM logo from head units that support this feature. This feature can be disabled on the default lock screen by setting `showDeviceLogo` to false. 
 
 @![iOS]
@@ -203,6 +208,11 @@ lockScreenConfig.setDisplayMode(LockScreenConfig.DISPLAY_MODE_ALWAYS);
 !@
 
 ### Enabling User Lockscreen Dismissal (Passenger Mode)
+
+@![iOS]
+![Custom Lock Screen](assets/DismissLockScreen.png)
+!@
+
 Starting in RPC v6.0+ users may now have the ability to dismiss the lock screen by swiping the lock screen down. Not all OEMs support this new feature. A dismissible lock screen is enabled by default if the head unit enables the feature, but you can disable it manually as well. To disable this feature, set @![iOS]`SDLLockScreenConfiguration`s!@ @![android]`LockScreenConfig`s!@  `enableDismissGesture` to false.
 
 @![iOS]
