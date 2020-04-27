@@ -53,6 +53,9 @@ It is possible to customize the background color and app icon in the default pro
 @![iOS]
 ![Custom Lock Screen](assets/CustomLockScreen.png)
 !@
+@![android]
+![Custom Lock Screen](assets/CustomLockScreen_Android.png)
+!@
 
 ### Custom Background Color
 @![iOS]
