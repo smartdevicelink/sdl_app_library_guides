@@ -588,7 +588,7 @@ Please be aware that using an Activity to host the SDL implementation will not w
 !@
 
 Create a new service and name it appropriately, for this guide we are going to call it `SdlService`.
-!@
+
 
 @![android]
 ```java
@@ -1292,4 +1292,5 @@ The `SDLSessionBean` should be inside a Java package other than the default pack
   Web Application: Archive -> for your war: exploded artifact which should already exist
 * Create Manifest. Apply + OK.
 * Run Build -> Build Artifacts to get a .war file in the /out folder.
+!@
 !@
