@@ -919,8 +919,31 @@ builder.setLockScreenConfig(lockScreenConfig);
 For more information, please refer to the [Adding the Lock Screen](Getting Started/Adding the Lock Screen) section, for this guide we will be using `SDLLockScreenConfiguration`'s basic `enabledConfiguration`.
 !@
 
-### Logging
-A logging configuration is used to define where and how often SDL will log. It will also allow you to set your own logging modules and filters. For more information about setting up logging, see [the logging guide](Developer Tools/Configuring SDL Logging).
+### SdlSecurity
+Security Libary
+
+```java
+builder.setSdlSecurity()
+```
+
+### Text-To-Speech 
+Set the Text-to-Speech name of application
+
+```java
+Vector<TTSChunk> ttschunk = new Vector<>();
+
+builder.setTtsName(ttschunk);
+```
+
+### Voice Recognition synonyms
+Voice Recognition synonyms can be usd to itentivy the application
+```java
+Vector<String> vrSynonyms = new Vector<>();
+vrSynonyms.add("App Name");
+
+builder.setVrSynonyms(vrSynonyms);
+```
+
 
 ### File Manager Configuration (optional)
 The file manager configuration allows you to configure retry behavior for uploading files and images. The default configuration attempts one re-upload, but will fail after that.
@@ -933,6 +956,11 @@ fileManagerConfig.setFileRetryCount(2);
 builder.setFileManagerConfig(fileManagerConfig);
 ```
 
+### Language
+The desired language to be used on display/HMI of connected module can be set.
+```java
+builder.setLanguage(Language.EN_US)
+```
 !@
 
 @![android,javaSE,javaEE]
