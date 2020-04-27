@@ -580,6 +580,7 @@ The SDL Java library supports Java 7 and above.
 @![android,javaSE,javaEE]
 ## SmartDeviceLink Service
 A SmartDeviceLink Service should be created to manage the lifecycle of the SDL session. The `SdlService` should build and start an instance of the `SdlManager` which will automatically connect with a head unit when available. This `SdlManager` will handle sending and receiving messages to and from SDL after it is connected.
+!@
 
 @![android]
 !!! NOTE
@@ -587,6 +588,7 @@ Please be aware that using an Activity to host the SDL implementation will not w
 !!!
 !@
 
+@![android,javaSE,javaEE]
 Create a new service and name it appropriately, for this guide we are going to call it `SdlService`.
 !@
 
@@ -677,6 +679,7 @@ In order to correctly connect to an SDL enabled head unit developers need to imp
 !!! NOTE
 An instance of SdlManager cannot be reused after it is closed and properly disposed of. Instead, a new instance must be created. Only one instance of SdlManager should be in use at any given time.
 !!!
+!@
 
 @![android]
 ```java
@@ -812,13 +815,12 @@ public class SdlService {
 The `sdlManager` must be shutdown properly if this class is shutting down in the respective method using the method `sdlManager.dispose()`.
 !!!
 !@
-!@
 
 @![android,javaSE,javaEE]
 ## SdlManager Builder options
 
-
 ### Required
+!@
 @![android]
 1. Context - Current context
 2. AppID - ID of applicaiton
@@ -836,6 +838,7 @@ SdlManager.Builder builder = new SdlManager.Builder(this, APP_ID, APP_NAME, list
 builder.setTransportType(transport);
 ```
 !!!
+!@
 
 @![javaSE, javaEE]
 1. AppID - ID of applicaiton
@@ -845,7 +848,6 @@ builder.setTransportType(transport);
 ```java
 SdlManager.Builder builder = new SdlManager.Builder(APP_ID, APP_NAME, listener);
 ```
-!@
 !@
 
 @![android,javaSE,javaEE]
@@ -902,6 +904,7 @@ If a head unit is blocked by protocol version, your app icon will never appear o
 builder.setMinimumProtocolVersion(new Version("3.0.0"));
 builder.setMinimumRPCVersion(new Version("4.0.0"));
 ```
+!@
 
 @![android]
 ### Lock Screen 
@@ -918,6 +921,7 @@ builder.setLockScreenConfig(lockScreenConfig);
 For more information, please refer to the [Adding the Lock Screen](Getting Started/Adding the Lock Screen) section, for this guide we will be using `SDLLockScreenConfiguration`'s basic `enabledConfiguration`.
 !@
 
+@![android,javaSE,javaEE]
 ### SdlSecurity
 Security Libary
 
