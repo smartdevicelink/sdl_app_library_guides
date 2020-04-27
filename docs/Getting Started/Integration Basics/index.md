@@ -720,10 +720,9 @@ public class SdlService extends Service {
             SdlArtwork appIcon = new SdlArtwork(ICON_FILENAME, FileType.GRAPHIC_PNG, R.mipmap.ic_launcher, true);
 
             // The manager builder sets options for your session
-            SdlManager.Builder builder = new SdlManager.Builder(this, APP_ID, APP_NAME, listener);
+            SdlManager.Builder builder = new SdlManager.Builder(this, APP_ID, APP_NAME, transport, listener);
             builder.setShortAppName(shortAppName);
             builder.setAppTypes(appType);
-            builder.setTransportType(transport);
             builder.setAppIcon(appIcon);
             builder.setFileManagerConfig(fileManagerConfig);
             builder.setLockScreenConfig(lockScreenConfig);
@@ -816,9 +815,42 @@ The `sdlManager` must be shutdown properly if this class is shutting down in the
 !@
 
 @![android,javaSE,javeEE]
-## Options to set for SDLManager
+## SdlManager builder options
 
-### Short App Name (optional)
+
+### Required
+@![android]
+1. Context - Current context
+2. AppID - ID of applicaiton
+3. AppName - Name of application
+4. BaseTransportConfig - the type of transport that should be used for this SdlManager instance
+5. SdlManagerListener - Listener that helps you know when certain events that pertain to the SDL Manager happen
+```java
+ SdlManager.Builder builder = new SdlManager.Builder(this, APP_ID, APP_NAME, transport, listener);
+```
+
+!!! IMPORTANT
+Alternatively you can use a constructor without transport, transport will then have to be set by:
+```java
+SdlManager.Builder builder = new SdlManager.Builder(this, APP_ID, APP_NAME, listener);
+builder.setTransportType(transport);
+```
+!!!
+!@
+@![javaSE, javaEE]
+1. AppID - ID of applicaiton
+2. AppName - Name of applicaiton
+3. SdlManagerListener - Listener that helps you know when certain events that pertain to the SDL Manager happen
+
+```java
+SdlManager.Builder builder = new SdlManager.Builder(APP_ID, APP_NAME, listener);
+```
+!@
+
+!@
+
+
+### Short App Name 
 This is a shortened version of your app name that is substituted when the full app name will not be visible due to character count constraints. You will want to make this as short as possible.
 
 ```java
@@ -852,6 +884,14 @@ If one app type doesn't cover your full app use-case, you can add additional `Ap
 
 ### Template Coloring
 You can customize the color scheme of your templates. For more information, see the [Customizing the Template guide](Customizing Look and Functionality/Customizing the Template) section.
+
+```java
+     TemplateColorScheme dayColorScheme = new TemplateColorScheme();
+     TemplateColorScheme nightColorScheme = new TemplateColorScheme();
+
+      builder.setDayColorScheme(dayColorScheme);
+      builder.setNightColorScheme(nightColorScheme);
+```
 
 ### Determining SDL Support
 You have the ability to determine a minimum SDL protocol and a minimum SDL RPC version that your app supports. We recommend not setting these values until your app is ready for production. The OEMs you support will help you configure the correct `minimumProtocolVersion` and `minimumRPCVersion` during the application review process.
