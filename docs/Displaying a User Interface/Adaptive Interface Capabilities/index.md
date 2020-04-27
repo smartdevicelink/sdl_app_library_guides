@@ -70,8 +70,23 @@ Below is a table with example image sizes. Check the `SystemCapabilityManager` f
 | appIcon 			   | SetAppIcon				    | Image shown as Icon in the "Mobile Apps" menu | 70x70px | png, jpg, bmp |
 | graphic 			   | Show 					    | Image shown on the base screen as cover art | 185x185px | png, jpg, bmp |
 
-## Querying for System Capabilities
-Most head units provide features that your app can use: making and receiving phone calls, an embedded navigation system, video and audio streaming, as well as supporting app services. To find out if the head unit supports a feature as well as more information about the feature, use the @![iOS]`SDLSystemCapabilityManager`!@@![android, javaSE, javaEE]`SystemCapabilityManager`!@ to query the head unit for the desired capability. If a capability is unavailable, the query will return @![iOS]`nil`!@@![android, javaSE, javaEE]`null`!@.
+## Determining Support for System Capabilities
+You should check if the head unit supports your desired capability before subscribing or updating the capability.
+
+@![iOS]
+##### Objective-C
+```objc
+BOOL navigationSupported = [self.sdlManager.systemCapabilityManager isCapabilitySupported:SDLSystemCapabilityTypeNavigation];
+```
+
+##### Swift
+```swift
+let navigationSupported = sdlManager.systemCapabilityManager.isCapabilitySupported(type: .navigation)
+```
+!@
+
+## Manual Querying for System Capabilities (RPC v5.0-)
+Most head units provide features that your app can use: making and receiving phone calls, an embedded navigation system, video and audio streaming, as well as supporting app services. To pull information about this capability, use the @![iOS]`SDLSystemCapabilityManager`!@@![android, javaSE, javaEE]`SystemCapabilityManager`!@ to query the head unit for the desired capability. If a capability is unavailable, the query will return @![iOS]`nil`!@@![android, javaSE, javaEE]`null`!@.
 
 @![iOS]
 ##### Objective-C
@@ -111,8 +126,16 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.APP_S
 ```
 !@
 
-### Subscribing to System Capabilities
-In addition getting the current system capabilities, it is also possible to subscribe for updates when the head unit capabilities change. @![iOS]To get these notifications you must register using a `subscribeToCapabilityType:` method.!@@![android, javaSE, javaEE]Since this information must be queried from Core you must implement the `OnSystemCapabilityListener`.!@ This feature is only available RPC v5.1 or greater connections (except for DISPLAYS, which is backward compatible to RPC v1.0).
+### Subscribing to System Capabilities (RPC v5.1+)
+In addition getting the current system capabilities, it is also possible to subscribe for updates when the head unit capabilities change. @![iOS]To get these notifications you must register using a `subscribeToCapabilityType:` method.!@@![android, javaSE, javaEE]Since this information must be queried from Core you must implement the `OnSystemCapabilityListener`.!@
+
+@![iOS]
+!!! NOTE
+If `supportsSubscriptions == NO`, you can still subscribe to capabilities, however, you must manually poll for new capability updates using `updateCapabilityType:completionHandler:`. All subscriptions will be automatically updated when that method returns a new value.
+
+The `DISPLAYS` type can be subscribed on all SDL versions.
+!!!
+!@
 
 @![iOS]
 #### Checking if the Head Unit Supports Subscriptions
@@ -131,17 +154,19 @@ let supportsSubscriptions = sdlManager.systemCapabilityManager.supportsSubscript
 ##### Objective-C
 ```objc
 // Subscribing to a capability via a selector callback. `success` will be `NO` if the subscription fails.
-BOOL success = [self.sdlManager.systemCapabilityManager subscribeToCapabilityType:SDLSystemCapabilityTypeNavigation withObserver:self selector:@selector(navigationCapabilitySelectorCallback:)];
+BOOL success = [self.sdlManager.systemCapabilityManager subscribeToCapabilityType:SDLSystemCapabilityTypeNavigation withObserver:self selector:@selector(navigationCapabilitySelectorCallback:error:subscribed:)];
 
 // This can either have one or zero parameters. If one parameter it must be of type `SDLSystemCapability`. See the [reference documentation](https://smartdevicelink.com/en/docs/iOS/master/Classes/SDLSystemCapabilityManager/) for more details.
-- (void)navigationCapabilitySelectorCallback:(SDLSystemCapability *)capability {
+- (void)navigationCapabilitySelectorCallback:(SDLSystemCapability *)capability error:(NSError *)error subscribed:(BOOL)isSubscribed {
+    if (error != nil) { return; }
     SDLNavigationCapability *navCapability = capability.navigationCapability;
 
     <#Use the capability#>
 }
 
 // Subscribing to a capability via a block callback. `subscribeToken` will be `nil` if the subscription failed. Pass `subscribeToken` to the observer parameter of `unsubscribeFromCapabilityType:withObserver:` to unsubscribe the block.
-id subscribeToken = [self subscribeToCapabilityType:SDLSystemCapabilityTypeNavigation usingBlock:^(SDLSystemCapability * _Nonnull capability) {
+id subscribeToken = [self subscribeToCapabilityType:SDLSystemCapabilityTypeNavigation withUpdateHandler:^(SDLSystemCapability *_Nullable capability, BOOL subscribed, NSError *_Nullable error) {
+    if (error != nil) { return; }
     SDLNavigationCapability *navCapability = capability.navigationCapability;
     <#Use the capability#>
 }];
@@ -150,17 +175,19 @@ id subscribeToken = [self subscribeToCapabilityType:SDLSystemCapabilityTypeNavig
 ##### Swift
 ```swift
 // Subscribing to a capability via a selector callback
-sdlManager.systemCapabilityManager.subscribe(toCapabilityType: .navigation, withObserver: self, selector: #selector(navigationCapabilitySelectorCallback(_:)))
+sdlManager.systemCapabilityManager.subscribe(toCapabilityType: .navigation, withObserver: self, selector: #selector(navigationCapabilitySelectorCallback(_:error:subscribed:)))
 
-@objc private func navigationCapabilitySelectorCallback(_ capability: SDLSystemCapability) {
+@objc private func navigationCapabilitySelectorCallback(_ capability: SDLSystemCapability, error: NSError, subscribed: Bool) {
+    guard error == nil else { return }
     let navCapability = capability.navigationCapability;
 
     <#Use the capability#>
 }
 
 // Subscribing to a capability via a block callback
-sdlManager.systemCapabilityManager.subscribe(toCapabilityType: .navigation) { (capability) in
-    let navCapability = capability.navigationCapability;
+sdlManager.systemCapabilityManager.subscribe(capabilityType: .navigation) { (capability, subscribed, error) in
+    guard error == nil else { return }
+    let navCapability = capability.navigationCapability
     <#Use the capability#>
 }
 ```
