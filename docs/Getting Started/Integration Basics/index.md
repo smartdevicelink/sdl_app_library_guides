@@ -588,7 +588,7 @@ Please be aware that using an Activity to host the SDL implementation will not w
 !@
 
 Create a new service and name it appropriately, for this guide we are going to call it `SdlService`.
-
+!@
 
 @![android]
 ```java
@@ -837,6 +837,7 @@ builder.setTransportType(transport);
 ```
 !!!
 !@
+
 @![javaSE, javaEE]
 1. AppID - ID of applicaiton
 2. AppName - Name of applicaiton
@@ -845,8 +846,6 @@ builder.setTransportType(transport);
 ```java
 SdlManager.Builder builder = new SdlManager.Builder(APP_ID, APP_NAME, listener);
 ```
-!@
-
 !@
 
 ### App Icon
