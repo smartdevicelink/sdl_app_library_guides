@@ -815,7 +815,7 @@ The `sdlManager` must be shutdown properly if this class is shutting down in the
 !@
 
 @![android,javaSE,javeEE]
-## SdlManager builder options
+## SdlManager Builder options
 
 
 ### Required
@@ -849,14 +849,6 @@ SdlManager.Builder builder = new SdlManager.Builder(APP_ID, APP_NAME, listener);
 
 !@
 
-
-### Short App Name 
-This is a shortened version of your app name that is substituted when the full app name will not be visible due to character count constraints. You will want to make this as short as possible.
-
-```java
-builder.setShortAppName(shortAppName);
-```
-
 ### App Icon
 This is a custom icon for your application. Please refer to [Adaptive Interface Capabilities](Displaying a User Interface/Adaptive Interface Capabilities) for icon sizes.
 
@@ -864,7 +856,7 @@ This is a custom icon for your application. Please refer to [Adaptive Interface 
 builder.setAppIcon(appIcon);
 ```
 
-### App Type (optional)
+### App Type 
 The app type is used by car manufacturers to decide how to categorize your app. Each car manufacturer has a different categorization system. For example, if you set your app type as media, your app will also show up in the audio tab as well as the apps tab of Ford’s SYNC3 head unit. The app type options are: default, communication, media (i.e. music/podcasts/radio), messaging, navigation, projection, information, and social.
 
 ```java
@@ -882,15 +874,22 @@ Navigation and projection applications both use video and audio byte streaming. 
 #### Additional App Types
 If one app type doesn't cover your full app use-case, you can add additional `AppHMIType`s as well.
 
+### Short App Name 
+This is a shortened version of your app name that is substituted when the full app name will not be visible due to character count constraints. You will want to make this as short as possible.
+
+```java
+builder.setShortAppName(shortAppName);
+```
+
 ### Template Coloring
 You can customize the color scheme of your templates. For more information, see the [Customizing the Template guide](Customizing Look and Functionality/Customizing the Template) section.
 
 ```java
-     TemplateColorScheme dayColorScheme = new TemplateColorScheme();
-     TemplateColorScheme nightColorScheme = new TemplateColorScheme();
+TemplateColorScheme dayColorScheme = new TemplateColorScheme();
+TemplateColorScheme nightColorScheme = new TemplateColorScheme();
 
-      builder.setDayColorScheme(dayColorScheme);
-      builder.setNightColorScheme(nightColorScheme);
+builder.setDayColorScheme(dayColorScheme);
+builder.setNightColorScheme(nightColorScheme);
 ```
 
 ### Determining SDL Support
@@ -936,7 +935,7 @@ builder.setTtsName(ttschunk);
 ```
 
 ### Voice Recognition synonyms
-Voice Recognition synonyms can be usd to itentivy the application
+Voice Recognition synonyms can be usd to identify the application
 ```java
 Vector<String> vrSynonyms = new Vector<>();
 vrSynonyms.add("App Name");
@@ -945,7 +944,7 @@ builder.setVrSynonyms(vrSynonyms);
 ```
 
 
-### File Manager Configuration (optional)
+### File Manager Configuration
 The file manager configuration allows you to configure retry behavior for uploading files and images. The default configuration attempts one re-upload, but will fail after that.
 
 ```java
@@ -961,7 +960,7 @@ The desired language to be used on display/HMI of connected module can be set.
 ```java
 builder.setLanguage(Language.EN_US)
 ```
-!@
+
 
 @![android,javaSE,javaEE]
 ### Listening for RPC notifications and events
