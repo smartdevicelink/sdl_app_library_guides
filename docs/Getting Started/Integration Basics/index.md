@@ -588,7 +588,7 @@ Please be aware that using an Activity to host the SDL implementation will not w
 !@
 
 Create a new service and name it appropriately, for this guide we are going to call it `SdlService`.
-
+!@
 
 @![android]
 ```java
@@ -670,6 +670,7 @@ public void onDestroy(){
 ```
 !@
 
+@![android,javaSE,javaEE]
 ### Implementing SDL Manager
 In order to correctly connect to an SDL enabled head unit developers need to implement methods for the proper creation and disposing of an `SdlManager` in our `SdlService`.
 
@@ -811,7 +812,9 @@ public class SdlService {
 The `sdlManager` must be shutdown properly if this class is shutting down in the respective method using the method `sdlManager.dispose()`.
 !!!
 !@
+!@
 
+@![android,javaSE,javaEE]
 ## SdlManager Builder options
 
 
@@ -843,7 +846,9 @@ builder.setTransportType(transport);
 SdlManager.Builder builder = new SdlManager.Builder(APP_ID, APP_NAME, listener);
 ```
 !@
+!@
 
+@![android,javaSE,javaEE]
 ### App Icon
 This is a custom icon for your application. Please refer to [Adaptive Interface Capabilities](Displaying a User Interface/Adaptive Interface Capabilities) for icon sizes.
 
@@ -975,6 +980,7 @@ onRPCNotificationListenerMap.put(FunctionID.ON_HMI_STATUS, new OnRPCNotification
 });
 builder.setRPCNotificationListeners(onRPCNotificationListenerMap);
 ```
+!@
 
 @![android]
 ## SmartDeviceLink Router Service
@@ -1284,5 +1290,4 @@ The `SDLSessionBean` should be inside a Java package other than the default pack
   Web Application: Archive -> for your war: exploded artifact which should already exist
 * Create Manifest. Apply + OK.
 * Run Build -> Build Artifacts to get a .war file in the /out folder.
-!@
 !@
