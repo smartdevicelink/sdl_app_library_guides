@@ -70,7 +70,10 @@ Below is a table with example image sizes. Check the `SystemCapabilityManager` f
 | appIcon 			   | SetAppIcon				    | Image shown as Icon in the "Mobile Apps" menu | 70x70px | png, jpg, bmp |
 | graphic 			   | Show 					    | Image shown on the base screen as cover art | 185x185px | png, jpg, bmp |
 
-## Determining Support for System Capabilities
+## Querying and Subscribing System Capabilities
+Capabilities that can be updated can be queried and subscribed to using the @![iOS]`SDLSystemCapabilityManager`!@@![android, javaSE, javaEE]`SystemCapabilityManager`!@.
+
+### Determining Support for System Capabilities
 You should check if the head unit supports your desired capability before subscribing or updating the capability.
 
 @![iOS]
@@ -91,7 +94,7 @@ let navigationSupported = sdlManager.systemCapabilityManager.isCapabilitySupport
 ```
 !@
 
-## Manual Querying for System Capabilities (RPC v5.0-)
+### Manual Querying for System Capabilities (RPC v5.0-)
 Most head units provide features that your app can use: making and receiving phone calls, an embedded navigation system, video and audio streaming, as well as supporting app services. To pull information about this capability, use the @![iOS]`SDLSystemCapabilityManager`!@@![android, javaSE, javaEE]`SystemCapabilityManager`!@ to query the head unit for the desired capability. If a capability is unavailable, the query will return @![iOS]`nil`!@@![android, javaSE, javaEE]`null`!@.
 
 @![iOS]
