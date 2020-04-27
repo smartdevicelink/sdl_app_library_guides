@@ -94,7 +94,7 @@ let navigationSupported = sdlManager.systemCapabilityManager.isCapabilitySupport
 ```
 !@
 
-### Manual Querying for System Capabilities (RPC v5.0-)
+### Manual Querying for System Capabilities
 Most head units provide features that your app can use: making and receiving phone calls, an embedded navigation system, video and audio streaming, as well as supporting app services. To pull information about this capability, use the @![iOS]`SDLSystemCapabilityManager`!@@![android, javaSE, javaEE]`SystemCapabilityManager`!@ to query the head unit for the desired capability. If a capability is unavailable, the query will return @![iOS]`nil`!@@![android, javaSE, javaEE]`null`!@.
 
 @![iOS]
