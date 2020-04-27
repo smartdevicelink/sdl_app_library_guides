@@ -886,14 +886,6 @@ builder.setShortAppName(shortAppName);
 ### Template Coloring
 You can customize the color scheme of your templates. For more information, see the [Customizing the Template guide](Customizing Look and Functionality/Customizing the Template) section.
 
-```java
-TemplateColorScheme dayColorScheme = new TemplateColorScheme();
-TemplateColorScheme nightColorScheme = new TemplateColorScheme();
-
-builder.setDayColorScheme(dayColorScheme);
-builder.setNightColorScheme(nightColorScheme);
-```
-
 ### Determining SDL Support
 You have the ability to determine a minimum SDL protocol and a minimum SDL RPC version that your app supports. We recommend not setting these values until your app is ready for production. The OEMs you support will help you configure the correct `minimumProtocolVersion` and `minimumRPCVersion` during the application review process.
 
