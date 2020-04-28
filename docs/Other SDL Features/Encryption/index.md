@@ -89,7 +89,7 @@ If you want to encrypt a specific RPC, you must configure the payload protected 
 
 ##### Swift
 ```swift
-self.sdlManager.startRPCEncryption()
+sdlManager.startRPCEncryption()
 ```
 !@
 
