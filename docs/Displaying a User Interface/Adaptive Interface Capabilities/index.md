@@ -131,7 +131,7 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.APP_S
     public void onError(String info) {
         <# Handle Error #>
     }
-});
+}, false);
 ```
 !@
 
@@ -139,7 +139,7 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.APP_S
 In addition getting the current system capabilities, it is also possible to subscribe for updates when the head unit capabilities change. @![iOS]To get these notifications you must register using a `subscribeToCapabilityType:` method.!@@![android, javaSE, javaEE]Since this information must be queried from Core you must implement the `OnSystemCapabilityListener`.!@
 
 !!! NOTE
-If @![iOS]`supportsSubscriptions == NO`!@@![android, javaSE, javaEE]`//TODO`!@, you can still subscribe to capabilities, however, you must manually poll for new capability updates using @![iOS]`updateCapabilityType:completionHandler:`!@@![android, javaSE, javaEE]`//TODO`!@. All subscriptions will be automatically updated when that method returns a new value.
+If @![iOS]`supportsSubscriptions == NO`!@@![android, javaSE, javaEE]`supportsSubscriptions == false`!@, you can still subscribe to capabilities, however, you must manually poll for new capability updates using @![iOS]`updateCapabilityType:completionHandler:`!@@![android, javaSE, javaEE]`getCapability(type, listener, forceUpdate)` with `forceUpdate` set to `true`!@. All subscriptions will be automatically updated when that method returns a new value.
 
 The `DISPLAYS` type can be subscribed on all SDL versions.
 !!!
@@ -157,7 +157,7 @@ let supportsSubscriptions = sdlManager.systemCapabilityManager.supportsSubscript
 !@
 @![android, javaSE, javaEE]
 ```java
-// TODO
+boolean supportsSubscriptions = sdlManager.getSystemCapabilityManager().supportsSubscriptions();
 ```
 !@
 
@@ -217,10 +217,5 @@ sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapa
         <# Handle Error #>
     }
 });
-
-GetSystemCapability getSystemCapability = new GetSystemCapability();
-getSystemCapability.setSystemCapabilityType(SystemCapabilityType.APP_SERVICES);
-getSystemCapability.setSubscribe(true);
-sdlManager.sendRPC(getSystemCapability);
 ```
 !@
