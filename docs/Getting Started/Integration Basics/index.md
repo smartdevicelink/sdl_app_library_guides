@@ -872,18 +872,17 @@ builder.setMinimumRPCVersion(new Version("4.0.0"));
 !@
 
 @![android]
-##### Lock Screen 
+##### Lock Screen Configuration
 A lock screen is used to prevent the user from interacting with the app on the smartphone while they are driving. When the vehicle starts moving, the lock screen is activated. Similarly, when the vehicle stops moving, the lock screen is removed. You must implement a lock screen in your app for safety reasons. Any application without a lock screen will not get approval for release to the public.
 
 The SDL SDK can take care of the lock screen implementation for you, automatically using your app logo and the connected vehicle logo. If you do not want to use the default lock screen, you can implement your own custom lock screen.
 
 ```java
 LockScreenConfig lockScreenConfig = new LockScreenConfig();
-
 builder.setLockScreenConfig(lockScreenConfig);
 ```
 
-For more information, please refer to the [Adding the Lock Screen](Getting Started/Adding the Lock Screen) section.
+You should also declare the `SDLLockScreenActivity` in your manifest. For more information, please refer to the [Adding the Lock Screen](Getting Started/Adding the Lock Screen) section.
 !@
 
 @![android,javaSE,javaEE]
@@ -903,15 +902,13 @@ builder.setFileManagerConfig(fileManagerConfig);
 
 ##### Language
 The desired language to be used on display/HMI of connected module can be set.
+
 ```java
 builder.setLanguage(Language.EN_US);
 ```
 
 ##### Listening for RPC notifications and events
-
 We can listen for specific events using `SdlManager`'s builder `setRPCNotificationListeners`. The following example shows how to listen for HMI Status notifications. Additional listeners can be added for specific RPCs by using their corresponding `FunctionID` in place of the `ON_HMI_STATUS` in the following example and casting the `RPCNotification` object to the correct type.
-
-###### Example of a listener for HMI Status:
 
 ```java
 Map<FunctionID, OnRPCNotificationListener> onRPCNotificationListenerMap = new HashMap<>();
