@@ -106,11 +106,11 @@ Boolean isPersistent = file.isPersistent();
 Be aware that persistence will not work if space on the head unit is limited. The @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE]`FileManager`!@ will always handle uploading images if they are non-existent.
 !!!
 
-
+@![iOS]
 ## Overwriting Stored Files
 If a file being uploaded has the same name as an already uploaded file, the new file will be ignored. To override this setting, set the `SDLFile`'s `overwrite` property to true.
 
-@![iOS]
+
 ##### Objective-C
 ```objc
 file.overwrite = YES;
@@ -122,11 +122,6 @@ file.overwrite = true
 ```
 !@
 
-@![android, javaSE, javaEE]
-```java
-file.setOverwrite(true);
-```
-!@
 
 ## Checking the Amount of File Storage Left
 To find the amount of file storage left for your app on the head unit, use the @![iOS]`SDLFileManager`’s `bytesAvailable` property!@ @![android, javaSE, javaEE]`ListFiles` RPC!@.
@@ -234,16 +229,4 @@ sdlManager.getFileManager().deleteRemoteFilesWithNames(remoteFiles, new Multiple
 	}
 });
 ```
-
-## Retrying File Uploads
-
-@![android, javaSE, javaEE]
-```java
-FileManagerConfig fileManagerConfig = new FileManagerConfig();
-fileManagerConfig.setArtworkRetryCount(2);
-fileManagerConfig.setFileRetryCount(2);
-```
-
-!@
-
 !@
