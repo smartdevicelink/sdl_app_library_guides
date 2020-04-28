@@ -74,7 +74,7 @@ Below is a table with example image sizes. Check the `SystemCapabilityManager` f
 Capabilities that can be updated can be queried and subscribed to using the @![iOS]`SDLSystemCapabilityManager`!@@![android, javaSE, javaEE]`SystemCapabilityManager`!@.
 
 ### Determining Support for System Capabilities
-You should check if the head unit supports your desired capability before subscribing or updating the capability.
+You should check if the head unit supports your desired capability before subscribing to or updating the capability.
 
 @![iOS]
 ##### Objective-C
@@ -136,7 +136,7 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.APP_S
 !@
 
 ### Subscribing to System Capabilities (RPC v5.1+)
-In addition getting the current system capabilities, it is also possible to subscribe for updates when the head unit capabilities change. @![iOS]To get these notifications you must register using a `subscribeToCapabilityType:` method.!@@![android, javaSE, javaEE]Since this information must be queried from Core you must implement the `OnSystemCapabilityListener`.!@
+In addition to getting the current system capabilities, it is also possible to subscribe for updates when the head unit capabilities change. @![iOS]To get these notifications you must register using a `subscribeToCapabilityType:` method.!@@![android, javaSE, javaEE]Since this information must be queried from Core you must implement the `OnSystemCapabilityListener`.!@
 
 !!! NOTE
 If @![iOS]`supportsSubscriptions == NO`!@@![android, javaSE, javaEE]`supportsSubscriptions == false`!@, you can still subscribe to capabilities, however, you must manually poll for new capability updates using @![iOS]`updateCapabilityType:completionHandler:`!@@![android, javaSE, javaEE]`getCapability(type, listener, forceUpdate)` with `forceUpdate` set to `true`!@. All subscriptions will be automatically updated when that method returns a new value.
