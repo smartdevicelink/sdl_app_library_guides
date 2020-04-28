@@ -90,7 +90,7 @@ let navigationSupported = sdlManager.systemCapabilityManager.isCapabilitySupport
 
 @![android, javaSE, javaEE]
 ```java
-sdlManager.getSystemCapabilityManager().isCapabilitySupported(SystemCapabilityType.NAVIGATION);
+boolean navigationSupported = sdlManager.getSystemCapabilityManager().isCapabilitySupported(SystemCapabilityType.NAVIGATION);
 ```
 !@
 
