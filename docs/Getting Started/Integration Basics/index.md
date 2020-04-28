@@ -716,6 +716,11 @@ public class SdlService extends Service {
                 @Override
                 public void onError(String info, Exception e) {
                 }
+
+                @Override
+                public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language) {
+                    return null;
+                }
             };
 
             // Create App Icon, this is set in the SdlManager builder
@@ -791,6 +796,11 @@ public class SdlService {
                 @Override
                 public void onError(SdlManager sdlManager, String info, Exception e) {
                 }
+
+                @Override
+                public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language) {
+                    return null;
+                }
             };
 
             // Create App Icon, this is set in the SdlManager builder
@@ -798,11 +808,9 @@ public class SdlService {
 
             // The manager builder sets options for your session
             SdlManager.Builder builder = new SdlManager.Builder(APP_ID, APP_NAME, listener);
-            builder.setShortAppName(shortAppName);
             builder.setAppTypes(appType);
             builder.setTransportType(transport);
             builder.setAppIcon(appIcon);
-            builder.setFileManagerConfig(fileManagerConfig);
             sdlManager = builder.build();
             sdlManager.start();
         }
@@ -844,9 +852,11 @@ builder.setTransportType(transport);
 1. AppID - ID of applicaiton
 2. AppName - Name of applicaiton
 3. SdlManagerListener - Listener that helps you know when certain events that pertain to the SDL Manager happen
+4. BaseTransportConfig - the type of transport that should be used for this SdlManager instance
 
 ```java
 SdlManager.Builder builder = new SdlManager.Builder(APP_ID, APP_NAME, listener);
+builder.setTransportType(transport);
 ```
 !@
 
