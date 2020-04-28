@@ -925,11 +925,7 @@ For more information, please refer to the [Adding the Lock Screen](Getting Start
 
 @![android,javaSE,javaEE]
 ### SdlSecurity
-Security Libary
-
-```java
-builder.setSdlSecurity()
-```
+Some OEMs may want to encrypt messages passed between your SDL app and the head unit. If this is the case, when you submit your app to the OEM for review, they will ask you to add a security library to your SDL app. See the [Encryption](Other SDL Features/Encryption) section.
 
 ### Text-To-Speech 
 Set the Text-to-Speech name of application
@@ -964,7 +960,7 @@ builder.setFileManagerConfig(fileManagerConfig);
 ### Language
 The desired language to be used on display/HMI of connected module can be set.
 ```java
-builder.setLanguage(Language.EN_US)
+builder.setLanguage(Language.EN_US);
 ```
 
 ### Listening for RPC notifications and events
