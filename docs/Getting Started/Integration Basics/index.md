@@ -908,7 +908,7 @@ builder.setLanguage(Language.EN_US);
 ```
 
 ##### Listening for RPC notifications and events
-We can listen for specific events using `SdlManager`'s builder `setRPCNotificationListeners`. The following example shows how to listen for HMI Status notifications. Additional listeners can be added for specific RPCs by using their corresponding `FunctionID` in place of the `ON_HMI_STATUS` in the following example and casting the `RPCNotification` object to the correct type.
+You can listen for specific events using `SdlManager`'s builder `setRPCNotificationListeners`. The following example shows how to listen for HMI Status notifications. Additional listeners can be added for specific RPCs by using their corresponding `FunctionID` in place of the `ON_HMI_STATUS` in the following example and casting the `RPCNotification` object to the correct type.
 
 ```java
 Map<FunctionID, OnRPCNotificationListener> onRPCNotificationListenerMap = new HashMap<>();
