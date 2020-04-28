@@ -728,11 +728,8 @@ public class SdlService extends Service {
 
             // The manager builder sets options for your session
             SdlManager.Builder builder = new SdlManager.Builder(this, APP_ID, APP_NAME, transport, listener);
-            builder.setShortAppName(shortAppName);
             builder.setAppTypes(appType);
             builder.setAppIcon(appIcon);
-            builder.setFileManagerConfig(fileManagerConfig);
-            builder.setLockScreenConfig(lockScreenConfig);
             sdlManager = builder.build();
             sdlManager.start();
         }
