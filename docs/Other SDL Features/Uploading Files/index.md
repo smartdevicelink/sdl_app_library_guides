@@ -110,7 +110,6 @@ Be aware that persistence will not work if space on the head unit is limited. Th
 ## Overwriting Stored Files
 If a file being uploaded has the same name as an already uploaded file, the new file will be ignored. To override this setting, set the `SDLFile`'s `overwrite` property to true.
 
-
 ##### Objective-C
 ```objc
 file.overwrite = YES;
@@ -121,7 +120,6 @@ file.overwrite = YES;
 file.overwrite = true
 ```
 !@
-
 
 ## Checking the Amount of File Storage Left
 To find the amount of file storage left for your app on the head unit, use the @![iOS]`SDLFileManager`’s `bytesAvailable` property!@ @![android, javaSE, javaEE]`ListFiles` RPC!@.
