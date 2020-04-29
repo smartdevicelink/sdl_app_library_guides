@@ -840,7 +840,6 @@ The app type is used by car manufacturers to decide how to categorize your app. 
 ```java
 Vector<AppHMIType> appHMITypes = new Vector<>();
 appHMITypes.add(AppHMIType.MEDIA);
-appHMITypes.add(AppHMIType.PROJECTION);
 
 builder.setAppTypes(appHMITypes);
 ```
