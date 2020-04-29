@@ -876,9 +876,11 @@ appHMITypes.add(AppHMIType.PROJECTION);
 builder.setAppTypes(appHMITypes);
 ```
 
+@![android]
 !!! NOTE
 Navigation and projection applications both use video and audio byte streaming. However, navigation apps require special permissions from OEMs, and projection apps are only for internal use by OEMs.
 !!!
+!@
 
 #### Additional App Types
 If one app type doesn't cover your full app use-case, you can add additional `AppHMIType`s as well.
@@ -891,7 +893,7 @@ builder.setShortAppName(shortAppName);
 ```
 
 ### Template Coloring
-You can customize the color scheme of your templates. For more information, see the [Customizing the Template guide](Customizing Look and Functionality/Customizing the Template) section.
+You can customize the color scheme of your initial template on head units that support this feature using the `builder`. For more information, see the [Customizing the Template guide](Customizing Look and Functionality/Customizing the Template) section.
 
 ### Determining SDL Support
 You have the ability to determine a minimum SDL protocol and a minimum SDL RPC version that your app supports. We recommend not setting these values until your app is ready for production. The OEMs you support will help you configure the correct `minimumProtocolVersion` and `minimumRPCVersion` during the application review process.
