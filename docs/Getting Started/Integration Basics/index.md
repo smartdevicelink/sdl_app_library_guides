@@ -844,11 +844,15 @@ appHMITypes.add(AppHMIType.PROJECTION);
 
 builder.setAppTypes(appHMITypes);
 ```
+!@
+
 @![android]
 !!! NOTE
 Navigation and projection applications both use video and audio byte streaming. However, navigation apps require special permissions from OEMs, and projection apps are only for internal use by OEMs.
 !!!
 !@
+
+@![android,javaSE,javaEE]
 
 ##### Short App Name 
 This is a shortened version of your app name that is substituted when the full app name will not be visible due to character count constraints. You will want to make this as short as possible.
