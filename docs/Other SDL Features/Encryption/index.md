@@ -84,12 +84,12 @@ If you want to encrypt a specific RPC, you must configure the payload protected 
 @![iOS]
 ##### Objective-C
 ```objc
-[self.sdlManger startRPCEncryption];
+[self.sdlManager startRPCEncryption];
 ```
 
 ##### Swift
 ```swift
-self.sdlManger.startRPCEncryption()
+sdlManager.startRPCEncryption()
 ```
 !@
 
