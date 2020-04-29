@@ -355,7 +355,7 @@ self.sdlManager = [[SDLManager alloc] initWithConfiguration:configuration delega
 sdlManager = SDLManager(configuration: configuration, delegate: self)
 ```
 
-### 11. Start the SDLManager
+### 12. Start the SDLManager
 The manager should be started as soon as possible in your application's lifecycle. We suggest doing this in the `didFinishLaunchingWithOptions()` method in your `AppDelegate` class. Once the manager has been initialized, it will immediately start watching for a connection with the remote system. The manager will passively search for a connection with a SDL Core during the entire lifespan of the app. If the manager detects a connection with a SDL Core, the `startWithReadyHandler` will be called.
 
 Create a new function in the `ProxyManager` class called `connect`.
@@ -580,6 +580,7 @@ The SDL Java library supports Java 7 and above.
 @![android,javaSE,javaEE]
 ## SmartDeviceLink Service
 A SmartDeviceLink Service should be created to manage the lifecycle of the SDL session. The `SdlService` should build and start an instance of the `SdlManager` which will automatically connect with a head unit when available. This `SdlManager` will handle sending and receiving messages to and from SDL after it is connected.
+!@
 
 @![android]
 !!! NOTE
@@ -587,6 +588,7 @@ Please be aware that using an Activity to host the SDL implementation will not w
 !!!
 !@
 
+@![android,javaSE,javaEE]
 Create a new service and name it appropriately, for this guide we are going to call it `SdlService`.
 !@
 
@@ -714,6 +716,11 @@ public class SdlService extends Service {
                 @Override
                 public void onError(String info, Exception e) {
                 }
+
+                @Override
+                public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language) {
+                    return null;
+                }
             };
 
             // Create App Icon, this is set in the SdlManager builder
@@ -787,6 +794,11 @@ public class SdlService {
                 @Override
                 public void onError(SdlManager sdlManager, String info, Exception e) {
                 }
+
+                @Override
+                public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language) {
+                    return null;
+                }
             };
 
             // Create App Icon, this is set in the SdlManager builder
@@ -811,7 +823,45 @@ The `sdlManager` must be shutdown properly if this class is shutting down in the
 !@
 
 @![android,javaSE,javaEE]
-### Determining SDL Support
+#### Optional SdlManager Builder Parameters
+
+##### App Icon
+This is a custom icon for your application. Please refer to [Adaptive Interface Capabilities](Displaying a User Interface/Adaptive Interface Capabilities) for icon sizes.
+
+```java
+builder.setAppIcon(appIcon);
+```
+
+##### App Type 
+The app type is used by car manufacturers to decide how to categorize your app. Each car manufacturer has a different categorization system. For example, if you set your app type as media, your app will also show up in the audio tab as well as the apps tab of Ford’s SYNC3 head unit. The app type options are: default, communication, media (i.e. music/podcasts/radio), messaging, navigation, projection, information, and social.
+
+```java
+Vector<AppHMIType> appHMITypes = new Vector<>();
+appHMITypes.add(AppHMIType.MEDIA);
+
+builder.setAppTypes(appHMITypes);
+```
+!@
+
+@![android]
+!!! NOTE
+Navigation and projection applications both use video and audio byte streaming. However, navigation apps require special permissions from OEMs, and projection apps are only for internal use by OEMs.
+!!!
+!@
+
+@![android,javaSE,javaEE]
+
+##### Short App Name 
+This is a shortened version of your app name that is substituted when the full app name will not be visible due to character count constraints. You will want to make this as short as possible.
+
+```java
+builder.setShortAppName(shortAppName);
+```
+
+##### Template Coloring
+You can customize the color scheme of your initial template on head units that support this feature using the `builder`. For more information, see the [Customizing the Template guide](Customizing Look and Functionality/Customizing the Template) section.
+
+##### Determining SDL Support
 You have the ability to determine a minimum SDL protocol and a minimum SDL RPC version that your app supports. We recommend not setting these values until your app is ready for production. The OEMs you support will help you configure the correct `minimumProtocolVersion` and `minimumRPCVersion` during the application review process.
 
 If a head unit is blocked by protocol version, your app icon will never appear on the head unit's screen. If you configure your app to block by RPC version, it will appear and then quickly disappear. So while blocking with `minimumProtocolVersion` is preferable, `minimumRPCVersion` allows you more granular control over which RPCs will be present.
@@ -821,12 +871,46 @@ If a head unit is blocked by protocol version, your app icon will never appear o
 builder.setMinimumProtocolVersion(new Version("3.0.0"));
 builder.setMinimumRPCVersion(new Version("4.0.0"));
 ```
+!@
 
-### Listening for RPC notifications and events
+@![android]
+##### Lock Screen Configuration
+A lock screen is used to prevent the user from interacting with the app on the smartphone while they are driving. When the vehicle starts moving, the lock screen is activated. Similarly, when the vehicle stops moving, the lock screen is removed. You must implement a lock screen in your app for safety reasons. Any application without a lock screen will not get approval for release to the public.
 
-We can listen for specific events using `SdlManager`'s builder `setRPCNotificationListeners`. The following example shows how to listen for HMI Status notifications. Additional listeners can be added for specific RPCs by using their corresponding `FunctionID` in place of the `ON_HMI_STATUS` in the following example and casting the `RPCNotification` object to the correct type.
+The SDL SDK can take care of the lock screen implementation for you, automatically using your app logo and the connected vehicle logo. If you do not want to use the default lock screen, you can implement your own custom lock screen.
 
-##### Example of a listener for HMI Status:
+```java
+LockScreenConfig lockScreenConfig = new LockScreenConfig();
+builder.setLockScreenConfig(lockScreenConfig);
+```
+
+You should also declare the `SDLLockScreenActivity` in your manifest. For more information, please refer to the [Adding the Lock Screen](Getting Started/Adding the Lock Screen) section.
+!@
+
+@![android,javaSE,javaEE]
+##### SdlSecurity
+Some OEMs may want to encrypt messages passed between your SDL app and the head unit. If this is the case, when you submit your app to the OEM for review, they will ask you to add a security library to your SDL app. See the [Encryption](Other SDL Features/Encryption) section.
+
+##### File Manager Configuration
+The file manager configuration allows you to configure retry behavior for uploading files and images. The default configuration attempts one re-upload, but will fail after that.
+
+```java
+FileManagerConfig fileManagerConfig = new FileManagerConfig();
+fileManagerConfig.setArtworkRetryCount(2);
+fileManagerConfig.setFileRetryCount(2);
+
+builder.setFileManagerConfig(fileManagerConfig);
+```
+
+##### Language
+The desired language to be used on display/HMI of connected module can be set.
+
+```java
+builder.setLanguage(Language.EN_US);
+```
+
+##### Listening for RPC notifications and events
+You can listen for specific events using `SdlManager`'s builder `setRPCNotificationListeners`. The following example shows how to listen for HMI Status notifications. Additional listeners can be added for specific RPCs by using their corresponding `FunctionID` in place of the `ON_HMI_STATUS` in the following example and casting the `RPCNotification` object to the correct type.
 
 ```java
 Map<FunctionID, OnRPCNotificationListener> onRPCNotificationListenerMap = new HashMap<>();
