@@ -824,9 +824,7 @@ The `sdlManager` must be shutdown properly if this class is shutting down in the
 
 @![android,javaSE,javaEE]
 #### Optional SdlManager Builder Parameters
-!@
 
-@![android,javaSE,javaEE]
 ##### App Icon
 This is a custom icon for your application. Please refer to [Adaptive Interface Capabilities](Displaying a User Interface/Adaptive Interface Capabilities) for icon sizes.
 
