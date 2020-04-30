@@ -276,7 +276,7 @@ SDLArtwork *artwork = [SDLArtwork artworkWithImage:image name:imageName asImageF
     SDLLocationCoordinate *coordinate = [[SDLLocationCoordinate alloc] initWithLatitudeDegrees:42 longitudeDegrees:43];
     SDLLocationDetails *location = [[SDLLocationDetails alloc] initWithCoordinate:coordinate];
     SDLNavigationInstruction *instruction = [[SDLNavigationInstruction alloc] initWithLocationDetails:location action:SDLNavigationActionTurn];
-    instruction.image = [[SDLImage alloc] initWithName:imageName isTemplate:NO];
+    instruction.image = [[SDLImage alloc] initWithName:artwork.name isTemplate:NO];
 
     SDLDateTime *timestamp = [[SDLDateTime alloc] initWithHour:2 minute:3 second:4 millisecond:847];
     SDLNavigationServiceData *navServiceData = [[SDLNavigationServiceData alloc] initWithTimestamp:timestamp];
@@ -302,7 +302,7 @@ sdlManager.fileManager.upload(file: artwork) { (success, bytesAvailable, error) 
     let coordinate = SDLLocationCoordinate(latitudeDegrees: 42, longitudeDegrees: 43)
     let location = SDLLocationDetails(coordinate: coordinate)
     let instruction = SDLNavigationInstruction(locationDetails: location, action: .turn)
-    instruction.image = SDLImage(name: imageName, isTemplate: false)
+    instruction.image = SDLImage(name: artwork.name, isTemplate: false)
 
     let timestamp = SDLDateTime(hour: 2, minute: 3, second: 4, millisecond: 847)
     let navServiceData = SDLNavigationServiceData(timestamp: timestamp)
@@ -370,7 +370,7 @@ SDLArtwork *artwork = [SDLArtwork artworkWithImage:image name:imageName asImageF
 // We have to send the image to the system before it's used in the app service.
 [self.sdlManager.fileManager uploadFile:artwork completionHandler:^(BOOL success, NSUInteger bytesAvailable, NSError * _Nullable error) {
     SDLWeatherData *weatherData = [[SDLWeatherData alloc] init];
-    weatherData.weatherIcon = [[SDLImage alloc] initWithName:imageName isTemplate:YES];
+    weatherData.weatherIcon = [[SDLImage alloc] initWithName:artwork.name isTemplate:YES];
 
     SDLWeatherServiceData *weatherServiceData = [[SDLWeatherServiceData alloc] initWithLocation:[[SDLLocationDetails alloc] initWithCoordinate:[[SDLLocationCoordinate alloc] initWithLatitudeDegrees:42.331427 longitudeDegrees:-83.0457538]]];
 
