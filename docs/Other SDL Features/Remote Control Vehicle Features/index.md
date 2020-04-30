@@ -143,19 +143,18 @@ When connected to head units supporting RPC v6.0+, you should save this informat
 @![iOS]
 ##### Objective-C
 ```objc
-[self.sdlManager.systemCapabilityManager subscribeToCapabilityType:SDLSystemCapabilityTypeRemoteControl withBlock:^(SDLSystemCapability * _Nonnull capability) {
-    if(!capability.remoteControlCapability) { return; }
-    <#Save remote control capabilities#>
+[self.sdlManager.systemCapabilityManager subscribeToCapabilityType:SDLSystemCapabilityTypeRemoteControl withUpdateHandler:^(SDLSystemCapability * _Nullable capability, BOOL subscribed, NSError * _Nullable error) {
+     if (!capability.remoteControlCapability) { return; }
+     <#Save the remote control capabilities#>
 }];
 ```
 
 ##### Swift
 ```swift
-sdlManager.systemCapabilityManager.subscribe(toCapabilityType: .remoteControl, with: { capability in
-    guard capability.remoteControlCapability != nil else { return }
-    <#Save remote control capabilities#>
-})
-
+sdlManager.systemCapabilityManager.subscribe(capabilityType: .remoteControl) { (capability, subscribed, error) in
+    guard capability?.remoteControlCapability != nil else { return }
+    <#Save the remote control capabilities#>
+}
 ```
 !@
 
@@ -220,7 +219,7 @@ An array of seats can be found in the `seatLocationCapability`'s `seat` array. E
 @![iOS]
 ##### Objective-C
 ```objc
-[self.sdlManager.systemCapabilityManager subscribeToCapabilityType:SDLSystemCapabilityTypeSeatLocation withBlock:^(SDLSystemCapability * _Nonnull capability) {
+[self.sdlManager.systemCapabilityManager subscribeToCapabilityType:SDLSystemCapabilityTypeSeatLocation withUpdateHandler:^(SDLSystemCapability * _Nullable capability, BOOL subscribed, NSError * _Nullable error) {
     if (!capability.seatLocationCapability) { return; }
     NSArray<SDLSeatLocation *> *seats = capability.seatLocationCapability.seats;
 
@@ -230,12 +229,12 @@ An array of seats can be found in the `seatLocationCapability`'s `seat` array. E
 
 ##### Swift
 ```swift
-sdlManager.systemCapabilityManager.subscribe(toCapabilityType: .seatLocation, with: { capability in
-    guard let seatLocationCapability = capability.seatLocationCapability else { return }
+sdlManager.systemCapabilityManager.subscribe(capabilityType: .seatLocation) { (capability, subscribed, error) in
+    guard let seatLocationCapability = capability?.seatLocationCapability else { return }
     let seats = seatLocationCapability.seats ?? []
 
     <#Save seat location capabilities#>
-})
+}
 ```
 !@
 

@@ -189,7 +189,7 @@ id subscribeToken = [self subscribeToCapabilityType:SDLSystemCapabilityTypeNavig
 // Subscribing to a capability via a selector callback
 sdlManager.systemCapabilityManager.subscribe(toCapabilityType: .navigation, withObserver: self, selector: #selector(navigationCapabilitySelectorCallback(_:error:subscribed:)))
 
-@objc private func navigationCapabilitySelectorCallback(_ capability: SDLSystemCapability, error: NSError, subscribed: Bool) {
+@objc private func navigationCapabilitySelectorCallback(_ capability: SDLSystemCapability, error: Error?, subscribed: Bool) {
     guard error == nil else { return }
     let navCapability = capability.navigationCapability;
 
