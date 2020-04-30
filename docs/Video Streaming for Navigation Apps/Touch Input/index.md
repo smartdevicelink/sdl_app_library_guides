@@ -77,7 +77,10 @@ timeStamp    | Timestamp of the head unit time. Can be used to compare time pass
 coord        | X and Y coordinates in the head unit coordinate system. (0, 0) is the top left.
 
 #### Example
+
+!!! NOTE
 Please note that if you are integrating an sdl_ios version less than v6.3, the following example code will not work. We recommend updating to the latest release version.
+!!!
 
 ##### Objective-C
 ```objc
@@ -88,9 +91,7 @@ Please note that if you are integrating an sdl_ios version less than v6.3, the f
       return;
     }
     SDLOnTouchEvent *touchEvent = (SDLOnTouchEvent *)notification.notification;
-
-    // Grab something like type
-    SDLTouchType* type = touchEvent.type;
+    <#Use the touch data#>
 }
 ```
 
@@ -98,14 +99,11 @@ Please note that if you are integrating an sdl_ios version less than v6.3, the f
 ```swift
 sdlManager.subscribe(to: .SDLDidReceiveTouchEvent, observer: self, selector: #selector(touchEventAvailable(_:)))
 
-// On Receive
 @objc private func touchEventAvailable(_ notification: SDLRPCNotificationNotification) {
     guard let touchEvent = notification.notification as? SDLOnTouchEvent else {
         print("Error retrieving onTouchEvent object")
         return
     }
-
-    // Grab something like type
-    let type = touchEvent.type
+     <#Use the touch data#>
 }
 ```
