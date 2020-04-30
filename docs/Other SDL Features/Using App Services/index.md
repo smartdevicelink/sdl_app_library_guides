@@ -84,7 +84,7 @@ SDLAppServicesCapabilities *capabilities = getResponse.systemCapability.appServi
 
 // This array contains all currently available app services on the system
 NSArray<SDLAppServiceCapability *> *appServices = capabilities.appServices;
-SDLAppServiceCapability *aCapability = appServices.firstObject
+SDLAppServiceCapability *aCapability = appServices.firstObject;
 
 // This will be nil since it's the first update
 SDLServiceUpdateReason capabilityReason = aCapability.updateReason;
@@ -124,12 +124,12 @@ let capabilityReason = aCapability.updateReason
 let serviceRecord = aCapability.updatedAppServiceRecord
 
 // From OnSystemCapabilityUpdated
-let serviceNotification: SDLOnSystemCapabilityUpdated = <#From wherever you got it#>;
+let serviceNotification: SDLOnSystemCapabilityUpdated = <#From wherever you got it#>
 let capabilities = serviceNotification.systemCapability.appServicesCapabilities
 
 // This array contains all recently updated services
 let appServices: [SDLAppServiceCapability] = capabilities.appServices
-let aCapability = appServices.first;
+let aCapability = appServices.first
 
 // This won't be nil. It will tell you why a service is in the list of updates
 let capabilityReason = aCapability.updateReason
@@ -223,14 +223,14 @@ getAppServiceData.setSubscribe(true);
 getAppServiceData.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
-        if (response != null){
+        if (response != null) {
             GetAppServiceDataResponse serviceResponse = (GetAppServiceDataResponse) response;
             MediaServiceData mediaServiceData = serviceResponse.getServiceData().getMediaServiceData();
         }
     }
     @Override
     public void onError(int correlationId, Result resultCode, String info){
-        <# Handle Error #>
+        <#Handle Error#>
     }
 });
 sdlManager.sendRPC(getAppServiceData);
