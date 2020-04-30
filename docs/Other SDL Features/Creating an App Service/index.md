@@ -42,9 +42,9 @@ manifest.mediaServiceManifest = <#Code#> // Covered below
 ```swift
 let manifest = SDLAppServiceManifest(appServiceType: .media)
 manifest.serviceIcon = SDLImage(name:"Service Icon Name", isTemplate: false) // Previously uploaded service icon. This could be the same as your app icon.
-manifest.allowAppConsumers = true; // Whether or not other apps can view your data in addition to the head unit. If set to `NO` only the head unit will have access to this data.
+manifest.allowAppConsumers = true as NSNumber // Whether or not other apps can view your data in addition to the head unit. If set to `NO` only the head unit will have access to this data.
 manifest.maxRPCSpecVersion = SDLMsgVersion(majorVersion: 5, minorVersion: 0, patchVersion: 0) // An *optional* parameter that limits the RPC spec versions you can understand to the provided version *or below*.
-manifest.handledRPCs = []; // If you add function ids to this *optional* parameter, you can support newer RPCs on older head units (that don't support those RPCs natively) when those RPCs are sent from other connected applications.
+manifest.handledRPCs = [] // If you add function ids to this *optional* parameter, you can support newer RPCs on older head units (that don't support those RPCs natively) when those RPCs are sent from other connected applications.
 manifest.mediaServiceManifest = <#Code#> // Covered below
 ```
 !@
@@ -154,7 +154,7 @@ SDLPublishAppService *publishServiceRequest = [[SDLPublishAppService alloc] init
     if (error != nil || !response.success.boolValue) { return; }
 
     SDLPublishAppServiceResponse *publishServiceResponse = (SDLPublishAppServiceResponse *)response;
-    SDLAppServiceRecord *serviceRecord = publishServiceResponse.appServiceRecord
+    SDLAppServiceRecord *serviceRecord = publishServiceResponse.appServiceRecord;
     <#Use the response#>
 }];
 ```
@@ -266,6 +266,7 @@ sdlManager.sendRPC(onAppData);
 
 ##### Objective-C
 ```objc
+NSString *imageName = @"<#Your image name#>";
 UIImage *image = [UIImage imageNamed:imageName];
 if (image == nil) { return; }
 
@@ -278,7 +279,7 @@ SDLArtwork *artwork = [SDLArtwork artworkWithImage:image name:imageName asImageF
     instruction.image = [[SDLImage alloc] initWithName:imageName isTemplate:NO];
 
     SDLDateTime *timestamp = [[SDLDateTime alloc] initWithHour:2 minute:3 second:4 millisecond:847];
-    SDLNavigationServiceData *navServiceData = [[SDLNavigationServiceData alloc] initWithTimestamp:timeStamp];
+    SDLNavigationServiceData *navServiceData = [[SDLNavigationServiceData alloc] initWithTimestamp:timestamp];
     navServiceData.instructions = @[instruction];
 
     SDLAppServiceData *appServiceData = [[SDLAppServiceData alloc] initWithNavigationServiceData:navServiceData serviceId:@"<#Your saved serviceID#>"];
@@ -290,10 +291,11 @@ SDLArtwork *artwork = [SDLArtwork artworkWithImage:image name:imageName asImageF
 
 ##### Swift
 ```swift
+let imageName = "<#Your image name#>"
 guard let image = UIImage(named: imageName) else { return }
 let artwork = SDLArtwork(image: image, name: imageName, persistent: false, as: .JPG)
 
-sdlManager.fileManager.upload(file: artwork) { [weak self] (success, bytesAvailable, error) in
+sdlManager.fileManager.upload(file: artwork) { (success, bytesAvailable, error) in
     guard success else { return }
 
     // Make sure the image is uploaded to the system before publishing your service
@@ -309,7 +311,7 @@ sdlManager.fileManager.upload(file: artwork) { [weak self] (success, bytesAvaila
     let appServiceData = SDLAppServiceData(navigationServiceData: navServiceData, serviceId: "<#Your saved serviceID#>")
 
     let onAppServiceData = SDLOnAppServiceData(serviceData: appServiceData)
-    self?.sdlManager.sendRPC(onAppServiceData)
+    self.sdlManager.sendRPC(onAppServiceData)
 }
 ```
 !@
@@ -359,20 +361,16 @@ sdlManager.getFileManager().uploadFile(navInstructionArt, new CompletionListener
 
 ##### Objective-C
 ```objc
+NSString *imageName = @"<#Your image name#>";
 UIImage *image = [UIImage imageNamed:imageName];
 if (image == nil) { return; }
 
 SDLArtwork *artwork = [SDLArtwork artworkWithImage:image name:imageName asImageFormat:SDLArtworkImageFormatJPG];
 
 // We have to send the image to the system before it's used in the app service.
-__weak typeof(self) weakself = self;
 [self.sdlManager.fileManager uploadFile:artwork completionHandler:^(BOOL success, NSUInteger bytesAvailable, NSError * _Nullable error) {
-    [weakSelf updateWeatherServiceWithImage:success];
-}];
-
-- (void)updateWeatherServiceWithImage:(BOOL)useImage {
     SDLWeatherData *weatherData = [[SDLWeatherData alloc] init];
-    weatherData.weatherIconImageName = useImage ? imageName : nil;
+    weatherData.weatherIcon = [[SDLImage alloc] initWithName:imageName isTemplate:YES];
 
     SDLWeatherServiceData *weatherServiceData = [[SDLWeatherServiceData alloc] initWithLocation:[[SDLLocationDetails alloc] initWithCoordinate:[[SDLLocationCoordinate alloc] initWithLatitudeDegrees:42.331427 longitudeDegrees:-83.0457538]]];
 
@@ -380,29 +378,26 @@ __weak typeof(self) weakself = self;
 
     SDLOnAppServiceData *onAppServiceData = [[SDLOnAppServiceData alloc] initWithServiceData:appServiceData];
     [self.sdlManager sendRPC:onAppServiceData];
-}
+}];
 ```
 
 ##### Swift
 ```swift
+let imageName = "<#Your image name#>"
 guard let image = UIImage(named: imageName) else { return }
 let artwork = SDLArtwork(image: image, name: imageName, persistent: false, as: .JPG)
 
 // We have to send the image to the system before it's used in the app service.
-sdlManager.fileManager.upload(file: artwork) { [weak self] (success, bytesAvailable, error) in
-    self?.updateWeatherService(shouldUseImage: success)
-}
-
-private func updateWeatherService(shouldUseImage: Bool) {
+sdlManager.fileManager.upload(file: artwork) { (success, bytesAvailable, error) in
     let weatherData = SDLWeatherData()
-    weatherData.weatherIconImageName = shouldUseImage ? imageName : nil
+    weatherData.weatherIcon = SDLImage(name: artwork.name, isTemplate: true)
 
     let weatherServiceData = SDLWeatherServiceData(location: SDLLocationDetails(coordinate: SDLLocationCoordinate(latitudeDegrees: 42.3314, longitudeDegrees: 83.0458)), currentForecast: weatherData, minuteForecast: nil, hourlyForecast: nil, multidayForecast: nil, alerts: nil)
 
     let appServiceData = SDLAppServiceData(weatherServiceData: weatherServiceData, serviceId: "<#Your saved serviceID#>")
 
     let onAppServiceData = SDLOnAppServiceData(serviceData: appServiceData)
-    sdlManager.sendRPC(onAppServiceData)
+    self.sdlManager.sendRPC(onAppServiceData)
 }
 ```
 !@
@@ -468,7 +463,7 @@ First, you will need to @![iOS]register for `GetAppServiceDataRequest`s notifica
 
 ##### Swift
 ```swift
-sdlManager.subscribe(to: SDLDidReceiveGetAppServiceDataRequest) { [weak self] (message) in
+sdlManager.subscribe(to: SDLDidReceiveGetAppServiceDataRequest) { (message) in
     guard let getAppServiceRequest = message as? SDLGetAppServiceData else { return }
     
     // Send a response
@@ -477,7 +472,7 @@ sdlManager.subscribe(to: SDLDidReceiveGetAppServiceDataRequest) { [weak self] (m
     response.success = true as NSNumber
     response.resultCode = .success
     response.info = "<#Use to provide more information about an error#>"
-    self?.sdlManager.sendRPC(response)
+    self.sdlManager.sendRPC(response)
 }
 ```
 !@
@@ -560,7 +555,7 @@ sdlManager.subscribe(to: SDLDidReceiveButtonPressRequest, observer: self, select
     let response = SDLButtonPressResponse()
 
     // These are very important, your response won't work properly without them.
-    response.success = true
+    response.success = true as NSNumber
     response.resultCode = .success
     response.correlationID = interactionRequest.correlationID
     response.info = "<#Use to provide more information about an error#>"
@@ -657,7 +652,7 @@ sdlManager.subscribe(to: SDLDidReceivePerformAppServiceInteractionRequest, obser
     let response = SDLPerformAppServiceInteractionResponse(serviceSpecificResult: result)
 
     // These are very important, your response won't work properly without them.
-    response.success = true
+    response.success = true as NSNumber
     response.resultCode = .success
     response.correlationID = interactionRequest.correlationID
 
