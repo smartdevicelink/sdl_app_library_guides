@@ -12,9 +12,11 @@ Currently, there is no high-level API support for using an app service, so you w
 ## Getting and Subscribing to Services
 Once your app has connected to the head unit, you will first want to be notified of all available services and updates to the metadata of all services on the head unit. Second, you will narrow down your app to subscribe to an individual app service and subscribe to its data. Third, you may want to interact with that service through RPCs, or fourth, through service actions.
 
+@![iOS]
 !!! NOTE
 Please note that if you are integrating an sdl_ios version less than v6.3, the example code in this guide will not work. We recommend updating to the latest release version.
 !!!
+!@
 
 ### 1. Getting and Subscribing to Available Services
 To get information on all services published on the system, as well as on changes to published services, you will use the @![iOS]`GetSystemCapability` request / response as well as the `OnSystemCapabilityUpdated` notification. !@ @![android,javaSE,javaEE] `SystemCapabilityManager` to get the information. Because this information is initially available asynchronously, we have to attach an `OnSystemCapabilityListener` to the `getCapability` request.!@
@@ -22,18 +24,16 @@ To get information on all services published on the system, as well as on change
 @![iOS]
 ##### Objective-C
 ```objc
-id subscribedObserver = [self.sdlManager.systemCapabilityManager subscribeToCapabilityType:SDLSystemCapabilityTypeAppServices withBlock:^(SDLSystemCapability * _Nonnull capability) {
-    NSArray<SDLAppServicesCapabilities *> *appServices = capability.appServicesCapabilities.appServices;
-
+id subscribedObserver = [self.sdlManager.systemCapabilityManager subscribeToCapabilityType:SDLSystemCapabilityTypeAppServices withUpdateHandler:^(SDLSystemCapability * _Nullable capability, BOOL subscribed, NSError * _Nullable error) {
+    NSArray<SDLAppServiceCapability *> *appServices = capability.appServicesCapabilities.appServices;
     <#Use the app services records#>
 }];
 ```
 
 ##### Swift
 ```swift
-let subscribedObserver = sdlManager.systemCapabilityManager.subscribe(toCapabilityType: .appServices) { (systemCapability) in
-    let appServices = systemCapability.appServicesCapabilities?.appServices
-
+let subscribedObserver = sdlManager.systemCapabilityManager.subscribe(capabilityType: .appServices) { (capability, subscribed, error) in
+    let appServices = capability?.appServicesCapabilities?.appServices
     <#Use the app services records#>
 }
 ```
@@ -84,10 +84,10 @@ SDLAppServicesCapabilities *capabilities = getResponse.systemCapability.appServi
 
 // This array contains all currently available app services on the system
 NSArray<SDLAppServiceCapability *> *appServices = capabilities.appServices;
-SDLAppServiceCapability *aCapability = appServices.first;
+SDLAppServiceCapability *aCapability = appServices.firstObject
 
 // This will be nil since it's the first update
-SDLServiceUpdateReason *capabilityReason = aCapability.updateReason;
+SDLServiceUpdateReason capabilityReason = aCapability.updateReason;
 
 // The app service record will give you access to a service's generated id, which can be used to address the service directly (see below), it's manifest, used to see what data it supports, whether or not the service is published (it always will be here), and whether or not the service is the active service for its service type (only one service can be active for each type)
 SDLAppServiceRecord *serviceRecord = aCapability.updatedAppServiceRecord;
@@ -98,10 +98,10 @@ SDLAppServicesCapabilities *capabilities = serviceNotification.systemCapability.
 
 // This array contains all recently updated services
 NSArray<SDLAppServiceCapability *> *appServices = capabilities.appServices;
-SDLAppServiceCapability *aCapability = appServices.first;
+SDLAppServiceCapability *aCapability = appServices.firstObject;
 
 // This won't be nil. It will tell you why a service is in the list of updates
-SDLServiceUpdateReason *capabilityReason = aCapability.updateReason;
+SDLServiceUpdateReason capabilityReason = aCapability.updateReason;
 
 // The app service record will give you access to a service's generated id, which can be used to address the service directly (see below), it's manifest, used to see what data it supports, whether or not the service is published (if it's not, it was just removed and should not be addressed), and whether or not the service is the active service for its service type (only one service can be active for each type)
 SDLAppServiceRecord *serviceRecord = aCapability.updatedAppServiceRecord;
@@ -166,14 +166,14 @@ Note that you will currently only be able to get data for the *active* service o
 ##### Objective-C
 ```objc
 // Get service data once
-SDLGetAppServiceData *getServiceData = [[SDLGetAppServiceData alloc] initWithServiceType:SDLAppServiceTypeMedia];
+SDLGetAppServiceData *getServiceData = [[SDLGetAppServiceData alloc] initWithAppServiceType:SDLAppServiceTypeMedia];
 
 // Subscribe to service data in perpetuity via `OnAppServiceData` notifications.
-SDLGetAppServiceData *subscribeServiceData = [[SDLGetAppServiceData alloc] initAndSubscribeToServiceType:SDLAppServiceTypeMedia];
+SDLGetAppServiceData *subscribeServiceData = [[SDLGetAppServiceData alloc] initAndSubscribeToAppServiceType:SDLAppServiceTypeMedia];
 
 // Unsubscribe to service data previously subscribed
-SDLGetAppServiceData *unsubscribeServiceData = [[SDLGetAppServiceData alloc] initWithServiceType:SDLAppServiceTypeMedia];
-unsubscribeServiceData.subscribe = NO;
+SDLGetAppServiceData *unsubscribeServiceData = [[SDLGetAppServiceData alloc] initWithAppServiceType:SDLAppServiceTypeMedia];
+unsubscribeServiceData.subscribe = @NO;
 
 // Get the service's data
 [self.sdlManager sendRequest:getServiceData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
@@ -184,25 +184,27 @@ unsubscribeServiceData.subscribe = NO;
 
     SDLGetAppServiceDataResponse *serviceResponse = (SDLGetAppServiceDataResponse *)response;
     SDLMediaServiceData *mediaData = serviceResponse.serviceData.mediaServiceData;
+
+    <#Use the mediaData#>
 }];
 ```
 
 ##### Swift
 ```swift
 // Get service data once
-let getServiceData = SDLGetAppServiceData(serviceType: .media)
+let getServiceData = SDLGetAppServiceData(appServiceType: .media)
 
 // Subscribe to service data in perpetuity via `OnAppServiceData` notifications.
 let subscribeServiceData = SDLGetAppServiceData(andSubscribeToAppServiceType: .media)
 
 // Unsubscribe to service data previously subscribed
-let unsubscribeServiceData = SDLGetAppServiceData(serviceType: .media)
-unsubscribeServiceData.subscribe = false
+let unsubscribeServiceData = SDLGetAppServiceData(appServiceType: .media)
+unsubscribeServiceData.subscribe = false as NSNumber
 
 // Get the service's data
-let getServiceData = SDLGetAppServiceData(serviceType: .media)
+let getServiceData = SDLGetAppServiceData(appServiceType: .media)
 sdlManager.send(request: getServiceData) { (req, res, err) in
-    guard let response = res as? SDLGetAppServiceDataResponse, response.success.boolValue == true, err == nil, let mediaData = response.serviceData.mediaData else { return }
+    guard let response = res as? SDLGetAppServiceDataResponse, response.success.boolValue == true, let mediaData = response.serviceData?.mediaServiceData else { return }
 
     <#Use the mediaData#>
 }
