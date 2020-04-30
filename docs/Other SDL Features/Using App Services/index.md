@@ -110,32 +110,32 @@ SDLAppServiceRecord *serviceRecord = aCapability.updatedAppServiceRecord;
 ##### Swift
 ```swift
 // From GetSystemCapabilityResponse
-let getResponse: SDLGetSystemCapabilityResponse = <#From wherever you got it#>;
-let capabilities = getResponse.systemCapability.appServicesCapabilities;
+let getResponse: SDLGetSystemCapabilityResponse = <#From wherever you got it#>
+let capabilities = getResponse.systemCapability.appServicesCapabilities
 
 // This array contains all currently available app services on the system
 let appServices: [SDLAppServiceCapability] = capabilities.appServices
-let aCapability = appServices.first;
+let aCapability = appServices.first
 
 // This will be nil since it's the first update
-let capabilityReason = aCapability.updateReason;
+let capabilityReason = aCapability.updateReason
 
 // The app service record will give you access to a service's generated id, which can be used to address the service directly (see below), it's manifest, used to see what data it supports, whether or not the service is published (it always will be here), and whether or not the service is the active service for its service type (only one service can be active for each type)
-let serviceRecord = aCapability.updatedAppServiceRecord;
+let serviceRecord = aCapability.updatedAppServiceRecord
 
 // From OnSystemCapabilityUpdated
 let serviceNotification: SDLOnSystemCapabilityUpdated = <#From wherever you got it#>;
-let capabilities = serviceNotification.systemCapability.appServicesCapabilities;
+let capabilities = serviceNotification.systemCapability.appServicesCapabilities
 
 // This array contains all recently updated services
-let appServices: [SDLAppServiceCapability] = capabilities.appServices;
+let appServices: [SDLAppServiceCapability] = capabilities.appServices
 let aCapability = appServices.first;
 
 // This won't be nil. It will tell you why a service is in the list of updates
-let capabilityReason = aCapability.updateReason;
+let capabilityReason = aCapability.updateReason
 
 // The app service record will give you access to a service's generated id, which can be used to address the service directly (see below), it's manifest, used to see what data it supports, whether or not the service is published (if it's not, it was just removed and should not be addressed), and whether or not the service is the active service for its service type (only one service can be active for each type)
-let serviceRecord = aCapability.updatedAppServiceRecord;
+let serviceRecord = aCapability.updatedAppServiceRecord
 ```
 !@
 
@@ -259,7 +259,10 @@ Your app may need special permissions to use the RPCs that route to app service 
 @![iOS]
 ##### Objective-C
 ```objc
-SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameOk moduleType:SDLModuleTypeAudio];
+SDLButtonPress *buttonPress = [[SDLButtonPress alloc] init];
+buttonPress.buttonName = SDLButtonNameOk;
+buttonPress.moduleType = SDLModuleTypeAudio;
+buttonPress.buttonPressMode = SDLButtonPressModeShort;
 
 [self.sdlManager sendRequest:buttonPress withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if (!response || !response.success.boolValue) {
@@ -274,9 +277,13 @@ SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButt
 
 ##### Swift
 ```swift
-let buttonPress = SDLButtonPress(buttonName: .ok, moduleType: .audio)
-sdlManager.send(request: getServiceData) { (req, res, err) in
-    guard let response = res as? SDLButtonPressResponse, response.success.boolValue == true, err == nil else { return }
+let buttonPress = SDLButtonPress()
+buttonPress.buttonName = .ok
+buttonPress.moduleType = .audio
+buttonPress.buttonPressMode = .short
+
+sdlManager.send(request: buttonPress) { (req, res, err) in
+    guard let response = res as? SDLButtonPressResponse, response.success.boolValue == true else { return }
 
     <#Use the response#>
 }
@@ -310,7 +317,7 @@ Actions are generic URI-based strings sent to any app service (active or not). Y
 @![iOS]
 ##### Objective-C
 ```objc
-SDLPerformAppServiceInteraction *performAction = [[SDLPerformAppServiceInteraction alloc] initWithServiceURI:@"sdlexample://x-callback-url/showText?x-source=MyApp&text=My%20Custom%20String" serviceID: <#Previously Retrived ServiceID#> originApp: <#Your App Id#> requestServiceActive: NO];
+SDLPerformAppServiceInteraction *performAction = [[SDLPerformAppServiceInteraction alloc] initWithServiceUri:@"<#sdlexample://x-callback-url/showText?x-source=MyApp&text=My%20Custom%20String#>" serviceID:@"<#Previously Retrived ServiceID#>" originApp:@"<#Your App Id#>" requestServiceActive:NO];
 [self.sdlManager sendRequest:performAction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if (!response || !response.success.boolValue) {
         SDLLogE(@"Error sending perform action: Req %@, Res %@, err %@", request, response, error);
@@ -324,10 +331,9 @@ SDLPerformAppServiceInteraction *performAction = [[SDLPerformAppServiceInteracti
 
 ##### Swift
 ```swift
-let performAction = SDLPerformAppServiceInteraction(serviceUri: "sdlexample://x-callback-url/showText?x-source=MyApp&text=My%20Custom%20String", serviceID: <#Previously Retrived ServiceID#>, originApp: <#Your App Id#>, requestServiceActive: false)
+let performAction = SDLPerformAppServiceInteraction(serviceUri: "<#sdlexample://x-callback-url/showText?x-source=MyApp&text=My%20Custom%20String#>", serviceID: "<#Previously Retrived ServiceID#>", originApp: "<#Your App Id#>", requestServiceActive: false)
 sdlManager.send(request: performAction) { (req, res, err) in
     guard let response = res as? SDLPerformAppServiceInteractionResponse else { return }
-
     <#Check the error and response#>
 }
 ```
