@@ -44,20 +44,19 @@ let subscribedObserver = sdlManager.systemCapabilityManager.subscribe(capability
 ```java
 // Grab the capability once
 sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.APP_SERVICES, new OnSystemCapabilityListener() {
-    @Override
-    public void onCapabilityRetrieved(Object capability) {
-        AppServicesCapabilities servicesCapabilities = (AppServicesCapabilities) capability;
-    }
+	@Override
+	public void onCapabilityRetrieved(Object capability) {
+		AppServicesCapabilities servicesCapabilities = (AppServicesCapabilities) capability;
+	}
 
-    @Override
-    public void onError(String info) {
-        <# Handle Error #>
-    }
-});
-
+	@Override
+	public void onError(String info) {
+        <#Handle Error#>
+	}
+}, false);
 ...
 
-// Subscribe to updates
+// Subscribe to capability updates
 sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapabilityType.APP_SERVICES, new OnSystemCapabilityListener() {
     @Override
     public void onCapabilityRetrieved(Object capability) {
@@ -66,7 +65,7 @@ sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapa
 
     @Override
     public void onError(String info) {
-        <# Handle Error #>
+        <#Handle Error#>
     }
 });
 ```
@@ -223,14 +222,14 @@ getAppServiceData.setSubscribe(true);
 getAppServiceData.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
-        if (response != null) {
+        if (response != null){
             GetAppServiceDataResponse serviceResponse = (GetAppServiceDataResponse) response;
             MediaServiceData mediaServiceData = serviceResponse.getServiceData().getMediaServiceData();
         }
     }
     @Override
     public void onError(int correlationId, Result resultCode, String info){
-        <#Handle Error#>
+        <# Handle Error #>
     }
 });
 sdlManager.sendRPC(getAppServiceData);
