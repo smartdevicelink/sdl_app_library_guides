@@ -79,17 +79,17 @@ ServiceEncryptionListener serviceEncryptionListener = new ServiceEncryptionListe
 !@
 
 ## Setting Optional Encryption
-If you want to encrypt a specific RPC, you must configure the payload protected status of the RPC before you send it to the head unit. In order to send RPCs with optional encryption you must call `startRPCEncryption` on the `sdlManager` to make sure the encryption manager gets started correctly. The best place to put `startRPCEncryption` is in the successful callback of @![iOS]`startWithReadyHandler`.!@@![android]the `SdlManagerListener`'s `onStart` method.!@
+If you want to encrypt a specific RPC, you must configure the payload protected status of the RPC before you send it to the head unit. In order to send RPCs with optional encryption you must call `startRPCEncryption` on the `sdlManager` to make sure the encryption manager gets started correctly. The best place to put `startRPCEncryption` is in the successful callback of @![iOS]`startWithReadyHandler`.!@@![android,javaSE,javaEE]the `SdlManagerListener`'s `onStart` method.!@
 
 @![iOS]
 ##### Objective-C
 ```objc
-[self.sdlManger startRPCEncryption];
+[self.sdlManager startRPCEncryption];
 ```
 
 ##### Swift
 ```swift
-self.sdlManger.startRPCEncryption()
+sdlManager.startRPCEncryption()
 ```
 !@
 
