@@ -229,7 +229,7 @@ getAppServiceData.setOnRPCResponseListener(new OnRPCResponseListener() {
     }
     @Override
     public void onError(int correlationId, Result resultCode, String info){
-        <# Handle Error #>
+        <#Handle Error#>
     }
 });
 sdlManager.sendRPC(getAppServiceData);
