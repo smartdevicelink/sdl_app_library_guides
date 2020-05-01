@@ -6,7 +6,7 @@ The @![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ RPC allows y
 !!!
 
 ## Checking if Dial Number is Available
-@![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ is a newer RPC, so there is a possibility that not all head units will support it. To find out if the RPC is supported by the head unit, check the system capability manager's @![iOS]`hmiCapabilities.phoneCall`!@ @![android,javaSE,javaEE]`hmiCapabilities.isPhoneCallAvailable()`!@ property after the manager has been started successfully.
+@![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ is a newer RPC, so there is a possibility that not all head units will support it. Once you have successfully connecting to the module, you can access the phone capability property on the @![iOS]`SDLManager.systemCapabilityManager`!@@![android, javaSE, javaEE]`sdlManager.getSystemCapabilityManager`!@ instance.
 
 @![iOS]
 ##### Objective-C
