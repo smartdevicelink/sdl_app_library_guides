@@ -134,10 +134,11 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_AUDIO_PASS_THRU, new OnRPC
 
 #### Format of Audio Data
 The format of audio data is described as follows:
-- It does not include a header (such as a RIFF header) at the beginning.
-- The audio sample is in linear PCM format.
-- The audio data includes only one channel (i.e. monaural).
-- For bit rates of 8 bits, the audio samples are unsigned. For bit rates of 16 bits, the audio samples are signed and are in little-endian.
+
+* It does not include a header (such as a RIFF header) at the beginning.
+* The audio sample is in linear PCM format.
+* The audio data includes only one channel (i.e. monaural).
+* For bit rates of 8 bits, the audio samples are unsigned. For bit rates of 16 bits, the audio samples are signed and are in little-endian.
 
 ## Ending Audio Capture
 @![iOS]`SDLPerformAudioPassThru`!@@![android,javaSE,javaEE]`PerformAudioPassThru`!@ is a request that works in a different way than other RPCs. For most RPCs, a request is followed by an immediate response, with whether that RPC was successful or not. This RPC, however, will only send out the response when the audio pass thru has ended.
