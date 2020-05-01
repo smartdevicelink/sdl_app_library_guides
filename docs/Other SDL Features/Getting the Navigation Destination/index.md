@@ -45,7 +45,7 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.NAVIG
 	@Override
 	public void onCapabilityRetrieved(Object capability) {
 		NavigationCapability navCapability = (NavigationCapability) capability;
-		boolean isNavigationSupported = navCapability != null && navCapability.getWayPointsEnabled();
+		Boolean isNavigationSupported = navCapability != null && navCapability.getWayPointsEnabled();
 		// If navigation is supported, send the `GetWayPoints` RPC
 	}
 
