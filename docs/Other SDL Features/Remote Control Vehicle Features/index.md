@@ -161,16 +161,17 @@ sdlManager.systemCapabilityManager.subscribe(capabilityType: .remoteControl) { (
 @![android,javaEE,javaSE]
 ```java
 sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.REMOTE_CONTROL, new OnSystemCapabilityListener() {
-    @Override
-    public void onCapabilityRetrieved(Object capability) {
-        RemoteControlCapabilities remoteControlCapabilities = (RemoteControlCapabilities) capability;
-    }
+	@Override
+	public void onCapabilityRetrieved(Object capability) {
+		RemoteControlCapabilities remoteControlCapabilities = (RemoteControlCapabilities) capability;
+        <#Save the remote control capabilities#>
+	}
 
-    @Override
-    public void onError(int correlationId, Result resultCode, String info) {
-        <# Handle Error #>
-    }
-});
+	@Override
+	public void onError(String info) {
+        <#Handle Error#>
+	}
+}, false);
 ```
 !@
 

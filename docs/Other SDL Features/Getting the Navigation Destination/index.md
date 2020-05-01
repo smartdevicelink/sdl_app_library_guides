@@ -42,18 +42,35 @@ sdlManager.systemCapabilityManager.updateCapabilityType(.navigation) { (error, s
 @![android, javaSE, javaEE]
 ```java
 sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.NAVIGATION, new OnSystemCapabilityListener() {
-    @Override
-    public void onCapabilityRetrieved(Object capability) {
-        NavigationCapability navCapability = (NavigationCapability) capability;
-        boolean isNavigationSupported = navCapability != null && navCapability.getWayPointsEnabled();
-    }
+	@Override
+	public void onCapabilityRetrieved(Object capability) {
+		NavigationCapability navCapability = (NavigationCapability) capability;
+		boolean isNavigationSupported = navCapability != null && navCapability.getWayPointsEnabled();
+		// If navigation is supported, send the `GetWayPoints` RPC
+	}
 
-    @Override
-    public void onError(String info) {
-        HMICapabilities hmiCapabilities = (HMICapabilities) sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.HMI);
-        boolean isNavigationSupported = hmiCapabilities.isNavigationAvailable();
-    }
-});
+	@Override
+	public void onError(String info) {
+		// Perform a fallback check because the module does not support the navigation capability
+		isNavigationAvailable();
+	}
+}, false);
+
+private void isNavigationAvailable() {
+	HMICapabilities hmiCapabilities = (HMICapabilities)sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.HMI, new OnSystemCapabilityListener() {
+		@Override
+		public void onCapabilityRetrieved(Object capability) {
+			HMICapabilities hmiCapabilities = (HMICapabilities) capability;
+			Boolean isDialNumberSupported = hmiCapabilities.isNavigationAvailable();
+			// If navigation is supported, send the `GetWayPoints` RPC
+		}
+
+		@Override
+		public void onError(String info) {
+			// Navigation is not supported
+		}
+	}, false);
+}
 ```
 !@
 

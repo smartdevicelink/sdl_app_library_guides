@@ -8,7 +8,37 @@ SDL does not support an open microphone. However, SDL is working on wake-word su
 !!!
 
 ## Starting Audio Capture
-To initiate audio capture, first construct a @![iOS]`SDLPerformAudioPassThru`!@@![android,javaSE,javaEE]`PerformAudioPassThru`!@ request. You must use a sampling rate, bit rate, and audio type supported by the head unit. To get the head unit's supported audio capture capabilities, check the @![iOS]`SDLSystemCapabilityManager.audioPassThruCapabilities`!@@![android,javaSE,javaEE] `sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.AUDIO_PASSTHROUGH)`!@ after successfully connecting to the head unit.
+To initiate audio capture, first construct a @![iOS]`SDLPerformAudioPassThru`!@@![android,javaSE,javaEE]`PerformAudioPassThru`!@ request. You must use a sampling rate, bit rate, and audio type supported by the head unit. Once you have successfully connecting to the module, you can access these properties on the @![iOS]`SDLManager.systemCapabilityManager`!@@![android, javaSE, javaEE]`sdlManager.getSystemCapabilityManager`!@ instance.
+
+@![iOS]
+##### Objective-C
+```objc
+NSArray<SDLAudioPassThruCapabilities *> *audioPassThruCapabilities = self.sdlManager.systemCapabilityManager.audioPassThruCapabilities;
+```
+
+##### Swift
+```swift
+let audioPassThruCapabilities = sdlManager.systemCapabilityManager.audioPassThruCapabilities
+```
+!@
+
+@![android, javaSE, javaEE]
+```java
+sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.AUDIO_PASSTHROUGH, new OnSystemCapabilityListener() {
+	@Override
+	public void onCapabilityRetrieved(Object capability) {
+		List<AudioPassThruCapabilities> audioPassThruCapabilities = (List<AudioPassThruCapabilities>) capability;
+	}
+
+	@Override
+	public void onError(String info) {
+        <#Handle Error#>
+	}
+}, false);
+```
+!@
+
+The module may return one or multiple supported audio pass thru capabilities. Each capability will have the following properties:
 
 | Audio Pass Thru Capability | Parameter Name  |  Description |
 | ------------- | ------------- | ------------- |

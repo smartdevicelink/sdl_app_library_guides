@@ -41,11 +41,35 @@ sdlManager.systemCapabilityManager.updateCapabilityType(.phoneCall) { (error, sy
 
 @![android,javaSE,javaEE]
 ```java
-HMICapabilities hmiCapabilities = (HMICapabilities)sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.HMI);
-if (hmiCapabilities.isPhoneCallAvailable()) {
-    // DialNumber supported
-} else {
-    // DialNumber is not supported
+sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.PHONE_CALL, new OnSystemCapabilityListener() {
+	@Override
+	public void onCapabilityRetrieved(Object capability) {
+		PhoneCapability phoneCapability = (PhoneCapability) capability;
+		Boolean isDialNumberSupported = ((PhoneCapability) capability).getDialNumberEnabled().booleanValue();
+		// If making phone calls is supported, send the `DialNumber` RPC
+	}
+
+	@Override
+	public void onError(String info) {
+		// Perform a fallback check because the module does not support the phone capability
+		isPhoneCallAvailable();
+	}
+}, false);
+
+private void isPhoneCallAvailable() {
+	HMICapabilities hmiCapabilities = (HMICapabilities)sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.HMI, new OnSystemCapabilityListener() {
+		@Override
+		public void onCapabilityRetrieved(Object capability) {
+			HMICapabilities hmiCapabilities = (HMICapabilities) capability;
+			Boolean isDialNumberSupported = hmiCapabilities.isPhoneCallAvailable();
+			// If making phone calls is supported, send the `DialNumber` RPC
+		}
+
+		@Override
+		public void onError(String info) {
+			// DialNumber is not supported
+		}
+	}, false);
 }
 ```
 !@

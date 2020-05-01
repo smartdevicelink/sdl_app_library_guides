@@ -48,15 +48,32 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.NAVIG
 	@Override
 	public void onCapabilityRetrieved(Object capability) {
 		NavigationCapability navCapability = (NavigationCapability) capability;
-		Boolean isNavigationSupported = navCapability.getSendLocationEnabled();
+		boolean isNavigationSupported = navCapability != null && navCapability.getWayPointsEnabled();
+		// If navigation is supported, send the `SendLocation` RPC
 	}
 
 	@Override
 	public void onError(String info) {
-		HMICapabilities hmiCapabilities = (HMICapabilities) sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.HMI);
-		Boolean isNavigationSupported = hmiCapabilities.isNavigationAvailable();
+		// Perform a fallback check because the module does not support the navigation capability
+		isNavigationAvailable();
 	}
-});
+}, false);
+
+private void isNavigationAvailable() {
+	HMICapabilities hmiCapabilities = (HMICapabilities)sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.HMI, new OnSystemCapabilityListener() {
+		@Override
+		public void onCapabilityRetrieved(Object capability) {
+			HMICapabilities hmiCapabilities = (HMICapabilities) capability;
+			Boolean isDialNumberSupported = hmiCapabilities.isNavigationAvailable();
+			// If navigation is supported, send the `SendLocation` RPC
+		}
+
+		@Override
+		public void onError(String info) {
+			// Navigation is not supported
+		}
+	}, false);
+}
 ```
 !@
 
