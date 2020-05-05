@@ -16,12 +16,13 @@ This repository has additional markdown customizations to permit content to be i
 
 #### Valid Tags
 
-| Platform         | Tag               |
-| ---------------- | ----------------- |
-| iOS              | @![iOS] ------ !@ |
-| Android          | @![android] -- !@ |
-| JavaEE           | @![javaEE] --- !@ |
-| JavaSE           | @![javaSE] --- !@ |
+| Platform         | Tag                |
+| ---------------- | ------------------ |
+| iOS              | @![iOS] ------- !@ |
+| Android          | @![android] --- !@ |
+| JavaEE           | @![javaEE] ---- !@ |
+| JavaSE           | @![javaSE] ---- !@ |
+| JavaScript       | @![javascript]- !@ |
 
 #### How to Use Inline Tags
 Inline tags allow you to create content that is only rendered for the specified platforms within a guide that is available on multiple platforms. For example, if you have a guide available on Android, JavaSE, and JavaEE but not on iOS (see below How to Use Configuration Tags for how to configure guide availability), then you can use inline tags to render some content for Android that won't be rendered for JavaSE or JavaEE, or visa versa.
