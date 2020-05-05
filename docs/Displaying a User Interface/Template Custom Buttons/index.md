@@ -11,8 +11,6 @@ To create a soft button using the @![iOS]`SDLScreenManager`!@@![android, javaSE,
 
 There are three different ways to create a soft button: with only text, with only an image, or with both text and an image. If creating a button with an image, we recommend that you template the image so its color works well with both the day and night modes of the head unit. For more information on templating images please see the [Template Images](Displaying a User Interface/Template Images) guide. 
 
-![Generic HMI](assets/Generic_non_media.png)
-
 #### Text Only Soft Buttons
 ![Generic - Text Only Soft Buttons](assets/Generic_Text_Only_Soft_Buttons.png)
 
