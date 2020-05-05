@@ -14,6 +14,8 @@ There are three different ways to create a soft button: with only text, with onl
 ![Generic HMI](assets/Generic_non_media.png)
 
 #### Text Only Soft Buttons
+![Generic - Text Only Soft Buttons](assets/Generic_Text_Only_Soft_Buttons.png)
+
 @![iOS]
 ##### Objective-C
 ```objc
@@ -79,6 +81,8 @@ sdlManager.getScreenManager().commit(new CompletionListener() {
 
 #### Image Only Soft Buttons
 You can use the @![iOS]`SDLSystemCapabilityManager`!@@![android,javaSE,javaEE]`SystemCapabilityManager`!@ to check if the HMI supports soft buttons with images. If you send image-only buttons to a HMI that does not support images, then the library will not send the buttons as they will be rejected by the head unit. If all your soft buttons have text in addition to images, the library will send the text-only buttons if the head unit does not support images.
+
+![Generic - Image Only Soft Buttons](assets/Generic_Image_Only_Soft_Buttons.png)
 
 @![iOS]
 ##### Objective-C
@@ -164,6 +168,8 @@ sdlManager.getScreenManager().commit(new CompletionListener() {
 !@
 
 #### Image and Text Soft Buttons
+![Generic - Text and Image Soft Buttons](assets/Generic_Text_And_Image_Soft_Buttons.png)
+
 @![iOS]
 ##### Objective-C
 ```objc
