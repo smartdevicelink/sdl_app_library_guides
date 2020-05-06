@@ -87,8 +87,8 @@ This is the main screen of your SDL app. If you get to this point, your SDL app 
 If you are having issues with connecting to an emulator or head unit, please see our [troubleshooting tips](Getting Started/Example Apps) in the Example Apps section of the guide. 
 !@
 
-@![javaSE,javaEE]
-Your SDL !@@![javaSE]embedded!@@![javaEE]cloud!@@![javaSE,javaEE] app will only work with head units that support RPC Spec v5.1+.
+@![javaSE,javaEE,javascript]
+Your SDL !@@![javaSE]embedded!@@![javaEE]cloud!@@![javascript]cloud/webengine!@@![javaSE,javaEE,javascript] app will only work with head units that support RPC Spec v5.1+.
 
 ## Configuring the Connection
 ### Generic SDL Core
