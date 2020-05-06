@@ -2,7 +2,7 @@
 In order to build your app on a SmartDeviceLink (SDL) Core, the SDL software development kit (SDK) must be installed in your app. The following steps will guide you through adding the SDL SDK to your workspace and configuring the environment.
 
 !!! NOTE
-The SDL SDK is currently supported on @![iOS]iOS 8.0!@@![android]Android 2.2 (Froyo)!@@![javaSE, javaEE]Java 7 (1.7)!@ and above.
+The SDL SDK is currently supported on @![iOS]iOS 8.0!@@![android]Android 2.2 (Froyo)!@@![javaSE, javaEE]Java 7 (1.7)!@@![javascript]Node 9.11.2!@ and above.
 !!!
 
 ## Install SDL SDK
@@ -188,4 +188,22 @@ from within the JavaEE directory and a JAR should be generated in the build/libs
 !!! NOTE
 Glassfish 5.0.0 only works on JDK 8 and lower.
 !!!
+!@
+
+@![javascript]
+The SDL JavaScript Suite comes with prebuilt bundles of the library. There is a vanilla JavaScript distribution of the library as well as one for Node.js. They are located in the lib/js/dist and lib/node/dist directories respectively. To use one of these bundles, include one of the following somewhere in your project:
+
+        const SDL = require('lib/js/SDL.min.js');
+OR
+
+        const SDL = require('lib/node/SDL.min.js');
+
+### Building The JavaScript Library    
+To build the library bundle from the source code, first clone the [SDL JavaScript Suite](https://github.com/smartdevicelink/sdl_javascript_suite) repository then, simply call:
+
+```
+npm run build
+```
+
+from within the sdl_javascript_suite directory and `SDL.min.js` files should be generated in the libs/js/dist and lib/node/dist folder.
 !@
