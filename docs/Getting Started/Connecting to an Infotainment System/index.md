@@ -5,7 +5,7 @@ In order to view your SDL app, you must connect your device to a head unit that 
 You will have to configure different connection types based on whether you are connecting to a head unit or an emulator. When connecting to a head unit, you must configure !@@![iOS]an `iAP`!@@![android]a `Multiplex`!@@![iOS,android] connection. Likewise, when connecting to an emulator, a `TCP` connection must be configured.
 !@
 
-@![iOS,android]
+@![iOS,android,javascript]
 ## Connecting to an Emulator
 To connect to an emulator such as [Manticore](https://smartdevicelink.com/resources/manticore/) or a local Ubuntu [SDL Core](https://github.com/smartdevicelink/sdl_core)-based emulator you must implement a TCP connection when configuring your SDL app. 
 
@@ -33,6 +33,12 @@ let lifecycleConfiguration = SDLLifecycleConfiguration(appName: "<#App Name#>", 
 ```java
 // Set the SdlManager.Builder transport
 builder.setTransportType(new TCPTransportConfig(<IP ADDRESS>, <PORT>, false));
+```
+!@
+
+@![javascript]
+```javascript
+const lifecycleConfiguration = new SDL.manager.LifecycleConfig().setTransportConfig(new SDL.transport.TcpClientConfig(<IP Address>, <PORT>));
 ```
 !@
 
@@ -65,9 +71,9 @@ builder.setTransportType(new MultiplexTransportConfig(context, <APP ID>));
 If you are testing with a vehicle head unit or TDK and wish to see realtime debug logs in the Xcode console, you should use [wireless debugging](https://developer.apple.com/videos/play/wwdc2017/404/).
 !@ 
 
-@![iOS,android]
+@![iOS,android,javascript]
 ## Running the SDL App
-Build and run the project in !@@![iOS]Xcode!@@![android]Android Studio!@@![iOS,android], targeting the device or simulator that you want to test your app with. Your app should compile and launch on your device of choosing. If your connection configuration is setup correctly, you should see your SDL app icon appear on the HMI screen:
+Build and run the project in !@@![iOS]Xcode!@@![android]Android Studio!@@![javascript]Node.js!@@![iOS,android,javascript], targeting the device or simulator that you want to test your app with. Your app should compile and launch on your device of choosing. If your connection configuration is setup correctly, you should see your SDL app icon appear on the HMI screen:
 
 ![Generic - SDL Apps Tab](assets/Generic_apps_screen.png)
 
