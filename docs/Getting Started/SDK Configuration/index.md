@@ -1,6 +1,6 @@
 # SDK Configuration
 
-@![iOS, android, javaSE, javaEE]
+@![iOS, android, javaSE, javaEE, javascript]
 ## 1. Get an App Id
 An app id is required for production level apps. The app id gives your app special permissions to access vehicle data. If your app does not need to access vehicle data, a dummy app id (i.e. creating a fake id like "1234") is sufficient during the development stage. However, you must get an app id before releasing the app to the public.
 
