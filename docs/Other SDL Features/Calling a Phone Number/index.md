@@ -42,35 +42,24 @@ sdlManager.systemCapabilityManager.updateCapabilityType(.phoneCall) { (error, sy
 @![android,javaSE,javaEE]
 ```java
 sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.PHONE_CALL, new OnSystemCapabilityListener() {
-	@Override
-	public void onCapabilityRetrieved(Object capability) {
-		PhoneCapability phoneCapability = (PhoneCapability) capability;
-		Boolean isDialNumberSupported = ((PhoneCapability) capability).getDialNumberEnabled().booleanValue();
-		// If making phone calls is supported, send the `DialNumber` RPC
-	}
+    @Override
+    public void onCapabilityRetrieved(Object capability) {
+        boolean isDialNumberSupported = false;
+        PhoneCapability phoneCapability = (PhoneCapability) capability;
+        if (phoneCapability != null) {
+            isDialNumberSupported = phoneCapability.getDialNumberEnabled();
+        } else {
+            isDialNumberSupported = sdlManager.getSystemCapabilityManager().isCapabilitySupported(SystemCapabilityType.PHONE_CALL);
+        }
 
-	@Override
-	public void onError(String info) {
-		// Perform a fallback check because the module does not support the phone capability
-		isPhoneCallAvailable();
-	}
+        <#If making phone calls is supported, send the `DialNumber` RPC#>
+    }
+
+    @Override
+    public void onError(String info) {
+        <#Handle Error#>
+    }
 }, false);
-
-private void isPhoneCallAvailable() {
-	HMICapabilities hmiCapabilities = (HMICapabilities)sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.HMI, new OnSystemCapabilityListener() {
-		@Override
-		public void onCapabilityRetrieved(Object capability) {
-			HMICapabilities hmiCapabilities = (HMICapabilities) capability;
-			Boolean isDialNumberSupported = hmiCapabilities.isPhoneCallAvailable();
-			// If making phone calls is supported, send the `DialNumber` RPC
-		}
-
-		@Override
-		public void onError(String info) {
-			// DialNumber is not supported
-		}
-	}, false);
-}
 ```
 !@
 
@@ -93,17 +82,17 @@ SDLDialNumber *dialNumber = [[SDLDialNumber alloc] initWithNumber: @"1238675309"
     SDLDialNumberResponse* dialNumber = (SDLDialNumberResponse *)response;
     SDLResult *resultCode = dialNumber.resultCode;
     if (!resultCode.success.boolValue) {
-		if ([resultCode isEqualToEnum:SDLResultRejected]) {
-	        <#DialNumber was rejected. Either the call was sent and cancelled or there is no device connected#>
-	    } else if ([resultCode isEqualToEnum:SDLResultDisallowed]) {
-	        <#Your app is not allowed to use DialNumber#>
-	    } else { 	
-	    	<#Some unknown error has occurred#>
-	    }
-	    return;
+        if ([resultCode isEqualToEnum:SDLResultRejected]) {
+            <#DialNumber was rejected. Either the call was sent and cancelled or there is no device connected#>
+        } else if ([resultCode isEqualToEnum:SDLResultDisallowed]) {
+            <#Your app is not allowed to use DialNumber#>
+        } else {
+            <#Some unknown error has occurred#>
+        }
+        return;
     }
 
-	<#DialNumber successfully sent#>
+    <#DialNumber successfully sent#>
 }];
 ```
 
