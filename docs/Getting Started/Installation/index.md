@@ -45,7 +45,7 @@ You can install this library using [Accio](https://github.com/JamitLabs/Accio), 
 2\. Add the following line to the dependencies array of your package file. We suggest always using the latest release of the SDL library. 
 
 ```swift
-.package(url: "https://github.com/smartdevicelink/sdl_ios.git", .upToNextMajor(from: "<#Version#>")),
+.package(url: "https://github.com/smartdevicelink/sdl_ios.git", .upToNextMajor(from: "<#SDL Version#>")),
 ```
 
 !!! NOTE
