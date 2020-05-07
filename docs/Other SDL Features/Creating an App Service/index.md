@@ -270,6 +270,7 @@ UIImage *image = [UIImage imageNamed:@"<#Your image name#>"];
 if (image == nil) { return; }
 SDLArtwork *artwork = [SDLArtwork artworkWithImage:image asImageFormat:SDLArtworkImageFormatPNG];
 
+__weak typeof(self) weakSelf = self;
 [self.sdlManager.fileManager uploadFile:artwork completionHandler:^(BOOL success, NSUInteger bytesAvailable, NSError * _Nullable error) {
     // Make sure the image is uploaded to the system before publishing your data
     SDLLocationCoordinate *coordinate = [[SDLLocationCoordinate alloc] initWithLatitudeDegrees:42 longitudeDegrees:43];
@@ -284,7 +285,7 @@ SDLArtwork *artwork = [SDLArtwork artworkWithImage:image asImageFormat:SDLArtwor
     SDLAppServiceData *appServiceData = [[SDLAppServiceData alloc] initWithNavigationServiceData:navServiceData serviceId:@"<#Your saved serviceID#>"];
 
     SDLOnAppServiceData *onAppServiceData = [[SDLOnAppServiceData alloc] initWithServiceData:appServiceData];
-    [self.sdlManager sendRPC:onAppServiceData];
+    [weakSelf.sdlManager sendRPC:onAppServiceData];
 }];
 ```
 
@@ -293,7 +294,7 @@ SDLArtwork *artwork = [SDLArtwork artworkWithImage:image asImageFormat:SDLArtwor
 guard let image = UIImage(named: "<#Your image name#>") else { return }
 let artwork = SDLArtwork(image: image, persistent: false, as: .PNG)
 
-sdlManager.fileManager.upload(file: artwork) { (success, bytesAvailable, error) in
+sdlManager.fileManager.upload(file: artwork) { [weak self] (success, bytesAvailable, error) in
     guard success else { return }
 
     // Make sure the image is uploaded to the system before publishing your data
@@ -309,7 +310,7 @@ sdlManager.fileManager.upload(file: artwork) { (success, bytesAvailable, error) 
     let appServiceData = SDLAppServiceData(navigationServiceData: navServiceData, serviceId: "<#Your saved serviceID#>")
 
     let onAppServiceData = SDLOnAppServiceData(serviceData: appServiceData)
-    self.sdlManager.sendRPC(onAppServiceData)
+    self?.sdlManager.sendRPC(onAppServiceData)
 }
 ```
 !@
@@ -363,6 +364,7 @@ UIImage *image = [UIImage imageNamed:@"<#Your image name#>"];
 if (image == nil) { return; }
 SDLArtwork *artwork = [SDLArtwork artworkWithImage:image asImageFormat:SDLArtworkImageFormatPNG];
 
+__weak typeof(self) weakSelf = self;
 [self.sdlManager.fileManager uploadFile:artwork completionHandler:^(BOOL success, NSUInteger bytesAvailable, NSError * _Nullable error) {
     // Make sure the image is uploaded to the system before publishing your data
     SDLWeatherData *weatherData = [[SDLWeatherData alloc] init];
@@ -373,7 +375,7 @@ SDLArtwork *artwork = [SDLArtwork artworkWithImage:image asImageFormat:SDLArtwor
     SDLAppServiceData *appServiceData = [[SDLAppServiceData alloc] initWithWeatherServiceData:weatherServiceData serviceId:@"<#Your saved serviceID#>"];
 
     SDLOnAppServiceData *onAppServiceData = [[SDLOnAppServiceData alloc] initWithServiceData:appServiceData];
-    [self.sdlManager sendRPC:onAppServiceData];
+    [weakSelf.sdlManager sendRPC:onAppServiceData];
 }];
 ```
 
@@ -382,7 +384,7 @@ SDLArtwork *artwork = [SDLArtwork artworkWithImage:image asImageFormat:SDLArtwor
 guard let image = UIImage(named: "<#Your image name#>") else { return }
 let artwork = SDLArtwork(image: image, persistent: false, as: .PNG)
 
-sdlManager.fileManager.upload(file: artwork) { (success, bytesAvailable, error) in
+sdlManager.fileManager.upload(file: artwork) { [weak self] (success, bytesAvailable, error) in
     // Make sure the image is uploaded to the system before publishing your data
     let weatherData = SDLWeatherData()
     weatherData.weatherIcon = SDLImage(name: artwork.name, isTemplate: true)
@@ -392,7 +394,7 @@ sdlManager.fileManager.upload(file: artwork) { (success, bytesAvailable, error) 
     let appServiceData = SDLAppServiceData(weatherServiceData: weatherServiceData, serviceId: "<#Your saved serviceID#>")
 
     let onAppServiceData = SDLOnAppServiceData(serviceData: appServiceData)
-    self.sdlManager.sendRPC(onAppServiceData)
+    self?.sdlManager.sendRPC(onAppServiceData)
 }
 ```
 !@
@@ -442,6 +444,7 @@ First, you will need to @![iOS]register for `GetAppServiceDataRequest`s notifica
 @![iOS]
 ##### Objective-C
 ```objc
+__weak typeof(self) weakSelf = self;
 [self.sdlManager subscribeToRPC:SDLDidReceiveGetAppServiceDataRequest withBlock:^(__kindof SDLRPCMessage * _Nonnull message) {
     SDLGetAppServiceData *getAppServiceRequest = message;
 
@@ -451,13 +454,13 @@ First, you will need to @![iOS]register for `GetAppServiceDataRequest`s notifica
     response.success = @YES;
     response.resultCode = SDLResultSuccess;
     response.info = @"<#Use to provide more information about an error#>";
-    [self.sdlManager sendRPC:response];
+    [weakSelf.sdlManager sendRPC:response];
 }];
 ```
 
 ##### Swift
 ```swift
-sdlManager.subscribe(to: SDLDidReceiveGetAppServiceDataRequest) { (message) in
+sdlManager.subscribe(to: SDLDidReceiveGetAppServiceDataRequest) { [weak self] (message) in
     guard let getAppServiceRequest = message as? SDLGetAppServiceData else { return }
     
     // Send a response
@@ -466,7 +469,7 @@ sdlManager.subscribe(to: SDLDidReceiveGetAppServiceDataRequest) { (message) in
     response.success = true as NSNumber
     response.resultCode = .success
     response.info = "<#Use to provide more information about an error#>"
-    self.sdlManager.sendRPC(response)
+    self?.sdlManager.sendRPC(response)
 }
 ```
 !@
