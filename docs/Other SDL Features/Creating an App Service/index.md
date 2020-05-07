@@ -176,15 +176,15 @@ sdlManager.send(request: publishServiceRequest) { (req, res, err) in
 PublishAppService publishServiceRequest = new PublishAppService();
 publishServiceRequest.setAppServiceManifest(manifest);
 publishServiceRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
-	@Override
-	public void onResponse(int correlationId, RPCResponse response) {
-		<#Use the response#>
-	}
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        <#Use the response#>
+    }
 
-	@Override
-	public void onError(int correlationId, Result resultCode, String info){
-		<#Error Handling#>
-	}
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        <#Error Handling#>
+    }
 });
 sdlManager.sendRPC(publishServiceRequest);
 ```
@@ -266,13 +266,12 @@ sdlManager.sendRPC(onAppData);
 
 ##### Objective-C
 ```objc
-NSString *imageName = @"<#Your image name#>";
-UIImage *image = [UIImage imageNamed:imageName];
+UIImage *image = [UIImage imageNamed:@"<#Your image name#>"];
 if (image == nil) { return; }
+SDLArtwork *artwork = [SDLArtwork artworkWithImage:image asImageFormat:SDLArtworkImageFormatPNG];
 
-SDLArtwork *artwork = [SDLArtwork artworkWithImage:image name:imageName asImageFormat:SDLArtworkImageFormatJPG];
 [self.sdlManager.fileManager uploadFile:artwork completionHandler:^(BOOL success, NSUInteger bytesAvailable, NSError * _Nullable error) {
-    // Make sure the image is uploaded to the system before publishing your service
+    // Make sure the image is uploaded to the system before publishing your data
     SDLLocationCoordinate *coordinate = [[SDLLocationCoordinate alloc] initWithLatitudeDegrees:42 longitudeDegrees:43];
     SDLLocationDetails *location = [[SDLLocationDetails alloc] initWithCoordinate:coordinate];
     SDLNavigationInstruction *instruction = [[SDLNavigationInstruction alloc] initWithLocationDetails:location action:SDLNavigationActionTurn];
@@ -291,14 +290,13 @@ SDLArtwork *artwork = [SDLArtwork artworkWithImage:image name:imageName asImageF
 
 ##### Swift
 ```swift
-let imageName = "<#Your image name#>"
-guard let image = UIImage(named: imageName) else { return }
-let artwork = SDLArtwork(image: image, name: imageName, persistent: false, as: .JPG)
+guard let image = UIImage(named: "<#Your image name#>") else { return }
+let artwork = SDLArtwork(image: image, persistent: false, as: .PNG)
 
 sdlManager.fileManager.upload(file: artwork) { (success, bytesAvailable, error) in
     guard success else { return }
 
-    // Make sure the image is uploaded to the system before publishing your service
+    // Make sure the image is uploaded to the system before publishing your data
     let coordinate = SDLLocationCoordinate(latitudeDegrees: 42, longitudeDegrees: 43)
     let location = SDLLocationDetails(coordinate: coordinate)
     let instruction = SDLNavigationInstruction(locationDetails: location, action: .turn)
@@ -320,7 +318,6 @@ sdlManager.fileManager.upload(file: artwork) { (success, bytesAvailable, error) 
 ```java
 final SdlArtwork navInstructionArt = new SdlArtwork("turn", FileType.GRAPHIC_PNG, R.drawable.turn, true);
 
-// We have to send the image to the system before it's used in the app service.
 sdlManager.getFileManager().uploadFile(navInstructionArt, new CompletionListener() {
     @Override
     public void onComplete(boolean success) {
@@ -329,7 +326,8 @@ sdlManager.getFileManager().uploadFile(navInstructionArt, new CompletionListener
 
             LocationDetails locationDetails = new LocationDetails();
             locationDetails.setCoordinate(coordinate);
-
+            
+            // Make sure the image is uploaded to the system before publishing your data
             NavigationInstruction navigationInstruction = new NavigationInstruction(locationDetails, NavigationAction.TURN);
             navigationInstruction.setImage(navInstructionArt.getImageRPC());
 
@@ -361,14 +359,12 @@ sdlManager.getFileManager().uploadFile(navInstructionArt, new CompletionListener
 
 ##### Objective-C
 ```objc
-NSString *imageName = @"<#Your image name#>";
-UIImage *image = [UIImage imageNamed:imageName];
+UIImage *image = [UIImage imageNamed:@"<#Your image name#>"];
 if (image == nil) { return; }
+SDLArtwork *artwork = [SDLArtwork artworkWithImage:image asImageFormat:SDLArtworkImageFormatPNG];
 
-SDLArtwork *artwork = [SDLArtwork artworkWithImage:image name:imageName asImageFormat:SDLArtworkImageFormatJPG];
-
-// We have to send the image to the system before it's used in the app service.
 [self.sdlManager.fileManager uploadFile:artwork completionHandler:^(BOOL success, NSUInteger bytesAvailable, NSError * _Nullable error) {
+    // Make sure the image is uploaded to the system before publishing your data
     SDLWeatherData *weatherData = [[SDLWeatherData alloc] init];
     weatherData.weatherIcon = [[SDLImage alloc] initWithName:artwork.name isTemplate:YES];
 
@@ -383,12 +379,11 @@ SDLArtwork *artwork = [SDLArtwork artworkWithImage:image name:imageName asImageF
 
 ##### Swift
 ```swift
-let imageName = "<#Your image name#>"
-guard let image = UIImage(named: imageName) else { return }
-let artwork = SDLArtwork(image: image, name: imageName, persistent: false, as: .JPG)
+guard let image = UIImage(named: "<#Your image name#>") else { return }
+let artwork = SDLArtwork(image: image, persistent: false, as: .PNG)
 
-// We have to send the image to the system before it's used in the app service.
 sdlManager.fileManager.upload(file: artwork) { (success, bytesAvailable, error) in
+    // Make sure the image is uploaded to the system before publishing your data
     let weatherData = SDLWeatherData()
     weatherData.weatherIcon = SDLImage(name: artwork.name, isTemplate: true)
 
@@ -406,12 +401,11 @@ sdlManager.fileManager.upload(file: artwork) { (success, bytesAvailable, error) 
 ```java
 final SdlArtwork weatherImage = new SdlArtwork("sun", FileType.GRAPHIC_PNG, R.drawable.sun, true);
 
-// We have to send the image to the system before it's used in the app service.
-sdlManager.getFileManager().uploadFile(weatherImage, new CompletionListener() { 
+sdlManager.getFileManager().uploadFile(weatherImage, new CompletionListener() {
     @Override
     public void onComplete(boolean success) {
         if (success) {
-
+            // Make sure the image is uploaded to the system before publishing your data
             WeatherData weatherData = new WeatherData();
             weatherData.setWeatherIcon(weatherImage.getImageRPC());
 
