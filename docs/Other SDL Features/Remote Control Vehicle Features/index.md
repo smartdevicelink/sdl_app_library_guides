@@ -144,8 +144,8 @@ When connected to head units supporting RPC v6.0+, you should save this informat
 ##### Objective-C
 ```objc
 [self.sdlManager.systemCapabilityManager subscribeToCapabilityType:SDLSystemCapabilityTypeRemoteControl withUpdateHandler:^(SDLSystemCapability * _Nullable capability, BOOL subscribed, NSError * _Nullable error) {
-     if (!capability.remoteControlCapability) { return; }
-     <#Save the remote control capabilities#>
+    if (!capability.remoteControlCapability) { return; }
+    <#Save the remote control capabilities#>
 }];
 ```
 
@@ -161,16 +161,16 @@ sdlManager.systemCapabilityManager.subscribe(capabilityType: .remoteControl) { (
 @![android,javaEE,javaSE]
 ```java
 sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.REMOTE_CONTROL, new OnSystemCapabilityListener() {
-	@Override
-	public void onCapabilityRetrieved(Object capability) {
-		RemoteControlCapabilities remoteControlCapabilities = (RemoteControlCapabilities) capability;
+    @Override
+    public void onCapabilityRetrieved(Object capability) {
+        RemoteControlCapabilities remoteControlCapabilities = (RemoteControlCapabilities) capability;
         <#Save the remote control capabilities#>
-	}
+    }
 
-	@Override
-	public void onError(String info) {
+    @Override
+    public void onError(String info) {
         <#Handle Error#>
-	}
+    }
 }, false);
 ```
 !@
