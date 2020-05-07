@@ -24,15 +24,15 @@ let speechCapabilities = sdlManager.systemCapabilityManager.speechCapabilities
 @![android, javaSE, javaEE]
 ```java
 sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.SPEECH, new OnSystemCapabilityListener() {
-	@Override
-	public void onCapabilityRetrieved(Object capability) {
-		List<SpeechCapabilities> speechCapabilities = (List<SpeechCapabilities>) capability;
-	}
+    @Override
+    public void onCapabilityRetrieved(Object capability) {
+        List<SpeechCapabilities> speechCapabilities = (List<SpeechCapabilities>) capability;
+    }
 
-	@Override
-	public void onError(String info) {
+    @Override
+    public void onError(String info) {
         <#Handle Error#>
-	}
+    }
 }, false);
 ```
 !@
@@ -46,6 +46,8 @@ Below is a list of commonly supported speech capabilities.
 | File | A pre-recorded sound file |
 
 ### Creating Different Types of Speak Requests
+Once you know what speech capabilities are supported by the the module, you can create the speak requests.
+
 #### Text Phrase
 @![iOS]
 ##### Objective-C
