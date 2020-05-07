@@ -134,7 +134,6 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_AUDIO_PASS_THRU, new OnRPC
 
 #### Format of Audio Data
 The format of audio data is described as follows:
-
 * It does not include a header (such as a RIFF header) at the beginning.
 * The audio sample is in linear PCM format.
 * The audio data includes only one channel (i.e. monaural).

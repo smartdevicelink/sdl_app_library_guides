@@ -54,7 +54,7 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.NAVIG
 
 	@Override
 	public void onError(String info) {
-		// Perform a fallback check because the module does not support the navigation capability
+		// The module does not support the navigation capability
 		isNavigationAvailable();
 	}
 }, false);

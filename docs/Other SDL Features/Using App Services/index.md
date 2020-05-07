@@ -198,7 +198,7 @@ let subscribeServiceData = SDLGetAppServiceData(andSubscribeToAppServiceType: .m
 
 // Unsubscribe to service data previously subscribed
 let unsubscribeServiceData = SDLGetAppServiceData(appServiceType: .media)
-unsubscribeServiceData.subscribe = false as NSNumber
+unsubscribeServiceData.subscribe = NSNumber(false)
 
 // Get the service's data
 let getServiceData = SDLGetAppServiceData(appServiceType: .media)

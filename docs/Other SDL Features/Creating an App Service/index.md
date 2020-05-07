@@ -42,7 +42,7 @@ manifest.mediaServiceManifest = <#Code#> // Covered below
 ```swift
 let manifest = SDLAppServiceManifest(appServiceType: .media)
 manifest.serviceIcon = SDLImage(name:"Service Icon Name", isTemplate: false) // Previously uploaded service icon. This could be the same as your app icon.
-manifest.allowAppConsumers = true as NSNumber // Whether or not other apps can view your data in addition to the head unit. If set to `NO` only the head unit will have access to this data.
+manifest.allowAppConsumers = NSNumber(true) // Whether or not other apps can view your data in addition to the head unit. If set to `false` only the head unit will have access to this data.
 manifest.maxRPCSpecVersion = SDLMsgVersion(majorVersion: 5, minorVersion: 0, patchVersion: 0) // An *optional* parameter that limits the RPC spec versions you can understand to the provided version *or below*.
 manifest.handledRPCs = [] // If you add function ids to this *optional* parameter, you can support newer RPCs on older head units (that don't support those RPCs natively) when those RPCs are sent from other connected applications.
 manifest.mediaServiceManifest = <#Code#> // Covered below
@@ -443,7 +443,7 @@ If you choose to make your app service available to other apps, you will have to
 Handling app service subscribers is a two step process. First, you must @![iOS]register for notifications from!@ @![android,javaSE,javaEE]setup listeners for!@ the subscriber. Then, when you get a request, you will either have to send a response to the subscriber with the app service data or if you have no data to send, send a response with a relevant failure result code.
 
 #### Listening for Requests
-First, you will need to @![iOS]register for `GetAppServiceDataRequest`s notifications.!@@![android,javaSE,javaEE]setup a listener for `GetAppServiceDataRequest`s!@. Then, when you get the request you need to respond with your app service data. This means that you will need to store your current service data after your most recent update using `OnAppServiceData` (see the section **Update Your Service's Data**).
+First, you will need to @![iOS]register for `GetAppServiceDataRequest`s notifications.!@@![android,javaSE,javaEE]setup a listener for `GetAppServiceDataRequest`s!@. Then, when you get the request, you will need to respond with your app service data. Therefore, you will need to store your current service data after the most recent update using `OnAppServiceData` (see the section **Update Your Service's Data**).
 
 @![iOS]
 ##### Objective-C
@@ -484,7 +484,7 @@ sdlManager.addOnRPCRequestListener(FunctionID.GET_APP_SERVICE_DATA, new OnRPCReq
     public void onRequest(RPCRequest request) {
         GetAppServiceData getAppServiceData = (GetAppServiceData) request;
 
-         // Send a response
+        // Send a response
         GetAppServiceDataResponse response = new GetAppServiceDataResponse();
         response.setSuccess(true);
         response.setCorrelationID(getAppServiceData.getCorrelationID());
@@ -555,7 +555,7 @@ sdlManager.subscribe(to: SDLDidReceiveButtonPressRequest, observer: self, select
     let response = SDLButtonPressResponse()
 
     // These are very important, your response won't work properly without them.
-    response.success = true as NSNumber
+    response.success = NSNumber(true)
     response.resultCode = .success
     response.correlationID = interactionRequest.correlationID
     response.info = "<#Use to provide more information about an error#>"
@@ -652,7 +652,7 @@ sdlManager.subscribe(to: SDLDidReceivePerformAppServiceInteractionRequest, obser
     let response = SDLPerformAppServiceInteractionResponse(serviceSpecificResult: result)
 
     // These are very important, your response won't work properly without them.
-    response.success = true as NSNumber
+    response.success = NSNumber(true)
     response.resultCode = .success
     response.correlationID = interactionRequest.correlationID
 
@@ -743,4 +743,3 @@ UnpublishAppService unpublishAppService = new UnpublishAppService("<#The service
 sdlManager.sendRPC(unpublishAppService);
 ```
 !@
-
