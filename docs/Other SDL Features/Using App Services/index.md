@@ -44,15 +44,15 @@ let subscribedObserver = sdlManager.systemCapabilityManager.subscribe(capability
 ```java
 // Grab the capability once
 sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.APP_SERVICES, new OnSystemCapabilityListener() {
-	@Override
-	public void onCapabilityRetrieved(Object capability) {
-		AppServicesCapabilities servicesCapabilities = (AppServicesCapabilities) capability;
-	}
+    @Override
+    public void onCapabilityRetrieved(Object capability) {
+        AppServicesCapabilities servicesCapabilities = (AppServicesCapabilities) capability;
+    }
 
-	@Override
-	public void onError(String info) {
+    @Override
+    public void onError(String info) {
         <#Handle Error#>
-	}
+    }
 }, false);
 ...
 
@@ -258,11 +258,7 @@ Your app may need special permissions to use the RPCs that route to app service 
 @![iOS]
 ##### Objective-C
 ```objc
-SDLButtonPress *buttonPress = [[SDLButtonPress alloc] init];
-buttonPress.buttonName = SDLButtonNameOk;
-buttonPress.moduleType = SDLModuleTypeAudio;
-buttonPress.buttonPressMode = SDLButtonPressModeShort;
-
+SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameOk moduleType:SDLModuleTypeAudio moduleId:nil buttonPressMode:SDLButtonPressModeShort];
 [self.sdlManager sendRequest:buttonPress withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if (!response || !response.success.boolValue) {
         SDLLogE(@"Error sending button press: Req %@, Res %@, err %@", request, response, error);
@@ -276,11 +272,7 @@ buttonPress.buttonPressMode = SDLButtonPressModeShort;
 
 ##### Swift
 ```swift
-let buttonPress = SDLButtonPress()
-buttonPress.buttonName = .ok
-buttonPress.moduleType = .audio
-buttonPress.buttonPressMode = .short
-
+let buttonPress = SDLButtonPress(buttonName: .ok, moduleType: .audio, moduleId: nil, buttonPressMode: .short)
 sdlManager.send(request: buttonPress) { (req, res, err) in
     guard let response = res as? SDLButtonPressResponse, response.success.boolValue == true else { return }
 
