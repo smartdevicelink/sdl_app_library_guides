@@ -158,8 +158,9 @@ sdlManager.sendRPC(dialNumber);
 The @![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ request has three possible responses that you should expect:
 
 1. `SUCCESS` - The request was successfully sent, and a phone call was initiated by the user.
-2. `REJECTED` - This can mean either: 
+1. `REJECTED` - This can mean either: 
 
     * The user rejected the request to make the phone call. 
     * The phone is not connected to the module via Bluetooth.
-3. `DISALLOWED` - Your app does not have permission to use the @![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ request.
+
+1. `DISALLOWED` - Your app does not have permission to use the @![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ request.
