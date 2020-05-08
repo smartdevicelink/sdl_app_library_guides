@@ -12,7 +12,8 @@ The @![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ RPC allows y
 
 ##### Swift
 ```swift
-_  = sdlManager.permissionManager.addObserver(forRPCs: [SDLRPCFunctionName.dialNumber.rawValue.rawValue], groupType:.any, withHandler: { (individualStatuses, groupStatus) in
+let observerId  = sdlManager.permissionManager.addObserver(forRPCs: [SDLRPCFunctionName.dialNumber.rawValue.rawValue], groupType: .any, withHandler: { (allChanges, groupStatus) in
+    // This handler will be called whenever the permission status changes
     guard groupStatus == SDLPermissionGroupStatus.allowed else { 
         // Your app does not have permission to send the `DialNumber` request for its current HMI level
         return 
@@ -40,7 +41,7 @@ Since making a phone call is a newer feature, there is a possibility that some l
 
 ##### Swift
 ```swift
-// Check if the module supports making a phone call
+// Check if the module supports has phone capabilities
 guard (sdlManager.systemCapabilityManager.isCapabilitySupported(type: .phoneCall)) else { return }
 
 // Check if the module supports the `DialNumber` request
