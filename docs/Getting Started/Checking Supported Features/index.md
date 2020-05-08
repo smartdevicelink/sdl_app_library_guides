@@ -97,4 +97,4 @@ SdlMsgVersion rpcSpecVersion = sdlManager.getRegisterAppInterfaceResponse().getS
 ```js
 const rpcSpecVersion = sdlManager.getRegisterAppInterfaceResponse().getSdlMsgVersion();
 ```
-!@
+!@ 
