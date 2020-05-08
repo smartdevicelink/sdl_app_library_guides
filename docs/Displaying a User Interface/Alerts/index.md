@@ -137,7 +137,7 @@ alert.duration = @(4000);
 ##### Swift
 ```swift
 // Duration timeout is in milliseconds
-alert.duration = 4000 as NSNumber
+alert.duration = NSNumber(4000)
 ```
 !@
 
