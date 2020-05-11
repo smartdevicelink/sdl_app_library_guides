@@ -75,6 +75,25 @@ sdlManager.sendRPC(setGlobalProperties);
 ```
 !@
 
+@![javascript]
+```js
+const setGlobalProperties = new SetGlobalProperties();
+setGlobalProperties.setVrHelpTitle('What Can I Say?');
+
+const item1 = new VrHelpItem().setText("Show Artists").setPosition(1).setImage(<#image#>); // a previously uploaded image or null
+
+const item2 = new VrHelpItem().setText("Show Albums").setPosition(2).setImage(<#image#>); // a previously uploaded image or null
+
+setGlobalProperties.setVrHelp([item1, item2]);
+sdlManager.addRpcListener(FunctionID.SetGlobalProperties, function (response) {
+    if (response instanceof RpcResponse) {
+        // The help menu is updated
+    }
+});
+sdlManager.sendRpc(setGlobalProperties);
+```
+!@
+
 ## Configuring the  Help Prompt
 On head units that support voice recognition, a user can request assistance by saying "Help." In addition to displaying the help menu discussed above a custom spoken text-to-speech response can be spoken to the user.
 
@@ -129,6 +148,20 @@ sdlManager.sendRPC(setGlobalProperties);
 ```
 !@
 
+@![javascript]
+```js
+const setGlobalProperties = new SetGlobalProperties();
+const chunk = new TTSChunk().setText('Your custom help prompt').setType(SpeechCapabilities.TEXT);
+setGlobalProperties.setHelpPrompt([chunk]);
+sdlManager.addRpcListener(FunctionID.SetGlobalProperties, function (response) {
+    if (response instanceof RpcResponse) {
+        // The help prompt is updated
+    }
+});
+sdlManager.sendRpc(setGlobalProperties);
+```
+!@
+
 ## Configuring the Timeout Prompt
 If you display any sort of popup menu or modal interaction that has a timeout – such as an alert, interaction, or slider – you can create a custom text-to-speech response that will be spoken to the user in the event that a timeout occurs.
 
@@ -178,6 +211,20 @@ setGlobalProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
     }
 });
 sdlManager.sendRPC(setGlobalProperties);
+```
+!@
+
+@![javascript]
+```js
+const setGlobalProperties = new SetGlobalProperties();
+const chunk = new TTSChunk().setText('Your custom help prompt').setType(SpeechCapabilities.TEXT);
+setGlobalProperties.setTimeoutPrompt([chunk]);
+sdlManager.addRpcListener(FunctionID.SetGlobalProperties, function (response) {
+    if (response instanceof RpcResponse) {
+        // The help prompt is updated
+    }
+});
+sdlManager.sendRpc(setGlobalProperties);
 ```
 !@
 
@@ -250,5 +297,26 @@ resetGlobalProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
     }
 });
 sdlManager.sendRPC(resetGlobalProperties);
+```
+!@
+
+@![android, javaSE, javaEE]
+```js
+// Reset the help menu
+const resetGlobalProperties = new ResetGlobalProperties().setProperties([GlobalProperty.VRHELPITEMS, GlobalProperty.VRHELPTITLE]);
+
+// Reset the menu icon and title
+const resetGlobalProperties = new ResetGlobalProperties().setProperties([GlobalProperty.MENUICON, GlobalProperty.MENUNAME]);
+
+// Reset spoken prompts
+const resetGlobalProperties = new ResetGlobalProperties().setProperties([GlobalProperty.HELPPROMPT, GlobalProperty.TIMEOUTPROMPT]);
+
+// To send any one of these, use the typical format:
+sdlManager.addRpcListener(FunctionID.ResetGlobalProperties, function (response) {
+    if (response instanceof RpcResponse) {
+        // The help prompt is updated
+    }
+});
+sdlManager.sendRpc(setGlobalProperties);
 ```
 !@

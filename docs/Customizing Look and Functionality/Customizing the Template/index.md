@@ -51,6 +51,27 @@ nightColorScheme.setSecondaryColor(darkGrey);
 builder.setDayColorScheme(nightColorScheme);
 ```
 !@
+@![javascript]
+```js
+// Set color schemes
+const green = new RGBColor().setRed(126).setGreen(188).setBlue(121);
+const white = new RGBColor().setRed(249).setGreen(251).setBlue(254);
+const grey = new RGBColor().setRed(186).setGreen(198).setBlue(210);
+const darkGrey = new RGBColor().setRed(57).setGreen(78).setBlue(96);
+
+const dayColorScheme = new TemplateColorScheme();
+dayColorScheme.setBackgroundColor(white);
+dayColorScheme.setPrimaryColor(green);
+dayColorScheme.setSecondaryColor(grey);
+lifecycleConfig.setDayColorScheme(dayColorScheme);
+
+const nightColorScheme = new TemplateColorScheme();
+nightColorScheme.setBackgroundColor(white);
+nightColorScheme.setPrimaryColor(green);
+nightColorScheme.setSecondaryColor(darkGrey);
+lifecycleConfig.setNightColorScheme(nightColorScheme);
+```
+!@
 
 !!! NOTE
 You may change the template coloring in the `lifecycleConfiguration` and the `SetDisplayLayout`, if connecting to a head unit with RPC v5.0+,  or with the `Show` request if connecting to RPC v6.0+. You may only change the template coloring once per template; that is, you cannot call `SetDisplayLayout` or `Show` for the template you are already on and expect the color scheme to update.
@@ -122,6 +143,37 @@ setDisplayLayout.setOnRPCResponseListener(new OnRPCResponseListener() {
 sdlManager.sendRPC(setDisplayLayout);
 ```
 !@
+@![javascript]
+```js
+// Set color schemes
+const green = new RGBColor().setRed(126).setGreen(188).setBlue(121);
+const white = new RGBColor().setRed(249).setGreen(251).setBlue(254);
+const grey = new RGBColor().setRed(186).setGreen(198).setBlue(210);
+const darkGrey = new RGBColor().setRed(57).setGreen(78).setBlue(96);
+
+const dayColorScheme = new TemplateColorScheme();
+dayColorScheme.setBackgroundColor(white);
+dayColorScheme.setPrimaryColor(green);
+dayColorScheme.setSecondaryColor(grey);
+lifecycleConfig.setDayColorScheme(dayColorScheme);
+
+const nightColorScheme = new TemplateColorScheme();
+nightColorScheme.setBackgroundColor(white);
+nightColorScheme.setPrimaryColor(green);
+nightColorScheme.setSecondaryColor(darkGrey);
+
+const setDisplayLayout = new SetDisplayLayout().setDisplayLayout(PredefinedLayout.GRAPHIC_WITH_TEXT);
+setDisplayLayout.setDayColorScheme(dayColorScheme);
+setDisplayLayout.setNightColorScheme(nightColorScheme);
+sdlManager.addRpcListener(FunctionID.SetDisplayLayout, function (response) {
+        if (response instanceof RpcResponse && response.getSuccess()){
+            // Success
+        }
+    }
+});
+sdlManager.sendRpc(setDisplayLayout);
+```
+!@
 
 ## Customizing the Menu Title and Icon
 You can also customize the title and icon of the main menu button that appears on your template layouts. The menu icon must first be uploaded with a specific name through the file manager; see the [Uploading Images](Other SDL Features/Uploading Images) section for more information on how to upload your image.
@@ -181,5 +233,20 @@ setGlobalProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
     }
 });
 sdlManager.sendRPC(setGlobalProperties);
+```
+!@
+@![javascript]
+```js
+const setGlobalProperties = new SetGlobalProperties();
+setGlobalProperties.setMenuTitle('customTitle');
+// The image must be uploaded before referencing the image name here
+setGlobalProperties.setMenuIcon(<#Image#>);
+sdlManager.addRpcListener(FunctionID.SetGlobalProperties, function (response) {
+        if (response instanceof RpcResponse && response.getSuccess()){
+            // Success
+        }
+    }
+});
+sdlManager.sendRpc(setGlobalProperties);
 ```
 !@
