@@ -158,7 +158,7 @@ alert.progressIndicator = @YES;
 
 ##### Swift
 ```swift
-alert.progressIndicator = true as NSNumber
+alert.progressIndicator = NSNumber(true)
 ```
 !@
 
@@ -223,7 +223,7 @@ alert.playTone = @YES;
 
 ##### Swift
 ```swift
-alert.playTone = true as NSNumber
+alert.playTone = NSNumber(true)
 ```
 !@
 
