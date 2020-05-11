@@ -89,6 +89,24 @@ sdlManager.sendRPC(subscribeButtonRequest);
 ```
 !@
 
+@![javascript]
+```js
+sdlManager.addRpcListener(FunctionID.ON_BUTTON_PRESS, function (onButtonPress) {
+    if (onButtonPress instanceof RpcNotification) {
+        switch (onButtonPress.getButtonName()) {
+            case ButtonName.PLAY_PAUSE:
+                // PLAY_PAUSE subscribe button selected
+                break;
+        }
+    }
+});
+
+const subscribeButtonRequest = new SubscribeButton();
+subscribeButtonRequest.setButtonName(ButtonName.PLAY_PAUSE);
+sdlManager.sendRpc(subscribeButtonRequest);
+```
+!@
+
 ### Preset Buttons
 All app types can subscribe to preset buttons. Depending on the OEM, the preset buttons may be added to the template when subscription occurs. Preset buttons can also be physical buttons on the console that will notify the subscriber when selected. An OEM may support only template buttons or only hard buttons or they may support both template and hard buttons. The screenshot below shows how the Ford SYNC 3 HMI displays the preset buttons on the HMI. 
 
@@ -113,6 +131,12 @@ let numberOfCustomPresetsAvailable = sdlManager.systemCapabilityManager.defaultM
 @![android,javaSE,javaEE]
 ```java
 Integer numOfCustomPresetsAvailable = sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getNumCustomPresetsAvailable();
+```
+!@
+
+@![javascript]
+```js
+const numOfCustomPresetsAvailable = sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getNumCustomPresetsAvailable();
 ```
 !@
 
@@ -178,6 +202,27 @@ sdlManager.sendRPCs(Arrays.asList(preset1, preset2), null);
 ```
 !@
 
+@![javascript]
+```js
+sdlManager.addRpcListener(FunctionID.ON_BUTTON_PRESS, function (onButtonPress) {
+    if (onButtonPress instanceof RpcNotification) {
+        switch (onButtonPress.getButtonName()) {
+            case ButtonName.PRESET_1:
+                // PRESET_1 subscribe button selected
+                break;
+            case ButtonName.PRESET_2:
+                // PRESET_2 subscribe button selected
+                break;
+        }
+    }
+});
+
+const preset1 = new SubscribeButton(ButtonName.PRESET_1);
+const preset2 = new SubscribeButton(ButtonName.PRESET_2);
+sdlManager.sendRpcs([preset1, preset2]);
+```
+!@
+
 ### Navigation Buttons
 Head units supporting RPC v6.0+ may support subscription buttons that allow your user to drag and scale the map using hard buttons located on car's center console or steering wheel. Subscriptions to navigation buttons will only succeed if your app's type is `NAVIGATION`. If subscribing to these buttons succeeds, you can remove any buttons of your own from your map screen. If subscribing to these buttons fails, you can display buttons of your own on your map screen.
 
@@ -226,5 +271,22 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
 SubscribeButton subscribeButtonRequest = new SubscribeButton();
 subscribeButtonRequest.setButtonName(ButtonName.NAV_PAN_UP);
 sdlManager.sendRPC(subscribeButtonRequest);
+```
+!@
+
+@![javascript]
+```js
+sdlManager.addRpcListener(FunctionID.ON_BUTTON_PRESS, function (onButtonPress) {
+    if (onButtonPress instanceof RpcNotification) {
+        switch (onButtonPress.getButtonName()) {
+            case ButtonName.NAV_PAN_UP:
+                break;
+        }
+    }
+});
+
+const subscribeButtonRequest = new SubscribeButton();
+subscribeButtonRequest.setButtonName(ButtonName.NAV_PAN_UP);
+sdlManager.sendRpc(subscribeButtonRequest);
 ```
 !@

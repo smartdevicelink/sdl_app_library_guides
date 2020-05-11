@@ -35,6 +35,13 @@ sdlManager.sendRPC(mediaClock);
 ```
 !@
 
+@![javascript]
+```js
+const mediaClock = new SetMediaClockTimer().setUpdateMode(UpdateMode.COUNTUP).setStartTime(new StartTime().setSeconds(30)).setEndTime(new StartTime().setStartTime(253)).setAudioStreamingIndicator(AudioStreamingIndicator.PAUSE);
+sdlManager.sendRpc(mediaClock);
+```
+!@
+
 ## Counting Down
 Counting down is the opposite of counting up (I know, right?). In order to count down using the timer, you will need to set a start time that is greater than the end time. The timer bar moves from right to left and the timer will automatically count down. For example, if you're counting down from `10:00` to `0:00`, the progress bar will be at the leftmost position and start decrementing every second until it reaches `0:00`.
 
@@ -56,6 +63,13 @@ sdlManager.send(mediaClock)
 ```java
 SetMediaClockTimer mediaClock = new SetMediaClockTimer().countDownFromStartTimeInterval(600, 0, AudioStreamingIndicator.PAUSE);
 sdlManager.sendRPC(mediaClock);
+```
+!@
+
+@![javascript]
+```js
+const mediaClock = new SetMediaClockTimer().setUpdateMode(UpdateMode.COUNTDOWN).setStartTime(new StartTime().setStartTime(600)).setEndTime(new StartTime().setStartTime(0)).setAudioStreamingIndicator(AudioStreamingIndicator.PAUSE);
+sdlManager.sendRpc(mediaClock);
 ```
 !@
 
@@ -113,6 +127,23 @@ sdlManager.sendRPC(mediaClock);
 ```
 !@
 
+@![javascript]
+```js
+const mediaClock = new SetMediaClockTimer().setUpdateMode(UpdateMode.PAUSE).setAudioStreamingIndicator(AudioStreamingIndicator.PLAY);
+sdlManager.sendRpc(mediaClock);
+```
+
+```js
+const mediaClock = new SetMediaClockTimer().setUpdateMode(UpdateMode.RESUME).setAudioStreamingIndicator(AudioStreamingIndicator.PAUSE);
+sdlManager.sendRpc(mediaClock);
+```
+
+```js
+const mediaClock = new SetMediaClockTimer().setUpdateMode(UpdateMode.PAUSE).setStartTime(new StartTime().setStartTime(60)).setEndTime(new StartTime().setStartTime(240)).setAudioStreamingIndicator(AudioStreamingIndicator.PLAY);
+sdlManager.sendRpc(mediaClock);
+```
+!@
+
 ## Clearing the Timer
 Clearing the timer removes it from the screen.
 
@@ -134,6 +165,13 @@ sdlManager.send(mediaClock)
 ```java
 SetMediaClockTimer mediaClock = new SetMediaClockTimer().clearWithPlayPauseIndicator(AudioStreamingIndicator.PLAY);
 sdlManager.sendRPC(mediaClock);
+```
+!@
+
+@![android, javaSE, javaEE]
+```js
+const mediaClock = new SetMediaClockTimer().setUpdateMode(UpdateMode.CLEAR).setPlayPauseIndicator(AudioStreamingIndicator.PLAY);
+sdlManager.sendRpc(mediaClock);
 ```
 !@
 

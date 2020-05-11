@@ -41,6 +41,16 @@ alert.setCancelID(<#Integer>);
 ```
 !@
 
+@![javascript]
+```js
+const alert = new Alert();
+alert.setAlertText1("Line 1");
+alert.setAlertText2("Line 2");
+alert.setAlertText3("Line 3");
+alert.setCancelID(<#Integer>);
+```
+!@
+
 ### Buttons
 
 @![iOS]
@@ -102,8 +112,26 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
 ```
 !@
 
+@![javascript]
+```js
+// Soft buttons
+const softButtonId = 123; // Set it to any unique ID
+const okButton = new SoftButton().setType(SoftButtonType.SBT_TEXT).setSoftButtonID(softButtonId).setText('OK');
+
+// Set the softbuttons(s) to the alert
+alert.setSoftButtons([okButton]);
+
+// This listener is only needed once, and will work for all of soft buttons you send with your alert
+sdlManager.addRpcListener(FunctionID.ON_BUTTON_PRESS, function (rpcMessage) {
+    if (rpcMessage instanceof RpcNotification) {
+        console.log("OK button pressed");
+    }
+})
+```
+!@
+
 ### Alert Icon
-An alert can include a custom or static (built-in) image that will be displayed within the alert. Before you add the image to the alert make sure the image is uploaded to the head unit using the @![iOS]`SDLFileManager`!@@![android,javaSE,javaEE]FileManager!@. If the image is already uploaded, you can set the `alertIcon` property.
+An alert can include a custom or static (built-in) image that will be displayed within the alert. Before you add the image to the alert make sure the image is uploaded to the head unit using the @![iOS]`SDLFileManager`!@@![android,javaSE,javaEE,javascript]FileManager!@. If the image is already uploaded, you can set the `alertIcon` property.
 
 ![Generic - Alert](assets/Generic_alertIcon.png)
 
@@ -120,6 +148,12 @@ alert.alertIcon = SDLImage(name: <#artworkName#>, isTemplate: true)
 
 @![android,javaSE,javaEE]
 ```java
+alert.setAlertIcon(new Image(<#artworkName#>, ImageType.DYNAMIC));
+```
+!@
+
+@![javascript]
+```js
 alert.setAlertIcon(new Image(<#artworkName#>, ImageType.DYNAMIC));
 ```
 !@
@@ -147,6 +181,12 @@ alert.setDuration(5000);
 ```
 !@
 
+@![javascript]
+```js
+alert.setDuration(5000);
+```
+!@
+
 ### Progress Indicator
 Not all OEMs support a progress indicator. If supported, the alert will show an animation that indicates that the user must wait (e.g. a spinning wheel or hourglass, etc). If omitted, no progress indicator will be shown.
 
@@ -164,6 +204,12 @@ alert.progressIndicator = true as NSNumber
 
 @![android,javaSE,javaEE]
 ```java
+alert.setProgressIndicator(true);
+```
+!@
+
+@![javascript]
+```js
 alert.setProgressIndicator(true);
 ```
 !@
@@ -190,6 +236,13 @@ alert.setTtsChunks(TTSChunkFactory.createSimpleTTSChunks("Text to Speak"));
 ```
 !@
 
+@![javascript]
+```js
+const chunk = new TTSChunk().setType(SpeechCapabilities.TEXT).setText('Text to Speak');
+alert.setTtsChunks([chunk]);
+```
+!@
+
 #### Sound File
 The `ttsChunks` parameter can also take a file to play/speak. For more information on how to upload the file please refer to the [Playing Audio Indications](Speech and Audio/Playing Audio Indications) guide.
 
@@ -212,6 +265,13 @@ alert.setTtsChunks(Collections.singletonList(ttsChunk));
 ```
 !@
 
+@![javascript]
+```js
+const ttsChunk = new TTSChunk(sdlFile.getName(), SpeechCapabilities.FILE);
+alert.setTtsChunk([ttsChunk]);
+```
+!@
+
 ### Play Tone
 To play the alert tone when the alert appears and before the text-to-speech is spoken, set `playTone` to `true`.
 
@@ -229,6 +289,12 @@ alert.playTone = true as NSNumber
 
 @![android,javaSE,javaEE]
 ```java
+alert.setPlayTone(true);
+```
+!@
+
+@![javascript]
+```js
 alert.setPlayTone(true);
 ```
 !@
@@ -275,6 +341,17 @@ alert.setOnRPCResponseListener(new OnRPCResponseListener() {
 sdlManager.sendRPC(alert);
 ```
 !@
+
+@![javascript]
+```js
+// Handle RPC Response
+sdlManager.addRpcListener(FunctionID.Alert, function (response) {
+    if(response instanceof RpcResponse && response.getSuccess()) {
+        console.log('Alert was shown successfully');
+    }
+});
+sdlManager.sendRpc(alert);
+```
 
 ## Dismissing the Alert (RPC v6.0+)
 You can dismiss a displayed alert before the timeout has elapsed. This feature is useful if you want to show users a loading screen while performing a task, such as searching for a list for nearby coffee shops. As soon as you have the search results, you can cancel the alert and show the results. 
@@ -335,6 +412,18 @@ sdlManager.sendRPC(cancelInteraction);
 ```
 !@
 
+@![javascript]
+```js
+const cancelInteraction = new CancelInteraction().setFunctionIDParam(FunctionID.Alert).setCancelID(cancelID);
+sdlManager.addRpcListener(FunctionID.CancelInteraction, function (response) {
+    if (response instanceof RpcResponse && response.getSuccess()) {
+        console.log('Alert was dismissed successfully');
+    }
+});
+sdlManager.sendRpc(cancelInterction)
+```
+!@
+
 ### Dismissing the Current Alert
 
 @![iOS]
@@ -379,3 +468,15 @@ cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
 sdlManager.sendRPC(cancelInteraction);
 ```
 !@  
+
+@![javascript]
+```js
+const cancelInteraction = new CancelInteraction().setFunctionIDParam(FunctionID.Alert);
+sdlManager.addRpcListener(FunctionID.CancelInteraction, function (response) {
+    if (response instanceof RpcResponse && response.getSuccess()) {
+        console.log('Alert was dismissed successfully');
+    }
+});
+sdlManager.sendRpc(cancelInteraction);
+```
+!@

@@ -52,6 +52,22 @@ sdlManager.sendRPC(setDisplayLayoutRequest);
 ```
 !@
 
+@![javascript]
+```js
+const setDisplayLayoutRequest = new SetDisplayLayout();
+setDisplayLayoutRequest.setDisplayLayout(PredefinedLayout.GRAPHIC_WITH_TEXT);
+sdlManager.addRpcListener(FunctionID.SetDisplayLayout, function (message) {
+    if (message instanceof RpcResponse) {
+        if (message.getSuccess()) {
+            console.log('Display layout set successfully.');
+        } else {
+            console.log('Display layout request rejected.');
+        }
+    }
+})
+```
+!@
+
 ## Available Templates
 There are fifteen standard templates to choose from, however some head units may only support a subset of these templates. The following examples show how templates will appear on the [Generic HMI](https://github.com/smartdevicelink/generic_hmi) and [Ford's SYNC 3 HMI](https://developer.ford.com).
 

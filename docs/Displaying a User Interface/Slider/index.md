@@ -1,5 +1,5 @@
 # Slider
-A @![iOS]`SDLSlider`!@@![android,javaSE,javaEE]`Slider`!@ creates a full screen or pop-up overlay (depending on platform) that a user can control. There are two main @![iOS]`SDLSlider`!@@![android,javaSE,javaEE]`Slider`!@ layouts, one with a static footer and one with a dynamic footer.
+A @![iOS]`SDLSlider`!@@![android,javaSE,javaEE,javascript]`Slider`!@ creates a full screen or pop-up overlay (depending on platform) that a user can control. There are two main @![iOS]`SDLSlider`!@@![android,javaSE,javaEE,javascript]`Slider`!@ layouts, one with a static footer and one with a dynamic footer.
 
 !!! NOTE
 The slider will persist on the screen until the timeout has elapsed or the user dismisses the slider by selecting a position or canceling.
@@ -37,6 +37,12 @@ Slider slider = new Slider();
 ```
 !@
 
+@![javascript]
+```js
+const slider = new Slider();
+```
+!@
+
 ### Ticks
 The number of selectable items on a horizontal axis.
 @![iOS]
@@ -54,6 +60,13 @@ sdlSlider.numTicks = 5
 
 @![android,javaSE,javaEE]
 ```java
+// Must be a number between 2 and 26
+slider.setNumTicks(5);
+```
+!@
+
+@![javascript]
+```js
 // Must be a number between 2 and 26
 slider.setNumTicks(5);
 ```
@@ -81,6 +94,13 @@ slider.setPosition(1);
 ```
 !@
 
+@![javascript]
+```js
+// Must be a number between 1 and 26
+slider.setPosition(1);
+```
+!@
+
 ### Header 
 The header to display.
 @![iOS]
@@ -98,6 +118,13 @@ sdlSlider.sliderHeader = "This is a Header"
 
 @![android,javaSE,javaEE]
 ```java
+// Max length 500 chars
+slider.setSliderHeader("This is a Header");
+```
+!@
+
+@![javascript]
+```js
 // Max length 500 chars
 slider.setSliderHeader("This is a Header");
 ```
@@ -122,6 +149,13 @@ sdlSlider.sliderFooter = ["Static Footer"]
 ```java
 // Max length 500 chars
 slider.setSliderFooter(Collections.singletonList("Static Footer"));
+```
+!@
+
+@![javascript]
+```js
+// Max length 500 chars
+slider.setSliderFooter(["Static Footer"]);
 ```
 !@
 
@@ -150,6 +184,13 @@ slider.setSliderFooter(Arrays.asList("Footer 1","Footer 2","Footer 3"));
 ```
 !@
 
+@![javascript]
+```js
+// Array length 1 - 26, Max length 500 chars
+slider.setSliderFooter(["Footer 1","Footer 2","Footer 3"]);
+```
+!@
+
 ### Cancel ID
 An ID for this specific slider to allow cancellation through the `CancelInteraction` RPC.
 @![iOS]
@@ -165,6 +206,12 @@ sdlSlider.cancelID = 45
 
 @![android,javaSE,javaEE]
 ```java
+slider.setCancelID(45);
+```
+!@
+
+@![javascript]
+```js
 slider.setCancelID(45);
 ```
 !@
@@ -212,6 +259,18 @@ slider.setOnRPCResponseListener(new OnRPCResponseListener() {
     }
 });
 sdlManager.sendRPC(slider);
+```
+!@
+
+@![javascript]
+```js
+sdlManager.addRpcListener(FunctionID.Slider, function (sliderRpc) {
+    if (sliderRpc instanceof RpcRespnse) {
+        console.log('Slider Position Set: ' + sliderRpc.getSliderPosition());
+    }
+});
+sdlManager.sendRpc(slider);
+
 ```
 !@
 
@@ -270,6 +329,19 @@ sdlManager.sendRPC(cancelInteraction);
 ```
 !@
 
+@![javascript]
+```js
+// `cancelID` is the ID that you assigned when creating the slider
+const cancelInteraction = new CancelInteraction().setFunctionIDParam(FunctionID.Slider).setCancelID(cancelID);
+sdlManager.addRpcListener(FunctionID.CancelInteraction, function (cancelInteraction) {
+    if (cancelInteractione instanceof RpcResponse && cancelInteraction.getSuccess()) {
+        console.log('Slider was dismissed successfully');
+    }
+})
+sdlManager.sendRPC(cancelInteraction);
+```
+!@
+
 ### Dismissing the Current Slider
 
 @![iOS]
@@ -315,3 +387,14 @@ sdlManager.sendRPC(cancelInteraction);
 ```
 !@  
 
+@![javascript]
+```js
+const cancelInteraction = new CancelInteraction().setFunctionIDParam(FunctionID.Slider);
+sdlManager.addRpcListener(FunctionID.CancelInteraction, function (cancelInteraction) {
+    if (cancelInteraction instanceof RpcResponse && cancelInteraction.getSuccess()) {
+        console.log('Slider was dismissed successfully');
+    }
+});
+sdlManager.sendRpc(cancelInteraction);
+```
+!@

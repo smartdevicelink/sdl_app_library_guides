@@ -1,5 +1,5 @@
 # Scrollable Message
-A @![iOS]`SDLScrollableMessage`!@@![android,javaSE,javaEE]`ScrollableMessage`!@ creates an overlay containing a large block of formatted text that can be scrolled. It contains a body of text, a message timeout, and up to eight soft buttons. To display a scrollable message in your SDL app, you simply send @![iOS]an `SDLScrollableMessage`!@@![android,javaSE,javaEE]a `ScrollableMessage`!@ RPC request.
+A @![iOS]`SDLScrollableMessage`!@@![android,javaSE,javaEE,javascript]`ScrollableMessage`!@ creates an overlay containing a large block of formatted text that can be scrolled. It contains a body of text, a message timeout, and up to eight soft buttons. To display a scrollable message in your SDL app, you simply send @![iOS]an `SDLScrollableMessage`!@@![android,javaSE,javaEE,javascript]a `ScrollableMessage`!@ RPC request.
 
 !!! NOTE
 The message will persist on the screen until the timeout has elapsed or the user dismisses the message by selecting a soft button or cancelling (if the head unit provides cancel UI).
@@ -131,6 +131,47 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
 
 !@
 
+@![javascript]
+```js
+// Create Message To Display
+const scrollableMessageText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Vestibulum mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare. Purus in massa tempor nec feugiat nisl pretium fusce id. Pharetra convallis posuere morbi leo urna molestie at elementum eu. Dictum sit amet justo donec enim diam.";
+		
+// Create SoftButtons
+const softButton1 = new SoftButton().setType(SoftButtonType.SBT_TEXT).setSoftButtonID(0).setText("Button 1");
+
+const softButton2 = new SoftButton().setType(SoftButtonType.SBT_TEXT).setSoftButtonID(1).setText("Button 2");
+
+// Create SoftButton Array
+const softButtonList = [softButton1, softButton2];
+
+// Create ScrollableMessage Object
+const scrollableMessage = new ScrollableMessage().setScrollableMessageBody(scrollableMessageText).setTimeout(50000).setSoftButtons(softButtonList);
+
+// Set cancelId
+scrollableMessage.setCancelID(<#Integer>);
+
+// Send the scrollable message
+sdlManager.sendRPC(scrollableMessage);
+```
+
+To listen for `OnButtonPress` events for `SoftButton`s, we need to add a listener that listens for their Id's:
+
+```js
+sdlManager.addRpcListener(FunctionID.OnButtonPress, function (onButtonPress) {
+    if (onButtonPress instanceof RpcNotification)
+		switch (onButtonPress.getCustomButtonName()){
+			case 0:
+				console.log("Button 1 Pressed");
+				break;
+			case 1:
+				console.log("Button 2 Pressed");
+				break;
+		}
+	}
+});
+```
+!@
+
 ## Dismissing a Scrollable Message (RPC v6.0+)
 You can dismiss a displayed scrollable message before the timeout has elapsed. You can dismiss a specific scrollable message, or you can dismiss the scrollable message that is currently displayed.
 
@@ -186,6 +227,20 @@ sdlManager.sendRPC(cancelInteraction);
 ```
 !@
 
+@![javascript]
+```js
+// `cancelID` is the ID that you assigned when creating and sending the alert
+const cancelInteraction = new CancelInteraction().setFunctionIDParam(FunctionID.ScrollableMessage).setCanelID(cancelID);
+sdlManager.addRpcListener(FunctionID.CancelInteraction, function(response) {
+        if (response instanceof RpcResponse && response.getSuccess()){
+            console.log("Scrollable message was dismissed successfully");
+        }
+    }
+});
+sdlManager.sendRpc(cancelInteraction);
+```
+!@
+
 ### Dismissing the Current Scrollable Message
 
 @![iOS]
@@ -228,5 +283,18 @@ cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
     }
 });
 sdlManager.sendRPC(cancelInteraction);
+```
+!@  
+
+@![javascript]
+```js
+const cancelInteraction = new CancelInteraction().setFunctionIDParam(FunctionID.ScrollableMessage);
+sdlManager.addRpcListener(FunctionID.CancelInteraction, function (response) {
+        if (response instanceof RpcResponse && response.getSuccess()){
+            console.log("Scrollable message was dismissed successfully");
+        }
+    }
+});
+sdlManager.sendRpc(cancelInteraction);
 ```
 !@  
