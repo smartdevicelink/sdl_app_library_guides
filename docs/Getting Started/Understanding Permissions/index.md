@@ -25,7 +25,7 @@ The easiest way to monitor the `hmiLevel` of your SDL app is through a required 
 !@
 
 @![android,javaSE,javaEE,javascript]
-Monitoring HMI Status is possible through an `OnHMIStatus` notification that you can subscribe to via the `SdlManager`'s `addOnRPCNotificationListener`.
+Monitoring HMI Status is possible through an `OnHMIStatus` notification that you can subscribe to via the `SdlManager`'s !@@![android,javaSE,javaEE]`addOnRPCNotificationListener`.!@@![javascript]`addRpcListener`.
 !@
 
 @![iOS]
@@ -92,11 +92,11 @@ builder.setRPCNotificationListeners(onRPCNotificationListenerMap);
 ```js
 function onHmiStatusListener (onHmiStatus) {
     const hmiLevel = onHmiStatus.getHmiLevel();
-    if (hmiLevel === HMILevel.HMI_FULL) {
+    if (hmiLevel === SDL.rpc.enums.HMILevel.HMI_FULL) {
         // now in HMI FULL
     }
 }
-sdlManager.addRpcListener(FunctionID.onHMIStatus, onHmiStatusListener);
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnHMIStatus, onHmiStatusListener);
 ```
 !@
 
@@ -127,9 +127,9 @@ boolean parameterAllowed = sdlManager.getPermissionManager().isPermissionParamet
 
 @![javascript]
 ```js
-const isAllowed = sdlManager.getPermissionManager().isRpcAllowed(FunctionID.Show);
+const isAllowed = sdlManager.getPermissionManager().isRpcAllowed(SDL.rpc.enums.FunctionID.Show);
 
-const isParameterAllowed = sdlManager.getPermissionManager().isPermissionParameterAllowed(FunctionID.GET_VEHICLE_DATA, GetVehicleData.KEY_RPM);
+const isParameterAllowed = sdlManager.getPermissionManager().isPermissionParameterAllowed(SDL.rpc.enums.FunctionID.GetVehicleData, SDL.rpc.messages.GetVehicleData.KEY_RPM);
 ```
 !@
 
@@ -194,22 +194,22 @@ if (status.get(FunctionID.GET_VEHICLE_DATA).getAllowedParameters().get(GetVehicl
 @![javascript]
 ```js
 const permissionElements = [];
-permissionElements.push(new PermissionElement(FunctionID.SHOW, null));
-permissionElements.push(new PermissionElement(FunctionID.GET_VEHICLE_DATA, [GetVehicleData.KEY_RPM, GetVehicleData.KEY_SPEED]));
+permissionElements.push(new SDL.manager.permission.PermissionElement(SDL.rpc.enums.FunctionID.Show, null));
+permissionElements.push(new SDL.manager.permission.PermissionElement(SDL.rpc.enums.FunctionID.GetVehicleData, [SDL.rpc.messages.GetVehicleData.KEY_RPM, SDL.rpc.nessages.GetVehicleData.KEY_SPEED]));
 
 const groupStatus = sdlManager.getPermissionManager().getGroupStatusOfPermissions(permissionElements);
 
 switch (groupStatus) {
-    case PermissionGroupStatus.ALLOWED:
+    case SDL.manager.permission.enums.PermissionGroupStatus.ALLOWED:
         // Every permission in the group is currently allowed
         break;
-    case PermissionGroupStatus.DISALLOWED:
+    case SDL.manager.permission.enums.PermissionGroupStatus.DISALLOWED:
         // Every permission in the group is currently disallowed
         break;
-    case PermissionGroupStatus.MIXED:
+    case SDL.manager.permission.enums.PermissionGroupStatus.MIXED:
         // Some permissions in the group are allowed and some disallowed
         break;
-    case PermissionGroupStatus.UNKNOWN:
+    case SDL.manager.permission.enums.PermissionGroupStatus.UNKNOWN:
         // The current status of the group is unknown
         break;
 }
@@ -219,23 +219,23 @@ The previous snippet will give a quick generic status for all permissions togeth
 
 ```js
 const permissionElements = [];
-permissionElements.push(new PermissionElement(FunctionID.SHOW, null));
-permissionElements.push(new PermissionElement(FunctionID.GET_VEHICLE_DATA, [GetVehicleData.KEY_RPM, GetVehicleData.KEY_AIRBAG_STATUS]));
+permissionElements.push(new SDL.manager.permission.PermissionElement(SDL.rpc.enums.FunctionID.Show, null));
+permissionElements.push(new SDL.manager.permission.PermissionElement(SDL.rpc.enms.FunctionID.GetVehicleData, [SDL.rpc.messages.GetVehicleData.KEY_RPM, SDL.rpc.messages.GetVehicleData.KEY_AIRBAG_STATUS]));
 
 const status = sdlManager.getPermissionManager().getStatusOfPermissions(permissionElements);
 
-if (status[FunctionID.GET_VEHICLE_DATA].getIsRPCAllowed()){
+if (status[SDL.rpc.enums.FunctionID.GetVehicleData].getIsRPCAllowed()){
     // GetVehicleData RPC is allowed
 }
 
-if (status[FunctionID.GET_VEHICLE_DATA].getAllowedParameters()[GetVehicleData.KEY_RPM]){
+if (status[SDL.rpc.enums.FunctionID.GetVehicleData].getAllowedParameters()[SDL.rpc.messages.GetVehicleData.KEY_RPM]){
     // rpm parameter in GetVehicleData RPC is allowed
 }
 ```
 !@
 
 ### Observing Permissions
-If desired, you can set @![iOS]an observer!@ @![android,javaSE,javaEE,javascript]a listener!@ for a group of permissions. The @![iOS]observer's handler!@ @![android,javaSE,javaEE,javascript]listener!@ will be called when the permissions for the group changes. If you want to be notified when the permission status of any of RPCs in the group change, set the `groupType` to @![iOS]`SDLPermissionGroupTypeAny`!@ @![android,javaSE,javaEE]`PERMISSION_GROUP_TYPE_ANY`!@ @![javascript]`PermissionGroupType.ANY`!@. If you only want to be notified when all of the RPCs in the group are allowed, set the `groupType` to @![iOS]`SDLPermissionGroupTypeAllAllowed`!@ @![android,javaSE,javaEE]`PERMISSION_GROUP_TYPE_ALL_ALLOWED`!@ @![javascript]`PermissionGroupType.ALL_ALLOWED`!@.
+If desired, you can set @![iOS]an observer!@ @![android,javaSE,javaEE,javascript]a listener!@ for a group of permissions. The @![iOS]observer's handler!@ @![android,javaSE,javaEE,javascript]listener!@ will be called when the permissions for the group changes. If you want to be notified when the permission status of any of RPCs in the group change, set the `groupType` to @![iOS]`SDLPermissionGroupTypeAny`!@ @![android,javaSE,javaEE]`PERMISSION_GROUP_TYPE_ANY`!@ @![javascript]`SDL.manager.permission.enums.PermissionGroupType.ANY`!@. If you only want to be notified when all of the RPCs in the group are allowed, set the `groupType` to @![iOS]`SDLPermissionGroupTypeAllAllowed`!@ @![android,javaSE,javaEE]`PERMISSION_GROUP_TYPE_ALL_ALLOWED`!@ @![javascript]`SDL.manager.permission.enums.PermissionGroupType.ALL_ALLOWED`!@.
 
 @![iOS]
 ##### Objective-C
@@ -278,15 +278,15 @@ UUID listenerId = sdlManager.getPermissionManager().addListener(permissionElemen
 @![javascript]
 ```js
 const permissionElements = [];
-permissionElements.push(new PermissionElement(FunctionID.SHOW, null));
-permissionElements.push(new PermissionElement(FunctionID.GET_VEHICLE_DATA, [GetVehicleData.KEY_RPM, GetVehicleData.KEY_AIRBAG_STATUS]));
+permissionElements.push(new SDL.manager.permission.PermissionElement(SDL.rpc.enums.FunctionID.Show, null));
+permissionElements.push(new SDL.manager.permission.PermissionElement(SDL.rpc.enums.FunctionID.GetVehicleData, [SDL.rpc.messages.GetVehicleData.KEY_RPM, SDL.rpc.messages.GetVehicleData.KEY_AIRBAG_STATUS]));
 
-const listenerId = sdlManager.getPermissionManager().addListener(permissionElements, PermissionManager.PermissionGroupType.ANY, function (allowedPermissions, permissionGroupStatus) {
-        if (allowedPermissions[FunctionID.GET_VEHICLE_DATA].getIsRPCAllowed()) {
+const listenerId = sdlManager.getPermissionManager().addListener(permissionElements, SDL.manager.permission.enums.PermissionGroupType.ANY, function (allowedPermissions, permissionGroupStatus) {
+        if (allowedPermissions[SDL.rpc.enums.FunctionID.GET_VEHICLE_DATA].getIsRPCAllowed()) {
             // GetVehicleData RPC is allowed
         }
 
-        if (allowedPermissions[FunctionID.GET_VEHICLE_DATA].getAllowedParameters()[GetVehicleData.KEY_RPM]){
+        if (allowedPermissions[SDL.rpc.enums.FunctionID.GET_VEHICLE_DATA].getAllowedParameters()[SDL.rpc.messages.GetVehicleData.KEY_RPM]){
             // rpm parameter in GetVehicleData RPC is allowed
         }
     }
