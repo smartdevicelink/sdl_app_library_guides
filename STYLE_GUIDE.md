@@ -1,13 +1,13 @@
 # Style Guide
 
 ## Formatting
-* Remember that you can't nest platform tags.
+* Currently you can not nest platform tags as it will break the markdown parser. 
 
 ### Whitespace
-* Use spaces, not tabs, 4 spaces per indentation.
+* When indenting text, code snippets, or lists, use spaces instead of tabs. One indentation equals 4 spaces.
 * Use one space after a period, not two.
 * One line between paragraphs, paragraphs and code, or paragraphs and a header (###) following it.
-* No extra lines between a header (###) and the paragraph following it.
+* Do not add a newline between a paragraph and its header.
 
 ## Grammar
 * In text, use `SDL`, not `sdl` or `Sdl`.
