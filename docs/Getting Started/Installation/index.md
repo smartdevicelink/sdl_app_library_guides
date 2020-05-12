@@ -191,17 +191,20 @@ Glassfish 5.0.0 only works on JDK 8 and lower.
 !@
 
 @![javascript]
-The SDL JavaScript Suite comes with prebuilt bundles of the library. There is a vanilla JavaScript distribution of the library as well as one for Node.js. They are located in the lib/js/dist and lib/node/dist directories respectively. To use one of these bundles, include one of the following somewhere in your project:
-
-        const SDL = require('lib/js/SDL.min.js');
-OR
+The SDL JavaScript Suite comes with prebuilt bundles of the library. There is a vanilla JavaScript distribution of the library as well as one for Node.js. They are located in the lib/js/dist and lib/node/dist directories respectively. To use one of these bundles in a Node.js project, include the following somewhere in your project:
 
         const SDL = require('lib/node/SDL.min.js');
+
+For a pure JS project, include the following line somewhere in your index.html file:
+
+        <script src='lib/js/SDL.min.js'></script>
 
 ### Building The JavaScript Library    
 To build the library bundle from the source code, first clone the [SDL JavaScript Suite](https://github.com/smartdevicelink/sdl_javascript_suite) repository then, simply call:
 
 ```
+git submodule init
+git submodule update
 npm run build
 ```
 
