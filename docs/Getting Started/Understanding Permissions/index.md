@@ -195,7 +195,7 @@ if (status.get(FunctionID.GET_VEHICLE_DATA).getAllowedParameters().get(GetVehicl
 ```js
 const permissionElements = [];
 permissionElements.push(new SDL.manager.permission.PermissionElement(SDL.rpc.enums.FunctionID.Show, null));
-permissionElements.push(new SDL.manager.permission.PermissionElement(SDL.rpc.enums.FunctionID.GetVehicleData, [SDL.rpc.messages.GetVehicleData.KEY_RPM, SDL.rpc.nessages.GetVehicleData.KEY_SPEED]));
+permissionElements.push(new SDL.manager.permission.PermissionElement(SDL.rpc.enums.FunctionID.GetVehicleData, [SDL.rpc.messages.GetVehicleData.KEY_RPM, SDL.rpc.messages.GetVehicleData.KEY_SPEED]));
 
 const groupStatus = sdlManager.getPermissionManager().getGroupStatusOfPermissions(permissionElements);
 
@@ -398,7 +398,7 @@ public void onNotified(RPCNotification notification) {
 ```
 !@
 
-@!
+@![javascript]
 ```js
 function onHmiStatusListener (onHmiStatus) {
     const systemContext = onHmiStatus.getSystemContext();
