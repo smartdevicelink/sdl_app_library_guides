@@ -1237,61 +1237,11 @@ The `SDLSessionBean` should be inside a Java package other than the default pack
 * Run Build -> Build Artifacts to get a .war file in the /out folder.
 !@
 
-
 @![javascript]
-### JavaScript
-The type of app you can make will depend on the build library you select. If you are using the Node build, your app can run as a WebSocket server or as a TCP client. If you are using the plain JavaScript build, your app can run as a WebSocket client. The process for integrating both the plain JavaScript and the Node SDL builds will be explained below.
+The type of app you can make will depend on the build library you select. If you are using the Node.js build, your app can run as a WebSocket server or as a TCP client. If you are using the vanilla JavaScript build, your app can run as a WebSocket client. This guide will cover topics that apply to both Node.js and plain JS library builds. Specific code snippets for each environment will be shown when applicable.
 
-#### Plain JavaScript Setup
-This build allows you to create apps that run on the browser. In order to have the build JS file be imported into your HTML, you'll need to run a simple web server that can serve that JS file. We will be using [NodeJS](https://nodejs.org/en/) and npm for this task, but you can use any software that lets you serve HTML and JS to the browser.
-
-In a new directory, save your `SDL.min.js` build there, and then run the following: `npm init`. Press Enter repeatedly through the prompts to set up some default npm configuration. Then, install the `express` package by running `npm install express --save`. Express is a popular NodeJS package that allows easy setup of a server. Finally, in a new `index.js` file, save the following to it:
-
-```js
-const express = require('express');
-const app = express();
-
-app.use(express.static(__dirname));
-
-const PORT = process.env.PORT || 3000;
-const server = app.listen(PORT, async function () {
-    console.log('Server running on port', PORT);
-});
-```
-
-This code will start up a server on port 3000 on localhost, and serve any files in the directory it is running in. Now that the server code is complete, create a new file named `index.html` that will contain the app logic and save it in the same directory. Make the contents of the HTML file the following:
-
-```html
-<html>
-    <head>
-        <script src='./SDL.min.js'></script>
-    </head>
-    <body>
-        <script>
-            console.log(SDL);
-        </script>
-    </body>
-</html>
-```
-
-Finally, run the server by running this in the same directory: `node index.js`. The console should print `Server running on port 3000`. Go to your browser and enter `localhost:3000` in the address bar. If you open up your browser's console on the blank page that shows up you should see the SDL library version be printed and the imported SDL object. If so, then you have successfully set up SDL in your browser! If not, then make sure your SDL build name is correct, and that the HTML file, build file, and JS server file are all in the same directory.
-
-#### NodeJS Setup
-This build allows you to create apps that run on your computer. [NodeJS](https://nodejs.org/en/) and npm are the tools you will need to integrate this library into what will be your app.
-
-In a new directory, save your `SDL.min.js` build there, and then create a new file in the same directory named `index.js`. Make the contents of that file the following:
-
-```js
-const SDL = require('./SDL.min.js');
-console.log(SDL);
-```
-
-Finally, run the file: `node index.js`. You should see the SDL library version be printed and the imported SDL object. If so, then you have successfully set up the SDL library!
-
-#### Basic Configuration
-The rest of this guide will cover topics that apply to both library builds. Specific code snippets for each environment will be shown when applicable.
-
-In order to correctly connect to an SDL enabled head unit, developers need to create a configuration object to pass into an instance of the `SdlManager` class and then start it. This configuration object is the `AppConfig`, which requires a `LifecycleConfig` object. `LifecycleConfig` contains the majority of the settings a developer would need to set in order for the app to be operable. At the very least, you will want to use the following methods to get started: `setAppId, setAppName, setLanguageDesired, setAppTypes, setTransportConfig`. These configuration objects support method chaining, which allow you to create the following example configuration object:
+## Basic Configuration
+In order to correctly connect to an SDL enabled head unit, developers need to create a configuration object to pass into an instance of the `SdlManager` class and then start it. This configuration object is the `AppConfig`, which requires a `LifecycleConfig` object. `LifecycleConfig` contains the majority of the settings a developer would need to set in order for the app to be operable. At the very least, you will want to use the following methods to get started: `setAppId`, `setAppName`, `setLanguageDesired`, `setAppTypes`, and `setTransportConfig`. These configuration objects support method chaining, which allow you to create the following example configuration object:
 
 ```js
 const lifecycleConfig = new SDL.manager.LifecycleConfig()
@@ -1303,29 +1253,35 @@ const lifecycleConfig = new SDL.manager.LifecycleConfig()
     ]);
 ```
 
-#### Transport Configuration
-The transport configuration will depend on the environment you're using. For instance, you can make a TCP connection with NodeJS, but not in the browser. Setting up the transport correctly will be covered in the next section. See below for example transport configurations.
+For WebEngine apps, most of this configuration will happen in the `manifest.js` file. The `LifecycleConfig` class has a `loadManifest` method that takes in a manifest file and sets up the configuration itself.
 
+## Transport Configuration
+The transport configuration will depend on the environment you're using. For instance, you can make a TCP connection with Node.js, but not with vanilla JS. Setting up the transport correctly will be covered in the next section. See below for example transport configurations.
+
+##### Node.js TCP Transport
 ```js
-// Example configurations to be completed by the developer
-
-// NodeJS TCP
 lifecycleConfig.setTransportConfig(new SDL.transport.TcpClientConfig(HOST, PORT));
+```
 
-// NodeJS WebSocket Server
+##### Node.js WebSocket Server
+```js
 lifecycleConfig.setTransportConfig(
     new SDL.transport.WebSocketServerConfig(
         wsClient, // The developer is responsible for providing incoming client connections
         CONNECTION_LOST_TIMEOUT // connection timeout in milliseconds
     )
 );
-
-// Plain JS WebSocket Client
+```
+##### Vanilla JS WebSocket Client
+```js
 lifecycleConfig.setTransportConfig(new SDL.transport.WebSocketClientConfig(HOST, PORT));
 ```
 
-##### App Icon
-An app icon can be set in the `LifecycleConfig` to automatically upload and set the icon image. Note that although the implementation of retreiving files are different between the JS browser and NodeJS environments, the developer can use the same API in both cases, and the SDL library will cover the implementation details for the developer depending on which build they are using.
+## Additional Configuration Options
+There are several additional basic configuration options to set up your app, like the app name and icon.
+
+### App Icon
+An app icon can be set in the `LifecycleConfig` to automatically upload and set the icon image. Note that although the implementation of retreiving files are different between the JS browser and Node.js environments, the developer can use the same API in both cases, and the SDL library will cover the implementation details for the developer depending on which build they are using.
 
 ```js
 const filePath = './app_icon.png';
@@ -1340,9 +1296,8 @@ lifecycleConfig.setAppIcon(file);
 
 In this case, the code snippet expects there to be an `app_icon.png` file present in the same directory for the app icon.
 
-##### SDL Manager
-
-After creating the `LifecycleConfig`, it can be set into the `AppConfig` and then passed into the `SdlManager`. The following snippet will set up the `SdlManager` and start it up. A listener is attached to the manager listener to know when the managers are ready. Listeners can also be set up for RPCs in `SdlManager`. In the snippet below, the `OnHMIStatus` notification is listened on to know what permissive state the app is in.
+## Setting Up the SDL Manager
+After creating the `LifecycleConfig`, it can be set into the `AppConfig` and then passed into the `SdlManager`. The following snippet will set up the `SdlManager` and start it up. A listener is attached to the manager listener to let you know when there is a connection and the managers are ready. Listeners can also be set up for RPCs in the `SdlManager`. In the snippet below, the `OnHMIStatus` notification is subscribed to in order to know what HMI level the app is in.
 
 ```js
 const appConfig = new SDL.manager.AppConfig()
@@ -1365,30 +1320,7 @@ const sdlManager = new SDL.manager.SdlManager(appConfig, managerListener)
     });
 ```
 
-##### WebEngine Configuration
-WebEngine apps use the plain JavaScript build, and are set up in a similar fashion to JS apps where it will also run in the browser. Set up the `index.js` and `index.html` file like in the Plain JavaScript Setup section. The majority of the configuration for the app will now be separated into a `manifest.js` file and then imported into the `index.html` file. Create a `manifest.js` file like below and save it in the same directory as the other two files.
-
-```js
-export default {
-    "entrypoint": "./index.html",
-    "appIcon": "./app_icon.png",
-    "appId": "hello-webengine",
-    "appName": "Hello WebEngine",
-    "category": "DEFAULT",
-    "additionalCategories": [],
-    "locales": {
-        "de_DE": {
-            "appName": "Hallo JS",
-            "appIcon": "./app_icon.png"
-        }
-    },
-    "appVersion": "1.0.0",
-    "minRpcVersion": "6.0",
-    "minProtocolVersion": "5.0"
-};
-```
-
-The entrypoint's value should have the same name as your app's HTML file. The `LifecycleConfig` file has a `loadManifest` method that takes in a manifest file and sets up the configuration itself. With these changes, the `index.html` may look something like this:
+For WebEngine apps, the resulting `index.html` may look something like this:
 
 ```html
 <html>
@@ -1426,11 +1358,5 @@ The entrypoint's value should have the same name as your app's HTML file. The `L
         </script>
     </body>
 </html>
-```
-
-Note that the manifest file is using the import/export module syntax, and so in the HTML file it is imported in as a module. Also note that in the transport configuration the parameters for `WebSocketClientConfig` are empty. This is because for WebEngine apps those connection details are expected as query parameters in the URL. See below for an example of what the URL is expected to be once the server is running. `sdl-host` is the location of the SDL Core WebSocket server. `sdl-port` is the port of that WebSocket server. `sdl-transport-role` refers to SDL Core's role, which is as a server (as opposed to a client).
-
-```
-http://localhost:3000/?sdl-host=HOST&sdl-transport-role=ws-server&sdl-port=PORT
 ```
 !@ 
