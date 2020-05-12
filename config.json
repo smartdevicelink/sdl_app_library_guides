@@ -87,13 +87,16 @@
                     "name": "Template Subscription Buttons"
                 },
                 {
-                    "name": "Main Menu"
+                    "name": "Main Menu",
+                    "platforms": ["iOS","Android","JavaEE","JavaSE"]
                 },
                 {
-                    "name": "Popup Menus"
+                    "name": "Popup Menus",
+                    "platforms": ["iOS","Android","JavaEE","JavaSE"]
                 },
                 {
-                    "name": "Popup Keyboards"
+                    "name": "Popup Keyboards",
+                    "platforms": ["iOS","Android","JavaEE","JavaSE"]
                 },
                 {
                     "name": "Alerts"

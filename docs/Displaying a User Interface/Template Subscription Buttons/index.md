@@ -91,18 +91,18 @@ sdlManager.sendRPC(subscribeButtonRequest);
 
 @![javascript]
 ```js
-sdlManager.addRpcListener(FunctionID.ON_BUTTON_PRESS, function (onButtonPress) {
-    if (onButtonPress instanceof RpcNotification) {
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnButtonPress, function (onButtonPress) {
+    if (onButtonPress instanceof SDL.rpc.RpcNotification) {
         switch (onButtonPress.getButtonName()) {
-            case ButtonName.PLAY_PAUSE:
+            case SDL.rpc.enums.ButtonName.PLAY_PAUSE:
                 // PLAY_PAUSE subscribe button selected
                 break;
         }
     }
 });
 
-const subscribeButtonRequest = new SubscribeButton();
-subscribeButtonRequest.setButtonName(ButtonName.PLAY_PAUSE);
+const subscribeButtonRequest = new SDL.rpc.messages.SubscribeButton();
+subscribeButtonRequest.setButtonName(SDL.rpc.enums.ButtonName.PLAY_PAUSE);
 sdlManager.sendRpc(subscribeButtonRequest);
 ```
 !@
@@ -204,8 +204,8 @@ sdlManager.sendRPCs(Arrays.asList(preset1, preset2), null);
 
 @![javascript]
 ```js
-sdlManager.addRpcListener(FunctionID.ON_BUTTON_PRESS, function (onButtonPress) {
-    if (onButtonPress instanceof RpcNotification) {
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnButtonPress, function (onButtonPress) {
+    if (onButtonPress instanceof SDL.rpc.RpcNotification) {
         switch (onButtonPress.getButtonName()) {
             case ButtonName.PRESET_1:
                 // PRESET_1 subscribe button selected
@@ -217,8 +217,8 @@ sdlManager.addRpcListener(FunctionID.ON_BUTTON_PRESS, function (onButtonPress) {
     }
 });
 
-const preset1 = new SubscribeButton(ButtonName.PRESET_1);
-const preset2 = new SubscribeButton(ButtonName.PRESET_2);
+const preset1 = new SDL.rpc.messages.SubscribeButton(ButtonName.PRESET_1);
+const preset2 = new SDL.rpc.messages.SubscribeButton(ButtonName.PRESET_2);
 sdlManager.sendRpcs([preset1, preset2]);
 ```
 !@
@@ -276,17 +276,17 @@ sdlManager.sendRPC(subscribeButtonRequest);
 
 @![javascript]
 ```js
-sdlManager.addRpcListener(FunctionID.ON_BUTTON_PRESS, function (onButtonPress) {
-    if (onButtonPress instanceof RpcNotification) {
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnButtonPress, function (onButtonPress) {
+    if (onButtonPress instanceof SDL.rpc.RpcNotification) {
         switch (onButtonPress.getButtonName()) {
-            case ButtonName.NAV_PAN_UP:
+            case SDL.rpc.enums.ButtonName.NAV_PAN_UP:
                 break;
         }
     }
 });
 
-const subscribeButtonRequest = new SubscribeButton();
-subscribeButtonRequest.setButtonName(ButtonName.NAV_PAN_UP);
+const subscribeButtonRequest = new SDL.rpc.messages.SubscribeButton();
+subscribeButtonRequest.setButtonName(SDL.rpc.enums.ButtonName.NAV_PAN_UP);
 sdlManager.sendRpc(subscribeButtonRequest);
 ```
 !@

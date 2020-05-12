@@ -137,15 +137,15 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
 const scrollableMessageText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Vestibulum mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare. Purus in massa tempor nec feugiat nisl pretium fusce id. Pharetra convallis posuere morbi leo urna molestie at elementum eu. Dictum sit amet justo donec enim diam.";
 		
 // Create SoftButtons
-const softButton1 = new SoftButton().setType(SoftButtonType.SBT_TEXT).setSoftButtonID(0).setText("Button 1");
+const softButton1 = new SDL.rpc.structs.SoftButton().setType(SDL.rpc.enums.SoftButtonType.SBT_TEXT).setSoftButtonID(0).setText("Button 1");
 
-const softButton2 = new SoftButton().setType(SoftButtonType.SBT_TEXT).setSoftButtonID(1).setText("Button 2");
+const softButton2 = new SDL.rpc.structs.SoftButton().setType(SDL.rpc.enums.SoftButtonType.SBT_TEXT).setSoftButtonID(1).setText("Button 2");
 
 // Create SoftButton Array
 const softButtonList = [softButton1, softButton2];
 
 // Create ScrollableMessage Object
-const scrollableMessage = new ScrollableMessage().setScrollableMessageBody(scrollableMessageText).setTimeout(50000).setSoftButtons(softButtonList);
+const scrollableMessage = new SDL.rpc.messages.ScrollableMessage().setScrollableMessageBody(scrollableMessageText).setTimeout(50000).setSoftButtons(softButtonList);
 
 // Set cancelId
 scrollableMessage.setCancelID(<#Integer>);
@@ -157,8 +157,8 @@ sdlManager.sendRPC(scrollableMessage);
 To listen for `OnButtonPress` events for `SoftButton`s, we need to add a listener that listens for their Id's:
 
 ```js
-sdlManager.addRpcListener(FunctionID.OnButtonPress, function (onButtonPress) {
-    if (onButtonPress instanceof RpcNotification)
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnButtonPress, function (onButtonPress) {
+    if (onButtonPress instanceof SDL.rpc.RpcNotification)
 		switch (onButtonPress.getCustomButtonName()){
 			case 0:
 				console.log("Button 1 Pressed");
@@ -230,9 +230,9 @@ sdlManager.sendRPC(cancelInteraction);
 @![javascript]
 ```js
 // `cancelID` is the ID that you assigned when creating and sending the alert
-const cancelInteraction = new CancelInteraction().setFunctionIDParam(FunctionID.ScrollableMessage).setCanelID(cancelID);
-sdlManager.addRpcListener(FunctionID.CancelInteraction, function(response) {
-        if (response instanceof RpcResponse && response.getSuccess()){
+const cancelInteraction = new SDL.rpc.messages.CancelInteraction().setFunctionIDParam(SDL.rpc.enums.FunctionID.ScrollableMessage).setCanelID(cancelID);
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.CancelInteraction, function(response) {
+        if (response instanceof SDL.rpc.RpcResponse && response.getSuccess()){
             console.log("Scrollable message was dismissed successfully");
         }
     }
@@ -288,9 +288,9 @@ sdlManager.sendRPC(cancelInteraction);
 
 @![javascript]
 ```js
-const cancelInteraction = new CancelInteraction().setFunctionIDParam(FunctionID.ScrollableMessage);
-sdlManager.addRpcListener(FunctionID.CancelInteraction, function (response) {
-        if (response instanceof RpcResponse && response.getSuccess()){
+const cancelInteraction = new SDL.rpc.messages.CancelInteraction().setFunctionIDParam(SDL.rpc.enums.FunctionID.ScrollableMessage);
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.CancelInteraction, function (response) {
+        if (response instanceof SDL.rpc.RpcResponse && response.getSuccess()){
             console.log("Scrollable message was dismissed successfully");
         }
     }

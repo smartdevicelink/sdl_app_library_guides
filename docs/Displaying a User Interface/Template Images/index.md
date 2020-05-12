@@ -123,7 +123,7 @@ image.setTemplateImage(true);
 
 @![javascript]
 ```js
-const image = new SdlArtwork("<#ArtworkName#>", FileType.GRAPHIC_PNG, <#FileData#>, true);
+const image = new SDL.manager.file.filetypes.SdlArtwork("<#ArtworkName#>", SDL.rpc.enums.FileType.GRAPHIC_PNG, <#FileData#>, true);
 image.setTemplateImage(true);
 ```
 !@
@@ -151,6 +151,6 @@ SdlArtwork staticIconArt = new SdlArtwork(StaticIconName.ALBUM);
 
 @![javascript]
 ```js
-const staticIconArt = new SdlArtwork(StaticIconName.ALBUM);
+const staticIconArt = new SDL.manager.file.filetypes.SdlArtwork(StaticIconName.ALBUM);
 ```
 !@

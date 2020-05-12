@@ -21,7 +21,7 @@ You can access these properties on the @![iOS]`SDLManager.systemCapabilityManage
 | @![iOS]remoteControlCapability!@@![android, javaSE, javaEE, javascript]SystemCapabilityType.REMOTE_CONTROL!@ | Describes the abilities of an app to control built-in aspects of the IVI system. |
 
 ### Deprecated Properties
-The following properties are deprecated on SDL @![iOS]iOS 6.4!@@![android, javaSE, javaEE]Android 4.10!@@![javascript]JavaScript!@ because as of RPC v6.0 they are deprecated. However, these properties will still be filled with information. When connected on RPC <6.0, the information will be exactly the same as what is returned in the `RegisterAppInterfaceResponse` and `SetDisplayLayoutResponse`. However, if connected on RPC >6.0, the information will be converted from the newer-style display information, which means that some information will not be available.
+The following properties are deprecated on SDL @![iOS]iOS 6.4!@@![android, javaSE, javaEE]Android 4.10!@@![javascript]JavaScript 1.0!@ because as of RPC v6.0 they are deprecated. However, these properties will still be filled with information. When connected on RPC <6.0, the information will be exactly the same as what is returned in the `RegisterAppInterfaceResponse` and `SetDisplayLayoutResponse`. However, if connected on RPC >6.0, the information will be converted from the newer-style display information, which means that some information will not be available.
 
 | Parameters | Description |
 | ---------- | ----------- |
@@ -103,7 +103,7 @@ boolean navigationSupported = sdlManager.getSystemCapabilityManager().isCapabili
 
 @![javascript]
 ```js
-const navigationSupported = sdlManager.getSystemCapabilityManager().isCapabilitySupported(SystemCapabilityType.NAVIGATION);
+const navigationSupported = sdlManager.getSystemCapabilityManager().isCapabilitySupported(SDL.rpc.enums.SystemCapabilityType.NAVIGATION);
 ```
 !@
 
@@ -150,7 +150,7 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.APP_S
 
 @!
 ```js
-const appServicesCapabilities = sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.APP_SERVICES);
+const appServicesCapabilities = sdlManager.getSystemCapabilityManager().getCapability(SDL.rpc.enums.SystemCapabilityType.APP_SERVICES);
 ```
 !@
 
@@ -246,7 +246,7 @@ sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapa
 
 @![javascript]
 ```js
-sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapabilityType.APP_SERVICES, function (capability) {
+sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SDL.rpc.enums.SystemCapabilityType.APP_SERVICES, function (capability) {
     // This listener is now subscribed to AppServicesCapabilities
 })
 ```

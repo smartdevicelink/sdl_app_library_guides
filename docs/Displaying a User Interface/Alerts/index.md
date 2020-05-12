@@ -43,7 +43,7 @@ alert.setCancelID(<#Integer>);
 
 @![javascript]
 ```js
-const alert = new Alert();
+const alert = new SDL.rpc.messages.Alert();
 alert.setAlertText1("Line 1");
 alert.setAlertText2("Line 2");
 alert.setAlertText3("Line 3");
@@ -116,14 +116,14 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
 ```js
 // Soft buttons
 const softButtonId = 123; // Set it to any unique ID
-const okButton = new SoftButton().setType(SoftButtonType.SBT_TEXT).setSoftButtonID(softButtonId).setText('OK');
+const okButton = new SDL.rpc.structs.SoftButton().setType(SDL.rpc.enums.SoftButtonType.SBT_TEXT).setSoftButtonID(softButtonId).setText('OK');
 
 // Set the softbuttons(s) to the alert
 alert.setSoftButtons([okButton]);
 
 // This listener is only needed once, and will work for all of soft buttons you send with your alert
-sdlManager.addRpcListener(FunctionID.ON_BUTTON_PRESS, function (rpcMessage) {
-    if (rpcMessage instanceof RpcNotification) {
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.ON_BUTTON_PRESS, function (rpcMessage) {
+    if (rpcMessage instanceof SDL.rpc.RpcNotification) {
         console.log("OK button pressed");
     }
 })
@@ -154,7 +154,7 @@ alert.setAlertIcon(new Image(<#artworkName#>, ImageType.DYNAMIC));
 
 @![javascript]
 ```js
-alert.setAlertIcon(new Image(<#artworkName#>, ImageType.DYNAMIC));
+alert.setAlertIcon(new SDL.rpc.structs.Image(<#artworkName#>, SDL.rpc.enums.ImageType.DYNAMIC));
 ```
 !@
 
@@ -238,7 +238,7 @@ alert.setTtsChunks(TTSChunkFactory.createSimpleTTSChunks("Text to Speak"));
 
 @![javascript]
 ```js
-const chunk = new TTSChunk().setType(SpeechCapabilities.TEXT).setText('Text to Speak');
+const chunk = new SDL.rpc.structs.TTSChunk().setType(SDL.rpc.enums.SpeechCapabilities.TEXT).setText('Text to Speak');
 alert.setTtsChunks([chunk]);
 ```
 !@
@@ -267,7 +267,7 @@ alert.setTtsChunks(Collections.singletonList(ttsChunk));
 
 @![javascript]
 ```js
-const ttsChunk = new TTSChunk().setText(sdlFile.getName()).setType(SpeechCapabilities.FILE);
+const ttsChunk = new SDL.rpc.structs.TTSChunk().setText(sdlFile.getName()).setType(SDL.rpc.enums.SpeechCapabilities.FILE);
 alert.setTtsChunk([ttsChunk]);
 ```
 !@
@@ -345,8 +345,8 @@ sdlManager.sendRPC(alert);
 @![javascript]
 ```js
 // Handle RPC Response
-sdlManager.addRpcListener(FunctionID.Alert, function (response) {
-    if(response instanceof RpcResponse && response.getSuccess()) {
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.Alert, function (response) {
+    if(response instanceof SDL.rpc.RpcResponse && response.getSuccess()) {
         console.log('Alert was shown successfully');
     }
 });
@@ -414,9 +414,9 @@ sdlManager.sendRPC(cancelInteraction);
 
 @![javascript]
 ```js
-const cancelInteraction = new CancelInteraction().setFunctionIDParam(FunctionID.Alert).setCancelID(cancelID);
-sdlManager.addRpcListener(FunctionID.CancelInteraction, function (response) {
-    if (response instanceof RpcResponse && response.getSuccess()) {
+const cancelInteraction = new SDL.rpc.messages.CancelInteraction().setFunctionIDParam(SDL.rpc.enums.FunctionID.Alert).setCancelID(cancelID);
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.CancelInteraction, function (response) {
+    if (response instanceof SDL.rpc.RpcResponse && response.getSuccess()) {
         console.log('Alert was dismissed successfully');
     }
 });
@@ -471,9 +471,9 @@ sdlManager.sendRPC(cancelInteraction);
 
 @![javascript]
 ```js
-const cancelInteraction = new CancelInteraction().setFunctionIDParam(FunctionID.Alert);
-sdlManager.addRpcListener(FunctionID.CancelInteraction, function (response) {
-    if (response instanceof RpcResponse && response.getSuccess()) {
+const cancelInteraction = new SDL.rpc.messages.CancelInteraction().setFunctionIDParam(SDL.rpc.enums.FunctionID.Alert);
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.CancelInteraction, function (response) {
+    if (response instanceof SDL.rpc.RpcResponse && response.getSuccess()) {
         console.log('Alert was dismissed successfully');
     }
 });

@@ -39,7 +39,7 @@ Slider slider = new Slider();
 
 @![javascript]
 ```js
-const slider = new Slider();
+const slider = new SDL.rpc.messages.Slider();
 ```
 !@
 
@@ -264,8 +264,8 @@ sdlManager.sendRPC(slider);
 
 @![javascript]
 ```js
-sdlManager.addRpcListener(FunctionID.Slider, function (sliderRpc) {
-    if (sliderRpc instanceof RpcRespnse) {
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.Slider, function (sliderRpc) {
+    if (sliderRpc instanceof SDL.rpc.RpcRespnse) {
         console.log('Slider Position Set: ' + sliderRpc.getSliderPosition());
     }
 });
@@ -332,9 +332,9 @@ sdlManager.sendRPC(cancelInteraction);
 @![javascript]
 ```js
 // `cancelID` is the ID that you assigned when creating the slider
-const cancelInteraction = new CancelInteraction().setFunctionIDParam(FunctionID.Slider).setCancelID(cancelID);
-sdlManager.addRpcListener(FunctionID.CancelInteraction, function (cancelInteraction) {
-    if (cancelInteractione instanceof RpcResponse && cancelInteraction.getSuccess()) {
+const cancelInteraction = new SDL.rpc.messages.CancelInteraction().setFunctionIDParam(SDL.rpc.enums.FunctionID.Slider).setCancelID(cancelID);
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.CancelInteraction, function (cancelInteraction) {
+    if (cancelInteraction instanceof SDL.rpc.RpcResponse && cancelInteraction.getSuccess()) {
         console.log('Slider was dismissed successfully');
     }
 })
@@ -389,9 +389,9 @@ sdlManager.sendRPC(cancelInteraction);
 
 @![javascript]
 ```js
-const cancelInteraction = new CancelInteraction().setFunctionIDParam(FunctionID.Slider);
-sdlManager.addRpcListener(FunctionID.CancelInteraction, function (cancelInteraction) {
-    if (cancelInteraction instanceof RpcResponse && cancelInteraction.getSuccess()) {
+const cancelInteraction = new SDL.rpc.messages.CancelInteraction().setFunctionIDParam(SDL.rpc.enums.FunctionID.Slider);
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.CancelInteraction, function (cancelInteraction) {
+    if (cancelInteraction instanceof SDL.rpc.RpcResponse && cancelInteraction.getSuccess()) {
         console.log('Slider was dismissed successfully');
     }
 });

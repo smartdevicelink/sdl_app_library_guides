@@ -37,7 +37,7 @@ sdlManager.sendRPC(mediaClock);
 
 @![javascript]
 ```js
-const mediaClock = new SetMediaClockTimer().setUpdateMode(UpdateMode.COUNTUP).setStartTime(new StartTime().setSeconds(30)).setEndTime(new StartTime().setStartTime(253)).setAudioStreamingIndicator(AudioStreamingIndicator.PAUSE);
+const mediaClock = new SDL.rpc.messages.SetMediaClockTimer().setUpdateMode(SDL.rpc.enums.UpdateMode.COUNTUP).setStartTime(new SDL.rpc.structs.StartTime().setSeconds(30)).setEndTime(new SDL.rpc.structs.StartTime().setStartTime(253)).setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PAUSE);
 sdlManager.sendRpc(mediaClock);
 ```
 !@
@@ -68,7 +68,7 @@ sdlManager.sendRPC(mediaClock);
 
 @![javascript]
 ```js
-const mediaClock = new SetMediaClockTimer().setUpdateMode(UpdateMode.COUNTDOWN).setStartTime(new StartTime().setStartTime(600)).setEndTime(new StartTime().setStartTime(0)).setAudioStreamingIndicator(AudioStreamingIndicator.PAUSE);
+const mediaClock = new SDL.rpc.messages.SetMediaClockTimer().setUpdateMode(SDL.rpc.enums.UpdateMode.COUNTDOWN).setStartTime(new SDL.rpc.structs.StartTime().setStartTime(600)).setEndTime(new SDL.rpc.structs.StartTime().setStartTime(0)).setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PAUSE);
 sdlManager.sendRpc(mediaClock);
 ```
 !@
@@ -129,17 +129,17 @@ sdlManager.sendRPC(mediaClock);
 
 @![javascript]
 ```js
-const mediaClock = new SetMediaClockTimer().setUpdateMode(UpdateMode.PAUSE).setAudioStreamingIndicator(AudioStreamingIndicator.PLAY);
+const mediaClock = new SDL.rpc.messages.SetMediaClockTimer().setUpdateMode(SDL.rpc.enums.UpdateMode.PAUSE).setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PLAY);
 sdlManager.sendRpc(mediaClock);
 ```
 
 ```js
-const mediaClock = new SetMediaClockTimer().setUpdateMode(UpdateMode.RESUME).setAudioStreamingIndicator(AudioStreamingIndicator.PAUSE);
+const mediaClock = new SDL.rpc.messages.SetMediaClockTimer().setUpdateMode(SDL.rpc.enums.UpdateMode.RESUME).setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PAUSE);
 sdlManager.sendRpc(mediaClock);
 ```
 
 ```js
-const mediaClock = new SetMediaClockTimer().setUpdateMode(UpdateMode.PAUSE).setStartTime(new StartTime().setStartTime(60)).setEndTime(new StartTime().setStartTime(240)).setAudioStreamingIndicator(AudioStreamingIndicator.PLAY);
+const mediaClock = new SDL.rpc.messages.SetMediaClockTimer().setUpdateMode(SDL.rpc.enums.UpdateMode.PAUSE).setStartTime(new SDL.rpc.structs.StartTime().setStartTime(60)).setEndTime(new SDL.rpc.structs.StartTime().setStartTime(240)).setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PLAY);
 sdlManager.sendRpc(mediaClock);
 ```
 !@
@@ -170,7 +170,7 @@ sdlManager.sendRPC(mediaClock);
 
 @![android, javaSE, javaEE]
 ```js
-const mediaClock = new SetMediaClockTimer().setUpdateMode(UpdateMode.CLEAR).setPlayPauseIndicator(AudioStreamingIndicator.PLAY);
+const mediaClock = new SDL.rpc.structs.SetMediaClockTimer().setUpdateMode(SDL.rpc.enums.UpdateMode.CLEAR).setPlayPauseIndicator(SDL.rpc.enums.AudioStreamingIndicator.PLAY);
 sdlManager.sendRpc(mediaClock);
 ```
 !@
