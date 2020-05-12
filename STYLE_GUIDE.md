@@ -6,11 +6,11 @@
 ### Whitespace
 * Use spaces, not tabs, 4 spaces per indentation.
 * Use one space after a period, not two.
-* One line between paragraphs, paragraphs and code, or paragraphs and a header (###) following it.
+* Add one newline between paragraphs, a paragraphs and code snippet, or a paragraph followed by a header (i.e. any line of text starting with a #).
 * No extra lines between a header (###) and the paragraph following it.
 
 ## Grammar
-* In text, use `SDL`, not `sdl` or `Sdl`.
+* When abbreviating "SmartDeviceLink" in text (i.e. not in a code snippet where libraries may abbreviate SDL differently), use _SDL_, not _sdl_ or _Sdl_.
 * "An SDL", not "A SDL".
 
 ## Code Style
