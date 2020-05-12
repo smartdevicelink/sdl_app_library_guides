@@ -267,7 +267,7 @@ alert.setTtsChunks(Collections.singletonList(ttsChunk));
 
 @![javascript]
 ```js
-const ttsChunk = new TTSChunk(sdlFile.getName(), SpeechCapabilities.FILE);
+const ttsChunk = new TTSChunk().setText(sdlFile.getName()).setType(SpeechCapabilities.FILE);
 alert.setTtsChunk([ttsChunk]);
 ```
 !@
