@@ -37,8 +37,11 @@ const headUnitHMILanguage = sdlManager.getRegisterAppInterfaceResponse().getHmiD
 ```
 !@
 
-@![iOS,android,javaSE,javaEE]
 ## Updating the SDL App Name
+@![javascript]
+The SDL JavaScript Suite currently does not support updating the app name. This will be addressed in a future release.
+!@
+@![iOS,android,javaSE,javaEE]
 To customize the app name for the head unit's current language, implement the following steps:
 
 1. Set the default `language` in the !@@![iOS]`SDLLifecycleConfiguration`!@@![android,javaSE,javaEE]`Builder`!@.
