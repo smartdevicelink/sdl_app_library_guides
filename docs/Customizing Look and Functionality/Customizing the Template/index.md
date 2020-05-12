@@ -54,18 +54,18 @@ builder.setDayColorScheme(nightColorScheme);
 @![javascript]
 ```js
 // Set color schemes
-const green = new RGBColor().setRed(126).setGreen(188).setBlue(121);
-const white = new RGBColor().setRed(249).setGreen(251).setBlue(254);
-const grey = new RGBColor().setRed(186).setGreen(198).setBlue(210);
-const darkGrey = new RGBColor().setRed(57).setGreen(78).setBlue(96);
+const green = new SDL.rpc.structs.RGBColor().setRed(126).setGreen(188).setBlue(121);
+const white = new SDL.rpc.structs.RGBColor().setRed(249).setGreen(251).setBlue(254);
+const grey = new SDL.rpc.structs.RGBColor().setRed(186).setGreen(198).setBlue(210);
+const darkGrey = new SDL.rpc.structs.RGBColor().setRed(57).setGreen(78).setBlue(96);
 
-const dayColorScheme = new TemplateColorScheme();
+const dayColorScheme = new SDL.rpc.structs.TemplateColorScheme();
 dayColorScheme.setBackgroundColor(white);
 dayColorScheme.setPrimaryColor(green);
 dayColorScheme.setSecondaryColor(grey);
 lifecycleConfig.setDayColorScheme(dayColorScheme);
 
-const nightColorScheme = new TemplateColorScheme();
+const nightColorScheme = new SDL.rpc.structs.TemplateColorScheme();
 nightColorScheme.setBackgroundColor(white);
 nightColorScheme.setPrimaryColor(green);
 nightColorScheme.setSecondaryColor(darkGrey);
@@ -78,7 +78,7 @@ You may change the template coloring in the `lifecycleConfiguration` and the `Se
 !!!
 
 ### Customizing Future Layouts
-You can change the template color scheme when you change layouts in the @![iOS]`SDLSetDisplayLayout` (any RPC version) or `SDLShow` (RPC v6.0+)!@@![android, javaSE, javaEE]`SetDisplayLayout` (any RPC version) or `Show` (RPC v6.0+)!@ request.
+You can change the template color scheme when you change layouts in the @![iOS]`SDLSetDisplayLayout` (any RPC version) or `SDLShow` (RPC v6.0+)!@@![android, javaSE, javaEE, javascript]`SetDisplayLayout` (any RPC version) or `Show` (RPC v6.0+)!@ request.
 
 @![iOS]
 ##### Objective-C
@@ -146,27 +146,27 @@ sdlManager.sendRPC(setDisplayLayout);
 @![javascript]
 ```js
 // Set color schemes
-const green = new RGBColor().setRed(126).setGreen(188).setBlue(121);
-const white = new RGBColor().setRed(249).setGreen(251).setBlue(254);
-const grey = new RGBColor().setRed(186).setGreen(198).setBlue(210);
-const darkGrey = new RGBColor().setRed(57).setGreen(78).setBlue(96);
+const green = new SDL.rpc.structs.RGBColor().setRed(126).setGreen(188).setBlue(121);
+const white = new SDL.rpc.structs.RGBColor().setRed(249).setGreen(251).setBlue(254);
+const grey = new SDL.rpc.structs.RGBColor().setRed(186).setGreen(198).setBlue(210);
+const darkGrey = new SDL.rpc.structs.RGBColor().setRed(57).setGreen(78).setBlue(96);
 
-const dayColorScheme = new TemplateColorScheme();
+const dayColorScheme = new SDL.rpc.structs.TemplateColorScheme();
 dayColorScheme.setBackgroundColor(white);
 dayColorScheme.setPrimaryColor(green);
 dayColorScheme.setSecondaryColor(grey);
 lifecycleConfig.setDayColorScheme(dayColorScheme);
 
-const nightColorScheme = new TemplateColorScheme();
+const nightColorScheme = new SDL.rpc.structs.TemplateColorScheme();
 nightColorScheme.setBackgroundColor(white);
 nightColorScheme.setPrimaryColor(green);
 nightColorScheme.setSecondaryColor(darkGrey);
 
-const setDisplayLayout = new SetDisplayLayout().setDisplayLayout(PredefinedLayout.GRAPHIC_WITH_TEXT);
+const setDisplayLayout = new SDL.rpc.messages.SetDisplayLayout().setDisplayLayout(SDL.rpc.enums.PredefinedLayout.GRAPHIC_WITH_TEXT);
 setDisplayLayout.setDayColorScheme(dayColorScheme);
 setDisplayLayout.setNightColorScheme(nightColorScheme);
-sdlManager.addRpcListener(FunctionID.SetDisplayLayout, function (response) {
-        if (response instanceof RpcResponse && response.getSuccess()){
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.SetDisplayLayout, function (response) {
+        if (response instanceof SDL.rpc.RpcResponse && response.getSuccess()){
             // Success
         }
     }
@@ -237,12 +237,12 @@ sdlManager.sendRPC(setGlobalProperties);
 !@
 @![javascript]
 ```js
-const setGlobalProperties = new SetGlobalProperties();
+const setGlobalProperties = new SDL.rpc.messages.SetGlobalProperties();
 setGlobalProperties.setMenuTitle('customTitle');
 // The image must be uploaded before referencing the image name here
 setGlobalProperties.setMenuIcon(<#Image#>);
-sdlManager.addRpcListener(FunctionID.SetGlobalProperties, function (response) {
-        if (response instanceof RpcResponse && response.getSuccess()){
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.SetGlobalProperties, function (response) {
+        if (response instanceof SDL.rpc.RpcResponse && response.getSuccess()){
             // Success
         }
     }
