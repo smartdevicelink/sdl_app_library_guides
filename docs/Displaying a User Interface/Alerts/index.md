@@ -137,7 +137,7 @@ alert.duration = @(4000);
 ##### Swift
 ```swift
 // Duration timeout is in milliseconds
-alert.duration = 4000 as NSNumber
+alert.duration = NSNumber(4000)
 ```
 !@
 
@@ -158,7 +158,7 @@ alert.progressIndicator = @YES;
 
 ##### Swift
 ```swift
-alert.progressIndicator = true as NSNumber
+alert.progressIndicator = NSNumber(true)
 ```
 !@
 
@@ -223,7 +223,7 @@ alert.playTone = @YES;
 
 ##### Swift
 ```swift
-alert.playTone = true as NSNumber
+alert.playTone = NSNumber(true)
 ```
 !@
 
