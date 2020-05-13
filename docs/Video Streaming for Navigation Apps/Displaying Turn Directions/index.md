@@ -143,7 +143,7 @@ clearTurnByTurn.maneuverComplete = @YES;
 ##### Swift
 ```swift
 let clearTurnByTurn = SDLShowConstantTBT()
-clearTurnByTurn.maneuverComplete = true as NSNumber
+clearTurnByTurn.maneuverComplete = NSNumber(true)
 
 sdlManager.send(request: clearTurnByTurn) { (request, response, error) in
     guard response?.success.boolValue == true else {

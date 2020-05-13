@@ -114,7 +114,7 @@ getVehicleData.payloadProtected = @YES;
 ##### Swift
 ```swift
 let getVehicleData = SDLGetVehicleData()
-getVehicleData.gps = true as NSNumber
+getVehicleData.gps = NSNumber(true)
 getVehicleData.isPayloadProtected = true
 
 sdlManager.send(getVehicleData)

@@ -53,6 +53,11 @@ Configuration tags allow to you create guides that are only available for the sp
 
 This code snippet shows how to configure a guide to only be made available for the Android platform guides.
 
+## Previewing Content
+Build servers will build all PRs for all available platforms. At the bottom of the PR you will see the progress of the build server for each platform. Press the "Details" button to open a link to the generated docs with the PR included for that given platform.
+
+![Generated Docs Example Image](assets/docs-generated-example.png)
+
 ## Best Practices
 * When shortening "SmartDeviceLink", the correct acronym is "SDL", not "Sdl", "sdl", or "S.D.L."
 * Screenshots should be _only_ of the SDL generic_HMI if available, if not, then another HMI such as Ford's Sync 3 head unit may be used.

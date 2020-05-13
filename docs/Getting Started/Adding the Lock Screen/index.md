@@ -53,6 +53,9 @@ It is possible to customize the background color and app icon in the default pro
 @![iOS]
 ![Custom Lock Screen](assets/CustomLockScreen.png)
 !@
+@![android]
+![Custom Lock Screen](assets/CustomLockScreen_Android.png)
+!@
 
 ### Custom Background Color
 @![iOS]
@@ -97,7 +100,16 @@ lockScreenConfig.setAppIcon(appIconInt); // For example, R.drawable.lockscreen i
 !@
 
 ### Showing the OEM Logo
-The default lock screen handles retrieving and setting the OEM logo from head units that support this feature. This feature can be disabled on the default lock screen by setting `showDeviceLogo` to false. 
+The default lock screen handles retrieving and setting the OEM logo from head units that support this feature.
+
+@![iOS]
+![Custom Lock Screen](assets/OEMLogoLockScreen.png)
+!@
+@![android]
+![Custom Lock Screen](assets/OEMLogoLockScreen_Android.png)
+!@
+
+This feature can be disabled on the default lock screen by setting `showDeviceLogo` to false.
 
 @![iOS]
 ##### Objective-C
@@ -203,7 +215,16 @@ lockScreenConfig.setDisplayMode(LockScreenConfig.DISPLAY_MODE_ALWAYS);
 !@
 
 ### Enabling User Lockscreen Dismissal (Passenger Mode)
-Starting in RPC v6.0+ users may now have the ability to dismiss the lock screen by swiping the lock screen down. Not all OEMs support this new feature. A dismissible lock screen is enabled by default if the head unit enables the feature, but you can disable it manually as well. To disable this feature, set @![iOS]`SDLLockScreenConfiguration`s!@ @![android]`LockScreenConfig`s!@  `enableDismissGesture` to false.
+Starting in RPC v6.0+ users may now have the ability to dismiss the lock screen by swiping the lock screen down. Not all OEMs support this new feature. A dismissible lock screen is enabled by default if the head unit enables the feature, but you can disable it manually as well.
+
+@![iOS]
+![Custom Lock Screen](assets/DismissLockScreen.png)
+!@
+@![android]
+![Custom Lock Screen](assets/DismissLockScreen_Android.png)
+!@
+
+To disable this feature, set @![iOS]`SDLLockScreenConfiguration`s!@ @![android]`LockScreenConfig`s!@  `enableDismissGesture` to false.
 
 @![iOS]
 ##### Objective-C

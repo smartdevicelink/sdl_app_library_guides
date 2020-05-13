@@ -74,7 +74,7 @@ getGPSData.gps = @YES;
 ##### Swift
 ```swift
 let getGPSData = SDLGetVehicleData()
-getGPSData.gps = true as NSNumber
+getGPSData.gps = NSNumber(true)
 sdlManager.send(request: getGPSData) { (request, response, error) in
     guard let response = response as? SDLGetVehicleDataResponse else { return }
     guard response?.success.boolValue == true else {
@@ -181,7 +181,7 @@ subscribeGPSData.gps = @YES;
 ##### Swift
 ```swift
 let subscribeGPSData = SDLSubscribeVehicleData()
-subscribeGPSData.gps = true as NSNumber
+subscribeGPSData.gps = NSNumber(true)
 
 sdlManager.send(request: subscribeGPSData) { (request, response, error) in
     guard let response = response as? SDLSubscribeVehicleDataResponse else { return }
@@ -312,7 +312,7 @@ unsubscribeGPSData.gps = @YES;
 ##### Swift
 ```swift
 let unsubscribeGPSData = SDLUnsubscribeVehicleData()
-unsubscribeGPSData.gps = true as NSNumber
+unsubscribeGPSData.gps = NSNumber(true)
 
 sdlManager.send(request: unsubscribeGPSData) { (request, response, error) in
     guard let response = response as? SDLUnsubscribeVehicleDataResponse else { return }

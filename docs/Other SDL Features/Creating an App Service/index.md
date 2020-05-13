@@ -466,7 +466,7 @@ sdlManager.subscribe(to: SDLDidReceiveGetAppServiceDataRequest) { [weak self] (m
     // Send a response
     let response = SDLGetAppServiceDataResponse(appServiceData: <#Your App Service Data#>)
     response.correlationID = getAppServiceRequest.correlationID
-    response.success = true as NSNumber
+    response.success = NSNumber(true)
     response.resultCode = .success
     response.info = "<#Use to provide more information about an error#>"
     self?.sdlManager.sendRPC(response)

@@ -11,31 +11,45 @@ There are four different ways to install the SDL SDK in your project: Accio, Coc
 
 ### CocoaPods Installation
 
-1. Xcode should be closed for the following steps.
-1. Open the terminal app on your Mac.
-1. Make sure you have the latest version of [CocoaPods](https://cocoapods.org) installed. For more information on installing CocoaPods on your system please consult: [https://cocoapods.org](https://cocoapods.org).
+1\. Xcode should be closed for the following steps.
 
-        sudo gem install cocoapods
+2\. Open the terminal app on your Mac.
 
-1. Navigate to the root directory of your app. Make sure your current folder contains the **.xcodeproj** file
-1. Create a new **Podfile**.
+3\. Make sure you have the latest version of [CocoaPods](https://cocoapods.org) installed. For more information on installing CocoaPods on your system please consult: [https://cocoapods.org](https://cocoapods.org).
 
-        pod init
+```
+sudo gem install cocoapods
+```
 
-1. In the **Podfile**, add the following text. This tells CocoaPods to install SDL SDK for iOS. SDL Versions are available on [Github](https://github.com/smartdevicelink/sdl_ios/releases). We suggest always using the latest release.
+4\. Navigate to the root directory of your app. Make sure your current folder contains the **.xcodeproj** file.
 
-        target ‘<#Your Project Name#>’ do
-                pod ‘SmartDeviceLink’, ‘~> <#SDL Version#>’
-        end
+5\. Create a new **Podfile**.
+
+```
+pod init
+```
+
+6\. In the **Podfile**, add the following text. This tells CocoaPods to install SDL SDK for iOS. SDL Versions are available on [Github](https://github.com/smartdevicelink/sdl_ios/releases). We suggest always using the latest release.
+
+```ruby
+target ‘<#Your Project Name#>’ do
+    pod ‘SmartDeviceLink’, ‘~> <#SDL Version#>’
+end
+```
     
-1. Install SDL SDK for iOS: 
+7\. Install SDL SDK for iOS: 
 
-        pod install
+```
+pod install
+```
 
-1. There will be a newly created **.xcworkspace** file in the directory in addition to the **.xcodeproj** file. Always use the **.xcworkspace** file from now on.
-1. Open the **.xcworkspace** file. To open from the  terminal, type:  
+8\. There will be a newly created **.xcworkspace** file in the directory in addition to the **.xcodeproj** file. Always use the **.xcworkspace** file from now on.
 
-        open <#Your Project Name#>.xcworkspace
+9\. Open the **.xcworkspace** file. To open from the  terminal, type:  
+
+```
+open <#Your Project Name#>.xcworkspace
+```
 
 ### Accio Installation
 You can install this library using [Accio](https://github.com/JamitLabs/Accio), which is based on SwiftPM syntax. Please follow the steps on the Accio README linked above to initialize Accio into your application. Once installed and initialized into your Xcode project, the root directory should contain a Package.swift file.
@@ -45,7 +59,7 @@ You can install this library using [Accio](https://github.com/JamitLabs/Accio), 
 2\. Add the following line to the dependencies array of your package file. We suggest always using the latest release of the SDL library. 
 
 ```swift
-.package(url: "https://github.com/smartdevicelink/sdl_ios.git", .upToNextMajor(from: "6.4.0")),
+.package(url: "https://github.com/smartdevicelink/sdl_ios.git", .upToNextMajor(from: "<#SDL Version#>")),
 ```
 
 !!! NOTE
@@ -93,11 +107,11 @@ and replace `{version}` with the desired release version in format of `x.x.x`. T
 
 ### Examples
 
-To compile release 4.10.1, use the following line:
+To compile release 4.11.0, use the following line:
 
 ```
 dependencies {
-    implementation 'com.smartdevicelink:sdl_android:4.10.1'
+    implementation 'com.smartdevicelink:sdl_android:4.11.0'
 }
 ```
 
@@ -136,11 +150,11 @@ and replace `{version}` with the desired release version in format of `x.x.x`. T
 
 ### Examples
 
-To compile release 4.10.1, use the following line:
+To compile release 4.11.0, use the following line:
 
 ```
 dependencies {
-    implementation 'com.smartdevicelink:sdl_java_se:4.10.1'
+    implementation 'com.smartdevicelink:sdl_java_se:4.11.0'
 }
 ```
 
