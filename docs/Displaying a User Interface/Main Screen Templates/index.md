@@ -56,15 +56,12 @@ sdlManager.sendRPC(setDisplayLayoutRequest);
 ```js
 const setDisplayLayoutRequest = new SDL.rpc.messages.SetDisplayLayout();
 setDisplayLayoutRequest.setDisplayLayout(SDL.rpc.enums.PredefinedLayout.GRAPHIC_WITH_TEXT);
-sdlManager.addRpcListener(SDl.rpc.enums.FunctionID.SetDisplayLayout, function (message) {
-    if (message instanceof SDL.rpc.RpcResponse) {
-        if (message.getSuccess()) {
-            console.log('Display layout set successfully.');
-        } else {
-            console.log('Display layout request rejected.');
-        }
-    }
-})
+const response = await sdlManager.sendRpc(setDisplayLayoutRequest);
+if (response.getSuccess()) {
+    console.log('Display layout set successfully.');
+} else {
+    console.log('Display layout request rejected.');
+}
 ```
 !@
 

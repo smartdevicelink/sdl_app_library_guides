@@ -345,12 +345,10 @@ sdlManager.sendRPC(alert);
 @![javascript]
 ```js
 // Handle RPC Response
-sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.Alert, function (response) {
-    if(response instanceof SDL.rpc.RpcResponse && response.getSuccess()) {
-        console.log('Alert was shown successfully');
-    }
-});
-sdlManager.sendRpc(alert);
+const response = await sdlManager.sendRpc(alert);
+if (response.getSuccess()) {
+    console.log('Alert was shown successfully');
+}
 ```
 
 ## Dismissing the Alert (RPC v6.0+)
@@ -415,12 +413,10 @@ sdlManager.sendRPC(cancelInteraction);
 @![javascript]
 ```js
 const cancelInteraction = new SDL.rpc.messages.CancelInteraction().setFunctionIDParam(SDL.rpc.enums.FunctionID.Alert).setCancelID(cancelID);
-sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.CancelInteraction, function (response) {
-    if (response instanceof SDL.rpc.RpcResponse && response.getSuccess()) {
-        console.log('Alert was dismissed successfully');
-    }
-});
-sdlManager.sendRpc(cancelInterction)
+const response = await sdlManager.sendRpc(cancelInterction);
+if (response.getSuccess()) {
+    console.log('Alert was dismissed successfully');
+}
 ```
 !@
 
@@ -472,11 +468,9 @@ sdlManager.sendRPC(cancelInteraction);
 @![javascript]
 ```js
 const cancelInteraction = new SDL.rpc.messages.CancelInteraction().setFunctionIDParam(SDL.rpc.enums.FunctionID.Alert);
-sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.CancelInteraction, function (response) {
-    if (response instanceof SDL.rpc.RpcResponse && response.getSuccess()) {
-        console.log('Alert was dismissed successfully');
-    }
-});
-sdlManager.sendRpc(cancelInteraction);
+const response = await sdlManager.sendRpc(cancelInteraction);
+if (response.getSuccess()) {
+    console.log('Alert was dismissed successfully');
+}
 ```
 !@

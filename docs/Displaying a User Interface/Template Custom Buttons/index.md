@@ -80,7 +80,7 @@ sdlManager.getScreenManager().commit(new CompletionListener() {
 @![javascript]
 ```js
 const textState = new SDL.manager.screen.utils.SoftButtonState('<#State Name#>', '<#Button Label Text#>', null);
-const softButtonObject = new SDL.manager.screen.utils.SoftButtonObject('softButtonObject', [textState], textState.getName(), function (softButtonObject, onButtonPress) {
+const softButtonObject = new SDL.manager.screen.utils.SoftButtonObject('softButtonObject', [textState], textState.getName(), function (softButtonObject, rpc) {
     if (rpc instanceof SDL.rpc.messages.OnButtonPress) {
         console.log('SoftButton pressed!');
     }
@@ -118,7 +118,7 @@ boolean imageSupported = (!softButtonCapabilitiesList.isEmpty()) ? softButtonCap
 @![javascript]
 ```js
 const softButtonCapabilitiesList = sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getSoftButtonCapabilities();
-const imageSupported = (!softButtonCapabilitiesList.isEmpty()) ? softButtonCapabilitiesList[0].getImageSupported() : false;
+const imageSupported = (softButtonCapabilitiesList.length !== 0) ? softButtonCapabilitiesList[0].getImageSupported() : false;
 ```
 !@
  
@@ -443,7 +443,7 @@ retrievedSoftButtonObject.transitionToNextState();
 const state1 = new SDL.manager.screen.utils.SoftButtonState("<#State1 Name#>", "<#Button1 Label Text#>", <#SdlArtwork#>);
 const state2 = new SDL.manager.screen.utils.SoftButtonState("<#State2 Name#>", "<#Button2 Label Text#>", <#SdlArtwork#>);
 
-const softButtonObject = new SDL.manager.screen.utils.SoftButtonObject("softButtonObject", Arrays.asList(state1, state2), state1.getName(), function (softButtonObj, rpc) {
+const softButtonObject = new SDL.manager.screen.utils.SoftButtonObject("softButtonObject", [state1, state2], state1.getName(), function (softButtonObj, rpc) {
     if (rpc instanceof SDL.rpc.messages.OnButtonPress) {
         console.log('Soft Button pressed.');
     }

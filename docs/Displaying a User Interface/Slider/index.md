@@ -264,13 +264,8 @@ sdlManager.sendRPC(slider);
 
 @![javascript]
 ```js
-sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.Slider, function (sliderRpc) {
-    if (sliderRpc instanceof SDL.rpc.RpcRespnse) {
-        console.log('Slider Position Set: ' + sliderRpc.getSliderPosition());
-    }
-});
-sdlManager.sendRpc(slider);
-
+const sliderResponse = await sdlManager.sendRpc(slider);
+console.log('Slider Position Set: ' + sliderResponse.getSliderPosition());
 ```
 !@
 
@@ -333,12 +328,10 @@ sdlManager.sendRPC(cancelInteraction);
 ```js
 // `cancelID` is the ID that you assigned when creating the slider
 const cancelInteraction = new SDL.rpc.messages.CancelInteraction().setFunctionIDParam(SDL.rpc.enums.FunctionID.Slider).setCancelID(cancelID);
-sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.CancelInteraction, function (cancelInteraction) {
-    if (cancelInteraction instanceof SDL.rpc.RpcResponse && cancelInteraction.getSuccess()) {
-        console.log('Slider was dismissed successfully');
-    }
-})
-sdlManager.sendRPC(cancelInteraction);
+const response = await sdlManager.sendRpc(cancelInteraction);
+if (response.getSuccess()) {
+    console.log('Slider was dismissed successfully');
+}
 ```
 !@
 
@@ -390,11 +383,9 @@ sdlManager.sendRPC(cancelInteraction);
 @![javascript]
 ```js
 const cancelInteraction = new SDL.rpc.messages.CancelInteraction().setFunctionIDParam(SDL.rpc.enums.FunctionID.Slider);
-sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.CancelInteraction, function (cancelInteraction) {
-    if (cancelInteraction instanceof SDL.rpc.RpcResponse && cancelInteraction.getSuccess()) {
-        console.log('Slider was dismissed successfully');
-    }
-});
-sdlManager.sendRpc(cancelInteraction);
+const response = await sdlManager.sendRpc(cancelInteraction);
+if (response.getSuccess()) {
+    console.log('Slider was dismissed successfully');
+}
 ```
 !@

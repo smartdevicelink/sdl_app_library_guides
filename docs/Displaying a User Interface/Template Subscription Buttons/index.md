@@ -207,10 +207,10 @@ sdlManager.sendRPCs(Arrays.asList(preset1, preset2), null);
 sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnButtonPress, function (onButtonPress) {
     if (onButtonPress instanceof SDL.rpc.RpcNotification) {
         switch (onButtonPress.getButtonName()) {
-            case ButtonName.PRESET_1:
+            case SDL.rpc.enums.ButtonName.PRESET_1:
                 // PRESET_1 subscribe button selected
                 break;
-            case ButtonName.PRESET_2:
+            case SDL.rpc.enums.ButtonName.PRESET_2:
                 // PRESET_2 subscribe button selected
                 break;
         }
