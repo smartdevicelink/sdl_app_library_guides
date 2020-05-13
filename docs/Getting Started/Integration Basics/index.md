@@ -1238,10 +1238,10 @@ The `SDLSessionBean` should be inside a Java package other than the default pack
 !@
 
 @![javascript]
-The type of app you can make will depend on the build library you select. If you are using the Node.js build, your app can run as a WebSocket server or as a TCP client. If you are using the vanilla JavaScript build, your app can run as a WebSocket client. This guide will cover topics that apply to both Node.js and plain JS library builds. Specific code snippets for each environment will be shown when applicable.
+The type of app you can make will depend on the build library you select. If you are using the Node.js build, your app can run as a WebSocket server or as a TCP client. If you are using the vanilla JavaScript build (a minified JS file not tied to any specific build system or server structure), your app can run as a WebSocket client. This guide will cover topics that apply to both Node.js and vanilla JS library builds.
 
 ## Basic Configuration
-In order to correctly connect to an SDL enabled head unit, developers need to create a configuration object to pass into an instance of the `SdlManager` class and then start it. This configuration object is the `AppConfig`, which requires a `LifecycleConfig` object. `LifecycleConfig` contains the majority of the settings a developer would need to set in order for the app to be operable. At the very least, you will want to use the following methods to get started: `setAppId`, `setAppName`, `setLanguageDesired`, `setAppTypes`, and `setTransportConfig`. These configuration objects support method chaining, which allow you to create the following example configuration object:
+In order to correctly connect to an SDL enabled head unit, developers need to create an `AppConfig` configuration object to pass into an instance of the `SdlManager` class and then start it. This configuration object requires a `LifecycleConfig` object which contains the majority of the settings you need to set in order for the app to function. You will want to use the following methods to get started: `setAppId`, `setAppName`, `setLanguageDesired`, `setAppTypes`, and `setTransportConfig`. These configuration objects support method chaining, which allow you to create the following example configuration object:
 
 ```js
 const lifecycleConfig = new SDL.manager.LifecycleConfig()
@@ -1253,24 +1253,40 @@ const lifecycleConfig = new SDL.manager.LifecycleConfig()
     ]);
 ```
 
-For WebEngine apps, most of this configuration will happen in the `manifest.js` file. The `LifecycleConfig` class has a `loadManifest` method that takes in a manifest file and sets up the configuration itself.
+!!! NOTE
+For WebEngine apps, most of this configuration will happen in the `manifest.js` file and does not need to be duplicated here.
+!!!
 
 ## Transport Configuration
-The transport configuration will depend on the environment you're using. For instance, you can make a TCP connection with Node.js, but not with vanilla JS. Setting up the transport correctly will be covered in the next section. See below for example transport configurations.
+The transport configuration will depend on the environment you're using. For example, you can make a TCP connection with Node.js, but not with vanilla JS. See below for example transport configurations.
 
 ##### Node.js TCP Transport
 ```js
 lifecycleConfig.setTransportConfig(new SDL.transport.TcpClientConfig(HOST, PORT));
 ```
 
+For a WebSocket server connection, the developer is expected to set up the server component, and pass in incoming client connections to the `WebSocketServerConfig`. The `ws` node module provides the necessary object to the config.
 ##### Node.js WebSocket Server
 ```js
-lifecycleConfig.setTransportConfig(
-    new SDL.transport.WebSocketServerConfig(
-        wsClient, // The developer is responsible for providing incoming client connections
-        CONNECTION_LOST_TIMEOUT // connection timeout in milliseconds
-    )
-);
+const WS = require('ws');
+const PORT = 3000;
+
+// create a WebSocket Server
+const appWebSocketServer = new WS.Server({
+    port: PORT,
+});
+console.log(`WebSocket Server listening on port ${PORT}`);
+
+appWebSocketServer.on('connection', (connection) => {
+    // app setup goes here
+    lifecycleConfig.setTransportConfig(
+        new SDL.transport.WebSocketServerConfig(
+            connection,
+            CONNECTION_LOST_TIMEOUT // connection timeout in milliseconds (default is 60 seconds)
+        )
+    );
+});
+
 ```
 ##### Vanilla JS WebSocket Client
 ```js
@@ -1320,7 +1336,8 @@ const sdlManager = new SDL.manager.SdlManager(appConfig, managerListener)
     });
 ```
 
-For WebEngine apps, the resulting `index.html` may look something like this:
+## Configuring the WebEngine App HTML File
+For WebEngine apps, there are slight modifications for integrating the library, such as importing the manifest file and passing it into the `LifecycleConfig.loadManifest` method. Additionally, since the data for the connection information is part of the URL query, the `WebSocketClientConfig` class requires no arguments, and the library will read the URL query values instead. The resulting `index.html` may look something like this as a result:
 
 ```html
 <html>
