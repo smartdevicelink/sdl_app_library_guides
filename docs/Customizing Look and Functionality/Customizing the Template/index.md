@@ -165,13 +165,10 @@ nightColorScheme.setSecondaryColor(darkGrey);
 const setDisplayLayout = new SDL.rpc.messages.SetDisplayLayout().setDisplayLayout(SDL.rpc.enums.PredefinedLayout.GRAPHIC_WITH_TEXT);
 setDisplayLayout.setDayColorScheme(dayColorScheme);
 setDisplayLayout.setNightColorScheme(nightColorScheme);
-sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.SetDisplayLayout, function (response) {
-        if (response instanceof SDL.rpc.RpcResponse && response.getSuccess()){
-            // Success
-        }
-    }
-});
-sdlManager.sendRpc(setDisplayLayout);
+const response = await sdlManager.sendRpc(setDisplayLayout);
+if (response.getSuccess()){
+    // Success
+}
 ```
 !@
 
@@ -241,12 +238,9 @@ const setGlobalProperties = new SDL.rpc.messages.SetGlobalProperties();
 setGlobalProperties.setMenuTitle('customTitle');
 // The image must be uploaded before referencing the image name here
 setGlobalProperties.setMenuIcon(<#Image#>);
-sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.SetGlobalProperties, function (response) {
-        if (response instanceof SDL.rpc.RpcResponse && response.getSuccess()){
-            // Success
-        }
-    }
-});
-sdlManager.sendRpc(setGlobalProperties);
+const response = await sdlManager.sendRpc(setGlobalProperties);
+if (response.getSuccess()){
+    // Success
+}
 ```
 !@
