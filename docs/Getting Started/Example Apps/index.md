@@ -20,7 +20,7 @@ To get the example app, download or clone the [sdl_java_suite](https://github.co
 !@
 
 @![javascript]
-The [JavaScript Suite repository on GitHub](https://github.com/smartdevicelink/sdl_javascript_suite/tree/master/examples) provides example apps for both the browser and for NodeJS. This includes a WebEngine app, a WebSocket client app, a WebSocket server app, and a TCP client app. The examples in the folders already come with their own SDL library build files. Check the `readme.md` files in each example app for more information on how to run the apps.
+The [JavaScript Suite repository on GitHub](https://github.com/smartdevicelink/sdl_javascript_suite/tree/master/examples) provides example apps for both the browser and for NodeJS. This includes a WebEngine app, a WebSocket client app, a WebSocket server app, and a TCP client app. The examples in the folders already come with their own SDL library build files. Check each example app's `readme.md` file for more information on how to run the respective app.
 !@
 
 @![iOS]
@@ -130,10 +130,12 @@ To connect the sample app to the infotainment system, please follow the instruct
 @![javascript]
 ## Connecting to an Infotainment System
 ### Connecting as a WebSocket Client
-For vanilla JavaScript SDL apps, connecting as a WebSocket client requires a version of SDL Core that can accept incoming WebSocket connections (at least v6.1.0). Note that Manticore does not currently support this feature. A workaround to this limitation is to use a proxy program that your app connects to which modifies the incoming WebSocket connection into a TCP connection, which then connects to SDL Core on the app's behalf. A `proxy.jar` Java program that does exactly this is available in the [repository's JavaScript example folder](https://github.com/smartdevicelink/sdl_javascript_suite/blob/master/examples/js/hello-sdl). Check the `readme.md` for how to run it. This workaround for older versions of Core is also necessary for WebEngine apps. Please check the [Connecting to an Infotainment System](Getting Started/Connecting to an Infotainment System) guide for more detailed instructions on how to get the emulator's IP address and port number.
+For vanilla JavaScript SDL apps, connecting as a WebSocket client requires a version of SDL Core that can accept incoming WebSocket connections (at least v6.1.0). If you are using Manticore to test your app, note that it currently does not support WebSocket connections.
+A workaround to this limitation is to use a proxy program for your app to connect with which modifies the incoming WebSocket connection into a TCP connection. The proxy program then connects to SDL Core on the app's behalf and passes through your transport data. A Java program that does exactly this is available in the [repository's JavaScript example folder](https://github.com/smartdevicelink/sdl_javascript_suite/blob/master/examples/js/hello-sdl) called `proxy.jar`. Check the example app's `readme.md` for how to run it. Please check the [Connecting to an Infotainment System](Getting Started/Connecting to an Infotainment System) guide for more detailed instructions on how to get the emulator's IP address and port number.
+This workaround for older versions of Core is also necessary for WebEngine apps.
 
 ### Connecting as a WebSocket Server
-SDL Core acts as the WebSocket client in this case. The information for what your app is and how Core is to connect to it goes into the policy table. [Check the JavaEE guide for how to set up your policy table to point to your app](https://smartdevicelink.com/en/guides/javaee/getting-started/connecting-to-an-infotainment-system/#policy-table-configuration).
+SDL Core acts as the WebSocket client in this case. The information about your app and how Core should connect to it must go into the policy table. Check the [Connecting to an Infotainment System](Getting Started/Connecting to an Infotainment System/#policy-table-configuration) guide for how to set up your policy table to point to your app
 
 The following snippet is a truncated version of what is needed to set up the WebSocket server to accept and pass connections to the SDL library. This example uses the `ws` npm module for WebSocket connections. Refer to [the integration basics guide](Getting Started/Integration Basics) for the full integration setup.
 
