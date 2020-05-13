@@ -56,17 +56,20 @@ func isDialNumberSupported(handler: @escaping (_ success: Bool, _ error: Error?)
         return handler(true, nil)
     }
 
-    // Check if the module supports the `DialNumber` request
+    // Check if the phone capability has already been retrieved from the module
+    if let phoneCapability = sdlManager.systemCapabilityManager.phoneCapability {
+        // Check if the module supports the `DialNumber` request
+        return handler(phoneCapability.dialNumberEnabled?.boolValue ?? false, nil)
+    }
+
+    // Retrieve the phone capability from the module
     sdlManager.systemCapabilityManager.updateCapabilityType(.phoneCall) { (error, systemCapabilityManager) in
         if (error != nil) {
             return handler(false, error)
         }
 
-        let isDialNumberSupported = false
-        if let phoneCapability = systemCapabilityManager.phoneCapability {
-            isDialNumberSupported = phoneCapability.dialNumberEnabled?.boolValue ?? false
-        }
-        return handler(isDialNumberSupported, nil)
+        // Check if the module supports the `DialNumber` request
+        return handler(systemCapabilityManager.phoneCapability?.dialNumberEnabled?.boolValue ?? false, nil)
     }
 }
 ```
