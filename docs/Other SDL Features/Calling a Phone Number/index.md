@@ -1,5 +1,5 @@
 # Calling a Phone Number
-The @![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ RPC allows you make a phone call via the user's phone. In order to make dial a phone number you must be sure that the device is connected via Bluetooth (even if using a USB cord) for this request to work. If the phone is not connected via Bluetooth, you will receive a result of `REJECTED` from the module.
+The @![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ RPC allows you make a phone call via the user's phone. In order to dial a phone number you must be sure that the device is connected via Bluetooth (even if using a USB cord) for this request to work. If the phone is not connected via Bluetooth, you will receive a result of `REJECTED` from the module.
 
 ## Checking Your App's Permissions
 @![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ is an RPC that is usually restricted by OEMs. As a result, a module may reject your request if your app does not have the correct permissions. Your SDL app may also be restricted to only being allowed to making a phone call when your app is open (i.e. the `hmiLevel` is non-`NONE`) or when it is the currently active app (i.e. the `hmiLevel` is `FULL`). 
@@ -12,7 +12,7 @@ The @![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ RPC allows y
 
 ##### Swift
 ```swift
-let observerId  = sdlManager.permissionManager.addObserver(forRPCs: [SDLRPCFunctionName.dialNumber.rawValue.rawValue], groupType: .any, withHandler: { (allChanges, groupStatus) in
+let observerId = sdlManager.permissionManager.addObserver(forRPCs: [SDLRPCFunctionName.dialNumber.rawValue.rawValue], groupType: .any, withHandler: { (allChanges, groupStatus) in
     // This handler will be called whenever the permission status changes
     guard groupStatus == SDLPermissionGroupStatus.allowed else { 
         // Your app does not have permission to send the `DialNumber` request for its current HMI level
@@ -31,9 +31,11 @@ let observerId  = sdlManager.permissionManager.addObserver(forRPCs: [SDLRPCFunct
 !@
 
 ## Checking if the Module Supports Calling a Phone Number
-Since making a phone call is a newer feature, there is a possibility that some legacy modules will reject your request because the module does not support the @![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ request. Once you have successfully connected to the module and you know that your SDL app has been opened, you can check the module's capabilities via the @![iOS]`SDLManager.systemCapabilityManager`!@@![android, javaSE, javaEE]`sdlManager.getSystemCapabilityManager`!@ as shown in the example below. Please note that you only need to check once if the module supports calling a phone number, however you must wait to perform this check until you know that the SDL app has been opened (i.e. the `hmiLevel` is non-`NONE`). 
+Since making a phone call is a newer feature, there is a possibility that some legacy modules will reject your request because the module does not support the @![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ request. Once you have successfully connected to the module, you can check the module's capabilities via the @![iOS]`SDLManager.systemCapabilityManager`!@@![android, javaSE, javaEE]`sdlManager.getSystemCapabilityManager`!@ as shown in the example below. Please note that you only need to check once if the module supports calling a phone number, however you must wait to perform this check until you know that the SDL app has been opened (i.e. the `hmiLevel` is non-`NONE`). 
 
+!!! NOTE
 If you discover that the module does not support calling a phone number or that your app does not have the right permissions, you should disable any buttons, voice commands, menu items, etc. in your app that would send the @![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ request.
+!!!
 
 @![iOS]
 ##### Objective-C
@@ -43,13 +45,13 @@ If you discover that the module does not support calling a phone number or that 
 
 ##### Swift
 ```swift
-func isDialNumberSupported(handler: @escaping (_ success: Bool, _ error: Error?) -> ()) {
+func isDialNumberSupported(handler: @escaping (_ success: Bool, _ error: Error?) -> Void) {
     // Check if the module has phone capabilities
     guard (sdlManager.systemCapabilityManager.isCapabilitySupported(type: .phoneCall)) else {
         return handler(false, nil)
     }
 
-    // Legacy modules (pre RPC Spec v4.5) do not support the phone call capability so for versions less than 4.5 we will assume `DialNumber` is supported
+    // Legacy modules (pre-RPC Spec v4.5) do not support checking capabilities, so for versions less than 4.5 we will assume `DialNumber` is supported
     guard let sdlMsgVersion = sdlManager.registerResponse?.sdlMsgVersion, SDLVersion(sdlMsgVersion: sdlMsgVersion).isGreaterThanOrEqual(to: SDLVersion(major: 4, minor: 5, patch: 0)) else {
         return handler(true, nil)
     }
@@ -60,11 +62,9 @@ func isDialNumberSupported(handler: @escaping (_ success: Bool, _ error: Error?)
             return handler(false, error)
         }
 
-        let isDialNumberSupported: Bool
+        let isDialNumberSupported = false
         if let phoneCapability = systemCapabilityManager.phoneCapability {
             isDialNumberSupported = phoneCapability.dialNumberEnabled?.boolValue ?? false
-        } else {
-            isDialNumberSupported = false
         }
         return handler(isDialNumberSupported, nil)
     }
@@ -79,7 +79,7 @@ func isDialNumberSupported(handler: @escaping (_ success: Bool, _ error: Error?)
 !@
 
 ## Sending a Dial Number Request
-Once you know that the module supports dialing a phone number and that your SDL app has permission to send a @![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ request, you can create and send the request. 
+Once you know that the module supports dialing a phone number and that your SDL app has permission to send the @![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ request, you can create and send the request. 
 
 !!! note
 @![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ strips all characters except for `0`-`9`, `*`, `#`, `,`, `;`, and `+`.
@@ -177,4 +177,3 @@ The @![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ request has 
     * The phone is not connected to the module via Bluetooth.
 
 1. `DISALLOWED` - Your app does not have permission to use the @![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ request.
-
