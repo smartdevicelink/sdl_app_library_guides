@@ -189,7 +189,7 @@ sdlManager.getScreenManager().commit(new CompletionListener() {
 @![javascript]
 ```js
 const imageState = new SDL.manager.screen.utils.SoftButtonState('<#State Name#>', null, <#SdlArtwork#>);
-const softButtonObject = new SDL.manager.screen.utils.SoftButtonObject('softButtonObject', [imageState], image.getName(), function (softButtonObject, rpc) {
+const softButtonObject = new SDL.manager.screen.utils.SoftButtonObject('softButtonObject', [imageState], imageState.getName(), function (softButtonObject, rpc) {
     if (rpc instanceof SDL.rpc.messages.OnButtonPress) {
         console.log('SoftButton pressed');
     }

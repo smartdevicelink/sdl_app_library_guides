@@ -151,7 +151,7 @@ const scrollableMessage = new SDL.rpc.messages.ScrollableMessage().setScrollable
 scrollableMessage.setCancelID(<#Integer>);
 
 // Send the scrollable message
-sdlManager.sendRPC(scrollableMessage);
+sdlManager.sendRpc(scrollableMessage);
 ```
 
 To listen for `OnButtonPress` events for `SoftButton`s, we need to add a listener that listens for their Id's:

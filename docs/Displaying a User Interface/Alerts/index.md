@@ -413,7 +413,7 @@ sdlManager.sendRPC(cancelInteraction);
 @![javascript]
 ```js
 const cancelInteraction = new SDL.rpc.messages.CancelInteraction().setFunctionIDParam(SDL.rpc.enums.FunctionID.Alert).setCancelID(cancelID);
-const response = await sdlManager.sendRpc(cancelInterction);
+const response = await sdlManager.sendRpc(cancelInteraction);
 if (response.getSuccess()) {
     console.log('Alert was dismissed successfully');
 }
