@@ -135,7 +135,7 @@ A workaround to this limitation is to use a proxy program for your app to connec
 This workaround for older versions of Core is also necessary for WebEngine apps.
 
 ### Connecting as a WebSocket Server
-SDL Core acts as the WebSocket client in this case. The information about your app and how Core should connect to it must go into the policy table. Check the [Connecting to an Infotainment System](getting-started/connecting-to-an-infotainment-system/#policy-table-configuration) guide for how to set up your policy table to point to your app
+SDL Core acts as the WebSocket client in this case. The information about your app and how Core should connect to it must go into the policy table. Check the [Connecting to an Infotainment System](Getting Started/Connecting to an Infotainment System) guide's Configuring the Connection section for how to set up your policy table to point to your app
 
 The following snippet is a truncated version of what is needed to set up the WebSocket server to accept and pass connections to the SDL library. This example uses the `ws` npm module for WebSocket connections. Refer to [the integration basics guide](Getting Started/Integration Basics) for the full integration setup.
 
