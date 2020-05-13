@@ -24,9 +24,7 @@ To get more detailed information about the state of your SDL app check the curre
 The easiest way to monitor the `hmiLevel` of your SDL app is through a required delegate callback of `SDLManagerDelegate`. The function `hmiLevel:didChangeToLevel:` is called every time your app's `hmiLevel` changes.
 !@
 
-@![android,javaSE,javaEE,javascript]
-Monitoring HMI Status is possible through an `OnHMIStatus` notification that you can subscribe to via the `SdlManager`'s !@@![android,javaSE,javaEE]`addOnRPCNotificationListener`.!@@![javascript]`addRpcListener`.
-!@
+@![android,javaSE,javaEE,javascript]Monitoring HMI Status is possible through an `OnHMIStatus` notification that you can subscribe to via the `SdlManager`'s !@@![android,javaSE,javaEE]`addOnRPCNotificationListener`.!@@![javascript]`addRpcListener`.!@
 
 @![iOS]
 ##### Objective-C
@@ -282,13 +280,12 @@ permissionElements.push(new SDL.manager.permission.PermissionElement(SDL.rpc.enu
 permissionElements.push(new SDL.manager.permission.PermissionElement(SDL.rpc.enums.FunctionID.GetVehicleData, [SDL.rpc.messages.GetVehicleData.KEY_RPM, SDL.rpc.messages.GetVehicleData.KEY_AIRBAG_STATUS]));
 
 const listenerId = sdlManager.getPermissionManager().addListener(permissionElements, SDL.manager.permission.enums.PermissionGroupType.ANY, function (allowedPermissions, permissionGroupStatus) {
-        if (allowedPermissions[SDL.rpc.enums.FunctionID.GET_VEHICLE_DATA].getIsRPCAllowed()) {
-            // GetVehicleData RPC is allowed
-        }
+    if (allowedPermissions[SDL.rpc.enums.FunctionID.GET_VEHICLE_DATA].getIsRPCAllowed()) {
+        // GetVehicleData RPC is allowed
+    }
 
-        if (allowedPermissions[SDL.rpc.enums.FunctionID.GET_VEHICLE_DATA].getAllowedParameters()[SDL.rpc.messages.GetVehicleData.KEY_RPM]){
-            // rpm parameter in GetVehicleData RPC is allowed
-        }
+    if (allowedPermissions[SDL.rpc.enums.FunctionID.GET_VEHICLE_DATA].getAllowedParameters()[SDL.rpc.messages.GetVehicleData.KEY_RPM]){
+        // rpm parameter in GetVehicleData RPC is allowed
     }
 });
 ```
@@ -321,7 +318,6 @@ sdlManager.getPermissionManager().removeListener(listenerUuid);
 ```
 !@
 
-@![iOS,android,javaSE,javaEE]
 ## Additional HMI State Information
 If you want more detail about the current state of your SDL app you can monitor the audio playback state as well as get notifications when something blocks the main screen of your app.
 
@@ -335,7 +331,7 @@ Audio Streaming State   | What does this mean?
 AUDIBLE     			| Any audio you are playing will be audible to the user
 ATTENUATED  			| Some kind of audio mixing is occurring between what you are playing, if anything, and some system level audio or navigation application audio.
 NOT_AUDIBLE 			| Your streaming audio is not audible. This could occur during a `VRSESSION` System Context.
-!@
+
 @![iOS]
 ##### Objective-C
 ```objc
@@ -359,6 +355,15 @@ public void onNotified(RPCNotification notification) {
     AudioStreamingState streamingState = notification.getAudioStreamingState();
 }
 ```
+!@
+
+@![javascript]
+```js
+function onHMIStatusListener (onHMIStatus) {
+    const streamingState = onHMIStatus.getAudioStreamingState();
+}
+```
+The code snippet above will get the AudioStreamingState which reflects the HMI's ability to stream audio. However, the JavaScript Suite does not yet support audio and video streaming. This will be addressed in a future version.
 !@
 
 ### System Context
