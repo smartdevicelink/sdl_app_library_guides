@@ -38,6 +38,8 @@ Speak speak = new Speak(ttsChunkList);
 
 @![javascript]
 ```js
+const chunk = new SDL.rpc.structs.TTSChunk().setText('hello').setType(SDL.rpc.enums.SpeechCapabilities.TEXT);
+const speak = new SDL.rpc.messages.Speak().setTtsChunks([chunk]);
 ```
 !@
 
@@ -60,6 +62,13 @@ let speech = SDLSpeak(ttsChunks: sapiPhonemesTTSChunk)
 TTSChunk ttsChunk = new TTSChunk("h eh - l ow 1", SpeechCapabilities.SAPI_PHONEMES);
 List<TTSChunk> ttsChunkList = Collections.singletonList(ttsChunk);
 Speak speak = new Speak(ttsChunkList);
+```
+!@
+
+@![javascript]
+```js
+const chunk = new SDL.rpc.structs.TTSChunk().setText('h eh - l ow 1').setType(SDL.rpc.enums.SpeechCapabilities.SAPI_PHONEMES);
+const speak = new SDL.rpc.messages.Speak([chunk]);
 ```
 !@
 
@@ -139,5 +148,28 @@ speak.setOnRPCResponseListener(new OnRPCResponseListener() {
     }
 });
 sdlManager.sendRPC(speak);
+```
+!@
+
+@![javascript]
+```js
+const response = await sdlManager.sendRpc(speak);
+if (!response.getSuccess()){
+    switch (response.getResultCode()){
+        case SDL.rpc.enums.Result.DISALLOWED:
+            console.log('The app does not have permission to use the speech request');
+            break;
+        case SDL.rpc.enums.Result.REJECTED:
+            console.log('The request was rejected because a higher priority request is in progress');
+            break;
+        case SDL.rpc.enums.Result.ABORTED:
+            console.log('The request was aborted by another higher priority request');
+            break;
+        default:
+            console.log('Some other error occurred');
+    }
+} else {
+    console.log('Speech was successfully spoken');
+}
 ```
 !@

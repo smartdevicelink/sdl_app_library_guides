@@ -1,8 +1,8 @@
 # Playing Audio Indications
-As of library v.@![iOS]6.1!@@![android, javaSE, javaEE]4.7!@ and SDL Core v.5.0+, you can pass an uploaded audio file's name to @![iOS]`SDLTTSChunk`!@@![android, javaSE, javaEE]`TTSChunk`!@, allowing any API that takes a text-to-speech parameter to pass and play your audio file. A sports app, for example, could play a distinctive audio chime to notify the user of a score update alongside an `Alert` request.
+As of library v.@![iOS]6.1!@@![android, javaSE, javaEE]4.7!@@![javascript]1.0!@ and SDL Core v.5.0+, you can pass an uploaded audio file's name to @![iOS]`SDLTTSChunk`!@@![android, javaSE, javaEE, javascript]`TTSChunk`!@, allowing any API that takes a text-to-speech parameter to pass and play your audio file. A sports app, for example, could play a distinctive audio chime to notify the user of a score update alongside an `Alert` request.
 
 ## Uploading the Audio File
-The first step is to make sure the audio file is available on the remote system. To upload the file use the @![iOS]`SDLFileManager`!@@![android, javaSE, javaEE]`FileManager`!@.
+The first step is to make sure the audio file is available on the remote system. To upload the file use the @![iOS]`SDLFileManager`!@@![android, javaSE, javaEE, javascript]`FileManager`!@.
 
 @![iOS]
 ##### Objective-C
@@ -34,10 +34,17 @@ sdlManager.getFileManager().uploadFile(audioFile, new CompletionListener() {
 ```
 !@
 
+@![javascript]
+```js
+const audioFile = new SDL.manager.file.filetypes.SdlFile('Audio file name', SDL.rpc.enums.FileType.AUDIO_MP, <#File Data#>, true);
+const success = await sdlManager.getFileManager().uploadFile(audioFile)
+```
+!@
+
 For more information about uploading files, see the [Uploading Files guide](Other SDL Features/Uploading Files).
 
 ## Using the Audio File
-Now that the file is uploaded to the remote system, it can be used in various RPCs, such as `Speak`, `Alert`, and `AlertManeuver`. To use the audio file in an alert, you simply need to construct a @![iOS]`SDLTTSChunk`!@@![android, javaSE, javaEE]`TTSChunk`!@ referring to the file's name.
+Now that the file is uploaded to the remote system, it can be used in various RPCs, such as `Speak`, `Alert`, and `AlertManeuver`. To use the audio file in an alert, you simply need to construct a @![iOS]`SDLTTSChunk`!@@![android, javaSE, javaEE, javascript]`TTSChunk`!@ referring to the file's name.
 
 @![iOS]
 ##### Objective-C
@@ -62,5 +69,15 @@ alert.setAlertText1("Alert Text 1");
 alert.setAlertText2("Alert Text 2");
 alert.setDuration(5000);
 alert.setTtsChunks(Arrays.asList(new TTSChunk("Audio file name", SpeechCapabilities.FILE)));
+```
+!@
+
+@![javascript]
+```js
+const alert = new SDL.rpc.messages.Alert();
+alert.setAlertText1('Alert Text 1');
+alert.setAlertText2('Alert Text 2');
+alert.setDuration(5000);
+alert.setTtsChunks([new SDL.rpc.structs.TTSChunk().setText('Audio file name').setType(SDL.rpc.enums.SpeechCapabilities.FILE)]);
 ```
 !@
