@@ -51,7 +51,7 @@ func isDialNumberSupported(handler: @escaping (_ success: Bool, _ error: Error?)
         return handler(false, nil)
     }
 
-    // Legacy modules (pre-RPC Spec v4.5) do not support checking capabilities, so for versions less than 4.5 we will assume `DialNumber` is supported
+    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `DialNumber` is supported
     guard let sdlMsgVersion = sdlManager.registerResponse?.sdlMsgVersion, SDLVersion(sdlMsgVersion: sdlMsgVersion).isGreaterThanOrEqual(to: SDLVersion(major: 4, minor: 5, patch: 0)) else {
         return handler(true, nil)
     }
