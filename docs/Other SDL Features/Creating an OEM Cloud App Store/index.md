@@ -1,5 +1,5 @@
 # Creating an OEM Cloud App Store
-A new feature of SDL Core v5.1 and SDL Java Suite v.@![iOS]6.2!@@![android,javaSE,javaEE]4.8!@ allows OEMs to offer an app store that lets users browse and install remote cloud apps. If the cloud app requires users to login with their credentials, the app store can use an authentication token to automatically login users after their first session.
+A new feature of SDL Core v5.1 and SDL Java Suite v.@![iOS]6.2!@@![android,javaSE,javaEE]4.8!@@![javascript]1.0!@ allows OEMs to offer an app store that lets users browse and install remote cloud apps. If the cloud app requires users to login with their credentials, the app store can use an authentication token to automatically login users after their first session.
 
 !!! note
 An OEM app store can be a mobile app or a cloud app.
@@ -85,6 +85,24 @@ sdlManager.sendRPC(setCloudAppProperties);
 ```
 !@
 
+@![javascript]
+```js
+const cloudAppProperties = new SDL.rpc.structs.CloudAppProperties()
+    .setAppID("<appId>")
+    .setAuthToken("<auth token>");
+
+const setCloudAppProperties = new SDL.rpc.messages.SetCloudAppProperties()
+    .setProperties(cloudAppProperties);
+
+const response = await sdlManager.sendRpc(setCloudAppProperties).catch(error => error);
+if (response.getSuccess()) {
+    console.log("Request was successful.");
+} else {
+    console.log("Request was rejected.");
+}
+```
+!@
+
 ### Getting Cloud App Properties
 To retrieve cloud properties for a specific cloud app from local policy table, app stores can send `GetCloudAppProperties` and specify the `appId` for that cloud app as in this example:
 
@@ -141,6 +159,20 @@ sdlManager.sendRPC(getCloudAppProperties);
 ```
 !@
 
+@![javascript]
+```js
+const getCloudAppProperties = new SDL.rpc.message.GetCloudAppProperties()
+    .setAppID("<appId>");
+
+const response = await sdlManager.sendRpc(getCloudAppProperties).catch(error => error);
+if (response.getSuccess()) {
+    console.log("Request was successful.");
+} else {
+    console.log("Request was rejected.");
+}
+```
+!@
+
 #### Getting the Cloud App Icon
 Cloud app developers don't need to add any code to download the app icon. The cloud app icon will be automatically downloaded from the url provided by the policy table and sent to Core to be later displayed on the HMI.
 
@@ -163,6 +195,12 @@ let authToken = sdlManager.authToken
 @![android,javaSE,javaEE]
 ```java
 String authToken = sdlManager.getAuthToken();
+```
+!@
+
+@![javascript]
+```js
+const authToken = sdlManager.getAuthToken();
 ```
 !@
 

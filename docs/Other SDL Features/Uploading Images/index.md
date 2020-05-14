@@ -1,7 +1,7 @@
 # Uploading Images
 
 !!! NOTE
-If you use the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@, [image uploading for template graphics](Displaying a User Interface/Template Images), [soft buttons](Displaying a User Interface/Template Custom Buttons), and [menu items](Displaying a User Interface/Main Menu) is handled for you behind the scenes. However, you will still need to manually upload your images if you need images in an alert, VR help lists, turn-by-turn directions, or other features not currently covered by the @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@.
+If you use the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE, javascript]`ScreenManager`!@, [image uploading for template graphics](Displaying a User Interface/Template Images), [soft buttons](Displaying a User Interface/Template Custom Buttons), and [menu items](Displaying a User Interface/Main Menu) is handled for you behind the scenes. However, you will still need to manually upload your images if you need images in an alert, VR help lists, turn-by-turn directions, or other features not currently covered by the @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE, javascript]`ScreenManager`!@.
 !!!
 
 You should be aware of these four things when using images in your SDL app:
@@ -12,7 +12,7 @@ You should be aware of these four things when using images in your SDL app:
 4. Images can not be uploaded when the app's `hmiLevel` is `NONE`. For more information about permissions, please review [Understanding Permissions](Getting Started/Understanding Permissions).
 
 ## Checking if Graphics are Supported
-Before uploading images to a head unit you should first check if the head unit supports graphics. If not, you should avoid uploading unnecessary image data. To check if graphics are supported, @![iOS]check the `SDLManager.systemCapabilityManager.defaultMainWindowCapability` property once the `SDLManager` has started successfully.!@@![android,javaSE,javaEE] check the `getCapability()` method of a valid `SystemCapabilityManager` obtained from `sdlManager.getSystemCapabilityManager()` to find out the display capabilities of the head unit.!@
+Before uploading images to a head unit you should first check if the head unit supports graphics. If not, you should avoid uploading unnecessary image data. To check if graphics are supported, @![iOS]check the `SDLManager.systemCapabilityManager.defaultMainWindowCapability` property once the `SDLManager` has started successfully.!@@![android,javaSE,javaEE,javascript] check the `getCapability()` method of a valid `SystemCapabilityManager` obtained from `sdlManager.getSystemCapabilityManager()` to find out the display capabilities of the head unit.!@
 
 @![iOS]
 ##### Objective-C
@@ -52,8 +52,15 @@ boolean imagesSuported = (imageFields.size() > 0);
 ```
 !@
 
+@![javascript]
+```js
+const imageFields = sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getImageFields();
+const imagesSuported = (imageFields.length > 0);
+```
+!@
+
 ## Uploading an Image Using the File Manager
-The @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE]`FileManager`!@ uploads files and keeps track of all the uploaded files names during a session. To send data with the @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE]`FileManager`!@, you need to create either a @![iOS]`SDLFile`!@ @![android, javaSE, javaEE]`SdlFile`!@ or @![iOS]`SDLArtwork`!@ @![android, javaSE, javaEE]`SdlArtwork`!@object. @![iOS]`SDLFile` objects are created with a local `NSURL` or `NSData`; `SDLArtwork` a `UIImage`.!@ @![android]Both `SdlFile`s and `SdlArtwork`s can be created with a `Uri`, `byte[]`, or `resourceId`.!@ @![javaSE, javaEE]Both `SdlFile`s and `SdlArtwork`s can be created with using `filePath`, or `byte[]`.!@
+The @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE, javascript]`FileManager`!@ uploads files and keeps track of all the uploaded files names during a session. To send data with the @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE, javascript]`FileManager`!@, you need to create either a @![iOS]`SDLFile`!@ @![android, javaSE, javaEE, javascript]`SdlFile`!@ or @![iOS]`SDLArtwork`!@ @![android, javaSE, javaEE, javascript]`SdlArtwork`!@object. @![iOS]`SDLFile` objects are created with a local `NSURL` or `NSData`; `SDLArtwork` a `UIImage`.!@ @![android]Both `SdlFile`s and `SdlArtwork`s can be created with a `Uri`, `byte[]`, or `resourceId`.!@ @![javaSE, javaEE]Both `SdlFile`s and `SdlArtwork`s can be created with using `filePath`, or `byte[]`.!@@![javascript]Both `SdlFile`s and `SdlArtwork`s can be created with using `filePath`, or `String`.!@
 
 
 @![iOS]
@@ -103,6 +110,16 @@ sdlManager.getFileManager().uploadFile(artwork, new CompletionListener() {
         }
     }
 });
+```
+!@
+
+@![javascript]
+```js
+const artwork = new SDL.manager.file.filetypes.SdlArtwork('image_name', SDL.rpc.enums.FileType.GRAPHIC_PNG, <#Audio byte array data as a string#>, false);
+const success = await sdlManager.getFileManager().uploadFile(audioFile);
+if (success) {
+    <#Image upload successful#>
+}
 ```
 !@
 

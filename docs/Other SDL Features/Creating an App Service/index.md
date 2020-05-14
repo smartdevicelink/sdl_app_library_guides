@@ -18,7 +18,7 @@ Apps are able to declare that they provide an app service by publishing an app s
 Publishing a service is a multi-step process. First, you need to create your app service manifest. Second, you will publish your app service to the module. Third, you will publish the service data using `OnAppServiceData`. Fourth, you must listen for data requests and respond accordingly. Fifth, if your app service supports handling of RPCs related to your service you must listen for these RPC requests and handle them accordingly. Sixth, optionally, you can support URI-based app actions. Finally, if necessary, you can you update or delete your app service manifest.
 
 ### 1. Creating an App Service Manifest
-The first step to publishing an app service is to create an @![iOS]`SDLAppServiceManifest`!@ @![android,javaSE,javaEE]`AppServiceManifest`!@ object. There is a set of generic parameters you will need to fill out as well as service type specific parameters based on the app service type you are creating.
+The first step to publishing an app service is to create an @![iOS]`SDLAppServiceManifest`!@ @![android,javaSE,javaEE,javascript]`AppServiceManifest`!@ object. There is a set of generic parameters you will need to fill out as well as service type specific parameters based on the app service type you are creating.
 
 @![iOS]
 
@@ -56,6 +56,23 @@ manifest.setMediaServiceManifest(<#Code#>); // Covered Below
 ```
 !@
 
+@![javascript]
+```js
+const manifest = new SDL.rpc.messages.AppServiceManifest()
+    .setServiceType(SDL.rpc.enums.AppServiceType.MEDIA)
+    .setServiceName('My Media App') // Must be unique across app services.
+    .setServiceIcon(new SDL.rpc.structs.Image()
+        .setValueParam('Service Icon Name')
+        .setImageType(SDL.rpc.enums.ImageType.DYNAMIC)) // Previously uploaded service icon. This could be the same as your app icon.
+    .setAllowAppConsumers(true) // Whether or not other apps can view your data in addition to the head unit. If set to `false` only the head unit will have access to this data.
+    .setRpcSpecVersion(new SDL.rpc.structs.SdlMsgVersion()
+        .setMajorVersion(5)
+        .setMinorVersion(0)) // An *optional* parameter that limits the RPC spec versions you can understand to the provided version *or below*.
+    .setHandledRpcs(<#Array of FunctionIDs#>) // If you add function ids to this *optional* parameter, you can support newer RPCs on older head units (that don't support those RPCs natively) when those RPCs are sent from other connected applications.
+    .setMediaServiceManifest(<#Code#>); // Covered Below
+```
+!@
+
 #### Creating a Media Service Manifest
 Currently, there's no information you have to provide in your media service manifest! You'll just have to create an empty media service manifest and set it into your general app service manifest.
 
@@ -77,6 +94,13 @@ manifest.mediaServiceManifest = mediaManifest
 @![android,javaSE,javaEE]
 ```java
 MediaServiceManifest mediaManifest = new MediaServiceManifest();
+manifest.setMediaServiceManifest(mediaManifest);
+```
+!@
+
+@![javascript]
+```js
+const mediaManifest = new SDL.rpc.structs.MediaServiceManifest()
 manifest.setMediaServiceManifest(mediaManifest);
 ```
 !@
@@ -107,6 +131,14 @@ manifest.setNavigationServiceManifest(navigationManifest);
 ```
 !@
 
+@![javascript]
+```js
+const navigationManifest = new SDL.rpc.structs.NavigationServiceManifest()
+    .setAcceptsWayPoints(true);
+manifest.setNavigationServiceManifest(navigationManifest);
+```
+!@
+
 #### Creating a Weather Service Manifest
 You will need to create a weather service manifest if you want to publish a weather service. You will declare the types of data your service provides in its @![iOS]`SDLWeatherServiceData`!@ @![android,javaSE,javaEE] `WeatherServiceData` !@.
 
@@ -133,6 +165,18 @@ weatherManifest.setMaxMultidayForecastAmount(10);
 weatherManifest.setMaxHourlyForecastAmount(24);
 weatherManifest.setMaxMinutelyForecastAmount(60);
 weatherManifest.setWeatherForLocationSupported(true);
+manifest.setWeatherServiceManifest(weatherManifest);
+```
+!@
+
+@![javascript]
+```js
+const weatherManifest = new SDL.rpc.structs.WeatherServiceManifest()
+    .setCurrentForecastSupported(true)
+    .setMaxMultidayForecastAmount(10)
+    .setMaxHourlyForecastAmount(24)
+    .setMaxMinutelyForecastAmount(60)
+    .setWeatherForLocationSupported(true);
 manifest.setWeatherServiceManifest(weatherManifest);
 ```
 !@
@@ -185,12 +229,21 @@ sdlManager.sendRPC(publishServiceRequest);
 ```
 !@
 
+@![javascript]
+```js
+const publishServiceRequest = new SDL.rpc.messages.PublishAppService()
+    .setAppServiceManifest(manifest);
+const response = await sdlManager.sendRpc(publishServiceRequest)
+    .catch(error => error);
+```
+!@
+
 Once you have your publish app service response, you will need to store the information provided in its `appServiceRecord` property. You will need the information later when you want to update your service's data.
 
 #### Watching for App Record Updates
-As noted in the introduction to this guide, one service for each type may become the "active" service. If your service is the active service, your @![iOS]`SDLAppServiceRecord`!@ @![android,javaEE,javaSE]`AppServiceRecord`!@ parameter `serviceActive` will be updated to note that you are now the active service.
+As noted in the introduction to this guide, one service for each type may become the "active" service. If your service is the active service, your @![iOS]`SDLAppServiceRecord`!@ @![android,javaEE,javaSE,javascript]`AppServiceRecord`!@ parameter `serviceActive` will be updated to note that you are now the active service.
 
-After the initial app record is passed to you in the @![iOS]`SDLPublishAppServiceResponse`!@ @![android,javaSE,javaEE] `PublishAppServiceResponse`!@, you will need to be notified of changes in order to observe whether or not you have become the active service. To do so, you will have to observe the new @![iOS]`SDLSystemCapabilityTypeAppServices`!@ @![android,javaSE,javaEE]`SystemCapabilityType.APP_SERVICES`!@ using `GetSystemCapability` and @![iOS]`OnSystemCapability`!@ @![android,javaSE,javaEE] `OnSystemCapabilityUpdated`!@.
+After the initial app record is passed to you in the @![iOS]`SDLPublishAppServiceResponse`!@ @![android,javaSE,javaEE,javascript] `PublishAppServiceResponse`!@, you will need to be notified of changes in order to observe whether or not you have become the active service. To do so, you will have to observe the new @![iOS]`SDLSystemCapabilityTypeAppServices`!@ @![android,javaSE,javaEE,javascript]`SystemCapabilityType.APP_SERVICES`!@ using `GetSystemCapability` and @![iOS]`OnSystemCapability`!@ @![android,javaSE,javaEE,javascript] `OnSystemCapabilityUpdated`!@.
 
 For more information, see the [Using App Services guide](Other SDL Features/Using App Services) and see the "Getting and Subscribing to Services" section.
 
@@ -201,8 +254,8 @@ After your service is published, it's time to update your service data. First, y
 You should only update your service's data when you are the active service; service consumers will only be able to see your data when you are the active service.
 !!!
 
-First, you will have to create an @![iOS]`SDLMediaServiceData`!@ @![android,javaSE,javaEE]`MediaServiceData`!@, @![iOS]`SDLNavigationServiceData`!@ @![android,javaSE,javaEE]`NavigationServiceData`!@ or @![iOS]`SDLWeatherServiceData`!@ @![android,javaSE,javaEE]
-`WeatherServiceData`!@ object with your service's data. Then, add that service-specific data object to an @![iOS]`SDLAppServiceData`!@ @![android,javaSE,javaEE]`AppServiceData`!@ object. Finally, create an @![iOS]`SDLOnAppServiceData`!@ @![android,javaSE,javaEE]`OnAppServiceData`!@ notification, append your @![iOS]`SDLAppServiceData`!@ @![android,javaEE,javaSE]`AppServiceData`!@ object, and send it.
+First, you will have to create an @![iOS]`SDLMediaServiceData`!@ @![android,javaSE,javaEE,javascript]`MediaServiceData`!@, @![iOS]`SDLNavigationServiceData`!@ @![android,javaSE,javaEE,javascript]`NavigationServiceData`!@ or @![iOS]`SDLWeatherServiceData`!@ @![android,javaSE,javaEE,javascript]
+`WeatherServiceData`!@ object with your service's data. Then, add that service-specific data object to an @![iOS]`SDLAppServiceData`!@ @![android,javaSE,javaEE,javascript]`AppServiceData`!@ object. Finally, create an @![iOS]`SDLOnAppServiceData`!@ @![android,javaSE,javaEE,javascript]`OnAppServiceData`!@ notification, append your @![iOS]`SDLAppServiceData`!@ @![android,javaEE,javaSE,javascript]`AppServiceData`!@ object, and send it.
 
 #### Media Service Data
 @![iOS]
@@ -255,6 +308,37 @@ onAppData.setServiceData(appData);
 sdlManager.sendRPC(onAppData);
 ```
 !@
+
+@![javascript]
+```js
+const mediaData = new SDL.rpc.structs.MediaServiceData();
+    .setMediaTitle('Some media title')
+    .setMediaArtist('Some media artist')
+    .setMediaAlbum('Some album')
+    .setMediaImage(new SDL.rpc.structs.Image()
+        .setValueParam('Some image')
+        .setImageType(SDL.rpc.enums.ImageType.DYNAMIC))
+    .setPlaylistName('Some playlist')
+    .setIsExplicit(true)
+    .setTrackPlaybackProgress(45)
+    .setTrackPlaybackDuration(90)
+    .setQueuePlaybackProgress(45)
+    .setQueuePlaybackDuration(150)
+    .setQueueCurrentTrackNumber(2)
+    .setQueueTotalTrackCount(3);
+
+const appData = new SDL.rpc.structs.AppServiceData()
+    .setServiceID(myServiceId)
+    .setServiceType(SDL.rpc.enums.AppServiceType.MEDIA)
+    .setMediaServiceData(mediaData);
+
+const onAppData = new SDL.rpc.messages.OnAppServiceData()
+    .setServiceData(appData);
+
+sdlManager.sendRpc(onAppData);
+```
+!@
+
 
 #### Navigation Service Data
 @![iOS]
@@ -348,6 +432,46 @@ sdlManager.getFileManager().uploadFile(navInstructionArt, new CompletionListener
 ```
 !@
 
+@![javascript]
+```js
+const navInstructionArt = SDL.manager.file.filetypes.SdlArtwork('turn', SDL.rpc.enums.FileType.GRAPHIC_PNG, <#Binary image data#>, true);
+// We have to send the image to the system before it's used in the app service.
+const success = await sdlManager.getFileManager().uploadFile(navInstructionArt);
+if (success) {
+    const coordinate = new SDL.rpc.structs.Coordinate()
+        .setLatitudeDegrees(42)
+        .setLongitudeDegrees(43);
+
+    const locationDetails = new SDL.rpc.structs.LocationDetails()
+        .setCoordinate(coordinate);
+
+    const navigationInstruction = new SDL.rpc.structs.NavigationInstruction()
+        .setLocationDetails(locationDetails)
+        .setAction(SDL.rpc.enums.NavigationAction.TURN)
+        .setImage(navInstructionArt.getImageRPC());
+
+    const dateTime = new SDL.rpc.structs.DateTime()
+        .setHour(2)
+        .setMinute(3)
+        .setSecond(4);
+
+    const navigationData = new SDL.rpc.structs.NavigationServiceData()
+        .setTimeStamp(dateTime)
+        .setInstructions([navigationInstruction]);
+
+    const appData = new SDL.rpc.structs.AppServiceData()
+        .setServiceID(myServiceId)
+        .setServiceType(SDL.rpc.enums.AppServiceType.NAVIGATION)
+        .setNavigationServiceData(navigationData);
+
+    const onAppData = new SDL.rpc.messages.OnAppServiceData()
+        .setServiceData(appData);
+
+    sdlManager.sendRpc(onAppData);
+}
+```
+!@
+
 #### Weather Service Data
 @![iOS]
 
@@ -435,13 +559,45 @@ sdlManager.getFileManager().uploadFile(weatherImage, new CompletionListener() { 
 ```
 !@
 
+@![javascript]
+```js
+const weatherImage = SDL.manager.file.filetypes.SdlArtwork('sun', SDL.rpc.enums.FileType.GRAPHIC_PNG, <#Binary image data#>, true);
+// We have to send the image to the system before it's used in the app service.
+const success = await sdlManager.getFileManager().uploadFile(weatherImage);
+if (success) {
+    const weatherData = new SDL.rpc.structs.WeatherData()
+        .setWeatherIcon(weatherImage.getImageRPC());
+
+    const coordinate = new SDL.rpc.structs.Coordinate()
+        .setLatitudeDegrees(42)
+        .setLongitudeDegrees(43);
+
+    const locationDetails = new SDL.rpc.structs.LocationDetails()
+        .setCoordinate(coordinate);
+
+    const weatherServiceData = new SDL.rpc.structs.WeatherServiceData()
+        .setLocation(locationDetails);
+
+    const appData = new SDL.rpc.structs.AppServiceData()
+        .setServiceID(myServiceId)
+        .setServiceType(SDL.rpc.enums.AppServiceType.WEATHER)
+        .setWeatherServiceData(weatherServiceData);
+
+    const onAppData = new SDL.rpc.messages.OnAppServiceData()
+        .setServiceData(appData);
+
+    sdlManager.sendRpc(onAppData);
+}
+```
+!@
+
 ### 4. Handling App Service Subscribers
 If you choose to make your app service available to other apps, you will have to handle requests to get your app service data when a consumer requests it directly.
 
-Handling app service subscribers is a two step process. First, you must @![iOS]register for notifications from!@ @![android,javaSE,javaEE]setup listeners for!@ the subscriber. Then, when you get a request, you will either have to send a response to the subscriber with the app service data or if you have no data to send, send a response with a relevant failure result code.
+Handling app service subscribers is a two step process. First, you must @![iOS]register for notifications from!@ @![android,javaSE,javaEE,javascript]setup listeners for!@ the subscriber. Then, when you get a request, you will either have to send a response to the subscriber with the app service data or if you have no data to send, send a response with a relevant failure result code.
 
 #### Listening for Requests
-First, you will need to @![iOS]register for notification of!@ @![android,javaSE,javaEE]setup a listener for!@ a `GetAppServiceDataRequest`.
+First, you will need to @![iOS]register for notification of!@ @![android,javaSE,javaEE,javascript]setup a listener for!@ a `GetAppServiceDataRequest`.
 
 @![iOS]
 ##### Objective-C
@@ -477,6 +633,17 @@ NotificationCenter.default.addObserver(self, selector: #selector(appServiceDataR
 sdlManager.addOnRPCRequestListener(FunctionID.GET_APP_SERVICE_DATA, new OnRPCRequestListener() {
     @Override
     public void onRequest(RPCRequest request) {
+        <#Handle Request#>
+    }
+});
+```
+!@
+
+@![javascript]
+```js
+// Get App Service Data Request Listener
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.GetAppServiceData, (message) => {
+    if (message.getMessageType() === SDL.rpc.enums.MessageType.request) {
         <#Handle Request#>
     }
 });
@@ -541,6 +708,26 @@ sdlManager.addOnRPCRequestListener(FunctionID.GET_APP_SERVICE_DATA, new OnRPCReq
 ```
 !@
 
+@![javascript]
+```js
+// Get App Service Data Request Listener
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.GetAppServiceData, (message) => {
+    if (message.getMessageType() === SDL.rpc.enums.MessageType.request) {
+        const getAppServiceData = message;
+
+        const response = new SDL.rpc.messages.GetAppServiceDataResponse()
+            .setSuccess(true)
+            .setCorrelationID(getAppServiceData.getCorrelationId())
+            .setResultCode(SDL.rpc.enums.Result.SUCCESS)
+            .setInfo('<#Use to provide more information about an error#>')
+            .setServiceData(<#Your App Service Data#>);
+
+        sdlManager.sendRpc(response);
+    }
+});
+```
+!@
+
 ## Supporting Service RPCs and Actions
 
 ### 5. Service RPCs
@@ -556,7 +743,7 @@ Certain RPCs are related to certain services. The chart below shows the current 
 | ButtonPress (SHUFFLE) | | |
 | ButtonPress (REPEAT) | | |
 
-When you are the active service for your service's type (e.g. media), and you have declared that you support these RPCs in your manifest (see section 1. Creating an App Service Manifest), then these RPCs will be automatically routed to your app. You will have to set up @![iOS]notifications!@ @![android,javaSE,javaEE]listeners!@ to be aware that they have arrived, and you will then need to respond to those requests.
+When you are the active service for your service's type (e.g. media), and you have declared that you support these RPCs in your manifest (see section 1. Creating an App Service Manifest), then these RPCs will be automatically routed to your app. You will have to set up @![iOS]notifications!@ @![android,javaSE,javaEE,javascript]listeners!@ to be aware that they have arrived, and you will then need to respond to those requests.
 
 @![iOS]
 ##### Objective-C
@@ -628,6 +815,29 @@ sdlManager.addOnRPCRequestListener(FunctionID.BUTTON_PRESS, new OnRPCRequestList
         response.setCorrelationID(buttonPress.getCorrelationID());
         response.setInfo("<#Use to provide more information about an error#>");
         sdlManager.sendRPC(response);
+    }
+});
+```
+!@
+
+@![javascript]
+```js
+const manifest = new SDL.rpc.structs.AppServiceManifest(SDL.rpc.enums.AppServiceType.MEDIA);
+...
+manifest.setHandledRpcs([SDL.rpc.enums.FunctionID.ButtonPress]);
+```
+
+```js
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.ButtonPress, (message) => {
+    if (message.getMessageType() === SDL.rpc.enums.MessageType.request) {
+        const buttonPress = message;
+
+        const response = new SDL.rpc.messages.ButtonPressResponse()
+            .setSuccess(true)
+            .setResultCode(SDL.rpc.enums.Result.SUCCESS)
+            .setCorrelationID(buttonPress.getCorrelationId())
+            .setInfo('<#Use to provide more information about an error#>');
+        sdlManager.sendRpc(response);
     }
 });
 ```
@@ -732,6 +942,29 @@ sdlManager.addOnRPCRequestListener(FunctionID.PERFORM_APP_SERVICES_INTERACTION, 
 ```
 !@
 
+@![javascript]
+```js
+// Perform App Services Interaction Request Listener
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.PerformAppServiceInteraction, (message) => {
+    if (message.getMessageType() === SDL.rpc.enums.MessageType.request) {
+        const performAppServiceInteraction = message;
+
+        // If you have multiple services, this will let you know which of your services is being addressed
+        const serviceId = performAppServiceInteraction.getServiceID();
+
+        // A result you want to send to the consumer app.
+        const response = new SDL.rpc.messages.PerformAppServiceInteractionResponse()
+            .setServiceSpecificResult('Some Result')
+            .setCorrelationID(performAppServiceInteraction.getCorrelationId())
+            .setInfo('<#Use to provide more information about an error#>')
+            .setSuccess(true)
+            .setResultCode(SDL.rpc.enums.Result.SUCCESS);
+        sdlManager.sendRpc(response);
+    }
+});
+```
+!@
+
 ## Updating Your Published App Service
 Once you have published your app service, you may decide to update its data. For example, if you have a free and paid tier with different amounts of data, you may need to upgrade or downgrade a user between these tiers and provide new data in your app service manifest. If desired, you can also delete your app service by unpublishing the service. 
 
@@ -766,6 +999,18 @@ sdlManager.sendRPC(publishServiceRequest);
 ```
 !@
 
+@![javascript]
+```js
+const manifest = new SDL.rpc.structs.AppServiceManifest()
+    .getServiceType(SDL.rpc.enums.AppServiceType.WEATHER)
+    .setWeatherServiceManifest('<#Updated weather service manifest>');
+
+const publishServiceRequest = new SDL.rpc.messages.PublishAppService()
+    .setAppServiceManifest(manifest);
+sdlManager.sendRpc(publishServiceRequest);
+```
+!@
+
 ### 8. Unpublishing a Published App Service Manifest (RPC v6.0+)
 @![iOS]
 ##### Objective-C
@@ -788,3 +1033,10 @@ sdlManager.sendRPC(unpublishAppService);
 ```
 !@
 
+@![javascript]
+```js
+const unpublishAppService = new SDL.rpc.messages.UnpublishAppService()
+    .setServiceID('<#The serviceID of the service to unpublish>');
+sdlManager.sendRpc(unpublishAppService);
+```
+!@

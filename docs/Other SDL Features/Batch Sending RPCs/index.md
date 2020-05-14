@@ -7,8 +7,14 @@ Both methods have optional progress and completion handlers. Use the `progressHa
 @![android,javaSE,javaEE]
 Both methods have optional listener that is specific to them, the `OnMultipleRequestListener`. This listener will provide more information than the normal `OnRPCResponseListener`.!@
 
+@![javascript]
+Both methods can have the `await` syntax be used to pause execution until all the responses return, and errors can be caught by attaching a `catch` handler. The concurrent method accepts an array of requests and will return an array of responses, while the sequential method accepts an array of requests and returns the last RPC response in the array.!@
+
 ## Sending Concurrent Requests
 When you send multiple RPCs concurrently, it will not wait for the response of the previous RPC before sending the next one. Therefore, there is no guarantee that responses will be returned in order, and you will not be able to use information sent in a previous RPC for a later RPC.
+
+@![javascript]
+Note that for the JavaScript library the concurrent method will honor the ordering of the requests passed in (the method uses Promise.all behind the scenes). Each response in the array has the same position of their matching request.!@
 
 @![iOS]
 ##### Objective-C
@@ -62,10 +68,24 @@ sdlManager.sendRPCs(Arrays.asList(subscribeButtonLeft, subscribeButtonLeft), new
 ```
 !@
 
+@![javascript]
+```js
+const subscribeButtonLeft = new SDL.rpc.messages.SubscribeButton()
+    .setButtonName(SDL.rpc.enums.ButtonName.SEEKLEFT);
+const subscribeButtonRight = new SDL.rpc.messages.SubscribeButton()
+    .setButtonName(SDL.rpc.enums.ButtonName.SEEKRIGHT);
+
+const responses = await sdlManager.sendRpcs([subscribeButtonLeft, subscribeButtonRight])
+    .catch(error => {
+         
+    });
+```
+!@
+
 ## Sending Sequential Requests
 Requests sent sequentially are sent in a set order. The next request is only sent when a response has been received for the previously sent request.
 
-The code example below shows how to create a perform interaction choice set. When creating a perform interaction choice set, the @![iOS]`SDLPerformInteraction`!@ @![android,javaSE,javaEE]`PerformInteraction`!@ RPC can only be sent after the @![iOS]`SDLCreateInteractionChoiceSet`!@ @![android,javaSE,javaEE]`CreateInteractionChoiceSet`!@ RPC has been registered by Core, which is why the requests must be sent sequentially.
+The code example below shows how to create a perform interaction choice set. When creating a perform interaction choice set, the @![iOS]`SDLPerformInteraction`!@ @![android,javaSE,javaEE,javascript]`PerformInteraction`!@ RPC can only be sent after the @![iOS]`SDLCreateInteractionChoiceSet`!@ @![android,javaSE,javaEE,javascript]`CreateInteractionChoiceSet`!@ RPC has been registered by Core, which is why the requests must be sent sequentially.
 
 @![iOS]
 ##### Objective-C
@@ -124,5 +144,26 @@ sdlManager.sendSequentialRPCs(Arrays.asList(createInteractionChoiceSet, performI
 
     }
 });
+```
+!@
+
+@![javascript]
+```js
+const choiceId = 111;
+const choiceSetId = 222;
+const choice = new SDL.rpc.structs.Choice()
+    .setChoiceID(choiceId)
+    .setMenuName('Choice title');
+const createInteractionChoiceSet = new SDL.rpc.messages.CreateInteractionChoiceSet()
+    .setInteractionChoiceSetID(choiceSetId)
+    .setChoiceSet([choice]);
+const performInteraction = new SDL.rpc.messages.PerformInteraction()
+    .setInitialText('Initial Text')
+    .setInteractionMode(SDL.rpc.enums.InteractionMode.MANUAL_ONLY)
+    .setInteractionChoiceSetIDList([choiceSetId]);
+const response = await sdlManager.sendSequentialRpcs([createInteractionChoiceSet, performInteraction])
+    .catch(error => {
+        
+    });
 ```
 !@
