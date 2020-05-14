@@ -191,7 +191,7 @@ Glassfish 5.0.0 only works on JDK 8 and lower.
 !@
 
 @![javascript]
-The SDL JavaScript Suite comes with prebuilt bundles of the library in the form of `SDL.min.js` files. There is a vanilla JavaScript distribution of the library as well as one for Node.js. They are located in the lib/js/dist and lib/node/dist directories respectively.
+You can find the most recent release of the SDL JavaScript Suite [here](https://github.com/smartdevicelink/sdl_javascript_suite/releases). The project comes with prebuilt bundles of the library in the form of `SDL.min.js` files. There is a vanilla JavaScript distribution of the library as well as one for Node.js. They are located in the `lib/js/dist` and `lib/node/dist` directories respectively. 
 
 ## Vanilla JavaScript Setup
 This build allows you to create apps that run on the browser. In order to have the built JS file be imported into your HTML, you'll need to run a simple web server that can serve that JS file. We will be using [Node.js](https://nodejs.org/en/) and [npm](https://docs.npmjs.com/about-npm/) for this task, but you can use any software that lets you serve HTML and JS to the browser.
