@@ -57,7 +57,37 @@ If you discover that the module does not support calling a phone number or that 
 @![iOS]
 ##### Objective-C
 ```objc
-// TODO
+- (void)isDialNumberSupportedWithHandler:(void (^) (BOOL success, NSError * _Nullable error))handler {
+    // Check if the module has phone capabilities
+    if (![self.sdlManager.systemCapabilityManager isCapabilitySupported:SDLSystemCapabilityTypePhoneCall]) {
+        return handler(false, nil);
+    }
+
+    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `DialNumber` is supported
+    SDLMsgVersion *sdlMsgVersion = self.sdlManager.registerResponse.sdlMsgVersion;
+    if (sdlMsgVersion == nil) {
+        return handler(true, nil);
+    }
+    SDLVersion *rpcSpecVersion = [[SDLVersion alloc] initWithSDLMsgVersion:sdlMsgVersion];
+    if (![rpcSpecVersion isGreaterThanOrEqualToVersion:[[SDLVersion alloc] initWithMajor:4 minor:5 patch:0]]) {
+        return handler(true, nil);
+    }
+
+    // Check if the phone capability has already been retrieved from the module
+    SDLPhoneCapability *phoneCapability = self.sdlManager.systemCapabilityManager.phoneCapability;
+    if (phoneCapability != nil) {
+        return handler(phoneCapability.dialNumberEnabled.boolValue, nil);
+    }
+
+    // Retrieve the phone capability from the module
+    [self.sdlManager.systemCapabilityManager updateCapabilityType:SDLSystemCapabilityTypePhoneCall completionHandler:^(NSError * _Nullable error, SDLSystemCapabilityManager * _Nonnull systemCapabilityManager) {
+        if (error != nil) {
+            return handler(NO, error);
+        }
+
+        return handler(systemCapabilityManager.phoneCapability.dialNumberEnabled.boolValue, nil);
+    }];
+}
 ```
 
 ##### Swift
@@ -75,7 +105,6 @@ func isDialNumberSupported(handler: @escaping (_ success: Bool, _ error: Error?)
 
     // Check if the phone capability has already been retrieved from the module
     if let phoneCapability = sdlManager.systemCapabilityManager.phoneCapability {
-        // Check if the module supports the `DialNumber` request
         return handler(phoneCapability.dialNumberEnabled?.boolValue ?? false, nil)
     }
 
@@ -85,7 +114,6 @@ func isDialNumberSupported(handler: @escaping (_ success: Bool, _ error: Error?)
             return handler(false, error)
         }
 
-        // Check if the module supports the `DialNumber` request
         return handler(systemCapabilityManager.phoneCapability?.dialNumberEnabled?.boolValue ?? false, nil)
     }
 }
@@ -94,7 +122,38 @@ func isDialNumberSupported(handler: @escaping (_ success: Bool, _ error: Error?)
 
 @![android,javaSE,javaEE]
 ```java
-// TODO
+private void isDialNumberSupported(final OnCapabilitySupportedListener capabilitySupportedListener) {
+	if (!sdlManager.getSystemCapabilityManager().isCapabilitySupported(SystemCapabilityType.PHONE_CALL)) {
+		capabilitySupportedListener.onCapabilitySupported(false);
+		return;
+	}
+
+	SdlMsgVersion sdlMsgVersion = sdlManager.getRegisterAppInterfaceResponse().getSdlMsgVersion();
+	if (sdlMsgVersion == null) {
+		capabilitySupportedListener.onCapabilitySupported(true);
+		return;
+	}
+
+	Version rpcSpecVersion = new Version(sdlMsgVersion);
+	if (rpcSpecVersion.isNewerThan(new Version(4, 5, 0)) < 0) {
+		capabilitySupportedListener.onCapabilitySupported(true);
+		return;
+	}
+
+	sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.PHONE_CALL, new OnSystemCapabilityListener() {
+		@Override
+		public void onCapabilityRetrieved(Object capability) {
+			PhoneCapability phoneCapability = (PhoneCapability) capability;
+			capabilitySupportedListener.onCapabilitySupported(phoneCapability.getDialNumberEnabled());
+			return;
+		}
+
+		@Override
+		public void onError(String info) {
+			capabilitySupportedListener.onError(info);
+		}
+	}, false);
+}
 ```
 !@
 
