@@ -160,7 +160,7 @@
                 },
                 {
                     "name": "Calling a Phone Number",
-                    "platforms": ["Android","iOS", "JavaEE", "JavaSE"],
+                    "platforms": ["Android","iOS", "JavaEE", "JavaSE"]
                 },
                 {
                     "name": "Setting the Navigation Destination"
@@ -179,7 +179,7 @@
                 },
                 {
                     "name": "Encryption",
-                    "platforms": ["Android","iOS", "JavaEE", "JavaSE"],
+                    "platforms": ["Android","iOS", "JavaEE", "JavaSE"]
                 }
             ]
         },
