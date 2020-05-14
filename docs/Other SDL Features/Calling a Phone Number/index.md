@@ -63,7 +63,7 @@ If you discover that the module does not support calling a phone number or that 
         return handler(false, nil);
     }
 
-    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `DialNumber` is supported
+    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `DialNumber` is supported if isCapabilitySupported returns true
     SDLMsgVersion *sdlMsgVersion = self.sdlManager.registerResponse.sdlMsgVersion;
     if (sdlMsgVersion == nil) {
         return handler(true, nil);
@@ -98,7 +98,7 @@ func isDialNumberSupported(handler: @escaping (_ success: Bool, _ error: Error?)
         return handler(false, nil)
     }
 
-    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `DialNumber` is supported
+    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `DialNumber` is supported if isCapabilitySupported returns true
     guard let sdlMsgVersion = sdlManager.registerResponse?.sdlMsgVersion, SDLVersion(sdlMsgVersion: sdlMsgVersion).isGreaterThanOrEqual(to: SDLVersion(major: 4, minor: 5, patch: 0)) else {
         return handler(true, nil)
     }
@@ -129,7 +129,7 @@ private void isDialNumberSupported(final OnCapabilitySupportedListener capabilit
 		return;
 	}
 
-    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `DialNumber` is supported
+    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `DialNumber` is supported if isCapabilitySupported returns true
 	SdlMsgVersion sdlMsgVersion = sdlManager.getRegisterAppInterfaceResponse().getSdlMsgVersion();
 	if (sdlMsgVersion == null) {
 		capabilitySupportedListener.onCapabilitySupported(true);
