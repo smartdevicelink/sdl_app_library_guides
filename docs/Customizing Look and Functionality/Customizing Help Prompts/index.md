@@ -85,8 +85,12 @@ const item1 = new SDL.rpc.structs.VrHelpItem().setText("Show Artists").setPositi
 const item2 = new SDL.rpc.structs.VrHelpItem().setText("Show Albums").setPosition(2).setImage(<#image#>); // a previously uploaded image or null
 
 setGlobalProperties.setVrHelp([item1, item2]);
-// The help menu is updated
-sdlManager.sendRpc(setGlobalProperties);
+sdlManager.sendRpc(setGlobalProperties).catch(err => err); // If there was an error, catch it and return it
+if (response instanceof SDL.rpc.RpcRespone && response.getSuccess()) {
+    // The help menu is updated
+} else {
+    // Handle Error
+}
 ```
 !@
 
@@ -149,8 +153,12 @@ sdlManager.sendRPC(setGlobalProperties);
 const setGlobalProperties = new SDL.rpc.messages.SetGlobalProperties();
 const chunk = new SDL.rpc.structs.TTSChunk().setText('Your custom help prompt').setType(SDL.rpc.enums.SpeechCapabilities.TEXT);
 setGlobalProperties.setHelpPrompt([chunk]);
-// The help prompt is updated
-const response = await sdlManager.sendRpc(setGlobalProperties);
+const response = await sdlManager.sendRpc(setGlobalProperties).catch(err => err); // If there was an error, catch it and return it
+if (response instanceof SDL.rpc.RpcRespone && response.getSuccess()) {
+    // The help prompt is updated
+} else {
+    // Handle Error
+}
 ```
 !@
 
@@ -211,9 +219,11 @@ sdlManager.sendRPC(setGlobalProperties);
 const setGlobalProperties = new SDL.rpc.messages.SetGlobalProperties();
 const chunk = new SDL.rpc.structs.TTSChunk().setText('Your custom help prompt').setType(SDL.rpc.enums.SpeechCapabilities.TEXT);
 setGlobalProperties.setTimeoutPrompt([chunk]);
-const response = await sdlManager.sendRpc(setGlobalProperties);
-if (response instanceof SDL.rpc.RpcResponse) {
-    // The help prompt is updated
+const response = await sdlManager.sendRpc(setGlobalProperties).catch(err => err); // If there was an error, catch it and return it
+if (response instanceof SDL.rpc.RpcRespone && response.getSuccess()) {
+    // The timeout prompt is updated
+} else {
+    // Handle Error
 }
 ```
 !@
@@ -302,9 +312,11 @@ const resetGlobalProperties = new SDL.rpc.messages.ResetGlobalProperties().setPr
 const resetGlobalProperties = new SDL.rpc.messages.ResetGlobalProperties().setProperties([SDL.rpc.enums.GlobalProperty.HELPPROMPT, SDL.rpc.enums.GlobalProperty.TIMEOUTPROMPT]);
 
 // To send any one of these, use the typical format:
-const response = await sdlManager.sendRpc(setGlobalProperties);
-if (response instanceof SDL.rpc.RpcResponse) {
-    // The help prompt is updated
+const response = await sdlManager.sendRpc(setGlobalProperties).catch(err => err); // If there was an error, catch it and return it
+if (response instanceof SDL.rpc.RpcRespone && response.getSuccess()) {
+    // The global properties are reset
+} else {
+    // Handle Error
 }
 ```
 !@
