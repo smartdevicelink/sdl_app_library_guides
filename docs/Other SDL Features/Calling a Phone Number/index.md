@@ -124,42 +124,45 @@ func isDialNumberSupported(handler: @escaping (_ success: Bool, _ error: Error?)
 ```java
 private void isDialNumberSupported(final OnCapabilitySupportedListener capabilitySupportedListener) {
     // Check if the module has phone capabilities
-	if (!sdlManager.getSystemCapabilityManager().isCapabilitySupported(SystemCapabilityType.PHONE_CALL)) {
-		capabilitySupportedListener.onCapabilitySupported(false);
-		return;
-	}
+    if (!sdlManager.getSystemCapabilityManager().isCapabilitySupported(SystemCapabilityType.PHONE_CALL)) {
+        capabilitySupportedListener.onCapabilitySupported(false);
+        return;
+    }
 
     // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `DialNumber` is supported if isCapabilitySupported returns true
-	SdlMsgVersion sdlMsgVersion = sdlManager.getRegisterAppInterfaceResponse().getSdlMsgVersion();
-	if (sdlMsgVersion == null) {
-		capabilitySupportedListener.onCapabilitySupported(true);
-		return;
-	}
-	Version rpcSpecVersion = new Version(sdlMsgVersion);
-	if (rpcSpecVersion.isNewerThan(new Version(4, 5, 0)) < 0) {
-		capabilitySupportedListener.onCapabilitySupported(true);
-		return;
-	}
+    SdlMsgVersion sdlMsgVersion = sdlManager.getRegisterAppInterfaceResponse().getSdlMsgVersion();
+    if (sdlMsgVersion == null) {
+        capabilitySupportedListener.onCapabilitySupported(true);
+        return;
+    }
+    Version rpcSpecVersion = new Version(sdlMsgVersion);
+    if (rpcSpecVersion.isNewerThan(new Version(4, 5, 0)) < 0) {
+        capabilitySupportedListener.onCapabilitySupported(true);
+        return;
+    }
 
     // Retrieve the phone capability
-	sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.PHONE_CALL, new OnSystemCapabilityListener() {
-		@Override
-		public void onCapabilityRetrieved(Object capability) {
-			PhoneCapability phoneCapability = (PhoneCapability) capability;
-			capabilitySupportedListener.onCapabilitySupported(phoneCapability.getDialNumberEnabled());
-			return;
-		}
+    sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.PHONE_CALL, new OnSystemCapabilityListener() {
+        @Override
+        public void onCapabilityRetrieved(Object capability) {
+            PhoneCapability phoneCapability = (PhoneCapability) capability;
+            if (phoneCapability == null) {
+                capabilitySupportedListener.onCapabilitySupported(false);
+                return;
+            }
+            capabilitySupportedListener.onCapabilitySupported(phoneCapability.getDialNumberEnabled());
+        }
 
-		@Override
-		public void onError(String info) {
-			capabilitySupportedListener.onError(info);
-		}
-	}, false);
+        @Override
+        public void onError(String info) {
+            capabilitySupportedListener.onError(info);
+        }
+    }, false);
 }
 
 public interface OnCapabilitySupportedListener {
-	void onCapabilitySupported(Boolean supported);
-	void onError(String info);
+    void onCapabilitySupported(Boolean supported);
+    void onError(String info);
 }
 ```
 !@
