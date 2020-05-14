@@ -227,7 +227,8 @@ Finally, run the server by running this in a Terminal window in the same directo
 
 ## Node.js Setup
 This build allows you to create apps that run through a server on your computer. You will need to have installed [Node.js](https://nodejs.org/en/) and [npm](https://docs.npmjs.com/about-npm/) are before beginning work on this app.
-In a new directory, save your `SDL.min.js` build there, and then create a new file in the same directory named `index.js`. Make the contents of that file the following:
+
+In a new directory, save your `SDL.min.js` file, then create a new file in the same directory named `index.js`. Make the contents of that file the following:
 
 ```js
 const SDL = require('./SDL.min.js');
