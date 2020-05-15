@@ -233,7 +233,6 @@ sdlManager.send(request: subscribeWaypoints) { (request, response, error) in
 !@
 
 @![android, javaSE, javaEE]
-##### Java
 ```java
 // You can subscribe any time before SDL would send the notification (such as when you call `sdlManager.start` or at initialization of your manager)
 sdlManager.addOnRPCNotificationListener(FunctionID.ON_WAY_POINT_CHANGE, new OnRPCNotificationListener() {
@@ -305,7 +304,6 @@ sdlManager.send(request: unsubscribeWaypoints) { (request, response, error) in
 !@
 
 @![android, javaSE, javaEE]
-##### Java
 ```java
 UnsubscribeWayPoints unsubscribeWayPoints = new UnsubscribeWayPoints();
 unsubscribeWayPoints.setOnRPCResponseListener(new OnRPCResponseListener() {
@@ -365,7 +363,6 @@ sdlManager.send(request: getWaypoints) { (request, response, error) in
 !@
 
 @![android, javaSE, javaEE]
-##### Java
 ```java
 GetWayPoints getWayPoints = new GetWayPoints();
 getWayPoints.setOnRPCResponseListener(new OnRPCResponseListener() {
