@@ -35,6 +35,7 @@ let observerId = sdlManager.permissionManager.addObserver(forRPCs: [SDLRPCFuncti
 
 @![android,javaSE,javaEE]
 ```java
+// You must add the listener as soon as the `onStart()` method of the `SdlManagerListener` is called.
 UUID listenerId = sdlManager.getPermissionManager().addListener(Arrays.asList(new PermissionElement(FunctionID.SEND_LOCATION, null)), PermissionManager.PERMISSION_GROUP_TYPE_ANY, new OnPermissionChangeListener() {
     @Override
     public void onPermissionsChange(@NonNull Map<FunctionID, PermissionStatus> allowedPermissions, @NonNull int permissionGroupStatus) {
