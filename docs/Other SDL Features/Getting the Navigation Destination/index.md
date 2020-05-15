@@ -280,7 +280,7 @@ You do not have to unsubscribe from the `sdlManager.subscribe` method, you must 
 ```objc
 SDLUnsubscribeWayPoints *unsubscribeWaypoints = [[SDLUnsubscribeWayPoints alloc] init];
 [self.sdlManager sendRequest:unsubscribeWaypoints withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    if (error != nil || !response.success) {
+    if (!response.success) {
         // Handle the error
         return;
     }
@@ -293,7 +293,7 @@ SDLUnsubscribeWayPoints *unsubscribeWaypoints = [[SDLUnsubscribeWayPoints alloc]
 ```swift
 let unsubscribeWaypoints = SDLUnsubscribeWayPoints()
 sdlManager.send(request: unsubscribeWaypoints) { (request, response, error) in
-    guard error == nil, let response = response, response.success == true else {
+    guard let response = response as? SDLGetWayPointsResponse, response.success.boolValue else {
         // Handle the error
         return
     }
@@ -336,7 +336,7 @@ If you only need waypoint data once without an ongoing subscription, you can use
 ```objc
 SDLGetWayPoints *getWaypoints = [[SDLGetWayPoints alloc] initWithType:SDLWayPointTypeAll];
 [self.sdlManager sendRequest:getWaypoints withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    if (error != nil || !response.success) {
+    if (!response.success) {
         // Handle the error
         return;
     }
@@ -352,7 +352,7 @@ SDLGetWayPoints *getWaypoints = [[SDLGetWayPoints alloc] initWithType:SDLWayPoin
 ```swift
 let getWaypoints = SDLGetWayPoints(type: .all)
 sdlManager.send(request: getWaypoints) { (request, response, error) in
-    guard error == nil, let response = response as? SDLGetWayPointsResponse, response.success == true else {
+    guard let response = response as? SDLGetWayPointsResponse, response.success.boolValue else {
         // Handle the errors
         return
     }
