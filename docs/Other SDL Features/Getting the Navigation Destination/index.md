@@ -60,29 +60,65 @@ If you discover that the module does not support getting navigation waypoints or
 @![iOS]
 ##### Objective-C
 ```objc
-[self.sdlManager.systemCapabilityManager updateCapabilityType:SDLSystemCapabilityTypeNavigation completionHandler:^(NSError * _Nullable error, SDLSystemCapabilityManager * _Nonnull systemCapabilityManager) {
-    BOOL isNavigationSupported = NO;
-    if (error == nil) {
-        isNavigationSupported = systemCapabilityManager.navigationCapability.getWayPointsEnabled.boolValue;
-    } else {
-        isNavigationSupported = systemCapabilityManager.hmiCapabilities.navigation.boolValue;
+- (void)isGetWaypointsSupportedWithHandler:(void (^) (BOOL success, NSError * _Nullable error))handler {
+    // Check if the module has navigation capabilities
+    if (![self.sdlManager.systemCapabilityManager isCapabilitySupported:SDLSystemCapabilityTypeNavigation]) {
+        return handler(false, nil);
     }
 
-    <#If navigation is supported, send the `GetWayPoints` RPC#>
-}];
+    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `GetWayPoints` and `SubscribeWayPoints` are supported if isCapabilitySupported returns true
+    SDLMsgVersion *sdlMsgVersion = self.sdlManager.registerResponse.sdlMsgVersion;
+    if (sdlMsgVersion == nil) {
+        return handler(true, nil);
+    }
+    SDLVersion *rpcSpecVersion = [[SDLVersion alloc] initWithSDLMsgVersion:sdlMsgVersion];
+    if (![rpcSpecVersion isGreaterThanOrEqualToVersion:[[SDLVersion alloc] initWithMajor:4 minor:5 patch:0]]) {
+        return handler(true, nil);
+    }
+
+    // Check if the navigation capability has already been retrieved from the module
+    SDLNavigationCapability *navigationCapability = self.sdlManager.systemCapabilityManager.navigationCapability;
+    if (navigationCapability != nil) {
+        return handler(navigationCapability.getWayPointsEnabled.boolValue, nil);
+    }
+
+    // Retrieve the navigation capability from the module
+    [self.sdlManager.systemCapabilityManager updateCapabilityType:SDLSystemCapabilityTypeNavigation completionHandler:^(NSError * _Nullable error, SDLSystemCapabilityManager * _Nonnull systemCapabilityManager) {
+        if (error != nil) {
+            return handler(NO, error);
+        }
+
+        return handler(systemCapabilityManager.navigationCapability.getWayPointsEnabled.boolValue, nil);
+    }];
+}
 ```
 
 ##### Swift
 ```swift
-sdlManager.systemCapabilityManager.updateCapabilityType(.navigation) { (error, systemCapabilityManager) in
-    var isNavigationSupported = false
-    if error == nil {
-        isNavigationSupported = systemCapabilityManager.navigationCapability?.getWayPointsEnabled?.boolValue ?? false;
-    } else {
-        isNavigationSupported = systemCapabilityManager.hmiCapabilities?.navigation?.boolValue ?? false
+func isGetWaypointsSupported(handler: @escaping (_ success: Bool, _ error: Error?) -> Void) {
+    // Check if the module has phone capabilities
+    guard (sdlManager.systemCapabilityManager.isCapabilitySupported(type: .navigation)) else {
+        return handler(false, nil)
     }
 
-    <#If navigation is supported, send the `GetWayPoints` RPC#>
+    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `GetWayPoints` and `SubscribeWayPoints` are supported if isCapabilitySupported returns true
+    guard let sdlMsgVersion = sdlManager.registerResponse?.sdlMsgVersion, SDLVersion(sdlMsgVersion: sdlMsgVersion).isGreaterThanOrEqual(to: SDLVersion(major: 4, minor: 5, patch: 0)) else {
+        return handler(true, nil)
+    }
+
+    // Check if the navigation capability has already been retrieved from the module
+    if let navigationCapability = sdlManager.systemCapabilityManager.navigationCapability {
+        return handler(navigationCapability.getWayPointsEnabled?.boolValue ?? false, nil)
+    }
+
+    // Retrieve the navigation capability from the module
+    sdlManager.systemCapabilityManager.updateCapabilityType(.navigation) { (error, systemCapabilityManager) in
+        if (error != nil) {
+            return handler(false, error)
+        }
+
+        return handler(systemCapabilityManager.navigationCapability?.getWayPointsEnabled?.boolValue ?? false, nil)
+    }
 }
 ```
 !@
@@ -136,7 +172,7 @@ SDLSubscribeWayPoints *subscribeWaypoints = [[SDLSubscribeWayPoints alloc] init]
         return;
     }
 
-    // You are now subscribed!
+    // You are now subscribed
 }];
 ```
 
@@ -160,7 +196,7 @@ sdlManager.send(request: subscribeWaypoints) { (request, response, error) in
         return
     }
 
-    // You are now subscribed!
+    // You are now subscribed
 }
 ```
 !@
@@ -173,7 +209,7 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_WAY_POINT_CHANGE, new OnRP
     @Override
     public void onNotified(RPCNotification notification) {
         OnWayPointChange onWayPointChangeNotification = (OnWayPointChange) notification;
-        //<#Use the waypoint data#>
+        <#Use the waypoint data#>
     }
 });
 
@@ -183,7 +219,7 @@ subscribeWayPoints.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse rpcResponse) {
         if (rpcResponse.getSuccess()){
-            // You are now subscribed!
+            // You are now subscribed
         } else {
             // Handle the errors
         }
@@ -210,7 +246,6 @@ You do not have to unsubscribe from the `sdlManager.subscribe` method, you must 
 @![iOS]
 ##### Objective-C
 ```objc
-// Whenever you want to unsubscribe
 SDLUnsubscribeWayPoints *unsubscribeWaypoints = [[SDLUnsubscribeWayPoints alloc] init];
 [self.sdlManager sendRequest:unsubscribeWaypoints withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if (error != nil || !response.success) {
@@ -218,21 +253,20 @@ SDLUnsubscribeWayPoints *unsubscribeWaypoints = [[SDLUnsubscribeWayPoints alloc]
         return;
     }
 
-    // You are now unsubscribed!
+    // You are now unsubscribed
 }];
 ```
 
 ##### Swift
 ```swift
-// Whenever you want to unsubscribe
 let unsubscribeWaypoints = SDLUnsubscribeWayPoints()
 sdlManager.send(request: unsubscribeWaypoints) { (request, response, error) in
     guard error == nil, let response = response, response.success == true else {
-        // Handle the errors
+        // Handle the error
         return
     }
 
-    // You are now subscribed!
+    // You are now unsubscribed
 }
 ```
 
@@ -246,7 +280,7 @@ unsubscribeWayPoints.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse rpcResponse) {
         if (rpcResponse.getSuccess()){
-            // You are now unsubscribed!
+            // You are now unsubscribed
         } else {
             // Handle the errors
         }
@@ -257,6 +291,7 @@ unsubscribeWayPoints.setOnRPCResponseListener(new OnRPCResponseListener() {
         // Handle the errors
     }
 });
+
 sdlManager.sendRPC(unsubscribeWayPoints);
 ```
 !@
@@ -317,6 +352,7 @@ getWayPoints.setOnRPCResponseListener(new OnRPCResponseListener() {
         // Handle the errors
     }
 });
+
 sdlManager.sendRPC(getWayPoints);
 ```
 !@
