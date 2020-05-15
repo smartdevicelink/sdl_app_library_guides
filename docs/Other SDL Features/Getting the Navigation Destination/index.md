@@ -51,7 +51,7 @@ let observerId = sdlManager.permissionManager.addObserver(forRPCs: [SDLRPCFuncti
 !@
 
 ### Checking if the Module Supports Getting Waypoints 
-Since some modules will not support getting waypoints, you should first check if the module supports this feature before trying to use the feature. Once you have successfully connected to the module, you can check the module's capabilities via the @![iOS]`SDLManager.systemCapabilityManager`!@@![android, javaSE, javaEE]`sdlManager.getSystemCapabilityManager`!@ as shown in the example below. Please note that you only need to check once if the module supports getting waypoints, however you must wait to perform this check until you know that the SDL app has been opened (i.e. the `hmiLevel` is non-`NONE`).  
+Since some modules will not support getting waypoints, you should first check if the module supports this feature before trying to use it. Once you have successfully connected to the module, you can check the module's capabilities via the @![iOS]`SDLManager.systemCapabilityManager`!@@![android, javaSE, javaEE]`sdlManager.getSystemCapabilityManager`!@ as shown in the example below. Please note that you only need to check once if the module supports getting waypoints, however you must wait to perform this check until you know that the SDL app has been opened (i.e. the `hmiLevel` is non-`NONE`).  
 
 !!! NOTE
 If you discover that the module does not support getting navigation waypoints or that your app does not have the right permissions, you should disable any buttons, voice commands, menu items, etc. in your app that would send the @![iOS]`SDLGetWayPoints`!@@![android,javaSE,javaEE]`GetWayPoints`!@ or @![iOS]`SDLSubscribeWayPoints`!@@![android,javaSE,javaEE]`SubscribeWayPoints`!@ requests.
