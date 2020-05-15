@@ -46,7 +46,25 @@ let observerId = sdlManager.permissionManager.addObserver(forRPCs: [SDLRPCFuncti
 
 @![android,javaSE,javaEE]
 ```java
-// TODO
+// You must add the listener as soon as the `onStart()` method of the `SdlManagerListener` is called.
+UUID listenerId = sdlManager.getPermissionManager().addListener(Arrays.asList(new PermissionElement(FunctionID.GET_WAY_POINTS, null), new PermissionElement(FunctionID.SUBSCRIBE_WAY_POINTS, null)), PermissionManager.PERMISSION_GROUP_TYPE_ANY, new OnPermissionChangeListener() {
+    @Override
+    public void onPermissionsChange(@NonNull Map<FunctionID, PermissionStatus> allowedPermissions, @NonNull int permissionGroupStatus) {
+        PermissionStatus getWayPointPermissionStatus = allowedPermissions.get(FunctionID.GET_WAY_POINTS);
+        if (getWayPointPermissionStatus != null && getWayPointPermissionStatus.getIsRPCAllowed()) {
+            // Your app has permission to send the `GetWayPoints` request for its current HMI level
+        } else {
+            // Your app does not have permission to send the `GetWayPoints` request for its current HMI level
+        }
+
+        PermissionStatus subscribeWayPointsPermissionStatus = allowedPermissions.get(FunctionID.SUBSCRIBE_WAY_POINTS);
+        if (subscribeWayPointsPermissionStatus != null && subscribeWayPointsPermissionStatus.getIsRPCAllowed()) {
+            // Your app has permission to send the `SubscribeWayPoints` request for its current HMI level
+        } else {
+            // Your app does not have permission to send the `SubscribeWayPoints` request for its current HMI level
+        }
+    }
+});
 ```
 !@
 
@@ -96,7 +114,7 @@ If you discover that the module does not support getting navigation waypoints or
 ##### Swift
 ```swift
 func isGetWaypointsSupported(handler: @escaping (_ success: Bool, _ error: Error?) -> Void) {
-    // Check if the module has phone capabilities
+    // Check if the module has navigation capabilities
     guard (sdlManager.systemCapabilityManager.isCapabilitySupported(type: .navigation)) else {
         return handler(false, nil)
     }
@@ -125,23 +143,35 @@ func isGetWaypointsSupported(handler: @escaping (_ success: Bool, _ error: Error
 
 @![android, javaSE, javaEE]
 ```java
+// Check if the module has navigation capabilities
+if (!sdlManager.getSystemCapabilityManager().isCapabilitySupported(SystemCapabilityType.NAVIGATION)) {
+    capabilitySupportedListener.onCapabilitySupported(false);
+    return;
+}
+
+// Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `GetWayPoints` and `SubscribeWayPoints` are supported if isCapabilitySupported returns true
+SdlMsgVersion sdlMsgVersion = sdlManager.getRegisterAppInterfaceResponse().getSdlMsgVersion();
+if (sdlMsgVersion == null) {
+    capabilitySupportedListener.onCapabilitySupported(true);
+    return;
+}
+Version rpcSpecVersion = new Version(sdlMsgVersion);
+if (rpcSpecVersion.isNewerThan(new Version(4, 5, 0)) < 0) {
+    capabilitySupportedListener.onCapabilitySupported(true);
+    return;
+}
+
+// Retrieve the navigation capability
 sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.NAVIGATION, new OnSystemCapabilityListener() {
     @Override
     public void onCapabilityRetrieved(Object capability) {
-        boolean isNavigationSupported = false;
-        NavigationCapability navCapability = (NavigationCapability) capability;
-        if (navCapability != null) {
-            isNavigationSupported = navCapability.getWayPointsEnabled();
-        } else {
-            isNavigationSupported = sdlManager.getSystemCapabilityManager().isCapabilitySupported(SystemCapabilityType.NAVIGATION);
-        }
-
-         <#If navigation is supported, send the `GetWayPoints` RPC#>
+        NavigationCapability navigationCapability = (NavigationCapability) capability;
+        capabilitySupportedListener.onCapabilitySupported(navigationCapability != null ? navigationCapability.getWayPointsEnabled() : false);
     }
 
     @Override
     public void onError(String info) {
-        <#Handle Error#>
+        capabilitySupportedListener.onError(info);
     }
 }, false);
 ```

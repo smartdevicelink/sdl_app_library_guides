@@ -146,11 +146,7 @@ private void isDialNumberSupported(final OnCapabilitySupportedListener capabilit
         @Override
         public void onCapabilityRetrieved(Object capability) {
             PhoneCapability phoneCapability = (PhoneCapability) capability;
-            if (phoneCapability == null) {
-                capabilitySupportedListener.onCapabilitySupported(false);
-                return;
-            }
-            capabilitySupportedListener.onCapabilitySupported(phoneCapability.getDialNumberEnabled());
+            capabilitySupportedListener.onCapabilitySupported(phoneCapability != null ? phoneCapability.getDialNumberEnabled() : false);
         }
 
         @Override
