@@ -21,7 +21,7 @@ id observerId = [self.sdlManager.permissionManager addObserverForRPCs:@[SDLRPCFu
 ```swift
 let observerId = sdlManager.permissionManager.addObserver(forRPCs: [SDLRPCFunctionName.dialNumber.rawValue.rawValue], groupType: .any, withHandler: { (allChanges, groupStatus) in
     // This handler will be called whenever the permission status changes
-    guard groupStatus == SDLPermissionGroupStatus.allowed else { 
+    guard groupStatus == .allowed else { 
         // Your app does not have permission to send the `DialNumber` request for its current HMI level
         return 
     }

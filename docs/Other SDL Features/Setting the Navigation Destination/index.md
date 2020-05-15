@@ -1,15 +1,60 @@
 # Setting the Navigation Destination
-The `SendLocation` RPC gives you the ability to send a GPS location to the active navigation app on the head unit.
+The @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE]`SendLocation`!@ RPC gives you the ability to send a GPS location to the active navigation app on the module.
 
-When using the `SendLocation` RPC, you will not have access to any information about how the user interacted with this location, only if the request was successfully sent. The request will be handled by Core from that point on using the active navigation system.
+When using the @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE]`SendLocation`!@ RPC, you will not have access to any information about how the user interacted with this location, only if the request was successfully sent. The request will be handled by the module from that point on using the active navigation system.
 
-## Checking If Your App Has Permission to Use SendLocation
-The `SendLocation` RPC is restricted by most vehicle manufacturers. As a result, the head unit you are connecting to will reject the request if you do not have the correct permissions. Please check the [Understanding Permissions](Getting Started/Understanding Permissions) section for more information on how to check permissions for an RPC.
+## Checking Your App's Permissions
+The @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE]`SendLocation`!@ RPC is restricted by most OEMs. As a result, a module may reject your request if your app does not have the correct permissions. Your SDL app may also be restricted to only being allowed to send a location when your app is open (i.e. the `hmiLevel` is non-`NONE`) or when it is the currently active app (i.e. the `hmiLevel` is `FULL`). 
 
-## Checking if Head Unit Supports SendLocation
-Since there is a possibility that some head units will not support the send location feature, you should check head unit support before attempting to send the request. You should also update your app's UI based on whether or not you can use `SendLocation`.
+@![iOS]
+##### Objective-C
+```objc
+id observerId = [self.sdlManager.permissionManager addObserverForRPCs:@[SDLRPCFunctionNameSendLocation] groupType:SDLPermissionGroupTypeAny withHandler:^(NSDictionary<SDLPermissionRPCName,NSNumber *> * _Nonnull allChanges, SDLPermissionGroupStatus groupStatus) {
+    if (groupStatus != SDLPermissionGroupStatusAllowed) {
+        // Your app does not have permission to send the `SendLocation` request for its current HMI level
+        return;
+    }
 
-If using library v.@![iOS]6.0!@@![android, javaSE, javaEE]4.4!@+, you can use the @![iOS]`SDLSystemCapabilityManager`!@@![android, javaSE, javaEE]`SystemCapabilityManager`!@ to check the navigation capability returned by Core as shown in the code sample below.
+    // Your app has permission to send the `SendLocation` request for its current HMI level
+}];
+```
+
+##### Swift
+```swift
+let observerId = sdlManager.permissionManager.addObserver(forRPCs: [SDLRPCFunctionName.sendLocation.rawValue.rawValue], groupType: .any, withHandler: { (allChanges, groupStatus) in
+    // This handler will be called whenever the permission status changes
+    guard groupStatus == .allowed else {
+        // Your app does not have permission to send the `SendLocation` request for its current HMI level
+        return
+    }
+
+    // Your app has permission to send the `SendLocation` request for its current HMI level
+})
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+UUID listenerId = sdlManager.getPermissionManager().addListener(Arrays.asList(new PermissionElement(FunctionID.SEND_LOCATION, null)), PermissionManager.PERMISSION_GROUP_TYPE_ANY, new OnPermissionChangeListener() {
+    @Override
+    public void onPermissionsChange(@NonNull Map<FunctionID, PermissionStatus> allowedPermissions, @NonNull int permissionGroupStatus) {
+        if (permissionGroupStatus != PermissionManager.PERMISSION_GROUP_TYPE_ANY) {
+            // Your app does not have permission to send the `SendLocation` request for its current HMI level
+            return;
+        }
+
+        // Your app has permission to send the `SendLocation` request for its current HMI level
+    }
+});
+```
+!@
+
+## Checking if the Module Supports Sending a Location
+Since some modules will not support sending a location, you should first check if the module supports this feature before trying to use it. Once you have successfully connected to the module, you can check the module's capabilities via the @![iOS]`SDLManager.systemCapabilityManager`!@@![android, javaSE, javaEE]`sdlManager.getSystemCapabilityManager`!@ as shown in the example below. Please note that you only need to check once if the module supports sending a location, however you must wait to perform this check until you know that the SDL app has been opened (i.e. the `hmiLevel` is non-`NONE`).  
+
+!!! NOTE
+If you discover that the module does not support sending a location or that your app does not have the right permissions, you should disable any buttons, voice commands, menu items, etc. in your app that would send the @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE]`SendLocation`!@ request.
+!!!
 
 @![iOS]
 ##### Objective-C
@@ -67,7 +112,7 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.NAVIG
 !@
 
 ## Using Send Location
-To use the `SendLocation` request, you must at minimum include the longitude and latitude of the location.
+To use the @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE]`SendLocation`! request, you must at minimum include the longitude and latitude of the location.
 
 @![iOS]
 ##### Objective-C
@@ -169,8 +214,8 @@ sdlManager.sendRPC(sendLocation);
 !@
 
 ## Checking the Result of Send Location
-The `SendLocation` response has 3 possible results that you should expect:
+The @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE]`SendLocation`!@ request has three possible responses that you should expect:
 
 1. `SUCCESS` - Successfully sent.
-2. `INVALID_DATA` - The request contains invalid data and was rejected.
-3. `DISALLOWED` - Your app does not have permission to use `SendLocation`.
+1. `INVALID_DATA` - The request contains invalid data and was rejected.
+1. `DISALLOWED` - Your app does not have permission to use the @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE]`SendLocation`!@ request.
