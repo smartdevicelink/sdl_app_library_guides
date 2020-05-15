@@ -115,7 +115,7 @@ If you discover that the module does not support getting navigation waypoints or
 ```swift
 func isGetWaypointsSupported(handler: @escaping (_ success: Bool, _ error: Error?) -> Void) {
     // Check if the module has navigation capabilities
-    guard (sdlManager.systemCapabilityManager.isCapabilitySupported(type: .navigation)) else {
+    guard sdlManager.systemCapabilityManager.isCapabilitySupported(type: .navigation) else {
         return handler(false, nil)
     }
 

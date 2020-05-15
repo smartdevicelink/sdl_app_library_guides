@@ -95,7 +95,7 @@ If you discover that the module does not support calling a phone number or that 
 ```swift
 func isDialNumberSupported(handler: @escaping (_ success: Bool, _ error: Error?) -> Void) {
     // Check if the module has phone capabilities
-    guard (sdlManager.systemCapabilityManager.isCapabilitySupported(type: .phoneCall)) else {
+    guard sdlManager.systemCapabilityManager.isCapabilitySupported(type: .phoneCall) else {
         return handler(false, nil)
     }
 
