@@ -1,13 +1,33 @@
 # Getting the Navigation Destination
-The `GetWayPoints` and `SubscribeWayPoints` RPCs are designed to allow you to get the navigation destination(s) from the active navigation app if the user is navigating.
+The @![iOS]`SDLGetWayPoints`!@@![android,javaSE,javaEE]`GetWayPoints`!@ and @![iOS]`SDLSubscribeWayPoints`!@@![android,javaSE,javaEE]`SubscribeWayPoints`!@ RPCs are designed to allow you to get the navigation destination(s) from the active navigation app when the user is navigating.
 
-## Checking If Your App Has Permission to Use GetWayPoints
-The `GetWayPoints` and `SubscribeWayPoints` RPCs are restricted by most vehicle manufacturers. As a result, the head unit you are connecting to will reject the request if you do not have the correct permissions. Please check the [Understanding Permissions](Getting Started/Understanding Permissions) section for more information on how to check permissions for an RPC.
+## Checking Your App's Permissions
+Both the @![iOS]`SDLGetWayPoints`!@@![android,javaSE,javaEE]`GetWayPoints`!@ and @![iOS]`SDLSubscribeWayPoints`!@@![android,javaSE,javaEE]`SubscribeWayPoints`!@ RPCs are restricted by most OEMs. As a result, a module may reject your request if your app does not have the correct permissions. Your SDL app may also be restricted to only being allowed to making a phone call when your app is open (i.e. the `hmiLevel` is non-`NONE`) or when it is the currently active app (i.e. the `hmiLevel` is `FULL`). 
 
-### Checking if Head Unit Supports GetWaypoints
-Since there is a possibility that some head units will not support getting the navigation destination, you should check head unit support before attempting to send the request. You should also update your app's UI based on whether or not you can use `GetWayPoints`.
+@![iOS]
+##### Objective-C
+```objc
+// TODO
+```
 
-You can use the @![iOS]`SDLSystemCapabilityManager`!@@![android, javaSE, javaEE]`SystemCapabilityManager`!@ to check the navigation capability returned by Core as shown in the code sample below.
+##### Swift
+```swift
+// TODO
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+// TODO
+```
+!@
+
+### Checking if the Module Supports Getting Waypoints 
+Since some modules will not support getting waypoints, you should first check if the module supports this feature before trying to use the feature. Once you have successfully connected to the module, you can check the module's capabilities via the @![iOS]`SDLManager.systemCapabilityManager`!@@![android, javaSE, javaEE]`sdlManager.getSystemCapabilityManager`!@ as shown in the example below. Please note that you only need to check once if the module supports getting waypoints, however you must wait to perform this check until you know that the SDL app has been opened (i.e. the `hmiLevel` is non-`NONE`).  
+
+!!! NOTE
+If you discover that the module does not support getting navigation waypoints or that your app does not have the right permissions, you should disable any buttons, voice commands, menu items, etc. in your app that would send the @![iOS]`SDLGetWayPoints`!@@![android,javaSE,javaEE]`GetWayPoints`!@ or @![iOS]`SDLSubscribeWayPoints`!@@![android,javaSE,javaEE]`SubscribeWayPoints`!@ requests.
+!!!
 
 @![iOS]
 ##### Objective-C
@@ -64,7 +84,7 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.NAVIG
 !@
 
 ## Subscribing to WayPoints
-To subscribe to the waypoints, you will have to set up your callback for whenever the waypoints are updated, then send the `SubscribeWayPoints` RPC.
+To subscribe to the navigation waypoints, you will have to set up your callback for whenever the waypoints are updated, then send the @![iOS]`SDLSubscribeWayPoints`!@@![android,javaSE,javaEE]`SubscribeWayPoints`!@ RPC.
 
 @![iOS]
 ##### Objective-C
@@ -214,12 +234,11 @@ sdlManager.sendRPC(unsubscribeWayPoints);
 !@
 
 ## One-Time Waypoints Request
-If you only need waypoint data once without an ongoing subscription, you can use `GetWayPoints` instead of `SubscribeWayPoints`.
+If you only need waypoint data once without an ongoing subscription, you can use @![iOS]`SDLGetWayPoints`!@@![android,javaSE,javaEE]`GetWayPoints`!@ instead of @![iOS]`SDLSubscribeWayPoints`!@@![android,javaSE,javaEE]`SubscribeWayPoints`!@.
 
 @![iOS]
 ##### Objective-C
 ```objc
-// Whenever you want to get waypoint data
 SDLGetWayPoints *getWaypoints = [[SDLGetWayPoints alloc] initWithType:SDLWayPointTypeAll];
 [self.sdlManager sendRequest:getWaypoints withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if (error != nil || !response.success) {
@@ -236,7 +255,6 @@ SDLGetWayPoints *getWaypoints = [[SDLGetWayPoints alloc] initWithType:SDLWayPoin
 
 ##### Swift
 ```swift
-// Whenever you want to unsubscribe
 let getWaypoints = SDLGetWayPoints(type: .all)
 sdlManager.send(request: getWaypoints) { (request, response, error) in
     guard error == nil, let response = response as? SDLGetWayPointsResponse, response.success == true else {
