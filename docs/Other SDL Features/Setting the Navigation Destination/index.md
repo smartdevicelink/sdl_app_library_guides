@@ -169,14 +169,14 @@ To use the @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE]`SendLocation`! re
 SDLSendLocation *sendLocation = [[SDLSendLocation alloc] initWithLongitude:-97.380967 latitude:42.877737 locationName:@"The Center" locationDescription:@"Center of the United States" address:@[@"900 Whiting Dr", @"Yankton, SD 57078"] phoneNumber:nil image:nil];
 
 [self.sdlManager sendRequest:sendLocation withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    if (!response.success || ![response isKindOfClass:SDLSendLocationResponse.class]) {
+    if (![response isKindOfClass:SDLSendLocationResponse.class]) {
         <#Encountered error sending SendLocation#>
         return;
     }
 
     SDLSendLocationResponse *sendLocation = (SDLSendLocationResponse *)response;
     SDLResult resultCode = sendLocation.resultCode;
-    if (!sendLocation.success.boolValue) {
+    if (!sendLocation.success) {
         if ([resultCode isEqualToEnum:SDLResultInvalidData]) {
             <#SendLocation was rejected. The request contained invalid data#>
         } else if ([resultCode isEqualToEnum:SDLResultDisallowed]) {
@@ -196,20 +196,21 @@ SDLSendLocation *sendLocation = [[SDLSendLocation alloc] initWithLongitude:-97.3
 let sendLocation = SDLSendLocation(longitude: -97.380967, latitude: 42.877737, locationName: "The Center", locationDescription: "Center of the United States", address: ["900 Whiting Dr", "Yankton, SD 57078"], phoneNumber: nil, image: nil)
 
 sdlManager.send(request: sendLocation) { (request, response, error) in
-    guard let response = response as? SDLSendLocationResponse, response.success.boolValue else {
-        // Encountered error sending `SendLocation`
+    guard let response = response as? SDLSendLocationResponse else {
+        <#Encountered error sending SendLocation#>
         return
     }
 
-    switch response.resultCode {
-    case .invalidData:
-        <#SendLocation was rejected. The request contained invalid data#>
-    case .disallowed:
-        <#Your app is not allowed to use SendLocation#>
-    default: break
-        <#Some unknown error has occurred#>
+    guard response.success.boolValue == true else {
+        case .invalidData:
+            <#SendLocation was rejected. The request contained invalid data#>
+        case .disallowed:
+            <#Your app is not allowed to use SendLocation#>
+        default: break
+            <#Some unknown error has occurred#>
+        }
+        return
     }
-    return
 
     <#SendLocation successfully sent#>
 }

@@ -144,37 +144,37 @@ func isGetWaypointsSupported(handler: @escaping (_ success: Bool, _ error: Error
 @![android, javaSE, javaEE]
 ```java
 private void isGetWaypointsSupported(final OnCapabilitySupportedListener capabilitySupportedListener) {
-	// Check if the module has navigation capabilities
-	if (!sdlManager.getSystemCapabilityManager().isCapabilitySupported(SystemCapabilityType.NAVIGATION)) {
-		capabilitySupportedListener.onCapabilitySupported(false);
-		return;
-	}
+    // Check if the module has navigation capabilities
+    if (!sdlManager.getSystemCapabilityManager().isCapabilitySupported(SystemCapabilityType.NAVIGATION)) {
+        capabilitySupportedListener.onCapabilitySupported(false);
+        return;
+    }
 
-	// Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `GetWayPoints` and `SubscribeWayPoints` are supported if `isCapabilitySupported` returns true
-	SdlMsgVersion sdlMsgVersion = sdlManager.getRegisterAppInterfaceResponse().getSdlMsgVersion();
-	if (sdlMsgVersion == null) {
-		capabilitySupportedListener.onCapabilitySupported(true);
-		return;
-	}
-	Version rpcSpecVersion = new Version(sdlMsgVersion);
-	if (rpcSpecVersion.isNewerThan(new Version(4, 5, 0)) < 0) {
-		capabilitySupportedListener.onCapabilitySupported(true);
-		return;
-	}
+    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `GetWayPoints` and `SubscribeWayPoints` are supported if `isCapabilitySupported` returns true
+    SdlMsgVersion sdlMsgVersion = sdlManager.getRegisterAppInterfaceResponse().getSdlMsgVersion();
+    if (sdlMsgVersion == null) {
+        capabilitySupportedListener.onCapabilitySupported(true);
+        return;
+    }
+    Version rpcSpecVersion = new Version(sdlMsgVersion);
+    if (rpcSpecVersion.isNewerThan(new Version(4, 5, 0)) < 0) {
+        capabilitySupportedListener.onCapabilitySupported(true);
+        return;
+    }
 
-	// Retrieve the navigation capability
-	sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.NAVIGATION, new OnSystemCapabilityListener() {
-		@Override
-		public void onCapabilityRetrieved(Object capability) {
-			NavigationCapability navigationCapability = (NavigationCapability) capability;
-			capabilitySupportedListener.onCapabilitySupported(navigationCapability != null ? navigationCapability.getWayPointsEnabled() : false);
-		}
+    // Retrieve the navigation capability
+    sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.NAVIGATION, new OnSystemCapabilityListener() {
+        @Override
+        public void onCapabilityRetrieved(Object capability) {
+            NavigationCapability navigationCapability = (NavigationCapability) capability;
+            capabilitySupportedListener.onCapabilitySupported(navigationCapability != null ? navigationCapability.getWayPointsEnabled() : false);
+        }
 
-		@Override
-		public void onError(String info) {
-			capabilitySupportedListener.onError(info);
-		}
-	}, false);
+        @Override
+        public void onError(String info) {
+            capabilitySupportedListener.onError(info);
+        }
+    }, false);
 }
 
 public interface OnCapabilitySupportedListener {
