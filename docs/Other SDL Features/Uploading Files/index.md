@@ -156,10 +156,7 @@ file.setOverwrite(false);
 !@
 
 @![javascript]
-If a file being uploaded has the same name as an already uploaded file, the existing file will be overwritten. To override this setting, so files do not get overwritten, set the `SdlFile`'s `overwrite` property to `false`.
-```js
-file.setOverwrite(false);
-```
+If a file being uploaded has the same name as an already uploaded file, the existing file will be overwritten. Changing overwriting properties is not currently supported.
 !@
 
 ## Checking the Amount of File Storage Left
