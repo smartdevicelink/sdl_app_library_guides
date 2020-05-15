@@ -59,60 +59,109 @@ If you discover that the module does not support sending a location or that your
 @![iOS]
 ##### Objective-C
 ```objc
-[self.sdlManager.systemCapabilityManager updateCapabilityType:SDLSystemCapabilityTypeNavigation completionHandler:^(NSError * _Nullable error, SDLSystemCapabilityManager * _Nonnull systemCapabilityManager) {
-    BOOL isNavigationSupported = NO;
-    if (error == nil) {
-        isNavigationSupported = systemCapabilityManager.navigationCapability.sendLocationEnabled.boolValue;
-    }
-    else {
-        isNavigationSupported = systemCapabilityManager.hmiCapabilities.navigation.boolValue;
+- (void)isSendLocationSupportedWithHandler:(void (^) (BOOL success, NSError * _Nullable error))handler {
+    // Check if the module has navigation capabilities
+    if (![self.sdlManager.systemCapabilityManager isCapabilitySupported:SDLSystemCapabilityTypeNavigation]) {
+        return handler(false, nil);
     }
 
-    <#If navigation is supported, send the `SendLocation` RPC#>
-}];
+    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `SendLocation` is supported if `isCapabilitySupported` returns true
+    SDLMsgVersion *sdlMsgVersion = self.sdlManager.registerResponse.sdlMsgVersion;
+    if (sdlMsgVersion == nil) {
+        return handler(true, nil);
+    }
+    SDLVersion *rpcSpecVersion = [[SDLVersion alloc] initWithSDLMsgVersion:sdlMsgVersion];
+    if (![rpcSpecVersion isGreaterThanOrEqualToVersion:[[SDLVersion alloc] initWithMajor:4 minor:5 patch:0]]) {
+        return handler(true, nil);
+    }
+
+    // Check if the navigation capability has already been retrieved from the module
+    SDLNavigationCapability *navigationCapability = self.sdlManager.systemCapabilityManager.navigationCapability;
+    if (navigationCapability != nil) {
+        return handler(navigationCapability.sendLocationEnabled.boolValue, nil);
+    }
+
+    // Retrieve the navigation capability from the module
+    [self.sdlManager.systemCapabilityManager updateCapabilityType:SDLSystemCapabilityTypeNavigation completionHandler:^(NSError * _Nullable error, SDLSystemCapabilityManager * _Nonnull systemCapabilityManager) {
+        if (error != nil) {
+            return handler(NO, error);
+        }
+
+        return handler(systemCapabilityManager.navigationCapability.sendLocationEnabled.boolValue, nil);
+    }];
+}
 ```
 
 ##### Swift
 ```swift
-sdlManager.systemCapabilityManager.updateCapabilityType(.navigation) { (error, systemCapabilityManager) in
-    var isNavigationSupported = false
-    if error == nil {
-        isNavigationSupported = systemCapabilityManager.navigationCapability?.sendLocationEnabled?.boolValue ?? false;
-    } else {
-        isNavigationSupported = systemCapabilityManager.hmiCapabilities?.navigation?.boolValue ?? false
+func isSendLocationSupported(handler: @escaping (_ success: Bool, _ error: Error?) -> Void) {
+    // Check if the module has navigation capabilities
+    guard (sdlManager.systemCapabilityManager.isCapabilitySupported(type: .navigation)) else {
+        return handler(false, nil)
     }
 
-    <#If navigation is supported, send the `SendLocation` RPC#>
+    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `SendLocation` is supported if `isCapabilitySupported` returns true
+    guard let sdlMsgVersion = sdlManager.registerResponse?.sdlMsgVersion, SDLVersion(sdlMsgVersion: sdlMsgVersion).isGreaterThanOrEqual(to: SDLVersion(major: 4, minor: 5, patch: 0)) else {
+        return handler(true, nil)
+    }
+
+    // Check if the navigation capability has already been retrieved from the module
+    if let navigationCapability = sdlManager.systemCapabilityManager.navigationCapability {
+        return handler(navigationCapability.sendLocationEnabled?.boolValue ?? false, nil)
+    }
+
+    // Retrieve the navigation capability from the module
+    sdlManager.systemCapabilityManager.updateCapabilityType(.navigation) { (error, systemCapabilityManager) in
+        if (error != nil) {
+            return handler(false, error)
+        }
+
+        return handler(systemCapabilityManager.navigationCapability?.sendLocationEnabled?.boolValue ?? false, nil)
+    }
 }
 ```
 !@
 
 @![android, javaSE, javaEE]
 ```java
-sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.NAVIGATION, new OnSystemCapabilityListener() {
-    @Override
-    public void onCapabilityRetrieved(Object capability) {
-        boolean isNavigationSupported = false;
-        NavigationCapability navCapability = (NavigationCapability) capability;
-        if (navCapability != null) {
-            isNavigationSupported = navCapability.getSendLocationEnabled();
-        } else {
-            isNavigationSupported = sdlManager.getSystemCapabilityManager().isCapabilitySupported(SystemCapabilityType.NAVIGATION);
+private void isSendLocationSupported(final OnCapabilitySupportedListener capabilitySupportedListener) {
+    // Check if the module has navigation capabilities
+    if (!sdlManager.getSystemCapabilityManager().isCapabilitySupported(SystemCapabilityType.NAVIGATION)) {
+        capabilitySupportedListener.onCapabilitySupported(false);
+        return;
+    }
+
+    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `SendLocation` is supported if `isCapabilitySupported` returns true
+    SdlMsgVersion sdlMsgVersion = sdlManager.getRegisterAppInterfaceResponse().getSdlMsgVersion();
+    if (sdlMsgVersion == null) {
+        capabilitySupportedListener.onCapabilitySupported(true);
+        return;
+    }
+    Version rpcSpecVersion = new Version(sdlMsgVersion);
+    if (rpcSpecVersion.isNewerThan(new Version(4, 5, 0)) < 0) {
+        capabilitySupportedListener.onCapabilitySupported(true);
+        return;
+    }
+
+    // Retrieve the navigation capability
+    sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.NAVIGATION, new OnSystemCapabilityListener() {
+        @Override
+        public void onCapabilityRetrieved(Object capability) {
+            NavigationCapability navigationCapability = (NavigationCapability) capability;
+            capabilitySupportedListener.onCapabilitySupported(navigationCapability != null ? navigationCapability.getSendLocationEnabled() : false);
         }
 
-        <#If navigation is supported, send the `SendLocation` RPC#>
-    }
-
-    @Override
-    public void onError(String info) {
-        <#Handle Error#>
-    }
-}, false);
+        @Override
+        public void onError(String info) {
+            capabilitySupportedListener.onError(info);
+        }
+    }, false);
+}
 ```
 !@
 
 ## Using Send Location
-To use the @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE]`SendLocation`! request, you must at minimum include the longitude and latitude of the location.
+To use the @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE]`SendLocation`! request, you must, at minimum, include the longitude and latitude of the location.
 
 @![iOS]
 ##### Objective-C
@@ -120,7 +169,7 @@ To use the @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE]`SendLocation`! re
 SDLSendLocation *sendLocation = [[SDLSendLocation alloc] initWithLongitude:-97.380967 latitude:42.877737 locationName:@"The Center" locationDescription:@"Center of the United States" address:@[@"900 Whiting Dr", @"Yankton, SD 57078"] phoneNumber:nil image:nil];
 
 [self.sdlManager sendRequest:sendLocation withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    if (error || ![response isKindOfClass:SDLSendLocationResponse.class]) {
+    if (!response.success || ![response isKindOfClass:SDLSendLocationResponse.class]) {
         <#Encountered error sending SendLocation#>
         return;
     }
@@ -129,11 +178,11 @@ SDLSendLocation *sendLocation = [[SDLSendLocation alloc] initWithLongitude:-97.3
     SDLResult resultCode = sendLocation.resultCode;
     if (!sendLocation.success.boolValue) {
         if ([resultCode isEqualToEnum:SDLResultInvalidData]) {
-            <#SendLocation was rejected. The request contained invalid data.#>
+            <#SendLocation was rejected. The request contained invalid data#>
         } else if ([resultCode isEqualToEnum:SDLResultDisallowed]) {
             <#Your app is not allowed to use SendLocation#>
         } else {
-            <#Some unknown error has occured#>
+            <#Some unknown error has occurred#>
         }
         return;
     }
@@ -147,22 +196,20 @@ SDLSendLocation *sendLocation = [[SDLSendLocation alloc] initWithLongitude:-97.3
 let sendLocation = SDLSendLocation(longitude: -97.380967, latitude: 42.877737, locationName: "The Center", locationDescription: "Center of the United States", address: ["900 Whiting Dr", "Yankton, SD 57078"], phoneNumber: nil, image: nil)
 
 sdlManager.send(request: sendLocation) { (request, response, error) in
-    guard let response = response as? SDLSendLocationResponse, error == nil else {
-        <#Encountered error sending SendLocation#>
+    guard let response = response as? SDLSendLocationResponse, response.success.boolValue else {
+        // Encountered error sending `SendLocation`
         return
     }
 
-    guard response?.success.boolValue == true else {
-        switch response.resultCode {
-        case .invalidData:
-            <#SendLocation was rejected. The request contained invalid data.#>
-        case .disallowed:
-            <#Your app is not allowed to use SendLocation#>
-        default:
-            <#Some unknown error has occured#>
-        }
-        return
+    switch response.resultCode {
+    case .invalidData:
+        <#SendLocation was rejected. The request contained invalid data#>
+    case .disallowed:
+        <#Your app is not allowed to use SendLocation#>
+    default: break
+        <#Some unknown error has occurred#>
     }
+    return
 
     <#SendLocation successfully sent#>
 }
