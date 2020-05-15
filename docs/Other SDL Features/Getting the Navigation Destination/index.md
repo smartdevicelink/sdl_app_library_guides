@@ -1,5 +1,5 @@
 # Getting the Navigation Destination
-The @![iOS]`SDLGetWayPoints`!@@![android,javaSE,javaEE]`GetWayPoints`!@ and @![iOS]`SDLSubscribeWayPoints`!@@![android,javaSE,javaEE]`SubscribeWayPoints`!@ RPCs are designed to allow you to get the navigation destination(s) from the active navigation app when the user is navigating.
+The @![iOS]`SDLGetWayPoints`!@@![android,javaSE,javaEE]`GetWayPoints`!@ and @![iOS]`SDLSubscribeWayPoints`!@@![android,javaSE,javaEE]`SubscribeWayPoints`!@ RPCs are designed to allow you to get the navigation destination(s) from the active navigation app when the user has activated in-car navigation.
 
 ## Checking Your App's Permissions
 Both the @![iOS]`SDLGetWayPoints`!@@![android,javaSE,javaEE]`GetWayPoints`!@ and @![iOS]`SDLSubscribeWayPoints`!@@![android,javaSE,javaEE]`SubscribeWayPoints`!@ RPCs are restricted by most OEMs. As a result, a module may reject your request if your app does not have the correct permissions. Your SDL app may also be restricted to only being allowed to making a phone call when your app is open (i.e. the `hmiLevel` is non-`NONE`) or when it is the currently active app (i.e. the `hmiLevel` is `FULL`). 
@@ -50,7 +50,7 @@ let observerId = sdlManager.permissionManager.addObserver(forRPCs: [SDLRPCFuncti
 ```
 !@
 
-### Checking if the Module Supports Getting Waypoints 
+### Checking if the Module Supports Waypoints 
 Since some modules will not support getting waypoints, you should first check if the module supports this feature before trying to use it. Once you have successfully connected to the module, you can check the module's capabilities via the @![iOS]`SDLManager.systemCapabilityManager`!@@![android, javaSE, javaEE]`sdlManager.getSystemCapabilityManager`!@ as shown in the example below. Please note that you only need to check once if the module supports getting waypoints, however you must wait to perform this check until you know that the SDL app has been opened (i.e. the `hmiLevel` is non-`NONE`).  
 
 !!! NOTE
@@ -147,13 +147,13 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.NAVIG
 ```
 !@
 
-## Subscribing to WayPoints
+## Subscribing to Waypoints
 To subscribe to the navigation waypoints, you will have to set up your callback for whenever the waypoints are updated, then send the @![iOS]`SDLSubscribeWayPoints`!@@![android,javaSE,javaEE]`SubscribeWayPoints`!@ RPC.
 
 @![iOS]
 ##### Objective-C
 ```objc
-// Any time before SDL would send the notification (such as when you call `sdlManager.start` or at initialization of your manager)
+// You can subscribe any time before SDL would send the notification (such as when you call `sdlManager.start` or at initialization of your manager)
 [self.sdlManager subscribeToRPC:SDLDidReceiveWaypointNotification withObserver:self selector:@selector(waypointsDidUpdate:)];
 
 // Create this method to receive the subscription callback
@@ -178,7 +178,7 @@ SDLSubscribeWayPoints *subscribeWaypoints = [[SDLSubscribeWayPoints alloc] init]
 
 ##### Swift
 ```swift
-// Any time before SDL would send the notification (such as when you call `sdlManager.start` or at initialization of your manager)
+// You can subscribe any time before SDL would send the notification (such as when you call `sdlManager.start` or at initialization of your manager)
 sdlManager.subscribe(to: .SDLDidReceiveWaypoint, observer: self, selector: #selector(waypointsDidUpdate(_:)))
 
 // Create this method to receive the subscription callback
@@ -204,7 +204,7 @@ sdlManager.send(request: subscribeWaypoints) { (request, response, error) in
 @![android, javaSE, javaEE]
 ##### Java
 ```java
-// Create this method to receive the subscription callback
+// You can subscribe any time before SDL would send the notification (such as when you call `sdlManager.start` or at initialization of your manager)
 sdlManager.addOnRPCNotificationListener(FunctionID.ON_WAY_POINT_CHANGE, new OnRPCNotificationListener() {
     @Override
     public void onNotified(RPCNotification notification) {
@@ -230,6 +230,7 @@ subscribeWayPoints.setOnRPCResponseListener(new OnRPCResponseListener() {
         // Handle the errors
     }
 });
+
 sdlManager.sendRPC(subscribeWayPoints);
 ```
 !@
