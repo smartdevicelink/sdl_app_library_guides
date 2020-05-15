@@ -158,6 +158,11 @@ private void isSendLocationSupported(final OnCapabilitySupportedListener capabil
         }
     }, false);
 }
+
+public interface OnCapabilitySupportedListener {
+    void onCapabilitySupported(Boolean supported);
+    void onError(String info);
+}
 ```
 !@
 
