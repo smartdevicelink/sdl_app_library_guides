@@ -53,7 +53,7 @@ if(response instanceof SDL.rpc.RpcResponse && response.getSuccess()) {
 ```
 !@
 
-@![iOS, android, javaSE, javaEE
+@![iOS, android, javaSE, javaEE]
 ## Other Properties
 !@
 @![iOS]While there are other keyboard properties available on `SDLKeyboardProperties`, these will be overridden by the screen manager. The `keypressMode` must be a specific configuration for the screen manager's callbacks to work properly. The `limitedCharacterList`, `autoCompleteText`, and `autoCompleteList` will be set on a per-keyboard basis in the `SDLKeyboardDelegate` which is set on the `presentKeyboard` and `presentSearchableChoiceSet` methods.!@
