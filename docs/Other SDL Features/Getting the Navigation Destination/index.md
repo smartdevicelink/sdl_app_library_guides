@@ -2,7 +2,7 @@
 The @![iOS]`SDLGetWayPoints`!@@![android,javaSE,javaEE]`GetWayPoints`!@ and @![iOS]`SDLSubscribeWayPoints`!@@![android,javaSE,javaEE]`SubscribeWayPoints`!@ RPCs are designed to allow you to get the navigation destination(s) from the active navigation app when the user has activated in-car navigation.
 
 ## Checking Your App's Permissions
-Both the @![iOS]`SDLGetWayPoints`!@@![android,javaSE,javaEE]`GetWayPoints`!@ and @![iOS]`SDLSubscribeWayPoints`!@@![android,javaSE,javaEE]`SubscribeWayPoints`!@ RPCs are restricted by most OEMs. As a result, a module may reject your request if your app does not have the correct permissions. Your SDL app may also be restricted to only being allowed to making a phone call when your app is open (i.e. the `hmiLevel` is non-`NONE`) or when it is the currently active app (i.e. the `hmiLevel` is `FULL`). 
+Both the @![iOS]`SDLGetWayPoints`!@@![android,javaSE,javaEE]`GetWayPoints`!@ and @![iOS]`SDLSubscribeWayPoints`!@@![android,javaSE,javaEE]`SubscribeWayPoints`!@ RPCs are restricted by most OEMs. As a result, a module may reject your request if your app does not have the correct permissions. Your SDL app may also be restricted to only being allowed to get waypoints when your app is open (i.e. the `hmiLevel` is non-`NONE`) or when it is the currently active app (i.e. the `hmiLevel` is `FULL`). 
 
 @![iOS]
 ##### Objective-C
@@ -189,7 +189,7 @@ To subscribe to the navigation waypoints, you will have to set up your callback 
 // Create this method to receive the subscription callback
 - (void)waypointsDidUpdate:(SDLRPCNotificationNotification *)notification {
     SDLOnWayPointChange *waypointUpdate = (SDLOnWayPointChange *)notification.notification;
-    NSArray<SDLLocationData> *waypoints = waypointUpdate.wayPoints;
+    NSArray<SDLLocationDetails *> *waypoints = waypointUpdate.waypoints;
 
     <#Use the waypoint data#>
 }
@@ -197,7 +197,7 @@ To subscribe to the navigation waypoints, you will have to set up your callback 
 // After SDL has started your connection, at whatever point you want to subscribe, send the subscribe RPC
 SDLSubscribeWayPoints *subscribeWaypoints = [[SDLSubscribeWayPoints alloc] init];
 [self.sdlManager sendRequest:subscribeWaypoints withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    if (error != nil || !response.success) {
+    if (!response.success) {
         // Handle the error
         return;
     }
@@ -212,8 +212,9 @@ SDLSubscribeWayPoints *subscribeWaypoints = [[SDLSubscribeWayPoints alloc] init]
 sdlManager.subscribe(to: .SDLDidReceiveWaypoint, observer: self, selector: #selector(waypointsDidUpdate(_:)))
 
 // Create this method to receive the subscription callback
-func waypointsDidUpdate(_ notification: SDLRPCNotificationNotification) {
-    guard let waypointUpdate = notification.notification as? SDLOnWayPointChange, let waypoints = waypointUpdate.wayPoints else { return }
+@objc func waypointsDidUpdate(_ notification: SDLRPCNotificationNotification) {
+    guard let waypointUpdate = notification.notification as? SDLOnWayPointChange else { return }
+    let waypoints = waypointUpdate.waypoints
 
     <#Use the waypoint data#>
 }
@@ -221,7 +222,7 @@ func waypointsDidUpdate(_ notification: SDLRPCNotificationNotification) {
 // After SDL has started your connection, at whatever point you want to subscribe, send the subscribe RPC
 let subscribeWaypoints = SDLSubscribeWayPoints()
 sdlManager.send(request: subscribeWaypoints) { (request, response, error) in
-    guard error == nil, let response = response, response.success == true else {
+    guard let response = response, response.success.boolValue else {
         // Handle the errors
         return
     }
