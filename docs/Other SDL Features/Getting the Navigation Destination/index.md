@@ -7,12 +7,40 @@ Both the @![iOS]`SDLGetWayPoints`!@@![android,javaSE,javaEE]`GetWayPoints`!@ and
 @![iOS]
 ##### Objective-C
 ```objc
-// TODO
+id observerId = [self.sdlManager.permissionManager addObserverForRPCs:@[SDLRPCFunctionNameGetWayPoints, SDLRPCFunctionNameSubscribeWayPoints] groupType:SDLPermissionGroupTypeAny withHandler:^(NSDictionary<SDLPermissionRPCName,NSNumber *> * _Nonnull allChanges, SDLPermissionGroupStatus groupStatus) {
+    // This handler will be called whenever the permission status changes
+    NSNumber *getWayPointPermissionStatus = allChanges[SDLRPCFunctionNameGetWayPoints];
+    if (getWayPointPermissionStatus.boolValue) {
+        // Your app has permission to send the `GetWayPoints` request for its current HMI level
+    } else {
+         // Your app does not have permission to send the `GetWayPoints` request for its current HMI level
+    }
+
+    NSNumber *subscribeWayPointsPermissionStatus = allChanges[SDLRPCFunctionNameSubscribeWayPoints];
+    if (subscribeWayPointsPermissionStatus.boolValue) {
+        // Your app has permission to send the `SubscribeWayPoints` request for its current HMI level
+    } else {
+        // Your app does not have permission to send the `SubscribeWayPoints` request for its current HMI level
+    }
+}];
 ```
 
 ##### Swift
 ```swift
-// TODO
+let observerId = sdlManager.permissionManager.addObserver(forRPCs: [SDLRPCFunctionName.getWayPoints.rawValue.rawValue, SDLRPCFunctionName.subscribeWayPoints.rawValue.rawValue], groupType: .any, withHandler: { (allChanges, groupStatus) in
+    // This handler will be called whenever the permission status changes
+    if let getWayPointPermissionStatus = allChanges[SDLRPCFunctionName.getWayPoints.rawValue.rawValue], getWayPointPermissionStatus.boolValue == true {
+        // Your app has permission to send the `GetWayPoints` request for its current HMI level
+    } else {
+        // Your app does not have permission to send the `GetWayPoints` request for its current HMI level
+    }
+
+    if let subscribeWayPointsPermissionStatus = allChanges[SDLRPCFunctionName.subscribeWayPoints.rawValue.rawValue], subscribeWayPointsPermissionStatus.boolValue == true {
+        // Your app has permission to send the `SubscribeWayPoints` request for its current HMI level
+    } else {
+        // Your app does not have permission to send the `SubscribeWayPoints` request for its current HMI level
+    }
+})
 ```
 !@
 
