@@ -116,8 +116,7 @@
                     "name": "Customizing the Template"
                 },
                 {
-                    "name": "Customizing the Keyboard",
-                    "platforms": ["iOS", "Android", "JavaEE", "JavaSE"]
+                    "name": "Customizing the Keyboard"
                 },
                 {
                     "name": "Customizing Help Prompts"
