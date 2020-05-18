@@ -167,7 +167,7 @@ public interface OnCapabilitySupportedListener {
 !@
 
 ## Using Send Location
-To use the @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE]`SendLocation`! request, you must, at minimum, include the longitude and latitude of the location.
+To use the @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE]`SendLocation`!@ request, you must, at minimum, include the longitude and latitude of the location.
 
 @![iOS]
 ##### Objective-C
