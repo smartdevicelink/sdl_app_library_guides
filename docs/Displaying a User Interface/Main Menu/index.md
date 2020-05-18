@@ -1,6 +1,6 @@
 # Main Menu
 @![javascript]
-The SDL JavaScript Suite currently does not support the MenuManager. This will be addressed in a future release.
+The SDL JavaScript Suite currently does not support the `MenuManager`. This will be addressed in a future release.
 !@
 @![iOS, android, javaEE, javaSE]
 You have two different options when creating menus. One is to simply add items to the default menu available in every template. The other is to create a custom menu that pops up when needed. You can find more information about these popups in the [Popup Menus and Keyboards](Displaying a User Interface/Popup Menus and Keyboards) section.
