@@ -176,7 +176,7 @@ SDLSendLocation *sendLocation = [[SDLSendLocation alloc] initWithLongitude:-97.3
 
 [self.sdlManager sendRequest:sendLocation withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if (![response isKindOfClass:SDLSendLocationResponse.class]) {
-        <#Encountered error sending SendLocation#>
+        // Encountered an error sending `SendLocation`
         return;
     }
 
@@ -184,16 +184,16 @@ SDLSendLocation *sendLocation = [[SDLSendLocation alloc] initWithLongitude:-97.3
     SDLResult resultCode = sendLocation.resultCode;
     if (!sendLocation.success) {
         if ([resultCode isEqualToEnum:SDLResultInvalidData]) {
-            <#SendLocation was rejected. The request contained invalid data#>
+            // `SendLocation` was rejected. The request contained invalid data
         } else if ([resultCode isEqualToEnum:SDLResultDisallowed]) {
-            <#Your app is not allowed to use SendLocation#>
+            // Your app is not allowed to use `SendLocation`
         } else {
-            <#Some unknown error has occurred#>
+            // Some unknown error has occurred
         }
         return;
     }
 
-    <#SendLocation successfully sent#>
+    // `SendLocation` successfully sent
 }];
 ```
 
@@ -203,22 +203,22 @@ let sendLocation = SDLSendLocation(longitude: -97.380967, latitude: 42.877737, l
 
 sdlManager.send(request: sendLocation) { (request, response, error) in
     guard let response = response as? SDLSendLocationResponse else {
-        <#Encountered error sending SendLocation#>
+        // Encountered an error sending `SendLocation`
         return
     }
 
     guard response.success.boolValue == true else {
         case .invalidData:
-            <#SendLocation was rejected. The request contained invalid data#>
+            // `SendLocation` was rejected. The request contained invalid data
         case .disallowed:
-            <#Your app is not allowed to use SendLocation#>
+            // Your app is not allowed to use `SendLocation`
         default: break
-            <#Some unknown error has occurred#>
+            // Some unknown error has occurred
         }
         return
     }
 
-    <#SendLocation successfully sent#>
+    // `SendLocation` successfully sent
 }
 ```
 !@
@@ -249,11 +249,11 @@ sendLocation.setOnRPCResponseListener(new OnRPCResponseListener() {
     public void onResponse(int correlationId, RPCResponse response) {
         Result result = response.getResultCode();
         if(result.equals(Result.SUCCESS)){
-            // SendLocation was successfully sent.
+            // `SendLocation` successfully sent
         }else if(result.equals(Result.INVALID_DATA)){
-            // The request you sent contains invalid data and was rejected.
+            // `SendLocation` was rejected. The request contained invalid data
         }else if(result.equals(Result.DISALLOWED)){
-            // Your app does not have permission to use SendLocation.
+            // Your app is not allowed to use `SendLocation`
         }
     }
 
