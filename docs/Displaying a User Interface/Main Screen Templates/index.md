@@ -56,7 +56,9 @@ sdlManager.sendRPC(setDisplayLayoutRequest);
 ```js
 const setDisplayLayoutRequest = new SDL.rpc.messages.SetDisplayLayout();
 setDisplayLayoutRequest.setDisplayLayout(SDL.rpc.enums.PredefinedLayout.GRAPHIC_WITH_TEXT);
-const response = await sdlManager.sendRpc(setDisplayLayoutRequest);
+const response = await sdlManager.sendRpc(setDisplayLayoutRequest).catch(function (error) {
+    // Handle Error
+});
 if (response.getSuccess()) {
     console.log('Display layout set successfully.');
 } else {

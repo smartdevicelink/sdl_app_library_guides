@@ -345,7 +345,9 @@ sdlManager.sendRPC(alert);
 @![javascript]
 ```js
 // Handle RPC Response
-const response = await sdlManager.sendRpc(alert);
+const response = await sdlManager.sendRpc(alert).catch(function (error) {
+    // Handle Error
+});
 if (response.getSuccess()) {
     console.log('Alert was shown successfully');
 }
@@ -413,7 +415,9 @@ sdlManager.sendRPC(cancelInteraction);
 @![javascript]
 ```js
 const cancelInteraction = new SDL.rpc.messages.CancelInteraction().setFunctionIDParam(SDL.rpc.enums.FunctionID.Alert).setCancelID(cancelID);
-const response = await sdlManager.sendRpc(cancelInteraction);
+const response = await sdlManager.sendRpc(cancelInteraction).catch(function (error) {
+    // Handle Error
+});
 if (response.getSuccess()) {
     console.log('Alert was dismissed successfully');
 }
@@ -468,7 +472,9 @@ sdlManager.sendRPC(cancelInteraction);
 @![javascript]
 ```js
 const cancelInteraction = new SDL.rpc.messages.CancelInteraction().setFunctionIDParam(SDL.rpc.enums.FunctionID.Alert);
-const response = await sdlManager.sendRpc(cancelInteraction);
+const response = await sdlManager.sendRpc(cancelInteraction).catch(function (error) {
+    // Handle Error
+});
 if (response.getSuccess()) {
     console.log('Alert was dismissed successfully');
 }

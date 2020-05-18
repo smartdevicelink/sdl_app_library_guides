@@ -91,7 +91,9 @@ const softButtonObject = new SDL.manager.screen.utils.SoftButtonObject('softButt
 sdlManager.getScreenManager().beginTransaction();
 sdlManager.getScreenManager().setSoftButtonObjects([softButtonObject]);
 // Commit the updates and catch any errors
-const success = await sdlManager.getScreenManager().commit().catch(error => error);
+const success = await sdlManager.getScreenManager().commit().catch(function (error) {
+    // Handle Error
+});
 console.log('ScreenManager update complete:', success);
 if (success === true) {
     // Update complete
@@ -206,7 +208,9 @@ const softButtonObject = new SDL.manager.screen.utils.SoftButtonObject('softButt
 sdlManager.getScreenManager().beginTransaction();
 sdlManager.getScreenManager().setSoftButtonObjects([softButtonObject]);
 // Commit the updates and catch any errors
-const success = await sdlManager.getScreenManager().commit().catch(error => error);
+const success = await sdlManager.getScreenManager().commit().catch(function (error) {
+    // Handle Error
+});
 console.log('ScreenManager update complete:', success);
 if (success === true) {
     // Update complete
@@ -291,7 +295,9 @@ const softButtonObject = new SDL.manager.screen.utils.SoftButtonObject('softButt
 sdlManager.getScreenManager().beginTransaction();
 sdlManager.getScreenManager().setSoftButtonObjects([softButtonObject])
 // Commit the updates and catch any errors
-const success = await sdlManager.getScreenManager().commit().catch(error => error);
+const success = await sdlManager.getScreenManager().commit().catch(function (error) {
+    // Handle Error
+});
 console.log('ScreenManager update complete:', success);
 if (success === true) {
     // Update complete
@@ -472,7 +478,9 @@ const softButtonObject = new SDL.manager.screen.utils.SoftButtonObject('softButt
 sdlManager.getScreenManager().beginTransaction();
 sdlManager.getScreenManager().setSoftButtonObjects([]);
 // Commit the updates and catch any errors
-const success = await sdlManager.getScreenManager().commit().catch(error => error);
+const success = await sdlManager.getScreenManager().commit().catch(function (error) {
+    // Handle Error
+});
 console.log('ScreenManager update complete:', success);
 if (success === true) {
     // Update complete, transition to a new state

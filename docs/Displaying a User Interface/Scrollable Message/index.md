@@ -231,7 +231,9 @@ sdlManager.sendRPC(cancelInteraction);
 const cancelInteraction = new SDL.rpc.messages.CancelInteraction()
     .setFunctionIDParam(SDL.rpc.enums.FunctionID.ScrollableMessage)
     .setCancelID(cancelID);
-const response = await sdlManager.sendRpc(cancelInteraction);
+const response = await sdlManager.sendRpc(cancelInteraction).catch(function (error) {
+    // Handle Error
+});
 if (response.getSuccess()){
     console.log("Scrollable message was dismissed successfully");
 }
@@ -286,7 +288,9 @@ sdlManager.sendRPC(cancelInteraction);
 @![javascript]
 ```js
 const cancelInteraction = new SDL.rpc.messages.CancelInteraction().setFunctionIDParam(SDL.rpc.enums.FunctionID.ScrollableMessage);
-const response = await sdlManager.sendRpc(cancelInteraction);
+const response = await sdlManager.sendRpc(cancelInteraction).catch(function (error) {
+    // Handle Error
+});
 if (response.getSuccess()){
     console.log("Scrollable message was dismissed successfully");
 }
