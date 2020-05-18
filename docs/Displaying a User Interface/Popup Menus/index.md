@@ -1,5 +1,5 @@
 # Popup Menus
-@![javscript]
+@![javascript]
 The SDL JavaScript Suite currently does not support the MenuManager and ChoiceSetManager. This will be addressed in a future release.
 !@
 @![iOS, android, javaEE, javaSE]
