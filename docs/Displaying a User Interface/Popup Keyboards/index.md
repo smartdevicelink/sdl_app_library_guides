@@ -210,7 +210,5 @@ sdlManager.getScreenManager().dismissKeyboard(cancelId);
 ```
 !@
 
-@![iOS, android, javaSE, javaEE]
 ## Using RPCs
-If you don't want to use the @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@, you can do this manually using the `PerformInteraction` RPC request. As this is no longer a recommended course of action, we will leave it to you to figure out how to manually do it.
-!@
+If you don't want to use the @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE, javascript]`ScreenManager`!@, you can do this manually using the `PerformInteraction` RPC request. As this is no longer a recommended course of action, we will leave it to you to figure out how to manually do it.

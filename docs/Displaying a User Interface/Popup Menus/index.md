@@ -1,4 +1,7 @@
 # Popup Menus
+@![javscript]
+The SDL JavaScript Suite currently does not support the MenuManager and ChoiceSetManager. This will be addressed in a future release.
+!@
 @![iOS, android, javaEE, javaSE]
 SDL supports modal menus. The user can respond to the list of menu options via touch, voice (if voice recognition is supported by the head unit), or by keyboard input to search or filter the menu.
 
@@ -283,7 +286,5 @@ choiceSet.cancel();
 ```
 !@
 
-@![iOS, android, javaEE, javaSE]
 ## Using RPCs
-If you don't want to use the !@@![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@@![iOS, android, javaEE, javaSE], you can do this manually using the `Choice`, `CreateInteractionChoiceSet`. You will need to create `Choice`s, bundle them into `CreateInteractionChoiceSet`s. As this is no longer a recommended course of action, we will leave it to you to figure out how to manually do it.
-!@
+If you don't want to use the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE,javascript]`ScreenManager`!@, you can do this manually using the `Choice`, `CreateInteractionChoiceSet`. You will need to create `Choice`s, bundle them into `CreateInteractionChoiceSet`s. As this is no longer a recommended course of action, we will leave it to you to figure out how to manually do it.
