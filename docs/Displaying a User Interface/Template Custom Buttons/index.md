@@ -290,7 +290,6 @@ const softButtonObject = new SDL.manager.screen.utils.SoftButtonObject('softButt
 
 sdlManager.getScreenManager().beginTransaction();
 sdlManager.getScreenManager().setSoftButtonObjects([softButtonObject])
-const success = await sdlManager.getScreenManager().commit();
 // Commit the updates and catch any errors
 const success = await sdlManager.getScreenManager().commit().catch(error => error);
 console.log('ScreenManager update complete:', success);
@@ -472,7 +471,6 @@ const softButtonObject = new SDL.manager.screen.utils.SoftButtonObject('softButt
 
 sdlManager.getScreenManager().beginTransaction();
 sdlManager.getScreenManager().setSoftButtonObjects([]);
-const success = await sdlManager.getScreenManager().commit();
 // Commit the updates and catch any errors
 const success = await sdlManager.getScreenManager().commit().catch(error => error);
 console.log('ScreenManager update complete:', success);

@@ -251,6 +251,9 @@ sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapa
 ```js
 sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SDL.rpc.enums.SystemCapabilityType.APP_SERVICES, function (capability) {
     // This listener is now subscribed to AppServicesCapabilities
+    if (capability instanceof SDL.rpc.structs.AppServicesCapabilities) {
+        // Got an AppServicesCapabilities struct
+    }
 })
 ```
 !@
