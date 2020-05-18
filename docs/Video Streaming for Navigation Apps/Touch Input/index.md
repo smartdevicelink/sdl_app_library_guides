@@ -88,7 +88,8 @@ Please note that if you are integrating an sdl_ios version less than v6.3, the f
 
 - (void)touchEventAvailable:(SDLRPCNotificationNotification *)notification {
     if (![notification.notification isKindOfClass:SDLOnTouchEvent.class]) {
-      return;
+        // Handle error
+        return;
     }
     SDLOnTouchEvent *touchEvent = (SDLOnTouchEvent *)notification.notification;
     <#Use the touch data#>
@@ -101,7 +102,7 @@ sdlManager.subscribe(to: .SDLDidReceiveTouchEvent, observer: self, selector: #se
 
 @objc private func touchEventAvailable(_ notification: SDLRPCNotificationNotification) {
     guard let touchEvent = notification.notification as? SDLOnTouchEvent else {
-        print("Error retrieving onTouchEvent object")
+        // Handle error
         return
     }
      <#Use the touch data#>
