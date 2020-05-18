@@ -4,7 +4,7 @@ If you present keyboards in your app – such as in searchable interactions or a
 !@
 
 @![javascript]
-The `ChoiceSetManager` used to customize the keyboard is currently missing from the SDL JavaScript Suite. This will be addressed in a future release. However you can still customize the keyboard through the `setGlobalProperties` RPC.
+The `ChoiceSetManager` used to customize the keyboard is currently missing from the SDL JavaScript Suite. This will be addressed in a future release. However you can still customize the keyboard through the `SetGlobalProperties` RPC.
 !@
 
 ## Setting Keyboard Properties
