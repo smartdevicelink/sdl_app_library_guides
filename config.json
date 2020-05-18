@@ -136,8 +136,7 @@
                     "name": "Setting Up Voice Commands"
                 },
                 {
-                    "name": "Getting Microphone Audio",
-                    "platforms": ["iOS", "Android", "JavaEE", "JavaSE"]
+                    "name": "Getting Microphone Audio"
                 }
             ]
         },
