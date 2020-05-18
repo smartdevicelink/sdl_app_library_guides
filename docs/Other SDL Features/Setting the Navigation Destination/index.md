@@ -231,7 +231,6 @@ sendLocation.setLongitudeDegrees(-97.380967);
 sendLocation.setLocationName("The Center");
 sendLocation.setLocationDescription("Center of the United States");
 
-// Create Address
 OasisAddress address = new OasisAddress();
 address.setSubThoroughfare("900");
 address.setThoroughfare("Whiting Dr");
@@ -243,7 +242,6 @@ address.setCountryName("United States");
 
 sendLocation.setAddress(address);
 
-// Monitor response
 sendLocation.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
