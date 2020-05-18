@@ -246,7 +246,7 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_WAY_POINT_CHANGE, new OnRP
     @Override
     public void onNotified(RPCNotification notification) {
         OnWayPointChange onWayPointChangeNotification = (OnWayPointChange) notification;
-        <#Use the waypoint data#>
+        // Use the waypoint data
     }
 });
 
@@ -349,7 +349,7 @@ SDLGetWayPoints *getWaypoints = [[SDLGetWayPoints alloc] initWithType:SDLWayPoin
     SDLGetWayPointsResponse *waypointResponse = response;
     NSArray<SDLLocationDetails *> *waypointLocations = waypointResponse.waypoints;
 
-    <#Use the waypoint information#>
+    <#Use the waypoint data#>
 }];
 ```
 
@@ -363,7 +363,7 @@ sdlManager.send(request: getWaypoints) { (request, response, error) in
     }
 
     let waypointLocations = response.waypoints;
-    <#Use the waypoint information#>
+    <#Use the waypoint data#>
 }
 ```
 
@@ -377,7 +377,7 @@ getWayPoints.setOnRPCResponseListener(new OnRPCResponseListener() {
     public void onResponse(int correlationId, RPCResponse rpcResponse) {
         if (rpcResponse.getSuccess()){
             GetWayPointsResponse getWayPointsResponse = (GetWayPointsResponse) rpcResponse;
-            <#Use the waypoint information#>
+            // Use the waypoint data
         } else {
             // Handle the errors
         }
