@@ -264,8 +264,12 @@ sdlManager.sendRPC(slider);
 
 @![javascript]
 ```js
-const sliderResponse = await sdlManager.sendRpc(slider);
-console.log('Slider Position Set: ' + sliderResponse.getSliderPosition());
+const sliderResponse = await sdlManager.sendRpc(slider).catch(error => error);
+if (sliderResponse instanceof RpcResponse) {
+    console.log('Slider Position Set: ' + sliderResponse.getSliderPosition());
+} else {
+    // Handle Error
+}
 ```
 !@
 

@@ -92,7 +92,7 @@ sdlManager.sendRPC(subscribeButtonRequest);
 @![javascript]
 ```js
 sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnButtonPress, function (onButtonPress) {
-    if (onButtonPress instanceof SDL.rpc.RpcNotification) {
+    if (onButtonPress instanceof SDL.rpc.messages.OnButtonPress) {
         switch (onButtonPress.getButtonName()) {
             case SDL.rpc.enums.ButtonName.PLAY_PAUSE:
                 // PLAY_PAUSE subscribe button selected
@@ -205,7 +205,7 @@ sdlManager.sendRPCs(Arrays.asList(preset1, preset2), null);
 @![javascript]
 ```js
 sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnButtonPress, function (onButtonPress) {
-    if (onButtonPress instanceof SDL.rpc.RpcNotification) {
+    if (onButtonPress instanceof SDL.rpc.messages.OnButtonPress) {
         switch (onButtonPress.getButtonName()) {
             case SDL.rpc.enums.ButtonName.PRESET_1:
                 // PRESET_1 subscribe button selected
@@ -277,7 +277,7 @@ sdlManager.sendRPC(subscribeButtonRequest);
 @![javascript]
 ```js
 sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnButtonPress, function (onButtonPress) {
-    if (onButtonPress instanceof SDL.rpc.RpcNotification) {
+    if (onButtonPress instanceof SDL.rpc.messages.OnButtonPress) {
         switch (onButtonPress.getButtonName()) {
             case SDL.rpc.enums.ButtonName.NAV_PAN_UP:
                 break;

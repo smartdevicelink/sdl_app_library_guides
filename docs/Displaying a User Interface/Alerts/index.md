@@ -122,8 +122,8 @@ const okButton = new SDL.rpc.structs.SoftButton().setType(SDL.rpc.enums.SoftButt
 alert.setSoftButtons([okButton]);
 
 // This listener is only needed once, and will work for all of soft buttons you send with your alert
-sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.ON_BUTTON_PRESS, function (rpcMessage) {
-    if (rpcMessage instanceof SDL.rpc.RpcNotification) {
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.ON_BUTTON_PRESS, function (onButtonPress ) {
+    if (onButtonPress.getCustomButtonId() === softButtonId) {
         console.log("OK button pressed");
     }
 })

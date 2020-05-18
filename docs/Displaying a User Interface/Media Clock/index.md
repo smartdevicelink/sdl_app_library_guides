@@ -37,7 +37,15 @@ sdlManager.sendRPC(mediaClock);
 
 @![javascript]
 ```js
-const mediaClock = new SDL.rpc.messages.SetMediaClockTimer().setUpdateMode(SDL.rpc.enums.UpdateMode.COUNTUP).setStartTime(new SDL.rpc.structs.StartTime().setSeconds(30)).setEndTime(new SDL.rpc.structs.StartTime().setStartTime(253)).setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PAUSE);
+const mediaClock = new SDL.rpc.messages.SetMediaClockTimer()
+    .setUpdateMode(SDL.rpc.enums.UpdateMode.COUNTUP)
+    .setStartTime(
+        new SDL.rpc.structs.StartTime()
+            .setSeconds(30)
+    ).setEndTime(
+        new SDL.rpc.structs.StartTime()
+            .setStartTime(253)
+    ).setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PAUSE);
 sdlManager.sendRpc(mediaClock);
 ```
 !@
@@ -68,7 +76,15 @@ sdlManager.sendRPC(mediaClock);
 
 @![javascript]
 ```js
-const mediaClock = new SDL.rpc.messages.SetMediaClockTimer().setUpdateMode(SDL.rpc.enums.UpdateMode.COUNTDOWN).setStartTime(new SDL.rpc.structs.StartTime().setStartTime(600)).setEndTime(new SDL.rpc.structs.StartTime().setStartTime(0)).setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PAUSE);
+const mediaClock = new SDL.rpc.messages.SetMediaClockTimer()
+    .setUpdateMode(SDL.rpc.enums.UpdateMode.COUNTDOWN)
+    .setStartTime(
+        new SDL.rpc.structs.StartTime()
+            .setStartTime(600)
+    ).setEndTime(
+        new SDL.rpc.structs.StartTime()
+            .setStartTime(0)
+    ).setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PAUSE);
 sdlManager.sendRpc(mediaClock);
 ```
 !@
@@ -129,17 +145,32 @@ sdlManager.sendRPC(mediaClock);
 
 @![javascript]
 ```js
-const mediaClock = new SDL.rpc.messages.SetMediaClockTimer().setUpdateMode(SDL.rpc.enums.UpdateMode.PAUSE).setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PLAY);
+// Pause the progress bar and set the play / pause indicator to PLAY
+const mediaClock = new SDL.rpc.messages.SetMediaClockTimer()
+    .setUpdateMode(SDL.rpc.enums.UpdateMode.PAUSE)
+    .setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PLAY);
 sdlManager.sendRpc(mediaClock);
 ```
 
 ```js
-const mediaClock = new SDL.rpc.messages.SetMediaClockTimer().setUpdateMode(SDL.rpc.enums.UpdateMode.RESUME).setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PAUSE);
+// Resume the progress bar from its current location and set the play / pause indicator to PAUSE
+const mediaClock = new SDL.rpc.messages.SetMediaClockTimer()
+    .setUpdateMode(SDL.rpc.enums.UpdateMode.RESUME)
+    .setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PAUSE);
 sdlManager.sendRpc(mediaClock);
 ```
 
 ```js
-const mediaClock = new SDL.rpc.messages.SetMediaClockTimer().setUpdateMode(SDL.rpc.enums.UpdateMode.PAUSE).setStartTime(new SDL.rpc.structs.StartTime().setStartTime(60)).setEndTime(new SDL.rpc.structs.StartTime().setStartTime(240)).setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PLAY);
+// Pause the progress bar, update the progress start / end time and set the play / pause indicator to PLAY
+const mediaClock = new SDL.rpc.messages.SetMediaClockTimer()
+    .setUpdateMode(SDL.rpc.enums.UpdateMode.PAUSE)
+    .setStartTime(
+        new SDL.rpc.structs.StartTime()
+            .setStartTime(60)
+    ).setEndTime(
+        new SDL.rpc.structs.StartTime()
+            .setStartTime(240)
+    ).setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PLAY);
 sdlManager.sendRpc(mediaClock);
 ```
 !@
@@ -168,9 +199,11 @@ sdlManager.sendRPC(mediaClock);
 ```
 !@
 
-@![android, javaSE, javaEE]
+@![javascript]
 ```js
-const mediaClock = new SDL.rpc.structs.SetMediaClockTimer().setUpdateMode(SDL.rpc.enums.UpdateMode.CLEAR).setPlayPauseIndicator(SDL.rpc.enums.AudioStreamingIndicator.PLAY);
+const mediaClock = new SDL.rpc.structs.SetMediaClockTimer()
+    .setUpdateMode(SDL.rpc.enums.UpdateMode.CLEAR)
+    .setPlayPauseIndicator(SDL.rpc.enums.AudioStreamingIndicator.PLAY);
 sdlManager.sendRpc(mediaClock);
 ```
 !@

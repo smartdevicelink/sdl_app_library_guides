@@ -66,8 +66,14 @@ sdlManager.getScreenManager().commit(new CompletionListener() {
 sdlManager.getScreenManager().beginTransaction();
 sdlManager.getScreenManager().setTextField1('Line 1 of Text');
 sdlManager.getScreenManager().setTextField2('Line 2 of Text');
-const success = await sdlManager.getScreenManager().commit();
+// Commit the updates and catch any errors
+const success = await sdlManager.getScreenManager().commit().catch(error => error);
 console.log('ScreenManager update complete:', success);
+if (success === true) {
+    // Update complete
+} else {
+    // Something went wrong
+}
 ```
 !@
 

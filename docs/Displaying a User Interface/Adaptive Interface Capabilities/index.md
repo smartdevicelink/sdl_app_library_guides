@@ -1,36 +1,34 @@
 # Adaptive Interface Capabilities
 Since each car manufacturer has different user interface style guidelines, the number of lines of text, soft and hard buttons, and images supported will vary between different types of head units. The system will send information to your app about its capabilities for various user interface elements. You should use this information to create the user interface of your SDL app.
 
-You can access these properties on the @![iOS]`SDLManager.systemCapabilityManager`!@@![android, javaSE, javaEE,javascript]`sdlManager.getSystemCapabilityManager`!@ instance. 
+You can access these properties on the @![iOS]`SDLManager.systemCapabilityManager`!@@![android, javaSE, javaEE,javascript]`sdlManager.getSystemCapabilityManager()`!@ instance. 
 
 ## System Capability Manager Properties
 | Parameters  |  Description |
 | ------------- | ------------- |
-| @![iOS]displays!@@![android, javaSE, javaEE, javascript ]SystemCapabilityType.DISPLAYS!@ | Specifies display related information. The primary display will be the first element within the array. Windows within that display are different places that the app could be displayed (such as the main app window and various widget windows). |
-| @![iOS]hmiZoneCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.HMI_ZONE!@ @![iOS, android, javaSE, javaEE] | Specifies HMI Zones in the vehicle. There may be a HMI available for back seat passengers as well as front seat passengers. |
-| !@@![iOS]speechCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.SPEECH!@ @![iOS, android, javaSE, javaEE]| Contains information about TTS capabilities on the SDL platform. Platforms may support text, SAPI phonemes, LH PLUS phonemes, pre-recorded speech, and silence. |
-| !@prerecordedSpeechCapabilities | @![iOS]A list of pre-recorded sounds you can use in your app. Sounds may include a help, initial, listen, positive, or a negative jingle.!@@![android, javaSE, javaEE, javascript]Currently only available in the SDL_iOS library!@ |
-| @![iOS]vrCapability!@@![android, javaSE, javaEE]SystemCapabilityType.VOICE_RECOGNITION!@ @![iOS, android, javaSE, javaEE]| The voice-recognition capabilities of the connected SDL platform. The platform may be able to recognize spoken text in the current language. |
-| !@@![iOS]audioPassThruCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.AUDIO_PASSTHROUGH!@ @![iOS, android, javaSE, javaEE]| Describes the sampling rate, bits per sample, and audio types available. |
-| !@@![iOS]pcmStreamCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.PCM_STREAMING!@ @![iOS, android, javaSE, javaEE]| Describes different audio type configurations for the audio PCM stream service, e.g. {8kHz,8-bit,PCM}. |
-| !@@![iOS]hmiCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.HMI!@ @![iOS, android, javaSE, javaEE]| Returns whether or not the app can support built-in navigation and phone calls. |
-| !@@![iOS]appServicesCapabilities!@@![android, javaSE, javaEE, javascript]SystemCapabilityType.APP_SERVICES!@ | Describes the capabilities of app services including what service types are supported and the current state of services. |
-| @![iOS]navigationCapability!@@![android, javaSE, javaEE, javascript]SystemCapabilityType.NAVIGATION!@ | Describes the built-in vehicle navigation system's APIs. |
-| @![iOS]phoneCapability!@@![android, javaSE, javaEE, javascript]SystemCapabilityType.PHONE_CALL!@ | Describes the built-in phone calling capabilities of the IVI system. |
-| @![iOS]videoStreamingCapability!@@![android, javaSE, javaEE, javascript]SystemCapabilityType.VIDEO_STREAMING!@ | Describes the abilities of the head unit to video stream projection applications. |
-| @![iOS]remoteControlCapability!@@![android, javaSE, javaEE, javascript]SystemCapabilityType.REMOTE_CONTROL!@ | Describes the abilities of an app to control built-in aspects of the IVI system. |
+| @![iOS]displays!@@![android, javaSE, javaEE]SystemCapabilityType.DISPLAYS!@@![javascript]_displays!@ | Specifies display related information. The primary display will be the first element within the array. Windows within that display are different places that the app could be displayed (such as the main app window and various widget windows). |
+| @![iOS]hmiZoneCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.HMI_ZONE!@@![javascript]_hmiZoneCapabilities!@ | Specifies HMI Zones in the vehicle. There may be a HMI available for back seat passengers as well as front seat passengers. |
+| @![iOS]speechCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.SPEECH!@@![javascript]_speechCapabilities!@ | Contains information about TTS capabilities on the SDL platform. Platforms may support text, SAPI phonemes, LH PLUS phonemes, pre-recorded speech, and silence. |
+| prerecordedSpeechCapabilities | @![iOS, javascript]A list of pre-recorded sounds you can use in your app. Sounds may include a help, initial, listen, positive, or a negative jingle.!@@![android, javaSE, javaEE, javascript]Currently only available in the SDL_iOS and SDL JavaScript libraries!@ |
+| @![iOS]vrCapability!@@![android, javaSE, javaEE]SystemCapabilityType.VOICE_RECOGNITION!@@![javascript]_vrCapability!@ | The voice-recognition capabilities of the connected SDL platform. The platform may be able to recognize spoken text in the current language. |
+| @![iOS]audioPassThruCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.AUDIO_PASSTHROUGH!@@![javascript]_audioPassThruCapabilties!@ | Describes the sampling rate, bits per sample, and audio types available. |
+| @![iOS]pcmStreamCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.PCM_STREAMING!@@![javascript]_pcmStreamCapability!@ | Describes different audio type configurations for the audio PCM stream service, e.g. {8kHz,8-bit,PCM}. |
+| @![iOS]hmiCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.HMI!@@![javascript]_hmiCapabilities!@ | Returns whether or not the app can support built-in navigation and phone calls. |
+| @![iOS]appServicesCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.APP_SERVICES!@@![javascript]_appServiceCapabilities!@ | Describes the capabilities of app services including what service types are supported and the current state of services. |
+| @![iOS]navigationCapability!@@![android, javaSE, javaEE]SystemCapabilityType.NAVIGATION!@@![javascript]_navigationCapability!@ | Describes the built-in vehicle navigation system's APIs. |
+| @![iOS]phoneCapability!@@![android, javaSE, javaEE]SystemCapabilityType.PHONE_CALL!@@![javascript]_phoneCapability!@ | Describes the built-in phone calling capabilities of the IVI system. |
+| @![iOS]videoStreamingCapability!@@![android, javaSE, javaEE]SystemCapabilityType.VIDEO_STREAMING!@ @![javascript]_videoStreamingCapability!@ | Describes the abilities of the head unit to video stream projection applications. |
+| @![iOS]remoteControlCapability!@@![android, javaSE, javaEE]SystemCapabilityType.REMOTE_CONTROL!@@![javascript]_remoteControlCapability!@ | Describes the abilities of an app to control built-in aspects of the IVI system. |
 
-@![iOS, android, javaSE, javaEE]
 ### Deprecated Properties
-The following properties are deprecated on SDL !@@![iOS]iOS 6.4!@@![android, javaSE, javaEE]Android 4.10!@@![iOS, android, javaSE, javaEE] because as of RPC v6.0 they are deprecated. However, these properties will still be filled with information. When connected on RPC <6.0, the information will be exactly the same as what is returned in the `RegisterAppInterfaceResponse` and `SetDisplayLayoutResponse`. However, if connected on RPC >6.0, the information will be converted from the newer-style display information, which means that some information will not be available.
+The following properties are deprecated on SDL @![iOS]iOS 6.4!@@![android, javaSE, javaEE]Android 4.10!@@![javascript]JavaScript 1.0!@ because as of RPC v6.0 they are deprecated. However, these properties will still be filled with information. When connected on RPC <6.0, the information will be exactly the same as what is returned in the `RegisterAppInterfaceResponse` and `SetDisplayLayoutResponse`. However, if connected on RPC >6.0, the information will be converted from the newer-style display information, which means that some information will not be available.
 
 | Parameters | Description |
 | ---------- | ----------- |
-| !@@![iOS]displayCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.DISPLAY!@@![iOS, android, javaSE, javaEE] | Information about the HMI display. This includes information about available templates, whether or not graphics are supported, and a list of all text fields and the max number of characters allowed in each text field. |
-| !@@![iOS]buttonCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.BUTTON!@@![iOS, android, javaSE, javaEE] | A list of available buttons and whether the buttons support long, short and up-down presses. |
-| !@@![iOS]softButtonCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.SOFTBUTTON!@@![iOS, android, javaSE, javaEE] | A list of available soft buttons and whether the button support images. Also, information about whether the button supports long, short and up-down presses. |
-| !@@![iOS]presetBankCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.PRESET_BANK!@@![iOS, android, javaSE, javaEE] | If returned, the platform supports custom on-screen presets. |
-!@
+| @![iOS]displayCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.DISPLAY!@@![javascript]_displayCapabilities!@ | Information about the HMI display. This includes information about available templates, whether or not graphics are supported, and a list of all text fields and the max number of characters allowed in each text field. |
+| @![iOS]buttonCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.BUTTON!@@![javascript]_buttonCapabilities!@ | A list of available buttons and whether the buttons support long, short and up-down presses. |
+| @![iOS]softButtonCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.SOFTBUTTON!@@![javascript]_softButtonCapabilities!@ | A list of available soft buttons and whether the button support images. Also, information about whether the button supports long, short and up-down presses. |
+| @![iOS]presetBankCapabilities!@@![android, javaSE, javaEE]SystemCapabilityType.PRESET_BANK!@@![javascript]_presetBankCapabilities!@ | If returned, the platform supports custom on-screen presets. |
 
 ### Image Specifics
 Images may be formatted as PNG, JPEG, or BMP. You can find which image types and resolutions are supported using the system capability manager.
@@ -153,6 +151,11 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.APP_S
 @![javascript]
 ```js
 const appServicesCapabilities = await sdlManager.getSystemCapabilityManager().updateCapability(SDL.rpc.enums.SystemCapabilityType.APP_SERVICES);
+if (appServicesCapabilities !== null) {
+    // Capability retrieved
+} else {
+    // Handle Error
+}
 ```
 !@
 
@@ -182,7 +185,7 @@ boolean supportsSubscriptions = sdlManager.getSystemCapabilityManager().supports
 ```
 !@
 @![javascript]
-The supportsSubscriptions method currently is not supported by the JavaScript Suite. This will be addressed in a future release.
+The `supportsSubscriptions` method currently is not supported by the JavaScript Suite. This will be addressed in a future release.
 !@
 
 #### Subscribe to a Capability
