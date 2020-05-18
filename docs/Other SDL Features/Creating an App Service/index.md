@@ -18,7 +18,7 @@ Apps are able to declare that they provide an app service by publishing an app s
 Publishing a service is a multi-step process. First, you need to create your app service manifest. Second, you will publish your app service to the module. Third, you will publish the service data using `OnAppServiceData`. Fourth, you must listen for data requests and respond accordingly. Fifth, if your app service supports handling of RPCs related to your service you must listen for these RPC requests and handle them accordingly. Sixth, optionally, you can support URI-based app actions. Finally, if necessary, you can you update or delete your app service manifest.
 
 ### 1. Creating an App Service Manifest
-The first step to publishing an app service is to create an @![iOS]`SDLAppServiceManifest`!@ @![android,javaSE,javaEE,javascript]`AppServiceManifest`!@ object. There is a set of generic parameters you will need to fill out as well as service type specific parameters based on the app service type you are creating.
+The first step to publishing an app service is to create an @![iOS]`SDLAppServiceManifest`!@@![android,javaSE,javaEE,javascript]`AppServiceManifest`!@ object. There is a set of generic parameters you will need to fill out as well as service type specific parameters based on the app service type you are creating.
 
 @![iOS]
 
@@ -743,7 +743,7 @@ Certain RPCs are related to certain services. The chart below shows the current 
 | ButtonPress (SHUFFLE) | | |
 | ButtonPress (REPEAT) | | |
 
-When you are the active service for your service's type (e.g. media), and you have declared that you support these RPCs in your manifest (see section 1. Creating an App Service Manifest), then these RPCs will be automatically routed to your app. You will have to set up @![iOS]notifications!@ @![android,javaSE,javaEE,javascript]listeners!@ to be aware that they have arrived, and you will then need to respond to those requests.
+When you are the active service for your service's type (e.g. media), and you have declared that you support these RPCs in your manifest (see section 1. Creating an App Service Manifest), then these RPCs will be automatically routed to your app. You will have to set up @![iOS]notifications!@@![android,javaSE,javaEE,javascript]listeners!@ to be aware that they have arrived, and you will then need to respond to those requests.
 
 @![iOS]
 ##### Objective-C

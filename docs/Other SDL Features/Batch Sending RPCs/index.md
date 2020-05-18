@@ -14,7 +14,10 @@ Both methods can have the `await` syntax be used to pause execution until all th
 When you send multiple RPCs concurrently, it will not wait for the response of the previous RPC before sending the next one. Therefore, there is no guarantee that responses will be returned in order, and you will not be able to use information sent in a previous RPC for a later RPC.
 
 @![javascript]
-Note that for the JavaScript library the concurrent `sendRpcs` method will honor the ordering of the requests passed in (the method uses Promise.all behind the scenes). Each response in the array has the same position of their matching request.!@
+!!! NOTE
+The JavaScript library concurrent `sendRpcs` method will honor the ordering of the requests passed in (the method uses Promise.all behind the scenes). Each response in the array has the same position of their matching request.
+!!!
+!@
 
 @![iOS]
 ##### Objective-C
