@@ -44,7 +44,7 @@ sdlManager.getScreenManager().setKeyboardConfiguration(keyboardProperties);
 ```js
 const keyboardProperties = new SDL.rpc.structs.KeyboardProperties().setLanguage(SDL.rpc.enums.Language.HE_IL).setKeyboardLayout(SDL.rpc.enums.KeyboardLayout.AZERTY);
 const setGlobalProperties = new SDL.rpc.messages.SetGlobalProperties().setKeyboardProperties(keyboardProperties);
-const response = await sdlManager.sendRpc(setGloablProperties).catch(error => error); // If there's an error, catch it and return it
+const response = await sdlManager.sendRpc(setGlobalProperties).catch(error => error); // If there's an error, catch it and return it
 if(response instanceof SDL.rpc.RpcResponse && response.getSuccess()) {
     //keyboard properties updated
 } else {
