@@ -178,7 +178,7 @@ SDLDialNumber *dialNumber = [[SDLDialNumber alloc] initWithNumber: @"1238675309"
 
 [self.sdlManager sendRequest:dialNumber withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if (error != nil || ![response isKindOfClass:SDLDialNumberResponse.class]) {
-        <#Encountered error sending DialNumber#>
+        // Encountered error sending `DialNumber`
         return;
     }
 
@@ -186,16 +186,16 @@ SDLDialNumber *dialNumber = [[SDLDialNumber alloc] initWithNumber: @"1238675309"
     SDLResult *resultCode = dialNumber.resultCode;
     if (!resultCode.success.boolValue) {
         if ([resultCode isEqualToEnum:SDLResultRejected]) {
-            <#DialNumber was rejected. Either the call was sent and cancelled or there is no device connected#>
+            // `DialNumber` was rejected. Either the call was sent and cancelled or there is no device connected
         } else if ([resultCode isEqualToEnum:SDLResultDisallowed]) {
-            <#Your app is not allowed to use DialNumber#>
+            // Your app is not allowed to use `DialNumber`
         } else {
-            <#Some unknown error has occurred#>
+            // Some unknown error has occurred
         }
         return;
     }
 
-    <#Dial number successfully sent#>
+    // `DialNumber` successfully sent
 }];
 ```
 
@@ -205,23 +205,23 @@ let dialNumber = SDLDialNumber(number: "1238675309")
 
 sdlManager.send(request: dialNumber) { (request, response, error) in
     guard let response = response as? SDLDialNumberResponse, error == nil else {
-        <#Encountered error sending DialNumber#>
+        // Encountered error sending `DialNumber`
         return
     }
 
     guard response?.success.boolValue == true else {
         switch response.resultCode {
         case .rejected:
-            <#DialNumber was rejected. Either the call was sent and cancelled or there is no device connected#>
+            // `DialNumber` was rejected. Either the call was sent and cancelled or there is no device connected
         case .disallowed:
-            <#Your app is not allowed to use DialNumber#>
+            // Your app is not allowed to use `DialNumber`
         default:
-            <#Some unknown error has occurred#>
+            // Some unknown error has occurred
         }
         return
     }
 
-    <#Dial number successfully sent#>
+    // `DialNumber` successfully sent
 }
 ```
 !@
@@ -235,17 +235,17 @@ dialNumber.setOnRPCResponseListener(new OnRPCResponseListener() {
     public void onResponse(int correlationId, RPCResponse response) {
         Result result = response.getResultCode();
         if(result.equals(Result.SUCCESS)){
-            // `DialNumber` was successfully sent, and a phone call was initiated by the user.
+            // `DialNumber` successfully sent
         }else if(result.equals(Result.REJECTED)){
-            // `DialNumber` was sent, and a phone call was cancelled by the user. Also, this could mean that there is no phone connected via Bluetooth.
+            // `DialNumber` was rejected. Either the call was sent and cancelled or there is no device connected
         }else if(result.equals(Result.DISALLOWED)){
-            // Your app does not have permission to use `DialNumber`.
+            // Your app is not allowed to use `DialNumber`
         }
     }
 
     @Override
     public void onError(int correlationId, Result resultCode, String info){
-        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
+        // Handle error
     }
 });
 
