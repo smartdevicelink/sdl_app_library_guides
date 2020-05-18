@@ -182,7 +182,7 @@ SDLDialNumber *dialNumber = [[SDLDialNumber alloc] initWithNumber: @"1238675309"
         return;
     }
 
-    SDLDialNumberResponse* dialNumber = (SDLDialNumberResponse *)response;
+    SDLDialNumberResponse *dialNumber = (SDLDialNumberResponse *)response;
     SDLResult *resultCode = dialNumber.resultCode;
     if (!resultCode.success.boolValue) {
         if ([resultCode isEqualToEnum:SDLResultRejected]) {
@@ -239,7 +239,7 @@ dialNumber.setOnRPCResponseListener(new OnRPCResponseListener() {
         }else if(result.equals(Result.REJECTED)){
             // `DialNumber` was sent, and a phone call was cancelled by the user. Also, this could mean that there is no phone connected via Bluetooth.
         }else if(result.equals(Result.DISALLOWED)){
-            // Your app does not have permission to use DialNumber.
+            // Your app does not have permission to use `DialNumber`.
         }
     }
 
