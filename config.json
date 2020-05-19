@@ -159,7 +159,8 @@
                     "name": "Using App Services"
                 },
                 {
-                    "name": "Calling a Phone Number"
+                    "name": "Calling a Phone Number",
+                    "platforms": ["Android","iOS", "JavaEE", "JavaSE"]
                 },
                 {
                     "name": "Setting the Navigation Destination"
@@ -177,7 +178,12 @@
                     "name": "Creating an OEM Cloud App Store"
                 },
                 {
-                    "name": "Encryption"
+                    "name": "Encryption",
+                    "platforms": ["Android","iOS", "JavaEE", "JavaSE"]
+                },
+                {
+                    "name": "Encryption - Not Supported",
+                    "platforms": ["javascript"]
                 }
             ]
         },
