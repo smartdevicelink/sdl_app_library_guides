@@ -1,13 +1,13 @@
 # Template Custom Buttons
-You can easily create and update custom buttons (called Soft Buttons in SDL) using the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@. To update the UI, simply give the manager your new data and (optionally) sandwich the update between the manager's @![iOS]`beginUpdates`!@@![android, javaSE, javaEE]`beginTransaction()`!@ and @![iOS]`endUpdatesWithCompletionHandler`!@@![android, javaSE, javaEE]`commit()`!@ methods.
+You can easily create and update custom buttons (called Soft Buttons in SDL) using the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE, javascript]`ScreenManager`!@. To update the UI, simply give the manager your new data and (optionally) sandwich the update between the manager's @![iOS]`beginUpdates`!@@![android, javaSE, javaEE, javascript]`beginTransaction()`!@ and @![iOS]`endUpdatesWithCompletionHandler`!@@![android, javaSE, javaEE, javascript]`commit()`!@ methods.
 
 ### Soft Button Fields
-| @![iOS]SDLScreenManager!@@![android, javaSE, javaEE]ScreenManager!@ Parameter Name | Description |
+| @![iOS]SDLScreenManager!@@![android, javaSE, javaEE, javascript]ScreenManager!@ Parameter Name | Description |
 |:--------------------------------------------|:--------------|
 | softButtonObjects | An array of buttons. Each template supports a different number of soft buttons |
 
 ### Creating Soft Buttons
-To create a soft button using the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@, you only need to create a custom name for the button and provide the text for the button's label and/or an image for the button's icon. If your button cycles between different states (e.g. a button used to set the repeat state of a song playlist can have three states: repeat-off, repeat-one, and repeat-all), you can create all the states on initialization. 
+To create a soft button using the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE, javascript]`ScreenManager`!@, you only need to create a custom name for the button and provide the text for the button's label and/or an image for the button's icon. If your button cycles between different states (e.g. a button used to set the repeat state of a song playlist can have three states: repeat-off, repeat-one, and repeat-all), you can create all the states on initialization. 
 
 There are three different ways to create a soft button: with only text, with only an image, or with both text and an image. If creating a button with an image, we recommend that you template the image so its color works well with both the day and night modes of the head unit. For more information on templating images please see the [Template Images](Displaying a User Interface/Template Images) guide. 
 
@@ -77,8 +77,34 @@ sdlManager.getScreenManager().commit(new CompletionListener() {
 ```
 !@
 
+@![javascript]
+```js
+const textState = new SDL.manager.screen.utils.SoftButtonState()
+    .setName('State Name')
+    .setText('Button Label Text');
+const softButtonObject = new SDL.manager.screen.utils.SoftButtonObject('softButtonObject', [textState], textState.getName(), function (softButtonObject, rpc) {
+    if (rpc instanceof SDL.rpc.messages.OnButtonPress && rpc.getSuccess()) {
+        console.log('SoftButton pressed!');
+    }
+});
+
+sdlManager.getScreenManager().beginTransaction();
+sdlManager.getScreenManager().setSoftButtonObjects([softButtonObject]);
+// Commit the updates and catch any errors
+const success = await sdlManager.getScreenManager().commit().catch(function (error) {
+    // Handle Error
+});
+console.log('ScreenManager update complete:', success);
+if (success === true) {
+    // Update complete
+} else {
+    // Something went wrong
+}
+```
+!@
+
 #### Image Only Soft Buttons
-You can use the @![iOS]`SDLSystemCapabilityManager`!@@![android,javaSE,javaEE]`SystemCapabilityManager`!@ to check if the HMI supports soft buttons with images. If you send image-only buttons to a HMI that does not support images, then the library will not send the buttons as they will be rejected by the head unit. If all your soft buttons have text in addition to images, the library will send the text-only buttons if the head unit does not support images.
+You can use the @![iOS]`SDLSystemCapabilityManager`!@@![android,javaSE,javaEE,javascript]`SystemCapabilityManager`!@ to check if the HMI supports soft buttons with images. If you send image-only buttons to a HMI that does not support images, then the library will not send the buttons as they will be rejected by the head unit. If all your soft buttons have text in addition to images, the library will send the text-only buttons if the head unit does not support images.
 
 @![iOS]
 ##### Objective-C
@@ -96,6 +122,13 @@ let softButtonsSupportImages = sdlManager.systemCapabilityManager.defaultMainWin
 ```java
 List<SoftButtonCapabilities> softButtonCapabilitiesList = sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getSoftButtonCapabilities();
 boolean imageSupported = (!softButtonCapabilitiesList.isEmpty()) ? softButtonCapabilitiesList.get(0).getImageSupported() : false;
+```
+!@
+
+@![javascript]
+```js
+const softButtonCapabilitiesList = sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getSoftButtonCapabilities();
+const imageSupported = (softButtonCapabilitiesList.length !== 0) ? softButtonCapabilitiesList[0].getImageSupported() : false;
 ```
 !@
  
@@ -163,6 +196,30 @@ sdlManager.getScreenManager().commit(new CompletionListener() {
 ```
 !@
 
+@![javascript]
+```js
+const imageState = new SDL.manager.screen.utils.SoftButtonState('State Name', null, sdlArtwork);
+const softButtonObject = new SDL.manager.screen.utils.SoftButtonObject('softButtonObject', [imageState], imageState.getName(), function (softButtonObject, rpc) {
+    if (rpc instanceof SDL.rpc.messages.OnButtonPress) {
+        console.log('SoftButton pressed');
+    }
+});
+
+sdlManager.getScreenManager().beginTransaction();
+sdlManager.getScreenManager().setSoftButtonObjects([softButtonObject]);
+// Commit the updates and catch any errors
+const success = await sdlManager.getScreenManager().commit().catch(function (error) {
+    // Handle Error
+});
+console.log('ScreenManager update complete:', success);
+if (success === true) {
+    // Update complete
+} else {
+    // Something went wrong
+}
+```
+!@
+
 #### Image and Text Soft Buttons
 @![iOS]
 ##### Objective-C
@@ -226,6 +283,30 @@ sdlManager.getScreenManager().commit(new CompletionListener() {
 ```
 !@
 
+@![javascript]
+```js
+const textAndImageState = new SDL.manager.screen.utils.SoftButtonState('State Name', 'Button Label Text', <#SdlArtwork#>);
+const softButtonObject = new SDL.manager.screen.utils.SoftButtonObject('softButtonObject', [textAndImageState], textAndImageState.getName(), function (softButtonObject, rpc) {
+    if (rpc instanceof SDL.rpc.messages.OnButtonPress) {
+        console.log('SoftButton pressed');
+    }
+});
+
+sdlManager.getScreenManager().beginTransaction();
+sdlManager.getScreenManager().setSoftButtonObjects([softButtonObject])
+// Commit the updates and catch any errors
+const success = await sdlManager.getScreenManager().commit().catch(function (error) {
+    // Handle Error
+});
+console.log('ScreenManager update complete:', success);
+if (success === true) {
+    // Update complete
+} else {
+    // Something went wrong
+}
+```
+!@
+
 #### Highlighting a Soft Button
 When a button is highlighted its background color will change to indicate that it has been selected. 
 
@@ -282,6 +363,20 @@ SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Arr
      @Override
      public void onEvent(SoftButtonObject softButtonObject, OnButtonEvent onButtonEvent) {
      }
+});
+```
+!@
+
+@![javascript]
+```js
+const softButtonState1 = new SDL.manager.screen.utils.SoftButtonState('Soft Button State Name', 'On', sdlArtwork);
+softButtonState1.setHighlighted(true);
+const softButtonState2 = new SDL.manager.screen.utils.SoftButtonState('Soft Button State Name 2', 'Off', sdlArtwork);
+softButtonState2.setHighlighted(false);
+const softButtonObject = new SDL.manager.screen.utils.SoftButtonObject('softButtonObject', [softButtonState1, softButtonState2], softButtonState1.getName(), function (softButtonObj, rpc) {
+    if (rpc instanceof SDL.rpc.messages.onButtonPress) {
+        softButtonObject.transitionToNextState();
+    }
 });
 ```
 !@
@@ -369,6 +464,34 @@ retrievedSoftButtonObject.transitionToNextState();
 ```
 !@
 
+@![javascript]
+```js
+const state1 = new SDL.manager.screen.utils.SoftButtonState('State1 Name', 'Button1 Label Text', sdlArtwork);
+const state2 = new SDL.manager.screen.utils.SoftButtonState('State2 Name', 'Button2 Label Text', sdlArtwork);
+
+const softButtonObject = new SDL.manager.screen.utils.SoftButtonObject('softButtonObject', [state1, state2], state1.getName(), function (softButtonObj, rpc) {
+    if (rpc instanceof SDL.rpc.messages.OnButtonPress) {
+        console.log('Soft Button pressed.');
+    }
+});
+
+sdlManager.getScreenManager().beginTransaction();
+sdlManager.getScreenManager().setSoftButtonObjects([]);
+// Commit the updates and catch any errors
+const success = await sdlManager.getScreenManager().commit().catch(function (error) {
+    // Handle Error
+});
+console.log('ScreenManager update complete:', success);
+if (success === true) {
+    // Update complete, transition to a new state
+    const retrievedSoftButtonObject = sdlManager.getScreenManager().getSoftButtonObjectByName('softButtonObject');
+    retrievedSoftButtonObject.transitionToNextState();
+} else {
+    // Something went wrong
+}
+```
+!@
+
 ### Deleting Soft Buttons
 To delete soft buttons, simply pass the screen manager a new array of soft buttons. To delete all soft buttons, simply pass the screen manager an empty array.
 
@@ -387,5 +510,11 @@ sdlManager.screenManager.softButtonObjects = []
 @![android,javaSE,javaEE]
 ```java
 sdlManager.getScreenManager().setSoftButtonObjects(Collections.EMPTY_LIST);
+```
+!@
+
+@![javascript]
+```js
+sdlManager.getScreenManager().setSoftButtonObjects([]);
 ```
 !@

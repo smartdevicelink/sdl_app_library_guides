@@ -1,6 +1,10 @@
 # Popup Keyboards
+@![javascript]
+The SDL JavaScript Suite's `ScreenManager` currently does not support presenting keyboards. This will be addressed in a future release.
+!@
 
-Presenting a keyboard or a popup menu with a search field requires you to implement the @![iOS]`SDLKeyboardDelegate`!@@![android, javaSE, javaEE]`KeyboardListener`!@. Note that the `initialText` in the keyboard case often acts as "placeholder text" and not as true initial text.
+@![iOS, android, javaSE, javaEE]
+Presenting a keyboard or a popup menu with a search field requires you to implement the !@@![iOS]`SDLKeyboardDelegate`!@@![android, javaSE, javaEE]`KeyboardListener`!@@![iOS, android, javaSE, javaEE]. Note that the `initialText` in the keyboard case often acts as "placeholder text" and not as true initial text.
 
 ## Presenting a Keyboard
 
@@ -12,6 +16,8 @@ Keyboards are unavailable for use in many countries when the driver is distracte
 
 ##### Keyboard Search
 ![SYNC 3 - Keyboard Search](assets/SYNC3_keyboard_search.jpg)
+
+!@
 
 @![iOS]
 ##### Objective-C
@@ -175,12 +181,14 @@ KeyboardListener keyboardListener = new KeyboardListener() {
 ```
 !@
 
+@![iOS, android, javaSE, javaEE]
 ### Dismissing the Keyboard (RPC v6.0+)
 You can dismiss a displayed keyboard before the timeout has elapsed by sending a `CancelInteraction` request. If you presented the keyboard using the screen manager, you can dismiss the choice set by calling `dismissKeyboard` with the `cancelID` that was returned (if one was returned) when presenting.
 
 !!! NOTE
 If connected to older head units that do not support this feature, the cancel request will be ignored, and the keyboard will persist on the screen until the timeout has elapsed or the user dismisses it by making a selection.
 !!!
+!@
 
 @![iOS]
 ##### Objective-C
@@ -203,4 +211,4 @@ sdlManager.getScreenManager().dismissKeyboard(cancelId);
 !@
 
 ## Using RPCs
-If you don't want to use the @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE]`ScreenManager`!@, you can do this manually using the `PerformInteraction` RPC request. As this is no longer a recommended course of action, we will leave it to you to figure out how to manually do it.
+If you don't want to use the @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE, javascript]`ScreenManager`!@, you can do this manually using the `PerformInteraction` RPC request. As this is no longer a recommended course of action, we will leave it to you to figure out how to manually do it.
