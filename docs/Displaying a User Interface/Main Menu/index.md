@@ -1,4 +1,8 @@
 # Main Menu
+@![javascript]
+The SDL JavaScript Suite currently does not support the `MenuManager`. This will be addressed in a future release.
+!@
+@![iOS, android, javaEE, javaSE]
 You have two different options when creating menus. One is to simply add items to the default menu available in every template. The other is to create a custom menu that pops up when needed. You can find more information about these popups in the [Popup Menus and Keyboards](Displaying a User Interface/Popup Menus and Keyboards) section.
 
 #### Menu Template
@@ -9,7 +13,8 @@ Every template has a main menu button. The position of this button varies betwee
 !!!
 
 ## Setting the Menu Layout (RPC v6.0+)
-On some newer head units, you may have the option to display menu items as a grid of tiles instead of the default list layout. To determine if the head unit supports the tiles layout, check the `SystemCapabilityManager`'s @![iOS]`defaultMainWindowCapability.menuLayoutsAvailable`!@@![android,javaEE,javaSE] `getDefaultMainWindowCapability().getMenuLayoutsAvailable()`!@ property after successfully connecting to the head unit. To set the menu layout using the screen manager, you will need to set the `ScreenManager.menuConfiguration` property.
+On some newer head units, you may have the option to display menu items as a grid of tiles instead of the default list layout. To determine if the head unit supports the tiles layout, check the `SystemCapabilityManager`'s !@@![iOS]`defaultMainWindowCapability.menuLayoutsAvailable`!@@![android,javaEE,javaSE] `getDefaultMainWindowCapability().getMenuLayoutsAvailable()`!@@![iOS, android, javaEE, javaSE] property after successfully connecting to the head unit. To set the menu layout using the screen manager, you will need to set the `ScreenManager.menuConfiguration` property.
+!@
 
 @![iOS]
 ##### Objective-C
@@ -31,10 +36,12 @@ sdlManager.getScreenManager().setMenuConfiguration(menuConfiguration);
 ```
 !@
 
+@![iOS, android, javaEE, javaSE]
 ## Adding Menu Items 
-The best way to create and update your menu is to the use the Screen Manager API. The screen manager contains two menu related properties: `menu`, and `voiceCommands`. Setting an array of @![iOS]`SDLMenuCell`!@@![android, javaSE, javaEE]`MenuCell`!@s into the `menu` property will automatically set and update your menu and submenus, while setting an array of @![iOS]`SDLVoiceCommand`!@@![android, javaSE, javaEE]`VoiceCommand`!@s into the `voiceCommands` property allows you to use "hidden" menu items that only contain voice recognition data. The user can then use the IVI system's voice engine to activate this command even though it will not be displayed within the main menu.
+The best way to create and update your menu is to the use the Screen Manager API. The screen manager contains two menu related properties: `menu`, and `voiceCommands`. Setting an array of !@@![iOS]`SDLMenuCell`!@@![android, javaSE, javaEE]`MenuCell`!@@![iOS, android, javaEE, javaSE]s into the `menu` property will automatically set and update your menu and submenus, while setting an array of !@@![iOS]`SDLVoiceCommand`!@@![android, javaSE, javaEE]`VoiceCommand`!@@![iOS, android, javaEE, javaSE]s into the `voiceCommands` property allows you to use "hidden" menu items that only contain voice recognition data. The user can then use the IVI system's voice engine to activate this command even though it will not be displayed within the main menu.
 
 To find out more information on how to create `voiceCommands` see the [related documentation](Speech and Audio/Setting Up Voice Commands).
+!@
 
 @![iOS]
 ##### Objective-C
@@ -75,8 +82,10 @@ sdlManager.getScreenManager().setMenu(Collections.singletonList(cell));
 ```
 !@
 
+@![iOS, android, javaEE, javaSE]
 ### Adding Submenus
-Adding a submenu is as simple as adding subcells to a @![iOS]`SDLMenuCell`!@@![android, javaSE, javaEE]`SdlMenuCell`!@. The submenu is automatically displayed when selected by the user. Currently menus only support one layer of subcells. In RPC v6.0+ it is possible to set individual submenus to use different layouts such as tiles or lists.
+Adding a submenu is as simple as adding subcells to a !@@![iOS]`SDLMenuCell`!@@![android, javaSE, javaEE]`SdlMenuCell`!@@![iOS, android, javaEE, javaSE]. The submenu is automatically displayed when selected by the user. Currently menus only support one layer of subcells. In RPC v6.0+ it is possible to set individual submenus to use different layouts such as tiles or lists.
+!@
 
 @![iOS]
 ##### Objective-C
@@ -123,6 +132,7 @@ sdlManager.getScreenManager().setMenu(Collections.singletonList(cell));
 ```
 !@
 
+@![iOS, android, javaEE, javaSE]
 ### Menu Item Artwork
 Artworks will be automatically handled when using the screen manager API. First, a "non-artwork" menu will be displayed, then, when the artworks have finished uploading, the "artwork-ified" menu will be displayed. If you are doing this manually with RPCs, you will have to upload artworks using the file manager yourself and send the correct menu when they are ready.
 
@@ -130,6 +140,7 @@ Artworks will be automatically handled when using the screen manager API. First,
 The screen manager will intelligently handle deletions for you. If you want to show new menu items, simply set a new array of menu cells. If you want to have a blank menu, set an empty array. On supported systems, the library will calculate the optimal adds / deletes to create the new menu. If the system doesn't support this sort of dynamic updating, the entire list will be removed and re-added.
 
 If you are doing this manually, you must use the `DeleteCommand` and `DeleteSubMenu` RPCs, passing the `cmdID`s you wish to delete.
+!@
 
 ## Using RPCs
 The `AddCommand` RPC can be used to add items to the root menu or to a submenu. Each `AddCommand` RPC must be sent with a unique id, a voice-recognition command, and a set of menu parameters. The menu parameters include the menu name, the position of the item in the menu, and the id of the menu item’s parent. If the menu item is being added to the root menu, then the parent id is 0. If it is being added to a submenu, then the parent id is the submenu’s id.

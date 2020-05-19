@@ -1,8 +1,8 @@
 # Template Images
-You can easily display text, images, and buttons using the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@. To update the UI, simply give the manager your new data and (optionally) sandwich the update between the manager's @![iOS]`beginUpdates`!@@![android, javaSE, javaEE]`beginTransaction()`!@ and @![iOS]`endUpdatesWithCompletionHandler`!@@![android, javaSE, javaEE]`commit()`!@ methods.
+You can easily display text, images, and buttons using the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE, javascript]`ScreenManager`!@. To update the UI, simply give the manager your new data and (optionally) sandwich the update between the manager's @![iOS]`beginUpdates`!@@![android, javaSE, javaEE, javascript]`beginTransaction()`!@ and @![iOS]`endUpdatesWithCompletionHandler`!@@![android, javaSE, javaEE, javascript]`commit()`!@ methods.
 
 ### Image Fields
-| @![iOS]SDLScreenManager!@@![android, javaSE, javaEE]ScreenManager!@ Parameter Name  | Description |
+| @![iOS]SDLScreenManager!@@![android, javaSE, javaEE, javascript]ScreenManager!@ Parameter Name  | Description |
 |:--------------------------------------------|:--------------|
 | primaryGraphic | The primary image in a template that supports images |
 | secondaryGraphic | The second image in a template that supports multiple images |
@@ -50,6 +50,23 @@ sdlManager.getScreenManager().commit(new CompletionListener() {
 ```
 !@
 
+@![javascript]
+```js
+sdlManager.getScreenManager().beginTransaction();
+sdlManager.getScreenManager().setPrimaryGraphic(sdlArtwork);
+// Commit the updates and catch any errors
+const success = await sdlManager.getScreenManager().commit().catch(function (error) {
+    // Handle Error
+});
+console.log('ScreenManager update complete:', success);
+if (success === true) {
+    // Update complete
+} else {
+    // Something went wrong
+}
+```
+!@
+
 ### Removing Images
 To remove an image from the screen you just need to set the screen manager property to @![iOS]`nil`!@@![android, javaSE, javaEE]`null`!@.
 
@@ -67,6 +84,12 @@ sdlManager.screenManager.primaryGraphic = nil
 
 @![android, javaSE, javaEE]
 ```java
+sdlManager.getScreenManager().setPrimaryGraphic(null);
+```
+!@
+
+@![javascript]
+```js
 sdlManager.getScreenManager().setPrimaryGraphic(null);
 ```
 !@
@@ -106,8 +129,15 @@ image.setTemplateImage(true);
 ```
 !@
 
+@![javascript]
+```js
+const image = new SDL.manager.file.filetypes.SdlArtwork("<#ArtworkName#>", SDL.rpc.enums.FileType.GRAPHIC_PNG, <#FileData#>, true);
+image.setTemplateImage(true);
+```
+!@
+
 ## Static Icons
-Static icons are pre-existing images on the remote system that you may reference and use in your own application. Each OEM will design their own custom static icons but you can get an overview of the available icons from the icons designed for the open source [Generic HMI](https://smartdevicelink.com/en/guides/sdl-overview-guides/user-interface/static-icons/). Static icons are fully supported by the screen manager via an @![iOS]`SDLArtwork`!@@![android, javaSE, javaEE]`SdlArtwork`!@ initializer. Static icons can be used in primary and secondary graphic fields, soft button image fields, and menu icon fields.
+Static icons are pre-existing images on the remote system that you may reference and use in your own application. Each OEM will design their own custom static icons but you can get an overview of the available icons from the icons designed for the open source [Generic HMI](https://smartdevicelink.com/en/guides/sdl-overview-guides/user-interface/static-icons/). Static icons are fully supported by the screen manager via an @![iOS]`SDLArtwork`!@@![android, javaSE, javaEE, javascript]`SdlArtwork`!@ initializer. Static icons can be used in primary and secondary graphic fields, soft button image fields, and menu icon fields.
 
 @![iOS]
 ##### Objective-C
@@ -124,5 +154,18 @@ let staticIconArt = SDLArtwork(staticIcon: .album)
 @![android, javaSE, javaEE]
 ```java
 SdlArtwork staticIconArt = new SdlArtwork(StaticIconName.ALBUM);
+```
+!@
+
+@![javascript]
+The SDL JavaScript Suite is currently missing support for the StaticIconName enum. This will be addressed in a future release. Constructing a StaticIcon can still be done using the appropriate hex values found [here](https://github.com/smartdevicelink/sdl_java_suite/blob/master/base/src/main/java/com/smartdevicelink/proxy/rpc/enums/StaticIconName.java).
+```js
+const staticIconAlbumName = '0x21';
+const staticIconAlbumBytes = 0x21;
+const staticIconArt = new SDL.manager.file.filetypes.SdlArtwork()
+    .setName(staticIconAlbumName)
+    .setFileData(staticIconAlbumBytes)
+    .setStaticIcon(true)
+    .setPersistent(false);
 ```
 !@
