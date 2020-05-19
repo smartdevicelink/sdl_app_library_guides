@@ -217,6 +217,7 @@
         },
         {
             "name": "Developer Tools",
+            "platforms": ["Android","iOS", "JavaEE", "JavaSE"],
             "navigation": [
                 {
                     "name": "Configuring SDL Logging"
