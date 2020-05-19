@@ -9,7 +9,7 @@ You have the ability to create voice command shortcuts to your [Main Menu](Displ
 
 
 ## Creating Voice Commands
-To create voice commands, you simply create and set @![iOS]`SDLVoiceCommand`!@ @![android, javaSE, javaEE]`VoiceCommand`!@ objects to the `voiceCommands` array on the screen manager.
+To create voice commands, you simply create and set @![iOS]`SDLVoiceCommand`!@ @![android, javaSE, javaEE, javascript]`VoiceCommand`!@ objects to the `voiceCommands` array on the screen manager.
 
 @![iOS]
 ##### Objective-C
@@ -44,5 +44,14 @@ sdlManager.getScreenManager().setVoiceCommands(Collections.singletonList(voiceCo
 ```
 !@
 
+@![javascript]
+```js
+const voiceCommand = new SDL.manager.screen.utils.VoiceCommand(['Command One'], function () {
+    // <#Handle the VoiceCommand's Selection#>
+});
+sdlManager.getScreenManager().setVoiceCommands([voiceCommand]);
+```
+!@
+
 ## Using RPCs
-If you wish to do this without the aid of the screen manager, you can create @![iOS]`SDLAddCommand`!@ @![android, javaSE, javaEE]`AddCommand`!@ objects without the `menuParams` parameter to create global voice commands.
+If you wish to do this without the aid of the screen manager, you can create @![iOS]`SDLAddCommand`!@ @![android, javaSE, javaEE, javascript]`AddCommand`!@ objects without the `menuParams` parameter to create global voice commands.

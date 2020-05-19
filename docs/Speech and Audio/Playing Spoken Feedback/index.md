@@ -1,13 +1,13 @@
 # Playing Spoken Feedback
-Since your user will be driving while interacting with your SDL app, speech phrases can provide important feedback to your user. At any time during your app's lifecycle you can send a speech phrase using the @![iOS]`SDLSpeak`!@@![android,javaSE,javaEE]`Speak`!@ request and the head unit's text-to-speech (TTS) engine will produce synthesized speech from your provided text.
+Since your user will be driving while interacting with your SDL app, speech phrases can provide important feedback to your user. At any time during your app's lifecycle you can send a speech phrase using the @![iOS]`SDLSpeak`!@@![android,javaSE,javaEE,javascript]`Speak`!@ request and the head unit's text-to-speech (TTS) engine will produce synthesized speech from your provided text.
 
-When using the @![iOS]`SDLSpeak`!@@![android,javaSE,javaEE]`Speak`!@ RPC, you will receive a response from the head unit once the operation has completed. From the response you will be able to tell if the speech was completed, interrupted, rejected or aborted. It is important to keep in mind that a speech request can interrupt another on-going speech request. If you want to chain speech requests you must wait for the current speech request to finish before sending the next speech request. 
+When using the @![iOS]`SDLSpeak`!@@![android,javaSE,javaEE,javascript]`Speak`!@ RPC, you will receive a response from the head unit once the operation has completed. From the response you will be able to tell if the speech was completed, interrupted, rejected or aborted. It is important to keep in mind that a speech request can interrupt another on-going speech request. If you want to chain speech requests you must wait for the current speech request to finish before sending the next speech request. 
 
 ## Creating the Speak Request
 The speech request you send can simply be a text phrase, which will be played back in accordance with the user's current language settings, or it can consist of phoneme specifications to direct SDL’s TTS engine to speak a language-independent, speech-sculpted phrase. It is also possible to play a pre-recorded sound file (such as an MP3) using the speech request. For more information on how to play a sound file please refer to [Playing Audio Indications](Speech and Audio/Playing Audio Indications). 
 
 ### Getting Head Unit Speech Capabilities
-To get the head unit's supported speech capabilities, check the @![iOS]`SDLSystemCapabilityManager.speechCapabilities`!@@![android,javaSE,javaEE] `sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.SPEECH)`!@ after successfully connecting to the head unit. Below is a list of commonly supported speech capabilities.
+To get the head unit's supported speech capabilities, check the @![iOS]`SDLSystemCapabilityManager.speechCapabilities`!@@![android,javaSE,javaEE,javascript] `sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.SPEECH)`!@ after successfully connecting to the head unit. Below is a list of commonly supported speech capabilities.
 
 | Speech Capability |  Description |
 | ------------- | ------------- |
@@ -36,6 +36,13 @@ Speak speak = new Speak(ttsChunkList);
 ```
 !@
 
+@![javascript]
+```js
+const chunk = new SDL.rpc.structs.TTSChunk().setText('hello').setType(SDL.rpc.enums.SpeechCapabilities.TEXT);
+const speak = new SDL.rpc.messages.Speak().setTtsChunks([chunk]);
+```
+!@
+
 ### SAPI Phonemes Phrase
 @![iOS]
 ##### Objective-C
@@ -55,6 +62,13 @@ let speech = SDLSpeak(ttsChunks: sapiPhonemesTTSChunk)
 TTSChunk ttsChunk = new TTSChunk("h eh - l ow 1", SpeechCapabilities.SAPI_PHONEMES);
 List<TTSChunk> ttsChunkList = Collections.singletonList(ttsChunk);
 Speak speak = new Speak(ttsChunkList);
+```
+!@
+
+@![javascript]
+```js
+const chunk = new SDL.rpc.structs.TTSChunk().setText('h eh - l ow 1').setType(SDL.rpc.enums.SpeechCapabilities.SAPI_PHONEMES);
+const speak = new SDL.rpc.messages.Speak([chunk]);
 ```
 !@
 
@@ -134,5 +148,28 @@ speak.setOnRPCResponseListener(new OnRPCResponseListener() {
     }
 });
 sdlManager.sendRPC(speak);
+```
+!@
+
+@![javascript]
+```js
+const response = await sdlManager.sendRpc(speak);
+if (!response.getSuccess()){
+    switch (response.getResultCode()){
+        case SDL.rpc.enums.Result.DISALLOWED:
+            console.log('The app does not have permission to use the speech request');
+            break;
+        case SDL.rpc.enums.Result.REJECTED:
+            console.log('The request was rejected because a higher priority request is in progress');
+            break;
+        case SDL.rpc.enums.Result.ABORTED:
+            console.log('The request was aborted by another higher priority request');
+            break;
+        default:
+            console.log('Some other error occurred');
+    }
+} else {
+    console.log('Speech was successfully spoken');
+}
 ```
 !@
