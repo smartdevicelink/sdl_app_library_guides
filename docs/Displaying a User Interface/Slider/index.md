@@ -331,7 +331,9 @@ sdlManager.sendRPC(cancelInteraction);
 @![javascript]
 ```js
 // `cancelID` is the ID that you assigned when creating the slider
-const cancelInteraction = new SDL.rpc.messages.CancelInteraction().setFunctionIDParam(SDL.rpc.enums.FunctionID.Slider).setCancelID(cancelID);
+const cancelInteraction = new SDL.rpc.messages.CancelInteraction()
+    .setFunctionIDParam(SDL.rpc.enums.FunctionID.Slider)
+    .setCancelID(cancelID);
 const response = await sdlManager.sendRpc(cancelInteraction).catch(function (error) {
     // Handle Error
 });

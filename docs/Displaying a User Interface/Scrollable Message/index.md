@@ -137,18 +137,27 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
 const scrollableMessageText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Vestibulum mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare. Purus in massa tempor nec feugiat nisl pretium fusce id. Pharetra convallis posuere morbi leo urna molestie at elementum eu. Dictum sit amet justo donec enim diam.";
 		
 // Create SoftButtons
-const softButton1 = new SDL.rpc.structs.SoftButton().setType(SDL.rpc.enums.SoftButtonType.SBT_TEXT).setSoftButtonID(0).setText("Button 1");
+const softButton1 = new SDL.rpc.structs.SoftButton()
+    .setType(SDL.rpc.enums.SoftButtonType.SBT_TEXT)
+    .setSoftButtonID(0)
+    .setText("Button 1");
 
-const softButton2 = new SDL.rpc.structs.SoftButton().setType(SDL.rpc.enums.SoftButtonType.SBT_TEXT).setSoftButtonID(1).setText("Button 2");
+const softButton2 = new SDL.rpc.structs.SoftButton()
+    .setType(SDL.rpc.enums.SoftButtonType.SBT_TEXT)
+    .setSoftButtonID(1)
+    .setText("Button 2");
 
 // Create SoftButton Array
 const softButtonList = [softButton1, softButton2];
 
 // Create ScrollableMessage Object
-const scrollableMessage = new SDL.rpc.messages.ScrollableMessage().setScrollableMessageBody(scrollableMessageText).setTimeout(50000).setSoftButtons(softButtonList);
+const scrollableMessage = new SDL.rpc.messages.ScrollableMessage()
+    .setScrollableMessageBody(scrollableMessageText)
+    .setTimeout(50000)
+    .setSoftButtons(softButtonList);
 
 // Set cancelId
-scrollableMessage.setCancelID(<#Integer>);
+scrollableMessage.setCancelID(integer);
 
 // Send the scrollable message
 sdlManager.sendRpc(scrollableMessage);

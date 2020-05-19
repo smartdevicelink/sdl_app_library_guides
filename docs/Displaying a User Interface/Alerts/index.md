@@ -43,11 +43,11 @@ alert.setCancelID(<#Integer>);
 
 @![javascript]
 ```js
-const alert = new SDL.rpc.messages.Alert();
-alert.setAlertText1("Line 1");
-alert.setAlertText2("Line 2");
-alert.setAlertText3("Line 3");
-alert.setCancelID(<#Integer>);
+const alert = new SDL.rpc.messages.Alert()
+    .setAlertText1('Line 1')
+    .setAlertText2('Line 2')
+    .setAlertText3('Line 3')
+    .setCancelID(integer);
 ```
 !@
 
@@ -116,7 +116,10 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
 ```js
 // Soft buttons
 const softButtonId = 123; // Set it to any unique ID
-const okButton = new SDL.rpc.structs.SoftButton().setType(SDL.rpc.enums.SoftButtonType.SBT_TEXT).setSoftButtonID(softButtonId).setText('OK');
+const okButton = new SDL.rpc.structs.SoftButton()
+    .setType(SDL.rpc.enums.SoftButtonType.SBT_TEXT)
+    .setSoftButtonID(softButtonId)
+    .setText('OK');
 
 // Set the softbuttons(s) to the alert
 alert.setSoftButtons([okButton]);
@@ -238,7 +241,9 @@ alert.setTtsChunks(TTSChunkFactory.createSimpleTTSChunks("Text to Speak"));
 
 @![javascript]
 ```js
-const chunk = new SDL.rpc.structs.TTSChunk().setType(SDL.rpc.enums.SpeechCapabilities.TEXT).setText('Text to Speak');
+const chunk = new SDL.rpc.structs.TTSChunk()
+    .setType(SDL.rpc.enums.SpeechCapabilities.TEXT)
+    .setText('Text to Speak');
 alert.setTtsChunks([chunk]);
 ```
 !@
@@ -267,7 +272,9 @@ alert.setTtsChunks(Collections.singletonList(ttsChunk));
 
 @![javascript]
 ```js
-const ttsChunk = new SDL.rpc.structs.TTSChunk().setText(sdlFile.getName()).setType(SDL.rpc.enums.SpeechCapabilities.FILE);
+const ttsChunk = new SDL.rpc.structs.TTSChunk()
+    .setText(sdlFile.getName())
+    .setType(SDL.rpc.enums.SpeechCapabilities.FILE);
 alert.setTtsChunk([ttsChunk]);
 ```
 !@
@@ -414,7 +421,9 @@ sdlManager.sendRPC(cancelInteraction);
 
 @![javascript]
 ```js
-const cancelInteraction = new SDL.rpc.messages.CancelInteraction().setFunctionIDParam(SDL.rpc.enums.FunctionID.Alert).setCancelID(cancelID);
+const cancelInteraction = new SDL.rpc.messages.CancelInteraction()
+    .setFunctionIDParam(SDL.rpc.enums.FunctionID.Alert)
+    .setCancelID(cancelID);
 const response = await sdlManager.sendRpc(cancelInteraction).catch(function (error) {
     // Handle Error
 });
