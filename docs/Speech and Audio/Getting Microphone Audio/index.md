@@ -246,7 +246,7 @@ performAPT.setOnRPCResponseListener(new OnRPCResponseListener() {
 @![javascript]
 ```js
 const response = await sdlManager.sendRpc(performAPT).catch(error => error);
-if (response instanceof SDL.rpc.RpcResponse) {
+if (response instanceof SDL.rpc.messages.PerformAudioPassThruResponse) {
     if (response.getResultCode() === SDL.rpc.enums.Result.SUCCESS) {
         // We can use the data
     } else {
