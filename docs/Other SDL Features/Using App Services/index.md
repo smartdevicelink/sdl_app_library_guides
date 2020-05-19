@@ -324,7 +324,7 @@ const getAppServiceData = new SDL.rpc.messages.GetAppServiceData()
 getAppServiceData.setSubscribe(true);
 
 const response = await sdlManager.sendRpc(getAppServiceData).catch(error => error);
-if (response !== null) {
+if (response !== null && ) {
     const mediaServiceData = response.getServiceData().getMediaServiceData();
 }
 ...

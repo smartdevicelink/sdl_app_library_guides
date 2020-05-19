@@ -80,7 +80,7 @@ const subscribeButtonRight = new SDL.rpc.messages.SubscribeButton()
 
 const responses = await sdlManager.sendRpcs([subscribeButtonLeft, subscribeButtonRight])
     .catch(error => {
-         
+         // if an RPC isn't successful, this is invoked with the passed-in failed RPC
     });
 ```
 !@
@@ -166,7 +166,7 @@ const performInteraction = new SDL.rpc.messages.PerformInteraction()
     .setInteractionChoiceSetIDList([choiceSetId]);
 const response = await sdlManager.sendSequentialRpcs([createInteractionChoiceSet, performInteraction])
     .catch(error => {
-        
+         // if an RPC isn't successful, this is invoked with the passed-in failed RPC
     });
 ```
 !@

@@ -40,7 +40,11 @@ sdlManager.sendRPC(audioFile);
 @![javascript]
 ```js
 const audioFile = new SDL.manager.file.filetypes.SdlFile('File Name', SDL.rpc.enums.FileType.AUDIO_MP3, <#Audio byte array data as a string#>, true);
-const success = await sdlManager.getFileManager().uploadFile(audioFile);
+const success = await sdlManager.getFileManager().uploadFile(audioFile)
+    .catch(error => {
+        // handle errors here
+        return false;
+    });
 if (success) {
     <#File upload successful#>
 }

@@ -177,7 +177,9 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.REMOT
 
 @![javascript]
 ```js
-const remoteControlCapabilities = await sdlManager.getSystemCapabilityManager().updateCapability(SDL.rpc.enums.SystemCapabilityType.REMOTE_CONTROL);
+sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SDL.rpc.enums.SystemCapabilityType.REMOTE_CONTROL, (remoteControlCapabilities) => {
+    <#Save remote control capabilities#>
+});
 ```
 !@
 

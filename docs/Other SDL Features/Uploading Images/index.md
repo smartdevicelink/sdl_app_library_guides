@@ -118,7 +118,11 @@ sdlManager.getFileManager().uploadFile(artwork, new CompletionListener() {
 @![javascript]
 ```js
 const artwork = new SDL.manager.file.filetypes.SdlArtwork('image_name', SDL.rpc.enums.FileType.GRAPHIC_PNG, <#Audio byte array data as a string#>, false);
-const success = await sdlManager.getFileManager().uploadFile(audioFile);
+const success = await sdlManager.getFileManager().uploadFile(audioFile)
+    .catch(error => {
+        // handle errors here
+        return false;
+    });
 if (success) {
     <#Image upload successful#>
 }

@@ -61,8 +61,16 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.NAVIG
 
 @![javascript]
 ```js
-const navCapability = await sdlManager.getSystemCapabilityManager().updateCapability(SDL.rpc.enums.SystemCapabilityType.NAVIGATION);
-const isNavigationSupported = navCapability.getSendLocationEnabled();
+let isNavigationSupported;
+const navCapability = await sdlManager.getSystemCapabilityManager().updateCapability(SDL.rpc.enums.SystemCapabilityType.NAVIGATION)
+    .catch(error => {
+        const hmiCapabilities = sdlManager.getSystemCapabilityManager().getCapability(SDL.rpc.enums.SystemCapabilityType.HMI);
+        isNavigationSupported = hmiCapabilities.isNavigationAvailable();
+        return null;
+    });
+if (navCapability !== null) {
+    isNavigationSupported = navCapability.getSendLocationEnabled();
+}
 ```
 !@
 

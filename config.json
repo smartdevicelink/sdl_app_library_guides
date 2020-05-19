@@ -178,8 +178,7 @@
                     "name": "Creating an OEM Cloud App Store"
                 },
                 {
-                    "name": "Encryption",
-                    "platforms": ["Android","iOS", "JavaEE", "JavaSE"]
+                    "name": "Encryption"
                 }
             ]
         },
