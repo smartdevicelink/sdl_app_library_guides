@@ -187,7 +187,7 @@ const bytesAvailable = sdlManager.getFileManager().getBytesAvailable();
 !@
 
 ## Checking if a File Has Already Been Uploaded
-You can check out if an image has already been uploaded to the head unit via the @![iOS]`SDLFileManager`'s!@ @![android, javaSE, javaEE, javascript]`FileManager`'s!@ `remoteFileNames` property.
+You can check out if an image has already been uploaded to the head unit via the @![iOS]`SDLFileManager`'s!@@![android, javaSE, javaEE, javascript]`FileManager`'s!@ `remoteFileNames` property.
 
 @![iOS]
 ##### Objective-C
@@ -209,7 +209,7 @@ Boolean fileIsOnHeadUnit = sdlManager.getFileManager().getRemoteFileNames().cont
 
 @![javascript]
 ```js
-const fileIsOnHeadUnit = sdlManager.getFileManager().getRemoteFileNames().includes('Name Uploaded As');
+const fileIsOnHeadUnit = sdlManager.getFileManager().getRemoteFileNames().includes('<#File Name#>');
 ```
 !@
 
@@ -249,7 +249,7 @@ sdlManager.getFileManager().deleteRemoteFileWithName("Name Uploaded As", new Com
 
 @![javascript]
 ```js
-const success = await sdlManager.getFileManager().deleteRemoteFileWithName('Name Uploaded As');
+const success = await sdlManager.getFileManager().deleteRemoteFileWithName('<#File Name#>');
 ```
 !@
 

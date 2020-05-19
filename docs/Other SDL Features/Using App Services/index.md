@@ -332,6 +332,7 @@ if (response !== null) {
 // Unsubscribe from updates
 const unsubscribeServiceData = new SDL.rpc.messages.GetAppServiceData(SDL.rpc.enums.AppServiceType.MEDIA);
 unsubscribeServiceData.setSubscribe(false);
+
 sdlManager.sendRpc(unsubscribeServiceData);
 ```
 !@

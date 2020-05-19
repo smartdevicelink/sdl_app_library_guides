@@ -830,7 +830,6 @@ sdlManager.sendRPC(setInteriorVehicleData);
 !@
 
 @![javascript]
-
 ###### RPC < v6.0
 ```js
 const temp = new SDL.rpc.struct.Temperature()

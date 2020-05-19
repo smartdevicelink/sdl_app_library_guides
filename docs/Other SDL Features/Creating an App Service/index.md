@@ -597,7 +597,7 @@ If you choose to make your app service available to other apps, you will have to
 Handling app service subscribers is a two step process. First, you must @![iOS]register for notifications from!@ @![android,javaSE,javaEE,javascript]setup listeners for!@ the subscriber. Then, when you get a request, you will either have to send a response to the subscriber with the app service data or if you have no data to send, send a response with a relevant failure result code.
 
 #### Listening for Requests
-First, you will need to @![iOS]register for notification of!@ @![android,javaSE,javaEE,javascript]setup a listener for!@ a `GetAppServiceDataRequest`.
+First, you will need to @![iOS]register for notification of!@@![android,javaSE,javaEE,javascript]setup a listener for!@ a `GetAppServiceDataRequest`.
 
 @![iOS]
 ##### Objective-C

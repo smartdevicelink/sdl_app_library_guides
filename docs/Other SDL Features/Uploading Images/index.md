@@ -2,6 +2,8 @@
 
 !!! NOTE
 If you use the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE, javascript]`ScreenManager`!@, [image uploading for template graphics](Displaying a User Interface/Template Images), [soft buttons](Displaying a User Interface/Template Custom Buttons), and [menu items](Displaying a User Interface/Main Menu) is handled for you behind the scenes. However, you will still need to manually upload your images if you need images in an alert, VR help lists, turn-by-turn directions, or other features not currently covered by the @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE, javascript]`ScreenManager`!@.
+
+The JavaScript manager does not currently handle uploading graphics for menu items. This will be included in a future version.
 !!!
 
 You should be aware of these four things when using images in your SDL app:
@@ -55,7 +57,7 @@ boolean imagesSuported = (imageFields.size() > 0);
 @![javascript]
 ```js
 const imageFields = sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getImageFields();
-const imagesSuported = (imageFields.length > 0);
+const areImagesSupported = (imageFields.length > 0);
 ```
 !@
 

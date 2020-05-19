@@ -9,7 +9,6 @@ The `SendLocation` RPC is restricted by most vehicle manufacturers. As a result,
 ## Checking if Head Unit Supports SendLocation
 Since there is a possibility that some head units will not support the send location feature, you should check head unit support before attempting to send the request. You should also update your app's UI based on whether or not you can use `SendLocation`.
 
-If using library v.@![iOS]6.0!@@![android, javaSE, javaEE]4.4!@@![javascript]1.0!@+, you can use the @![iOS]`SDLSystemCapabilityManager`!@@![android, javaSE, javaEE, javascript]`SystemCapabilityManager`!@ to check the navigation capability returned by Core as shown in the code sample below.
 
 @![iOS]
 ##### Objective-C

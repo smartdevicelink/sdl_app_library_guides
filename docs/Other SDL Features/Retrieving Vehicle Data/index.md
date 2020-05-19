@@ -132,7 +132,7 @@ const response = await sdlManager.sendRpc(vdRequest).catch(error => error);
 if (response.getSuccess()) {
     const prndl = response.getPrndl();
     console.log('PRNDL status: ' + prndl);
-}else{
+} else {
     console.log('GetVehicleData was rejected.')
 }
 ```
