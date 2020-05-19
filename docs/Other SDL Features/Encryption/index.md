@@ -42,10 +42,6 @@ builder.setSdlSecurity(secList, <# Optional serviceEncryptionListener>);
 ```
 !@
 
-@![javascript]
-Encryption will be supported in a future release.
-!@
-
 ## Getting the Encryption Status
 Since it can take a few moments to set up the encryption manager, you must wait until you know that setup has completed before sending encrypted RPCs. If your RPC is sent before setup has completed, your RPC will not be sent. You can implement the @![iOS]`SDLServiceEncryptionDelegate`!@@![android,javaSE,javaEE,javascript]`ServiceEncryptionListener`!@, which is set in @![iOS]`SDLEncryptionConfiguration`!@@![android,javaSE,javaEE,javascript]`Builder.setSdlSecurity`!@, to get updates to the encryption manager state.
 
@@ -82,10 +78,6 @@ ServiceEncryptionListener serviceEncryptionListener = new ServiceEncryptionListe
 ```
 !@
 
-@![javascript]
-Encryption will be supported in a future release.
-!@
-
 ## Setting Optional Encryption
 If you want to encrypt a specific RPC, you must configure the payload protected status of the RPC before you send it to the head unit. In order to send RPCs with optional encryption you must call `startRPCEncryption` on the `sdlManager` to make sure the encryption manager gets started correctly. The best place to put `startRPCEncryption` is in the successful callback of @![iOS]`startWithReadyHandler`.!@@![android,javaSE,javaEE,javascript]the `SdlManagerListener`'s `onStart` method.!@
 
@@ -105,10 +97,6 @@ sdlManager.startRPCEncryption()
 ```java
 sdlManager.startRPCEncryption();
 ```
-!@
-
-@![javascript]
-Encryption will be supported in a future release.
 !@
 
 Then, once you know the encryption manager has started successfully via encryption manager state updates to your @![iOS]`SDLServiceEncryptionDelegate`!@@![android,javaSE,javaEE,javascript]`ServiceEncryptionListener`!@ object, you can start to send encrypted RPCs by setting @![iOS]`payloadProtected`!@@![android,javaSE,javaEE,javascript]`setPayloadProtected`!@ to `true`.
@@ -141,8 +129,4 @@ getVehicleData.setPayloadProtected(true);
 
 sdlManager.sendRPC(getVehicleData);
 ```
-!@
-
-@![javascript]
-Encryption will be supported in a future release.
 !@
