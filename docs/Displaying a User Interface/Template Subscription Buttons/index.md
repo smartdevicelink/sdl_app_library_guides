@@ -110,7 +110,7 @@ sdlManager.sendRpc(subscribeButtonRequest);
 ### Preset Buttons
 All app types can subscribe to preset buttons. Depending on the OEM, the preset buttons may be added to the template when subscription occurs. Preset buttons can also be physical buttons on the console that will notify the subscriber when selected. An OEM may support only template buttons or only hard buttons or they may support both template and hard buttons. The screenshot below shows how the Ford SYNC 3 HMI displays the preset buttons on the HMI. 
 
-![Ford - Preset Soft Button Menu Button](assets/ford_sync_presetMenu.png)
+![Ford - Preset Soft Button Menu Button](assets/ford_sync_presetMenu.bmp)
 ![Ford - Preset Soft Buttons List](assets/ford_sync_presetOptions.png)
 
 #### Checking if Preset Buttons are Supported
