@@ -1,8 +1,8 @@
 # Template Text
-You can easily display text, images, and buttons using the  @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@. To update the UI, simply give the manager your new data and (optionally) sandwich the update between the manager's @![iOS]`beginUpdates`!@@![android, javaSE, javaEE]`beginTransaction()`!@ and @![iOS]`endUpdatesWithCompletionHandler`!@@![android, javaSE, javaEE]`commit()`!@ methods.
+You can easily display text, images, and buttons using the  @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE, javascript]`ScreenManager`!@. To update the UI, simply give the manager your new data and (optionally) sandwich the update between the manager's @![iOS]`beginUpdates`!@@![android, javaSE, javaEE, javascript]`beginTransaction()`!@ and @![iOS]`endUpdatesWithCompletionHandler`!@@![android, javaSE, javaEE, javascript]`commit()`!@ methods.
 
 ### Text Fields
-| @![iOS]SDLScreenManager!@@![android, javaSE, javaEE]ScreenManager!@ Parameter Name | Description |
+| @![iOS]SDLScreenManager!@@![android, javaSE, javaEE, javascript]ScreenManager!@ Parameter Name | Description |
 |:--------------------------------------------|:--------------|
 | textField1 | The text displayed in a single-line display, or in the upper display line of a multi-line display |
 | textField2 | The text displayed on the second display line of a multi-line display |
@@ -61,6 +61,24 @@ sdlManager.getScreenManager().commit(new CompletionListener() {
 ```
 !@
 
+@![javascript]
+```js
+sdlManager.getScreenManager().beginTransaction();
+sdlManager.getScreenManager().setTextField1('Line 1 of Text');
+sdlManager.getScreenManager().setTextField2('Line 2 of Text');
+// Commit the updates and catch any errors
+const success = await sdlManager.getScreenManager().commit().catch(function (error) {
+    // Handle Error
+});
+console.log('ScreenManager update complete:', success);
+if (success === true) {
+    // Update complete
+} else {
+    // Something went wrong
+}
+```
+!@
+
 ### Removing Text
 To remove text from the screen simply set the screen manager property to @![iOS]`nil`!@@![android, javaSE, javaEE]`null`!@.
 
@@ -80,6 +98,13 @@ sdlManager.screenManager.textField2 = nil
 
 @![android, javaSE, javaEE]
 ```java
+sdlManager.getScreenManager().setTextField1(null);
+sdlManager.getScreenManager().setTextField2(null);
+```
+!@
+
+@![javascript]
+```js
 sdlManager.getScreenManager().setTextField1(null);
 sdlManager.getScreenManager().setTextField2(null);
 ```

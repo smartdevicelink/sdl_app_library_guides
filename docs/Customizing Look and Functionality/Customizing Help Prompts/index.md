@@ -4,7 +4,7 @@ On some head units it is possible to display a customized help menu or speak a c
 ## Configuring the Help Menu
 You can customize the help menu with your own title and/or menu options. If you don't customize these options, then the head unit's default menu will be used.
 
-If you wish to use an image, you should check the @![iOS]`sdlManager.systemCapabilityManager.defaultMainWindowCapability.imageFields`!@@![android, javaSE, javaEE]`sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getImageFields();`!@ for an `imageField.name` of `vrHelpItem` to see if that image is supported. If `vrHelpItem` is in the `imageFields` array, then it can be used. You will then need to upload the image using the file manager before using it in the request. See the [Uploading Images](Other SDL Features/Uploading Images) section for more information.
+If you wish to use an image, you should check the @![iOS]`sdlManager.systemCapabilityManager.defaultMainWindowCapability.imageFields`!@@![android, javaSE, javaEE, javascript]`sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getImageFields();`!@ for an `imageField.name` of `vrHelpItem` to see if that image is supported. If `vrHelpItem` is in the `imageFields` array, then it can be used. You will then need to upload the image using the file manager before using it in the request. See the [Uploading Images](Other SDL Features/Uploading Images) section for more information.
 
 @![iOS]
 ##### Objective-C
@@ -75,6 +75,25 @@ sdlManager.sendRPC(setGlobalProperties);
 ```
 !@
 
+@![javascript]
+```js
+const setGlobalProperties = new SDL.rpc.messages.SetGlobalProperties();
+setGlobalProperties.setVrHelpTitle('What Can I Say?');
+
+const item1 = new SDL.rpc.structs.VrHelpItem().setText("Show Artists").setPosition(1).setImage(<#image#>); // a previously uploaded image or null
+
+const item2 = new SDL.rpc.structs.VrHelpItem().setText("Show Albums").setPosition(2).setImage(<#image#>); // a previously uploaded image or null
+
+setGlobalProperties.setVrHelp([item1, item2]);
+sdlManager.sendRpc(setGlobalProperties).catch(err => err); // If there was an error, catch it and return it
+if (response instanceof SDL.rpc.RpcRespone && response.getSuccess()) {
+    // The help menu is updated
+} else {
+    // Handle Error
+}
+```
+!@
+
 ## Configuring the  Help Prompt
 On head units that support voice recognition, a user can request assistance by saying "Help." In addition to displaying the help menu discussed above a custom spoken text-to-speech response can be spoken to the user.
 
@@ -129,6 +148,20 @@ sdlManager.sendRPC(setGlobalProperties);
 ```
 !@
 
+@![javascript]
+```js
+const setGlobalProperties = new SDL.rpc.messages.SetGlobalProperties();
+const chunk = new SDL.rpc.structs.TTSChunk().setText('Your custom help prompt').setType(SDL.rpc.enums.SpeechCapabilities.TEXT);
+setGlobalProperties.setHelpPrompt([chunk]);
+const response = await sdlManager.sendRpc(setGlobalProperties).catch(err => err); // If there was an error, catch it and return it
+if (response instanceof SDL.rpc.RpcRespone && response.getSuccess()) {
+    // The help prompt is updated
+} else {
+    // Handle Error
+}
+```
+!@
+
 ## Configuring the Timeout Prompt
 If you display any sort of popup menu or modal interaction that has a timeout – such as an alert, interaction, or slider – you can create a custom text-to-speech response that will be spoken to the user in the event that a timeout occurs.
 
@@ -178,6 +211,20 @@ setGlobalProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
     }
 });
 sdlManager.sendRPC(setGlobalProperties);
+```
+!@
+
+@![javascript]
+```js
+const setGlobalProperties = new SDL.rpc.messages.SetGlobalProperties();
+const chunk = new SDL.rpc.structs.TTSChunk().setText('Your custom help prompt').setType(SDL.rpc.enums.SpeechCapabilities.TEXT);
+setGlobalProperties.setTimeoutPrompt([chunk]);
+const response = await sdlManager.sendRpc(setGlobalProperties).catch(err => err); // If there was an error, catch it and return it
+if (response instanceof SDL.rpc.RpcRespone && response.getSuccess()) {
+    // The timeout prompt is updated
+} else {
+    // Handle Error
+}
 ```
 !@
 
@@ -250,5 +297,26 @@ resetGlobalProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
     }
 });
 sdlManager.sendRPC(resetGlobalProperties);
+```
+!@
+
+@![javascript]
+```js
+// Reset the help menu
+const resetGlobalProperties = new SDL.rpc.messages.ResetGlobalProperties().setProperties([SDL.rpc.enums.GlobalProperty.VRHELPITEMS, SDL.rpc.enums.GlobalProperty.VRHELPTITLE]);
+
+// Reset the menu icon and title
+const resetGlobalProperties = new SDL.rpc.messages.ResetGlobalProperties().setProperties([SDL.rpc.enums.GlobalProperty.MENUICON, SDL.rpc.enums.GlobalProperty.MENUNAME]);
+
+// Reset spoken prompts
+const resetGlobalProperties = new SDL.rpc.messages.ResetGlobalProperties().setProperties([SDL.rpc.enums.GlobalProperty.HELPPROMPT, SDL.rpc.enums.GlobalProperty.TIMEOUTPROMPT]);
+
+// To send any one of these, use the typical format:
+const response = await sdlManager.sendRpc(setGlobalProperties).catch(err => err); // If there was an error, catch it and return it
+if (response instanceof SDL.rpc.RpcRespone && response.getSuccess()) {
+    // The global properties are reset
+} else {
+    // Handle Error
+}
 ```
 !@

@@ -3,7 +3,7 @@ In almost all cases, you will not need to handle uploading images because the sc
 
 
 ## Uploading an MP3 Using the File Manager
-The @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE]`FileManager`!@ uploads files and keeps track of all the uploaded files names during a session. To send data with the file manager you need to create either a @![iOS]`SDLFile`!@ @![android, javaSE, javaEE]`SdlFile`!@ or @![iOS]`SDLArtwork`!@ @![android, javaSE, javaEE]`SdlArtwork`!@ object. @![iOS]`SDLFile` objects are created with a local `NSURL` or `NSData`; `SDLArtwork` uses a `UIImage`.!@ @![android]Both `SdlFile`s and `SdlArtwork`s can be created with a `Uri`, `byte[]`, or `resourceId`.!@ @![javaSE, javaEE]Both `SdlFile`s and `SdlArtwork`s can be created with using `filePath`, or `byte[]`.!@
+The @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE, javascript]`FileManager`!@ uploads files and keeps track of all the uploaded files names during a session. To send data with the file manager you need to create either a @![iOS]`SDLFile`!@ @![android, javaSE, javaEE, javascript]`SdlFile`!@ or @![iOS]`SDLArtwork`!@ @![android, javaSE, javaEE, javascript]`SdlArtwork`!@ object. @![iOS]`SDLFile` objects are created with a local `NSURL` or `NSData`; `SDLArtwork` uses a `UIImage`.!@ @![android]Both `SdlFile`s and `SdlArtwork`s can be created with a `Uri`, `byte[]`, or `resourceId`.!@ @![javaSE, javaEE]Both `SdlFile`s and `SdlArtwork`s can be created with using `filePath`, or `byte[]`.!@@![javascript]Both `SdlFile`s and `SdlArtwork`s can be created with using `filePath`, or `String`.!@
 
 @![iOS]
 ##### Objective-C
@@ -37,8 +37,22 @@ sdlManager.sendRPC(audioFile);
 ```
 !@
 
+@![javascript]
+```js
+const audioFile = new SDL.manager.file.filetypes.SdlFile('File Name', SDL.rpc.enums.FileType.AUDIO_MP3, <#Audio byte array data as a string#>, true);
+const success = await sdlManager.getFileManager().uploadFile(audioFile)
+    .catch(error => {
+        // handle errors here
+        return false;
+    });
+if (success) {
+    <#File upload successful#>
+}
+```
+!@
+
 ## Batching File Uploads
-If you want to upload a group of files, you can use the @![iOS]`SDLFileManager`'s!@ @![android, javaSE, javaEE]`FileManager`!@ batch upload methods. Once all of the uploads have completed you will be notified if any of the uploads failed. @![iOS]If desired, you can also track the progress of each file in the group.!@
+If you want to upload a group of files, you can use the @![iOS]`SDLFileManager`'s!@ @![android, javaSE, javaEE, javascript]`FileManager`!@ batch upload methods. Once all of the uploads have completed you will be notified if any of the uploads failed. @![iOS]If desired, you can also track the progress of each file in the group.!@
 
 @![iOS]
 ##### Objective-C
@@ -81,8 +95,17 @@ sdlManager.getFileManager().uploadFiles(sdlFileList, new MultipleFileCompletionL
 ```
 !@
 
+@![javascript]
+```js
+const files = await sdlManager.getFileManager().uploadFiles(sdlFileList)
+    .catch(err => {
+        // handle errors here
+    });
+```
+!@
+
 ## File Persistence
-@![iOS]`SDLFile`!@ @![android, javaSE, javaEE]`SdlFile`!@ and its subclass @![iOS]`SDLArtwork`!@ @![android, javaSE, javaEE]`SdlArtwork`!@ support uploading persistent files, i.e. files that are not deleted when the car turns off. Persistence should be used for files that will be used every time the user opens the app. If the file is only displayed for short time the file should not be persistent because it will take up unnecessary space on the head unit. You can check the persistence via:
+@![iOS]`SDLFile`!@ @![android, javaSE, javaEE, javascript]`SdlFile`!@ and its subclass @![iOS]`SDLArtwork`!@ @![android, javaSE, javaEE, javascript]`SdlArtwork`!@ support uploading persistent files, i.e. files that are not deleted when the car turns off. Persistence should be used for files that will be used every time the user opens the app. If the file is only displayed for short time the file should not be persistent because it will take up unnecessary space on the head unit. You can check the persistence via:
 
 @![iOS]
 ##### Objective-C
@@ -102,8 +125,14 @@ Boolean isPersistent = file.isPersistent();
 ```
 !@
 
+@![javascript]
+```js
+const isPersistent = file.isPersistent();
+```
+!@
+
 !!! NOTE
-Be aware that persistence will not work if space on the head unit is limited. The @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE]`FileManager`!@ will always handle uploading images if they are non-existent.
+Be aware that persistence will not work if space on the head unit is limited. The @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE, javascript]`FileManager`!@ will always handle uploading images if they are non-existent.
 !!!
 
 
@@ -130,8 +159,12 @@ file.setOverwrite(false);
 ```
 !@
 
+@![javascript]
+If a file being uploaded has the same name as an already uploaded file, the existing file will be overwritten. Changing overwriting properties is not currently supported.
+!@
+
 ## Checking the Amount of File Storage Left
-To find the amount of file storage left for your app on the head unit, use the @![iOS]`SDLFileManager`’s `bytesAvailable` property!@ @![android, javaSE, javaEE]`ListFiles` RPC!@.
+To find the amount of file storage left for your app on the head unit, use the @![iOS]`SDLFileManager`’s `bytesAvailable` property!@ @![android, javaSE, javaEE, javascript]`ListFiles` RPC!@.
 
 @![iOS]
 ##### Objective-C
@@ -151,8 +184,14 @@ int bytesAvailable = sdlManager.getFileManager().getBytesAvailable();
 ```
 !@
 
+@![javascript]
+```js
+const bytesAvailable = sdlManager.getFileManager().getBytesAvailable();
+```
+!@
+
 ## Checking if a File Has Already Been Uploaded
-You can check out if an image has already been uploaded to the head unit via the @![iOS]`SDLFileManager`'s!@ @![android, javaSE, javaEE]`FileManager`'s!@ `remoteFileNames` property.
+You can check out if an image has already been uploaded to the head unit via the @![iOS]`SDLFileManager`'s!@@![android, javaSE, javaEE, javascript]`FileManager`'s!@ `remoteFileNames` property.
 
 @![iOS]
 ##### Objective-C
@@ -169,6 +208,12 @@ let isFileOnHeadUnit = sdlManager.fileManager.remoteFileNames.contains(<#Name Up
 @![android, javaSE, javaEE]
 ```java
 Boolean fileIsOnHeadUnit = sdlManager.getFileManager().getRemoteFileNames().contains("Name Uploaded As")
+```
+!@
+
+@![javascript]
+```js
+const fileIsOnHeadUnit = sdlManager.getFileManager().getRemoteFileNames().includes('<#File Name#>');
 ```
 !@
 
@@ -206,6 +251,12 @@ sdlManager.getFileManager().deleteRemoteFileWithName("Name Uploaded As", new Com
 ```
 !@
 
+@![javascript]
+```js
+const success = await sdlManager.getFileManager().deleteRemoteFileWithName('<#File Name#>');
+```
+!@
+
 ## Batch Deleting Files
 @![iOS]
 ##### Objective-C
@@ -235,5 +286,11 @@ sdlManager.getFileManager().deleteRemoteFilesWithNames(remoteFiles, new Multiple
 
 	}
 });
+```
+!@
+
+@![javascript]
+```js
+const successes = await sdlManager.getFileManager().deleteRemoteFilesWithNames(remoteFiles);
 ```
 !@

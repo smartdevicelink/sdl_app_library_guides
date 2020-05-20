@@ -51,13 +51,34 @@ nightColorScheme.setSecondaryColor(darkGrey);
 builder.setDayColorScheme(nightColorScheme);
 ```
 !@
+@![javascript]
+```js
+// Set color schemes
+const green = new SDL.rpc.structs.RGBColor().setRed(126).setGreen(188).setBlue(121);
+const white = new SDL.rpc.structs.RGBColor().setRed(249).setGreen(251).setBlue(254);
+const grey = new SDL.rpc.structs.RGBColor().setRed(186).setGreen(198).setBlue(210);
+const darkGrey = new SDL.rpc.structs.RGBColor().setRed(57).setGreen(78).setBlue(96);
+
+const dayColorScheme = new SDL.rpc.structs.TemplateColorScheme();
+dayColorScheme.setBackgroundColor(white);
+dayColorScheme.setPrimaryColor(green);
+dayColorScheme.setSecondaryColor(grey);
+lifecycleConfig.setDayColorScheme(dayColorScheme);
+
+const nightColorScheme = new SDL.rpc.structs.TemplateColorScheme();
+nightColorScheme.setBackgroundColor(white);
+nightColorScheme.setPrimaryColor(green);
+nightColorScheme.setSecondaryColor(darkGrey);
+lifecycleConfig.setNightColorScheme(nightColorScheme);
+```
+!@
 
 !!! NOTE
 You may change the template coloring in the `lifecycleConfiguration` and the `SetDisplayLayout`, if connecting to a head unit with RPC v5.0+,  or with the `Show` request if connecting to RPC v6.0+. You may only change the template coloring once per template; that is, you cannot call `SetDisplayLayout` or `Show` for the template you are already on and expect the color scheme to update.
 !!!
 
 ### Customizing Future Layouts
-You can change the template color scheme when you change layouts in the @![iOS]`SDLSetDisplayLayout` (any RPC version) or `SDLShow` (RPC v6.0+)!@@![android, javaSE, javaEE]`SetDisplayLayout` (any RPC version) or `Show` (RPC v6.0+)!@ request.
+You can change the template color scheme when you change layouts in the @![iOS]`SDLSetDisplayLayout` (any RPC version) or `SDLShow` (RPC v6.0+)!@@![android, javaSE, javaEE, javascript]`SetDisplayLayout` (any RPC version) or `Show` (RPC v6.0+)!@ request.
 
 @![iOS]
 ##### Objective-C
@@ -122,6 +143,34 @@ setDisplayLayout.setOnRPCResponseListener(new OnRPCResponseListener() {
 sdlManager.sendRPC(setDisplayLayout);
 ```
 !@
+@![javascript]
+```js
+// Set color schemes
+const green = new SDL.rpc.structs.RGBColor().setRed(126).setGreen(188).setBlue(121);
+const white = new SDL.rpc.structs.RGBColor().setRed(249).setGreen(251).setBlue(254);
+const grey = new SDL.rpc.structs.RGBColor().setRed(186).setGreen(198).setBlue(210);
+const darkGrey = new SDL.rpc.structs.RGBColor().setRed(57).setGreen(78).setBlue(96);
+
+const dayColorScheme = new SDL.rpc.structs.TemplateColorScheme();
+dayColorScheme.setBackgroundColor(white);
+dayColorScheme.setPrimaryColor(green);
+dayColorScheme.setSecondaryColor(grey);
+lifecycleConfig.setDayColorScheme(dayColorScheme);
+
+const nightColorScheme = new SDL.rpc.structs.TemplateColorScheme();
+nightColorScheme.setBackgroundColor(white);
+nightColorScheme.setPrimaryColor(green);
+nightColorScheme.setSecondaryColor(darkGrey);
+
+const setDisplayLayout = new SDL.rpc.messages.SetDisplayLayout().setDisplayLayout(SDL.rpc.enums.PredefinedLayout.GRAPHIC_WITH_TEXT);
+setDisplayLayout.setDayColorScheme(dayColorScheme);
+setDisplayLayout.setNightColorScheme(nightColorScheme);
+const response = await sdlManager.sendRpc(setDisplayLayout);
+if (response.getSuccess()){
+    // Success
+}
+```
+!@
 
 ## Customizing the Menu Title and Icon
 You can also customize the title and icon of the main menu button that appears on your template layouts. The menu icon must first be uploaded with a specific name through the file manager; see the [Uploading Images](Other SDL Features/Uploading Images) section for more information on how to upload your image.
@@ -181,5 +230,17 @@ setGlobalProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
     }
 });
 sdlManager.sendRPC(setGlobalProperties);
+```
+!@
+@![javascript]
+```js
+const setGlobalProperties = new SDL.rpc.messages.SetGlobalProperties();
+setGlobalProperties.setMenuTitle('customTitle');
+// The image must be uploaded before referencing the image name here
+setGlobalProperties.setMenuIcon(<#Image#>);
+const response = await sdlManager.sendRpc(setGlobalProperties);
+if (response.getSuccess()){
+    // Success
+}
 ```
 !@

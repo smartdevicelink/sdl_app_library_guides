@@ -57,6 +57,19 @@ sdlManager.sendRPC(<#Your Request#>);
 ```
 !@
 
+@![javascript]
+```js
+(async function () {
+    const response = await sdlManager.sendRpc(<#Your Request#>);
+    if (!response.getSuccess()) {
+        <#The request was not successful. Check the response's result code or catch and log the Promise error for more information#>
+        return;
+    }
+    <#The request was successful#>
+})();
+```
+!@
+
 ### Checking if a Feature is Supported by Version
 When you connect successfully to a head unit, SDL will automatically negotiate the maximum SDL RPC version supported by both the module and your SDL SDK. If the feature you want to support was added in a version less than or equal to the version returned by the head unit, then your head unit may support the feature. Remember that the module may still disable the feature, or the user may still have disabled permissions for the feature in some cases. It's best to check if the feature is supported through the System Capability Manager first, but you may also check the negotiated version to know if the head unit was built before the feature was designed.
 
@@ -79,3 +92,9 @@ let rpcSpecVersion = sdlManager.registerResponse.sdlMsgVersion
 SdlMsgVersion rpcSpecVersion = sdlManager.getRegisterAppInterfaceResponse().getSdlMsgVersion();
 ```
 !@
+
+@![javascript]
+```js
+const rpcSpecVersion = sdlManager.getRegisterAppInterfaceResponse().getSdlMsgVersion();
+```
+!@ 

@@ -1,5 +1,5 @@
 # Main Screen Templates
-Each head unit manufacturer supports a set of user interface templates. These templates determine the position and size of the text, images, and buttons on the screen. Once the app has connected successfully with an SDL enabled head unit, a list of supported templates is available on @![iOS]`SDLManager.systemCapabilityManager.defaultMainWindowCapability.templatesAvailable`!@@![android, javaSE, javaEE]`sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getTemplatesAvailable()`!@.
+Each head unit manufacturer supports a set of user interface templates. These templates determine the position and size of the text, images, and buttons on the screen. Once the app has connected successfully with an SDL enabled head unit, a list of supported templates is available on @![iOS]`SDLManager.systemCapabilityManager.defaultMainWindowCapability.templatesAvailable`!@@![android, javaSE, javaEE, javascript]`sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getTemplatesAvailable()`!@.
 
 ## Change the Template
 To change a template at any time, send a `SetDisplayLayout` RPC to Core.
@@ -49,6 +49,21 @@ setDisplayLayoutRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
 });
 
 sdlManager.sendRPC(setDisplayLayoutRequest);
+```
+!@
+
+@![javascript]
+```js
+const setDisplayLayoutRequest = new SDL.rpc.messages.SetDisplayLayout();
+setDisplayLayoutRequest.setDisplayLayout(SDL.rpc.enums.PredefinedLayout.GRAPHIC_WITH_TEXT);
+const response = await sdlManager.sendRpc(setDisplayLayoutRequest).catch(function (error) {
+    // Handle Error
+});
+if (response.getSuccess()) {
+    console.log('Display layout set successfully.');
+} else {
+    console.log('Display layout request rejected.');
+}
 ```
 !@
 

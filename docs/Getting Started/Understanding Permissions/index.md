@@ -24,9 +24,7 @@ To get more detailed information about the state of your SDL app check the curre
 The easiest way to monitor the `hmiLevel` of your SDL app is through a required delegate callback of `SDLManagerDelegate`. The function `hmiLevel:didChangeToLevel:` is called every time your app's `hmiLevel` changes.
 !@
 
-@![android,javaSE,javaEE]
-Monitoring HMI Status is possible through an `OnHMIStatus` notification that you can subscribe to via the `SdlManager`'s `addOnRPCNotificationListener`.
-!@
+@![android,javaSE,javaEE,javascript]Monitoring HMI Status is possible through an `OnHMIStatus` notification that you can subscribe to via the `SdlManager`'s !@@![android,javaSE,javaEE]`addOnRPCNotificationListener`.!@@![javascript]`addRpcListener`.!@
 
 @![iOS]
 ##### Objective-C
@@ -88,6 +86,18 @@ builder.setRPCNotificationListeners(onRPCNotificationListenerMap);
 ```
 !@
 
+@![javascript]
+```js
+function onHmiStatusListener (onHmiStatus) {
+    const hmiLevel = onHmiStatus.getHmiLevel();
+    if (hmiLevel === SDL.rpc.enums.HMILevel.HMI_FULL) {
+        // now in HMI FULL
+    }
+}
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnHMIStatus, onHmiStatusListener);
+```
+!@
+
 ## Permission Manager
 The PermissionManager allows developers to easily query whether specific RPCs are allowed or not. It also allows a listener to be added for a list of RPCs so that if there are changes in their permissions, the app will be notified.
 
@@ -110,6 +120,14 @@ boolean allowed = sdlManager.getPermissionManager().isRPCAllowed(FunctionID.SHOW
 
 // You can also check if a permission parameter is allowed
 boolean parameterAllowed = sdlManager.getPermissionManager().isPermissionParameterAllowed(FunctionID.GET_VEHICLE_DATA, GetVehicleData.KEY_RPM);
+```
+!@
+
+@![javascript]
+```js
+const isAllowed = sdlManager.getPermissionManager().isRpcAllowed(SDL.rpc.enums.FunctionID.Show);
+
+const isParameterAllowed = sdlManager.getPermissionManager().isPermissionParameterAllowed(SDL.rpc.enums.FunctionID.GetVehicleData, SDL.rpc.messages.GetVehicleData.KEY_RPM);
 ```
 !@
 
@@ -171,8 +189,51 @@ if (status.get(FunctionID.GET_VEHICLE_DATA).getAllowedParameters().get(GetVehicl
 ```
 !@
 
+@![javascript]
+```js
+const permissionElements = [];
+permissionElements.push(new SDL.manager.permission.PermissionElement(SDL.rpc.enums.FunctionID.Show, null));
+permissionElements.push(new SDL.manager.permission.PermissionElement(SDL.rpc.enums.FunctionID.GetVehicleData, [SDL.rpc.messages.GetVehicleData.KEY_RPM, SDL.rpc.messages.GetVehicleData.KEY_SPEED]));
+
+const groupStatus = sdlManager.getPermissionManager().getGroupStatusOfPermissions(permissionElements);
+
+switch (groupStatus) {
+    case SDL.manager.permission.enums.PermissionGroupStatus.ALLOWED:
+        // Every permission in the group is currently allowed
+        break;
+    case SDL.manager.permission.enums.PermissionGroupStatus.DISALLOWED:
+        // Every permission in the group is currently disallowed
+        break;
+    case SDL.manager.permission.enums.PermissionGroupStatus.MIXED:
+        // Some permissions in the group are allowed and some disallowed
+        break;
+    case SDL.manager.permission.enums.PermissionGroupStatus.UNKNOWN:
+        // The current status of the group is unknown
+        break;
+}
+```
+
+The previous snippet will give a quick generic status for all permissions together. However, if developers want to get a more detailed result about the status of every permission or parameter in the group, they can use `getStatusOfPermissions` method:
+
+```js
+const permissionElements = [];
+permissionElements.push(new SDL.manager.permission.PermissionElement(SDL.rpc.enums.FunctionID.Show, null));
+permissionElements.push(new SDL.manager.permission.PermissionElement(SDL.rpc.enms.FunctionID.GetVehicleData, [SDL.rpc.messages.GetVehicleData.KEY_RPM, SDL.rpc.messages.GetVehicleData.KEY_AIRBAG_STATUS]));
+
+const status = sdlManager.getPermissionManager().getStatusOfPermissions(permissionElements);
+
+if (status[SDL.rpc.enums.FunctionID.GetVehicleData].getIsRPCAllowed()){
+    // GetVehicleData RPC is allowed
+}
+
+if (status[SDL.rpc.enums.FunctionID.GetVehicleData].getAllowedParameters()[SDL.rpc.messages.GetVehicleData.KEY_RPM]){
+    // rpm parameter in GetVehicleData RPC is allowed
+}
+```
+!@
+
 ### Observing Permissions
-If desired, you can set @![iOS]an observer!@ @![android,javaSE,javaEE]a listener!@ for a group of permissions. The @![iOS]observer's handler!@ @![android,javaSE,javaEE]listener!@ will be called when the permissions for the group changes. If you want to be notified when the permission status of any of RPCs in the group change, set the `groupType` to @![iOS]`SDLPermissionGroupTypeAny`!@ @![android,javaSE,javaEE]`PERMISSION_GROUP_TYPE_ANY`!@. If you only want to be notified when all of the RPCs in the group are allowed, set the `groupType` to @![iOS]`SDLPermissionGroupTypeAllAllowed`!@ @![android,javaSE,javaEE]`PERMISSION_GROUP_TYPE_ALL_ALLOWED`!@.
+If desired, you can set @![iOS]an observer!@ @![android,javaSE,javaEE,javascript]a listener!@ for a group of permissions. The @![iOS]observer's handler!@ @![android,javaSE,javaEE,javascript]listener!@ will be called when the permissions for the group changes. If you want to be notified when the permission status of any of RPCs in the group change, set the `groupType` to @![iOS]`SDLPermissionGroupTypeAny`!@ @![android,javaSE,javaEE]`PERMISSION_GROUP_TYPE_ANY`!@ @![javascript]`SDL.manager.permission.enums.PermissionGroupType.ANY`!@. If you only want to be notified when all of the RPCs in the group are allowed, set the `groupType` to @![iOS]`SDLPermissionGroupTypeAllAllowed`!@ @![android,javaSE,javaEE]`PERMISSION_GROUP_TYPE_ALL_ALLOWED`!@ @![javascript]`SDL.manager.permission.enums.PermissionGroupType.ALL_ALLOWED`!@.
 
 @![iOS]
 ##### Objective-C
@@ -212,8 +273,26 @@ UUID listenerId = sdlManager.getPermissionManager().addListener(permissionElemen
 ```
 !@
 
+@![javascript]
+```js
+const permissionElements = [];
+permissionElements.push(new SDL.manager.permission.PermissionElement(SDL.rpc.enums.FunctionID.Show, null));
+permissionElements.push(new SDL.manager.permission.PermissionElement(SDL.rpc.enums.FunctionID.GetVehicleData, [SDL.rpc.messages.GetVehicleData.KEY_RPM, SDL.rpc.messages.GetVehicleData.KEY_AIRBAG_STATUS]));
+
+const listenerId = sdlManager.getPermissionManager().addListener(permissionElements, SDL.manager.permission.enums.PermissionGroupType.ANY, function (allowedPermissions, permissionGroupStatus) {
+    if (allowedPermissions[SDL.rpc.enums.FunctionID.GET_VEHICLE_DATA].getIsRPCAllowed()) {
+        // GetVehicleData RPC is allowed
+    }
+
+    if (allowedPermissions[SDL.rpc.enums.FunctionID.GET_VEHICLE_DATA].getAllowedParameters()[SDL.rpc.messages.GetVehicleData.KEY_RPM]){
+        // rpm parameter in GetVehicleData RPC is allowed
+    }
+});
+```
+!@
+
 ### Stopping Observation of Permissions
-When you set up the @![iOS]observer!@ @![android,javaSE,javaEE]listener!@, you will get a unique id back. Use this id to unsubscribe to the permissions at a later date.
+When you set up the @![iOS]observer!@ @![android,javaSE,javaEE,javascript]listener!@, you will get a unique id back. Use this id to unsubscribe to the permissions at a later date.
 
 @![iOS]
 ##### Objective-C
@@ -230,6 +309,12 @@ sdlManager.permissionManager.removeObserver(forIdentifier: observerId)
 @![android,javaSE,javaEE]
 ```java
 sdlManager.getPermissionManager().removeListener(listenerId);
+```
+!@
+
+@![javascript]
+```js
+sdlManager.getPermissionManager().removeListener(listenerUuid);
 ```
 !@
 
@@ -272,6 +357,15 @@ public void onNotified(RPCNotification notification) {
 ```
 !@
 
+@![javascript]
+```js
+function onHMIStatusListener (onHMIStatus) {
+    const streamingState = onHMIStatus.getAudioStreamingState();
+}
+```
+The code snippet above will get the AudioStreamingState which reflects the HMI's ability to stream audio. However, the JavaScript Suite does not yet support audio and video streaming. This will be addressed in a future version.
+!@
+
 ### System Context
 The System Context informs your app if there is potentially a blocking HMI component while your app is still visible. An example of this would be if your application is open and you display an alert. Your app will receive a system context of `ALERT` while it is presented on the screen, followed by `MAIN` when it is dismissed.
 
@@ -305,6 +399,14 @@ func systemContext(_ oldContext: SDLSystemContext?, didChangeToContext newContex
 public void onNotified(RPCNotification notification) {
     OnHMIStatus status = (OnHMIStatus) notification;
     SystemContext systemContext = notification.getSystemContext();
+}
+```
+!@
+
+@![javascript]
+```js
+function onHmiStatusListener (onHmiStatus) {
+    const systemContext = onHmiStatus.getSystemContext();
 }
 ```
 !@

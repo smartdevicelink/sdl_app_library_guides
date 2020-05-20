@@ -7,7 +7,7 @@ The `GetWayPoints` and `SubscribeWayPoints` RPCs are restricted by most vehicle 
 ### Checking if Head Unit Supports GetWaypoints
 Since there is a possibility that some head units will not support getting the navigation destination, you should check head unit support before attempting to send the request. You should also update your app's UI based on whether or not you can use `GetWayPoints`.
 
-You can use the @![iOS]`SDLSystemCapabilityManager`!@@![android, javaSE, javaEE]`SystemCapabilityManager`!@ to check the navigation capability returned by Core as shown in the code sample below.
+You can use the @![iOS]`SDLSystemCapabilityManager`!@@![android, javaSE, javaEE, javascript]`SystemCapabilityManager`!@ to check the navigation capability returned by Core as shown in the code sample below.
 
 @![iOS]
 ##### Objective-C
@@ -54,6 +54,13 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.NAVIG
         boolean isNavigationSupported = hmiCapabilities.isNavigationAvailable();
     }
 });
+```
+!@
+
+@![javascript]
+```js
+const navCapability = await sdlManager.getSystemCapabilityManager().updateCapability(SDL.rpc.enums.SystemCapabilityType.NAVIGATION);
+const isNavigationSupported = navCapability !== null && navCapability.getWayPointsEnabled();
 ```
 !@
 
@@ -144,8 +151,26 @@ sdlManager.sendRPC(subscribeWayPoints);
 ```
 !@
 
+@![javascript]
+```js
+// Create this method to receive the subscription callback
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnWayPointChange, (onWayPointChangeNotification) => {
+    //<#Use the waypoint data#>
+});
+
+// After SDL has started your connection, at whatever point you want to subscribe, send the subscribe RPC
+const subscribeWayPoints = new SDL.rpc.messages.SubscribeWayPoints();
+const response = await sdlManager.sendRpc(subscribeWayPoints).catch(error => error);
+if (response.getSuccess()) {
+    // You are now subscribed!
+} else {
+    // Handle the errors
+}
+```
+!@
+
 ### Unsubscribing from Waypoints
-To unsubscribe from waypoint data, you must send the @![iOS]`SDLUnsubscribeWayPoints`!@@![android, javaSE, javaEE]`UnsubscribeWayPoints`!@ RPC.
+To unsubscribe from waypoint data, you must send the @![iOS]`SDLUnsubscribeWayPoints`!@@![android, javaSE, javaEE, javascript]`UnsubscribeWayPoints`!@ RPC.
 
 @![iOS]
 !!! NOTE
@@ -204,6 +229,18 @@ unsubscribeWayPoints.setOnRPCResponseListener(new OnRPCResponseListener() {
     }
 });
 sdlManager.sendRPC(unsubscribeWayPoints);
+```
+!@
+
+@![javascript]
+```js
+const unsubscribeWayPoints = new SDL.rpc.messages.UnsubscribeWayPoints();
+const response = await sdlManager.sendRpc(unsubscribeWayPoints).catch(error => error);
+if (response.getSuccess()) {
+    // You are now unsubscribed!
+} else {
+    // Handle the errors
+}
 ```
 !@
 
@@ -266,5 +303,17 @@ getWayPoints.setOnRPCResponseListener(new OnRPCResponseListener() {
     }
 });
 sdlManager.sendRPC(getWayPoints);
+```
+!@
+
+@![javascript]
+```js
+const getWayPoints = new SDL.rpc.messages.GetWayPoints();
+const response = await sdlManager.sendRpc(getWayPoints).catch(error => error);
+if (response.getSuccess()) {
+    <#Use the waypoint information#>
+} else {
+    // Handle the errors
+}
 ```
 !@

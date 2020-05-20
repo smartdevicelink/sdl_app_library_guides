@@ -9,7 +9,6 @@ The `SendLocation` RPC is restricted by most vehicle manufacturers. As a result,
 ## Checking if Head Unit Supports SendLocation
 Since there is a possibility that some head units will not support the send location feature, you should check head unit support before attempting to send the request. You should also update your app's UI based on whether or not you can use `SendLocation`.
 
-If using library v.@![iOS]6.0!@@![android, javaSE, javaEE]4.4!@+, you can use the @![iOS]`SDLSystemCapabilityManager`!@@![android, javaSE, javaEE]`SystemCapabilityManager`!@ to check the navigation capability returned by Core as shown in the code sample below.
 
 @![iOS]
 ##### Objective-C
@@ -57,6 +56,21 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.NAVIG
 		Boolean isNavigationSupported = hmiCapabilities.isNavigationAvailable();
 	}
 });
+```
+!@
+
+@![javascript]
+```js
+let isNavigationSupported;
+const navCapability = await sdlManager.getSystemCapabilityManager().updateCapability(SDL.rpc.enums.SystemCapabilityType.NAVIGATION)
+    .catch(error => {
+        const hmiCapabilities = sdlManager.getSystemCapabilityManager().getCapability(SDL.rpc.enums.SystemCapabilityType.HMI);
+        isNavigationSupported = hmiCapabilities.isNavigationAvailable();
+        return null;
+    });
+if (navCapability !== null) {
+    isNavigationSupported = navCapability.getSendLocationEnabled();
+}
 ```
 !@
 
@@ -159,6 +173,40 @@ sendLocation.setOnRPCResponseListener(new OnRPCResponseListener() {
 });
 
 sdlManager.sendRPC(sendLocation);
+```
+!@
+
+@![javascript]
+```js
+const sendLocation = new SDL.rpc.messages.SendLocation()
+    .setLatitudeDegrees(42.877737)
+    .setLongitudeDegrees(-97.380967)
+    .setLocationName('The Center')
+    .setLocationDescription('Center of the United States');
+
+// Create Address
+const address = new SDL.rpc.structs.OasisAddress()
+    .setSubThoroughfare('900')
+    .setThoroughfare('Whiting Dr')
+    .setLocality('Yankton')
+    .setAdministrativeArea('SD')
+    .setPostalCode('57078')
+    .setCountryCode('US-SD')
+    .setCountryName('United States');
+
+sendLocation.setAddress(address);
+
+const response = await sdlManager.sendRpc(sendLocation).catch(error => error);
+
+// Monitor response
+const result = response.getResultCode();
+if (result === SDL.rpc.enums.Result.SUCCESS) {
+    // SendLocation was successfully sent.
+} else if (result === SDL.rpc.enums.Result.INVALID_DATA) {
+    // The request you sent contains invalid data and was rejected.
+} else if (result === SDL.rpc.enums.Result.DISALLOWED) {
+    // Your app does not have permission to use SendLocation.
+}
 ```
 !@
 
