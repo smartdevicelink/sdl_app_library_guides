@@ -1,10 +1,10 @@
 # Setting the Navigation Destination
-The @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE]`SendLocation`!@ RPC gives you the ability to send a GPS location to the active navigation app on the module.
+The @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE,javascript]`SendLocation`!@ RPC gives you the ability to send a GPS location to the active navigation app on the module.
 
-When using the @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE]`SendLocation`!@ RPC, you will not have access to any information about how the user interacted with this location, only if the request was successfully sent. The request will be handled by the module from that point on using the active navigation system.
+When using the @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE,javascript]`SendLocation`!@ RPC, you will not have access to any information about how the user interacted with this location, only if the request was successfully sent. The request will be handled by the module from that point on using the active navigation system.
 
 ## Checking Your App's Permissions
-The @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE]`SendLocation`!@ RPC is restricted by most OEMs. As a result, a module may reject your request if your app does not have the correct permissions. Your SDL app may also be restricted to only being allowed to send a location when your app is open (i.e. the `hmiLevel` is non-`NONE`) or when it is the currently active app (i.e. the `hmiLevel` is `FULL`). 
+The @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE,javascript]`SendLocation`!@ RPC is restricted by most OEMs. As a result, a module may reject your request if your app does not have the correct permissions. Your SDL app may also be restricted to only being allowed to send a location when your app is open (i.e. the `hmiLevel` is non-`NONE`) or when it is the currently active app (i.e. the `hmiLevel` is `FULL`). 
 
 @![iOS]
 ##### Objective-C
@@ -50,8 +50,24 @@ UUID listenerId = sdlManager.getPermissionManager().addListener(Arrays.asList(ne
 ```
 !@
 
+@![javascript]
+```js
+const permissionElements = [];
+permissionElements.push(new SDL.manager.permission.PermissionElement(SDL.rpc.enums.FunctionID.SendLocation, null));
+
+const listenerId = sdlManager.getPermissionManager().addListener(permissionElements, SDL.manager.permission.enums.PermissionGroupType.ANY, function (allowedPermissions, permissionGroupStatus) {
+    if (permissionGroupStatus != SDL.manager.permission.enums.PermissionGroupStatus.ALLOWED) {
+        // Your app does not have permission to send the `SendLocation` request for its current HMI level
+        return;
+    }
+
+    // Your app has permission to send the `SendLocation` request for its current HMI level
+});
+```
+!@
+
 ## Checking if the Module Supports Sending a Location
-Since some modules will not support sending a location, you should first check if the module supports this feature before trying to use it. Once you have successfully connected to the module, you can check the module's capabilities via the @![iOS]`SDLManager.systemCapabilityManager`!@@![android, javaSE, javaEE]`sdlManager.getSystemCapabilityManager`!@ as shown in the example below. Please note that you only need to check once if the module supports sending a location, however you must wait to perform this check until you know that the SDL app has been opened (i.e. the `hmiLevel` is non-`NONE`).  
+Since some modules will not support sending a location, you should first check if the module supports this feature before trying to use it. Once you have successfully connected to the module, you can check the module's capabilities via the @![iOS]`SDLManager.systemCapabilityManager`!@@![android,javaSE,javaEE,javascript]`sdlManager.getSystemCapabilityManager()`!@ as shown in the example below. Please note that you only need to check once if the module supports sending a location, however you must wait to perform this check until you know that the SDL app has been opened (i.e. the `hmiLevel` is non-`NONE`).  
 
 !!! NOTE
 If you discover that the module does not support sending a location or that your app does not have the right permissions, you should disable any buttons, voice commands, menu items, etc. in your app that would send the @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE]`SendLocation`!@ request.
@@ -166,8 +182,23 @@ public interface OnCapabilitySupportedListener {
 ```
 !@
 
+@![javascript]
+```js
+let isNavigationSupported;
+const navCapability = await sdlManager.getSystemCapabilityManager().updateCapability(SDL.rpc.enums.SystemCapabilityType.NAVIGATION)
+    .catch(error => {
+        const hmiCapabilities = sdlManager.getSystemCapabilityManager().getCapability(SDL.rpc.enums.SystemCapabilityType.HMI);
+        isNavigationSupported = hmiCapabilities.isNavigationAvailable();
+        return null;
+    });
+if (navCapability !== null) {
+    isNavigationSupported = navCapability.getSendLocationEnabled();
+}
+```
+!@
+
 ## Using Send Location
-To use the @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE]`SendLocation`!@ request, you must, at minimum, include the longitude and latitude of the location.
+To use the @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE,javascript]`SendLocation`!@ request, you must, at minimum, include the longitude and latitude of the location.
 
 @![iOS]
 ##### Objective-C
@@ -265,9 +296,41 @@ sdlManager.sendRPC(sendLocation);
 ```
 !@
 
+@![javascript]
+```js
+const sendLocation = new SDL.rpc.messages.SendLocation()
+    .setLatitudeDegrees(42.877737)
+    .setLongitudeDegrees(-97.380967)
+    .setLocationName('The Center')
+    .setLocationDescription('Center of the United States');
+
+const address = new SDL.rpc.structs.OasisAddress()
+    .setSubThoroughfare('900')
+    .setThoroughfare('Whiting Dr')
+    .setLocality('Yankton')
+    .setAdministrativeArea('SD')
+    .setPostalCode('57078')
+    .setCountryCode('US-SD')
+    .setCountryName('United States');
+
+sendLocation.setAddress(address);
+
+const response = await sdlManager.sendRpc(sendLocation).catch(error => error);
+
+const result = response.getResultCode();
+if (result === SDL.rpc.enums.Result.SUCCESS) {
+    // SendLocation was successfully sent.
+} else if (result === SDL.rpc.enums.Result.INVALID_DATA) {
+    // The request you sent contains invalid data and was rejected.
+} else if (result === SDL.rpc.enums.Result.DISALLOWED) {
+    // Your app does not have permission to use SendLocation.
+}
+```
+!@
+
 ## Checking the Result of Send Location
-The @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE]`SendLocation`!@ request has three possible responses that you should expect:
+The @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE,javascript]`SendLocation`!@ request has three possible responses that you should expect:
 
 1. `SUCCESS` - Successfully sent.
 1. `INVALID_DATA` - The request contains invalid data and was rejected.
-1. `DISALLOWED` - Your app does not have permission to use the @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE]`SendLocation`!@ request.
+1. `DISALLOWED` - Your app does not have permission to use the @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE,javascript]`SendLocation`!@ request.

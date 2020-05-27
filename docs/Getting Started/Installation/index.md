@@ -2,7 +2,7 @@
 In order to build your app on a SmartDeviceLink (SDL) Core, the SDL software development kit (SDK) must be installed in your app. The following steps will guide you through adding the SDL SDK to your workspace and configuring the environment.
 
 !!! NOTE
-The SDL SDK is currently supported on @![iOS]iOS 8.0!@@![android]Android 2.2 (Froyo)!@@![javaSE, javaEE]Java 7 (1.7)!@ and above.
+The SDL SDK is currently supported on @![iOS]iOS 8.0!@@![android]Android 2.2 (Froyo)!@@![javaSE, javaEE]Java 7 (1.7)!@@![javascript]Node 9.11.2!@ and above.
 !!!
 
 ## Install SDL SDK
@@ -107,11 +107,11 @@ and replace `{version}` with the desired release version in format of `x.x.x`. T
 
 ### Examples
 
-To compile release 4.11.0, use the following line:
+To compile release 4.11.1, use the following line:
 
 ```
 dependencies {
-    implementation 'com.smartdevicelink:sdl_android:4.11.0'
+    implementation 'com.smartdevicelink:sdl_android:4.11.1'
 }
 ```
 
@@ -150,11 +150,11 @@ and replace `{version}` with the desired release version in format of `x.x.x`. T
 
 ### Examples
 
-To compile release 4.11.0, use the following line:
+To compile release 4.11.1, use the following line:
 
 ```
 dependencies {
-    implementation 'com.smartdevicelink:sdl_java_se:4.11.0'
+    implementation 'com.smartdevicelink:sdl_java_se:4.11.1'
 }
 ```
 
@@ -202,4 +202,88 @@ from within the JavaEE directory and a JAR should be generated in the build/libs
 !!! NOTE
 Glassfish 5.0.0 only works on JDK 8 and lower.
 !!!
+!@
+
+@![javascript]
+You can find the most recent release of the SDL JavaScript Suite [here](https://github.com/smartdevicelink/sdl_javascript_suite/releases). The project comes with prebuilt bundles of the library in the form of `SDL.min.js` files. There is a vanilla JavaScript distribution of the library as well as one for Node.js. They are located in the `lib/js/dist` and `lib/node/dist` directories respectively. 
+
+## Vanilla JavaScript Setup
+This build allows you to create apps that run on the browser. In order to have the built JS file be imported into your HTML, you'll need to run a simple web server that can serve that JS file. We will be using [Node.js](https://nodejs.org/en/) and [npm](https://docs.npmjs.com/about-npm/) for this task, but you can use any software that lets you serve HTML and JS to the browser.
+
+In a new directory, save your `SDL.min.js` file there, and then run the following: `npm init`. Press Enter repeatedly through the prompts to set up some default npm configuration. Then, install the `express` package by running `npm install express --save`. Express is a popular Node.js package that allows easy setup of a server. Then, create a `index.js` file in the same directory, and save the following to it:
+
+```js
+const express = require('express');
+const app = express();
+app.use(express.static(__dirname));
+const PORT = process.env.PORT || 3000;
+const server = app.listen(PORT, async function () {
+    console.log('Server running on port', PORT);
+});
+```
+
+This code will start up a server on port 3000 on localhost, and serve any files in the directory it is running in. Now that the server code is complete, create a new file named `index.html` that will contain the app logic and save it in the same directory. Make the contents of the HTML file the following:
+
+```html
+<html>
+    <head>
+        <script src='./SDL.min.js'></script>
+    </head>
+    <body>
+        <script>
+            console.log(SDL);
+        </script>
+    </body>
+</html>
+```
+
+Finally, run the server by running this in a Terminal window in the same directory: `node index.js`. The console should print `Server running on port 3000`. Go to your browser and enter `localhost:3000` in the address bar. If you open up your browser's console on the blank page that shows up you should see the SDL library version be printed and the imported SDL object. If so, then you have successfully set up SDL in your browser! If not, then make sure your SDL build name is correct, and that the HTML file, build file, and JS server file are all in the same directory. If you still have  questions, ask them in the javascript-suite-help channel in the SDL Slack. You can sign up for our Slack [here](https://slack.smartdevicelink.com/).
+
+## Node.js Setup
+This build allows you to create apps that run through a server on your computer. You will need to have installed [Node.js](https://nodejs.org/en/) and [npm](https://docs.npmjs.com/about-npm/) are before beginning work on this app.
+
+In a new directory, save your `SDL.min.js` file, then create a new file in the same directory named `index.js`. Make the contents of that file the following:
+
+```js
+const SDL = require('./SDL.min.js');
+console.log(SDL);
+```
+
+Finally, run the file by entering the following in a Terminal window in the same directory: `node index.js`. You should see the SDL library version and the imported SDL object be printed to the console. If so, then you have successfully set up the SDL library!
+
+## WebEngine App Setup
+WebEngine apps use the vanilla JavaScript build, and are set up in a similar fashion to those JS apps where it will also run in the browser. Set up the `index.js` and `index.html` file like in the **Vanilla JavaScript Setup** section. The majority of the configuration for the app will now be separated into a `manifest.js` file and then imported into the `index.html` file. Create a `manifest.js` file like below and save it in the same directory as the other two files. The entrypoint's value should have the same name as your app's HTML file. 
+
+```js
+export default {
+    "entrypoint": "./index.html",
+    "appIcon": "./app_icon.png",
+    "appId": "hello-webengine",
+    "appName": "Hello WebEngine",
+    "category": "DEFAULT",
+    "additionalCategories": [],
+    "locales": {
+        "de_DE": {
+            "appName": "Hallo JS",
+            "appIcon": "./app_icon.png"
+        }
+    },
+    "appVersion": "1.0.0",
+    "minRpcVersion": "6.0",
+    "minProtocolVersion": "5.0"
+};
+```
+
+Note that the manifest file is using the import/export module syntax; in the HTML file it should be imported in as a module:
+
+```js
+import sdl_manifest from './manifest.js';
+```
+
+In the transport configuration the parameters for `WebSocketClientConfig` will be empty. For WebEngine apps those connection details are expected as query parameters in the URL. See below for an example of what the URL is expected to be once the server is running. `sdl-host` is the location of the SDL Core WebSocket server. `sdl-port` is the port of that WebSocket server. `sdl-transport-role` refers to SDL Core's role, which is as a server (as opposed to a client).
+
+```
+http://localhost:3000/?sdl-host=HOST&sdl-transport-role=ws-server&sdl-port=PORT
+```
+
 !@

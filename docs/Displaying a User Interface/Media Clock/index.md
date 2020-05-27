@@ -35,6 +35,21 @@ sdlManager.sendRPC(mediaClock);
 ```
 !@
 
+@![javascript]
+```js
+const mediaClock = new SDL.rpc.messages.SetMediaClockTimer()
+    .setUpdateMode(SDL.rpc.enums.UpdateMode.COUNTUP)
+    .setStartTime(
+        new SDL.rpc.structs.StartTime()
+            .setSeconds(30)
+    ).setEndTime(
+        new SDL.rpc.structs.StartTime()
+            .setStartTime(253)
+    ).setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PAUSE);
+sdlManager.sendRpc(mediaClock);
+```
+!@
+
 ## Counting Down
 Counting down is the opposite of counting up (I know, right?). In order to count down using the timer, you will need to set a start time that is greater than the end time. The timer bar moves from right to left and the timer will automatically count down. For example, if you're counting down from `10:00` to `0:00`, the progress bar will be at the leftmost position and start decrementing every second until it reaches `0:00`.
 
@@ -56,6 +71,21 @@ sdlManager.send(mediaClock)
 ```java
 SetMediaClockTimer mediaClock = new SetMediaClockTimer().countDownFromStartTimeInterval(600, 0, AudioStreamingIndicator.PAUSE);
 sdlManager.sendRPC(mediaClock);
+```
+!@
+
+@![javascript]
+```js
+const mediaClock = new SDL.rpc.messages.SetMediaClockTimer()
+    .setUpdateMode(SDL.rpc.enums.UpdateMode.COUNTDOWN)
+    .setStartTime(
+        new SDL.rpc.structs.StartTime()
+            .setStartTime(600)
+    ).setEndTime(
+        new SDL.rpc.structs.StartTime()
+            .setStartTime(0)
+    ).setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PAUSE);
+sdlManager.sendRpc(mediaClock);
 ```
 !@
 
@@ -113,6 +143,38 @@ sdlManager.sendRPC(mediaClock);
 ```
 !@
 
+@![javascript]
+```js
+// Pause the progress bar and set the play / pause indicator to PLAY
+const mediaClock = new SDL.rpc.messages.SetMediaClockTimer()
+    .setUpdateMode(SDL.rpc.enums.UpdateMode.PAUSE)
+    .setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PLAY);
+sdlManager.sendRpc(mediaClock);
+```
+
+```js
+// Resume the progress bar from its current location and set the play / pause indicator to PAUSE
+const mediaClock = new SDL.rpc.messages.SetMediaClockTimer()
+    .setUpdateMode(SDL.rpc.enums.UpdateMode.RESUME)
+    .setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PAUSE);
+sdlManager.sendRpc(mediaClock);
+```
+
+```js
+// Pause the progress bar, update the progress start / end time and set the play / pause indicator to PLAY
+const mediaClock = new SDL.rpc.messages.SetMediaClockTimer()
+    .setUpdateMode(SDL.rpc.enums.UpdateMode.PAUSE)
+    .setStartTime(
+        new SDL.rpc.structs.StartTime()
+            .setStartTime(60)
+    ).setEndTime(
+        new SDL.rpc.structs.StartTime()
+            .setStartTime(240)
+    ).setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PLAY);
+sdlManager.sendRpc(mediaClock);
+```
+!@
+
 ## Clearing the Timer
 Clearing the timer removes it from the screen.
 
@@ -134,6 +196,15 @@ sdlManager.send(mediaClock)
 ```java
 SetMediaClockTimer mediaClock = new SetMediaClockTimer().clearWithPlayPauseIndicator(AudioStreamingIndicator.PLAY);
 sdlManager.sendRPC(mediaClock);
+```
+!@
+
+@![javascript]
+```js
+const mediaClock = new SDL.rpc.structs.SetMediaClockTimer()
+    .setUpdateMode(SDL.rpc.enums.UpdateMode.CLEAR)
+    .setPlayPauseIndicator(SDL.rpc.enums.AudioStreamingIndicator.PLAY);
+sdlManager.sendRpc(mediaClock);
 ```
 !@
 

@@ -1,5 +1,5 @@
 # Main Screen Templates
-Each head unit manufacturer supports a set of user interface templates. These templates determine the position and size of the text, images, and buttons on the screen. Once the app has connected successfully with an SDL enabled head unit, a list of supported templates is available on @![iOS]`SDLManager.systemCapabilityManager.defaultMainWindowCapability.templatesAvailable`!@@![android, javaSE, javaEE]`sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getTemplatesAvailable()`!@.
+Each head unit manufacturer supports a set of user interface templates. These templates determine the position and size of the text, images, and buttons on the screen. Once the app has connected successfully with an SDL enabled head unit, a list of supported templates is available on @![iOS]`SDLManager.systemCapabilityManager.defaultMainWindowCapability.templatesAvailable`!@@![android, javaSE, javaEE, javascript]`sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getTemplatesAvailable()`!@.
 
 ## Change the Template
 To change a template at any time, send a `SetDisplayLayout` RPC to Core.
@@ -52,6 +52,21 @@ sdlManager.sendRPC(setDisplayLayoutRequest);
 ```
 !@
 
+@![javascript]
+```js
+const setDisplayLayoutRequest = new SDL.rpc.messages.SetDisplayLayout();
+setDisplayLayoutRequest.setDisplayLayout(SDL.rpc.enums.PredefinedLayout.GRAPHIC_WITH_TEXT);
+const response = await sdlManager.sendRpc(setDisplayLayoutRequest).catch(function (error) {
+    // Handle Error
+});
+if (response.getSuccess()) {
+    console.log('Display layout set successfully.');
+} else {
+    console.log('Display layout request rejected.');
+}
+```
+!@
+
 ## Available Templates
 There are fifteen standard templates to choose from, however some head units may only support a subset of these templates. The following examples show how templates will appear on the [Generic HMI](https://github.com/smartdevicelink/generic_hmi) and [Ford's SYNC 3 HMI](https://developer.ford.com).
 
@@ -74,16 +89,16 @@ There are fifteen standard templates to choose from, however some head units may
 ![Generic - Tiles Only](assets/GenericHMI/Generic_tiles_only.png)
 
 #### Graphic with Tiles
-![SYNC 3 - Graphic with Tiles](assets/SYNC3HMI/SYNC3_graphic_with_tiles.jpg)
+![SYNC 3 - Graphic with Tiles](assets/SYNC3HMI/SYNC3_graphic_with_tiles.bmp)
 
 #### Tiles with Graphic
-![SYNC 3 - Tiles with Graphic](assets/SYNC3HMI/SYNC3_tiles_with_graphic.jpg)
+![SYNC 3 - Tiles with Graphic](assets/SYNC3HMI/SYNC3_tiles_with_graphic.bmp)
 
 #### Graphic with Text and Soft Buttons
-![SYNC 3 - Graphic with Text and Soft Buttons](assets/SYNC3HMI/SYNC3_graphic_with_text_and_soft_buttons.jpg)
+![SYNC 3 - Graphic with Text and Soft Buttons](assets/SYNC3HMI/SYNC3_graphic_with_text_and_soft_buttons.bmp)
 
 #### Text and Soft Buttons with Graphic
-![SYNC 3 Text and Soft Buttons with Graphic](assets/SYNC3HMI/SYNC3_text_and_soft_buttons_with_graphic.jpg)
+![SYNC 3 Text and Soft Buttons with Graphic](assets/SYNC3HMI/SYNC3_text_and_soft_buttons_with_graphic.bmp)
 
 #### Graphic with Text Buttons
 ![Generic - Graphic with Text Buttons](assets/GenericHMI/Generic_graphic_with_text_buttons.png)

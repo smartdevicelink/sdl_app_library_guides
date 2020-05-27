@@ -1,8 +1,8 @@
 # Getting the Navigation Destination
-The @![iOS]`SDLGetWayPoints`!@@![android,javaSE,javaEE]`GetWayPoints`!@ and @![iOS]`SDLSubscribeWayPoints`!@@![android,javaSE,javaEE]`SubscribeWayPoints`!@ RPCs are designed to allow you to get the navigation destination(s) from the active navigation app when the user has activated in-car navigation.
+The @![iOS]`SDLGetWayPoints`!@@![android,javaSE,javaEE,javascript]`GetWayPoints`!@ and @![iOS]`SDLSubscribeWayPoints`!@@![android,javaSE,javaEE,javascript]`SubscribeWayPoints`!@ RPCs are designed to allow you to get the navigation destination(s) from the active navigation app when the user has activated in-car navigation.
 
 ## Checking Your App's Permissions
-Both the @![iOS]`SDLGetWayPoints`!@@![android,javaSE,javaEE]`GetWayPoints`!@ and @![iOS]`SDLSubscribeWayPoints`!@@![android,javaSE,javaEE]`SubscribeWayPoints`!@ RPCs are restricted by most OEMs. As a result, a module may reject your request if your app does not have the correct permissions. Your SDL app may also be restricted to only being allowed to get waypoints when your app is open (i.e. the `hmiLevel` is non-`NONE`) or when it is the currently active app (i.e. the `hmiLevel` is `FULL`). 
+Both the @![iOS]`SDLGetWayPoints`!@@![android,javaSE,javaEE,javascript]`GetWayPoints`!@ and @![iOS]`SDLSubscribeWayPoints`!@@![android,javaSE,javaEE,javascript]`SubscribeWayPoints`!@ RPCs are restricted by most OEMs. As a result, a module may reject your request if your app does not have the correct permissions. Your SDL app may also be restricted to only being allowed to get waypoints when your app is open (i.e. the `hmiLevel` is non-`NONE`) or when it is the currently active app (i.e. the `hmiLevel` is `FULL`). 
 
 @![iOS]
 ##### Objective-C
@@ -68,11 +68,32 @@ UUID listenerId = sdlManager.getPermissionManager().addListener(Arrays.asList(ne
 ```
 !@
 
+@![javascript]
+```js
+const permissionElements = [];
+permissionElements.push(new SDL.manager.permission.PermissionElement(SDL.rpc.enums.FunctionID.GetWayPoints, null));
+permissionElements.push(new SDL.manager.permission.PermissionElement(SDL.rpc.enums.FunctionID.SubscribeWayPoints, null));
+
+const listenerId = sdlManager.getPermissionManager().addListener(permissionElements, SDL.manager.permission.enums.PermissionGroupType.ANY, function (allowedPermissions, permissionGroupStatus) {
+    if (allowedPermissions[SDL.rpc.enums.FunctionID.GetWayPoints].getIsRpcAllowed()) {
+        // Your app has permission to send the `GetWayPoints` request for its current HMI level
+    } else {
+        // Your app does not have permission to send the `GetWayPoints` request for its current HMI level
+    }
+
+    if (allowedPermissions[SDL.rpc.enums.FunctionID.SubscribeWayPoints].getIsRpcAllowed()) {
+        // Your app has permission to send the `SubscribeWayPoints` request for its current HMI level
+    } else {
+        // Your app does not have permission to send the `SubscribeWayPoints` request for its current HMI level
+    }
+});
+```
+
 ### Checking if the Module Supports Waypoints 
-Since some modules will not support getting waypoints, you should first check if the module supports this feature before trying to use it. Once you have successfully connected to the module, you can check the module's capabilities via the @![iOS]`SDLManager.systemCapabilityManager`!@@![android, javaSE, javaEE]`sdlManager.getSystemCapabilityManager`!@ as shown in the example below. Please note that you only need to check once if the module supports getting waypoints, however you must wait to perform this check until you know that the SDL app has been opened (i.e. the `hmiLevel` is non-`NONE`).  
+Since some modules will not support getting waypoints, you should first check if the module supports this feature before trying to use it. Once you have successfully connected to the module, you can check the module's capabilities via the @![iOS]`SDLManager.systemCapabilityManager`!@@![android, javaSE, javaEE,javascript]`sdlManager.getSystemCapabilityManager()`!@ as shown in the example below. Please note that you only need to check once if the module supports getting waypoints, however you must wait to perform this check until you know that the SDL app has been opened (i.e. the `hmiLevel` is non-`NONE`).  
 
 !!! NOTE
-If you discover that the module does not support getting navigation waypoints or that your app does not have the right permissions, you should disable any buttons, voice commands, menu items, etc. in your app that would send the @![iOS]`SDLGetWayPoints`!@@![android,javaSE,javaEE]`GetWayPoints`!@ or @![iOS]`SDLSubscribeWayPoints`!@@![android,javaSE,javaEE]`SubscribeWayPoints`!@ requests.
+If you discover that the module does not support getting navigation waypoints or that your app does not have the right permissions, you should disable any buttons, voice commands, menu items, etc. in your app that would send the @![iOS]`SDLGetWayPoints`!@@![android,javaSE,javaEE,javascript]`GetWayPoints`!@ or @![iOS]`SDLSubscribeWayPoints`!@@![android,javaSE,javaEE,javascript]`SubscribeWayPoints`!@ requests.
 !!!
 
 @![iOS]
@@ -184,8 +205,15 @@ public interface OnCapabilitySupportedListener {
 ```
 !@
 
+@![javascript]
+```js
+const navCapability = await sdlManager.getSystemCapabilityManager().updateCapability(SDL.rpc.enums.SystemCapabilityType.NAVIGATION);
+const isNavigationSupported = navCapability !== null && navCapability.getWayPointsEnabled();
+```
+!@
+
 ## Subscribing to Waypoints
-To subscribe to the navigation waypoints, you will have to set up your callback for whenever the waypoints are updated, then send the @![iOS]`SDLSubscribeWayPoints`!@@![android,javaSE,javaEE]`SubscribeWayPoints`!@ RPC.
+To subscribe to the navigation waypoints, you will have to set up your callback for whenever the waypoints are updated, then send the @![iOS]`SDLSubscribeWayPoints`!@@![android,javaSE,javaEE,javascript]`SubscribeWayPoints`!@ RPC.
 
 @![iOS]
 ##### Objective-C
@@ -272,8 +300,27 @@ sdlManager.sendRPC(subscribeWayPoints);
 ```
 !@
 
+
+@![javascript]
+```js
+// Create this method to receive the subscription callback
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnWayPointChange, (onWayPointChangeNotification) => {
+    // Use the waypoint data
+});
+
+// After SDL has started your connection, at whatever point you want to subscribe, send the subscribe RPC
+const subscribeWayPoints = new SDL.rpc.messages.SubscribeWayPoints();
+const response = await sdlManager.sendRpc(subscribeWayPoints).catch(error => error);
+if (response.getSuccess()) {
+    // You are now subscribed!
+} else {
+    // Handle the errors
+}
+```
+!@
+
 ### Unsubscribing from Waypoints
-To unsubscribe from waypoint data, you must send the @![iOS]`SDLUnsubscribeWayPoints`!@@![android, javaSE, javaEE]`UnsubscribeWayPoints`!@ RPC.
+To unsubscribe from waypoint data, you must send the @![iOS]`SDLUnsubscribeWayPoints`!@@![android,javaSE,javaEE,javascript]`UnsubscribeWayPoints`!@ RPC.
 
 @![iOS]
 !!! NOTE
@@ -333,8 +380,20 @@ sdlManager.sendRPC(unsubscribeWayPoints);
 ```
 !@
 
+@![javascript]
+```js
+const unsubscribeWayPoints = new SDL.rpc.messages.UnsubscribeWayPoints();
+const response = await sdlManager.sendRpc(unsubscribeWayPoints).catch(error => error);
+if (response.getSuccess()) {
+    // You are now unsubscribed!
+} else {
+    // Handle the errors
+}
+```
+!@
+
 ## One-Time Waypoints Request
-If you only need waypoint data once without an ongoing subscription, you can use @![iOS]`SDLGetWayPoints`!@@![android,javaSE,javaEE]`GetWayPoints`!@ instead of @![iOS]`SDLSubscribeWayPoints`!@@![android,javaSE,javaEE]`SubscribeWayPoints`!@.
+If you only need waypoint data once without an ongoing subscription, you can use @![iOS]`SDLGetWayPoints`!@@![android,javaSE,javaEE,javascript]`GetWayPoints`!@ instead of @![iOS]`SDLSubscribeWayPoints`!@@![android,javaSE,javaEE,javascript]`SubscribeWayPoints`!@.
 
 @![iOS]
 ##### Objective-C
@@ -390,5 +449,17 @@ getWayPoints.setOnRPCResponseListener(new OnRPCResponseListener() {
 });
 
 sdlManager.sendRPC(getWayPoints);
+```
+!@
+
+@![javascript]
+```js
+const getWayPoints = new SDL.rpc.messages.GetWayPoints();
+const response = await sdlManager.sendRpc(getWayPoints).catch(error => error);
+if (response.getSuccess()) {
+    // Use the waypoint data
+} else {
+    // Handle the errors
+}
 ```
 !@

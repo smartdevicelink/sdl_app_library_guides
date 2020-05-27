@@ -1,7 +1,7 @@
 # Getting Microphone Audio
-Capturing in-car audio allows developers to interact with users by requesting raw audio data provided to them from the car's microphones. In order to gather the raw audio from the vehicle, you must leverage the @![iOS][`SDLPerformAudioPassThru`](https://smartdevicelink.com/en/docs/iOS/master/Classes/SDLPerformAudioPassThru/)!@@![android,javaSE,javaEE]`PerformAudioPassThru`!@ RPC.
+Capturing in-car audio allows developers to interact with users by requesting raw audio data provided to them from the car's microphones. In order to gather the raw audio from the vehicle, you must leverage the @![iOS][`SDLPerformAudioPassThru`](https://smartdevicelink.com/en/docs/iOS/master/Classes/SDLPerformAudioPassThru/)!@@![android,javaSE,javaEE,javascript]`PerformAudioPassThru`!@ RPC.
 
-SDL does not support automatic speech cancellation detection, so if this feature is desired, it is up to the developer to implement. The user may press an "OK" or "Cancel" button, the dialog may timeout, or you may close the dialog with @![iOS]`SDLEndAudioPassThru`!@@![android,javaSE,javaEE]`EndAudioPassThru`!@.
+SDL does not support automatic speech cancellation detection, so if this feature is desired, it is up to the developer to implement. The user may press an "OK" or "Cancel" button, the dialog may timeout, or you may close the dialog with @![iOS]`SDLEndAudioPassThru`!@@![android,javaSE,javaEE,javascript]`EndAudioPassThru`!@.
 
 !!! NOTE
 SDL does not support an open microphone. However, SDL is working on wake-word support in the future. You may implement a voice command and start an audio pass thru session when that voice command occurs.
@@ -11,7 +11,7 @@ SDL does not support an open microphone. However, SDL is working on wake-word su
 Before you start an audio capture session you need to find out what audio pass pass thru capabilities the module supports. You can then use that information to start an audio pass thru session.
 
 ### Getting the Supported Capabilities
-You must use a sampling rate, bit rate, and audio type supported by the head unit. Once you have successfully connecting to the module, you can access these properties on the @![iOS]`SDLManager.systemCapabilityManager`!@@![android, javaSE, javaEE]`sdlManager.getSystemCapabilityManager`!@ instance.
+You must use a sampling rate, bit rate, and audio type supported by the head unit. Once you have successfully connecting to the module, you can access these properties on the @![iOS]`SDLManager.systemCapabilityManager`!@@![android,javaSE,javaEE,javascript]`sdlManager.getSystemCapabilityManager`!@ instance.
 
 @![iOS]
 ##### Objective-C
@@ -35,14 +35,19 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.AUDIO
 
     @Override
     public void onError(String info) {
-        <#Handle Error#>
+        // Handle Error
     }
 }, false);
 ```
 !@
 
-The module may return one or multiple supported audio pass thru capabilities. Each capability will have the following properties:
+@![javascript]
+```js
+let audioPassThruCapabilities = this._sdlManager.getSystemCapabilityManager()._audioPassThruCapabilities;
+```
+!@
 
+The module may return one or multiple supported audio pass thru capabilities. Each capability will have the following properties:
 | Audio Pass Thru Capability | Parameter Name  |  Description |
 | ------------- | ------------- | ------------- |
 | Sampling Rate | samplingRate | The sampling rate |
@@ -50,7 +55,7 @@ The module may return one or multiple supported audio pass thru capabilities. Ea
 | Audio Type | audioType | The audio type |
 
 ### Sending the Audio Capture Request
-To initiate audio capture, first construct a @![iOS]`SDLPerformAudioPassThru`!@@![android,javaSE,javaEE]`PerformAudioPassThru`!@ request. 
+To initiate audio capture, first construct a @![iOS]`SDLPerformAudioPassThru`!@@![android,javaSE,javaEE,javascript]`PerformAudioPassThru`!@ request. 
 
 @![iOS]
 ##### Objective-C
@@ -83,11 +88,29 @@ sdlManager.sendRPC(performAPT);
 ```
 !@
 
+@![javascript]
+```js
+const performAPT = new SDL.rpc.messages.PerformAudioPassThru()
+    .setAudioPassThruDisplayText1('Ask me "What\'s the weather?"')
+    .setAudioPassThruDisplayText2('or "What\'s 1 + 2?"');
+    .setInitialPrompt(new SDL.rpc.structs.TTSChunk()
+        .setType(SDL.rpc.enums.SpeechCapabilities.TEXT)
+        .setText('Ask me What\'s the weather? or What\'s 1 plus 2?'))
+    .setSamplingRate(SDL.rpc.enums.SamplingRate._22KHZ)
+    .setMaxDuration(7000)
+    .setBitsPerSample(SDL.rpc.enums.BitsPerSample._16_BIT)
+    .setAudioType(SDL.rpc.enums.AudioType.PCM)
+    .setMuteAudio(false);
+
+sdlManager.sendRpc(performAPT);
+```
+!@
+
 ![Ford Audio Pass Thru](assets/Ford_AudioPassThruPrompt.png)
 
 ### Gathering Audio Data
 SDL provides audio data as fast as it can gather it, and sends it to the developer in chunks. In order to retrieve this audio data, the developer must @![iOS]add a handler to the `SDLPerformAudioPassThru`.!@
-@![android,javaSE,javaEE]observe the `OnAudioPassThru` notification.!@
+@![android,javaSE,javaEE,javascript]observe the `OnAudioPassThru` notification.!@
 
 !!! NOTE
 This audio data is only the current chunk of audio data, so the developer must be in charge of managing previously retrieved audio data.
@@ -134,6 +157,17 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_AUDIO_PASS_THRU, new OnRPC
 ```
 !@
 
+@![javascript]
+```js
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnAudioPassThru, function (onAudioPassThru) {
+    if(onAudioPassThru instanceof SDL.rpc.messages.OnAudioPassThru) {
+        const dataRcvd = onAudioPassThru.getBulkData();
+        processAPTData(dataRcvd); // Do something with audio data
+    }
+});
+```
+!@
+
 #### Format of Audio Data
 The format of audio data is described as follows:
 * It does not include a header (such as a RIFF header) at the beginning.
@@ -142,25 +176,20 @@ The format of audio data is described as follows:
 * For bit rates of 8 bits, the audio samples are unsigned. For bit rates of 16 bits, the audio samples are signed and are in little-endian.
 
 ## Ending Audio Capture
-@![iOS]`SDLPerformAudioPassThru`!@@![android,javaSE,javaEE]`PerformAudioPassThru`!@ is a request that works in a different way than other RPCs. For most RPCs, a request is followed by an immediate response, with whether that RPC was successful or not. This RPC, however, will only send out the response when the audio pass thru has ended.
+@![iOS]`SDLPerformAudioPassThru`!@@![android,javaSE,javaEE,javascript]`PerformAudioPassThru`!@ is a request that works in a different way than other RPCs. For most RPCs, a request is followed by an immediate response, with whether that RPC was successful or not. This RPC, however, will only send out the response when the audio pass thru has ended.
 
 Audio capture can be ended in 4 ways:
-
-1. Audio pass thru has timed out.
-
+1\. The audio pass thru has timed out.
     * If the audio pass thru has proceeded longer than the requested timeout duration, Core will end this request with a `resultCode` of `SUCCESS`. You should handle the audio pass thru though it was successful.
 
-2. Audio pass thru was closed due to user pressing "Cancel".
-
+2\. The audio pass thru was closed due to user pressing "Cancel".
     * If the audio pass thru was displayed, and the user pressed the "Cancel" button, you will receive a `resultCode` of `ABORTED`. You should ignore the audio pass thru.
 
-3. Audio pass thru was closed due to user pressing "Done".
-
+3\. The audio pass thru was closed due to user pressing "Done".
     * If the audio pass thru was displayed and the user pressed the "Done" button, you will receive a `resultCode` of `SUCCESS`. You should handle the audio pass thru as though it was successful.
 
-4. Audio pass thru was ended due to the developer ending the request.
-
-    * If the audio pass thru was displayed, but you have established on your own that you no longer need to capture audio data, you can send an @![iOS]`SDLEndAudioPassThru`!@@![android,javaSE,javaEE]`EndAudioPassThru`!@ RPC. You will receive a `resultCode` of `SUCCESS`, and should handle the audio pass thru as though it was successful.
+4\. The audio pass thru was ended due to the developer ending the request.
+    * If the audio pass thru was displayed, but you have established on your own that you no longer need to capture audio data, you can send an @![iOS]`SDLEndAudioPassThru`!@@![android,javaSE,javaEE,javascript]`EndAudioPassThru`!@ RPC. You will receive a `resultCode` of `SUCCESS`, and should handle the audio pass thru as though it was successful.
 
 @![iOS]
 ##### Objective-C
@@ -178,13 +207,20 @@ sdlManager.send(endAudioPassThru)
 
 @![android,javaSE,javaEE]
 ```java
-EndAudioPassThru endAPT = new EndAudioPassThru();
-sdlManager.sendRPC(endAPT);
+EndAudioPassThru endAudioPassThru = new EndAudioPassThru();
+sdlManager.sendRPC(endAudioPassThru);
+```
+!@
+
+@![javascript]
+```js
+const endAudioPassThru = new SDL.rpc.messages.EndAudioPassThru();
+sdlManager.sendRpc(endAudioPassThru);
 ```
 !@
 
 ## Handling the Response
-To process the response received from an ended audio capture, @![iOS]use the `withResponseHandler` property in `SDLManager`'s `send(_ :)` function!@@![android,javaSE,javaEE] monitor the `PerformAudioPassThruResponse` by adding a listener to the `PerformAudioPassThru` RPC before sending it. If the response has a successful result, all of the audio data for the passthrough has been received and is ready for processing!@.
+To process the response received from an ended audio capture, @![iOS]use the `withResponseHandler` property in `SDLManager`'s `send(_ :)` function!@@![android,javaSE,javaEE,javascript] monitor the `PerformAudioPassThruResponse` by adding a listener to the `PerformAudioPassThru` RPC before sending it.!@ If the response has a successful result, all of the audio data for the audio pass thru has been received and is ready for processing.
 
 @![iOS]
 ##### Objective-C
@@ -238,5 +274,21 @@ performAPT.setOnRPCResponseListener(new OnRPCResponseListener() {
         Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
     }
 });
+```
+!@
+
+@![javascript]
+```js
+const response = await sdlManager.sendRpc(performAPT).catch(error => error);
+if (response instanceof SDL.rpc.messages.PerformAudioPassThruResponse) {
+    if (response.getResultCode() === SDL.rpc.enums.Result.SUCCESS) {
+        // We can use the data
+    } else {
+        // Cancel any usage of the data
+        console.log('Audio pass thru attempt failed.');
+    }
+} else {
+    // Handle Error
+}
 ```
 !@

@@ -19,7 +19,7 @@ Please note that if you are integrating an sdl_ios version less than v6.3, the e
 !@
 
 ### 1. Getting and Subscribing to Available Services
-To get information on all services published on the system, as well as on changes to published services, you will use the @![iOS]`GetSystemCapability` request / response as well as the `OnSystemCapabilityUpdated` notification. !@ @![android,javaSE,javaEE] `SystemCapabilityManager` to get the information. Because this information is initially available asynchronously, we have to attach an `OnSystemCapabilityListener` to the `getCapability` request.!@
+To get information on all services published on the system, as well as on changes to published services, you will use the @![iOS]`GetSystemCapability` request / response as well as the `OnSystemCapabilityUpdated` notification. !@ @![android,javaSE,javaEE] `SystemCapabilityManager` to get the information. Because this information is initially available asynchronously, we have to attach an `OnSystemCapabilityListener` to the `getCapability` request.!@@![javascript] `SystemCapabilityManager` and await the `updateCapability` method to get the information!@
 
 @![iOS]
 ##### Objective-C
@@ -67,6 +67,20 @@ sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapa
     public void onError(String info) {
         <#Handle Error#>
     }
+});
+```
+!@
+
+@![javascript]
+```js
+// Grab the capability once
+const servicesCapabilities = await sdlManager.getSystemCapabilityManager().updateCapability(SDL.rpc.enums.SystemCapabilityType.APP_SERVICES);
+
+...
+
+// Subscribe to updates
+sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SDL.rpc.enums.SystemCapabilityType.APP_SERVICES, (servicesCapabilities) => {
+
 });
 ```
 !@
@@ -152,6 +166,22 @@ if (appServices!= null && appServices.size() > 0) {
         // The app service record will give you access to a service's generated id, which can be used to address the service directly (see below), it's manifest, used to see what data it supports, whether or not the service is published (it always will be here), and whether or not the service is the active service for its service type (only one service can be active for each type)
         AppServiceRecord serviceRecord = anAppServiceCapability.getUpdatedAppServiceRecord();
     }
+}
+```
+!@
+
+@![javascript]
+```js
+// This array contains all currently available app services on the system
+const appServices = servicesCapabilities.getAppServices();
+
+if (appServices !== null) {
+    appServices.forEach(anAppServiceCapability => {
+        // This will tell you why a service is in the list of updates
+        const updateReason = anAppServiceCapability.getUpdateReason();
+        // The app service record will give you access to a service's generated id, which can be used to address the service directly (see below), it's manifest, used to see what data it supports, whether or not the service is published (it always will be here), and whether or not the service is the active service for its service type (only one service can be active for each type)
+        const serviceRecord = anAppServiceCapability.getUpdatedAppServiceRecord();
+    });
 }
 ```
 !@
@@ -243,6 +273,29 @@ sdlManager.sendRPC(unsubscribeServiceData);
 ```
 !@
 
+@![javascript]
+```js
+// Get service data once
+const getAppServiceData = new SDL.rpc.messages.GetAppServiceData()
+    .setServiceType(SDL.rpc.enums.AppServiceType.MEDIA);
+
+// Subscribe to future updates if you want them
+getAppServiceData.setSubscribe(true);
+
+const response = await sdlManager.sendRpc(getAppServiceData).catch(error => error);
+if (response !== null && ) {
+    const mediaServiceData = response.getServiceData().getMediaServiceData();
+}
+...
+
+// Unsubscribe from updates
+const unsubscribeServiceData = new SDL.rpc.messages.GetAppServiceData(SDL.rpc.enums.AppServiceType.MEDIA);
+unsubscribeServiceData.setSubscribe(false);
+
+sdlManager.sendRpc(unsubscribeServiceData);
+```
+!@
+
 ## Interacting with a Service Provider
 Once you have a service's data, you may want to interact with a service provider by sending RPCs or actions.
 
@@ -302,6 +355,17 @@ sdlManager.sendRPC(buttonPress);
 ```
 !@
 
+@![javascript]
+```js
+const buttonPress = new SDL.rpc.messages.ButtonPress()
+    .setButtonPressMode(SDL.rpc.enums.ButtonPressMode.SHORT)
+    .setButtonName(SDL.rpc.enums.ButtonName.OK)
+    .setModuleType(SDL.rpc.enums.ModuleType.AUDIO);
+
+const response = await sdlManager.sendRpc(buttonPress).catch(error => error);
+```
+!@
+
 ### 4. Sending an Action to a Service Provider
 Actions are generic URI-based strings sent to any app service (active or not). You can also use actions to request to the system that they make the service the active service for that service type. Service actions are *schema-less*, i.e. there is no way to define the appropriate URIs through SDL. The service provider must document their list of available actions elsewhere (such as their website).
 
@@ -348,8 +412,19 @@ sdlManager.sendRPC(performAppServiceInteraction);
 ```
 !@
 
+@![javascript]
+```js
+const performAppServiceInteraction = new SDL.rpc.messages.PerformAppServiceInteraction()
+    .setServiceUri("sdlexample://x-callback-url/showText?x-source=MyApp&text=My%20Custom%20String")
+    .setServiceID("<#Previously Retrieved ServiceID#>")
+    .setOriginApp("<#Your App Id#>");
+
+const response = await sdlManager.sendRpc(performAppServiceInteraction).catch(error => error);
+```
+!@
+
 ### 5. Getting a File from a Service Provider
-In some cases, a service may upload an image that can then be retrieved from the module. First, you will need to get the image name from the @![iOS]`SDLAppServiceData`!@@![android,javaSE,javaEE]`AppServiceData`!@ (see point 2 above). Then you will use the image name to retrieve the image data. 
+In some cases, a service may upload an image that can then be retrieved from the module. First, you will need to get the image name from the @![iOS]`SDLAppServiceData`!@@![android,javaSE,javaEE,javascript]`AppServiceData`!@ (see point 2 above). Then you will use the image name to retrieve the image data. 
 
 @![iOS]
 ##### Objective-C
@@ -450,5 +525,27 @@ getFile.setOnRPCResponseListener(new OnRPCResponseListener() {
     }
 });
 sdlManager.sendRPC(getFile);
+```
+!@
+
+@![javascript]
+```js
+const appServiceData = <#Get the App Service Data#>;
+const weatherServiceData = appServiceData.getWeatherServiceData();
+
+if (weatherServiceData === null || weatherServiceData.getCurrentForecast() === null || weatherServiceData.getCurrentForecast().getWeatherIcon() === null) {
+    // The image doesn't exist, exit early
+    return;
+}
+const currentForecastImageName = weatherServiceData.getCurrentForecast().getWeatherIcon().getValueParam();
+
+const getFile = new SDL.rpc.messages.GetFile()
+    .setFileName(currentForecastImageName)
+    .setAppServiceId(<#Service ID>);
+
+const getFileResponse = await sdlManager.sendRpc(getFile).catch(error => error);
+const fileData = getFileResponse.getBulkData();
+const sdlArtwork = new SDL.manager.file.filetypes.SdlArtwork(fileName, FileType.GRAPHIC_PNG, fileData, false);
+// Use the sdlArtwork 
 ```
 !@
