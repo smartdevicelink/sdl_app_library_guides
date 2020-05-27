@@ -7,7 +7,7 @@ When using the @![iOS]`SDLSpeak`!@@![android,javaSE,javaEE,javascript]`Speak`!@ 
 The speech request you send can simply be a text phrase, which will be played back in accordance with the user's current language settings, or it can consist of phoneme specifications to direct SDL’s TTS engine to speak a language-independent, speech-sculpted phrase. It is also possible to play a pre-recorded sound file (such as an MP3) using the speech request. For more information on how to play a sound file please refer to [Playing Audio Indications](Speech and Audio/Playing Audio Indications). 
 
 ### Getting the Supported Speech Capabilities
-Once you have successfully connected to the module, you can access supported speech capabilities properties on the @![iOS]`SDLManager.systemCapabilityManager`!@@![android, javaSE, javaEE, javascript]`sdlManager.getSystemCapabilityManager()`!@ instance.
+Once you have successfully connected to the module, you can access supported speech capabilities properties on the @![iOS]`SDLManager.systemCapabilityManager`!@@![android,javaSE,javaEE,javascript]`sdlManager.getSystemCapabilityManager()`!@ instance.
 
 @![iOS]
 ##### Objective-C
@@ -39,7 +39,7 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.SPEEC
 
 @![javascript]
 ```js
-let speechCapabilities = this._sdlManager.getSystemCapabilityManager()._speechCapabilities;
+let speechCapabilities = sdlManager.getSystemCapabilityManager()._speechCapabilities;
 ```
 !@
 

@@ -43,7 +43,7 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.AUDIO
 
 @![javascript]
 ```js
-let audioPassThruCapabilities = this._sdlManager.getSystemCapabilityManager()._audioPassThruCapabilities;
+let audioPassThruCapabilities = sdlManager.getSystemCapabilityManager()._audioPassThruCapabilities;
 ```
 !@
 
