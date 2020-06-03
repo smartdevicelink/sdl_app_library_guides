@@ -184,15 +184,33 @@ public interface OnCapabilitySupportedListener {
 
 @![javascript]
 ```js
-let isNavigationSupported;
-const navCapability = await sdlManager.getSystemCapabilityManager().updateCapability(SDL.rpc.enums.SystemCapabilityType.NAVIGATION)
-    .catch(error => {
-        const hmiCapabilities = sdlManager.getSystemCapabilityManager().getCapability(SDL.rpc.enums.SystemCapabilityType.HMI);
-        isNavigationSupported = hmiCapabilities.isNavigationAvailable();
-        return null;
-    });
-if (navCapability !== null) {
-    isNavigationSupported = navCapability.getSendLocationEnabled();
+async isSendLocationSupported() {
+    // Check if the module has navigation capabilities
+    if (!sdlManager.getSystemCapabilityManager()._getCapabilityMethodForType(SDL.rpc.enums.SystemCapabilityType.NAVIGATION)) {
+        return false;
+    }
+
+    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `SendLocation` is supported if `isCapabilitySupported` returns true
+    let sdlMsgVersion = sdlManager.getRegisterAppInterfaceResponse().getSdlMsgVersion();
+    if (sdlMsgVersion == null) {
+        return true;
+    }
+    let rpcSpecVersion = new SDL.util.Version(sdlMsgVersion.getMajorVersion(), sdlMsgVersion.getMinorVersion(), sdlMsgVersion.getPatchVersion());
+    if (rpcSpecVersion.isNewerThan(new SDL.util.Version(4, 5, 0)) < 0) {
+        return true;
+    }
+
+    // Retrieve the navigation capability
+    let isNavigationSupported = false;
+    const navCapability = await sdlManager.getSystemCapabilityManager().updateCapability(SDL.rpc.enums.SystemCapabilityType.NAVIGATION)
+        .catch(error => {
+            throw error;
+        });
+    if (navCapability !== null) {
+        isNavigationSupported = navCapability.getSendLocationEnabled();
+    }
+
+    return isNavigationSupported;
 }
 ```
 !@
