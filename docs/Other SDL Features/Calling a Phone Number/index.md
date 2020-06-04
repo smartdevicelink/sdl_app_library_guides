@@ -9,31 +9,29 @@ The @![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ RPC allows y
 ```objc
 id observerId = [self.sdlManager.permissionManager addObserverForRPCs:@[SDLRPCFunctionNameDialNumber] groupType:SDLPermissionGroupTypeAny withHandler:^(NSDictionary<SDLPermissionRPCName,NSNumber *> * _Nonnull allChanges, SDLPermissionGroupStatus groupStatus) {
     if (groupStatus != SDLPermissionGroupStatusAllowed) {
-        // Your app does not have permission to send the `DialNumber` request for its current HMI level
+        // Your app does not have permission to send the `SDLDialNumber` request for its current HMI level
         return;
     }
 
-    // Your app has permission to send the `DialNumber` request for its current HMI level
+    // Your app has permission to send the `SDLDialNumber` request for its current HMI level
 }];
 ```
 
 ##### Swift
 ```swift
 let observerId = sdlManager.permissionManager.addObserver(forRPCs: [SDLRPCFunctionName.dialNumber.rawValue.rawValue], groupType: .any, withHandler: { (allChanges, groupStatus) in
-    // This handler will be called whenever the permission status changes
     guard groupStatus == .allowed else { 
-        // Your app does not have permission to send the `DialNumber` request for its current HMI level
+        // Your app does not have permission to send the `SDLDialNumber` request for its current HMI level
         return 
     }
 
-    // Your app has permission to send the `DialNumber` request for its current HMI level
+    // Your app has permission to send the `SDLDialNumber` request for its current HMI level
 })
 ```
 !@
 
 @![android,javaSE,javaEE]
 ```java
-// You must add the listener as soon as the `onStart()` method of the `SdlManagerListener` is called.
 UUID listenerId = sdlManager.getPermissionManager().addListener(Arrays.asList(new PermissionElement(FunctionID.DIAL_NUMBER, null)), PermissionManager.PERMISSION_GROUP_TYPE_ANY, new OnPermissionChangeListener() {
     @Override
     public void onPermissionsChange(@NonNull Map<FunctionID, PermissionStatus> allowedPermissions, @NonNull int permissionGroupStatus) {
@@ -99,7 +97,7 @@ func isDialNumberSupported(handler: @escaping (_ success: Bool, _ error: Error?)
         return handler(false, nil)
     }
 
-    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `DialNumber` is supported if `isCapabilitySupported` returns true
+    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `SDLDialNumber` is supported if `isCapabilitySupported` returns true
     guard let sdlMsgVersion = sdlManager.registerResponse?.sdlMsgVersion, SDLVersion(sdlMsgVersion: sdlMsgVersion).isGreaterThanOrEqual(to: SDLVersion(major: 4, minor: 5, patch: 0)) else {
         return handler(true, nil)
     }
@@ -130,7 +128,7 @@ private void isDialNumberSupported(final OnCapabilitySupportedListener capabilit
         return;
     }
 
-    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `DialNumber` is supported if `isCapabilitySupported` returns true
+    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `DialNumber` is supported if `isCapabilitySupported()` returns true
     SdlMsgVersion sdlMsgVersion = sdlManager.getRegisterAppInterfaceResponse().getSdlMsgVersion();
     if (sdlMsgVersion == null) {
         capabilitySupportedListener.onCapabilitySupported(true);
@@ -178,7 +176,7 @@ SDLDialNumber *dialNumber = [[SDLDialNumber alloc] initWithNumber: @"1238675309"
 
 [self.sdlManager sendRequest:dialNumber withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if (error != nil || ![response isKindOfClass:SDLDialNumberResponse.class]) {
-        // Encountered error sending `DialNumber`
+        // Encountered error sending `SDLDialNumber`
         return;
     }
 
@@ -186,16 +184,16 @@ SDLDialNumber *dialNumber = [[SDLDialNumber alloc] initWithNumber: @"1238675309"
     SDLResult *resultCode = dialNumber.resultCode;
     if (!resultCode.success.boolValue) {
         if ([resultCode isEqualToEnum:SDLResultRejected]) {
-            // `DialNumber` was rejected. Either the call was sent and cancelled or there is no device connected
+            // `SDLDialNumber` was rejected. Either the call was sent and cancelled or there is no device connected
         } else if ([resultCode isEqualToEnum:SDLResultDisallowed]) {
-            // Your app is not allowed to use `DialNumber`
+            // Your app is not allowed to use `SDLDialNumber`
         } else {
             // Some unknown error has occurred
         }
         return;
     }
 
-    // `DialNumber` successfully sent
+    // `SDLDialNumber` successfully sent
 }];
 ```
 
@@ -205,23 +203,23 @@ let dialNumber = SDLDialNumber(number: "1238675309")
 
 sdlManager.send(request: dialNumber) { (request, response, error) in
     guard let response = response as? SDLDialNumberResponse, error == nil else {
-        // Encountered error sending `DialNumber`
+        // Encountered error sending `SDLDialNumber`
         return
     }
 
     guard response?.success.boolValue == true else {
         switch response.resultCode {
         case .rejected:
-            // `DialNumber` was rejected. Either the call was sent and cancelled or there is no device connected
+            // `SDLDialNumber` was rejected. Either the call was sent and cancelled or there is no device connected
         case .disallowed:
-            // Your app is not allowed to use `DialNumber`
+            // Your app is not allowed to use `SDLDialNumber`
         default:
             // Some unknown error has occurred
         }
         return
     }
 
-    // `DialNumber` successfully sent
+    // `SDLDialNumber` successfully sent
 }
 ```
 !@
