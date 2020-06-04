@@ -189,7 +189,7 @@ if (appServices !== null) {
 ### 2. Getting and Subscribing to a Service Type's Data
 Once you have information about all of the services available, you may want to view or subscribe to a service type's data. To do so, you will use the `GetAppServiceData` RPC.
 
-Note that you will currently only be able to get data for the *active* service of the service type. You can attempt to make another service the active service by using the `PerformAppServiceInteraction` RPC, discussed below in "Sending an Action to a Service Provider."
+Note that you will currently only be able to get data for the *active* service of the service type. You can attempt to make another service the active service by using the `PerformAppServiceInteraction` RPC, discussed below in [Sending an Action to a Service Provider](#4-sending-an-action-to-a-service-provider).
 
 @![iOS]
 ##### Objective-C
