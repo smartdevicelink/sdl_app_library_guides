@@ -183,7 +183,7 @@ The format of audio data is described as follows:
 Audio capture can be ended four ways:
 
 1. The audio pass thru has timed out.
-    * If the audio pass thru has proceeded longer than the requested timeout duration, Core will end this request with a `resultCode` of `SUCCESS`. You should handle the audio pass thru though it was successful.
+    * If the audio pass thru has proceeded longer than the requested timeout duration, this request will be ended with a `resultCode` of `SUCCESS`. You should handle the audio pass thru though it was successful.
 2. The audio pass thru was closed due to user pressing "Cancel".
     * If the audio pass thru was displayed, and the user pressed the "Cancel" button, you will receive a `resultCode` of `ABORTED`. You should ignore the audio pass thru.
 3. The audio pass thru was closed due to user pressing "Done".
