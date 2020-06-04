@@ -11,16 +11,16 @@ id observerId = [self.sdlManager.permissionManager addObserverForRPCs:@[SDLRPCFu
     // This handler will be called whenever the permission status changes
     NSNumber *getWayPointPermissionStatus = allChanges[SDLRPCFunctionNameGetWayPoints];
     if (getWayPointPermissionStatus.boolValue) {
-        // Your app has permission to send the `GetWayPoints` request for its current HMI level
+        // Your app has permission to send the `SDLGetWayPoints` request for its current HMI level
     } else {
-         // Your app does not have permission to send the `GetWayPoints` request for its current HMI level
+         // Your app does not have permission to send the `SDLGetWayPoints` request for its current HMI level
     }
 
     NSNumber *subscribeWayPointsPermissionStatus = allChanges[SDLRPCFunctionNameSubscribeWayPoints];
     if (subscribeWayPointsPermissionStatus.boolValue) {
-        // Your app has permission to send the `SubscribeWayPoints` request for its current HMI level
+        // Your app has permission to send the `SDLSubscribeWayPoints` request for its current HMI level
     } else {
-        // Your app does not have permission to send the `SubscribeWayPoints` request for its current HMI level
+        // Your app does not have permission to send the `SDLSubscribeWayPoints` request for its current HMI level
     }
 }];
 ```
@@ -30,9 +30,9 @@ id observerId = [self.sdlManager.permissionManager addObserverForRPCs:@[SDLRPCFu
 let observerId = sdlManager.permissionManager.addObserver(forRPCs: [SDLRPCFunctionName.getWayPoints.rawValue.rawValue, SDLRPCFunctionName.subscribeWayPoints.rawValue.rawValue], groupType: .any, withHandler: { (allChanges, groupStatus) in
     // This handler will be called whenever the permission status changes
     if let getWayPointPermissionStatus = allChanges[SDLRPCFunctionName.getWayPoints.rawValue.rawValue], getWayPointPermissionStatus.boolValue == true {
-        // Your app has permission to send the `GetWayPoints` request for its current HMI level
+        // Your app has permission to send the `SDLGetWayPoints` request for its current HMI level
     } else {
-        // Your app does not have permission to send the `GetWayPoints` request for its current HMI level
+        // Your app does not have permission to send the `SDLGetWayPoints` request for its current HMI level
     }
 
     if let subscribeWayPointsPermissionStatus = allChanges[SDLRPCFunctionName.subscribeWayPoints.rawValue.rawValue], subscribeWayPointsPermissionStatus.boolValue == true {
@@ -46,22 +46,21 @@ let observerId = sdlManager.permissionManager.addObserver(forRPCs: [SDLRPCFuncti
 
 @![android,javaSE,javaEE]
 ```java
-// You must add the listener as soon as the `onStart()` method of the `SdlManagerListener` is called.
 UUID listenerId = sdlManager.getPermissionManager().addListener(Arrays.asList(new PermissionElement(FunctionID.GET_WAY_POINTS, null), new PermissionElement(FunctionID.SUBSCRIBE_WAY_POINTS, null)), PermissionManager.PERMISSION_GROUP_TYPE_ANY, new OnPermissionChangeListener() {
     @Override
     public void onPermissionsChange(@NonNull Map<FunctionID, PermissionStatus> allowedPermissions, @NonNull int permissionGroupStatus) {
         PermissionStatus getWayPointPermissionStatus = allowedPermissions.get(FunctionID.GET_WAY_POINTS);
         if (getWayPointPermissionStatus != null && getWayPointPermissionStatus.getIsRPCAllowed()) {
-            // Your app has permission to send the `GetWayPoints` request for its current HMI level
+            // Your app has permission to send the `SDLGetWayPoints` request for its current HMI level
         } else {
-            // Your app does not have permission to send the `GetWayPoints` request for its current HMI level
+            // Your app does not have permission to send the `SDLGetWayPoints` request for its current HMI level
         }
 
         PermissionStatus subscribeWayPointsPermissionStatus = allowedPermissions.get(FunctionID.SUBSCRIBE_WAY_POINTS);
         if (subscribeWayPointsPermissionStatus != null && subscribeWayPointsPermissionStatus.getIsRPCAllowed()) {
-            // Your app has permission to send the `SubscribeWayPoints` request for its current HMI level
+            // Your app has permission to send the `SDLSubscribeWayPoints` request for its current HMI level
         } else {
-            // Your app does not have permission to send the `SubscribeWayPoints` request for its current HMI level
+            // Your app does not have permission to send the `SDLSubscribeWayPoints` request for its current HMI level
         }
     }
 });
@@ -105,7 +104,7 @@ If you discover that the module does not support getting navigation waypoints or
         return handler(false, nil);
     }
 
-    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `GetWayPoints` and `SubscribeWayPoints` are supported if `isCapabilitySupported` returns true
+    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `SDLGetWayPoints` and `SDLSubscribeWayPoints` are supported if `isCapabilitySupported` returns true
     SDLMsgVersion *sdlMsgVersion = self.sdlManager.registerResponse.sdlMsgVersion;
     if (sdlMsgVersion == nil) {
         return handler(true, nil);
@@ -140,7 +139,7 @@ func isGetWaypointsSupported(handler: @escaping (_ success: Bool, _ error: Error
         return handler(false, nil)
     }
 
-    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `GetWayPoints` and `SubscribeWayPoints` are supported if `isCapabilitySupported` returns true
+    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `SDLGetWayPoints` and `SDLSubscribeWayPoints` are supported if `isCapabilitySupported` returns true
     guard let sdlMsgVersion = sdlManager.registerResponse?.sdlMsgVersion, SDLVersion(sdlMsgVersion: sdlMsgVersion).isGreaterThanOrEqual(to: SDLVersion(major: 4, minor: 5, patch: 0)) else {
         return handler(true, nil)
     }
@@ -171,7 +170,7 @@ private void isGetWaypointsSupported(final OnCapabilitySupportedListener capabil
         return;
     }
 
-    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `GetWayPoints` and `SubscribeWayPoints` are supported if `isCapabilitySupported` returns true
+    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `GetWayPoints` and `SubscribeWayPoints` are supported if `isCapabilitySupported()` returns true
     SdlMsgVersion sdlMsgVersion = sdlManager.getRegisterAppInterfaceResponse().getSdlMsgVersion();
     if (sdlMsgVersion == null) {
         capabilitySupportedListener.onCapabilitySupported(true);
@@ -213,7 +212,7 @@ async isGetWaypointsSupported() {
         return false;
     }
 
-    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `GetWayPoints` and `SubscribeWayPoints` are supported if `isCapabilitySupported` returns true
+    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `GetWayPoints` and `SubscribeWayPoints` are supported if `getCapabilityMethodForType` returns true
     let sdlMsgVersion = sdlManager.getRegisterAppInterfaceResponse().getSdlMsgVersion();
     if (sdlMsgVersion == null) {
         return true;
@@ -338,7 +337,7 @@ sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnWayPointChange, (onWayPoint
 const subscribeWayPoints = new SDL.rpc.messages.SubscribeWayPoints();
 const response = await sdlManager.sendRpc(subscribeWayPoints).catch(error => error);
 if (response.getSuccess()) {
-    // You are now subscribed!
+    // You are now subscribed
 } else {
     // Handle the errors
 }
@@ -411,7 +410,7 @@ sdlManager.sendRPC(unsubscribeWayPoints);
 const unsubscribeWayPoints = new SDL.rpc.messages.UnsubscribeWayPoints();
 const response = await sdlManager.sendRpc(unsubscribeWayPoints).catch(error => error);
 if (response.getSuccess()) {
-    // You are now unsubscribed!
+    // You are now unsubscribed
 } else {
     // Handle the errors
 }
