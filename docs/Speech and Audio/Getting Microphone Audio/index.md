@@ -180,7 +180,7 @@ The format of audio data is described as follows:
 ## Ending Audio Capture
 @![iOS]`SDLPerformAudioPassThru`!@@![android,javaSE,javaEE,javascript]`PerformAudioPassThru`!@ is a request that works in a different way than other RPCs. For most RPCs, a request is followed by an immediate response, with whether that RPC was successful or not. This RPC, however, will only send out the response when the audio pass thru has ended.
 
-Audio capture can be ended in 4 ways:
+### Audio capture can be ended in 4 ways:
 
 1. The audio pass thru has timed out.
     * If the audio pass thru has proceeded longer than the requested timeout duration, Core will end this request with a `resultCode` of `SUCCESS`. You should handle the audio pass thru though it was successful.
@@ -190,6 +190,9 @@ Audio capture can be ended in 4 ways:
     * If the audio pass thru was displayed and the user pressed the "Done" button, you will receive a `resultCode` of `SUCCESS`. You should handle the audio pass thru as though it was successful.
 4. The audio pass thru was ended due to the developer ending the request.
     * If the audio pass thru was displayed, but you have established on your own that you no longer need to capture audio data, you can send an @![iOS]`SDLEndAudioPassThru`!@@![android,javaSE,javaEE,javascript]`EndAudioPassThru`!@ RPC. You will receive a `resultCode` of `SUCCESS`, and should handle the audio pass thru as though it was successful.
+
+### Stopping Audio Capture
+To stop audio capture, simply send an @![iOS]`SDLEndAudioPassThru`!@@![android,javaSE,javaEE,javascript]`EndAudioPassThru`!@ request. Your @![iOS]`SDLPerformAudioPassThru`!@@![android,javaSE,javaEE,javascript]`PerformAudioPassThru`!@ request will receive response with a `resultCode` of `SUCCESS` when the audio pass thru has ended.
 
 @![iOS]
 ##### Objective-C
