@@ -51,16 +51,16 @@ UUID listenerId = sdlManager.getPermissionManager().addListener(Arrays.asList(ne
     public void onPermissionsChange(@NonNull Map<FunctionID, PermissionStatus> allowedPermissions, @NonNull int permissionGroupStatus) {
         PermissionStatus getWayPointPermissionStatus = allowedPermissions.get(FunctionID.GET_WAY_POINTS);
         if (getWayPointPermissionStatus != null && getWayPointPermissionStatus.getIsRPCAllowed()) {
-            // Your app has permission to send the `SDLGetWayPoints` request for its current HMI level
+            // Your app has permission to send the `GetWayPoints` request for its current HMI level
         } else {
-            // Your app does not have permission to send the `SDLGetWayPoints` request for its current HMI level
+            // Your app does not have permission to send the `GetWayPoints` request for its current HMI level
         }
 
         PermissionStatus subscribeWayPointsPermissionStatus = allowedPermissions.get(FunctionID.SUBSCRIBE_WAY_POINTS);
         if (subscribeWayPointsPermissionStatus != null && subscribeWayPointsPermissionStatus.getIsRPCAllowed()) {
-            // Your app has permission to send the `SDLSubscribeWayPoints` request for its current HMI level
+            // Your app has permission to send the `SubscribeWayPoints` request for its current HMI level
         } else {
-            // Your app does not have permission to send the `SDLSubscribeWayPoints` request for its current HMI level
+            // Your app does not have permission to send the `SubscribeWayPoints` request for its current HMI level
         }
     }
 });
@@ -87,6 +87,7 @@ const listenerId = sdlManager.getPermissionManager().addListener(permissionEleme
     }
 });
 ```
+!@
 
 ### Checking if the Module Supports Waypoints 
 Since some modules will not support getting waypoints, you should first check if the module supports this feature before trying to use it. Once you have successfully connected to the module, you can check the module's capabilities via the @![iOS]`SDLManager.systemCapabilityManager`!@@![android, javaSE, javaEE,javascript]`sdlManager.getSystemCapabilityManager()`!@ as shown in the example below. Please note that you only need to check once if the module supports getting waypoints, however you must wait to perform this check until you know that the SDL app has been opened (i.e. the `hmiLevel` is non-`NONE`).  
