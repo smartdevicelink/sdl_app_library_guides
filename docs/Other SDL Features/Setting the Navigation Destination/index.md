@@ -11,11 +11,11 @@ The @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE,javascript]`SendLocation`
 ```objc
 id observerId = [self.sdlManager.permissionManager addObserverForRPCs:@[SDLRPCFunctionNameSendLocation] groupType:SDLPermissionGroupTypeAny withHandler:^(NSDictionary<SDLPermissionRPCName,NSNumber *> * _Nonnull allChanges, SDLPermissionGroupStatus groupStatus) {
     if (groupStatus != SDLPermissionGroupStatusAllowed) {
-        // Your app does not have permission to send the `SendLocation` request for its current HMI level
+        // Your app does not have permission to send the `SDLSendLocation` request for its current HMI level
         return;
     }
 
-    // Your app has permission to send the `SendLocation` request for its current HMI level
+    // Your app has permission to send the `SDLSendLocation` request for its current HMI level
 }];
 ```
 
@@ -24,11 +24,11 @@ id observerId = [self.sdlManager.permissionManager addObserverForRPCs:@[SDLRPCFu
 let observerId = sdlManager.permissionManager.addObserver(forRPCs: [SDLRPCFunctionName.sendLocation.rawValue.rawValue], groupType: .any, withHandler: { (allChanges, groupStatus) in
     // This handler will be called whenever the permission status changes
     guard groupStatus == .allowed else {
-        // Your app does not have permission to send the `SendLocation` request for its current HMI level
+        // Your app does not have permission to send the `SDLSendLocation` request for its current HMI level
         return
     }
 
-    // Your app has permission to send the `SendLocation` request for its current HMI level
+    // Your app has permission to send the `SDLSendLocation` request for its current HMI level
 })
 ```
 !@
@@ -82,7 +82,7 @@ If you discover that the module does not support sending a location or that your
         return handler(false, nil);
     }
 
-    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `SendLocation` is supported if `isCapabilitySupported` returns true
+    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `SDLSendLocation` is supported if `isCapabilitySupported` returns true
     SDLMsgVersion *sdlMsgVersion = self.sdlManager.registerResponse.sdlMsgVersion;
     if (sdlMsgVersion == nil) {
         return handler(true, nil);
@@ -117,7 +117,7 @@ func isSendLocationSupported(handler: @escaping (_ success: Bool, _ error: Error
         return handler(false, nil)
     }
 
-    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `SendLocation` is supported if `isCapabilitySupported` returns true
+    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `SDLSendLocation` is supported if `isCapabilitySupported` returns true
     guard let sdlMsgVersion = sdlManager.registerResponse?.sdlMsgVersion, SDLVersion(sdlMsgVersion: sdlMsgVersion).isGreaterThanOrEqual(to: SDLVersion(major: 4, minor: 5, patch: 0)) else {
         return handler(true, nil)
     }
@@ -148,7 +148,7 @@ private void isSendLocationSupported(final OnCapabilitySupportedListener capabil
         return;
     }
 
-    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `SendLocation` is supported if `isCapabilitySupported` returns true
+    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `SendLocation` is supported if `isCapabilitySupported()` returns true
     SdlMsgVersion sdlMsgVersion = sdlManager.getRegisterAppInterfaceResponse().getSdlMsgVersion();
     if (sdlMsgVersion == null) {
         capabilitySupportedListener.onCapabilitySupported(true);
@@ -190,7 +190,7 @@ async isSendLocationSupported() {
         return false;
     }
 
-    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `SendLocation` is supported if `isCapabilitySupported` returns true
+    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `SendLocation` is supported if `getCapabilityMethodForType` returns true
     let sdlMsgVersion = sdlManager.getRegisterAppInterfaceResponse().getSdlMsgVersion();
     if (sdlMsgVersion == null) {
         return true;
@@ -233,16 +233,16 @@ SDLSendLocation *sendLocation = [[SDLSendLocation alloc] initWithLongitude:-97.3
     SDLResult resultCode = sendLocation.resultCode;
     if (!sendLocation.success) {
         if ([resultCode isEqualToEnum:SDLResultInvalidData]) {
-            // `SendLocation` was rejected. The request contained invalid data
+            // `SDLSendLocation` was rejected. The request contained invalid data
         } else if ([resultCode isEqualToEnum:SDLResultDisallowed]) {
-            // Your app is not allowed to use `SendLocation`
+            // Your app is not allowed to use `SDLSendLocation`
         } else {
             // Some unknown error has occurred
         }
         return;
     }
 
-    // `SendLocation` successfully sent
+    // `SDLSendLocation` successfully sent
 }];
 ```
 
@@ -258,16 +258,16 @@ sdlManager.send(request: sendLocation) { (request, response, error) in
 
     guard response.success.boolValue == true else {
         case .invalidData:
-            // `SendLocation` was rejected. The request contained invalid data
+            // `SDLSendLocation` was rejected. The request contained invalid data
         case .disallowed:
-            // Your app is not allowed to use `SendLocation`
+            // Your app is not allowed to use `SDLSendLocation`
         default: break
             // Some unknown error has occurred
         }
         return
     }
 
-    // `SendLocation` successfully sent
+    // `SDLSendLocation` successfully sent
 }
 ```
 !@
@@ -337,11 +337,11 @@ const response = await sdlManager.sendRpc(sendLocation).catch(error => error);
 
 const result = response.getResultCode();
 if (result === SDL.rpc.enums.Result.SUCCESS) {
-    // SendLocation was successfully sent.
+    // `SendLocation` was successfully sent
 } else if (result === SDL.rpc.enums.Result.INVALID_DATA) {
-    // The request you sent contains invalid data and was rejected.
+    // `SendLocation` was rejected. The request contained invalid data
 } else if (result === SDL.rpc.enums.Result.DISALLOWED) {
-    // Your app does not have permission to use SendLocation.
+    // Your app is not allowed to use `SendLocation`
 }
 ```
 !@
