@@ -48,6 +48,7 @@ let audioPassThruCapabilities = sdlManager.getSystemCapabilityManager()._audioPa
 !@
 
 The module may return one or multiple supported audio pass thru capabilities. Each capability will have the following properties:
+
 | Audio Pass Thru Capability | Parameter Name  |  Description |
 | ------------- | ------------- | ------------- |
 | Sampling Rate | samplingRate | The sampling rate |
