@@ -5,7 +5,7 @@ App services are used to publish navigation, weather and media data (such as tem
 
 Vehicle head units may use these services in various ways. One app service for each type will be the "active" service to the module. For media, for example, this will be the media app that the user is currently using or listening to. For navigation, it would be a navigation app that the user is using to navigate. For weather, it may be the last used weather app, or a user-selected default. The system may then use that service's data to perform various actions (such as navigating to an address with the active service or to display the temperature as provided from the active weather service).
 
-An SDL app can also subscribe to a published app service. Once subscribed, the app will be sent the new data when the app service publisher updates its data. This guide will cover subscribing to a service. Subscribed apps can also send certain RPCs and generic URI-based actions (see the section [Supporting App Actions](#4-sending-an-action-to-a-service-provider), below) to your service.
+An SDL app can also subscribe to a published app service. Once subscribed, the app will be sent the new data when the app service publisher updates its data. This guide will cover subscribing to a service. Subscribed apps can also send certain RPCs and generic URI-based actions (see the section [Sending an Action to a Service Provider](#4-sending-an-action-to-a-service-provider), below) to your service.
 
 Currently, there is no high-level API support for using an app service, so you will have to use raw RPCs for all app service related APIs.
 
@@ -300,7 +300,7 @@ sdlManager.sendRpc(unsubscribeServiceData);
 Once you have a service's data, you may want to interact with a service provider by sending RPCs or actions.
 
 ### 3. Sending RPCs to a Service Provider
-Only certain RPCs are available to be passed to the service provider based on their service type. See the [Creating an App Service](Other SDL Features/Creating an App Service#supporting-service-rpcs-and-actions) guide (under the "Supporting Service RPCs and Actions" section) for a chart detailing which RPCs work with which service types. The RPC can only be sent to the active service of a specific service type, not to any inactive service.
+Only certain RPCs are available to be passed to the service provider based on their service type. See the [Creating an App Service](Other SDL Features/Creating an App Service#supporting-service-rpcs-and-actions) guide (under the **Supporting Service RPCs and Actions** section) for a chart detailing which RPCs work with which service types. The RPC can only be sent to the active service of a specific service type, not to any inactive service.
 
 Sending an RPC works exactly the same as if you were sending the RPC to the head unit system. The head unit will simply route your RPC to the appropriate app automatically.
 
