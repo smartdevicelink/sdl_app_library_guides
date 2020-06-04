@@ -682,7 +682,7 @@ Certain RPCs are related to certain services. The chart below shows the current 
 | ButtonPress (SHUFFLE) | | |
 | ButtonPress (REPEAT) | | |
 
-When you are the active service for your service's type (e.g. media), and you have declared that you support these RPCs in your manifest (see the section [Creating an App Service Manifest](#creating-an-app-service-manifest)), then these RPCs will be automatically routed to your app. You will have to set up @![iOS]notifications!@@![android,javaSE,javaEE,javascript]listeners!@ to be aware that they have arrived, and you will then need to respond to those requests.
+When you are the active service for your service's type (e.g. media), and you have declared that you support these RPCs in your manifest (see the section [Creating an App Service Manifest](#1-creating-an-app-service-manifest)), then these RPCs will be automatically routed to your app. You will have to set up @![iOS]notifications!@@![android,javaSE,javaEE,javascript]listeners!@ to be aware that they have arrived, and you will then need to respond to those requests.
 
 @![iOS]
 ##### Objective-C
