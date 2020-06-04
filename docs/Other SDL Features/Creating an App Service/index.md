@@ -5,7 +5,7 @@ App services are used to publish navigation, weather and media data (such as tem
 
 Vehicle head units may use these services in various ways. One app service for each type will be the "active" service to the module. For media, for example, this will be the media app that the user is currently using or listening to. For navigation, it would be a navigation app that the user is using to navigate. For weather, it may be the last used weather app, or a user-selected default. The system may then use that service's data to perform various actions (such as navigating to an address with the active service or to display the temperature as provided from the active weather service).
 
-An SDL app can also subscribe to a published app service. Once subscribed, the app will be sent the new data when the app service publisher updates its data. To find out more about how to subscribe to an app service check out the [Using App Services](Other SDL Features/Using App Services) section. Subscribed apps can also send certain RPCs and generic URI-based actions (see the section **Supporting Service RPCs and Actions** below) to your service.
+An SDL app can also subscribe to a published app service. Once subscribed, the app will be sent the new data when the app service publisher updates its data. To find out more about how to subscribe to an app service check out the [Using App Services](Other SDL Features/Using App Services) section. Subscribed apps can also send certain RPCs and generic URI-based actions (see the section [Supporting Service RPCs and Actions](#supporting-service-rpcs-and-actions) below) to your service.
 
 Currently, there is no high-level API support for publishing an app service, so you will have to use raw RPCs for all app service related APIs.
 
