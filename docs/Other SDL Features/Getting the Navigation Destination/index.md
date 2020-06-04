@@ -89,7 +89,7 @@ const listenerId = sdlManager.getPermissionManager().addListener(permissionEleme
 ```
 !@
 
-### Checking if the Module Supports Waypoints 
+## Checking if the Module Supports Waypoints 
 Since some modules will not support getting waypoints, you should first check if the module supports this feature before trying to use it. Once you have successfully connected to the module, you can check the module's capabilities via the @![iOS]`SDLManager.systemCapabilityManager`!@@![android, javaSE, javaEE,javascript]`sdlManager.getSystemCapabilityManager()`!@ as shown in the example below. Please note that you only need to check once if the module supports getting waypoints, however you must wait to perform this check until you know that the SDL app has been opened (i.e. the `hmiLevel` is non-`NONE`).  
 
 !!! NOTE
