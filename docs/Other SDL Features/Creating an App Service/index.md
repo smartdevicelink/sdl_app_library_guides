@@ -249,7 +249,7 @@ As noted in the introduction to this guide, one service for each type may become
 
 After the initial app record is passed to you in the @![iOS]`SDLPublishAppServiceResponse`!@ @![android,javaSE,javaEE,javascript] `PublishAppServiceResponse`!@, you will need to be notified of changes in order to observe whether or not you have become the active service. To do so, you will have to observe the new @![iOS]`SDLSystemCapabilityTypeAppServices`!@ @![android,javaSE,javaEE,javascript]`SystemCapabilityType.APP_SERVICES`!@ using `GetSystemCapability` and @![iOS]`OnSystemCapability`!@ @![android,javaSE,javaEE,javascript] `OnSystemCapabilityUpdated`!@.
 
-For more information, see the [Using App Services guide](Other SDL Features/Using App Services/#getting-and-subscribing-to-services) and see the **Getting and Subscribing to Services** section.
+For more information, see the [Using App Services](Other SDL Features/Using App Services/getting-and-subscribing-to-services) guide and see the **Getting and Subscribing to Services** section.
 
 ### 3. Update Your Service's Data
 After your service is published, it's time to update your service data. First, you must send an `onAppServiceData` RPC notification with your updated service data. RPC notifications are different than RPC requests in that they will not receive a response from the connected head unit @![iOS], and must use a different `SDLManager` method call to send!@.
@@ -592,7 +592,7 @@ If you choose to make your app service available to other apps, you will have to
 Handling app service subscribers is a two step process. First, you must @![iOS]register for notifications from!@ @![android,javaSE,javaEE,javascript]setup listeners for!@ the subscriber. Then, when you get a request, you will either have to send a response to the subscriber with the app service data or if you have no data to send, send a response with a relevant failure result code.
 
 #### Listening for Requests
-First, you will need to @![iOS]register for `GetAppServiceDataRequest`s notifications.!@@![android,javaSE,javaEE,javascript]setup a listener for `GetAppServiceDataRequest`s!@. Then, when you get the request, you will need to respond with your app service data. Therefore, you will need to store your current service data after the most recent update using `OnAppServiceData` (see the section [Update Your Service's Data](#update-your-service's-data)).
+First, you will need to @![iOS]register for `GetAppServiceDataRequest`s notifications.!@@![android,javaSE,javaEE,javascript]setup a listener for `GetAppServiceDataRequest`s!@. Then, when you get the request, you will need to respond with your app service data. Therefore, you will need to store your current service data after the most recent update using `OnAppServiceData` (see the section [Update Your Service's Data](#update-your-services-data)).
 
 @![iOS]
 ##### Objective-C
