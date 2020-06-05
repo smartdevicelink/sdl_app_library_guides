@@ -39,6 +39,7 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.SPEEC
 
 @![javascript]
 ```js
+// This is technically a private property and will be made public by removing the `_` in a future release
 let speechCapabilities = sdlManager.getSystemCapabilityManager()._speechCapabilities;
 ```
 !@

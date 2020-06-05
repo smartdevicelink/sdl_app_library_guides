@@ -215,7 +215,7 @@ async isSendLocationSupported() {
 !@
 
 ## Using Send Location
-To use the @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE,javascript]`SendLocation`!@ request, you must, at minimum, include the longitude and latitude of the location.
+To use the @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE,javascript]`SendLocation`!@ request, you must at minimum include the longitude and latitude of the location.
 
 @![iOS]
 ##### Objective-C
@@ -223,7 +223,7 @@ To use the @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE,javascript]`SendLo
 SDLSendLocation *sendLocation = [[SDLSendLocation alloc] initWithLongitude:-97.380967 latitude:42.877737 locationName:@"The Center" locationDescription:@"Center of the United States" address:@[@"900 Whiting Dr", @"Yankton, SD 57078"] phoneNumber:nil image:nil];
 
 [self.sdlManager sendRequest:sendLocation withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    if (![response isKindOfClass:SDLSendLocationResponse.class]) {
+    if (error != nil) {
         // Encountered an error sending `SendLocation`
         return;
     }

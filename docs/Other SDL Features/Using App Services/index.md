@@ -56,7 +56,7 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.APP_S
 }, false);
 ...
 
-// Subscribe to capability updates
+// Subscribe to app service capability updates
 sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapabilityType.APP_SERVICES, new OnSystemCapabilityListener() {
     @Override
     public void onCapabilityRetrieved(Object capability) {
@@ -300,7 +300,7 @@ sdlManager.sendRpc(unsubscribeServiceData);
 Once you have a service's data, you may want to interact with a service provider by sending RPCs or actions.
 
 ### 3. Sending RPCs to a Service Provider
-Only certain RPCs are available to be passed to the service provider based on their service type. See the [Creating an App Service](Other SDL Features/Creating an App Service#supporting-service-rpcs-and-actions) guide (under the **Supporting Service RPCs and Actions** section) for a chart detailing which RPCs work with which service types. The RPC can only be sent to the active service of a specific service type, not to any inactive service.
+Only certain RPCs are available to be passed to the service provider based on their service type. See the [Creating an App Service guide **Supporting Service RPCs and Actions** section](Other SDL Features/Creating an App Service#supporting-service-rpcs-and-actions) for a chart detailing which RPCs work with which service types. The RPC can only be sent to the active service of a specific service type, not to any inactive service.
 
 Sending an RPC works exactly the same as if you were sending the RPC to the head unit system. The head unit will simply route your RPC to the appropriate app automatically.
 

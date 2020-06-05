@@ -9,14 +9,14 @@ Both the @![iOS]`SDLGetWayPoints`!@@![android,javaSE,javaEE,javascript]`GetWayPo
 ```objc
 id observerId = [self.sdlManager.permissionManager addObserverForRPCs:@[SDLRPCFunctionNameGetWayPoints, SDLRPCFunctionNameSubscribeWayPoints] groupType:SDLPermissionGroupTypeAny withHandler:^(NSDictionary<SDLPermissionRPCName,NSNumber *> * _Nonnull allChanges, SDLPermissionGroupStatus groupStatus) {
     // This handler will be called whenever the permission status changes
-    NSNumber *getWayPointPermissionStatus = allChanges[SDLRPCFunctionNameGetWayPoints];
+    BOOL getWayPointPermissionStatus = allChanges[SDLRPCFunctionNameGetWayPoints].boolValue;
     if (getWayPointPermissionStatus.boolValue) {
         // Your app has permission to send the `SDLGetWayPoints` request for its current HMI level
     } else {
-         // Your app does not have permission to send the `SDLGetWayPoints` request for its current HMI level
+        // Your app does not have permission to send the `SDLGetWayPoints` request for its current HMI level
     }
 
-    NSNumber *subscribeWayPointsPermissionStatus = allChanges[SDLRPCFunctionNameSubscribeWayPoints];
+    BOOL subscribeWayPointsPermissionStatus = allChanges[SDLRPCFunctionNameSubscribeWayPoints].boolValue;
     if (subscribeWayPointsPermissionStatus.boolValue) {
         // Your app has permission to send the `SDLSubscribeWayPoints` request for its current HMI level
     } else {

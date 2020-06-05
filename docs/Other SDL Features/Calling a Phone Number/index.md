@@ -162,7 +162,7 @@ public interface OnCapabilitySupportedListener {
 ```
 !@
 
-## Sending a Dial Number Request
+## Sending a DialNumber Request
 Once you know that the module supports dialing a phone number and that your SDL app has permission to send the @![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ request, you can create and send the request. 
 
 !!! note
