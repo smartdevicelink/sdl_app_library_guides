@@ -230,7 +230,7 @@ SDLSendLocation *sendLocation = [[SDLSendLocation alloc] initWithLongitude:-97.3
 
     SDLSendLocationResponse *sendLocation = (SDLSendLocationResponse *)response;
     SDLResult resultCode = sendLocation.resultCode;
-    if (!sendLocation.success) {
+    if (!sendLocation.success.boolValue) {
         if ([resultCode isEqualToEnum:SDLResultInvalidData]) {
             // `SDLSendLocation` was rejected. The request contained invalid data
         } else if ([resultCode isEqualToEnum:SDLResultDisallowed]) {
