@@ -223,14 +223,14 @@ To use the @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE,javascript]`SendLo
 SDLSendLocation *sendLocation = [[SDLSendLocation alloc] initWithLongitude:-97.380967 latitude:42.877737 locationName:@"The Center" locationDescription:@"Center of the United States" address:@[@"900 Whiting Dr", @"Yankton, SD 57078"] phoneNumber:nil image:nil];
 
 [self.sdlManager sendRequest:sendLocation withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    if (error != nil) {
+    SDLSendLocationResponse *response = (SDLSendLocationResponse *)response;
+    if (response == nil) {
         // Encountered an error sending `SendLocation`
         return;
     }
 
-    SDLSendLocationResponse *sendLocation = (SDLSendLocationResponse *)response;
-    SDLResult resultCode = sendLocation.resultCode;
-    if (!sendLocation.success.boolValue) {
+    SDLResult resultCode = response.resultCode;
+    if (!response.success.boolValue) {
         if ([resultCode isEqualToEnum:SDLResultInvalidData]) {
             // `SDLSendLocation` was rejected. The request contained invalid data
         } else if ([resultCode isEqualToEnum:SDLResultDisallowed]) {
@@ -256,13 +256,15 @@ sdlManager.send(request: sendLocation) { (request, response, error) in
     }
 
     guard response.success.boolValue == true else {
+        switch response.resultCode {
         case .invalidData:
-            // `SDLSendLocation` was rejected. The request contained invalid data
+        // `SDLSendLocation` was rejected. The request contained invalid data
         case .disallowed:
-            // Your app is not allowed to use `SDLSendLocation`
-        default: break
+        // Your app is not allowed to use `SDLSendLocation`
+        default:
             // Some unknown error has occurred
         }
+
         return
     }
 
