@@ -38,7 +38,7 @@ let observerId = sdlManager.permissionManager.addObserver(forRPCs: [SDLRPCFuncti
 UUID listenerId = sdlManager.getPermissionManager().addListener(Arrays.asList(new PermissionElement(FunctionID.SEND_LOCATION, null)), PermissionManager.PERMISSION_GROUP_TYPE_ANY, new OnPermissionChangeListener() {
     @Override
     public void onPermissionsChange(@NonNull Map<FunctionID, PermissionStatus> allowedPermissions, @NonNull int permissionGroupStatus) {
-        if (permissionGroupStatus != PermissionManager.PERMISSION_GROUP_TYPE_ANY) {
+        if (permissionGroupStatus != PermissionManager.PERMISSION_GROUP_TYPE_ALL_ALLOWED) {
             // Your app does not have permission to send the `SendLocation` request for its current HMI level
             return;
         }
