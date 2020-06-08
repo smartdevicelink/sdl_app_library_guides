@@ -192,7 +192,7 @@ Audio capture can be ended four ways:
 3. The audio pass thru was closed due to user pressing "Done" (or other head-unit provided completion button).
     * If the audio pass thru was displayed and the user pressed the "Done" button, you will receive a `resultCode` of `SUCCESS`. You should handle the audio pass thru as though it was successful.
 4. The audio pass thru was ended due to a request from the app for it to end.
-    * If the audio pass thru was displayed, but you have established on your own that you no longer need to capture audio data, you can send an @![iOS]`SDLEndAudioPassThru`!@@![android,javaSE,javaEE,javascript]`EndAudioPassThru`!@ RPC. You will receive a `resultCode` of `SUCCESS`, and should handle the audio pass thru as though it was successful.
+    * If the audio pass thru was displayed, but you have established on your own that you no longer need to capture audio data, you can send an @![iOS]`SDLEndAudioPassThru`!@@![android,javaSE,javaEE,javascript]`EndAudioPassThru`!@ RPC. You will receive a `resultCode` of `SUCCESS`. Depending on the reason that you sent the `EndAudioPassThru`, you can choose whether or not to handle the audio pass thru as though it were successful. See [Manually Stopping Audio Capture below](#Manually-Stopping-Audio-Capture) for more details.
 
 ### Manually Stopping Audio Capture
 To force stop audio capture, simply send an @![iOS]`SDLEndAudioPassThru`!@@![android,javaSE,javaEE,javascript]`EndAudioPassThru`!@ request. Your @![iOS]`SDLPerformAudioPassThru`!@@![android,javaSE,javaEE,javascript]`PerformAudioPassThru`!@ request will receive response with a `resultCode` of `SUCCESS` when the audio pass thru has ended.
