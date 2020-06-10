@@ -626,6 +626,11 @@ If you created the service using the Android Studio template then the service sh
 </manifest>
 ```
 
+!!! NOTE
+Android API 29 adds a new attribute [foregroundServiceType](https://developer.android.com/reference/android/R.attr#foregroundServiceType) to specify the type of foreground service.
+Starting with Android API 29 please include `android:foregroundServiceType='connectedDevice'` to the service tag for SdlService in your AndroidManifest.xml
+!!!
+
 ### Entering the Foreground
 Because of Android Oreo's requirements, it is mandatory that services enter the foreground for long running tasks. The first bit of integration is ensuring that happens in the `onCreate` method of the `SdlService` or similar. Within the service that implements the SDL lifecycle you will need to add a call to start the service in the foreground. This will include creating a notification to sit in the status bar tray. This information and icons should be relevant for what the service is doing/going to do. If you already start your service in the foreground, you can ignore this section.
 
@@ -951,6 +956,11 @@ Make sure this local class `SdlRouterService.java` is in the same package of `Sd
 !!!
 
 If you created the service using the Android Studio template then the service should have been added to your `AndroidManifest.xml` otherwise the service needs to be added in the manifest. Because we want our service to be seen by other SDL enabled apps, we need to set `android:exported="true"`. The system may issue a lint warning because of this, so we can suppress that using `tools:ignore="ExportedService"`.
+
+!!! NOTE
+Android API 29 adds a new attribute [foregroundServiceType](https://developer.android.com/reference/android/R.attr#foregroundServiceType) to specify the type of foreground service.
+Starting with Android API 29 please include `android:foregroundServiceType='connectedDevice'` to the service tag for SdlRouterService in your AndroidManifest.xml
+!!!
 
 !!! MUST
 The `SdlRouterService` must be placed in a separate process with the name `com.smartdevicelink.router`. If it is not in that process during its start up it will stop itself.
@@ -1376,4 +1386,4 @@ For WebEngine apps, there are slight modifications for integrating the library, 
     </body>
 </html>
 ```
-!@ 
+!@
