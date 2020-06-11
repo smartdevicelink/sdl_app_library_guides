@@ -288,8 +288,7 @@ EndAudioPassThru endAudioPassThru = new EndAudioPassThru();
 endAudioPassThru.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse (int correlationId, RPCResponse response) {
-        EndAudioPassThruResponse endAudioPassThruResponse = (EndAudioPassThruResponse) response;
-        if (endAudioPassThruResponse == null || !endAudioPassThruResponse.getSuccess()) {
+        if (!response.getSuccess())) {
             // There was an error sending the end audio pass thru
             return;
         }
