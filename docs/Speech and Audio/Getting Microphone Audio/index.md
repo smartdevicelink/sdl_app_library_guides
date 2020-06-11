@@ -120,13 +120,10 @@ audioPassThru.setOnRPCResponseListener(new OnRPCResponseListener() {
 		switch (response.getResultCode()) {
 			case SUCCESS:
 				// The audio pass thru ended successfully. Process the audio data
-				break;
 			case ABORTED:
 				// The audio pass thru was aborted by the user. You should cancel any usage of the audio data.
-				break;
 			default:
 				// Some other error occurred. Handle the error.
-				break;
 		}
 	}
 
@@ -144,24 +141,27 @@ sdlManager.sendRPC(audioPassThru);
 ```js
 const audioPassThru = new SDL.rpc.messages.PerformAudioPassThru()
     .setAudioPassThruDisplayText1('Ask me "What\'s the weather?"')
-    .setAudioPassThruDisplayText2('or "What\'s 1 + 2?"');
-.setInitialPrompt(new SDL.rpc.structs.TTSChunk()
-        .setType(SDL.rpc.enums.SpeechCapabilities.TEXT)
-        .setText('Ask me What\'s the weather? or What\'s 1 plus 2?'))
-    .setSamplingRate(SDL.rpc.enums.SamplingRate._22KHZ)
+    .setAudioPassThruDisplayText2('or "What\'s 1 + 2?"')
+    .setInitialPrompt([new SDL.rpc.structs.TTSChunk()
+        .setType(SDL.rpc.enums.SpeechCapabilities.SC_TEXT)
+        .setText('Ask me What\'s the weather? or What\'s 1 plus 2?')
+    ])
+    .setSamplingRate(SDL.rpc.enums.SamplingRate.SamplingRate_16KHZ)
     .setMaxDuration(7000)
-    .setBitsPerSample(SDL.rpc.enums.BitsPerSample._16_BIT)
+    .setBitsPerSample(SDL.rpc.enums.BitsPerSample.BitsPerSample_16_BIT)
     .setAudioType(SDL.rpc.enums.AudioType.PCM)
     .setMuteAudio(false);
 
-const response = await sdlManager.sendRpc(audioPassThru).catch(error => error);
 if (response instanceof SDL.rpc.messages.PerformAudioPassThruResponse) {
-    if (response.getResultCode() !== SDL.rpc.enums.Result.SUCCESS) {
-        // Cancel any usage of the audio data
-        return;
-    } 
-
-    // Process audio data
+    let resultCode = response.getResultCode();
+    if (resultCode === SDL.rpc.enums.Result.SUCCESS) {
+        // The audio pass thru ended successfully. Process the audio data
+    } else if (resultCode === SDL.rpc.enums.Result.ABORTED) {
+        // The audio pass thru was aborted by the user. You should cancel any usage of the audio data.
+    } else {
+        // Some other error occurred. Handle the error.
+        return false;
+    }
 } else {
     // Handle Error
 }
