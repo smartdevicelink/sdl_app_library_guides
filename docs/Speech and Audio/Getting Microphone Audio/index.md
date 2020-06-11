@@ -152,6 +152,7 @@ const audioPassThru = new SDL.rpc.messages.PerformAudioPassThru()
     .setAudioType(SDL.rpc.enums.AudioType.PCM)
     .setMuteAudio(false);
 
+const response = await sdlManager.sendRpc(audioPassThru).catch(error => error);
 if (response instanceof SDL.rpc.messages.PerformAudioPassThruResponse) {
     let resultCode = response.getResultCode();
     if (resultCode === SDL.rpc.enums.Result.SUCCESS) {
@@ -175,7 +176,7 @@ SDL provides audio data as fast as it can gather it, and sends it to the develop
 @![android,javaSE,javaEE,javascript]observe the `OnAudioPassThru` notification.!@
 
 !!! NOTE
-This audio data is only the current chunk of audio data, so the app is in charge of managing previously retrieved audio data.
+This audio data is only the current chunk of audio data, so the app is in charge of saving previously retrieved audio data.
 !!!
 
 @![iOS]
@@ -257,10 +258,8 @@ To force stop audio capture, simply send an @![iOS]`SDLEndAudioPassThru`!@@![and
 ##### Objective-C
 ```objc
 SDLEndAudioPassThru *endAudioPassThru = [[SDLEndAudioPassThru alloc] init];
-[self.sdlManager sendRequest:endAudioPassThru];
 [self.sdlManager sendRequest:endAudioPassThru withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    SDLEndAudioPassThruResponse *endAudioPassThruResponse = (SDLEndAudioPassThruResponse *)response;
-    if (endAudioPassThruResponse == nil || !endAudioPassThruResponse.success.boolValue) {
+    if (!response.success.boolValue) {
         // There was an error sending the end audio pass thru
         return;
     }
@@ -272,7 +271,7 @@ SDLEndAudioPassThru *endAudioPassThru = [[SDLEndAudioPassThru alloc] init];
 ##### Swift
 ```swift
 let endAudioPassThru = SDLEndAudioPassThru()
-sdlManager.send(endAudioPassThru)
+let endAudioPassThru = SDLEndAudioPassThru()
 sdlManager.send(request: endAudioPassThru) { (request, response, error) in
     guard let response = response, response.success.boolValue else {
         // There was an error sending the end audio pass thru
@@ -309,8 +308,7 @@ sdlManager.sendRPC(endAudioPassThru);
 const endAudioPassThru = new SDL.rpc.messages.EndAudioPassThru();
 const response = await sdlManager.sendRpc(endAudioPassThru).catch(error => error);
 
-const result = response.getResultCode();
-if (result !== SDL.rpc.enums.Result.SUCCESS) {
+if (!response.getSuccess()) {
     // There was an error sending the end audio pass thru
     return;
 }
