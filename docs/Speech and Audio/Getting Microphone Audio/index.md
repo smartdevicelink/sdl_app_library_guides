@@ -65,15 +65,13 @@ To initiate audio capture, first construct a @![iOS]`SDLPerformAudioPassThru`!@@
 SDLPerformAudioPassThru *audioPassThru = [[SDLPerformAudioPassThru alloc] initWithInitialPrompt:@"A speech prompt when the dialog appears" audioPassThruDisplayText1:@"Ask me \"What's the weather?\"" audioPassThruDisplayText2:@"or \"What is 1 + 2?\"" samplingRate:SDLSamplingRate16KHZ bitsPerSample:SDLBitsPerSample16Bit audioType:SDLAudioTypePCM maxDuration:4500 muteAudio:YES];
 
 [self.sdlManager sendRequest:audioPassThru withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    SDLPerformAudioPassThruResponse *audioPassThruResponse = (SDLPerformAudioPassThruResponse *)response;
-    if (audioPassThruResponse == nil) {
-        return;
-    }
-
-    if (!audioPassThruResponse.success.boolValue) {
+    if (error != nil) {
         // Cancel any usage of the audio data
         return;
     }
+    
+    SDLPerformAudioPassThruResponse *audioPassThruResponse = (SDLPerformAudioPassThruResponse *)response;
+    // The response was successful
 
     <#Process audio data#>
 }];
@@ -84,12 +82,7 @@ SDLPerformAudioPassThru *audioPassThru = [[SDLPerformAudioPassThru alloc] initWi
 let audioPassThru = SDLPerformAudioPassThru(initialPrompt: "<#A speech prompt when the dialog appears#>", audioPassThruDisplayText1: "<#Ask me \"What's the weather?\"#>", audioPassThruDisplayText2: "<#or \"What is 1 + 2?\"#>", samplingRate: .rate16KHZ, bitsPerSample: .sample16Bit, audioType: .PCM, maxDuration: <#Time in milliseconds to keep the dialog open#>, muteAudio: true)
 
 sdlManager.send(request: audioPassThru) { (request, response, error) in
-    guard let response = response else { return }
-
-    guard response.success.boolValue == true else {
-        // Cancel any usage of the audio data
-        return
-    }
+    guard let response = response as? SDLPerformAudioPassThruResponse, response.success.boolValue == true else { return }
 
     <#Process audio data#>
 }
