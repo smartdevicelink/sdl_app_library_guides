@@ -65,13 +65,10 @@ To initiate audio capture, first construct a @![iOS]`SDLPerformAudioPassThru`!@@
 SDLPerformAudioPassThru *audioPassThru = [[SDLPerformAudioPassThru alloc] initWithInitialPrompt:@"A speech prompt when the dialog appears" audioPassThruDisplayText1:@"Ask me \"What's the weather?\"" audioPassThruDisplayText2:@"or \"What is 1 + 2?\"" samplingRate:SDLSamplingRate16KHZ bitsPerSample:SDLBitsPerSample16Bit audioType:SDLAudioTypePCM maxDuration:4500 muteAudio:YES];
 
 [self.sdlManager sendRequest:audioPassThru withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    if (error != nil) {
-        // Cancel any usage of the audio data
+    if (response.resultCode != SDLResultSuccess) {
+        <#Cancel any usage of the audio data#>
         return;
     }
-    
-    SDLPerformAudioPassThruResponse *audioPassThruResponse = (SDLPerformAudioPassThruResponse *)response;
-    // The response was successful
 
     <#Process audio data#>
 }];
@@ -82,7 +79,10 @@ SDLPerformAudioPassThru *audioPassThru = [[SDLPerformAudioPassThru alloc] initWi
 let audioPassThru = SDLPerformAudioPassThru(initialPrompt: "<#A speech prompt when the dialog appears#>", audioPassThruDisplayText1: "<#Ask me \"What's the weather?\"#>", audioPassThruDisplayText2: "<#or \"What is 1 + 2?\"#>", samplingRate: .rate16KHZ, bitsPerSample: .sample16Bit, audioType: .PCM, maxDuration: <#Time in milliseconds to keep the dialog open#>, muteAudio: true)
 
 sdlManager.send(request: audioPassThru) { (request, response, error) in
-    guard let response = response as? SDLPerformAudioPassThruResponse, response.success.boolValue == true else { return }
+    guard response?.success.boolValue == true else {
+        <#Cancel any usage of the audio data#>
+        return
+    }
 
     <#Process audio data#>
 }
@@ -104,19 +104,20 @@ audioPassThru.setAudioType(AudioType.PCM);
 audioPassThru.setMuteAudio(false);
 
 audioPassThru.setOnRPCResponseListener(new OnRPCResponseListener() {
-	@Override
-	public void onResponse (int correlationId, RPCResponse response) {
-		if(!response.getSuccess()) {
-			return;
-		}
+    @Override
+    public void onResponse (int correlationId, RPCResponse response) {
+        if(!response.getSuccess()) {
+            // Cancel any usage of the audio data
+            return;
+        }
 
-		// Process audio data
-	}
+        // Process audio data
+    }
 
-	@Override
-	public void onError (int correlationId, Result resultCode, String info) {
-		// Handle error
-	}
+    @Override
+    public void onError (int correlationId, Result resultCode, String info) {
+        // Handle error
+    }
 });
 
 sdlManager.sendRPC(audioPassThru);
@@ -139,6 +140,11 @@ const audioPassThru = new SDL.rpc.messages.PerformAudioPassThru()
 
 const response = await sdlManager.sendRpc(audioPassThru).catch(error => error);
 if (response instanceof SDL.rpc.messages.PerformAudioPassThruResponse) {
+    if (response.getResultCode() !== SDL.rpc.enums.Result.SUCCESS) {
+        // Cancel any usage of the audio data
+        return;
+    } 
+
     // Process audio data
 } else {
     // Handle Error
@@ -266,16 +272,16 @@ sdlManager.send(request: endAudioPassThru) { (request, response, error) in
 ```java
 EndAudioPassThru endAudioPassThru = new EndAudioPassThru();
 endAudioPassThru.setOnRPCResponseListener(new OnRPCResponseListener() {
-	@Override
-	public void onResponse (int correlationId, RPCResponse response) {
-		EndAudioPassThruResponse endAudioPassThruResponse = (EndAudioPassThruResponse) response;
-		if (endAudioPassThruResponse == null || !endAudioPassThruResponse.getSuccess()) {
-			// There was an error sending the end audio pass thru
+    @Override
+    public void onResponse (int correlationId, RPCResponse response) {
+        EndAudioPassThruResponse endAudioPassThruResponse = (EndAudioPassThruResponse) response;
+        if (endAudioPassThruResponse == null || !endAudioPassThruResponse.getSuccess()) {
+            // There was an error sending the end audio pass thru
             return;
-		}
+        }
 
-		// The end audio pass thru was sent successfully
-	}
+        // The end audio pass thru was sent successfully
+    }
 });
 
 sdlManager.sendRPC(endAudioPassThru);
@@ -304,13 +310,8 @@ To process the response received from an ended audio capture, make sure that you
 ##### Objective-C
 ```objc
 [self.sdlManager sendRequest:audioPassThru withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    SDLPerformAudioPassThruResponse *audioPassThruResponse = (SDLPerformAudioPassThruResponse *)response;
-    if (audioPassThruResponse == nil) {
-        return;
-    }
-
-    if (!audioPassThruResponse.success.boolValue) {
-        // Cancel any usage of the audio data
+    if (response.resultCode != SDLResultSuccess) {
+        <#Cancel any usage of the audio data#>
         return;
     }
 
@@ -321,10 +322,8 @@ To process the response received from an ended audio capture, make sure that you
 ##### Swift
 ```swift
 sdlManager.send(request: audioPassThru) { (request, response, error) in
-    guard let response = response else { return }
-
-    guard response.success.boolValue == true else {
-        // Cancel any usage of the audio data
+    guard response?.success.boolValue == true else {
+        <#Cancel any usage of the audio data#>
         return
     }
 
@@ -335,20 +334,20 @@ sdlManager.send(request: audioPassThru) { (request, response, error) in
 
 @![android,javaSE,javaEE]
 ```java
-performAPT.setOnRPCResponseListener(new OnRPCResponseListener() {
+audioPassThru.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
-    public void onResponse(int correlationId, RPCResponse response) {
-        Result result = response.getResultCode();
-
-        if(result.equals(Result.SUCCESS)){
-            // Process audio data
-        }else{
-            // Cancel any usage of the data
+    public void onResponse (int correlationId, RPCResponse response) {
+        if(!response.getSuccess()) {
+            // Cancel any usage of the audio data
+            return;
         }
+
+        // Process audio data
     }
+
     @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        // Handle Error
+    public void onError (int correlationId, Result resultCode, String info) {
+        // Handle error
     }
 });
 ```
@@ -356,13 +355,14 @@ performAPT.setOnRPCResponseListener(new OnRPCResponseListener() {
 
 @![javascript]
 ```js
-const response = await sdlManager.sendRpc(performAPT).catch(error => error);
+const response = await sdlManager.sendRpc(audioPassThru).catch(error => error);
 if (response instanceof SDL.rpc.messages.PerformAudioPassThruResponse) {
-    if (response.getResultCode() === SDL.rpc.enums.Result.SUCCESS) {
-        // Process audio data
-    } else {
-        // Cancel any usage of the data
-    }
+    if (response.getResultCode() !== SDL.rpc.enums.Result.SUCCESS) {
+        // Cancel any usage of the audio data
+        return;
+    } 
+
+    // Process audio data
 } else {
     // Handle Error
 }
