@@ -270,7 +270,6 @@ SDLEndAudioPassThru *endAudioPassThru = [[SDLEndAudioPassThru alloc] init];
 ##### Swift
 ```swift
 let endAudioPassThru = SDLEndAudioPassThru()
-let endAudioPassThru = SDLEndAudioPassThru()
 sdlManager.send(request: endAudioPassThru) { (request, response, error) in
     guard let response = response, response.success.boolValue else {
         // There was an error sending the end audio pass thru
