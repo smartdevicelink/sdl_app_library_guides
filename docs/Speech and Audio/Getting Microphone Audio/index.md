@@ -65,7 +65,7 @@ To initiate audio capture, first construct a @![iOS]`SDLPerformAudioPassThru`!@@
 SDLPerformAudioPassThru *audioPassThru = [[SDLPerformAudioPassThru alloc] initWithInitialPrompt:@"A speech prompt when the dialog appears" audioPassThruDisplayText1:@"Ask me \"What's the weather?\"" audioPassThruDisplayText2:@"or \"What is 1 + 2?\"" samplingRate:SDLSamplingRate16KHZ bitsPerSample:SDLBitsPerSample16Bit audioType:SDLAudioTypePCM maxDuration:4500 muteAudio:YES];
 
 [self.sdlManager sendRequest:audioPassThru withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    if (response.resultCode != SDLResultSuccess) {
+    if (!response.success.boolValue) {
         <#Cancel any usage of the audio data#>
         return;
     }
