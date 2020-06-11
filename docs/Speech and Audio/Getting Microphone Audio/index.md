@@ -109,12 +109,20 @@ performAPT.setBitsPerSample(BitsPerSample._16_BIT);
 performAPT.setAudioType(AudioType.PCM);
 performAPT.setMuteAudio(false);
 
-sdlManager.addOnRPCNotificationListener(FunctionID.ON_AUDIO_PASS_THRU, new OnRPCNotificationListener() {
-    @Override
-    public void onNotified(RPCNotification notification) {
-        OnAudioPassThru onAudioPassThru = (OnAudioPassThru) notification;
-        // Process audio data
-    }
+performAPT.setOnRPCResponseListener(new OnRPCResponseListener() {
+	@Override
+	public void onResponse (int correlationId, RPCResponse response) {
+		if (!response.getSuccess()) {
+			return;
+		}
+
+		// Process audio data
+	}
+
+	@Override
+	public void onError(int correlationId, Result resultCode, String info){
+		// Handle error
+	}
 });
 
 sdlManager.sendRPC(performAPT);
