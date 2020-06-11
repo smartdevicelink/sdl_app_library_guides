@@ -84,12 +84,7 @@ SDLPerformAudioPassThru *audioPassThru = [[SDLPerformAudioPassThru alloc] initWi
 let audioPassThru = SDLPerformAudioPassThru(initialPrompt: "<#A speech prompt when the dialog appears#>", audioPassThruDisplayText1: "<#Ask me \"What's the weather?\"#>", audioPassThruDisplayText2: "<#or \"What is 1 + 2?\"#>", samplingRate: .rate16KHZ, bitsPerSample: .sample16Bit, audioType: .PCM, maxDuration: <#Time in milliseconds to keep the dialog open#>, muteAudio: true)
 
 sdlManager.send(request: audioPassThru) { (request, response, error) in
-    guard let response = response else { return }
-
-    guard response.success.boolValue == true else {
-        // Cancel any usage of the audio data
-        return
-    }
+    guard let response = response as? SDLPerformAudioPassThruResponse, response.success.boolValue == true else { return }
 
     <#Process audio data#>
 }
