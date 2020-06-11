@@ -62,15 +62,19 @@ To initiate audio capture, first construct a @![iOS]`SDLPerformAudioPassThru`!@@
 @![iOS]
 ##### Objective-C
 ```objc
-SDLPerformAudioPassThru *audioPassThru = [[SDLPerformAudioPassThru alloc] initWithInitialPrompt:@"A speech prompt when the dialog appears" audioPassThruDisplayText1:@"Ask me \"What's the weather?\"" audioPassThruDisplayText2:@"or \"What is 1 + 2?\"" samplingRate:SDLSamplingRate16KHZ bitsPerSample:SDLBitsPerSample16Bit audioType:SDLAudioTypePCM maxDuration:4500 muteAudio:YES];
+SDLPerformAudioPassThru *audioPassThru = [[SDLPerformAudioPassThru alloc] initWithInitialPrompt:@"<#A speech prompt when the dialog appears#>" audioPassThruDisplayText1:@"<#Ask me \"What's the weather?\"#>" audioPassThruDisplayText2:@"<#or \"What is 1 + 2?\"#>" samplingRate:SDLSamplingRate16KHZ bitsPerSample:SDLBitsPerSample16Bit audioType:SDLAudioTypePCM maxDuration:<#Time in milliseconds to keep the dialog open#> muteAudio:YES];
 
 [self.sdlManager sendRequest:audioPassThru withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    if (!response.success.boolValue) {
+    if ([response.resultCode isEqualToEnum:SDLResultSuccess]) {
+        // The audio pass thru ended successfully.
+        <#Process the audio data#>
+    } else if ([response.resultCode isEqualToEnum:SDLResultAborted]) {
+        // The audio pass thru was aborted by the user. You should cancel any usage of the audio data.
         <#Cancel any usage of the audio data#>
-        return;
+    } else {
+        // Some other error occurred.
+        <#Handle error#>
     }
-
-    <#Process audio data#>
 }];
 ```
 
@@ -79,12 +83,19 @@ SDLPerformAudioPassThru *audioPassThru = [[SDLPerformAudioPassThru alloc] initWi
 let audioPassThru = SDLPerformAudioPassThru(initialPrompt: "<#A speech prompt when the dialog appears#>", audioPassThruDisplayText1: "<#Ask me \"What's the weather?\"#>", audioPassThruDisplayText2: "<#or \"What is 1 + 2?\"#>", samplingRate: .rate16KHZ, bitsPerSample: .sample16Bit, audioType: .PCM, maxDuration: <#Time in milliseconds to keep the dialog open#>, muteAudio: true)
 
 sdlManager.send(request: audioPassThru) { (request, response, error) in
-    guard response?.success.boolValue == true else {
-        <#Cancel any usage of the audio data#>
-        return
-    }
+    guard let response = response else { return }
 
-    <#Process audio data#>
+    switch response.resultCode {
+    case .success:
+        // The audio pass thru ended successfully.
+        <#Process the audio data#>
+    case .aborted:
+        // The audio pass thru was aborted by the user. You should cancel any usage of the audio data.
+        <#Cancel any usage of the audio data#>
+    default:
+        // Some other error occurred.
+        <#Handle error#>
+    }
 }
 ```
 !@
@@ -104,20 +115,25 @@ audioPassThru.setAudioType(AudioType.PCM);
 audioPassThru.setMuteAudio(false);
 
 audioPassThru.setOnRPCResponseListener(new OnRPCResponseListener() {
-    @Override
-    public void onResponse (int correlationId, RPCResponse response) {
-        if(!response.getSuccess()) {
-            // Cancel any usage of the audio data
-            return;
-        }
+	@Override
+	public void onResponse (int correlationId, RPCResponse response) {
+		switch (response.getResultCode()) {
+			case SUCCESS:
+				// The audio pass thru ended successfully. Process the audio data
+				break;
+			case ABORTED:
+				// The audio pass thru was aborted by the user. You should cancel any usage of the audio data.
+				break;
+			default:
+				// Some other error occurred. Handle the error.
+				break;
+		}
+	}
 
-        // Process audio data
-    }
-
-    @Override
-    public void onError (int correlationId, Result resultCode, String info) {
-        // Handle error
-    }
+	@Override
+	public void onError (int correlationId, Result resultCode, String info) {
+		// Handle error
+	}
 });
 
 sdlManager.sendRPC(audioPassThru);
@@ -305,66 +321,3 @@ if (result !== SDL.rpc.enums.Result.SUCCESS) {
 
 ## Handling the Response
 To process the response received from an ended audio capture, make sure that you are listening to the @![iOS]`SDLPerformAudioPassThru`!@@![android,javaSE,javaEE,javascript]`PerformAudioPassThru`!@ response. If the response has a successful result, all of the audio data for the audio pass thru has been received and is ready for processing.
-
-@![iOS]
-##### Objective-C
-```objc
-[self.sdlManager sendRequest:audioPassThru withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    if (response.resultCode != SDLResultSuccess) {
-        <#Cancel any usage of the audio data#>
-        return;
-    }
-
-    <#Process audio data#>
-}];
-```
-
-##### Swift
-```swift
-sdlManager.send(request: audioPassThru) { (request, response, error) in
-    guard response?.success.boolValue == true else {
-        <#Cancel any usage of the audio data#>
-        return
-    }
-
-    <#Process audio data#>
-}
-```
-!@
-
-@![android,javaSE,javaEE]
-```java
-audioPassThru.setOnRPCResponseListener(new OnRPCResponseListener() {
-    @Override
-    public void onResponse (int correlationId, RPCResponse response) {
-        if(!response.getSuccess()) {
-            // Cancel any usage of the audio data
-            return;
-        }
-
-        // Process audio data
-    }
-
-    @Override
-    public void onError (int correlationId, Result resultCode, String info) {
-        // Handle error
-    }
-});
-```
-!@
-
-@![javascript]
-```js
-const response = await sdlManager.sendRpc(audioPassThru).catch(error => error);
-if (response instanceof SDL.rpc.messages.PerformAudioPassThruResponse) {
-    if (response.getResultCode() !== SDL.rpc.enums.Result.SUCCESS) {
-        // Cancel any usage of the audio data
-        return;
-    } 
-
-    // Process audio data
-} else {
-    // Handle Error
-}
-```
-!@
