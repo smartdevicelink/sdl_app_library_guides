@@ -98,21 +98,22 @@ sdlManager.send(request: audioPassThru) { (request, response, error) in
 
 @![android,javaSE,javaEE]
 ```java
-PerformAudioPassThru performAPT = new PerformAudioPassThru();
-performAPT.setAudioPassThruDisplayText1("Ask me \"What's the weather?\"");
-performAPT.setAudioPassThruDisplayText2("or \"What's 1 + 2?\"");
+PerformAudioPassThru audioPassThru = new PerformAudioPassThru();
+audioPassThru.setAudioPassThruDisplayText1("Ask me \"What's the weather?\"");
+audioPassThru.setAudioPassThruDisplayText2("or \"What's 1 + 2?\"");
 
-performAPT.setInitialPrompt(TTSChunkFactory.createSimpleTTSChunks("Ask me What's the weather? or What's 1 plus 2?"));
-performAPT.setSamplingRate(SamplingRate._22KHZ);
-performAPT.setMaxDuration(7000);
-performAPT.setBitsPerSample(BitsPerSample._16_BIT);
-performAPT.setAudioType(AudioType.PCM);
-performAPT.setMuteAudio(false);
+TTSChunk initialPrompt = new TTSChunk("Ask me What's the weather? or What's 1 plus 2?", SpeechCapabilities.TEXT);
+audioPassThru.setInitialPrompt(Arrays.asList(initialPrompt));
+audioPassThru.setSamplingRate(SamplingRate._22KHZ);
+audioPassThru.setMaxDuration(7000);
+audioPassThru.setBitsPerSample(BitsPerSample._16_BIT);
+audioPassThru.setAudioType(AudioType.PCM);
+audioPassThru.setMuteAudio(false);
 
-performAPT.setOnRPCResponseListener(new OnRPCResponseListener() {
+audioPassThru.setOnRPCResponseListener(new OnRPCResponseListener() {
 	@Override
 	public void onResponse (int correlationId, RPCResponse response) {
-		if (!response.getSuccess()) {
+		if(!response.getSuccess()) {
 			return;
 		}
 
@@ -120,21 +121,21 @@ performAPT.setOnRPCResponseListener(new OnRPCResponseListener() {
 	}
 
 	@Override
-	public void onError(int correlationId, Result resultCode, String info){
+	public void onError (int correlationId, Result resultCode, String info) {
 		// Handle error
 	}
 });
 
-sdlManager.sendRPC(performAPT);
+sdlManager.sendRPC(audioPassThru);
 ```
 !@
 
 @![javascript]
 ```js
-const performAPT = new SDL.rpc.messages.PerformAudioPassThru()
+const audioPassThru = new SDL.rpc.messages.PerformAudioPassThru()
     .setAudioPassThruDisplayText1('Ask me "What\'s the weather?"')
     .setAudioPassThruDisplayText2('or "What\'s 1 + 2?"');
-    .setInitialPrompt(new SDL.rpc.structs.TTSChunk()
+.setInitialPrompt(new SDL.rpc.structs.TTSChunk()
         .setType(SDL.rpc.enums.SpeechCapabilities.TEXT)
         .setText('Ask me What\'s the weather? or What\'s 1 plus 2?'))
     .setSamplingRate(SDL.rpc.enums.SamplingRate._22KHZ)
@@ -143,7 +144,7 @@ const performAPT = new SDL.rpc.messages.PerformAudioPassThru()
     .setAudioType(SDL.rpc.enums.AudioType.PCM)
     .setMuteAudio(false);
 
-const response = await sdlManager.sendRpc(performAPT).catch(error => error);
+const response = await sdlManager.sendRpc(audioPassThru).catch(error => error);
 if (response instanceof SDL.rpc.messages.PerformAudioPassThruResponse) {
     // Process audio data
 } else {
