@@ -172,7 +172,7 @@ if (response instanceof SDL.rpc.messages.PerformAudioPassThruResponse) {
 ![Ford Audio Pass Thru](assets/Ford_AudioPassThruPrompt.png)
 
 ### Gathering Audio Data
-SDL provides audio data as fast as it can gather it, and sends it to the developer in chunks. In order to retrieve this audio data, the developer must @![iOS]add a handler to the `SDLPerformAudioPassThru`.!@
+SDL provides audio data as fast as it can gather it and sends it to the developer in chunks. In order to retrieve this audio data, the developer must @![iOS]add a handler to the `SDLPerformAudioPassThru`.!@
 @![android,javaSE,javaEE,javascript]observe the `OnAudioPassThru` notification.!@
 
 !!! NOTE
