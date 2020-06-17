@@ -207,13 +207,13 @@ public interface OnCapabilitySupportedListener {
 
 @![javascript]
 ```js
-async isGetWaypointsSupported() {
+async function isGetWaypointsSupported() {
     // Check if the module has navigation capabilities
-    if (!sdlManager.getSystemCapabilityManager()._getCapabilityMethodForType(SDL.rpc.enums.SystemCapabilityType.NAVIGATION)) {
+    if (!sdlManager.getSystemCapabilityManager().isCapabilitySupported(SDL.rpc.enums.SystemCapabilityType.NAVIGATION)) {
         return false;
     }
 
-    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `GetWayPoints` and `SubscribeWayPoints` are supported if `getCapabilityMethodForType` returns true
+    // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `GetWayPoints` and `SubscribeWayPoints` are supported if `isCapabilitySupported` returns true
     let sdlMsgVersion = sdlManager.getRegisterAppInterfaceResponse().getSdlMsgVersion();
     if (sdlMsgVersion == null) {
         return true;

@@ -43,7 +43,7 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.AUDIO
 
 @![javascript]
 ```js
-// This is technically a private property and will be made public by removing the `_` in a future release
+// This is technically a private property and a `getAudioPassThruCapabilities` method will be added to retrieve it in a future release.
 let audioPassThruCapabilities = sdlManager.getSystemCapabilityManager()._audioPassThruCapabilities;
 ```
 !@
