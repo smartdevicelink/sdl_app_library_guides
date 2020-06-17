@@ -59,8 +59,7 @@ Points that are provided via these callbacks are in the head unit's coordinate s
 !!!
 
 ### Implementing onTouchEvent Yourself
-
-If apps want to have access to the raw touch data, the `SDLDidReceiveTouchEventNotification` notification can be evaluated. This callback will be fired for every touch of the user and contains the following data:
+If you want access to the raw touch data, you can subscribe to the touch event notifications. The notification will contain the following data:
 
 ##### Type
 Touch Type   | What does this mean?
@@ -79,41 +78,33 @@ coord        | X and Y coordinates in the head unit coordinate system. (0, 0) is
 
 #### Example
 
+!!! NOTE
+Please note that if you are integrating an sdl_ios version less than v6.3, the following example code will not work. We recommend updating to the latest release version.
+!!!
+
 ##### Objective-C
 ```objc
-// sdl_ios v6.3+
 [self.sdlManager subscribeToRPC:SDLDidReceiveTouchEventNotification withObserver:self selector:@selector(touchEventAvailable:)];
-
-// Pre sdl_ios v6.3
-[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(touchEventAvailable:) name:SDLDidReceiveTouchEventNotification object:nil];
 
 - (void)touchEventAvailable:(SDLRPCNotificationNotification *)notification {
     if (![notification.notification isKindOfClass:SDLOnTouchEvent.class]) {
-      return;
+        // Handle error
+        return;
     }
     SDLOnTouchEvent *touchEvent = (SDLOnTouchEvent *)notification.notification;
-
-    // Grab something like type
-    SDLTouchType* type = touchEvent.type;
+    <#Use the touch data#>
 }
 ```
 
 ##### Swift
 ```swift
-// sdl_ios v6.3+
 sdlManager.subscribe(to: .SDLDidReceiveTouchEvent, observer: self, selector: #selector(touchEventAvailable(_:)))
 
-// Pre sdl_ios v6.3
-NotificationCenter.default.addObserver(self, selector: #selector(touchEventAvailable(_:)), name: .SDLDidReceiveTouchEvent, object: nil)
-
-// On Receive
 @objc private func touchEventAvailable(_ notification: SDLRPCNotificationNotification) {
     guard let touchEvent = notification.notification as? SDLOnTouchEvent else {
-        print("Error retrieving onTouchEvent object")
+        // Handle error
         return
     }
-
-    // Grab something like type
-    let type = touchEvent.type
+     <#Use the touch data#>
 }
 ```
