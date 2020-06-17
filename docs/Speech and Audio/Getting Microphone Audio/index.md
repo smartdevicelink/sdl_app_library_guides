@@ -8,7 +8,7 @@ SDL does not support an open microphone. However, SDL is working on wake-word su
 !!!
 
 ## Starting Audio Capture
-Before you start an audio capture session you need to find out what audio pass pass thru capabilities the module supports. You can then use that information to start an audio pass thru session.
+Before you start an audio capture session you need to find out what audio pass thru capabilities the module supports. You can then use that information to start an audio pass thru session.
 
 ### Getting the Supported Capabilities
 You must use a sampling rate, bit rate, and audio type supported by the module. Once you have successfully connected to the module, you can access these properties on the @![iOS]`SDLManager.systemCapabilityManager`!@@![android,javaSE,javaEE,javascript]`sdlManager.getSystemCapabilityManager`!@ instance.
