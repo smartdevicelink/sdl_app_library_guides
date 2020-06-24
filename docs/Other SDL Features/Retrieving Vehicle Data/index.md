@@ -125,6 +125,20 @@ sdlManager.sendRPC(vdRequest);
 
 @![javascript]
 ```js
+// sdl_javascript_suite v1.1+
+const vdRequest = new SDL.rpc.messages.GetVehicleData()
+    .setPrndl(true);
+const response = await sdlManager.sendRpcResolve(vdRequest);
+
+if (response.getSuccess()) {
+    const prndl = response.getPrndl();
+    console.log('PRNDL status: ' + prndl);
+} else {
+    console.log('GetVehicleData was rejected.')
+}
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.0
 const vdRequest = new SDL.rpc.messages.GetVehicleData()
     .setPrndl(true);
 const response = await sdlManager.sendRpc(vdRequest).catch(error => error);
@@ -306,6 +320,18 @@ sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnVehicleData, (onVehicleData
 **Second**, send the `SubscribeVehicleData` request:
 
 ```js
+// sdl_javascript_suite v1.1+
+const subscribeRequest = new SDL.rpc.messages.SubscribeVehicleData()
+    .setPrndl(true);
+const response = await sdlManager.sendRpcResolve(subscribeRequest);
+if (response.getSuccess()) {
+    console.log('Successfully subscribed to vehicle data.');
+} else {
+    console.log('Request to subscribe to vehicle data was rejected.');
+}
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.0
 const subscribeRequest = new SDL.rpc.messages.SubscribeVehicleData()
     .setPrndl(true);
 const response = await sdlManager.sendRpc(subscribeRequest).catch(error => error);
@@ -412,6 +438,18 @@ sdlManager.sendRPC(unsubscribeRequest);
 
 @![javascript]
 ```js
+// sdl_javascript_suite v1.1+
+const unsubscribeRequest = new SDL.rpc.messages.UnsubscribeVehicleData()
+    .setPrndl(true); // unsubscribe to PRNDL data
+const response = await sdlManager.sendRpcResolve(unsubscribeRequest);
+if (response.getSuccess()) {
+    console.log('Successfully unsubscribed to vehicle data.');
+} else {
+    console.log('Request to unsubscribe to vehicle data was rejected.');
+}
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.0
 const unsubscribeRequest = new SDL.rpc.messages.UnsubscribeVehicleData()
     .setPrndl(true); // unsubscribe to PRNDL data
 const response = await sdlManager.sendRpc(unsubscribeRequest).catch(error => error);
@@ -518,6 +556,18 @@ sdlManager.sendRPC(vdRequest);
 
 @![javascript]
 ```js
+// sdl_javascript_suite v1.1+
+const vdRequest = new SDL.rpc.messages.GetVehicleData()
+    .setOemCustomVehicleData('OEM-X-Vehicle-Data', true);
+const response = await sdlManager.sendRpcResolve(vdRequest);
+if (response.getSuccess()) {
+    const CustomData = response.getOemCustomVehicleData('OEM-X-Vehicle-Data');
+} else {
+    console.log('GetVehicleData was rejected.')
+}
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.0
 const vdRequest = new SDL.rpc.messages.GetVehicleData()
     .setOemCustomVehicleData('OEM-X-Vehicle-Data', true);
 const response = await sdlManager.sendRpc(vdRequest).catch(error => error);

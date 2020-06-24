@@ -59,6 +59,21 @@ sdlManager.sendRPC(<#Your Request#>);
 
 @![javascript]
 ```js
+// sdl_javascript_suite v1.1+
+async function send () {
+    const response = await sdlManager.sendRpcResolve(alert);
+    if (!response.getSuccess()) {
+        <#The request was not successful. Check the response's result code for more information#>
+        return;
+    }
+    <#The request was successful#>
+}
+send().catch(err => {
+    // thrown exceptions will be caught here
+    // catch exceptional behavior in a parent function instead of at the RPC sending level
+});
+
+// Pre sdl_javascript_suite v1.0
 (async function () {
     const response = await sdlManager.sendRpc(<#Your Request#>);
     if (!response.getSuccess()) {

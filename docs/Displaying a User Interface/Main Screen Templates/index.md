@@ -54,6 +54,18 @@ sdlManager.sendRPC(setDisplayLayoutRequest);
 
 @![javascript]
 ```js
+// sdl_javascript_suite v1.1+
+const setDisplayLayoutRequest = new SDL.rpc.messages.SetDisplayLayout();
+setDisplayLayoutRequest.setDisplayLayout(SDL.rpc.enums.PredefinedLayout.GRAPHIC_WITH_TEXT);
+const response = await sdlManager.sendRpcResolve(alert);
+if (response.getSuccess()) {
+    console.log('Display layout set successfully.');
+} else {
+    console.log('Display layout request rejected.');
+}
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.0
 const setDisplayLayoutRequest = new SDL.rpc.messages.SetDisplayLayout();
 setDisplayLayoutRequest.setDisplayLayout(SDL.rpc.enums.PredefinedLayout.GRAPHIC_WITH_TEXT);
 const response = await sdlManager.sendRpc(setDisplayLayoutRequest).catch(function (error) {

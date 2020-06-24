@@ -63,6 +63,9 @@ const performAPT = new SDL.rpc.messages.PerformAudioPassThru()
     .setAudioType(SDL.rpc.enums.AudioType.PCM)
     .setMuteAudio(false);
 
+// sdl_javascript_suite v1.1+
+sdlManager.sendRpcResolve(performAPT);
+// Pre sdl_javascript_suite v1.0
 sdlManager.sendRpc(performAPT);
 ```
 !@
@@ -181,6 +184,9 @@ sdlManager.sendRPC(endAPT);
 @![javascript]
 ```js
 const endAPT = new SDL.rpc.messages.EndAudioPassThru();
+// sdl_javascript_suite v1.1+
+sdlManager.sendRpcResolve(endAPT);
+// Pre sdl_javascript_suite v1.0
 sdlManager.sendRpc(endAPT);
 ```
 !@
@@ -245,6 +251,19 @@ performAPT.setOnRPCResponseListener(new OnRPCResponseListener() {
 
 @![javascript]
 ```js
+// sdl_javascript_suite v1.1+
+const response = await sdlManager.sendRpcResolve(performAPT);
+if (response instanceof SDL.rpc.messages.PerformAudioPassThruResponse) {
+    if (response.getResultCode() === SDL.rpc.enums.Result.SUCCESS) {
+        // We can use the data
+    } else {
+        // Cancel any usage of the data
+        console.log('Audio pass thru attempt failed.');
+    }
+}
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.0
 const response = await sdlManager.sendRpc(performAPT).catch(error => error);
 if (response instanceof SDL.rpc.messages.PerformAudioPassThruResponse) {
     if (response.getResultCode() === SDL.rpc.enums.Result.SUCCESS) {

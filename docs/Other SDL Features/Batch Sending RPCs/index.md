@@ -73,6 +73,19 @@ sdlManager.sendRPCs(Arrays.asList(subscribeButtonLeft, subscribeButtonLeft), new
 
 @![javascript]
 ```js
+// sdl_javascript_suite v1.1+
+const subscribeButtonLeft = new SDL.rpc.messages.SubscribeButton()
+    .setButtonName(SDL.rpc.enums.ButtonName.SEEKLEFT);
+const subscribeButtonRight = new SDL.rpc.messages.SubscribeButton()
+    .setButtonName(SDL.rpc.enums.ButtonName.SEEKRIGHT);
+
+const responses = await sdlManager.sendRpcsResolve([subscribeButtonLeft, subscribeButtonRight], 
+    (result, messagesRemaining) => {
+        // this is the update callback function
+    });
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.0
 const subscribeButtonLeft = new SDL.rpc.messages.SubscribeButton()
     .setButtonName(SDL.rpc.enums.ButtonName.SEEKLEFT);
 const subscribeButtonRight = new SDL.rpc.messages.SubscribeButton()
@@ -152,6 +165,26 @@ sdlManager.sendSequentialRPCs(Arrays.asList(createInteractionChoiceSet, performI
 
 @![javascript]
 ```js
+// sdl_javascript_suite v1.1+
+const choiceId = 111;
+const choiceSetId = 222;
+const choice = new SDL.rpc.structs.Choice()
+    .setChoiceID(choiceId)
+    .setMenuName('Choice title');
+const createInteractionChoiceSet = new SDL.rpc.messages.CreateInteractionChoiceSet()
+    .setInteractionChoiceSetID(choiceSetId)
+    .setChoiceSet([choice]);
+const performInteraction = new SDL.rpc.messages.PerformInteraction()
+    .setInitialText('Initial Text')
+    .setInteractionMode(SDL.rpc.enums.InteractionMode.MANUAL_ONLY)
+    .setInteractionChoiceSetIDList([choiceSetId]);
+const response = await sdlManager.sendSequentialRpcsResolve([createInteractionChoiceSet, performInteraction], 
+    (result, messagesRemaining) => {
+        // this is the update callback function
+    });
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.0
 const choiceId = 111;
 const choiceSetId = 222;
 const choice = new SDL.rpc.structs.Choice()

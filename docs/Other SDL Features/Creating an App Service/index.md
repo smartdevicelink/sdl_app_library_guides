@@ -231,6 +231,13 @@ sdlManager.sendRPC(publishServiceRequest);
 
 @![javascript]
 ```js
+// sdl_javascript_suite v1.1+
+const publishServiceRequest = new SDL.rpc.messages.PublishAppService()
+    .setAppServiceManifest(manifest);
+const response = await sdlManager.sendRpcResolve(publishServiceRequest);
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.0
 const publishServiceRequest = new SDL.rpc.messages.PublishAppService()
     .setAppServiceManifest(manifest);
 const response = await sdlManager.sendRpc(publishServiceRequest)
@@ -335,6 +342,9 @@ const appData = new SDL.rpc.structs.AppServiceData()
 const onAppData = new SDL.rpc.messages.OnAppServiceData()
     .setServiceData(appData);
 
+// sdl_javascript_suite v1.1+
+sdlManager.sendRpcResolve(onAppData);
+// Pre sdl_javascript_suite v1.0
 sdlManager.sendRpc(onAppData);
 ```
 !@
@@ -467,6 +477,9 @@ if (success) {
     const onAppData = new SDL.rpc.messages.OnAppServiceData()
         .setServiceData(appData);
 
+    // sdl_javascript_suite v1.1+
+    sdlManager.sendRpcResolve(onAppData);
+    // Pre sdl_javascript_suite v1.0
     sdlManager.sendRpc(onAppData);
 }
 ```
@@ -586,6 +599,9 @@ if (success) {
     const onAppData = new SDL.rpc.messages.OnAppServiceData()
         .setServiceData(appData);
 
+    // sdl_javascript_suite v1.1+
+    sdlManager.sendRpcResolve(onAppData);
+    // Pre sdl_javascript_suite v1.0
     sdlManager.sendRpc(onAppData);
 }
 ```
@@ -722,6 +738,9 @@ sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.GetAppServiceData, (message) 
             .setInfo('<#Use to provide more information about an error#>')
             .setServiceData(<#Your App Service Data#>);
 
+        // sdl_javascript_suite v1.1+
+        sdlManager.sendRpcResolve(response);
+        // Pre sdl_javascript_suite v1.0
         sdlManager.sendRpc(response);
     }
 });
@@ -837,6 +856,10 @@ sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.ButtonPress, (message) => {
             .setResultCode(SDL.rpc.enums.Result.SUCCESS)
             .setCorrelationID(buttonPress.getCorrelationId())
             .setInfo('<#Use to provide more information about an error#>');
+
+        // sdl_javascript_suite v1.1+
+        sdlManager.sendRpcResolve(response);
+        // Pre sdl_javascript_suite v1.0
         sdlManager.sendRpc(response);
     }
 });
@@ -959,6 +982,10 @@ sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.PerformAppServiceInteraction,
             .setInfo('<#Use to provide more information about an error#>')
             .setSuccess(true)
             .setResultCode(SDL.rpc.enums.Result.SUCCESS);
+
+        // sdl_javascript_suite v1.1+
+        sdlManager.sendRpcResolve(response);
+        // Pre sdl_javascript_suite v1.0
         sdlManager.sendRpc(response);
     }
 });
@@ -1007,6 +1034,10 @@ const manifest = new SDL.rpc.structs.AppServiceManifest()
 
 const publishServiceRequest = new SDL.rpc.messages.PublishAppService()
     .setAppServiceManifest(manifest);
+
+// sdl_javascript_suite v1.1+
+sdlManager.sendRpcResolve(publishServiceRequest);
+// Pre sdl_javascript_suite v1.0
 sdlManager.sendRpc(publishServiceRequest);
 ```
 !@
@@ -1037,6 +1068,10 @@ sdlManager.sendRPC(unpublishAppService);
 ```js
 const unpublishAppService = new SDL.rpc.messages.UnpublishAppService()
     .setServiceID('<#The serviceID of the service to unpublish>');
+
+// sdl_javascript_suite v1.1+
+sdlManager.sendRpcResolve(unpublishAppService);
+// Pre sdl_javascript_suite v1.0
 sdlManager.sendRpc(unpublishAppService);
 ```
 !@
