@@ -170,7 +170,7 @@ if (response.getSuccess()) {
 }
 // thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const response = await sdlManager.sendRpc(subscribeWayPoints).catch(error => error);
 if (response.getSuccess()) {
     // You are now subscribed!
@@ -255,7 +255,7 @@ if (response.getSuccess()) {
 }
 // thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const unsubscribeWayPoints = new SDL.rpc.messages.UnsubscribeWayPoints();
 const response = await sdlManager.sendRpc(unsubscribeWayPoints).catch(error => error);
 if (response.getSuccess()) {
@@ -340,7 +340,7 @@ if (response.getSuccess()) {
 }
 // thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const getWayPoints = new SDL.rpc.messages.GetWayPoints();
 const response = await sdlManager.sendRpc(getWayPoints).catch(error => error);
 if (response.getSuccess()) {

@@ -351,7 +351,7 @@ const response = await sdlManager.sendRpcResolve(seatLocation);
 <#Seat location updated#>
 // thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const seatLocation = new SDL.rpc.messages.SetGlobalProperties()
     .setUserLocation(<#Selected Seat#>);
 const response = await sdlManager.sendRpc(seatLocation).catch(error => error);
@@ -520,7 +520,7 @@ const response = await sdlManager.sendRpcResolve(getInteriorVehicleData);
 <#Code#>
 // thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const getInteriorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
     .setModuleType(SDL.rpc.enums.ModuleType.RADIO);
 const response = await sdlManager.sendRpc(getInteriorVehicleData).catch(error => error);
@@ -539,7 +539,7 @@ const response = await sdlManager.sendRpcResolve(getInteriorVehicleData);
 <#Code#>
 // thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const getInteriorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
     .setModuleType(SDL.rpc.enums.ModuleType.RADIO)
     .setModuleId(<#ModuleID#>);
@@ -646,7 +646,7 @@ const interiorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
 const response = await sdlManager.sendRpcResolve(interiorVehicleData);
 // thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const interiorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
     .setModuleType(SDL.rpc.enums.ModuleType.RADIO);
 const response = await sdlManager.sendRpc(interiorVehicleData).catch(error => error);
@@ -663,7 +663,7 @@ const interiorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
 const response = await sdlManager.sendRpcResolve(interiorVehicleData);
 // thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const interiorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
     .setModuleType(SDL.rpc.enums.ModuleType.RADIO)
     .setModuleId('<#ModuleID#>');
@@ -740,7 +740,7 @@ const allowed = getInteriorVehicleDataConsentResponse.getAllowances();
 <#Allowed is an array of true or false values#>
 // thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const getInteriorVehicleDataConsent = new SDL.rpc.messages.GetInteriorVehicleDataConsent()
     .setModuleType(<#ModuleType#>)
     .setModuleIds(<#ModuleIDs#>);
@@ -913,7 +913,7 @@ const setInteriorVehicleData = new SDL.rpc.messages.SetInteriorVehicleData()
 const response = await sdlManager.sendRpcResolve(setInteriorVehicleData);
 // thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const response = await sdlManager.sendRpc(setInteriorVehicleData).catch(error => error);
 ```
 
@@ -947,7 +947,7 @@ const setInteriorVehicleData = new SDL.rpc.messages.SetInteriorVehicleData()
 const response = await sdlManager.sendRpcResolve(setInteriorVehicleData);
 // thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const response = await sdlManager.sendRpc(setInteriorVehicleData).catch(error => error);
 ```
 !@
@@ -1049,7 +1049,7 @@ const buttonPress = new SDL.rpc.messages.ButtonPress()
 const response = await sdlManager.sendRpcResolve(buttonPress);
 // thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const response = await sdlManager.sendRpc(buttonPress).catch(error => error);
 ```
 
@@ -1065,7 +1065,7 @@ const buttonPress = new SDL.rpc.messages.ButtonPress()
 const response = await sdlManager.sendRpcResolve(buttonPress);
 // thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const response = await sdlManager.sendRpc(buttonPress).catch(error => error);
 ```
 !@
@@ -1122,7 +1122,7 @@ const response = await sdlManager.sendRpcResolve(releaseInteriorVehicleDataModul
 <#Module Was Released#>
 // thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const releaseInteriorVehicleDataModule = new SDL.rpc.messages.ReleaseInteriorVehicleDataModule()
     .setModuleType(<#ModuleType#>)
     .setModuleId(<#ModuleID#>);

@@ -105,7 +105,7 @@ const subscribeButtonRequest = new SDL.rpc.messages.SubscribeButton();
 subscribeButtonRequest.setButtonName(SDL.rpc.enums.ButtonName.PLAY_PAUSE);
 // sdl_javascript_suite v1.1+
 sdlManager.sendRpcResolve(subscribeButtonRequest);
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 sdlManager.sendRpc(subscribeButtonRequest);
 ```
 !@
@@ -224,7 +224,7 @@ const preset1 = new SDL.rpc.messages.SubscribeButton(ButtonName.PRESET_1);
 const preset2 = new SDL.rpc.messages.SubscribeButton(ButtonName.PRESET_2);
 // sdl_javascript_suite v1.1+
 sdlManager.sendRpcsResolve([preset1, preset2]);
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 sdlManager.sendRpcs([preset1, preset2]);
 ```
 !@
@@ -295,7 +295,7 @@ const subscribeButtonRequest = new SDL.rpc.messages.SubscribeButton();
 subscribeButtonRequest.setButtonName(SDL.rpc.enums.ButtonName.NAV_PAN_UP);
 // sdl_javascript_suite v1.1+
 sdlManager.sendRpcResolve(subscribeButtonRequest);
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 sdlManager.sendRpc(subscribeButtonRequest);
 ```
 !@

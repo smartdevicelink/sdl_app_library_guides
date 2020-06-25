@@ -85,7 +85,7 @@ const responses = await sdlManager.sendRpcsResolve([subscribeButtonLeft, subscri
     });
 // thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const subscribeButtonLeft = new SDL.rpc.messages.SubscribeButton()
     .setButtonName(SDL.rpc.enums.ButtonName.SEEKLEFT);
 const subscribeButtonRight = new SDL.rpc.messages.SubscribeButton()
@@ -184,7 +184,7 @@ const response = await sdlManager.sendSequentialRpcsResolve([createInteractionCh
     });
 // thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const choiceId = 111;
 const choiceSetId = 222;
 const choice = new SDL.rpc.structs.Choice()

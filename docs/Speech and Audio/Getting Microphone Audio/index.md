@@ -65,7 +65,7 @@ const performAPT = new SDL.rpc.messages.PerformAudioPassThru()
 
 // sdl_javascript_suite v1.1+
 sdlManager.sendRpcResolve(performAPT);
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 sdlManager.sendRpc(performAPT);
 ```
 !@
@@ -186,7 +186,7 @@ sdlManager.sendRPC(endAPT);
 const endAPT = new SDL.rpc.messages.EndAudioPassThru();
 // sdl_javascript_suite v1.1+
 sdlManager.sendRpcResolve(endAPT);
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 sdlManager.sendRpc(endAPT);
 ```
 !@
@@ -263,7 +263,7 @@ if (response instanceof SDL.rpc.messages.PerformAudioPassThruResponse) {
 }
 // thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const response = await sdlManager.sendRpc(performAPT).catch(error => error);
 if (response instanceof SDL.rpc.messages.PerformAudioPassThruResponse) {
     if (response.getResultCode() === SDL.rpc.enums.Result.SUCCESS) {

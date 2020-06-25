@@ -358,7 +358,7 @@ if (response.getSuccess()) {
 }
 // thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 // Handle RPC Response
 const response = await sdlManager.sendRpc(alert).catch(function (error) {
     // Handle Error
@@ -439,7 +439,7 @@ if (response.getSuccess()) {
 }
 // thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const cancelInteraction = new SDL.rpc.messages.CancelInteraction()
     .setFunctionIDParam(SDL.rpc.enums.FunctionID.Alert)
     .setCancelID(cancelID);
@@ -507,7 +507,7 @@ if (response.getSuccess()) {
 }
 // thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const cancelInteraction = new SDL.rpc.messages.CancelInteraction().setFunctionIDParam(SDL.rpc.enums.FunctionID.Alert);
 const response = await sdlManager.sendRpc(cancelInteraction).catch(function (error) {
     // Handle Error

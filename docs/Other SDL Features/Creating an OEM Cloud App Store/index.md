@@ -103,7 +103,7 @@ if (response.getSuccess()) {
 }
 // thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const response = await sdlManager.sendRpc(setCloudAppProperties).catch(error => error);
 if (response.getSuccess()) {
     console.log("Request was successful.");
@@ -183,7 +183,7 @@ if (response.getSuccess()) {
 }
 // thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const getCloudAppProperties = new SDL.rpc.message.GetCloudAppProperties()
     .setAppID("<appId>");
 

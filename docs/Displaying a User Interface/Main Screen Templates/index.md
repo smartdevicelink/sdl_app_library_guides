@@ -65,7 +65,7 @@ if (response.getSuccess()) {
 }
 // thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const setDisplayLayoutRequest = new SDL.rpc.messages.SetDisplayLayout();
 setDisplayLayoutRequest.setDisplayLayout(SDL.rpc.enums.PredefinedLayout.GRAPHIC_WITH_TEXT);
 const response = await sdlManager.sendRpc(setDisplayLayoutRequest).catch(function (error) {

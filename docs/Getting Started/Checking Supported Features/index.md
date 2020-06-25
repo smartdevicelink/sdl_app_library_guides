@@ -73,7 +73,7 @@ send().catch(err => {
     // catch exceptional behavior in a parent function instead of at the RPC sending level
 });
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 (async function () {
     const response = await sdlManager.sendRpc(<#Your Request#>);
     if (!response.getSuccess()) {

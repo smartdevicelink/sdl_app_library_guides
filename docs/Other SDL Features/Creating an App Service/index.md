@@ -237,7 +237,7 @@ const publishServiceRequest = new SDL.rpc.messages.PublishAppService()
 const response = await sdlManager.sendRpcResolve(publishServiceRequest);
 // thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const publishServiceRequest = new SDL.rpc.messages.PublishAppService()
     .setAppServiceManifest(manifest);
 const response = await sdlManager.sendRpc(publishServiceRequest)
@@ -344,7 +344,7 @@ const onAppData = new SDL.rpc.messages.OnAppServiceData()
 
 // sdl_javascript_suite v1.1+
 sdlManager.sendRpcResolve(onAppData);
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 sdlManager.sendRpc(onAppData);
 ```
 !@
@@ -479,7 +479,7 @@ if (success) {
 
     // sdl_javascript_suite v1.1+
     sdlManager.sendRpcResolve(onAppData);
-    // Pre sdl_javascript_suite v1.0
+    // Pre sdl_javascript_suite v1.1
     sdlManager.sendRpc(onAppData);
 }
 ```
@@ -601,7 +601,7 @@ if (success) {
 
     // sdl_javascript_suite v1.1+
     sdlManager.sendRpcResolve(onAppData);
-    // Pre sdl_javascript_suite v1.0
+    // Pre sdl_javascript_suite v1.1
     sdlManager.sendRpc(onAppData);
 }
 ```
@@ -740,7 +740,7 @@ sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.GetAppServiceData, (message) 
 
         // sdl_javascript_suite v1.1+
         sdlManager.sendRpcResolve(response);
-        // Pre sdl_javascript_suite v1.0
+        // Pre sdl_javascript_suite v1.1
         sdlManager.sendRpc(response);
     }
 });
@@ -859,7 +859,7 @@ sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.ButtonPress, (message) => {
 
         // sdl_javascript_suite v1.1+
         sdlManager.sendRpcResolve(response);
-        // Pre sdl_javascript_suite v1.0
+        // Pre sdl_javascript_suite v1.1
         sdlManager.sendRpc(response);
     }
 });
@@ -985,7 +985,7 @@ sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.PerformAppServiceInteraction,
 
         // sdl_javascript_suite v1.1+
         sdlManager.sendRpcResolve(response);
-        // Pre sdl_javascript_suite v1.0
+        // Pre sdl_javascript_suite v1.1
         sdlManager.sendRpc(response);
     }
 });
@@ -1037,7 +1037,7 @@ const publishServiceRequest = new SDL.rpc.messages.PublishAppService()
 
 // sdl_javascript_suite v1.1+
 sdlManager.sendRpcResolve(publishServiceRequest);
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 sdlManager.sendRpc(publishServiceRequest);
 ```
 !@
@@ -1071,7 +1071,7 @@ const unpublishAppService = new SDL.rpc.messages.UnpublishAppService()
 
 // sdl_javascript_suite v1.1+
 sdlManager.sendRpcResolve(unpublishAppService);
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 sdlManager.sendRpc(unpublishAppService);
 ```
 !@

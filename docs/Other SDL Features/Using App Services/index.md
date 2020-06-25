@@ -325,7 +325,7 @@ const getAppServiceData = new SDL.rpc.messages.GetAppServiceData()
 getAppServiceData.setSubscribe(true);
 
 const response = await sdlManager.sendRpcResolve(getAppServiceData);
-if (response !== null && ) {
+if (response !== null && response.getSuccess()) {
     const mediaServiceData = response.getServiceData().getMediaServiceData();
 }
 ...
@@ -338,7 +338,7 @@ sdlManager.sendRpcResolve(unsubscribeServiceData);
 // thrown exceptions should be caught by a parent function via .catch()
 
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 // Get service data once
 const getAppServiceData = new SDL.rpc.messages.GetAppServiceData()
     .setServiceType(SDL.rpc.enums.AppServiceType.MEDIA);
@@ -347,7 +347,7 @@ const getAppServiceData = new SDL.rpc.messages.GetAppServiceData()
 getAppServiceData.setSubscribe(true);
 
 const response = await sdlManager.sendRpc(getAppServiceData).catch(error => error);
-if (response !== null && ) {
+if (response !== null && response.getSuccess()) {
     const mediaServiceData = response.getServiceData().getMediaServiceData();
 }
 ...
@@ -431,7 +431,7 @@ const buttonPress = new SDL.rpc.messages.ButtonPress()
 const response = await sdlManager.sendRpcResolve(buttonPress);
 // thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const response = await sdlManager.sendRpc(buttonPress).catch(error => error);
 ```
 !@
@@ -494,7 +494,7 @@ const performAppServiceInteraction = new SDL.rpc.messages.PerformAppServiceInter
 const response = await sdlManager.sendRpcResolve(performAppServiceInteraction);
 // thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const response = await sdlManager.sendRpc(performAppServiceInteraction).catch(error => error);
 ```
 !@
@@ -627,7 +627,7 @@ const sdlArtwork = new SDL.manager.file.filetypes.SdlArtwork(fileName, FileType.
 // thrown exceptions should be caught by a parent function via .catch()
 
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const appServiceData = <#Get the App Service Data#>;
 const weatherServiceData = appServiceData.getWeatherServiceData();
 

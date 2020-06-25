@@ -138,7 +138,7 @@ if (response.getSuccess()) {
 }
 // thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const vdRequest = new SDL.rpc.messages.GetVehicleData()
     .setPrndl(true);
 const response = await sdlManager.sendRpc(vdRequest).catch(error => error);
@@ -331,7 +331,7 @@ if (response.getSuccess()) {
 }
 // thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const subscribeRequest = new SDL.rpc.messages.SubscribeVehicleData()
     .setPrndl(true);
 const response = await sdlManager.sendRpc(subscribeRequest).catch(error => error);
@@ -449,7 +449,7 @@ if (response.getSuccess()) {
 }
 // thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const unsubscribeRequest = new SDL.rpc.messages.UnsubscribeVehicleData()
     .setPrndl(true); // unsubscribe to PRNDL data
 const response = await sdlManager.sendRpc(unsubscribeRequest).catch(error => error);
@@ -567,7 +567,7 @@ if (response.getSuccess()) {
 }
 // thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const vdRequest = new SDL.rpc.messages.GetVehicleData()
     .setOemCustomVehicleData('OEM-X-Vehicle-Data', true);
 const response = await sdlManager.sendRpc(vdRequest).catch(error => error);

@@ -212,7 +212,7 @@ if (result === SDL.rpc.enums.Result.SUCCESS) {
 // thrown exceptions should be caught by a parent function via .catch()
 
 
-// Pre sdl_javascript_suite v1.0
+// Pre sdl_javascript_suite v1.1
 const response = await sdlManager.sendRpc(sendLocation).catch(error => error);
 
 // Monitor response
