@@ -61,17 +61,23 @@ This code snippet shows how to configure a guide to only be made available for t
 1. Apostrophes need to be removed
 
 ### Examples
-#### To link to a header on the same page: 
+#### To link to a header on the same page:
 ```
 ### Supporting Service RPCs and Actions
 ```
+
 Use the following formatting:
 ```
 [Supporting Service RPCs and Actions](#supporting-service-rpcs-and-actions) 
 ```
 
 #### To link to a header on a different page:
-To link to a header called **Getting and Subscribing to Services** on a page called **Using App Services** use the following formatting:
+To link to the following header on a page called **Using App Services**:
+```
+### Getting and Subscribing to Services
+```
+
+Use the following formatting:
 ```
 [Using App Services](Using App Services#getting-and-subscribing-to-services)
 ```
