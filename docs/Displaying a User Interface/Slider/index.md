@@ -264,6 +264,14 @@ sdlManager.sendRPC(slider);
 
 @![javascript]
 ```js
+// sdl_javascript_suite v1.1+
+const sliderResponse = await sdlManager.sendRpcResolve(slider);
+if (sliderResponse.getSuccess()) {
+    console.log('Slider Position Set: ' + sliderResponse.getSliderPosition());
+}
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.1
 const sliderResponse = await sdlManager.sendRpc(slider).catch(function (error) {
     // Handle Error
 });
@@ -330,6 +338,18 @@ sdlManager.sendRPC(cancelInteraction);
 
 @![javascript]
 ```js
+// sdl_javascript_suite v1.1+
+// `cancelID` is the ID that you assigned when creating the slider
+const cancelInteraction = new SDL.rpc.messages.CancelInteraction()
+    .setFunctionIDParam(SDL.rpc.enums.FunctionID.Slider)
+    .setCancelID(cancelID);
+const response = await sdlManager.sendRpcResolve(cancelInteraction);
+if (response.getSuccess()) {
+    console.log('Slider was dismissed successfully');
+}
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.1
 // `cancelID` is the ID that you assigned when creating the slider
 const cancelInteraction = new SDL.rpc.messages.CancelInteraction()
     .setFunctionIDParam(SDL.rpc.enums.FunctionID.Slider)
@@ -390,6 +410,15 @@ sdlManager.sendRPC(cancelInteraction);
 
 @![javascript]
 ```js
+// sdl_javascript_suite v1.1+
+const cancelInteraction = new SDL.rpc.messages.CancelInteraction().setFunctionIDParam(SDL.rpc.enums.FunctionID.Slider);
+const response = await sdlManager.sendRpcResolve(cancelInteraction);
+if (response.getSuccess()) {
+    console.log('Slider was dismissed successfully');
+}
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.1
 const cancelInteraction = new SDL.rpc.messages.CancelInteraction().setFunctionIDParam(SDL.rpc.enums.FunctionID.Slider);
 const response = await sdlManager.sendRpc(cancelInteraction).catch(function (error) {
     // Handle Error

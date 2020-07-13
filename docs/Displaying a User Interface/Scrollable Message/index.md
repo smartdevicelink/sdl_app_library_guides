@@ -160,6 +160,10 @@ const scrollableMessage = new SDL.rpc.messages.ScrollableMessage()
 scrollableMessage.setCancelID(integer);
 
 // Send the scrollable message
+
+// sdl_javascript_suite v1.1+
+sdlManager.sendRpcResolve(scrollableMessage);
+// Pre sdl_javascript_suite v1.1
 sdlManager.sendRpc(scrollableMessage);
 ```
 
@@ -236,6 +240,18 @@ sdlManager.sendRPC(cancelInteraction);
 
 @![javascript]
 ```js
+// sdl_javascript_suite v1.1+
+// `cancelID` is the ID that you assigned when creating and sending the alert
+const cancelInteraction = new SDL.rpc.messages.CancelInteraction()
+    .setFunctionIDParam(SDL.rpc.enums.FunctionID.ScrollableMessage)
+    .setCancelID(cancelID);
+const response = await sdlManager.sendRpcResolve(cancelInteraction);
+if (response.getSuccess()){
+    console.log("Scrollable message was dismissed successfully");
+}
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.1
 // `cancelID` is the ID that you assigned when creating and sending the alert
 const cancelInteraction = new SDL.rpc.messages.CancelInteraction()
     .setFunctionIDParam(SDL.rpc.enums.FunctionID.ScrollableMessage)
@@ -296,6 +312,16 @@ sdlManager.sendRPC(cancelInteraction);
 
 @![javascript]
 ```js
+// sdl_javascript_suite v1.1+
+// `cancelID` is the ID that you assigned when creating and sending the alert
+const cancelInteraction = new SDL.rpc.messages.CancelInteraction().setFunctionIDParam(SDL.rpc.enums.FunctionID.ScrollableMessage);
+const response = await sdlManager.sendRpcResolve(cancelInteraction);
+if (response.getSuccess()){
+    console.log("Scrollable message was dismissed successfully");
+}
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.1
 const cancelInteraction = new SDL.rpc.messages.CancelInteraction().setFunctionIDParam(SDL.rpc.enums.FunctionID.ScrollableMessage);
 const response = await sdlManager.sendRpc(cancelInteraction).catch(function (error) {
     // Handle Error

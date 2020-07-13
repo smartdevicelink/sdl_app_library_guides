@@ -316,6 +316,29 @@ sdlManager.sendRPC(unsubscribeServiceData);
 
 @![javascript]
 ```js
+// sdl_javascript_suite v1.1+
+// Get service data once
+const getAppServiceData = new SDL.rpc.messages.GetAppServiceData()
+    .setServiceType(SDL.rpc.enums.AppServiceType.MEDIA);
+
+// Subscribe to future updates if you want them
+getAppServiceData.setSubscribe(true);
+
+const response = await sdlManager.sendRpcResolve(getAppServiceData);
+if (response !== null && response.getSuccess()) {
+    const mediaServiceData = response.getServiceData().getMediaServiceData();
+}
+...
+
+// Unsubscribe from updates
+const unsubscribeServiceData = new SDL.rpc.messages.GetAppServiceData(SDL.rpc.enums.AppServiceType.MEDIA);
+unsubscribeServiceData.setSubscribe(false);
+
+sdlManager.sendRpcResolve(unsubscribeServiceData);
+// thrown exceptions should be caught by a parent function via .catch()
+
+
+// Pre sdl_javascript_suite v1.1
 // Get service data once
 const getAppServiceData = new SDL.rpc.messages.GetAppServiceData()
     .setServiceType(SDL.rpc.enums.AppServiceType.MEDIA);
@@ -324,7 +347,7 @@ const getAppServiceData = new SDL.rpc.messages.GetAppServiceData()
 getAppServiceData.setSubscribe(true);
 
 const response = await sdlManager.sendRpc(getAppServiceData).catch(error => error);
-if (response !== null && ) {
+if (response !== null && response.getSuccess()) {
     const mediaServiceData = response.getServiceData().getMediaServiceData();
 }
 ...
@@ -404,6 +427,11 @@ const buttonPress = new SDL.rpc.messages.ButtonPress()
     .setButtonName(SDL.rpc.enums.ButtonName.OK)
     .setModuleType(SDL.rpc.enums.ModuleType.AUDIO);
 
+// sdl_javascript_suite v1.1+
+const response = await sdlManager.sendRpcResolve(buttonPress);
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.1
 const response = await sdlManager.sendRpc(buttonPress).catch(error => error);
 ```
 !@
@@ -462,6 +490,11 @@ const performAppServiceInteraction = new SDL.rpc.messages.PerformAppServiceInter
     .setServiceID("<#Previously Retrieved ServiceID#>")
     .setOriginApp("<#Your App Id#>");
 
+// sdl_javascript_suite v1.1+
+const response = await sdlManager.sendRpcResolve(performAppServiceInteraction);
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.1
 const response = await sdlManager.sendRpc(performAppServiceInteraction).catch(error => error);
 ```
 !@
@@ -573,6 +606,28 @@ sdlManager.sendRPC(getFile);
 
 @![javascript]
 ```js
+// sdl_javascript_suite v1.1+
+const appServiceData = <#Get the App Service Data#>;
+const weatherServiceData = appServiceData.getWeatherServiceData();
+
+if (weatherServiceData === null || weatherServiceData.getCurrentForecast() === null || weatherServiceData.getCurrentForecast().getWeatherIcon() === null) {
+    // The image doesn't exist, exit early
+    return;
+}
+const currentForecastImageName = weatherServiceData.getCurrentForecast().getWeatherIcon().getValueParam();
+
+const getFile = new SDL.rpc.messages.GetFile()
+    .setFileName(currentForecastImageName)
+    .setAppServiceId(<#Service ID>);
+
+const getFileResponse = await sdlManager.sendRpcResolve(getFile);
+const fileData = getFileResponse.getBulkData();
+const sdlArtwork = new SDL.manager.file.filetypes.SdlArtwork(fileName, FileType.GRAPHIC_PNG, fileData, false);
+// Use the sdlArtwork 
+// thrown exceptions should be caught by a parent function via .catch()
+
+
+// Pre sdl_javascript_suite v1.1
 const appServiceData = <#Get the App Service Data#>;
 const weatherServiceData = appServiceData.getWeatherServiceData();
 
