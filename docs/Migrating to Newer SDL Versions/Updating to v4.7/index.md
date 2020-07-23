@@ -582,7 +582,7 @@ public void onOnButtonEvent(OnButtonEvent notification) {
    Log.i(TAG, "onOnButtonEvent: ");
 
    if (notification.getButtonName() == CUSTOM_BUTTON){
-        int ID = notification.getCustomButtonName();
+        int ID = notification.getCustomButtonID();
         Log.i(TAG, "Button event received for button " + ID);
     }
 }
@@ -592,7 +592,7 @@ public void onOnButtonPress(OnButtonPress notification) {
     Log.i(TAG, "onOnButtonPress: ");
 
     if (notification.getButtonName() == CUSTOM_BUTTON){
-        int ID = notification.getCustomButtonName();
+        int ID = notification.getCustomButtonID();
         Log.i(TAG, "Button press received for button " + ID);
     }
 }
