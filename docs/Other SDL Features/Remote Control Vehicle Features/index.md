@@ -959,8 +959,7 @@ Another unique feature of remote control is the ability to send simulated button
 ##### Objective-C
 ###### RPC < v6.0
 ```objc
-SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameEject moduleType:SDLModuleTypeRadio];
-buttonPress.buttonPressMode = SDLButtonPressModeShort;
+SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameEject moduleType:SDLModuleTypeRadio moduleId:nil buttonPressMode:SDLButtonPressModeShort];
 
 [self.sdlManager sendRequest:buttonPress withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if(!response.success) { return; }
@@ -969,8 +968,7 @@ buttonPress.buttonPressMode = SDLButtonPressModeShort;
 
 ###### RPC v6.0+
 ```objc
-SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameEject moduleType:SDLModuleTypeRadio moduleId:@"<#ModuleID#>"];
-buttonPress.buttonPressMode = SDLButtonPressModeShort;
+SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameEject moduleType:SDLModuleTypeRadio moduleId:@"<#ModuleID#>" buttonPressMode:SDLButtonPressModeShort];
 
 [self.sdlManager sendRequest:buttonPress withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if(!response.success) { return; }
@@ -980,7 +978,7 @@ buttonPress.buttonPressMode = SDLButtonPressModeShort;
 ##### Swift
 ###### RPC < v6.0
 ```swift
-let buttonPress = SDLButtonPress(buttonName: .eject, moduleType: .radio)
+let buttonPress = SDLButtonPress(buttonName: .eject, moduleType: .radio, moduleId: nil, buttonPressMode: .short)
 buttonPress.buttonPressMode = .short
 
 sdlManager.send(request: buttonPress) { (request, response, error) in
@@ -990,8 +988,7 @@ sdlManager.send(request: buttonPress) { (request, response, error) in
 
 ###### RPC v6.0+
 ```swift
-let buttonPress = SDLButtonPress(buttonName: .eject, moduleType: .radio, moduleId: "<#ModuleID#>")
-buttonPress.buttonPressMode = .short
+let buttonPress = SDLButtonPress(buttonName: .eject, moduleType: .radio, moduleId: "<#ModuleID#>", buttonPressMode: .short)
 
 sdlManager.send(request: buttonPress) { (request, response, error) in
     guard response?.success.boolValue == true else { return }

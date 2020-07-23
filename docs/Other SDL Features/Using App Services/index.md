@@ -375,7 +375,7 @@ Your app may need special permissions to use the RPCs that route to app service 
 @![iOS]
 ##### Objective-C
 ```objc
-SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameOk moduleType:SDLModuleTypeAudio];
+SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameOk moduleType:SDLModuleTypeAudio moduleId:nil buttonPressMode:SDLButtonPressModeShort];
 
 [self.sdlManager sendRequest:buttonPress withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if (!response || !response.success.boolValue) {
@@ -390,7 +390,7 @@ SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButt
 
 ##### Swift
 ```swift
-let buttonPress = SDLButtonPress(buttonName: .ok, moduleType: .audio)
+let buttonPress = SDLButtonPress(buttonName: .ok, moduleType: .audio, moduleId: nil, buttonPressMode: .short)
 sdlManager.send(request: getServiceData) { (req, res, err) in
     guard let response = res as? SDLButtonPressResponse, response.success.boolValue == true, err == nil else { return }
 
