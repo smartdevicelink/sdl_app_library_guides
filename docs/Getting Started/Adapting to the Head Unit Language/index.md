@@ -47,7 +47,7 @@ To customize the app name for the head unit's current language, implement the fo
 1. Set the default `language` in the !@@![iOS]`SDLLifecycleConfiguration`!@@![android,javaSE,javaEE]`Builder`.!@
 @![iOS]
 2. Add all languages your app supports to `languagesSupported` in the `SDLLifecycleConfiguration`.
-3. Implement the `SDLManagerDelegate`'s `managerShouldUpdateLifecycleToLanguage:hmiLanguage` method. If the head unit's language is different from the default language and is a supported language, the method will be called with the head unit's current language. Return a `SDLLifecycleConfigurationUpdate` object with the new `appName` and/or `ttsName`.
+3. Implement the `SDLManagerDelegate`'s `managerShouldUpdateLifecycleToLanguage:hmiLanguage:` method. If the head unit's language is different from the default language and is a supported language, the method will be called with the head unit's current language. Return a `SDLLifecycleConfigurationUpdate` object with the new `appName` and/or `ttsName`.
 !@
 @![android,javaSE,javaEE]
 2. Implement the `sdlManagerListener`'s `//TODO` method. If the head unit's language is different from the default language and is a supported language, the method will be called with the head unit's current language. Return a `LifecycleConfigurationUpdate` with the new `appName` and/or `ttsName`.
