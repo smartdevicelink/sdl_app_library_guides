@@ -94,7 +94,10 @@ function onHmiStatusListener (onHmiStatus) {
         // now in HMI FULL
     }
 }
-sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnHMIStatus, onHmiStatusListener);
+
+lifecycleConfig.setRpcNotificationListeners({
+    [SDL.rpc.enums.FunctionID.OnHMIStatus]: onHmiStatusListener
+});
 ```
 !@
 
