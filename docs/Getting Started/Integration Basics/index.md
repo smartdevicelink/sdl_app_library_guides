@@ -399,7 +399,7 @@ In addition, there are three optional methods:
 
 1. `audioStreamingState:didChangeToState:` Called when the audio streaming state of this application changes on the remote system. For more information, please refer to [Understanding Permissions](Getting Started/Understanding Permissions).
 1. `systemContext:didChangeToContext:` Called when the system context (i.e. a menu is open, an alert is visible,  a voice recognition session is in progress) of this application changes on the remote system. For more information, please refer to [Understanding Permissions](Getting Started/Understanding Permissions).
-1. `managerShouldUpdateLifecycleToLanguage:` Called when the head unit language does not match the `language` set in the `SDLLifecycleConfiguration` but does match a language included in `languagesSupported`. If desired, you can customize the `appName`, the `shortAppName`,  and `ttsName` for the head unit's current language. For more information about supporting more than one language in your app please refer to [Getting Started/Adapting to the Head Unit Language](Getting Started/Adapting to the Head Unit Language).
+1. `managerShouldUpdateLifecycleToLanguage:hmiLanguage:` Called when the head unit language does not match the `language` set in the `SDLLifecycleConfiguration` but does match a language included in `languagesSupported`. If desired, you can customize the `appName`, the `shortAppName`,  and `ttsName` for the head unit's current language. For more information about supporting more than one language in your app please refer to [Getting Started/Adapting to the Head Unit Language](Getting Started/Adapting to the Head Unit Language).
 
 ### Example Implementation of a Proxy Class
 The following code snippet has an example of setting up both a TCP and iAP connection.
@@ -723,6 +723,7 @@ public class SdlService extends Service {
                 }
 
                 @Override
+                // TODO
                 public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language) {
                     return null;
                 }
@@ -801,6 +802,7 @@ public class SdlService {
                 }
 
                 @Override
+                // TODO
                 public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language) {
                     return null;
                 }
