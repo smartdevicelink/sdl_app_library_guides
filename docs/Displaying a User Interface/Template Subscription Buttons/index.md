@@ -36,7 +36,7 @@ There are three general types of subscriptions buttons: audio related buttons on
 
 @![iOS,android,javaSE,javaEE]
 ## Subscribing to Subscription Buttons
-You can easily subscribe to subscription buttons using the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@. Simply tell the manager which button to subscribe to and you will be notified when the user selects the button.
+You can easily subscribe to subscription buttons using the !@@![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@@![iOS,android,javaSE,javaEE]. Simply tell the manager which button to subscribe to and you will be notified when the user selects the button.
 !@
 
 ### How to Subscribe
