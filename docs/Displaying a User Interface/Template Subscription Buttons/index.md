@@ -36,8 +36,8 @@ There are three general types of subscriptions buttons: audio related buttons on
 
 @![iOS,android,javaSE,javaEE]
 ## Subscribing to Subscription Buttons
-You can easily subscribe to subscription buttons using the !@@![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@@![iOS,android,javaSE,javaEE]. Simply tell the manager which button to subscribe to and you will be notified when the user selects the button.
-!@
+You can easily subscribe to subscription buttons using the !@@![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@@![iOS,android,javaSE,javaEE]. Simply tell the manager which button to subscribe and you will be notified when the user selects the button.
+!@@![iOS]There are two different ways to get notification of button updates. The first way is to pass a handler that will get called when the button is selected. The other way is to pass a selector that be notified when the button is selected.!@
 
 @![iOS]
 ### Subscribe with a Block Handler
@@ -82,7 +82,7 @@ sdlManager.screenManager.subscribeButton(.playPause) { (buttonPress, buttonEvent
 ### Subscribe with a Selector
 Once you have subscribed to the button, the selector will be called when the button has been selected. If there is an error subscribing to the subscribe button it will be returned in the `error` parameter.
 
-The selector can be created with zero or up to four parameters in the following order: `SDLButtonName`, `NSError`, `SDLOnButtonPress`, and `SDLOnButtonEvent`. If the fourth parameter, `SDLOnButtonEvent` is omitted from the selector, then you will only be notified when a button press occurs. 
+The selector can be created with zero or up to four parameters in the following order: `SDLButtonName`, `NSError`, `SDLOnButtonPress`, and `SDLOnButtonEvent`. When the fourth parameter, `SDLOnButtonEvent` is omitted from the selector, then you will only be notified when a button press occurs. 
 
 ##### Objective-C
 ```objc
