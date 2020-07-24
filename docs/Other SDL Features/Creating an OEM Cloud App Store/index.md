@@ -75,11 +75,6 @@ setCloudAppProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
             Log.i("SdlService", "Request was rejected.");
         }
     }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
-    }
 });
 sdlManager.sendRPC(setCloudAppProperties);
 ```
@@ -158,11 +153,6 @@ getCloudAppProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
         } else {
             Log.i("SdlService", "Request was rejected.");
         }
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
     }
 });
 sdlManager.sendRPC(getCloudAppProperties);

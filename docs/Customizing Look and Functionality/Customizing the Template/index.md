@@ -134,11 +134,6 @@ setDisplayLayout.setOnRPCResponseListener(new OnRPCResponseListener() {
             // Success
         }
     }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        // Handle error
-    }
 });
 sdlManager.sendRPC(setDisplayLayout);
 ```
@@ -222,11 +217,6 @@ setGlobalProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
         if (response.getSuccess()){
             // Success
         }
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        // Handle error
     }
 });
 sdlManager.sendRPC(setGlobalProperties);

@@ -241,10 +241,6 @@ performAPT.setOnRPCResponseListener(new OnRPCResponseListener() {
             Log.e("SdlService", "Audio pass thru attempt failed.");
         }
     }
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
-    }
 });
 ```
 !@

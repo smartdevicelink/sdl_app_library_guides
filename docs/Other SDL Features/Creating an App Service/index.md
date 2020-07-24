@@ -217,12 +217,12 @@ publishServiceRequest.setAppServiceManifest(manifest);
 publishServiceRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
 	@Override
 	public void onResponse(int correlationId, RPCResponse response) {
-		<#Use the response#>
-	}
-
-	@Override
-	public void onError(int correlationId, Result resultCode, String info){
-		<#Error Handling#>
+        if (response.getSuccess()) {
+            <#Use the response#>
+        } else {
+            <#Error Handling#>
+        }
+		
 	}
 });
 sdlManager.sendRPC(publishServiceRequest);
