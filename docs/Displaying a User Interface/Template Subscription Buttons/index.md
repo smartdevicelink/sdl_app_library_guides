@@ -37,7 +37,11 @@ There are three general types of subscriptions buttons: audio related buttons on
 @![iOS,android,javaSE,javaEE]
 ## Subscribing to Subscription Buttons
 You can easily subscribe to subscription buttons using the !@@![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@@![iOS,android,javaSE,javaEE]. Simply tell the manager which button to subscribe and you will be notified when the user selects the button.
-!@@![iOS]There are two different ways to get notification of button updates. The first way is to pass a handler that will get called when the button is selected. The other way is to pass a selector that be notified when the button is selected.!@
+!@
+
+@![iOS]
+There are two different ways to get notification of button updates. The first way is to pass a handler that will get called when the button is selected. The other way is to pass a selector that be notified when the button is selected.
+!@
 
 @![iOS]
 ### Subscribe with a Block Handler
@@ -45,7 +49,7 @@ Once you have subscribed to the button, the handler will be called when the butt
 
 ##### Objective-C
 ```objc
-[self.sdlManager.screenManager subscribeButton:SDLButtonNamePlayPause withUpdateHandler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent, NSError * _Nullable error) {
+ NSObject *observer = [self.sdlManager.screenManager subscribeButton:SDLButtonNamePlayPause withUpdateHandler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent, NSError * _Nullable error) {
     if (error != nil) {
         // There was an error subscribing to the button
         return;
@@ -63,7 +67,7 @@ Once you have subscribed to the button, the handler will be called when the butt
 
 ##### Swift
 ```swift
-sdlManager.screenManager.subscribeButton(.playPause) { (buttonPress, buttonEvent, error) in
+let observer = sdlManager.screenManager.subscribeButton(.playPause) { (buttonPress, buttonEvent, error) in
     guard error == nil else {
         // There was an error subscribing to the button
         return
@@ -127,7 +131,7 @@ sdlManager.screenManager.subscribeButton(.playPause, withObserver: self, selecto
 
 @![android,javaSE,javaEE]
 ### Subscribe with a Listener
-Once you have subscribed to the button, the listener will be called when the button has been selected. If there is an error subscribing to the subscribe button it will be returned in the `error` parameter.
+Once you have subscribed to the button, the listener will be called when the button has been selected. If there is an error subscribing to the button the error message will be returned in the `error` parameter.
 
 ```java
 sdlManager.getScreenManager().addButtonListener(ButtonName.PLAY_PAUSE, new OnButtonListener() {
@@ -145,6 +149,57 @@ sdlManager.getScreenManager().addButtonListener(ButtonName.PLAY_PAUSE, new OnBut
     public void onError (String info) {
         // There was an error subscribing to the button
     }
+});
+```
+!@
+
+@![iOS,android,javaSE,javaEE]
+## Unsubscribing to Subscription Buttons
+To unsubscribe to a subscription button, simply tell the !@@![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@@![iOS,android,javaSE,javaEE] which button to unsubscribe.
+!@
+
+@![iOS]
+When unsubscribing, you will need to pass the observer object that you want to unsubscribe. If you subscribed using a handler, use the observer object returned when you subscribed. If you subscribed using a selector, use the same observer object you passed when subscribing. 
+!@
+
+##### Objective-C
+```objc
+[self.sdlManager.screenManager unsubscribeButton:SDLButtonNamePlayPause withObserver:<#Your observer object#> withCompletionHandler:^(NSError * _Nullable error) {
+    if (error != nil) {
+        // There was an error unsubscribing to the button
+        return;
+    }
+
+    // The button was unsubscribed successfully
+}];
+```
+
+##### Swift
+```swift
+sdlManager.screenManager.unsubscribeButton(.playPause, withObserver: observer) { (error) in
+    guard error == nil else {
+        // There was an error unsubscribing to the button
+        return
+    }
+
+    // The button was unsubscribed successfully
+}
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+sdlManager.getScreenManager().removeButtonListener(ButtonName.PLAY_PAUSE, new OnButtonListener() {
+	@Override
+	public void onPress (ButtonName buttonName, OnButtonPress buttonPress) {}
+
+	@Override
+	public void onEvent (ButtonName buttonName, OnButtonEvent buttonEvent) {}
+
+	@Override
+	public void onError (String info) {
+		// There was an error unsubscribing to the button
+	}
 });
 ```
 !@
