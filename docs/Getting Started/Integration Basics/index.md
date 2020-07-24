@@ -930,6 +930,13 @@ onRPCNotificationListenerMap.put(FunctionID.ON_HMI_STATUS, new OnRPCNotification
 });
 builder.setRPCNotificationListeners(onRPCNotificationListenerMap);
 ```
+
+##### Hash Resumption
+Set HashID for you application that can be used over connection cycles (i.e. loss of connection, ignition cycles, etc.).
+
+```java
+builder.setResumeHash(hashID);
+```
 !@
 
 @![android]
