@@ -189,16 +189,16 @@ sdlManager.screenManager.unsubscribeButton(.playPause, withObserver: <#Your obse
 @![android,javaSE,javaEE]
 ```java
 sdlManager.getScreenManager().removeButtonListener(ButtonName.PLAY_PAUSE, new OnButtonListener() {
-	@Override
-	public void onPress (ButtonName buttonName, OnButtonPress buttonPress) {}
+    @Override
+    public void onPress (ButtonName buttonName, OnButtonPress buttonPress) { }
 
-	@Override
-	public void onEvent (ButtonName buttonName, OnButtonEvent buttonEvent) {}
+    @Override
+    public void onEvent (ButtonName buttonName, OnButtonEvent buttonEvent) { }
 
-	@Override
-	public void onError (String info) {
-		// There was an error unsubscribing to the button
-	}
+    @Override
+    public void onError (String info) {
+        // There was an error unsubscribing to the button
+    }
 });
 ```
 !@
@@ -266,8 +266,7 @@ sdlManager.getScreenManager().addButtonListener(ButtonName.PLAY_PAUSE, new OnBut
     }
 
     @Override
-    public void onEvent (ButtonName buttonName, OnButtonEvent buttonEvent) {
-    }
+    public void onEvent (ButtonName buttonName, OnButtonEvent buttonEvent) { }
 
     @Override
     public void onError (String info) {
@@ -392,7 +391,7 @@ OnButtonListener onButtonListener = new OnButtonListener() {
     }
 
     @Override
-    public void onEvent (ButtonName buttonName, OnButtonEvent buttonEvent) {}
+    public void onEvent (ButtonName buttonName, OnButtonEvent buttonEvent) { }
 
     @Override
     public void onError (String info) {
@@ -489,8 +488,7 @@ sdlManager.getScreenManager().addButtonListener(ButtonName.NAV_PAN_UP, new OnBut
     }
 
     @Override
-    public void onEvent (ButtonName buttonName, OnButtonEvent buttonEvent) {
-    }
+    public void onEvent (ButtonName buttonName, OnButtonEvent buttonEvent) { }
 
     @Override
     public void onError (String info) {
