@@ -39,9 +39,8 @@ There are three general types of subscriptions buttons: audio related buttons on
 You can easily subscribe to subscription buttons using the !@@![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@@![iOS,android,javaSE,javaEE]. Simply tell the manager which button to subscribe to and you will be notified when the user selects the button.
 !@
 
-### How to Subscribe
 @![iOS]
-#### Subscribe with a Block Handler
+### Subscribe with a Block Handler
 Once you have subscribed to the button the handler will be called when the button has been selected. If there is an error subscribing to the subscribe button it will be returned in the `error` parameter.
 
 ##### Objective-C
@@ -80,7 +79,7 @@ sdlManager.screenManager.subscribeButton(.playPause) { (buttonPress, buttonEvent
 }
 ```
 
-#### Subscribe with a Selector
+### Subscribe with a Selector
 Once you have subscribed to the button the selector will be called when the button has been selected. If there is an error subscribing to the subscribe button it will be returned in the `error` parameter.
 
 The selector can be created with zero or up to four parameters in the following order: `SDLButtonName`, `NSError`, `SDLOnButtonPress`, and `SDLOnButtonEvent`. If the fourth parameter, `SDLOnButtonEvent` is omitted from the selector, then you will only be notified when a button press occurs. 
@@ -127,7 +126,7 @@ sdlManager.screenManager.subscribeButton(.playPause, withObserver: self, selecto
 !@
 
 @![android,javaSE,javaEE]
-#### Subscribe with a Listener
+### Subscribe with a Listener
 Once you have subscribed to the button the listener will be called when the button has been selected. If there is an error subscribing to the subscribe button it will be returned in the `error` parameter.
 
 ```java
@@ -150,7 +149,7 @@ sdlManager.getScreenManager().addButtonListener(ButtonName.PLAY_PAUSE, new OnBut
 ```
 !@
 
-### Media Buttons
+## Media Buttons
 The play/pause, seek left, seek right, tune up, and tune down subscribe buttons can only be used if the app type is `MEDIA`. Depending on the OEM, the subscribed button could show up as an on-screen button in the `MEDIA` template, work as a physical button on the car console or steering wheel, or both. For example, Ford's SYNC 3 HMI will add the play/pause, seek right, and seek left soft buttons to the media template when you subscribe to those buttons. However, those buttons will also trigger when the user uses the seek left / seek right buttons on the steering wheel.
 
 If desired, you can toggle the play/pause button image between a play, stop, or pause icon by updating the audio streaming state as described in the [Media Clock](Displaying a User Interface/Media Clock#pausing-&-resuming) guide. 
@@ -244,13 +243,13 @@ sdlManager.sendRpc(subscribeButtonRequest);
 ```
 !@
 
-### Preset Buttons
+## Preset Buttons
 All app types can subscribe to preset buttons. Depending on the OEM, the preset buttons may be added to the template when subscription occurs. Preset buttons can also be physical buttons on the console that will notify the subscriber when selected. An OEM may support only template buttons or only hard buttons or they may support both template and hard buttons. The screenshot below shows how the Ford SYNC 3 HMI displays the preset buttons on the HMI. 
 
 ![Ford - Preset Soft Button Menu Button](assets/ford_sync_presetMenu.bmp)
 ![Ford - Preset Soft Buttons List](assets/ford_sync_presetOptions.png)
 
-#### Checking if Preset Buttons are Supported
+### Checking if Preset Buttons are Supported
 You can check if a HMI supports subscribing to preset buttons, and if so, how many preset buttons are supported, by checking the system capability manager.
 
 @![iOS]
@@ -277,7 +276,7 @@ const numOfCustomPresetsAvailable = sdlManager.getSystemCapabilityManager().getD
 ```
 !@
 
-#### Subscribing to Preset Buttons
+### Subscribing to Preset Buttons
 @![iOS]
 ##### Objective-C
 ```objc
@@ -375,10 +374,10 @@ sdlManager.sendRpcs([preset1, preset2]);
 ```
 !@
 
-### Navigation Buttons
+## Navigation Buttons
 Head units supporting RPC v6.0+ may support subscription buttons that allow your user to drag and scale the map using hard buttons located on car's center console or steering wheel. Subscriptions to navigation buttons will only succeed if your app's type is `NAVIGATION`. If subscribing to these buttons succeeds, you can remove any buttons of your own from your map screen. If subscribing to these buttons fails, you can display buttons of your own on your map screen.
 
-#### Subscribing to Navigation Buttons
+### Subscribing to Navigation Buttons
 @![iOS]
 ##### Objective-C
 ```objc
