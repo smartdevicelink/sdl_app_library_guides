@@ -56,6 +56,7 @@ To customize the app name for the head unit's current language, implement the fo
 @![iOS]
 ##### Objective-C
 ```objc
+// The `hmiLanguage` is the text language of the head unit, the `language` is the VR language of the head unit. These will usually be the same, but not always. You may want to update your `appName` (text) and `ttsName` (VR) separately.
 - (nullable SDLLifecycleConfigurationUpdate *)managerShouldUpdateLifecycleToLanguage:(SDLLanguage)language hmiLanguage:(SDLLanguage)hmiLanguage {
     SDLLifecycleConfigurationUpdate *configurationUpdate = [[SDLLifecycleConfigurationUpdate alloc] init];
 
@@ -76,6 +77,7 @@ To customize the app name for the head unit's current language, implement the fo
 
 ##### Swift
 ```swift
+// The `hmiLanguage` is the text language of the head unit, the `language` is the VR language of the head unit. These will usually be the same, but not always. You may want to update your `appName` (text) and `ttsName` (VR) separately.
 func managerShouldUpdateLifecycle(toLanguage language: SDLLanguage, hmiLanguage: SDLLanguage) -> SDLLifecycleConfigurationUpdate? {
     let configurationUpdate = SDLLifecycleConfigurationUpdate()
 
@@ -98,7 +100,8 @@ func managerShouldUpdateLifecycle(toLanguage language: SDLLanguage, hmiLanguage:
 
 @![android,javaSE,javaEE]
 ```java
-// TODO
+// The `hmiLanguage` is the text language of the head unit, the `language` is the VR language of the head unit. These will usually be the same, but not always. You may want to update your `appName` (text) and `ttsName` (VR) separately.
+// TODO: Update
 @Override
 public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language){
     String appName;
