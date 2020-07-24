@@ -40,7 +40,7 @@ You can easily subscribe to subscription buttons using the !@@![iOS]`SDLScreenMa
 !@
 
 @![iOS]
-There are two different ways to get notification of button updates. The first way is to pass a handler that will get called when the button is selected. The other way is to pass a selector that be notified when the button is selected.
+There are two different ways to get notification of button updates. The first way is to pass a handler that will get called when the button is selected. The other way is to pass a selector that will be notified when the button is selected.
 !@
 
 @![iOS]
@@ -86,7 +86,7 @@ let observer = sdlManager.screenManager.subscribeButton(.playPause) { (buttonPre
 ### Subscribe with a Selector
 Once you have subscribed to the button, the selector will be called when the button has been selected. If there is an error subscribing to the subscribe button it will be returned in the `error` parameter.
 
-The selector can be created with zero or up to four parameters in the following order: `SDLButtonName`, `NSError`, `SDLOnButtonPress`, and `SDLOnButtonEvent`. When the fourth parameter, `SDLOnButtonEvent` is omitted from the selector, then you will only be notified when a button press occurs. 
+The selector can be created with zero or up to four parameters in the following order: `SDLButtonName`, `NSError`, `SDLOnButtonPress`, and `SDLOnButtonEvent`. When the fourth parameter, `SDLOnButtonEvent`, is omitted from the selector, then you will only be notified when a button press occurs. 
 
 ##### Objective-C
 ```objc
@@ -160,7 +160,6 @@ To unsubscribe to a subscription button, simply tell the !@@![iOS]`SDLScreenMana
 
 @![iOS]
 When unsubscribing, you will need to pass the observer object that you want to unsubscribe. If you subscribed using a handler, use the observer object returned when you subscribed. If you subscribed using a selector, use the same observer object you passed when subscribing. 
-!@
 
 ##### Objective-C
 ```objc
@@ -176,7 +175,7 @@ When unsubscribing, you will need to pass the observer object that you want to u
 
 ##### Swift
 ```swift
-sdlManager.screenManager.unsubscribeButton(.playPause, withObserver: observer) { (error) in
+sdlManager.screenManager.unsubscribeButton(.playPause, withObserver: <#Your observer object#>) { (error) in
     guard error == nil else {
         // There was an error unsubscribing to the button
         return
