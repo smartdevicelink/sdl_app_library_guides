@@ -42,6 +42,8 @@ You can easily subscribe to subscription buttons using the @![iOS]`SDLScreenMana
 ### How to Subscribe
 @![iOS]
 #### Subscribe with a Block Handler
+Once you have subscribed to the button the handler will be called when the button has been selected. If there is an error subscribing to the subscribe button it will be returned in the `error` parameter.
+
 ##### Objective-C
 ```objc
 [self.sdlManager.screenManager subscribeButton:SDLButtonNamePlayPause withUpdateHandler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent, NSError * _Nullable error) {
@@ -62,9 +64,27 @@ You can easily subscribe to subscription buttons using the @![iOS]`SDLScreenMana
 
 ##### Swift
 ```swift
+sdlManager.screenManager.subscribeButton(.playPause) { (buttonPress, buttonEvent, error) in
+    guard error == nil else {
+        // There was an error subscribing to the button
+        return
+    }
+
+    if let buttonPress = buttonPress {
+        // Contains information about whether the button was short or long pressed
+    }
+
+    if let buttonPress = buttonPress {
+        // The user has depressed or released the button
+    }
+}
 ```
 
 #### Subscribe with a Selector
+Once you have subscribed to the button the selector will be called when the button has been selected. If there is an error subscribing to the subscribe button it will be returned in the `error` parameter.
+
+The selector can be created with zero or up to four parameters in the following order: `SDLButtonName`, `NSError`, `SDLOnButtonPress`, and `SDLOnButtonEvent`. If the fourth parameter, `SDLOnButtonEvent` is omitted from the selector, then you will only be notified when a button press occurs. 
+
 ##### Objective-C
 ```objc
 [self.sdlManager.screenManager subscribeButton:SDLButtonNamePlayPause withObserver:self selector:@selector(buttonPressEventWithButtonName:error:buttonPress:buttonEvent:)];
@@ -87,15 +107,48 @@ You can easily subscribe to subscription buttons using the @![iOS]`SDLScreenMana
 
 ##### Swift
 ```swift
+sdlManager.screenManager.subscribeButton(.playPause, withObserver: self, selector: #selector(buttonPressEvent(buttonName:error:buttonPress:buttonEvent:)))
+
+@objc func buttonPressEvent(buttonName: SDLButtonName, error: Error?, buttonPress: SDLOnButtonPress?, buttonEvent: SDLOnButtonEvent?) {
+    guard error == nil else {
+        // There was an error subscribing to the button
+        return
+    }
+
+    if let buttonPress = buttonPress {
+        // Contains information about whether the button was short or long pressed
+    }
+
+    if let buttonPress = buttonPress {
+        // The user has depressed or released the button
+    }
+}
 ```
 !@
 
 @![android,javaSE,javaEE]
 #### Subscribe with a Listener
+Once you have subscribed to the button the listener will be called when the button has been selected. If there is an error subscribing to the subscribe button it will be returned in the `error` parameter.
+
 ```java
+sdlManager.getScreenManager().addButtonListener(ButtonName.PLAY_PAUSE, new OnButtonListener() {
+    @Override
+    public void onPress (ButtonName buttonName, OnButtonPress buttonPress) {
+        // Contains information about whether the button was short or long pressed
+    }
+
+    @Override
+    public void onEvent (ButtonName buttonName, OnButtonEvent buttonEvent) {
+        // The user has depressed or released the button
+    }
+
+    @Override
+    public void onError (String info) {
+        // There was an error subscribing to the button
+    }
+});
 ```
 !@
-
 
 ### Media Buttons
 The play/pause, seek left, seek right, tune up, and tune down subscribe buttons can only be used if the app type is `MEDIA`. Depending on the OEM, the subscribed button could show up as an on-screen button in the `MEDIA` template, work as a physical button on the car console or steering wheel, or both. For example, Ford's SYNC 3 HMI will add the play/pause, seek right, and seek left soft buttons to the media template when you subscribe to those buttons. However, those buttons will also trigger when the user uses the seek left / seek right buttons on the steering wheel.
@@ -108,46 +161,65 @@ Before library v.@![iOS]6.1!@@![android, javaSE, javaEE]4.7!@ and RPC v5.0, `Ok`
 
 ##### Objective-C
 ```objc
-SDLSubscribeButton *subscribeButton = [[SDLSubscribeButton alloc] initWithButtonName:SDLButtonNamePlayPause handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
+[self.sdlManager.screenManager subscribeButton:SDLButtonNamePlayPause withUpdateHandler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent, NSError * _Nullable error) {
+    if (error != nil) {
+        // There was an error subscribing to the button
+        return;
+    }
+
     if (buttonPress == nil) { return; }
-    <#Subscribe button selected#>
-}];
-[self.sdlManager sendRequest:subscribeButton withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    if (!response.success.boolValue) { return; }
-    <#Subscribe button sent successfully#>
+
+    if ([buttonPress.buttonPressMode isEqualToEnum:SDLButtonPressModeShort]) {
+        // The user short pressed the button
+    } else if ([buttonPress.buttonPressMode isEqualToEnum:SDLButtonPressModeLong]) {
+        // The user long pressed the button
+    }
 }];
 ```
 
 ##### Swift
 ```swift
-let subscribeButton = SDLSubscribeButton(buttonName: .playPause) { (buttonPress, buttonEvent) in
+sdlManager.screenManager.subscribeButton(.playPause) { (buttonPress, buttonEvent, error) in
+    guard error == nil else {
+        // There was an error subscribing to the button
+        return
+    }
+
     guard let buttonPress = buttonPress else { return }
-    <#Subscribe button selected#>
-}
-sdlManager.send(request: subscribeButton) { (request, response, error) in
-    guard response?.success.boolValue == true else { return }
-    <#Subscribe button sent successfully#>
+
+    switch buttonPress.buttonPressMode {
+    case .short:
+        // The user short pressed the button
+    case .long:
+        // The user long pressed the button
+    default: break
+    }
 }
 ```
 !@
 
 @![android, javaSE, javaEE]
 ```java
-sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNotificationListener() {
+sdlManager.getScreenManager().addButtonListener(ButtonName.PLAY_PAUSE, new OnButtonListener() {
     @Override
-    public void onNotified(RPCNotification notification) {
-        OnButtonPress onButtonPressNotification = (OnButtonPress) notification;
-        switch (onButtonPressNotification.getButtonName()) {
-            case PLAY_PAUSE:
-                <#PLAY_PAUSE subscribe button selected#>
-                break;
+    public void onPress (ButtonName buttonName, OnButtonPress buttonPress) {
+        switch (buttonPress.getButtonPressMode()) {
+            case SHORT:
+                // The user short pressed the button
+            case LONG:
+                // The user long pressed the button
         }
     }
-});
 
-SubscribeButton subscribeButtonRequest = new SubscribeButton();
-subscribeButtonRequest.setButtonName(ButtonName.PLAY_PAUSE);
-sdlManager.sendRPC(subscribeButtonRequest);
+    @Override
+    public void onEvent (ButtonName buttonName, OnButtonEvent buttonEvent) {
+    }
+
+    @Override
+    public void onError (String info) {
+        // There was an error subscribing to the button
+    }
+});
 ```
 !@
 
@@ -189,7 +261,7 @@ NSInteger numberOfCustomPresetsAvailable = self.sdlManager.systemCapabilityManag
 
 ##### Swift
 ```swift
-let numberOfCustomPresetsAvailable = sdlManager.systemCapabilityManager.defaultMainWindowCapability.numCustomPresetsAvailable as? NSInteger
+let numberOfCustomPresetsAvailable = sdlManager.systemCapabilityManager.defaultMainWindowCapability?.numCustomPresetsAvailable as? NSInteger
 ```
 !@
 
@@ -209,61 +281,73 @@ const numOfCustomPresetsAvailable = sdlManager.getSystemCapabilityManager().getD
 @![iOS]
 ##### Objective-C
 ```objc
-SDLSubscribeButton *preset1 = [[SDLSubscribeButton alloc] initWithButtonName:SDLButtonNamePreset1 handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
-    if (buttonPress == nil) { return; }
-    <#Subscribe button selected#>
-}];
+[self.sdlManager.screenManager subscribeButton:SDLButtonNamePreset1 withObserver:self selector:@selector(buttonPressEventWithButtonName:error:buttonPress:)];
+[self.sdlManager.screenManager subscribeButton:SDLButtonNamePreset2 withObserver:self selector:@selector(buttonPressEventWithButtonName:error:buttonPress:)];
 
-SDLSubscribeButton *preset2 = [[SDLSubscribeButton alloc] initWithButtonName:SDLButtonNamePreset2 handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
-    if (buttonPress == nil) { return; }
-    <#Subscribe button selected#>
-}];
+- (void)buttonPressEventWithButtonName:(SDLButtonName)buttonName error:(NSError *)error buttonPress:(SDLOnButtonPress *)buttonPress {
+    if (error != nil) {
+        // There was an error subscribing to the button
+        return;
+    }
 
-[self.sdlManager sendRequests:@[preset1, preset2] progressHandler:nil completionHandler:^(BOOL success) {
-    if (!success) { return; }
-    <#Subscribe buttons sent successfully#>
-}];
+    if ([buttonName isEqualToEnum:SDLButtonNamePreset1]) {
+        // The user short or long pressed the preset 1 button
+    } else if ([buttonName isEqualToEnum:SDLButtonNamePreset2]) {
+        // The user short or long pressed the preset 2 button
+    }
+}
 ```
 
 ##### Swift
 ```swift
-let preset1 = SDLSubscribeButton(buttonName: .preset1, handler: { (buttonPress, buttonEvent) in
-    guard let buttonPress = buttonPress else { return }
-    <#Subscribe button selected#>
-})
+sdlManager.screenManager.subscribeButton(.preset1, withObserver: self, selector: #selector(buttonPressEvent(buttonName:error:buttonPress:)))
+sdlManager.screenManager.subscribeButton(.preset2, withObserver: self, selector: #selector(buttonPressEvent(buttonName:error:buttonPress:)))
 
-let preset2 = SDLSubscribeButton(buttonName: .preset2, handler: { (buttonPress, buttonEvent) in
-    guard let buttonPress = buttonPress else { return }
-    <#Subscribe button selected#>
-})
+@objc func buttonPressEvent(buttonName: SDLButtonName, error: Error?, buttonPress: SDLOnButtonPress?) {
+    guard error == nil else {
+        // There was an error subscribing to the button
+        return
+    }
 
-self.sdlManager.send([preset1, preset2], progressHandler: nil, completionHandler: { (success) in
-    guard success else { return }
-    <#Subscribe buttons sent successfully#>
-})
+    guard let buttonPress = buttonPress else { return }
+
+    switch buttonName {
+    case .preset1:
+        // The user short or long pressed the preset 1 button
+    case .preset2:
+        // The user short or long pressed the preset 2 button
+    default: break
+    }
+}
 ```
 !@
 
 @![android,javaSE,javaEE]
 ```java
-sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNotificationListener() {
+OnButtonListener onButtonListener = new OnButtonListener() {
     @Override
-    public void onNotified(RPCNotification notification) {
-        OnButtonPress onButtonPressNotification = (OnButtonPress) notification;
-        switch (onButtonPressNotification.getButtonName()) {
+    public void onPress(ButtonName buttonName, OnButtonPress buttonPress) {
+        switch (buttonName) {
             case PRESET_1:
-                <#PRESET_1 subscribe button selected#>
+                // The user short or long pressed the preset 1 button
                 break;
             case PRESET_2:
-                <#PRESET_2 subscribe button selected#>
+                // The user short or long pressed the preset 2 button
                 break;
         }
     }
-});
 
-SubscribeButton preset1 = new SubscribeButton(ButtonName.PRESET_1);
-SubscribeButton preset2 = new SubscribeButton(ButtonName.PRESET_2);
-sdlManager.sendRPCs(Arrays.asList(preset1, preset2), null);
+    @Override
+    public void onEvent (ButtonName buttonName, OnButtonEvent buttonEvent) {}
+
+    @Override
+    public void onError (String info) {
+        // There was an error subscribing to the button
+    }
+};
+
+sdlManager.getScreenManager().addButtonListener(ButtonName.PRESET_1, onButtonListener);
+sdlManager.getScreenManager().addButtonListener(ButtonName.PRESET_2, onButtonListener);
 ```
 !@
 
@@ -298,47 +382,67 @@ Head units supporting RPC v6.0+ may support subscription buttons that allow your
 @![iOS]
 ##### Objective-C
 ```objc
-SDLSubscribeButton *navPanUpButton = [[SDLSubscribeButton alloc] initWithButtonName:SDLButtonNameNavPanUp handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
-    if (buttonPress == nil) { return; }
-    <#Subscribe button selected#>
-}];
+[self.sdlManager.screenManager subscribeButton:SDLButtonNameNavPanUp withUpdateHandler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent, NSError * _Nullable error) {
+    if (error != nil) {
+        // There was an error subscribing to the button
+        return;
+    }
 
-[self.sdlManager sendRequest:navPanUpButton withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    if (!response.success.boolValue) { return; }
-    <#Subscribe button sent successfully#>
+    if (buttonPress == nil) { return; }
+
+    if ([buttonPress.buttonPressMode isEqualToEnum:SDLButtonPressModeShort]) {
+        // The user short pressed the button
+    } else if ([buttonPress.buttonPressMode isEqualToEnum:SDLButtonPressModeLong]) {
+        // The user long pressed the button
+    }
 }];
 ```
 
 ##### Swift
 ```swift
-let navPanUpButton = SDLSubscribeButton(buttonName: .navPanUp) { (buttonPress, buttonEvent) in
-    guard let buttonPress = buttonPress else { return }
-    <#Subscribe button selected#>
-}
+sdlManager.screenManager.subscribeButton(.navPanUp) { (buttonPress, buttonEvent, error) in
+    guard error == nil else {
+        // There was an error subscribing to the button
+        return
+    }
 
-sdlManager.send(request: navPanUpButton) { (request, response, error) in
-    guard response?.success.boolValue == true else { return }
-    <#Subscribe button sent successfully#>
+    guard let buttonPress = buttonPress else { return }
+
+    switch buttonPress.buttonPressMode {
+    case .short:
+        // The user short pressed the button
+        break
+    case .long:
+        // The user long pressed the button
+        break
+    default: break
+    }
 }
 ```
 !@
 
 @![android,javaSE,javaEE]
 ```java
-sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNotificationListener() {
-	@Override
-	public void onNotified(RPCNotification notification) {
-		OnButtonPress onButtonPressNotification = (OnButtonPress) notification;
-		switch (onButtonPressNotification.getButtonName()) {
-			case NAV_PAN_UP:
-				break;
-		}
-	}
-});
+sdlManager.getScreenManager().addButtonListener(ButtonName.NAV_PAN_UP, new OnButtonListener() {
+    @Override
+    public void onPress (ButtonName buttonName, OnButtonPress buttonPress) {
+        switch (buttonPress.getButtonPressMode()) {
+            case SHORT:
+                // The user short pressed the button
+            case LONG:
+                // The user long pressed the button
+        }
+    }
 
-SubscribeButton subscribeButtonRequest = new SubscribeButton();
-subscribeButtonRequest.setButtonName(ButtonName.NAV_PAN_UP);
-sdlManager.sendRPC(subscribeButtonRequest);
+    @Override
+    public void onEvent (ButtonName buttonName, OnButtonEvent buttonEvent) {
+    }
+
+    @Override
+    public void onError (String info) {
+        // There was an error subscribing to the button
+    }
+});
 ```
 !@
 
