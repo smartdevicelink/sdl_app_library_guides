@@ -5,8 +5,8 @@ In the screenshot below, the pause, seek left and seek right icons are subscript
 
 ![Generic - Media Template with subscribe buttons](assets/Generic_template_media_light.png)
 
-## Subscribing to Subscription Buttons
-Please note that you can only successfully subscribe to certain buttons depending on your app type. Audio-related buttons can only be used with the `MEDIA` app type and navigation-related buttons can only be used with the `NAVIGATION` app type.
+## Types of Subscription Buttons
+There are three general types of subscriptions buttons: audio related buttons only used for media apps, navigation related buttons only used for navigation apps, and general buttons, like preset and ok buttons, that can be used with all apps. Please note that if your app type is not `MEDIA` or `NAVIGATION`, your attempt to subscribe to media-only or navigation-only buttons will be rejected.
 
 | Button  | App Type | RPC Version |
 | ------------- | ------------- | ------------- |
@@ -34,16 +34,78 @@ Please note that you can only successfully subscribe to certain buttons dependin
 | Rotate Counter-Clockwise | Navigation only | v6.0+ |
 | Toggle Heading | Navigation only | v6.0+ |
 
-### Audio-Related Buttons
+@![iOS,android,javaSE,javaEE]
+## Subscribing to Subscription Buttons
+You can easily subscribe to subscription buttons using the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@. Simply tell the manager which button to subscribe to and you will be notified when the user selects the button.
+!@
+
+### How to Subscribe
+@![iOS]
+#### Subscribe with a Block Handler
+##### Objective-C
+```objc
+[self.sdlManager.screenManager subscribeButton:SDLButtonNamePlayPause withUpdateHandler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent, NSError * _Nullable error) {
+    if (error != nil) {
+        // There was an error subscribing to the button
+        return;
+    }
+
+    if (buttonPress != nil) {
+        // Contains information about whether the button was short or long pressed
+    }
+
+    if (buttonEvent != nil) {
+        // The user has depressed or released the button
+    }
+}];
+```
+
+##### Swift
+```swift
+```
+
+#### Subscribe with a Selector
+##### Objective-C
+```objc
+[self.sdlManager.screenManager subscribeButton:SDLButtonNamePlayPause withObserver:self selector:@selector(buttonPressEventWithButtonName:error:buttonPress:buttonEvent:)];
+
+- (void)buttonPressEventWithButtonName:(SDLButtonName)buttonName error:(NSError *)error buttonPress:(SDLOnButtonPress *)buttonPress buttonEvent:(SDLOnButtonEvent *)buttonEvent {
+    if (error != nil) {
+        // There was an error subscribing to the button
+        return;
+    }
+
+    if (buttonPress != nil) {
+        // Contains information about whether the button was short or long pressed
+    }
+
+    if (buttonEvent != nil) {
+        // The user has depressed or released the button
+    }
+}
+```
+
+##### Swift
+```swift
+```
+!@
+
+@![android,javaSE,javaEE]
+#### Subscribe with a Listener
+```java
+```
+!@
+
+
+### Media Buttons
 The play/pause, seek left, seek right, tune up, and tune down subscribe buttons can only be used if the app type is `MEDIA`. Depending on the OEM, the subscribed button could show up as an on-screen button in the `MEDIA` template, work as a physical button on the car console or steering wheel, or both. For example, Ford's SYNC 3 HMI will add the play/pause, seek right, and seek left soft buttons to the media template when you subscribe to those buttons. However, those buttons will also trigger when the user uses the seek left / seek right buttons on the steering wheel.
 
-If desired, you can toggle the play/pause button image between a play, stop, or pause icon by updating the audio streaming state as described in the [Media Clock](Displaying a User Interface/Media Clock) guide. 
+If desired, you can toggle the play/pause button image between a play, stop, or pause icon by updating the audio streaming state as described in the [Media Clock](Displaying a User Interface/Media Clock#pausing-&-resuming) guide. 
 
 !!! NOTE
 Before library v.@![iOS]6.1!@@![android, javaSE, javaEE]4.7!@ and RPC v5.0, `Ok` and `PlayPause` were combined into `Ok`. Subscribing to `Ok` will, in v@![iOS]6.1+!@@![android, javaSE, javaEE]4.7+!@, also subscribe you to `PlayPause`. This means that for the time being, *you should not simultaneously subscribe to `Ok` and `PlayPause`*. In a future major version, this will change. For now, only subscribe to either `Ok` or `PlayPause` and the library will execute the right action based on the connected head unit.
 !!!
 
-@![iOS]
 ##### Objective-C
 ```objc
 SDLSubscribeButton *subscribeButton = [[SDLSubscribeButton alloc] initWithButtonName:SDLButtonNamePlayPause handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
