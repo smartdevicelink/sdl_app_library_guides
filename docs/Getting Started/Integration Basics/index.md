@@ -1335,7 +1335,7 @@ lifecycleConfig.setRpcNotificationListeners({
 });
 ```
 
-It is recommended to use this method over the `SdlManager.addRpcListener` method for the `OnHMIStatus` RPC, or any RPC that your app cannot afford to miss during the initial connection.
+It is recommended to use this method over the `SdlManager.addRpcListener` method for the `OnHMIStatus` RPC, or any RPC Notifications that your app cannot afford to miss during the initial connection.
 
 ## Setting Up the SDL Manager
 After creating the `LifecycleConfig`, it can be set into the `AppConfig` and then passed into the `SdlManager`. The following snippet will set up the `SdlManager` and start it up. A listener is attached to the manager listener to let you know when there is a connection and the managers are ready.
