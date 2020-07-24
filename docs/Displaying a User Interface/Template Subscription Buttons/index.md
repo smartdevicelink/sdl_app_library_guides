@@ -41,7 +41,7 @@ You can easily subscribe to subscription buttons using the !@@![iOS]`SDLScreenMa
 
 @![iOS]
 ### Subscribe with a Block Handler
-Once you have subscribed to the button the handler will be called when the button has been selected. If there is an error subscribing to the subscribe button it will be returned in the `error` parameter.
+Once you have subscribed to the button, the handler will be called when the button has been selected. If there is an error subscribing to the subscribe button it will be returned in the `error` parameter.
 
 ##### Objective-C
 ```objc
@@ -80,7 +80,7 @@ sdlManager.screenManager.subscribeButton(.playPause) { (buttonPress, buttonEvent
 ```
 
 ### Subscribe with a Selector
-Once you have subscribed to the button the selector will be called when the button has been selected. If there is an error subscribing to the subscribe button it will be returned in the `error` parameter.
+Once you have subscribed to the button, the selector will be called when the button has been selected. If there is an error subscribing to the subscribe button it will be returned in the `error` parameter.
 
 The selector can be created with zero or up to four parameters in the following order: `SDLButtonName`, `NSError`, `SDLOnButtonPress`, and `SDLOnButtonEvent`. If the fourth parameter, `SDLOnButtonEvent` is omitted from the selector, then you will only be notified when a button press occurs. 
 
@@ -127,7 +127,7 @@ sdlManager.screenManager.subscribeButton(.playPause, withObserver: self, selecto
 
 @![android,javaSE,javaEE]
 ### Subscribe with a Listener
-Once you have subscribed to the button the listener will be called when the button has been selected. If there is an error subscribing to the subscribe button it will be returned in the `error` parameter.
+Once you have subscribed to the button, the listener will be called when the button has been selected. If there is an error subscribing to the subscribe button it will be returned in the `error` parameter.
 
 ```java
 sdlManager.getScreenManager().addButtonListener(ButtonName.PLAY_PAUSE, new OnButtonListener() {
@@ -152,12 +152,13 @@ sdlManager.getScreenManager().addButtonListener(ButtonName.PLAY_PAUSE, new OnBut
 ## Media Buttons
 The play/pause, seek left, seek right, tune up, and tune down subscribe buttons can only be used if the app type is `MEDIA`. Depending on the OEM, the subscribed button could show up as an on-screen button in the `MEDIA` template, work as a physical button on the car console or steering wheel, or both. For example, Ford's SYNC 3 HMI will add the play/pause, seek right, and seek left soft buttons to the media template when you subscribe to those buttons. However, those buttons will also trigger when the user uses the seek left / seek right buttons on the steering wheel.
 
-If desired, you can toggle the play/pause button image between a play, stop, or pause icon by updating the audio streaming state as described in the [Media Clock](Displaying a User Interface/Media Clock#pausing-&-resuming) guide. 
+If desired, you can toggle the play/pause button image between a play, stop, or pause icon by updating the audio streaming state as described in the [Media Clock](Displaying a User Interface/Media Clock#pausing-resuming) guide. 
 
 !!! NOTE
 Before library v.@![iOS]6.1!@@![android, javaSE, javaEE]4.7!@ and RPC v5.0, `Ok` and `PlayPause` were combined into `Ok`. Subscribing to `Ok` will, in v@![iOS]6.1+!@@![android, javaSE, javaEE]4.7+!@, also subscribe you to `PlayPause`. This means that for the time being, *you should not simultaneously subscribe to `Ok` and `PlayPause`*. In a future major version, this will change. For now, only subscribe to either `Ok` or `PlayPause` and the library will execute the right action based on the connected head unit.
 !!!
 
+@![iOS]
 ##### Objective-C
 ```objc
 [self.sdlManager.screenManager subscribeButton:SDLButtonNamePlayPause withUpdateHandler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent, NSError * _Nullable error) {
