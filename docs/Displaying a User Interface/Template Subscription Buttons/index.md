@@ -41,6 +41,7 @@ You can easily subscribe to subscription buttons using the !@@![iOS]`SDLScreenMa
 
 @![iOS]
 There are two different ways to receive button press notifications. The first is to pass a block handler that will get called when the button is selected. The second is to pass a selector that will be notified when the button is selected.
+
 ### Subscribe with a Block Handler
 Once you have subscribed to the button with a block handler, the handler will be called whenever the button has been selected. If an error occurs attempting to subscribe to the button, the error will be returned in the `error` parameter.
 
@@ -310,7 +311,7 @@ NSInteger numberOfCustomPresetsAvailable = self.sdlManager.systemCapabilityManag
 
 ##### Swift
 ```swift
-let numberOfCustomPresetsAvailable = self.sdlManager.systemCapabilityManager.defaultMainWindowCapability?.numCustomPresetsAvailable?.intValue
+let numberOfCustomPresetsAvailable = sdlManager.systemCapabilityManager.defaultMainWindowCapability?.numCustomPresetsAvailable?.intValue
 ```
 !@
 
@@ -352,7 +353,7 @@ const numOfCustomPresetsAvailable = sdlManager.getSystemCapabilityManager().getD
 sdlManager.screenManager.subscribeButton(.preset1, withObserver: self, selector: #selector(buttonPressEvent(buttonName:error:buttonPress:)))
 sdlManager.screenManager.subscribeButton(.preset2, withObserver: self, selector: #selector(buttonPressEvent(buttonName:error:buttonPress:)))
 
-@objc func buttonPressEvent(buttonName: SDLButtonName, error: Error?, buttonPress: SDLOnButtonPress?) {
+@objc private func buttonPressEvent(buttonName: SDLButtonName, error: Error?, buttonPress: SDLOnButtonPress?) {
     if let error = error {
         // There was an error subscribing to the button
         return
@@ -365,7 +366,6 @@ sdlManager.screenManager.subscribeButton(.preset2, withObserver: self, selector:
         // The user short or long pressed the preset 1 button
     case .preset2:
         // The user short or long pressed the preset 2 button
-    default: break
     }
 }
 ```
@@ -460,11 +460,8 @@ sdlManager.screenManager.subscribeButton(.navPanUp) { (buttonPress, buttonEvent,
     switch buttonPress.buttonPressMode {
     case .short:
         // The user short pressed the button
-        break
     case .long:
         // The user long pressed the button
-        break
-    default: break
     }
 }
 ```
