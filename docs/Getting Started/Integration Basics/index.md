@@ -723,9 +723,13 @@ public class SdlService extends Service {
                 }
 
                 @Override
-                // TODO
                 public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language) {
                     return null;
+                }
+
+                @Override
+                public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language, Language hmiLanguage) {
+                  return null;
                 }
             };
 
@@ -802,9 +806,13 @@ public class SdlService {
                 }
 
                 @Override
-                // TODO
                 public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language) {
                     return null;
+                }
+
+                @Override
+                public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language, Language hmiLanguage) {
+                  return null;
                 }
             };
 

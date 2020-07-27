@@ -50,7 +50,7 @@ To customize the app name for the head unit's current language, implement the fo
 3. Implement the `SDLManagerDelegate`'s `managerShouldUpdateLifecycleToLanguage:hmiLanguage:` method. If the module's current HMI language or voice recognition (VR) language is different from the app's default language, the method will be called with the module's current HMI and/or VR language. Please note that the delegate method will only be called if your app supports the head unit's current language. Return a `SDLLifecycleConfigurationUpdate` object with the new `appName` and/or `ttsName`.
 !@
 @![android,javaSE,javaEE]
-2. Implement the `sdlManagerListener`'s `//TODO` method. If the module's current HMI language or voice recognition (VR) language is different from the app's default language, the listener will be called with the module's current HMI and/or VR language. Return a `LifecycleConfigurationUpdate` with the new `appName` and/or `ttsName`.
+2. Implement the `sdlManagerListener`'s `managerShouldUpdateLifecycle(Language language, Language hmiLanguage)` method. If the module's current HMI language or voice recognition (VR) language is different from the app's default language, the listener will be called with the module's current HMI and/or VR language. Return a `LifecycleConfigurationUpdate` with the new `appName` and/or `ttsName`.
 !@
 
 @![iOS]
@@ -100,23 +100,40 @@ func managerShouldUpdateLifecycle(toLanguage language: SDLLanguage, hmiLanguage:
 
 @![android,javaSE,javaEE]
 ```java
-// The `hmiLanguage` is the text language of the head unit, the `language` is the VR language of the head unit. These will usually be the same, but not always. You may want to update your `appName` (text) and `ttsName` (VR) separately.
-// TODO: Update
-@Override
-public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language){
-    String appName;
-    switch (language) {
-        case ES_MX:
-            appName = APP_NAME_ES;
-            break;
-        case FR_CA:
-            appName = APP_NAME_FR;
-            break;
-        default:
-            return null;
-    }
-
-    return new LifecycleConfigurationUpdate(appName,null,TTSChunkFactory.createSimpleTTSChunks(appName), null);
-}
+                @Override
+                public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language, Language hmiLanguage) {
+                    boolean isNeedUpdate = false;
+                    String appName = APP_NAME;
+                    String ttsName = APP_NAME;
+                    switch (language) {
+                        case ES_MX:
+                            isNeedUpdate = true;
+                            ttsName = APP_NAME_ES;
+                            break;
+                        case FR_CA:
+                            isNeedUpdate = true;
+                            ttsName = APP_NAME_FR;
+                            break;
+                        default:
+                            break;
+                    }
+                    switch (hmiLanguage) {
+                        case ES_MX:
+                            isNeedUpdate = true;
+                            appName = APP_NAME_ES;
+                            break;
+                        case FR_CA:
+                            isNeedUpdate = true;
+                            appName = APP_NAME_FR;
+                            break;
+                        default:
+                            break;
+                    }
+                    if (isNeedUpdate) {
+                        return new LifecycleConfigurationUpdate(appName, null, TTSChunkFactory.createSimpleTTSChunks(ttsName), null);
+                    } else {
+                        return null;
+                    }
+                }
 ```
 !@
