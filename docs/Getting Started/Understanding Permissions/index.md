@@ -229,7 +229,7 @@ switch (groupStatus) {
 ```
 !@
 
-The previous snippet will give a quick generic status for all permissions together. However, if you want to get a more detailed result about the status of every permission or parameter in the group, you can use the @![iOS]`statusesOfRPCPermissions:`!@@![java, javaSE, javaEE]`getStatusOfPermissions`@! method.
+The previous snippet will give a quick generic status for all permissions together. However, if you want to get a more detailed result about the status of every permission or parameter in the group, you can use the @![iOS]`statusesOfRPCPermissions:`!@@![java, javaSE, javaEE]`getStatusOfPermissions`!@ method.
 
 @![iOS]
 ```objc
