@@ -100,40 +100,40 @@ func managerShouldUpdateLifecycle(toLanguage language: SDLLanguage, hmiLanguage:
 
 @![android,javaSE,javaEE]
 ```java
-                @Override
-                public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language, Language hmiLanguage) {
-                    boolean isNeedUpdate = false;
-                    String appName = APP_NAME;
-                    String ttsName = APP_NAME;
-                    switch (language) {
-                        case ES_MX:
-                            isNeedUpdate = true;
-                            ttsName = APP_NAME_ES;
-                            break;
-                        case FR_CA:
-                            isNeedUpdate = true;
-                            ttsName = APP_NAME_FR;
-                            break;
-                        default:
-                            break;
-                    }
-                    switch (hmiLanguage) {
-                        case ES_MX:
-                            isNeedUpdate = true;
-                            appName = APP_NAME_ES;
-                            break;
-                        case FR_CA:
-                            isNeedUpdate = true;
-                            appName = APP_NAME_FR;
-                            break;
-                        default:
-                            break;
-                    }
-                    if (isNeedUpdate) {
-                        return new LifecycleConfigurationUpdate(appName, null, TTSChunkFactory.createSimpleTTSChunks(ttsName), null);
-                    } else {
-                        return null;
-                    }
-                }
+@Override
+public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language, Language hmiLanguage) {
+    boolean isNeedUpdate = false;
+    String appName = APP_NAME;
+    String ttsName = APP_NAME;
+    switch (language) {
+        case ES_MX:
+            isNeedUpdate = true;
+            ttsName = APP_NAME_ES;
+            break;
+        case FR_CA:
+            isNeedUpdate = true;
+            ttsName = APP_NAME_FR;
+            break;
+        default:
+            break;
+    }
+    switch (hmiLanguage) {
+        case ES_MX:
+            isNeedUpdate = true;
+            appName = APP_NAME_ES;
+            break;
+        case FR_CA:
+            isNeedUpdate = true;
+            appName = APP_NAME_FR;
+            break;
+        default:
+            break;
+    }
+    if (isNeedUpdate) {
+        return new LifecycleConfigurationUpdate(appName, null, TTSChunkFactory.createSimpleTTSChunks(ttsName), null);
+    } else {
+        return null;
+    }
+}
 ```
 !@
