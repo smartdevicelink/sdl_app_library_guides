@@ -305,7 +305,7 @@ If desired, you can @![iOS]subscribe to!@@![android,javaSE,javaEE,javascript]set
 ```objc
 SDLPermissionElement *showElement = [[SDLPermissionElement alloc] initWithRPCName:SDLRPCFunctionNameShow parameterPermissions:nil];
 SDLPermissionElement *getVehicleDataElement = [[SDLPermissionElement alloc] initWithRPCName:SDLRPCFunctionNameGetVehicleData parameterPermissions:@[@"rpm"]];
-SDLPermissionObserverIdentifier observerId = [self.sdlManager.permissionManager subscribeToRPCPermissions:@[showElement, getVehicleDataElement] groupType:<#SDLPermissionGroupType#> withHandler:^(NSDictionary<SDLRPCFunctionName, SDLPermissionStatus *> *_Nonnull updatedPermissionStatuses, SDLPermissionGroupStatus updatedGroupStatus) {
+SDLPermissionObserverIdentifier subscriptionId = [self.sdlManager.permissionManager subscribeToRPCPermissions:@[showElement, getVehicleDataElement] groupType:<#SDLPermissionGroupType#> withHandler:^(NSDictionary<SDLRPCFunctionName, SDLRPCPermissionStatus *> *_Nonnull updatedPermissionStatuses, SDLPermissionGroupStatus updatedGroupStatus) {
     if (updatedPermissionStatuses[SDLRPCFunctionNameGetVehicleData].isRPCAllowed) {
         // GetVehicleData RPC is allowed
     }
