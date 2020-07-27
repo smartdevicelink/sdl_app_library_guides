@@ -132,14 +132,14 @@ const isParameterAllowed = sdlManager.getPermissionManager().isPermissionParamet
 !@
 
 ### Checking Current Permissions of a Group of RPCs
-You can also retrieve the status of a group of RPCs. First, you can retrieve the permission status of the group of RPCs as a whole: whether or not those RPCs are all allowed, all disallowed, or some are allowed and some are disallowed. This may allow you to know, for example, if a feature you need is allowed based on the status of all the RPCs of the features.
+You can also retrieve the status of a group of RPCs. First, you can retrieve the permission status of the group of RPCs as a whole: whether or not those RPCs are all allowed, all disallowed, or some are allowed and some are disallowed. This will allow you to know, for example, if a feature you need is allowed based on the status of all the RPCs needed for the feature.
 
 @![iOS]
 ##### Objective-C
 ```objc
 SDLPermissionElement *showElement = [[SDLPermissionElement alloc] initWithRPCName:SDLRPCFunctionNameShow parameterPermissions:nil];
 SDLPermissionElement *getVehicleDataElement = [[SDLPermissionElement alloc] initWithRPCName:SDLRPCFunctionNameGetVehicleData parameterPermissions:@[@"rpm"]];
-SDLPermissionGroupStatus groupStatus = [self.sdlManager.permissionManager groupStatusOfRPCPermissions:@[showElement, addCommandElement]];
+SDLPermissionGroupStatus groupStatus = [self.sdlManager.permissionManager groupStatusOfRPCPermissions:@[showElement, getVehicleDataElement]];
 
 switch (groupStatus) {
     case SDLPermissionGroupStatusAllowed:
@@ -161,7 +161,7 @@ switch (groupStatus) {
 ```swift
 let showElement = SDLPermissionElement(rpcName: .show, parameterPermissions: nil)
 let getVehicleDataElement = SDLPermissionElement(rpcName: .getVehicleData, parameterPermissions: ["rpm"])
-let groupStatus = sdlManager.permissionManager.groupStatus(ofRPCPermissions:[showElement, addCommandElement])
+let groupStatus = sdlManager.permissionManager.groupStatus(ofRPCPermissions:[showElement, getVehicleDataElement])
 switch groupStatus {
 case .allowed:
     // All of the RPCs are allowed
@@ -235,7 +235,7 @@ The previous snippet will give a quick generic status for all permissions togeth
 ```objc
 SDLPermissionElement *showElement = [[SDLPermissionElement alloc] initWithRPCName:SDLRPCFunctionNameShow parameterPermissions:nil];
 SDLPermissionElement *getVehicleDataElement = [[SDLPermissionElement alloc] initWithRPCName:SDLRPCFunctionNameGetVehicleData parameterPermissions:@[@"rpm"]];
-NSDictionary<SDLRPCFunctionName, SDLRPCPermissionStatus *> *status = [self.sdlManager.permissionManager statusOfRPCs:@[showElement, addCommandElement]];
+NSDictionary<SDLRPCFunctionName, SDLRPCPermissionStatus *> *status = [self.sdlManager.permissionManager statusesOfRPCPermissions:@[showElement, getVehicleDataElement]];
 
 if (status[SDLRPCFunctionNameGetVehicleData].isRPCAllowed) {
     // GetVehicleData RPC is allowed
@@ -249,7 +249,7 @@ if (status[SDLRPCFunctionNameGetVehicleData].rpcParameters[@"rpm"].boolValue) {
 ```swift
 let showElement = SDLPermissionElement(rpcName: .show, parameterPermissions: nil)
 let getVehicleDataElement = SDLPermissionElement(rpcName: .getVehicleData, parameterPermissions: ["rpm"])
-let status = sdlManager.permissionManager.statuses(ofRPCPermissions:[showElement, addCommandElement])
+let status = sdlManager.permissionManager.statuses(ofRPCPermissions:[showElement, getVehicleDataElement])
 
 if status[.getVehicleData]?.isRPCAllowed == true {
     // GetVehicleData RPC is allowed
@@ -325,7 +325,7 @@ let subscriptionId = sdlManager.permissionManager.subscribe(toRPCPermissions: [s
         // GetVehicleData RPC is allowed
     }
 
-    if status[.getVehicleData]?.rpcParameters?["rpm"]?.boolValue == true {
+    if updatedPermissionStatuses[.getVehicleData]?.rpcParameters?["rpm"]?.boolValue == true {
         // RPM parameter in GetVehicleDataRPC is allowed
     }
 }
@@ -372,7 +372,7 @@ const listenerId = sdlManager.getPermissionManager().addListener(permissionEleme
 !@
 
 ### Stopping Observation of Permissions
-When you set up the @![iOS]subscription!@ @![android,javaSE,javaEE,javascript]listener!@, you will get a unique id back. Use this id to unsubscribe to the permissions at a later date.
+When you set up the @![iOS]subscription!@@![android,javaSE,javaEE,javascript]listener!@, you will get a unique id back. Use this id to unsubscribe to the permissions at a later date.
 
 @![iOS]
 ##### Objective-C
