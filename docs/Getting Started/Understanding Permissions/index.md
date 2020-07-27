@@ -24,7 +24,7 @@ To get more detailed information about the state of your SDL app check the curre
 The easiest way to monitor the `hmiLevel` of your SDL app is through a required delegate callback of `SDLManagerDelegate`. The function `hmiLevel:didChangeToLevel:` is called every time your app's `hmiLevel` changes.
 !@
 
-@![android,javaSE,javaEE,javascript]Monitoring HMI Status is possible through an `OnHMIStatus` notification that you can subscribe to via the `SdlManager`'s !@@![android,javaSE,javaEE]`addOnRPCNotificationListener`.!@@![javascript]`addRpcListener`.!@
+@![android,javaSE,javaEE,javascript]Monitoring HMI Status is possible through an `OnHMIStatus` notification that you can subscribe to via the !@@![android,javaSE,javaEE]`SdlManager.Builder`'s `setRPCNotificationListeners`.!@@![javascript]`LifecycleConfig`'s `setRpcNotificationListeners`.!@
 
 @![iOS]
 ##### Objective-C
@@ -94,7 +94,10 @@ function onHmiStatusListener (onHmiStatus) {
         // now in HMI FULL
     }
 }
-sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnHMIStatus, onHmiStatusListener);
+
+lifecycleConfig.setRpcNotificationListeners({
+    [SDL.rpc.enums.FunctionID.OnHMIStatus]: onHmiStatusListener
+});
 ```
 !@
 
