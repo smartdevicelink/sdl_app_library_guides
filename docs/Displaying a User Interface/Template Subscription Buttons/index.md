@@ -132,23 +132,24 @@ sdlManager.screenManager.subscribeButton(.playPause, withObserver: self, selecto
 Once you have subscribed to the button, the listener will be called when the button has been selected. If there is an error subscribing to the button the error message will be returned in the `error` parameter.
 
 ```java
-		OnButtonListener playPauseButtonListener = new OnButtonListener() {
-			@Override
-			public void onPress(ButtonName buttonName, OnButtonPress buttonPress) {
+OnButtonListener playPauseButtonListener = new OnButtonListener() {
+    @Override
+    public void onPress(ButtonName buttonName, OnButtonPress buttonPress) {
 
-			}
+    }
 
-			@Override
-			public void onEvent(ButtonName buttonName, OnButtonEvent buttonEvent) {
+    @Override
+    public void onEvent(ButtonName buttonName, OnButtonEvent buttonEvent) {
 
-			}
+    }
 
-			@Override
-			public void onError(String info) {
+    @Override
+    public void onError(String info) {
 
-			}
-		};
-		sdlManager.getScreenManager().addButtonListener(ButtonName.PLAY_PAUSE, playPauseButtonListener);
+    }
+};
+
+sdlManager.getScreenManager().addButtonListener(ButtonName.PLAY_PAUSE, playPauseButtonListener);
 ```
 !@
 
@@ -185,7 +186,7 @@ sdlManager.screenManager.unsubscribeButton(.playPause, withObserver: <#Your obse
 !@
 
 @![android,javaSE,javaEE]
-To unsubscribe to a subscription button, simply tell the `ScreenManager` which button to unsubscribe.
+To unsubscribe to a subscription button, simply tell the `ScreenManager` which button name and listener object to unsubscribe.
 ```java
 sdlManager.getScreenManager().removeButtonListener(ButtonName.PLAY_PAUSE, playPauseButtonListener);
 ```
