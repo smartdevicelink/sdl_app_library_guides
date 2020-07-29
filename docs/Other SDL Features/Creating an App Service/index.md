@@ -5,7 +5,7 @@ App services are used to publish navigation, weather and media data (such as tem
 
 Vehicle head units may use these services in various ways. One app service for each type will be the "active" service to the module. For media, for example, this will be the media app that the user is currently using or listening to. For navigation, it would be a navigation app that the user is using to navigate. For weather, it may be the last used weather app, or a user-selected default. The system may then use that service's data to perform various actions (such as navigating to an address with the active service or to display the temperature as provided from the active weather service).
 
-An SDL app can also subscribe to a published app service. Once subscribed, the app will be sent the new data when the app service publisher updates its data. To find out more about how to subscribe to an app service check out the [Using App Services](Other SDL Features/Using App Services) section. Subscribed apps can also send certain RPCs and generic URI-based actions (see the section Supporting App Actions, below) to your service.
+An SDL app can also subscribe to a published app service. Once subscribed, the app will be sent the new data when the app service publisher updates its data. To find out more about how to subscribe to an app service check out the [Using App Services](Other SDL Features/Using App Services) guide. Subscribed apps can also send certain RPCs and generic URI-based actions (see the section [Supporting Service RPCs and Actions](#supporting-service-rpcs-and-actions) below) to your service.
 
 Currently, there is no high-level API support for publishing an app service, so you will have to use raw RPCs for all app service related APIs.
 
@@ -17,11 +17,16 @@ Apps are able to declare that they provide an app service by publishing an app s
 ## Publishing an App Service
 Publishing a service is a multi-step process. First, you need to create your app service manifest. Second, you will publish your app service to the module. Third, you will publish the service data using `OnAppServiceData`. Fourth, you must listen for data requests and respond accordingly. Fifth, if your app service supports handling of RPCs related to your service you must listen for these RPC requests and handle them accordingly. Sixth, optionally, you can support URI-based app actions. Finally, if necessary, you can you update or delete your app service manifest.
 
+@![iOS]
+!!! NOTE
+Please note that if you are integrating an sdl_ios version less than v6.3, the example code in this guide will not work. We recommend updating to the latest release version.
+!!!
+!@
+
 ### 1. Creating an App Service Manifest
 The first step to publishing an app service is to create an @![iOS]`SDLAppServiceManifest`!@@![android,javaSE,javaEE,javascript]`AppServiceManifest`!@ object. There is a set of generic parameters you will need to fill out as well as service type specific parameters based on the app service type you are creating.
 
 @![iOS]
-
 ##### Objective-C
 ```objc
 SDLAppServiceManifest *manifest = [[SDLAppServiceManifest alloc] initWithAppServiceType:SDLAppServiceTypeMedia];
@@ -37,9 +42,9 @@ manifest.mediaServiceManifest = <#Code#> // Covered below
 ```swift
 let manifest = SDLAppServiceManifest(appServiceType: .media)
 manifest.serviceIcon = SDLImage(name:"Service Icon Name", isTemplate: false) // Previously uploaded service icon. This could be the same as your app icon.
-manifest.allowAppConsumers = true; // Whether or not other apps can view your data in addition to the head unit. If set to `NO` only the head unit will have access to this data.
+manifest.allowAppConsumers = NSNumber(true) // Whether or not other apps can view your data in addition to the head unit. If set to `false` only the head unit will have access to this data.
 manifest.maxRPCSpecVersion = SDLMsgVersion(majorVersion: 5, minorVersion: 0, patchVersion: 0) // An *optional* parameter that limits the RPC spec versions you can understand to the provided version *or below*.
-manifest.handledRPCs = []; // If you add function ids to this *optional* parameter, you can support newer RPCs on older head units (that don't support those RPCs natively) when those RPCs are sent from other connected applications.
+manifest.handledRPCs = [] // If you add function ids to this *optional* parameter, you can support newer RPCs on older head units (that don't support those RPCs natively) when those RPCs are sent from other connected applications.
 manifest.mediaServiceManifest = <#Code#> // Covered below
 ```
 !@
@@ -140,10 +145,9 @@ manifest.setNavigationServiceManifest(navigationManifest);
 !@
 
 #### Creating a Weather Service Manifest
-You will need to create a weather service manifest if you want to publish a weather service. You will declare the types of data your service provides in its @![iOS]`SDLWeatherServiceData`!@ @![android,javaSE,javaEE] `WeatherServiceData` !@.
+You will need to create a weather service manifest if you want to publish a weather service. You will declare the types of data your service provides in its @![iOS]`SDLWeatherServiceData`!@@![android,javaSE,javaEE,javascript]`WeatherServiceData`!@.
 
 @![iOS]
-
 ##### Objective-C
 ```objc
 SDLWeatherServiceManifest *weatherManifest = [[SDLWeatherServiceManifest alloc] initWithCurrentForecastSupported:YES maxMultidayForecastAmount:10 maxHourlyForecastAmount:24 maxMinutelyForecastAmount:60 weatherForLocationSupported:YES];
@@ -193,7 +197,7 @@ SDLPublishAppService *publishServiceRequest = [[SDLPublishAppService alloc] init
     if (error != nil || !response.success.boolValue) { return; }
 
     SDLPublishAppServiceResponse *publishServiceResponse = (SDLPublishAppServiceResponse *)response;
-    SDLAppServiceRecord *serviceRecord = publishServiceResponse.appServiceRecord
+    SDLAppServiceRecord *serviceRecord = publishServiceResponse.appServiceRecord;
     <#Use the response#>
 }];
 ```
@@ -215,15 +219,15 @@ sdlManager.send(request: publishServiceRequest) { (req, res, err) in
 PublishAppService publishServiceRequest = new PublishAppService();
 publishServiceRequest.setAppServiceManifest(manifest);
 publishServiceRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
-	@Override
-	public void onResponse(int correlationId, RPCResponse response) {
-		<#Use the response#>
-	}
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        <#Use the response#>
+    }
 
-	@Override
-	public void onError(int correlationId, Result resultCode, String info){
-		<#Error Handling#>
-	}
+    @Override
+    public void onError(int correlationId, Result resultCode, String info){
+        <#Error Handling#>
+    }
 });
 sdlManager.sendRPC(publishServiceRequest);
 ```
@@ -252,7 +256,7 @@ As noted in the introduction to this guide, one service for each type may become
 
 After the initial app record is passed to you in the @![iOS]`SDLPublishAppServiceResponse`!@ @![android,javaSE,javaEE,javascript] `PublishAppServiceResponse`!@, you will need to be notified of changes in order to observe whether or not you have become the active service. To do so, you will have to observe the new @![iOS]`SDLSystemCapabilityTypeAppServices`!@ @![android,javaSE,javaEE,javascript]`SystemCapabilityType.APP_SERVICES`!@ using `GetSystemCapability` and @![iOS]`OnSystemCapability`!@ @![android,javaSE,javaEE,javascript] `OnSystemCapabilityUpdated`!@.
 
-For more information, see the [Using App Services guide](Other SDL Features/Using App Services) and see the "Getting and Subscribing to Services" section.
+For more information, see the [Using App Services](Other SDL Features/Using App Services#getting-and-subscribing-to-services) guide and go to the **Getting and Subscribing to Services** section.
 
 ### 3. Update Your Service's Data
 After your service is published, it's time to update your service data. First, you must send an `onAppServiceData` RPC notification with your updated service data. RPC notifications are different than RPC requests in that they will not receive a response from the connected head unit @![iOS], and must use a different `SDLManager` method call to send!@.
@@ -266,7 +270,6 @@ First, you will have to create an @![iOS]`SDLMediaServiceData`!@ @![android,java
 
 #### Media Service Data
 @![iOS]
-
 ##### Objective-C
 ```objc
 SDLImage *currentImage = [[SDLImage alloc] initWithName:@"some artwork name" isTemplate:NO];
@@ -352,44 +355,44 @@ sdlManager.sendRpc(onAppData);
 
 #### Navigation Service Data
 @![iOS]
-
 ##### Objective-C
 ```objc
-UIImage *image = [UIImage imageNamed:imageName];
+UIImage *image = [UIImage imageNamed:@"<#Your image name#>"];
 if (image == nil) { return; }
+SDLArtwork *artwork = [SDLArtwork artworkWithImage:image asImageFormat:SDLArtworkImageFormatPNG];
 
-SDLArtwork *artwork = [SDLArtwork artworkWithImage:image name:imageName asImageFormat:SDLArtworkImageFormatJPG];
+__weak typeof(self) weakSelf = self;
 [self.sdlManager.fileManager uploadFile:artwork completionHandler:^(BOOL success, NSUInteger bytesAvailable, NSError * _Nullable error) {
-    // Make sure the image is uploaded to the system before publishing your service
+    // Make sure the image is uploaded to the system before publishing your data
     SDLLocationCoordinate *coordinate = [[SDLLocationCoordinate alloc] initWithLatitudeDegrees:42 longitudeDegrees:43];
     SDLLocationDetails *location = [[SDLLocationDetails alloc] initWithCoordinate:coordinate];
     SDLNavigationInstruction *instruction = [[SDLNavigationInstruction alloc] initWithLocationDetails:location action:SDLNavigationActionTurn];
-    instruction.image = [[SDLImage alloc] initWithName:imageName isTemplate:NO];
+    instruction.image = [[SDLImage alloc] initWithName:artwork.name isTemplate:NO];
 
     SDLDateTime *timestamp = [[SDLDateTime alloc] initWithHour:2 minute:3 second:4 millisecond:847];
-    SDLNavigationServiceData *navServiceData = [[SDLNavigationServiceData alloc] initWithTimestamp:timeStamp];
+    SDLNavigationServiceData *navServiceData = [[SDLNavigationServiceData alloc] initWithTimestamp:timestamp];
     navServiceData.instructions = @[instruction];
 
     SDLAppServiceData *appServiceData = [[SDLAppServiceData alloc] initWithNavigationServiceData:navServiceData serviceId:@"<#Your saved serviceID#>"];
 
     SDLOnAppServiceData *onAppServiceData = [[SDLOnAppServiceData alloc] initWithServiceData:appServiceData];
-    [self.sdlManager sendRPC:onAppServiceData];
+    [weakSelf.sdlManager sendRPC:onAppServiceData];
 }];
 ```
 
 ##### Swift
 ```swift
-guard let image = UIImage(named: imageName) else { return }
-let artwork = SDLArtwork(image: image, name: imageName, persistent: false, as: .JPG)
+guard let image = UIImage(named: "<#Your image name#>") else { return }
+let artwork = SDLArtwork(image: image, persistent: false, as: .PNG)
 
 sdlManager.fileManager.upload(file: artwork) { [weak self] (success, bytesAvailable, error) in
     guard success else { return }
 
-    // Make sure the image is uploaded to the system before publishing your service
+    // Make sure the image is uploaded to the system before publishing your data
     let coordinate = SDLLocationCoordinate(latitudeDegrees: 42, longitudeDegrees: 43)
     let location = SDLLocationDetails(coordinate: coordinate)
     let instruction = SDLNavigationInstruction(locationDetails: location, action: .turn)
-    instruction.image = SDLImage(name: imageName, isTemplate: false)
+    instruction.image = SDLImage(name: artwork.name, isTemplate: false)
 
     let timestamp = SDLDateTime(hour: 2, minute: 3, second: 4, millisecond: 847)
     let navServiceData = SDLNavigationServiceData(timestamp: timestamp)
@@ -407,7 +410,7 @@ sdlManager.fileManager.upload(file: artwork) { [weak self] (success, bytesAvaila
 ```java
 final SdlArtwork navInstructionArt = new SdlArtwork("turn", FileType.GRAPHIC_PNG, R.drawable.turn, true);
 
-sdlManager.getFileManager().uploadFile(navInstructionArt, new CompletionListener() { // We have to send the image to the system before it's used in the app service.
+sdlManager.getFileManager().uploadFile(navInstructionArt, new CompletionListener() {
     @Override
     public void onComplete(boolean success) {
         if (success){
@@ -415,7 +418,8 @@ sdlManager.getFileManager().uploadFile(navInstructionArt, new CompletionListener
 
             LocationDetails locationDetails = new LocationDetails();
             locationDetails.setCoordinate(coordinate);
-
+            
+            // Make sure the image is uploaded to the system before publishing your data
             NavigationInstruction navigationInstruction = new NavigationInstruction(locationDetails, NavigationAction.TURN);
             navigationInstruction.setImage(navInstructionArt.getImageRPC());
 
@@ -490,50 +494,41 @@ if (success) {
 
 ##### Objective-C
 ```objc
-UIImage *image = [UIImage imageNamed:imageName];
+UIImage *image = [UIImage imageNamed:@"<#Your image name#>"];
 if (image == nil) { return; }
+SDLArtwork *artwork = [SDLArtwork artworkWithImage:image asImageFormat:SDLArtworkImageFormatPNG];
 
-SDLArtwork *artwork = [SDLArtwork artworkWithImage:image name:imageName asImageFormat:SDLArtworkImageFormatJPG];
-
-// We have to send the image to the system before it's used in the app service.
-__weak typeof(self) weakself = self;
+__weak typeof(self) weakSelf = self;
 [self.sdlManager.fileManager uploadFile:artwork completionHandler:^(BOOL success, NSUInteger bytesAvailable, NSError * _Nullable error) {
-    [weakSelf updateWeatherServiceWithImage:success];
-}];
-
-- (void)updateWeatherServiceWithImage:(BOOL)useImage {
+    // Make sure the image is uploaded to the system before publishing your data
     SDLWeatherData *weatherData = [[SDLWeatherData alloc] init];
-    weatherData.weatherIconImageName = useImage ? imageName : nil;
+    weatherData.weatherIcon = [[SDLImage alloc] initWithName:artwork.name isTemplate:YES];
 
     SDLWeatherServiceData *weatherServiceData = [[SDLWeatherServiceData alloc] initWithLocation:[[SDLLocationDetails alloc] initWithCoordinate:[[SDLLocationCoordinate alloc] initWithLatitudeDegrees:42.331427 longitudeDegrees:-83.0457538]]];
 
     SDLAppServiceData *appServiceData = [[SDLAppServiceData alloc] initWithWeatherServiceData:weatherServiceData serviceId:@"<#Your saved serviceID#>"];
 
     SDLOnAppServiceData *onAppServiceData = [[SDLOnAppServiceData alloc] initWithServiceData:appServiceData];
-    [self.sdlManager sendRPC:onAppServiceData];
-}
+    [weakSelf.sdlManager sendRPC:onAppServiceData];
+}];
 ```
 
 ##### Swift
 ```swift
-guard let image = UIImage(named: imageName) else { return }
-let artwork = SDLArtwork(image: image, name: imageName, persistent: false, as: .JPG)
+guard let image = UIImage(named: "<#Your image name#>") else { return }
+let artwork = SDLArtwork(image: image, persistent: false, as: .PNG)
 
-// We have to send the image to the system before it's used in the app service.
 sdlManager.fileManager.upload(file: artwork) { [weak self] (success, bytesAvailable, error) in
-    self?.updateWeatherService(shouldUseImage: success)
-}
-
-private func updateWeatherService(shouldUseImage: Bool) {
+    // Make sure the image is uploaded to the system before publishing your data
     let weatherData = SDLWeatherData()
-    weatherData.weatherIconImageName = shouldUseImage ? imageName : nil
+    weatherData.weatherIcon = SDLImage(name: artwork.name, isTemplate: true)
 
     let weatherServiceData = SDLWeatherServiceData(location: SDLLocationDetails(coordinate: SDLLocationCoordinate(latitudeDegrees: 42.3314, longitudeDegrees: 83.0458)), currentForecast: weatherData, minuteForecast: nil, hourlyForecast: nil, multidayForecast: nil, alerts: nil)
 
     let appServiceData = SDLAppServiceData(weatherServiceData: weatherServiceData, serviceId: "<#Your saved serviceID#>")
 
     let onAppServiceData = SDLOnAppServiceData(serviceData: appServiceData)
-    sdlManager.sendRPC(onAppServiceData)
+    self?.sdlManager.sendRPC(onAppServiceData)
 }
 ```
 !@
@@ -542,11 +537,11 @@ private func updateWeatherService(shouldUseImage: Bool) {
 ```java
 final SdlArtwork weatherImage = new SdlArtwork("sun", FileType.GRAPHIC_PNG, R.drawable.sun, true);
 
-sdlManager.getFileManager().uploadFile(weatherImage, new CompletionListener() { // We have to send the image to the system before it's used in the app service.
+sdlManager.getFileManager().uploadFile(weatherImage, new CompletionListener() {
     @Override
     public void onComplete(boolean success) {
         if (success) {
-
+            // Make sure the image is uploaded to the system before publishing your data
             WeatherData weatherData = new WeatherData();
             weatherData.setWeatherIcon(weatherImage.getImageRPC());
 
@@ -613,111 +608,55 @@ If you choose to make your app service available to other apps, you will have to
 Handling app service subscribers is a two step process. First, you must @![iOS]register for notifications from!@ @![android,javaSE,javaEE,javascript]setup listeners for!@ the subscriber. Then, when you get a request, you will either have to send a response to the subscriber with the app service data or if you have no data to send, send a response with a relevant failure result code.
 
 #### Listening for Requests
-First, you will need to @![iOS]register for notification of!@@![android,javaSE,javaEE,javascript]setup a listener for!@ a `GetAppServiceDataRequest`.
+First, you will need to @![iOS]subscribe to `GetAppServiceDataRequest` notifications.!@@![android,javaSE,javaEE,javascript]setup a listener for `GetAppServiceDataRequest`!@. Then, when you get the request, you will need to respond with your app service data. Therefore, you will need to store your current service data after the most recent update using `OnAppServiceData` (see the section [Update Your Service's Data](#3-update-your-services-data)).
 
 @![iOS]
 ##### Objective-C
 ```objc
-// sdl_ios v6.3+
+__weak typeof(self) weakSelf = self;
 [self.sdlManager subscribeToRPC:SDLDidReceiveGetAppServiceDataRequest withBlock:^(__kindof SDLRPCMessage * _Nonnull message) {
     SDLGetAppServiceData *getAppServiceRequest = message;
 
-    <#Use the request#>
-}];
-
-// Pre sdl_ios v6.3
-[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appServiceDataRequestReceived:) name:SDLDidReceiveGetAppServiceDataRequest object:nil];
-```
-
-##### Swift
-```swift
-// sdl_ios v6.3+
-sdlManager.subscribe(to: SDLDidReceiveGetAppServiceDataRequest) { (message) in
-    guard let getAppServiceRequest = message as? SDLGetAppServiceData else { return }
-
-    <#Use the request#>
-}
-
-// Pre sdl_ios v6.3
-NotificationCenter.default.addObserver(self, selector: #selector(appServiceDataRequestReceived(_:)), name: SDLDidReceiveGetAppServiceDataRequest, object: nil)
-```
-!@
-
-@![android,javaSE,javaEE]
-```java
-// Get App Service Data Request Listener
-sdlManager.addOnRPCRequestListener(FunctionID.GET_APP_SERVICE_DATA, new OnRPCRequestListener() {
-    @Override
-    public void onRequest(RPCRequest request) {
-        <#Handle Request#>
-    }
-});
-```
-!@
-
-@![javascript]
-```js
-// Get App Service Data Request Listener
-sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.GetAppServiceData, (message) => {
-    if (message.getMessageType() === SDL.rpc.enums.MessageType.request) {
-        <#Handle Request#>
-    }
-});
-```
-!@
-
-#### Sending a Response to Subscribers
-Second, you need to respond to the request when you receive it with your app service data. This means that you will need to store your current service data after your most recent update using `OnAppServiceData` (see the section Updating Your Service Data).
-
-@![iOS]
-##### Objective-C
-```objc
-- (void)appServiceDataRequestReceived:(SDLRPCRequestNotification *)request {
-    SDLGetAppServiceData *getAppServiceData = (SDLGetAppServiceData *)request.request;
-
     // Send a response
     SDLGetAppServiceDataResponse *response = [[SDLGetAppServiceDataResponse alloc] initWithAppServiceData:<#Your App Service Data#>];
-    response.correlationID = getAppServiceData.correlationID;
+    response.correlationID = getAppServiceRequest.correlationID;
     response.success = @YES;
-    response.resultCode = SDLResultCodeSuccess;
+    response.resultCode = SDLResultSuccess;
     response.info = @"<#Use to provide more information about an error#>";
-
-    [self.sdlManager sendRPC:response];
-}
+    [weakSelf.sdlManager sendRPC:response];
+}];
 ```
 
 ##### Swift
 ```swift
-@objc func appServiceDataRequestReceived(_ request: SDLRPCRequestNotification) {
-    guard let getAppServiceData = request.request as? SDLGetAppServiceData else { return }
-
+sdlManager.subscribe(to: SDLDidReceiveGetAppServiceDataRequest) { [weak self] (message) in
+    guard let getAppServiceRequest = message as? SDLGetAppServiceData else { return }
+    
     // Send a response
     let response = SDLGetAppServiceDataResponse(appServiceData: <#Your App Service Data#>)
-    response.correlationID = getAppServiceData.correlationID
+    response.correlationID = getAppServiceRequest.correlationID
     response.success = NSNumber(true)
     response.resultCode = .success
     response.info = "<#Use to provide more information about an error#>"
-
-    sdlManager.sendRPC(response)
+    self?.sdlManager.sendRPC(response)
 }
 ```
 !@
 
 @![android,javaSE,javaEE]
 ```java
-// Get App Service Data Request Listener
 sdlManager.addOnRPCRequestListener(FunctionID.GET_APP_SERVICE_DATA, new OnRPCRequestListener() {
     @Override
     public void onRequest(RPCRequest request) {
         GetAppServiceData getAppServiceData = (GetAppServiceData) request;
 
+        // Send a response
         GetAppServiceDataResponse response = new GetAppServiceDataResponse();
         response.setSuccess(true);
         response.setCorrelationID(getAppServiceData.getCorrelationID());
         response.setResultCode(Result.SUCCESS);
         response.setInfo("<#Use to provide more information about an error#>");
         response.setServiceData(<#Your App Service Data#>);
-
         sdlManager.sendRPC(response);
     }
 });
@@ -762,7 +701,7 @@ Certain RPCs are related to certain services. The chart below shows the current 
 | ButtonPress (SHUFFLE) | | |
 | ButtonPress (REPEAT) | | |
 
-When you are the active service for your service's type (e.g. media), and you have declared that you support these RPCs in your manifest (see section 1. Creating an App Service Manifest), then these RPCs will be automatically routed to your app. You will have to set up @![iOS]notifications!@@![android,javaSE,javaEE,javascript]listeners!@ to be aware that they have arrived, and you will then need to respond to those requests.
+When you are the active service for your service's type (e.g. media), and you have declared that you support these RPCs in your manifest (see the section [Creating an App Service Manifest](#1-creating-an-app-service-manifest)), then these RPCs will be automatically routed to your app. You will have to set up @![iOS]notifications!@@![android,javaSE,javaEE,javascript]listeners!@ to be aware that they have arrived, and you will then need to respond to those requests.
 
 @![iOS]
 ##### Objective-C
@@ -805,7 +744,7 @@ sdlManager.subscribe(to: SDLDidReceiveButtonPressRequest, observer: self, select
     let response = SDLButtonPressResponse()
 
     // These are very important, your response won't work properly without them.
-    response.success = true
+    response.success = NSNumber(true)
     response.resultCode = .success
     response.correlationID = interactionRequest.correlationID
     response.info = "<#Use to provide more information about an error#>"
@@ -929,7 +868,7 @@ sdlManager.subscribe(to: SDLDidReceivePerformAppServiceInteractionRequest, obser
     let response = SDLPerformAppServiceInteractionResponse(serviceSpecificResult: result)
 
     // These are very important, your response won't work properly without them.
-    response.success = true
+    response.success = NSNumber(true)
     response.resultCode = .success
     response.correlationID = interactionRequest.correlationID
 

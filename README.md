@@ -1,8 +1,8 @@
 # SDL App Library Guide Content
-The iOS and Java Suite (Android, JavaEE, and JavaSE) guides are located on the [SDL Developer Portal](https://smartdevicelink.com/en/guides/iOS/getting-started/installation/).
+The iOS, Java Suite (Android, JavaEE, and JavaSE), and JavaScript Suite guides are located on the [SDL Developer Portal](https://smartdevicelink.com/docs/).
 
 ## Overview
-Since both the iOS and Java Suite guides provide almost the same instructions and information, the content of each section should be written as generically as possible. This allows the guides to be written once for all platforms with little modification needed. If a guide is specific to one platform or has content specific to one platform, like code snippets, the content should be separated out using custom platform tags.
+Since the iOS, Java Suite, and JavaScript Suite guides provide almost the same instructions and information, the content of each section should be written as generically as possible. This allows the guides to be written once for all platforms with little modification needed. If a guide is specific to one platform or has content specific to one platform, like code snippets, the content should be separated out using custom platform tags.
 
 Guide documents are formatted using a custom SDL markdown format. All guides get created as directories inside this repository. Each directory gets a link in the left-hand sidebar on [smartdevicelink.com](https://smartdevicelink.com). Guides do not currently support multiple pages or sub-directories.
 
@@ -53,6 +53,34 @@ Configuration tags allow to you create guides that are only available for the sp
     }
 
 This code snippet shows how to configure a guide to only be made available for the Android platform guides.
+
+## To create a link to a header:
+1. The first character must be a `#`
+1. All characters must be lowercased
+1. All spaces need to be replaced by a hyphen
+1. Apostrophes need to be removed
+
+### Examples
+#### To link to a header on the same page:
+```
+### Supporting Service RPCs and Actions
+```
+
+Use the following formatting:
+```
+[Supporting Service RPCs and Actions](#supporting-service-rpcs-and-actions) 
+```
+
+#### To link to a header on a different page:
+To link to the following header on a page called **Using App Services**:
+```
+### Getting and Subscribing to Services
+```
+
+Use the following formatting:
+```
+[Using App Services](Using App Services#getting-and-subscribing-to-services)
+```
 
 ## Previewing Content
 Build servers will build all PRs for all available platforms. At the bottom of the PR you will see the progress of the build server for each platform. Press the "Details" button to open a link to the generated docs with the PR included for that given platform.

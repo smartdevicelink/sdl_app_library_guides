@@ -6,8 +6,45 @@ When using the @![iOS]`SDLSpeak`!@@![android,javaSE,javaEE,javascript]`Speak`!@ 
 ## Creating the Speak Request
 The speech request you send can simply be a text phrase, which will be played back in accordance with the user's current language settings, or it can consist of phoneme specifications to direct SDL’s TTS engine to speak a language-independent, speech-sculpted phrase. It is also possible to play a pre-recorded sound file (such as an MP3) using the speech request. For more information on how to play a sound file please refer to [Playing Audio Indications](Speech and Audio/Playing Audio Indications). 
 
-### Getting Head Unit Speech Capabilities
-To get the head unit's supported speech capabilities, check the @![iOS]`SDLSystemCapabilityManager.speechCapabilities`!@@![android,javaSE,javaEE,javascript] `sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.SPEECH)`!@ after successfully connecting to the head unit. Below is a list of commonly supported speech capabilities.
+### Getting the Supported Speech Capabilities
+Once you have successfully connected to the module, you can access supported speech capabilities properties on the @![iOS]`SDLManager.systemCapabilityManager`!@@![android,javaSE,javaEE,javascript]`sdlManager.getSystemCapabilityManager()`!@ instance.
+
+@![iOS]
+##### Objective-C
+```objc
+NSArray<SDLSpeechCapabilities> *speechCapabilities = self.sdlManager.systemCapabilityManager.speechCapabilities;
+```
+
+##### Swift
+```swift
+let speechCapabilities = sdlManager.systemCapabilityManager.speechCapabilities
+```
+!@
+
+@![android, javaSE, javaEE]
+```java
+sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.SPEECH, new OnSystemCapabilityListener() {
+    @Override
+    public void onCapabilityRetrieved(Object capability) {
+        List<SpeechCapabilities> speechCapabilities = (List<SpeechCapabilities>) capability;
+    }
+
+    @Override
+    public void onError(String info) {
+        // Handle error
+    }
+}, false);
+```
+!@
+
+@![javascript]
+```js
+// This is technically a private property and a `getSpeechCapabilities` method will be added to retrieve it in a future release.
+let speechCapabilities = sdlManager.getSystemCapabilityManager()._speechCapabilities;
+```
+!@
+
+Below is a list of commonly supported speech capabilities.
 
 | Speech Capability |  Description |
 | ------------- | ------------- |
@@ -15,7 +52,10 @@ To get the head unit's supported speech capabilities, check the @![iOS]`SDLSyste
 | SAPI Phonemes | Microsoft speech synthesis API |
 | File | A pre-recorded sound file |
 
-### Text Phrase
+### Creating Different Types of Speak Requests
+Once you know what speech capabilities are supported by the the module, you can create the speak requests.
+
+#### Text Phrase
 @![iOS]
 ##### Objective-C
 ```objc
@@ -43,7 +83,7 @@ const speak = new SDL.rpc.messages.Speak().setTtsChunks([chunk]);
 ```
 !@
 
-### SAPI Phonemes Phrase
+#### SAPI Phonemes Phrase
 @![iOS]
 ##### Objective-C
 ```objc
@@ -94,6 +134,7 @@ const speak = new SDL.rpc.messages.Speak([chunk]);
     <#Speech was successfully spoken#>
 }];
 ```
+
 ##### Swift
 ```swift
 sdlManager.send(request: speech) { (request, response, error) in
