@@ -194,6 +194,29 @@ sdlManager.sendRPC(speak);
 
 @![javascript]
 ```js
+// sdl_javascript_suite v1.1+
+const response = await sdlManager.sendRpcResolve(speak);
+if (!response.getSuccess()){
+    switch (response.getResultCode()){
+        case SDL.rpc.enums.Result.DISALLOWED:
+            console.log('The app does not have permission to use the speech request');
+            break;
+        case SDL.rpc.enums.Result.REJECTED:
+            console.log('The request was rejected because a higher priority request is in progress');
+            break;
+        case SDL.rpc.enums.Result.ABORTED:
+            console.log('The request was aborted by another higher priority request');
+            break;
+        default:
+            console.log('Some other error occurred');
+    }
+} else {
+    console.log('Speech was successfully spoken');
+}
+
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.1
 const response = await sdlManager.sendRpc(speak);
 if (!response.getSuccess()){
     switch (response.getResultCode()){

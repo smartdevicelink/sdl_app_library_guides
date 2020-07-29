@@ -46,6 +46,10 @@ const mediaClock = new SDL.rpc.messages.SetMediaClockTimer()
         new SDL.rpc.structs.StartTime()
             .setStartTime(253)
     ).setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PAUSE);
+
+// sdl_javascript_suite v1.1+
+sdlManager.sendRpcResolve(mediaClock);
+// Pre sdl_javascript_suite v1.1
 sdlManager.sendRpc(mediaClock);
 ```
 !@
@@ -85,6 +89,10 @@ const mediaClock = new SDL.rpc.messages.SetMediaClockTimer()
         new SDL.rpc.structs.StartTime()
             .setStartTime(0)
     ).setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PAUSE);
+
+// sdl_javascript_suite v1.1+
+sdlManager.sendRpcResolve(mediaClock);
+// Pre sdl_javascript_suite v1.1
 sdlManager.sendRpc(mediaClock);
 ```
 !@
@@ -149,6 +157,9 @@ sdlManager.sendRPC(mediaClock);
 const mediaClock = new SDL.rpc.messages.SetMediaClockTimer()
     .setUpdateMode(SDL.rpc.enums.UpdateMode.PAUSE)
     .setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PLAY);
+// sdl_javascript_suite v1.1+
+sdlManager.sendRpcResolve(mediaClock);
+// Pre sdl_javascript_suite v1.1
 sdlManager.sendRpc(mediaClock);
 ```
 
@@ -157,6 +168,9 @@ sdlManager.sendRpc(mediaClock);
 const mediaClock = new SDL.rpc.messages.SetMediaClockTimer()
     .setUpdateMode(SDL.rpc.enums.UpdateMode.RESUME)
     .setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PAUSE);
+// sdl_javascript_suite v1.1+
+sdlManager.sendRpcResolve(mediaClock);
+// Pre sdl_javascript_suite v1.1
 sdlManager.sendRpc(mediaClock);
 ```
 
@@ -171,6 +185,9 @@ const mediaClock = new SDL.rpc.messages.SetMediaClockTimer()
         new SDL.rpc.structs.StartTime()
             .setStartTime(240)
     ).setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PLAY);
+// sdl_javascript_suite v1.1+
+sdlManager.sendRpcResolve(mediaClock);
+// Pre sdl_javascript_suite v1.1
 sdlManager.sendRpc(mediaClock);
 ```
 !@
@@ -204,6 +221,9 @@ sdlManager.sendRPC(mediaClock);
 const mediaClock = new SDL.rpc.structs.SetMediaClockTimer()
     .setUpdateMode(SDL.rpc.enums.UpdateMode.CLEAR)
     .setPlayPauseIndicator(SDL.rpc.enums.AudioStreamingIndicator.PLAY);
+// sdl_javascript_suite v1.1+
+sdlManager.sendRpcResolve(mediaClock);
+// Pre sdl_javascript_suite v1.1
 sdlManager.sendRpc(mediaClock);
 ```
 !@

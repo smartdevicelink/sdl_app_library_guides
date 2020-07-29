@@ -104,7 +104,7 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
       @Override
       public void onNotified(RPCNotification notification) {
           OnButtonPress onButtonPress = (OnButtonPress) notification;
-          if (onButtonPress.getCustomButtonName() == softButtonId){
+          if (onButtonPress.getCustomButtonID() == softButtonId){
                Log.i(TAG, "Ok button pressed");
           }
       }
@@ -351,6 +351,14 @@ sdlManager.sendRPC(alert);
 
 @![javascript]
 ```js
+// sdl_javascript_suite v1.1+
+const response = await sdlManager.sendRpcResolve(alert);
+if (response.getSuccess()) {
+    console.log('Alert was shown successfully');
+}
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.1
 // Handle RPC Response
 const response = await sdlManager.sendRpc(alert).catch(function (error) {
     // Handle Error
@@ -421,6 +429,17 @@ sdlManager.sendRPC(cancelInteraction);
 
 @![javascript]
 ```js
+// sdl_javascript_suite v1.1+
+const cancelInteraction = new SDL.rpc.messages.CancelInteraction()
+    .setFunctionIDParam(SDL.rpc.enums.FunctionID.Alert)
+    .setCancelID(cancelID);
+const response = await sdlManager.sendRpcResolve(cancelInteraction);
+if (response.getSuccess()) {
+    console.log('Alert was dismissed successfully');
+}
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.1
 const cancelInteraction = new SDL.rpc.messages.CancelInteraction()
     .setFunctionIDParam(SDL.rpc.enums.FunctionID.Alert)
     .setCancelID(cancelID);
@@ -480,6 +499,15 @@ sdlManager.sendRPC(cancelInteraction);
 
 @![javascript]
 ```js
+// sdl_javascript_suite v1.1+
+const cancelInteraction = new SDL.rpc.messages.CancelInteraction().setFunctionIDParam(SDL.rpc.enums.FunctionID.Alert);
+const response = await sdlManager.sendRpcResolve(cancelInteraction);
+if (response.getSuccess()) {
+    console.log('Alert was dismissed successfully');
+}
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.1
 const cancelInteraction = new SDL.rpc.messages.CancelInteraction().setFunctionIDParam(SDL.rpc.enums.FunctionID.Alert);
 const response = await sdlManager.sendRpc(cancelInteraction).catch(function (error) {
     // Handle Error

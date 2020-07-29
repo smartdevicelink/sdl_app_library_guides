@@ -334,6 +334,23 @@ const address = new SDL.rpc.structs.OasisAddress()
 
 sendLocation.setAddress(address);
 
+
+// sdl_javascript_suite v1.1+
+const response = await sdlManager.sendRpcResolve(sendLocation);
+
+// Monitor response
+const result = response.getResultCode();
+if (result === SDL.rpc.enums.Result.SUCCESS) {
+    // SendLocation was successfully sent.
+} else if (result === SDL.rpc.enums.Result.INVALID_DATA) {
+    // The request you sent contains invalid data and was rejected.
+} else if (result === SDL.rpc.enums.Result.DISALLOWED) {
+    // Your app does not have permission to use SendLocation.
+}
+// thrown exceptions should be caught by a parent function via .catch()
+
+
+// Pre sdl_javascript_suite v1.1
 const response = await sdlManager.sendRpc(sendLocation).catch(error => error);
 
 const result = response.getResultCode();

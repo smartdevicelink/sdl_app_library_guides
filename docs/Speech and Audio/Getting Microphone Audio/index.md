@@ -152,19 +152,10 @@ const audioPassThru = new SDL.rpc.messages.PerformAudioPassThru()
     .setAudioType(SDL.rpc.enums.AudioType.PCM)
     .setMuteAudio(false);
 
-const response = await sdlManager.sendRpc(audioPassThru).catch(error => error);
-if (response instanceof SDL.rpc.messages.PerformAudioPassThruResponse) {
-    let resultCode = response.getResultCode();
-    if (resultCode === SDL.rpc.enums.Result.SUCCESS) {
-        // The audio pass thru ended successfully. Process the audio data
-    } else if (resultCode === SDL.rpc.enums.Result.ABORTED) {
-        // The audio pass thru was aborted by the user. You should cancel any usage of the audio data.
-    } else {
-        // Some other error occurred. Handle the error.
-    }
-} else {
-    // Handle Error
-}
+// sdl_javascript_suite v1.1+
+sdlManager.sendRpcResolve(performAPT);
+// Pre sdl_javascript_suite v1.1
+sdlManager.sendRpc(performAPT);
 ```
 !@
 
@@ -262,9 +253,10 @@ SDLEndAudioPassThru *endAudioPassThru = [[SDLEndAudioPassThru alloc] init];
         // There was an error sending the end audio pass thru
         return;
     }
-
     // The end audio pass thru was sent successfully
 }];
+
+
 ```
 
 ##### Swift
@@ -302,12 +294,29 @@ sdlManager.sendRPC(endAudioPassThru);
 
 @![javascript]
 ```js
-const endAudioPassThru = new SDL.rpc.messages.EndAudioPassThru();
-const response = await sdlManager.sendRpc(endAudioPassThru).catch(error => error);
+// sdl_javascript_suite v1.1+
+const response = await sdlManager.sendRpcResolve(performAPT);
+if (response instanceof SDL.rpc.messages.PerformAudioPassThruResponse) {
+    if (response.getResultCode() === SDL.rpc.enums.Result.SUCCESS) {
+        // We can use the data
+    } else {
+        // Cancel any usage of the data
+        console.log('Audio pass thru attempt failed.');
+    }
+}
+// thrown exceptions should be caught by a parent function via .catch()
 
-if (!response.getSuccess()) {
-    // There was an error sending the end audio pass thru
-    return;
+// Pre sdl_javascript_suite v1.1
+const response = await sdlManager.sendRpc(performAPT).catch(error => error);
+if (response instanceof SDL.rpc.messages.PerformAudioPassThruResponse) {
+    if (response.getResultCode() === SDL.rpc.enums.Result.SUCCESS) {
+        // We can use the data
+    } else {
+        // Cancel any usage of the data
+        console.log('Audio pass thru attempt failed.');
+    }
+} else {
+    // Handle Error
 }
 
 // The end audio pass thru was sent successfully

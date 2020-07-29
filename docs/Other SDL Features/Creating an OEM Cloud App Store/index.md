@@ -94,6 +94,16 @@ const cloudAppProperties = new SDL.rpc.structs.CloudAppProperties()
 const setCloudAppProperties = new SDL.rpc.messages.SetCloudAppProperties()
     .setProperties(cloudAppProperties);
 
+// sdl_javascript_suite v1.1+
+const response = await sdlManager.sendRpcResolve(setCloudAppProperties);
+if (response.getSuccess()) {
+    console.log("Request was successful.");
+} else {
+    console.log("Request was rejected.");
+}
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.1
 const response = await sdlManager.sendRpc(setCloudAppProperties).catch(error => error);
 if (response.getSuccess()) {
     console.log("Request was successful.");
@@ -161,6 +171,19 @@ sdlManager.sendRPC(getCloudAppProperties);
 
 @![javascript]
 ```js
+// sdl_javascript_suite v1.1+
+const getCloudAppProperties = new SDL.rpc.message.GetCloudAppProperties()
+    .setAppID("<appId>");
+
+const response = await sdlManager.sendRpcResolve(getCloudAppProperties);
+if (response.getSuccess()) {
+    console.log("Request was successful.");
+} else {
+    console.log("Request was rejected.");
+}
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.1
 const getCloudAppProperties = new SDL.rpc.message.GetCloudAppProperties()
     .setAppID("<appId>");
 

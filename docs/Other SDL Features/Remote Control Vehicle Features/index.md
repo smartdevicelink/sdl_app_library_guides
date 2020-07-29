@@ -344,6 +344,14 @@ sdlManager.sendRPC(seatLocation);
 
 @![javascript]
 ```js
+// sdl_javascript_suite v1.1+
+const seatLocation = new SDL.rpc.messages.SetGlobalProperties()
+    .setUserLocation(<#Selected Seat#>);
+const response = await sdlManager.sendRpcResolve(seatLocation);
+<#Seat location updated#>
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.1
 const seatLocation = new SDL.rpc.messages.SetGlobalProperties()
     .setUserLocation(<#Selected Seat#>);
 const response = await sdlManager.sendRpc(seatLocation).catch(error => error);
@@ -504,6 +512,15 @@ After you subscribe to the `InteriorVehicleDataNotification` you must also subsc
 
 ###### RPC < v6.0
 ```js
+// sdl_javascript_suite v1.1+
+const getInteriorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
+    .setModuleType(SDL.rpc.enums.ModuleType.RADIO);
+const response = await sdlManager.sendRpcResolve(getInteriorVehicleData);
+// This can now be used to retrieve data
+<#Code#>
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.1
 const getInteriorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
     .setModuleType(SDL.rpc.enums.ModuleType.RADIO);
 const response = await sdlManager.sendRpc(getInteriorVehicleData).catch(error => error);
@@ -513,6 +530,16 @@ const response = await sdlManager.sendRpc(getInteriorVehicleData).catch(error =>
 
 ###### RPC v6.0+
 ```js
+// sdl_javascript_suite v1.1+
+const getInteriorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
+    .setModuleType(SDL.rpc.enums.ModuleType.RADIO)
+    .setModuleId(<#ModuleID#>);
+const response = await sdlManager.sendRpcResolve(getInteriorVehicleData);
+// This can now be used to retrieve data
+<#Code#>
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.1
 const getInteriorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
     .setModuleType(SDL.rpc.enums.ModuleType.RADIO)
     .setModuleId(<#ModuleID#>);
@@ -613,6 +640,13 @@ sdlManager.sendRPC(interiorVehicleData);
 @![javascript]
 ###### RPC < v6.0
 ```js
+// sdl_javascript_suite v1.1+
+const interiorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
+    .setModuleType(SDL.rpc.enums.ModuleType.RADIO);
+const response = await sdlManager.sendRpcResolve(interiorVehicleData);
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.1
 const interiorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
     .setModuleType(SDL.rpc.enums.ModuleType.RADIO);
 const response = await sdlManager.sendRpc(interiorVehicleData).catch(error => error);
@@ -622,6 +656,14 @@ const response = await sdlManager.sendRpc(interiorVehicleData).catch(error => er
 
 ###### RPC 6.0+
 ```js
+// sdl_javascript_suite v1.1+
+const interiorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
+    .setModuleType(SDL.rpc.enums.ModuleType.RADIO)
+    .setModuleId('<#ModuleID#>');
+const response = await sdlManager.sendRpcResolve(interiorVehicleData);
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.1
 const interiorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
     .setModuleType(SDL.rpc.enums.ModuleType.RADIO)
     .setModuleId('<#ModuleID#>');
@@ -689,6 +731,16 @@ sdlManager.sendRPC(getInteriorVehicleDataConsent);
 
 @![javascript]
 ```js
+// sdl_javascript_suite v1.1+
+const getInteriorVehicleDataConsent = new SDL.rpc.messages.GetInteriorVehicleDataConsent()
+    .setModuleType(<#ModuleType#>)
+    .setModuleIds(<#ModuleIDs#>);
+const getInteriorVehicleDataConsentResponse = await sdlManager.sendRpcResolve(getInteriorVehicleDataConsent);
+const allowed = getInteriorVehicleDataConsentResponse.getAllowances();
+<#Allowed is an array of true or false values#>
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.1
 const getInteriorVehicleDataConsent = new SDL.rpc.messages.GetInteriorVehicleDataConsent()
     .setModuleType(<#ModuleType#>)
     .setModuleIds(<#ModuleIDs#>);
@@ -856,6 +908,12 @@ const moduleData = new SDL.rpc.structs.ModuleData()
 
 const setInteriorVehicleData = new SDL.rpc.messages.SetInteriorVehicleData()
     .setModuleData(moduleData);
+
+// sdl_javascript_suite v1.1+
+const response = await sdlManager.sendRpcResolve(setInteriorVehicleData);
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.1
 const response = await sdlManager.sendRpc(setInteriorVehicleData).catch(error => error);
 ```
 
@@ -884,6 +942,12 @@ const moduleData = new SDL.rpc.structs.ModuleData()
 
 const setInteriorVehicleData = new SDL.rpc.messages.SetInteriorVehicleData()
     .setModuleData(moduleData);
+
+// sdl_javascript_suite v1.1+
+const response = await sdlManager.sendRpcResolve(setInteriorVehicleData);
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.1
 const response = await sdlManager.sendRpc(setInteriorVehicleData).catch(error => error);
 ```
 !@
@@ -895,8 +959,7 @@ Another unique feature of remote control is the ability to send simulated button
 ##### Objective-C
 ###### RPC < v6.0
 ```objc
-SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameEject moduleType:SDLModuleTypeRadio];
-buttonPress.buttonPressMode = SDLButtonPressModeShort;
+SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameEject moduleType:SDLModuleTypeRadio moduleId:nil buttonPressMode:SDLButtonPressModeShort];
 
 [self.sdlManager sendRequest:buttonPress withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if(!response.success) { return; }
@@ -905,8 +968,7 @@ buttonPress.buttonPressMode = SDLButtonPressModeShort;
 
 ###### RPC v6.0+
 ```objc
-SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameEject moduleType:SDLModuleTypeRadio moduleId:@"<#ModuleID#>"];
-buttonPress.buttonPressMode = SDLButtonPressModeShort;
+SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameEject moduleType:SDLModuleTypeRadio moduleId:@"<#ModuleID#>" buttonPressMode:SDLButtonPressModeShort];
 
 [self.sdlManager sendRequest:buttonPress withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if(!response.success) { return; }
@@ -916,7 +978,7 @@ buttonPress.buttonPressMode = SDLButtonPressModeShort;
 ##### Swift
 ###### RPC < v6.0
 ```swift
-let buttonPress = SDLButtonPress(buttonName: .eject, moduleType: .radio)
+let buttonPress = SDLButtonPress(buttonName: .eject, moduleType: .radio, moduleId: nil, buttonPressMode: .short)
 buttonPress.buttonPressMode = .short
 
 sdlManager.send(request: buttonPress) { (request, response, error) in
@@ -926,8 +988,7 @@ sdlManager.send(request: buttonPress) { (request, response, error) in
 
 ###### RPC v6.0+
 ```swift
-let buttonPress = SDLButtonPress(buttonName: .eject, moduleType: .radio, moduleId: "<#ModuleID#>")
-buttonPress.buttonPressMode = .short
+let buttonPress = SDLButtonPress(buttonName: .eject, moduleType: .radio, moduleId: "<#ModuleID#>", buttonPressMode: .short)
 
 sdlManager.send(request: buttonPress) { (request, response, error) in
     guard response?.success.boolValue == true else { return }
@@ -980,6 +1041,12 @@ const buttonPress = new SDL.rpc.messages.ButtonPress()
     .setModuleType(SDL.rpc.enums.ModuleType.RADIO)
     .setButtonName(SDL.rpc.enums.ButtonName.EJECT)
     .setButtonPressMode(SDL.rpc.enums.ButtonPressMode.SHORT);
+
+// sdl_javascript_suite v1.1+
+const response = await sdlManager.sendRpcResolve(buttonPress);
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.1
 const response = await sdlManager.sendRpc(buttonPress).catch(error => error);
 ```
 
@@ -990,6 +1057,12 @@ const buttonPress = new SDL.rpc.messages.ButtonPress()
     .setButtonName(SDL.rpc.enums.ButtonName.EJECT)
     .setModuleId('<#ModuleID#>')
     .setButtonPressMode(SDL.rpc.enums.ButtonPressMode.SHORT);
+
+// sdl_javascript_suite v1.1+
+const response = await sdlManager.sendRpcResolve(buttonPress);
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.1
 const response = await sdlManager.sendRpc(buttonPress).catch(error => error);
 ```
 !@
@@ -1038,6 +1111,15 @@ sdlManager.sendRPC(releaseInteriorVehicleDataModule);
 
 @![javascript]
 ```js
+// sdl_javascript_suite v1.1+
+const releaseInteriorVehicleDataModule = new SDL.rpc.messages.ReleaseInteriorVehicleDataModule()
+    .setModuleType(<#ModuleType#>)
+    .setModuleId(<#ModuleID#>);
+const response = await sdlManager.sendRpcResolve(releaseInteriorVehicleDataModule);
+<#Module Was Released#>
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.1
 const releaseInteriorVehicleDataModule = new SDL.rpc.messages.ReleaseInteriorVehicleDataModule()
     .setModuleType(<#ModuleType#>)
     .setModuleId(<#ModuleID#>);
