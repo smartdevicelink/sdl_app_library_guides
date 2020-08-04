@@ -77,9 +77,20 @@ SDL iOS supports Carthage! Install using Carthage by following [this guide](http
 Tagged to our releases is a dynamic framework file that can be drag-and-dropped into the application. 
 
 !!! NOTE
-You cannot submit your app to the app store with the framework as is. You MUST strip the simulator part of the framework first. Use a script such as Carthage's to accomplish this.
+You cannot submit your app to the app store with the framework as is. You MUST strip the simulator part of the framework first.
 !!!
 
+You can check the architectures of your built framework like so:
+
+```bash
+lipo -info SmartDeviceLink.framework/SmartDeviceLink
+```
+
+Use a script like this to strip the simulator part of the framework.
+
+```bash
+lipo -remove i386 -remove x86_64 -o SmartDeviceLink.framework/SmartDeviceLink SmartDeviceLink.framework/SmartDeviceLink
+```
 !@
 
 @![android]
