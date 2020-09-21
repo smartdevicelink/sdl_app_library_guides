@@ -281,6 +281,10 @@
                     "platforms": ["Android"]
                 }
             ]
+        },
+        {
+            "name": "NodeJS Documentation",
+            "platforms": ["javascript"]
         }
     ]
 }
