@@ -104,7 +104,7 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
       @Override
       public void onNotified(RPCNotification notification) {
           OnButtonPress onButtonPress = (OnButtonPress) notification;
-          if (onButtonPress.getCustomButtonName() == softButtonId){
+          if (onButtonPress.getCustomButtonID() == softButtonId){
                Log.i(TAG, "Ok button pressed");
           }
       }

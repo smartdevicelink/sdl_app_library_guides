@@ -399,7 +399,7 @@ In addition, there are three optional methods:
 
 1. `audioStreamingState:didChangeToState:` Called when the audio streaming state of this application changes on the remote system. For more information, please refer to [Understanding Permissions](Getting Started/Understanding Permissions).
 1. `systemContext:didChangeToContext:` Called when the system context (i.e. a menu is open, an alert is visible,  a voice recognition session is in progress) of this application changes on the remote system. For more information, please refer to [Understanding Permissions](Getting Started/Understanding Permissions).
-1. `managerShouldUpdateLifecycleToLanguage:` Called when the head unit language does not match the `language` set in the `SDLLifecycleConfiguration` but does match a language included in `languagesSupported`. If desired, you can customize the `appName`, the `shortAppName`,  and `ttsName` for the head unit's current language. For more information about supporting more than one language in your app please refer to [Getting Started/Adapting to the Head Unit Language](Getting Started/Adapting to the Head Unit Language).
+1. `managerShouldUpdateLifecycleToLanguage:hmiLanguage:` Called when the module's HMI language or voice recognition language does not match the `language` set in the `SDLLifecycleConfiguration` but does match a language included in `languagesSupported`. If desired, you can customize the `appName`, the `shortAppName`,  and `ttsName` for the head unit's current language. For more information about supporting more than one language in your app please refer to [Getting Started/Adapting to the Head Unit Language](Getting Started/Adapting to the Head Unit Language).
 
 ### Example Implementation of a Proxy Class
 The following code snippet has an example of setting up both a TCP and iAP connection.
@@ -726,6 +726,11 @@ public class SdlService extends Service {
                 public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language) {
                     return null;
                 }
+
+                @Override
+                public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language, Language hmiLanguage) {
+                  return null;
+                }
             };
 
             // Create App Icon, this is set in the SdlManager builder
@@ -803,6 +808,11 @@ public class SdlService {
                 @Override
                 public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language) {
                     return null;
+                }
+
+                @Override
+                public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language, Language hmiLanguage) {
+                  return null;
                 }
             };
 
@@ -929,6 +939,13 @@ onRPCNotificationListenerMap.put(FunctionID.ON_HMI_STATUS, new OnRPCNotification
     }
 });
 builder.setRPCNotificationListeners(onRPCNotificationListenerMap);
+```
+
+##### Hash Resumption
+Set a `hashID` for your application that can be used over connection cycles (i.e. loss of connection, ignition cycles, etc.).
+
+```java
+builder.setResumeHash(hashID);
 ```
 !@
 
@@ -1322,8 +1339,23 @@ lifecycleConfig.setAppIcon(file);
 
 In this case, the code snippet expects there to be an `app_icon.png` file present in the same directory for the app icon.
 
+### Listening for RPC notifications and events
+You can listen for specific events using the `LifecycleConfig`'s `setRpcNotificationListeners`. The following example shows how to listen for HMI Status notifications. Additional listeners can be added for specific RPCs by using their corresponding `FunctionID` in place of the `OnHMIStatus` in the following example.
+
+```js
+lifecycleConfig.setRpcNotificationListeners({
+    [SDL.rpc.enums.FunctionID.OnHMIStatus]: (onHmiStatus) => {
+        // HMI Level updates
+        const hmiLevel = onHmiStatus.getHmiLevel();
+        console.log("Current HMI Level: ", hmiLevel);
+    }
+});
+```
+
+It is recommended to use this method over the `SdlManager.addRpcListener` method for the `OnHMIStatus` RPC, or any RPC Notifications that your app cannot afford to miss during the initial connection.
+
 ## Setting Up the SDL Manager
-After creating the `LifecycleConfig`, it can be set into the `AppConfig` and then passed into the `SdlManager`. The following snippet will set up the `SdlManager` and start it up. A listener is attached to the manager listener to let you know when there is a connection and the managers are ready. Listeners can also be set up for RPCs in the `SdlManager`. In the snippet below, the `OnHMIStatus` notification is subscribed to in order to know what HMI level the app is in.
+After creating the `LifecycleConfig`, it can be set into the `AppConfig` and then passed into the `SdlManager`. The following snippet will set up the `SdlManager` and start it up. A listener is attached to the manager listener to let you know when there is a connection and the managers are ready.
 
 ```js
 const appConfig = new SDL.manager.AppConfig()
@@ -1338,12 +1370,7 @@ const managerListener = new SDL.manager.SdlManagerListener()
     });
 
 const sdlManager = new SDL.manager.SdlManager(appConfig, managerListener)
-    .start()
-    .addRpcListener(SDL.rpc.enums.FunctionID.OnHMIStatus, (onHmiStatus) => {
-        // HMI Level updates
-        const hmiLevel = onHmiStatus.getHmiLevel();
-        console.log("Current HMI Level: ", hmiLevel);
-    });
+    .start();
 ```
 
 ## Configuring the WebEngine App HTML File
@@ -1364,6 +1391,14 @@ For WebEngine apps, there are slight modifications for integrating the library, 
 
             lifecycleConfig.setTransportConfig(new SDL.transport.WebSocketClientConfig());
 
+            lifecycleConfig.setRpcNotificationListeners({
+                [SDL.rpc.enums.FunctionID.OnHMIStatus]: (onHmiStatus) => {
+                    // HMI Level updates
+                    const hmiLevel = onHmiStatus.getHmiLevel();
+                    console.log("Current HMI Level: ", hmiLevel);
+                }
+            });
+
             const appConfig = new SDL.manager.AppConfig()
                 .setLifecycleConfig(lifecycleConfig);
 
@@ -1376,12 +1411,7 @@ For WebEngine apps, there are slight modifications for integrating the library, 
                 });
 
             const sdlManager = new SDL.manager.SdlManager(appConfig, managerListener)
-                .start()
-                .addRpcListener(SDL.rpc.enums.FunctionID.OnHMIStatus, (onHmiStatus) => {
-                    // HMI Level updates
-                    const hmiLevel = onHmiStatus.getHmiLevel();
-                    console.log("Current HMI Level: ", hmiLevel);
-                });
+                .start();
         </script>
     </body>
 </html>

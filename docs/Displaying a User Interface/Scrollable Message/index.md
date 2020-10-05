@@ -117,7 +117,7 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
 	@Override
 	public void onNotified(RPCNotification notification) {
 		OnButtonPress onButtonPress = (OnButtonPress) notification;
-		switch (onButtonPress.getCustomButtonName()){
+		switch (onButtonPress.getCustomButtonID()){
 			case 0:
 				Log.i(TAG, "Button 1 Pressed");
 				break;
