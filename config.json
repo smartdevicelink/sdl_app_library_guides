@@ -264,13 +264,13 @@
                 {
                     "name": "Updating to v4.9",
                     "platforms": [
-                        ["Android", "JavaEE", "JavaSE"]
+                        "Android", "JavaEE", "JavaSE"
                     ]
                 },
                 {
                     "name": "Updating to v5.0",
                     "platforms": [
-                        ["Android", "JavaEE", "JavaSE"]
+                        "Android", "JavaEE", "JavaSE"
                     ]
                 }
             ]
