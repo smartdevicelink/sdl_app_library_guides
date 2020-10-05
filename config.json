@@ -259,7 +259,7 @@
                     ]
                 },
                 {
-                    "name": "Updating to v5",
+                    "name": "Updating to v5.0",
                     "platforms": [
                         "Android", "JavaEE", "JavaSE"
                     ]
