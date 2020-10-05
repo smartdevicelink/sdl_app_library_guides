@@ -257,6 +257,12 @@
                     "platforms": [
                         "Android", "JavaEE", "JavaSE"
                     ]
+                },
+                {
+                    "name": "Updating to v5.0",
+                    "platforms": [
+                        "Android", "JavaEE", "JavaSE"
+                    ]
                 }
             ]
         },
