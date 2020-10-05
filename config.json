@@ -225,6 +225,15 @@
             ]
         },
         {
+        "name": "Migrating to Newer SDL Java Suite Versions",
+            "platforms": ["Android", "JavaEE", "JavaSE"],
+            "navigation": [
+                {
+                    "name": "Updating to v5.0",
+                }
+            ]
+        },
+        {
             "name": "Migrating to Newer SDL Versions",
             "platforms": ["Android","iOS", "JavaEE", "JavaSE"],
             "navigation": [
