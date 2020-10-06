@@ -738,10 +738,10 @@ public class SdlService extends Service {
 
             // The manager builder sets options for your session
             SdlManager.Builder builder = new SdlManager.Builder(this, APP_ID, APP_NAME, listener);
-            builder.setAppTypes(appType);
-            builder.setTransportType(transport);
-            builder.setAppIcon(appIcon);
-            sdlManager = builder.build();
+            sdlManager = builder.setAppTypes(appType)
+                  .setTransportType(transport)
+                  .setAppIcon(appIcon)
+                  .build();
             sdlManager.start();
         }
 
@@ -821,10 +821,10 @@ public class SdlService {
 
             // The manager builder sets options for your session
             SdlManager.Builder builder = new SdlManager.Builder(APP_ID, APP_NAME, listener);
-            builder.setAppTypes(appType);
-            builder.setTransportType(transport);
-            builder.setAppIcon(appIcon);
-            sdlManager = builder.build();
+            sdlManager = builder.setAppTypes(appType)
+                  .setTransportType(transport)
+                  .setAppIcon(appIcon)
+                  .build();
             sdlManager.start();
         }
 
@@ -883,8 +883,8 @@ If a head unit is blocked by protocol version, your app icon will never appear o
 
 
 ```java
-builder.setMinimumProtocolVersion(new Version("3.0.0"));
-builder.setMinimumRPCVersion(new Version("4.0.0"));
+builder.setMinimumProtocolVersion(new Version("3.0.0"))
+       .setMinimumRPCVersion(new Version("4.0.0"));
 ```
 !@
 

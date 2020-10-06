@@ -30,8 +30,8 @@ sdlManager.send(request: display) { (request, response, error) in
 @![android, javaSE, javaEE]
 ```java
 SetDisplayLayout setDisplayLayoutRequest = new SetDisplayLayout();
-setDisplayLayoutRequest.setDisplayLayout(PredefinedLayout.GRAPHIC_WITH_TEXT.toString());
-setDisplayLayoutRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
+setDisplayLayoutRequest.setDisplayLayout(PredefinedLayout.GRAPHIC_WITH_TEXT.toString())
+                       .setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
         if (((SetDisplayLayoutResponse) response).getSuccess()) {

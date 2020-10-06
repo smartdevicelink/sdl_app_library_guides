@@ -39,15 +39,15 @@ RGBColor grey = new RGBColor(186, 198, 210);
 RGBColor darkGrey = new RGBColor(57, 78, 96);
 
 TemplateColorScheme dayColorScheme = new TemplateColorScheme();
-dayColorScheme.setBackgroundColor(white);
-dayColorScheme.setPrimaryColor(green);
-dayColorScheme.setSecondaryColor(grey);
+dayColorScheme.setBackgroundColor(white)
+              .setPrimaryColor(green)
+              .setSecondaryColor(grey);
 builder.setDayColorScheme(dayColorScheme);
 
 TemplateColorScheme nightColorScheme = new TemplateColorScheme();
-nightColorScheme.setBackgroundColor(white);
-nightColorScheme.setPrimaryColor(green);
-nightColorScheme.setSecondaryColor(darkGrey);
+nightColorScheme.setBackgroundColor(white)
+                .setPrimaryColor(green)
+                .setSecondaryColor(darkGrey);
 builder.setDayColorScheme(nightColorScheme);
 ```
 !@
@@ -114,20 +114,20 @@ RGBColor grey = new RGBColor(186, 198, 210);
 RGBColor darkGrey = new RGBColor(57, 78, 96);
 
 TemplateColorScheme dayColorScheme = new TemplateColorScheme();
-dayColorScheme.setBackgroundColor(white);
-dayColorScheme.setPrimaryColor(green);
-dayColorScheme.setSecondaryColor(grey);
+dayColorScheme.setBackgroundColor(white)
+              .setPrimaryColor(green)
+              .setSecondaryColor(grey);
 builder.setDayColorScheme(dayColorScheme);
 
 TemplateColorScheme nightColorScheme = new TemplateColorScheme();
-nightColorScheme.setBackgroundColor(white);
-nightColorScheme.setPrimaryColor(green);
-nightColorScheme.setSecondaryColor(darkGrey);
+nightColorScheme.setBackgroundColor(white)
+                .setPrimaryColor(green)
+                .setSecondaryColor(darkGrey);
 
 SetDisplayLayout setDisplayLayout = new SetDisplayLayout(PredefinedLayout.GRAPHIC_WITH_TEXT.toString());
-setDisplayLayout.setDayColorScheme(dayColorScheme);
-setDisplayLayout.setNightColorScheme(nightColorScheme);
-setDisplayLayout.setOnRPCResponseListener(new OnRPCResponseListener() {
+setDisplayLayout.setDayColorScheme(dayColorScheme)
+                .setNightColorScheme(nightColorScheme)
+                .setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
         if (response.getSuccess()){
@@ -213,10 +213,10 @@ sdlManager.send(request: setGlobals) { (request, response, error) in
 @![android, javaSE, javaEE]
 ```java
 SetGlobalProperties setGlobalProperties = new SetGlobalProperties();
-setGlobalProperties.setMenuTitle("customTitle");
 // The image must be uploaded before referencing the image name here
-setGlobalProperties.setMenuIcon(<#Image#>);
-setGlobalProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
+setGlobalProperties.setMenuTitle("customTitle")
+                   .setMenuIcon(<#Image#>)
+                   .setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
         if (response.getSuccess()){
