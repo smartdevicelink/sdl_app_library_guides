@@ -101,18 +101,8 @@ turnByTurn.setOnRPCResponseListener(new OnRPCResponseListener() {
                     Log.e(TAG, "onResponse: Error sending AlertManeuver");
                 }
             }
-
-            @Override
-            public void onError(int correlationId, Result resultCode, String info){
-                Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
-            }
         });
         sdlManager.sendRPC(alertManeuver);
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
     }
 });
 sdlManager.sendRPC(turnByTurn);
@@ -166,11 +156,6 @@ turnByTurn.setOnRPCResponseListener(new OnRPCResponseListener() {
         if (!response.getSuccess()){
             Log.e(TAG, "onResponse: Error sending TBT");
         }
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
     }
 });
 sdlManager.sendRPC(turnByTurn);

@@ -134,11 +134,6 @@ setDisplayLayout.setDayColorScheme(dayColorScheme)
             // Success
         }
     }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        // Handle error
-    }
 });
 sdlManager.sendRPC(setDisplayLayout);
 ```
@@ -222,11 +217,6 @@ setGlobalProperties.setMenuTitle("customTitle")
         if (response.getSuccess()){
             // Success
         }
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        // Handle error
     }
 });
 sdlManager.sendRPC(setGlobalProperties);

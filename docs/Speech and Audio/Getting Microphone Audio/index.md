@@ -126,11 +126,6 @@ audioPassThru.setOnRPCResponseListener(new OnRPCResponseListener() {
 				// Some other error occurred. Handle the error.
 		}
 	}
-
-	@Override
-	public void onError (int correlationId, Result resultCode, String info) {
-		// Handle error
-	}
 });
 
 sdlManager.sendRPC(audioPassThru);

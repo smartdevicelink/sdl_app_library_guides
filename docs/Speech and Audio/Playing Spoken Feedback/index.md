@@ -182,11 +182,6 @@ speak.setOnRPCResponseListener(new OnRPCResponseListener() {
         }
         Log.i(TAG, "Speech was successfully spoken");
     }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info) {
-        Log.i(TAG, "onError: " + info);
-    }
 });
 sdlManager.sendRPC(speak);
 ```

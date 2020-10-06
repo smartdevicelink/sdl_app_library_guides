@@ -113,11 +113,6 @@ vdRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
             Log.i("SdlService", "GetVehicleData was rejected.");
         }
     }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
-    }
 });
 sdlManager.sendRPC(vdRequest);
 ```
@@ -292,11 +287,6 @@ subscribeRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
             Log.i("SdlService", "Request to subscribe to vehicle data was rejected.");
         }
     }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
-    }
 });
 sdlManager.sendRPC(subscribeRequest);
 ```
@@ -424,11 +414,6 @@ unsubscribeRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
             Log.i("SdlService", "Request to unsubscribe to vehicle data was rejected.");
         }
     }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
-    }
 });
 sdlManager.sendRPC(unsubscribeRequest);
 ```
@@ -541,11 +526,6 @@ vdRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
             }else{
                 Log.i("SdlService", "GetVehicleData was rejected.");
             }
-        }
-
-        @Override
-        public void onError(int correlationId, Result resultCode, String info){
-            Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
         }
     });
 sdlManager.sendRPC(vdRequest);

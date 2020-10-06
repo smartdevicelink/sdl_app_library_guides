@@ -339,11 +339,6 @@ alert.setOnRPCResponseListener(new OnRPCResponseListener() {
         Log.i(TAG, "Alert was shown successfully");
       }
     }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-      Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
-    }
 });
 sdlManager.sendRPC(alert);
 ```
@@ -417,11 +412,6 @@ cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
 			Log.i(TAG, "Alert was dismissed successfully");
 		}
 	}
-
-	@Override
-	public void onError(int correlationId, Result resultCode, String info) {
-		Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
-	}
 });
 sdlManager.sendRPC(cancelInteraction);
 ```
@@ -486,11 +476,6 @@ cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
 		if (response.getSuccess()){
 			Log.i(TAG, "Alert was dismissed successfully");
 		}
-	}
-
-	@Override
-	public void onError(int correlationId, Result resultCode, String info) {
-		Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
 	}
 });
 sdlManager.sendRPC(cancelInteraction);
