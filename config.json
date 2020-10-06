@@ -232,7 +232,7 @@
                     "name": "Updating to v4.3+",
                     "platforms": ["iOS"]
                 },
-                                {
+                {
                     "name": "Updating to v5.0+",
                     "platforms": ["iOS"]
                 }
