@@ -85,7 +85,85 @@ SdlManagerListener listener = new SdlManagerListener() {
 };
 ```
 
-## sending RPC's listener updates (onError removal)
+## Sending RPC's listener updates
+When sending RPC's with a listener, onError has been removed from `OnMultipleRequestListener.java` and `OnRPCResponseListener.java`. Instad of onError getting called, onResponse will be called weather its a success or not.
+
+OnRPCResponseListener Before:
+
+```Java
+subscribeButtonLeft.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info) {
+        <#Handle Error#>
+    }
+});
+```
+OnRPCResponseListener Now:
+```Java
+subscribeButtonLeft.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        if(response.getSuccess()){
+                   // Add if statement to check success
+        }
+    }
+});
+```
+
+OnMultipleRequestListener Before:
+```Java
+sdlManager.sendRPCs(Arrays.asList(subscribeButtonLeft, subscribeButtonRight), new OnMultipleRequestListener() {
+    @Override
+    public void onUpdate(int remainingRequests) {
+
+    }
+
+    @Override
+    public void onFinished() {
+
+    }
+
+    @Override
+    public void onError(int correlationId, Result resultCode, String info) {
+
+    }
+
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+
+    }
+});
+```
+
+OnMultipleRequestListener Now:
+
+```Java
+sdlManager.sendRPCs(Arrays.asList(subscribeButtonLeft, subscribeButtonRight), new OnMultipleRequestListener() {
+    @Override
+    public void onUpdate(int remainingRequests) {
+
+    }
+
+    @Override
+    public void onFinished() {
+
+    }
+
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+    	if(response.getSuccess()){
+            // Add if statement to check success
+        }
+
+    }
+});
+```
+
 
 ## Use Multiplex instead of legacy BT & USB
 
