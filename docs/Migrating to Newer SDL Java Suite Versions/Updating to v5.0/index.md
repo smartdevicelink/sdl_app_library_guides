@@ -37,52 +37,52 @@ In 4.12 a new managerShouldUpdateLifecycle method was added and the old managerS
 Before:
 
 ```java
-            SdlManagerListener listener = new SdlManagerListener() {
-                @Override
-                public void onStart() {
-                }
+SdlManagerListener listener = new SdlManagerListener() {
+    @Override
+    public void onStart() {
+    }
 
-                @Override
-                public void onDestroy() {
-                }
+    @Override
+    public void onDestroy() {
+    }
 
-                @Override
-                public void onError(String info, Exception e) {
-                }
+    @Override
+    public void onError(String info, Exception e) {
+    }
 
-                @Override
-                public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language, Language hmiLanguage) {
-                    return null;
-                }
+    @Override
+    public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language, Language hmiLanguage) {
+        return null;
+    }
 
-                @Override
-                public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language) {
-                    return null;
-                }
-            };
+	@Override
+	public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language) {
+        return null;
+    }
+};
 ```
 
 Now:
 
 ```java
-            SdlManagerListener listener = new SdlManagerListener() {
-                @Override
-                public void onStart() {
-                }
+SdlManagerListener listener = new SdlManagerListener() {
+    @Override
+    public void onStart() {
+    }
 
-                @Override
-                public void onDestroy() {
-                }
+    @Override
+    public void onDestroy() {
+    }
 
-                @Override
-                public void onError(String info, Exception e) {
-                }
+    @Override
+    public void onError(String info, Exception e) {
+    }
 
-                @Override
-                public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language, Language hmiLanguage) {
-                    return null;
-                }
-            };
+    @Override
+    public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language, Language hmiLanguage) {
+        return null;
+    }
+};
 ```
 
 ## sending RPC's listener updates (onError removal)
