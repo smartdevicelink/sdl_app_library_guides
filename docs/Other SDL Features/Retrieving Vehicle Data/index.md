@@ -24,19 +24,23 @@ You will only have access to vehicle data that is allowed to your `appName` and 
 | Fuel Level | fuelLevel | The fuel level in the tank (percentage) |
 | Fuel Level State | fuelLevel_State | The fuel level state: Unknown, Normal, Low, Fault, Alert, or Not Supported |
 | Fuel Range | fuelRange | The estimate range in KM the vehicle can travel based on fuel level and consumption |
+| Gear Status | gearStatus | Tells the transmission type, actual Gear in use by the transmission and the gear position selected by the user i.e. Park, Drive, Reverse  |
 | GPS | gps | Longitude and latitude, current time in UTC, degree of precision, altitude, heading, speed, satellite data vs dead reckoning, and supported dimensions of the GPS |
+| Hands Off Steering | handsOffSteering | Status of hands on steering wheels capability |
 | Head Lamp Status | headLampStatus | Status of the head lamps: whether or not the low and high beams are on or off. The ambient light sensor status: night, twilight 1, twilight 2, twilight 3, twilight 4, day, unknown, invalid |
 | Instant Fuel Consumption | instantFuelConsumption | The instantaneous fuel consumption in microlitres |
 | My Key | myKey | Information about whether or not the emergency 911 override has been activated |
 | Odometer | odometer | Odometer reading in km |
 | PRNDL | prndl | The selected gear the car is in: park, reverse, neutral, drive, sport, low gear, first, second, third, fourth, fifth, sixth, seventh or eighth gear, unknown, or fault |
 | Speed | speed | Speed in KPH |
+| Stability Control Status | stabilityControlsStatus | Status of the vehicle's stability control and trailer sway control |
 | Steering Wheel Angle | steeringWheelAngle | Current angle of the steering wheel (in degrees) |
 | Tire Pressure | tirePressure | Tire status of each wheel in the vehicle: normal, low, fault, alert, or not supported. Warning light status for the tire pressure: off, on, flash, or not used |
 | Turn Signal | turnSignal | The status of the turn signal. Available states: off, left, right, both |
 | RPM | rpm | The number of revolutions per minute of the engine |
 | VIN | vin | The Vehicle Identification Number |
 | Wiper Status | wiperStatus | The status of the wipers: off, automatic off, off moving, manual interaction off, manual interaction on, manual low, manual high, manual flick, wash, automatic low, automatic high, courtesy wipe, automatic adjust, stalled, no data exists |
+| Window Status | windowStatus | The status of window and location |
 
 ## One-Time Vehicle Data Retrieval
 To get vehicle data a single time, use the @![iOS]`SDLGetVehicleData`!@@![android, javaSE, javaEE,javascript]`GetVehicleData`!@ RPC.
