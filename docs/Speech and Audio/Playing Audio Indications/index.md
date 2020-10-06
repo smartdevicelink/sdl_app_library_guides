@@ -65,10 +65,10 @@ sdlManager.send(alert)
 @![android, javaSE, javaEE]
 ```java
 Alert alert = new Alert();
-alert.setAlertText1("Alert Text 1");
-alert.setAlertText2("Alert Text 2");
-alert.setDuration(5000);
-alert.setTtsChunks(Arrays.asList(new TTSChunk("Audio file name", SpeechCapabilities.FILE)));
+alert.setAlertText1("Alert Text 1")
+     .setAlertText2("Alert Text 2")
+     .setDuration(5000)
+     .setTtsChunks(Arrays.asList(new TTSChunk("Audio file name", SpeechCapabilities.FILE)));
 ```
 !@
 

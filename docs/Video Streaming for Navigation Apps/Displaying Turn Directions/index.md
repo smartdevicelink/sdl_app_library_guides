@@ -81,10 +81,10 @@ sdlManager.send(request: turnByTurn) { (request, response, error) in
 Image turnIcon =  <#Create Image#>
 
 ShowConstantTbt turnByTurn = new ShowConstantTbt();
-turnByTurn.setNavigationText1("Turn Right");
-turnByTurn.setNavigationText2("3 mi");
-turnByTurn.setTurnIcon(turnIcon);
-turnByTurn.setOnRPCResponseListener(new OnRPCResponseListener() {
+turnByTurn.setNavigationText1("Turn Right")
+          .setNavigationText2("3 mi")
+          .setTurnIcon(turnIcon)
+          .setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
         if (!response.getSuccess()){
@@ -93,8 +93,8 @@ turnByTurn.setOnRPCResponseListener(new OnRPCResponseListener() {
         }
 
         AlertManeuver alertManeuver = new AlertManeuver();
-        alertManeuver.setTtsChunks(TTSChunkFactory.createSimpleTTSChunks("In 3 miles turn right"));
-        alertManeuver.setOnRPCResponseListener(new OnRPCResponseListener() {
+        alertManeuver.setTtsChunks(TTSChunkFactory.createSimpleTTSChunks("In 3 miles turn right"))
+                     .setOnRPCResponseListener(new OnRPCResponseListener() {
             @Override
             public void onResponse(int correlationId, RPCResponse response) {
                 if (!response.getSuccess()){
@@ -149,8 +149,8 @@ sdlManager.send(request: clearTurnByTurn) { (request, response, error) in
 @![android]
 ```java
 ShowConstantTbt turnByTurn = new ShowConstantTbt();
-turnByTurn.setManeuverComplete(true);
-turnByTurn.setOnRPCResponseListener(new OnRPCResponseListener() {
+turnByTurn.setManeuverComplete(true)
+          .setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
         if (!response.getSuccess()){
