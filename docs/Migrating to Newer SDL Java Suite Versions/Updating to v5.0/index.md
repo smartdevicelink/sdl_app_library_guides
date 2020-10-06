@@ -10,14 +10,14 @@ The full release notes are published [here](https://github.com/smartdevicelink/s
 SDL now has a new minimun required SDK version of 16. You can change the minimum SDK version in the apps build.gradle file by changing minSdkVersion to 16. An example:
 
 ```Gradle
-    defaultConfig {
-        applicationId "com.sdl.mobileweather"
-        minSdkVersion 16
-        targetSdkVersion 26
-        versionCode 27
-        versionName "1.7.15"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
+defaultConfig {
+    applicationId "com.sdl.mobileweather"
+    minSdkVersion 16
+    targetSdkVersion 26
+    versionCode 27
+    versionName "1.7.15"
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+}
 ```
 
 ## AndroidX
@@ -32,7 +32,7 @@ To migrate to AndroidX you must set the `compileSdkVersion` to 28 in the apps bu
 ## New imports due to package changes
 
 ## SdlManagerListener managerShouldUpdateLifecycle changes
-In 4.12 a new managerShouldUpdateLifecycle method was added and the old managerShouldUpdateLifecycle method was deprecated. In 5.0 the deprecated method was removed.
+In 4.12 a new managerShouldUpdateLifecycle method was added and the old managerShouldUpdateLifecycle method was deprecated. In 5.0 the deprecated method was removed. Add link to details...
 
 Before:
 
@@ -92,6 +92,19 @@ SdlManagerListener listener = new SdlManagerListener() {
 ## ScreenManager Template Managment
 
 ## Chainable RPC setters
+Rpc setters are now chainable. Before you had to either use a constructor that took all paramters or set every one indivually. Now you are able to chain them together.
+
+Before:
+```Java
+Alert alert = new Alert();
+alert.setAlertText1("text1");
+alert.setDuration(5000);
+alert.setPlayTone(true);
+```
+Now:
+```Java
+Alert alert = new Alert().setAlertText1("text1").setDuration(5000).setPlayTone(true);
+```
 
 ## Use the new DebugTool methods(especially in javaSE, there is no log.x() methods anymore)
 
