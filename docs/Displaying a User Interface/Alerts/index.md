@@ -93,8 +93,8 @@ alert.softButtons = [button1, button2]
 ```java
 // Soft buttons
 final int softButtonId = 123; // Set it to any unique ID
-SoftButton okButton = new SoftButton(SoftButtonType.SBT_TEXT, softButtonId);
-okButton.setText("OK");
+SoftButton okButton = new SoftButton(SoftButtonType.SBT_TEXT, softButtonId)
+    .setText("OK");
 
 // Set the softbuttons(s) to the alert
 alert.setSoftButtons(Collections.singletonList(okButton));
@@ -404,15 +404,15 @@ sdlManager.send(request: cancelInteraction) { (request, response, error) in
 @![android,javaSE,javaEE]
 ```java
 // `cancelID` is the ID that you assigned when creating and sending the alert
-CancelInteraction cancelInteraction = new CancelInteraction(FunctionID.ALERT.getId(), cancelID);
-cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
-	@Override
-	public void onResponse(int correlationId, RPCResponse response) {
-		if (response.getSuccess()){
-			Log.i(TAG, "Alert was dismissed successfully");
-		}
-	}
-});
+CancelInteraction cancelInteraction = new CancelInteraction(FunctionID.ALERT.getId(), cancelID)
+    .setOnRPCResponseListener(new OnRPCResponseListener() {
+	    @Override
+	    public void onResponse(int correlationId, RPCResponse response) {
+		    if (response.getSuccess()){
+			    Log.i(TAG, "Alert was dismissed successfully");
+		    }
+	    }
+    });
 sdlManager.sendRPC(cancelInteraction);
 ```
 !@
@@ -469,15 +469,15 @@ sdlManager.send(request: cancelInteraction) { (request, response, error) in
 
 @![android,javaSE,javaEE]
 ```java
-CancelInteraction cancelInteraction = new CancelInteraction(FunctionID.ALERT.getId());
-cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
-	@Override
-	public void onResponse(int correlationId, RPCResponse response) {
-		if (response.getSuccess()){
-			Log.i(TAG, "Alert was dismissed successfully");
-		}
-	}
-});
+CancelInteraction cancelInteraction = new CancelInteraction(FunctionID.ALERT.getId())
+    .setOnRPCResponseListener(new OnRPCResponseListener() {
+	    @Override
+	    public void onResponse(int correlationId, RPCResponse response) {
+		    if (response.getSuccess()){
+			    Log.i(TAG, "Alert was dismissed successfully");
+		    }
+	    }
+    });
 sdlManager.sendRPC(cancelInteraction);
 ```
 !@  
