@@ -90,6 +90,18 @@ SdlManagerListener listener = new SdlManagerListener() {
 ## Use Multiplex instead of legacy BT & USB
 
 ## ScreenManager Template Managment
+You can now use the ScreenManager to change screen templatas and day/night color schems. See ... for more.
+
+Example:
+```java
+TemplateConfiguration configuration = new TemplateConfiguration().setTemplate(Template).setDayColorScheme(DayColorScheme).setNightColorScheme(NightColorScheme);
+sdlManager.getScreenManager().changeLayout(configuration, new CompletionListener() {
+    @Override
+    public void onComplete(boolean success) {
+                
+    }
+});
+```
 
 ## Chainable RPC setters
 Rpc setters are now chainable. Before you had to either use a constructor that took all paramters or set every one indivually. Now you are able to chain them together.
