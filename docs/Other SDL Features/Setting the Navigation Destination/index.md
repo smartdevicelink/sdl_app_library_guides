@@ -276,19 +276,19 @@ sdlManager.send(request: sendLocation) { (request, response, error) in
 @![android, javaSE, javaEE]
 ```java
 SendLocation sendLocation = new SendLocation();
-sendLocation.setLatitudeDegrees(42.877737);
-sendLocation.setLongitudeDegrees(-97.380967);
-sendLocation.setLocationName("The Center");
-sendLocation.setLocationDescription("Center of the United States");
+sendLocation.setLatitudeDegrees(42.877737)
+            .setLongitudeDegrees(-97.380967)
+            .setLocationName("The Center")
+            .setLocationDescription("Center of the United States");
 
 OasisAddress address = new OasisAddress();
-address.setSubThoroughfare("900");
-address.setThoroughfare("Whiting Dr");
-address.setLocality("Yankton");
-address.setAdministrativeArea("SD");
-address.setPostalCode("57078");
-address.setCountryCode("US-SD");
-address.setCountryName("United States");
+address.setSubThoroughfare("900")
+       .setThoroughfare("Whiting Dr")
+       .setLocality("Yankton")
+       .setAdministrativeArea("SD")
+       .setPostalCode("57078")
+       .setCountryCode("US-SD")
+       .setCountryName("United States");
 
 sendLocation.setAddress(address);
 
