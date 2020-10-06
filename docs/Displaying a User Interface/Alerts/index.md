@@ -33,11 +33,11 @@ let alert = SDLAlert(alertText: <#String?#>, softButtons: <#[SDLSoftButton]?#>, 
 
 @![android,javaSE,javaEE]
 ```java
-Alert alert = new Alert();
-alert.setAlertText1("Line 1")
-     .setAlertText2("Line 2")
-     .setAlertText3("Line 3")
-     .setCancelID(<#Integer>);
+Alert alert = new Alert()
+    .setAlertText1("Line 1")
+    .setAlertText2("Line 2")
+    .setAlertText3("Line 3")
+    .setCancelID(<#Integer>);
 ```
 !@
 

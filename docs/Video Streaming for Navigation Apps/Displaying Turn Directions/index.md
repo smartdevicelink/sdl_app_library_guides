@@ -80,31 +80,31 @@ sdlManager.send(request: turnByTurn) { (request, response, error) in
 ```java
 Image turnIcon =  <#Create Image#>
 
-ShowConstantTbt turnByTurn = new ShowConstantTbt();
-turnByTurn.setNavigationText1("Turn Right")
-          .setNavigationText2("3 mi")
-          .setTurnIcon(turnIcon)
-          .setOnRPCResponseListener(new OnRPCResponseListener() {
-    @Override
-    public void onResponse(int correlationId, RPCResponse response) {
-        if (!response.getSuccess()){
-            Log.e(TAG, "onResponse: Error sending TBT");
-            return;
-        }
-
-        AlertManeuver alertManeuver = new AlertManeuver();
-        alertManeuver.setTtsChunks(TTSChunkFactory.createSimpleTTSChunks("In 3 miles turn right"))
-                     .setOnRPCResponseListener(new OnRPCResponseListener() {
-            @Override
-            public void onResponse(int correlationId, RPCResponse response) {
-                if (!response.getSuccess()){
-                    Log.e(TAG, "onResponse: Error sending AlertManeuver");
-                }
+ShowConstantTbt turnByTurn = new ShowConstantTbt()
+    .setNavigationText1("Turn Right")
+    .setNavigationText2("3 mi")
+    .setTurnIcon(turnIcon)
+    .setOnRPCResponseListener(new OnRPCResponseListener() {
+        @Override
+        public void onResponse(int correlationId, RPCResponse response) {
+            if (!response.getSuccess()){
+                Log.e(TAG, "onResponse: Error sending TBT");
+                return;
             }
-        });
-        sdlManager.sendRPC(alertManeuver);
-    }
-});
+
+            AlertManeuver alertManeuver = new AlertManeuver();
+            alertManeuver.setTtsChunks(TTSChunkFactory.createSimpleTTSChunks("In 3 miles turn right"))
+                .setOnRPCResponseListener(new OnRPCResponseListener() {
+                    @Override
+                    public void onResponse(int correlationId, RPCResponse response) {
+                    if (!response.getSuccess()){
+                        Log.e(TAG, "onResponse: Error sending AlertManeuver");
+                    }
+                }
+                });
+            sdlManager.sendRPC(alertManeuver);
+        }
+    });
 sdlManager.sendRPC(turnByTurn);
 ```
 !@
@@ -148,16 +148,16 @@ sdlManager.send(request: clearTurnByTurn) { (request, response, error) in
 
 @![android]
 ```java
-ShowConstantTbt turnByTurn = new ShowConstantTbt();
-turnByTurn.setManeuverComplete(true)
-          .setOnRPCResponseListener(new OnRPCResponseListener() {
-    @Override
-    public void onResponse(int correlationId, RPCResponse response) {
-        if (!response.getSuccess()){
-            Log.e(TAG, "onResponse: Error sending TBT");
+ShowConstantTbt turnByTurn = new ShowConstantTbt()
+    .setManeuverComplete(true)
+    .setOnRPCResponseListener(new OnRPCResponseListener() {
+        @Override
+        public void onResponse(int correlationId, RPCResponse response) {
+            if (!response.getSuccess()){
+                Log.e(TAG, "onResponse: Error sending TBT");
+            }
         }
-    }
-});
+    });
 sdlManager.sendRPC(turnByTurn);
 ```
 !@

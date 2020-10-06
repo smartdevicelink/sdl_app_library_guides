@@ -244,26 +244,24 @@ sdlManager.send(request: getServiceData) { (req, res, err) in
 ##### Java
 ```java
 // Get service data once
-GetAppServiceData getAppServiceData = new GetAppServiceData(AppServiceType.MEDIA.toString());
-
-// Subscribe to future updates if you want them
-getAppServiceData.setSubscribe(true)
-                 .setOnRPCResponseListener(new OnRPCResponseListener() {
-    @Override
-    public void onResponse(int correlationId, RPCResponse response) {
-        if (response != null){
-            GetAppServiceDataResponse serviceResponse = (GetAppServiceDataResponse) response;
-            MediaServiceData mediaServiceData = serviceResponse.getServiceData().getMediaServiceData();
+GetAppServiceData getAppServiceData = new GetAppServiceData(AppServiceType.MEDIA.toString())
+    .setSubscribe(true) // Subscribe to future updates if you want them
+    .setOnRPCResponseListener(new OnRPCResponseListener() {
+        @Override
+        public void onResponse(int correlationId, RPCResponse response) {
+            if (response != null){
+                GetAppServiceDataResponse serviceResponse = (GetAppServiceDataResponse) response;
+                MediaServiceData mediaServiceData = serviceResponse.getServiceData().getMediaServiceData();
+            }
         }
-    }
-});
+    });
 sdlManager.sendRPC(getAppServiceData);
 
 ...
 
 // Unsubscribe from updates
-GetAppServiceData unsubscribeServiceData = new GetAppServiceData(AppServiceType.MEDIA.toString());
-unsubscribeServiceData.setSubscribe(false);
+GetAppServiceData unsubscribeServiceData = new GetAppServiceData(AppServiceType.MEDIA.toString())
+    .setSubscribe(false);
 sdlManager.sendRPC(unsubscribeServiceData);
 ```
 !@
@@ -355,16 +353,16 @@ sdlManager.send(request: buttonPress) { (req, res, err) in
 @![android,javaSE,javaEE]
 ##### Java
 ```java
-ButtonPress buttonPress = new ButtonPress();
-buttonPress.setButtonPressMode(ButtonPressMode.SHORT)
-           .setButtonName(ButtonName.OK)
-           .setModuleType(ModuleType.AUDIO)
-           .setOnRPCResponseListener(new OnRPCResponseListener() {
-    @Override
-    public void onResponse(int correlationId, RPCResponse response) {
-        <#Use the response#>
-    }
-});
+ButtonPress buttonPress = new ButtonPress()
+    .setButtonPressMode(ButtonPressMode.SHORT)
+    .setButtonName(ButtonName.OK)
+    .setModuleType(ModuleType.AUDIO)
+    .setOnRPCResponseListener(new OnRPCResponseListener() {
+        @Override
+        public void onResponse(int correlationId, RPCResponse response) {
+            <#Use the response#>
+        }
+    });
 sdlManager.sendRPC(buttonPress);
 ```
 !@
@@ -528,17 +526,17 @@ if (weatherServiceData == null || weatherServiceData.getCurrentForecast() == nul
 }
 String currentForecastImageName = weatherServiceData.getCurrentForecast().getWeatherIcon().getValue();
 
-GetFile getFile = new GetFile(currentForecastImageName);
-getFile.setAppServiceId(<#Service ID>)
-       .setOnRPCResponseListener(new OnRPCResponseListener() {
-    @Override
-    public void onResponse(int correlationId, RPCResponse response) {
-        GetFileResponse getFileResponse = (GetFileResponse) response;
-        byte[] fileData = getFileResponse.getBulkData();
-        SdlArtwork sdlArtwork = new SdlArtwork(fileName, FileType.GRAPHIC_PNG, fileData, false);
-        // Use the sdlArtwork 
-    }
-});
+GetFile getFile = new GetFile(currentForecastImageName)
+    .setAppServiceId(<#Service ID>)
+    .setOnRPCResponseListener(new OnRPCResponseListener() {
+        @Override
+        public void onResponse(int correlationId, RPCResponse response) {
+            GetFileResponse getFileResponse = (GetFileResponse) response;
+            byte[] fileData = getFileResponse.getBulkData();
+            SdlArtwork sdlArtwork = new SdlArtwork(fileName, FileType.GRAPHIC_PNG, fileData, false);
+            // Use the sdlArtwork 
+        }
+    });
 sdlManager.sendRPC(getFile);
 ```
 !@

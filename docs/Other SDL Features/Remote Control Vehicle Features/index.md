@@ -325,14 +325,14 @@ sdlManager.send(request: seatLocation, responseHandler: { (request, response, er
 
 @![android,javaEE,javaSE]
 ```java
-SetGlobalProperties seatLocation = new SetGlobalProperties();
-seatLocation.setUserLocation(<#Selected Seat#>;)
-            .setOnRPCResponseListener(new OnRPCResponseListener() {
-    @Override
-    public void onResponse(int correlationId, RPCResponse response) {
-        <#Seat location updated#>
-    }
-});
+SetGlobalProperties seatLocation = new SetGlobalProperties()
+    .setUserLocation(<#Selected Seat#>;)
+    .setOnRPCResponseListener(new OnRPCResponseListener() {
+        @Override
+        public void onResponse(int correlationId, RPCResponse response) {
+            <#Seat location updated#>
+        }
+    });
 sdlManager.sendRPC(seatLocation);
 ```
 !@
@@ -456,28 +456,28 @@ After you subscribe to the `InteriorVehicleDataNotification` you must also subsc
 
 ###### RPC < v6.0
 ```java
-GetInteriorVehicleData getInteriorVehicleData = new GetInteriorVehicleData(ModuleType.RADIO);
-getInteriorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
-    @Override
-    public void onResponse(int correlationId, RPCResponse response) {
-        // This can now be used to retrieve data
-        <#Code#>
-    }
-});
+GetInteriorVehicleData getInteriorVehicleData = new GetInteriorVehicleData(ModuleType.RADIO)
+    .setOnRPCResponseListener(new OnRPCResponseListener() {
+        @Override
+        public void onResponse(int correlationId, RPCResponse response) {
+            // This can now be used to retrieve data
+            <#Code#>
+        }
+    });
 sdlManager.sendRPC(getInteriorVehicleData);
 ```
 
 ###### RPC v6.0+
 ```java
-GetInteriorVehicleData getInteriorVehicleData = new GetInteriorVehicleData(ModuleType.RADIO);
-getInteriorVehicleData.setModuleId(<#ModuleID#>)
-                      .setOnRPCResponseListener(new OnRPCResponseListener() {
-    @Override
-    public void onResponse(int correlationId, RPCResponse response) {
-        // This can now be used to retrieve data
-        <#Code#>
-    }
-});
+GetInteriorVehicleData getInteriorVehicleData = new GetInteriorVehicleData(ModuleType.RADIO)
+    .setModuleId(<#ModuleID#>)
+    .setOnRPCResponseListener(new OnRPCResponseListener() {
+        @Override
+        public void onResponse(int correlationId, RPCResponse response) {
+            // This can now be used to retrieve data
+            <#Code#>
+        }
+    });
 sdlManager.sendRPC(getInteriorVehicleData);
 ```
 !@
@@ -586,28 +586,28 @@ sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
 
 ###### RPC < v6.0
 ```java
-GetInteriorVehicleData interiorVehicleData = new GetInteriorVehicleData(ModuleType.RADIO);
-interiorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
-    @Override
-    public void onResponse(int correlationId, RPCResponse response) {
-        // This can now be used to retrieve data
-        <#Code#>
-    }
-});
+GetInteriorVehicleData interiorVehicleData = new GetInteriorVehicleData(ModuleType.RADIO)
+    .setOnRPCResponseListener(new OnRPCResponseListener() {
+        @Override
+        public void onResponse(int correlationId, RPCResponse response) {
+            // This can now be used to retrieve data
+            <#Code#>
+        }
+    });
 sdlManager.sendRPC(interiorVehicleData);
 ```
 
 ###### RPC 6.0+
 ```java
-GetInteriorVehicleData interiorVehicleData = new GetInteriorVehicleData(ModuleType.RADIO);
-interiorVehicleData.setModuleId("<#ModuleID#>")
-                   .setOnRPCResponseListener(new OnRPCResponseListener() {
-    @Override
-    public void onResponse(int correlationId, RPCResponse response) {
-        // This can now be used to retrieve data
-        <#Code#>
-    }
-});
+GetInteriorVehicleData interiorVehicleData = new GetInteriorVehicleData(ModuleType.RADIO)
+    .setModuleId("<#ModuleID#>")
+    .setOnRPCResponseListener(new OnRPCResponseListener() {
+        @Override
+        public void onResponse(int correlationId, RPCResponse response) {
+            // This can now be used to retrieve data
+            <#Code#>
+        }
+    });
 sdlManager.sendRPC(interiorVehicleData);
 ```
 !@
@@ -686,15 +686,15 @@ sdlManager.send(request: getInteriorVehicleDataConsent , responseHandler: { (req
 
 @![android, javaEE, javaSE]
 ```java
-GetInteriorVehicleDataConsent getInteriorVehicleDataConsent = new GetInteriorVehicleDataConsent(<#ModuleType#>,<#ModuleIDs#>,);
-getInteriorVehicleDataConsent.setOnRPCResponseListener(new OnRPCResponseListener() {
-    @Override
-    public void onResponse(int correlationId, RPCResponse response) {
-        GetInteriorVehicleDataConsentResponse getInteriorVehicleDataConsentResponse = (GetInteriorVehicleDataConsentResponse) response;
-        List<Boolean> allowed = getInteriorVehicleDataConsentResponse.getAllowances();
-            <#Allowed is an array of true or false values#>
-    }
-});
+GetInteriorVehicleDataConsent getInteriorVehicleDataConsent = new GetInteriorVehicleDataConsent(<#ModuleType#>,<#ModuleIDs#>,)
+    .setOnRPCResponseListener(new OnRPCResponseListener() {
+        @Override
+        public void onResponse(int correlationId, RPCResponse response) {
+            GetInteriorVehicleDataConsentResponse getInteriorVehicleDataConsentResponse = (GetInteriorVehicleDataConsentResponse) response;
+            List<Boolean> allowed = getInteriorVehicleDataConsentResponse.getAllowances();
+                <#Allowed is an array of true or false values#>
+        }
+    });
 sdlManager.sendRPC(getInteriorVehicleDataConsent);
 ```
 !@
@@ -787,28 +787,28 @@ sdlManager.send(request: setInteriorVehicleData) { (request, response, error) in
 
 Temperature temp = new Temperature(TemperatureUnit.FAHRENHEIT, 74.1f);
 
-ClimateControlData climateControlData = new ClimateControlData();
-climateControlData.setAcEnable(true)
-                  .setAcMaxEnable(true)
-                  .setAutoModeEnable(false)
-                  .setCirculateAirEnable(true)
-                  .setCurrentTemperature(temp)
-                  .setDefrostZone(DefrostZone.FRONT)
-                  .setDualModeEnable(true)
-                  .setFanSpeed(2)
-                  .setVentilationMode(VentilationMode.BOTH)
-                  .setDesiredTemperature(temp);
+ClimateControlData climateControlData = new ClimateControlData()
+    .setAcEnable(true)
+    .setAcMaxEnable(true)
+    .setAutoModeEnable(false)
+    .setCirculateAirEnable(true)
+    .setCurrentTemperature(temp)
+    .setDefrostZone(DefrostZone.FRONT)
+    .setDualModeEnable(true)
+    .setFanSpeed(2)
+    .setVentilationMode(VentilationMode.BOTH)
+    .setDesiredTemperature(temp);
 
-ModuleData moduleData = new ModuleData(ModuleType.CLIMATE);
-moduleData.setClimateControlData(climateControlData);
+ModuleData moduleData = new ModuleData(ModuleType.CLIMATE)
+    .setClimateControlData(climateControlData);
 
-SetInteriorVehicleData setInteriorVehicleData = new SetInteriorVehicleData(moduleData);
-setInteriorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
-    @Override
-    public void onResponse(int correlationId, RPCResponse response) {
-        <#Code#>
-    }
-});
+SetInteriorVehicleData setInteriorVehicleData = new SetInteriorVehicleData(moduleData)
+    .setOnRPCResponseListener(new OnRPCResponseListener() {
+        @Override
+        public void onResponse(int correlationId, RPCResponse response) {
+            <#Code#>
+        }
+    });
 sdlManager.sendRPC(setInteriorVehicleData);
 ```
 
@@ -816,29 +816,29 @@ sdlManager.sendRPC(setInteriorVehicleData);
 ```java
 Temperature temp = new Temperature(TemperatureUnit.FAHRENHEIT, 74.1f);
 
-ClimateControlData climateControlData = new ClimateControlData();
-climateControlData.setAcEnable(true)
-                  .setAcMaxEnable(true)
-                  .setAutoModeEnable(false)
-                  .setCirculateAirEnable(true)
-                  .setCurrentTemperature(temp)
-                  .setDefrostZone(DefrostZone.FRONT)
-                  .setDualModeEnable(true)
-                  .setFanSpeed(2)
-                  .setVentilationMode(VentilationMode.BOTH)
-                  .setDesiredTemperature(temp);
+ClimateControlData climateControlData = new ClimateControlData()
+    .setAcEnable(true)
+    .setAcMaxEnable(true)
+    .setAutoModeEnable(false)
+    .setCirculateAirEnable(true)
+    .setCurrentTemperature(temp)
+    .setDefrostZone(DefrostZone.FRONT)
+    .setDualModeEnable(true)
+    .setFanSpeed(2)
+    .setVentilationMode(VentilationMode.BOTH)
+    .setDesiredTemperature(temp);
 
-ModuleData moduleData = new ModuleData(ModuleType.CLIMATE);
-moduleData.setModuleId("<#ModuleID#>")
-          .setClimateControlData(climateControlData);
+ModuleData moduleData = new ModuleData(ModuleType.CLIMATE)
+    .setModuleId("<#ModuleID#>")
+    .setClimateControlData(climateControlData);
 
-SetInteriorVehicleData setInteriorVehicleData = new SetInteriorVehicleData(moduleData);
-setInteriorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
-    @Override
-    public void onResponse(int correlationId, RPCResponse response) {
-        <#Code#>
-    }
-});
+SetInteriorVehicleData setInteriorVehicleData = new SetInteriorVehicleData(moduleData)
+    .setOnRPCResponseListener(new OnRPCResponseListener() {
+        @Override
+        public void onResponse(int correlationId, RPCResponse response) {
+            <#Code#>
+        }
+    });
 sdlManager.sendRPC(setInteriorVehicleData);
 ```
 !@
@@ -960,26 +960,26 @@ sdlManager.send(request: buttonPress) { (request, response, error) in
 
 ###### RPC < 6.0
 ```java
-ButtonPress buttonPress = new ButtonPress(ModuleType.RADIO, ButtonName.EJECT, ButtonPressMode.SHORT);
-buttonPress.setOnRPCResponseListener(new OnRPCResponseListener() {
-    @Override
-    public void onResponse(int correlationId, RPCResponse response) {
-        <#Code#>
-    }
-});
+ButtonPress buttonPress = new ButtonPress(ModuleType.RADIO, ButtonName.EJECT, ButtonPressMode.SHORT)
+    .setOnRPCResponseListener(new OnRPCResponseListener() {
+        @Override
+        public void onResponse(int correlationId, RPCResponse response) {
+            <#Code#>
+        }
+    });
 sdlManager.sendRPC(buttonPress);
 ```
 
 ###### RPC 6.0+
 ```java
-ButtonPress buttonPress = new ButtonPress(ModuleType.RADIO, ButtonName.EJECT, ButtonPressMode.SHORT);
-buttonPress.setModuleId("<#ModuleID#>")
-           .setOnRPCResponseListener(new OnRPCResponseListener() {
-    @Override
-    public void onResponse(int correlationId, RPCResponse response) {
-        <#Code#>
-    }
-});
+ButtonPress buttonPress = new ButtonPress(ModuleType.RADIO, ButtonName.EJECT, ButtonPressMode.SHORT)
+    .setModuleId("<#ModuleID#>")
+    .setOnRPCResponseListener(new OnRPCResponseListener() {
+        @Override
+        public void onResponse(int correlationId, RPCResponse response) {
+            <#Code#>
+        }
+    });
 sdlManager.sendRPC(buttonPress);
 ```
 !@
@@ -1042,14 +1042,14 @@ sdlManager.send(request: releaseInteriorVehicleDataModule) { (request, response,
 
 @![android, javaEE, javaSE]
 ```java
-ReleaseInteriorVehicleDataModule releaseInteriorVehicleDataModule = new ReleaseInteriorVehicleDataModule(<#ModuleType#>);
-releaseInteriorVehicleDataModule.setModuleId(<#ModuleID#>)
-                                .setOnRPCResponseListener(new OnRPCResponseListener() {
-    @Override
-    public void onResponse(int correlationId, RPCResponse response) {
-        <#Module Was Released#>
-    }
-});
+ReleaseInteriorVehicleDataModule releaseInteriorVehicleDataModule = new ReleaseInteriorVehicleDataModule(<#ModuleType#>)
+    .setModuleId(<#ModuleID#>)
+    .setOnRPCResponseListener(new OnRPCResponseListener() {
+        @Override
+        public void onResponse(int correlationId, RPCResponse response) {
+            <#Module Was Released#>
+        }
+    });
 sdlManager.sendRPC(releaseInteriorVehicleDataModule);
 ```
 !@

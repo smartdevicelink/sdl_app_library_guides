@@ -226,21 +226,21 @@ sdlManager.send(request: dialNumber) { (request, response, error) in
 
 @![android,javaSE,javaEE]
 ```java
-DialNumber dialNumber = new DialNumber();
-dialNumber.setNumber("1238675309")
-          .setOnRPCResponseListener(new OnRPCResponseListener() {
-    @Override
-    public void onResponse(int correlationId, RPCResponse response) {
-        Result result = response.getResultCode();
-        if(result.equals(Result.SUCCESS)){
-            // `DialNumber` successfully sent
-        }else if(result.equals(Result.REJECTED)){
-            // `DialNumber` was rejected. Either the call was sent and cancelled or there is no device connected
-        }else if(result.equals(Result.DISALLOWED)){
-            // Your app is not allowed to use `DialNumber`
+DialNumber dialNumber = new DialNumber()
+    .setNumber("1238675309")
+    .setOnRPCResponseListener(new OnRPCResponseListener() {
+        @Override
+        public void onResponse(int correlationId, RPCResponse response) {
+            Result result = response.getResultCode();
+            if(result.equals(Result.SUCCESS)){
+                // `DialNumber` successfully sent
+            }else if(result.equals(Result.REJECTED)){
+                // `DialNumber` was rejected. Either the call was sent and cancelled or there is no device connected
+            }else if(result.equals(Result.DISALLOWED)){
+                // Your app is not allowed to use `DialNumber`
+            }
         }
-    }
-});
+    });
 
 sdlManager.sendRPC(dialNumber);
 ```

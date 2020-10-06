@@ -104,28 +104,28 @@ sdlManager.send(request: audioPassThru) { (request, response, error) in
 ```java
 TTSChunk initialPrompt = new TTSChunk("Ask me What's the weather? or What's 1 plus 2?", SpeechCapabilities.TEXT);
 
-PerformAudioPassThru audioPassThru = new PerformAudioPassThru();
-audioPassThru.setAudioPassThruDisplayText1("Ask me \"What's the weather?\"")
-             .setAudioPassThruDisplayText2("or \"What's 1 + 2?\"")
-             .setInitialPrompt(Arrays.asList(initialPrompt))
-             .setSamplingRate(SamplingRate._22KHZ)
-             .setMaxDuration(7000)
-             .setBitsPerSample(BitsPerSample._16_BIT)
-             .setAudioType(AudioType.PCM)
-             .setMuteAudio(false)
-             .setOnRPCResponseListener(new OnRPCResponseListener() {
-	@Override
-	public void onResponse (int correlationId, RPCResponse response) {
-		switch (response.getResultCode()) {
-			case SUCCESS:
-				// The audio pass thru ended successfully. Process the audio data
-			case ABORTED:
-				// The audio pass thru was aborted by the user. You should cancel any usage of the audio data.
-			default:
-				// Some other error occurred. Handle the error.
-		}
-	}
-});
+PerformAudioPassThru audioPassThru = new PerformAudioPassThru()
+    .setAudioPassThruDisplayText1("Ask me \"What's the weather?\"")
+    .setAudioPassThruDisplayText2("or \"What's 1 + 2?\"")
+    .setInitialPrompt(Arrays.asList(initialPrompt))
+    .setSamplingRate(SamplingRate._22KHZ)
+    .setMaxDuration(7000)
+    .setBitsPerSample(BitsPerSample._16_BIT)
+    .setAudioType(AudioType.PCM)
+    .setMuteAudio(false)
+    .setOnRPCResponseListener(new OnRPCResponseListener() {
+	    @Override
+	    public void onResponse (int correlationId, RPCResponse response) {
+		    switch (response.getResultCode()) {
+			    case SUCCESS:
+				    // The audio pass thru ended successfully. Process the audio data
+			    case ABORTED:
+				    // The audio pass thru was aborted by the user. You should cancel any usage of the audio data.
+			    default:
+				    // Some other error occurred. Handle the error.
+		    }
+	    }
+    });
 
 sdlManager.sendRPC(audioPassThru);
 ```
@@ -269,18 +269,18 @@ sdlManager.send(request: endAudioPassThru) { (request, response, error) in
 
 @![android,javaSE,javaEE]
 ```java
-EndAudioPassThru endAudioPassThru = new EndAudioPassThru();
-endAudioPassThru.setOnRPCResponseListener(new OnRPCResponseListener() {
-    @Override
-    public void onResponse (int correlationId, RPCResponse response) {
-        if (!response.getSuccess())) {
-            // There was an error sending the end audio pass thru
-            return;
-        }
+EndAudioPassThru endAudioPassThru = new EndAudioPassThru()
+    .setOnRPCResponseListener(new OnRPCResponseListener() {
+        @Override
+        public void onResponse (int correlationId, RPCResponse response) {
+            if (!response.getSuccess())) {
+                // There was an error sending the end audio pass thru
+                return;
+            }
 
-        // The end audio pass thru was sent successfully
-    }
-});
+            // The end audio pass thru was sent successfully
+        }
+    });
 
 sdlManager.sendRPC(endAudioPassThru);
 ```

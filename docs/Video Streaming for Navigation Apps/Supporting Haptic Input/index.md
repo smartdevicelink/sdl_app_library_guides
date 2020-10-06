@@ -94,15 +94,15 @@ It is also possible that you may want to create your own rects instead of using 
 ```java
 public void sendHapticData() {
 
-	Rectangle rectangle = new Rectangle();
-	rectangle.setX((float) 1.0)
-	         .setY((float) 1.0)
-	         .setWidth((float) 1.0)
-	         .setHeight((float) 1.0);
+	Rectangle rectangle = new Rectangle()
+	    .setX((float) 1.0)
+	    .setY((float) 1.0)
+	    .setWidth((float) 1.0)
+	    .setHeight((float) 1.0);
 
-	HapticRect hapticRect = new HapticRect();
-	hapticRect.setId(123)
-	          .setRect(rec);
+	HapticRect hapticRect = new HapticRect()
+	    .setId(123)
+	    .setRect(rec);
 
 	ArrayList<HapticRect> hapticArray = new ArrayList<HapticRect>();
 	hapticArray.add(0, hr);

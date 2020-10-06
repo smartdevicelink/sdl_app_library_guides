@@ -101,19 +101,19 @@ sdlManager.send(request: getGPSData) { (request, response, error) in
 
 @![android, javaSE, javaEE]
 ```java
-GetVehicleData vdRequest = new GetVehicleData();
-vdRequest.setPrndl(true)
-         .setOnRPCResponseListener(new OnRPCResponseListener() {
-    @Override
-    public void onResponse(int correlationId, RPCResponse response) {
-        if(response.getSuccess()){
-            PRNDL prndl = ((GetVehicleDataResponse) response).getPrndl();
-            Log.i("SdlService", "PRNDL status: " + prndl.toString());
-        }else{
-            Log.i("SdlService", "GetVehicleData was rejected.");
+GetVehicleData vdRequest = new GetVehicleData()
+    .setPrndl(true)
+    .setOnRPCResponseListener(new OnRPCResponseListener() {
+        @Override
+        public void onResponse(int correlationId, RPCResponse response) {
+            if(response.getSuccess()){
+                PRNDL prndl = ((GetVehicleDataResponse) response).getPrndl();
+                Log.i("SdlService", "PRNDL status: " + prndl.toString());
+            }else{
+                Log.i("SdlService", "GetVehicleData was rejected.");
+            }
         }
-    }
-});
+    });
 sdlManager.sendRPC(vdRequest);
 ```
 !@
@@ -276,18 +276,18 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_VEHICLE_DATA, new OnRPCNot
 **Second**, send the `SubscribeVehicleData` request:
 
 ```java
-SubscribeVehicleData subscribeRequest = new SubscribeVehicleData();
-subscribeRequest.setPrndl(true)
-                .setOnRPCResponseListener(new OnRPCResponseListener() {
-    @Override
-    public void onResponse(int correlationId, RPCResponse response) {
-        if(response.getSuccess()){
-            Log.i("SdlService", "Successfully subscribed to vehicle data.");
-        }else{
-            Log.i("SdlService", "Request to subscribe to vehicle data was rejected.");
+SubscribeVehicleData subscribeRequest = new SubscribeVehicleData()
+    .setPrndl(true)
+    .setOnRPCResponseListener(new OnRPCResponseListener() {
+        @Override
+        public void onResponse(int correlationId, RPCResponse response) {
+            if(response.getSuccess()){
+                Log.i("SdlService", "Successfully subscribed to vehicle data.");
+            }else{
+                Log.i("SdlService", "Request to subscribe to vehicle data was rejected.");
+            }
         }
-    }
-});
+    });
 sdlManager.sendRPC(subscribeRequest);
 ```
 
@@ -403,18 +403,18 @@ sdlManager.send(request: unsubscribeGPSData) { (request, response, error) in
 
 @![android, javaSE, javaEE]
 ```java
-UnsubscribeVehicleData unsubscribeRequest = new UnsubscribeVehicleData();
-unsubscribeRequest.setPrndl(true) // unsubscribe to PRNDL data
-                  .setOnRPCResponseListener(new OnRPCResponseListener() {
-    @Override
-    public void onResponse(int correlationId, RPCResponse response) {
-        if(response.getSuccess()){
-            Log.i("SdlService", "Successfully unsubscribed to vehicle data.");
-        }else{
-            Log.i("SdlService", "Request to unsubscribe to vehicle data was rejected.");
+UnsubscribeVehicleData unsubscribeRequest = new UnsubscribeVehicleData()
+    .setPrndl(true) // unsubscribe to PRNDL data
+    .setOnRPCResponseListener(new OnRPCResponseListener() {
+        @Override
+        public void onResponse(int correlationId, RPCResponse response) {
+            if(response.getSuccess()){
+                Log.i("SdlService", "Successfully unsubscribed to vehicle data.");
+            }else{
+                Log.i("SdlService", "Request to unsubscribe to vehicle data was rejected.");
+            }
         }
-    }
-});
+    });
 sdlManager.sendRPC(unsubscribeRequest);
 ```
 !@
@@ -516,9 +516,9 @@ sdlManager.send(request: getCustomData) { (request, response, error) in
 
 ```java
 
-GetVehicleData vdRequest = new GetVehicleData();
-vdRequest.setOEMCustomVehicleData("OEM-X-Vehicle-Data", true)
-         .setOnRPCResponseListener(new OnRPCResponseListener() {
+GetVehicleData vdRequest = new GetVehicleData()
+    .setOEMCustomVehicleData("OEM-X-Vehicle-Data", true)
+    .setOnRPCResponseListener(new OnRPCResponseListener() {
         @Override
         public void onResponse(int correlationId, RPCResponse response) {
             if(response.getSuccess()){
