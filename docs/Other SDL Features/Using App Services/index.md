@@ -257,10 +257,6 @@ getAppServiceData.setOnRPCResponseListener(new OnRPCResponseListener() {
             MediaServiceData mediaServiceData = serviceResponse.getServiceData().getMediaServiceData();
         }
     }
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        // Handle Error
-    }
 });
 sdlManager.sendRPC(getAppServiceData);
 
@@ -369,10 +365,6 @@ buttonPress.setOnRPCResponseListener(new OnRPCResponseListener() {
     public void onResponse(int correlationId, RPCResponse response) {
         <#Use the response#>
     }
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        <#Handle the Error#>
-    }
 });
 sdlManager.sendRPC(buttonPress);
 ```
@@ -430,10 +422,6 @@ performAppServiceInteraction.setOnRPCResponseListener(new OnRPCResponseListener(
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
         <#Use the response#>
-    }
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        <#Handle the Error#>
     }
 });
 sdlManager.sendRPC(performAppServiceInteraction);
@@ -550,11 +538,6 @@ getFile.setOnRPCResponseListener(new OnRPCResponseListener() {
         byte[] fileData = getFileResponse.getBulkData();
         SdlArtwork sdlArtwork = new SdlArtwork(fileName, FileType.GRAPHIC_PNG, fileData, false);
         // Use the sdlArtwork 
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info) {
-        // Something went wrong, examine the resultCode and info
     }
 });
 sdlManager.sendRPC(getFile);

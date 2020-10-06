@@ -36,15 +36,9 @@ setDisplayLayoutRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
     public void onResponse(int correlationId, RPCResponse response) {
         if (((SetDisplayLayoutResponse) response).getSuccess()) {
             Log.i("SdlService", "Display layout set successfully.");
-            // Proceed with more user interface RPCs
         } else {
             Log.i("SdlService", "Display layout request rejected.");
         }
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
     }
 });
 

@@ -240,11 +240,6 @@ dialNumber.setOnRPCResponseListener(new OnRPCResponseListener() {
             // Your app is not allowed to use `DialNumber`
         }
     }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        // Handle error
-    }
 });
 
 sdlManager.sendRPC(dialNumber);

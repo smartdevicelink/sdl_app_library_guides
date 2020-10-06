@@ -332,11 +332,6 @@ seatLocation.setOnRPCResponseListener(new OnRPCResponseListener() {
     public void onResponse(int correlationId, RPCResponse response) {
         <#Seat location updated#>
     }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info) {
-        <#Handle Error#>
-    }
 });
 sdlManager.sendRPC(seatLocation);
 ```
@@ -468,11 +463,6 @@ getInteriorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
         // This can now be used to retrieve data
         <#Code#>
     }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        <#Handle Error#>
-    }
 });
 sdlManager.sendRPC(getInteriorVehicleData);
 ```
@@ -486,11 +476,6 @@ getInteriorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
     public void onResponse(int correlationId, RPCResponse response) {
         // This can now be used to retrieve data
         <#Code#>
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        <#Handle Error#>
     }
 });
 sdlManager.sendRPC(getInteriorVehicleData);
@@ -608,11 +593,6 @@ interiorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
         // This can now be used to retrieve data
         <#Code#>
     }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        <#Handle Error#>
-    }
 });
 sdlManager.sendRPC(interiorVehicleData);
 ```
@@ -626,11 +606,6 @@ interiorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
     public void onResponse(int correlationId, RPCResponse response) {
         // This can now be used to retrieve data
         <#Code#>
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        <#Handle Error#>
     }
 });
 sdlManager.sendRPC(interiorVehicleData);
@@ -718,11 +693,6 @@ getInteriorVehicleDataConsent.setOnRPCResponseListener(new OnRPCResponseListener
         GetInteriorVehicleDataConsentResponse getInteriorVehicleDataConsentResponse = (GetInteriorVehicleDataConsentResponse) response;
         List<Boolean> allowed = getInteriorVehicleDataConsentResponse.getAllowances();
             <#Allowed is an array of true or false values#>
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        <#Handle Error#>
     }
 });
 sdlManager.sendRPC(getInteriorVehicleDataConsent);
@@ -838,11 +808,6 @@ setInteriorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
     public void onResponse(int correlationId, RPCResponse response) {
         <#Code#>
     }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        <#Handle Error#>
-    }
 });
 sdlManager.sendRPC(setInteriorVehicleData);
 ```
@@ -872,11 +837,6 @@ setInteriorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
         <#Code#>
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        <#Handle Error#>
     }
 });
 sdlManager.sendRPC(setInteriorVehicleData);
@@ -1006,11 +966,6 @@ buttonPress.setOnRPCResponseListener(new OnRPCResponseListener() {
     public void onResponse(int correlationId, RPCResponse response) {
         <#Code#>
     }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        <#Handle Error#>
-    }
 });
 sdlManager.sendRPC(buttonPress);
 ```
@@ -1023,11 +978,6 @@ buttonPress.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
         <#Code#>
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        <#Handle Error#>
     }
 });
 sdlManager.sendRPC(buttonPress);
@@ -1098,11 +1048,6 @@ releaseInteriorVehicleDataModule.setOnRPCResponseListener(new OnRPCResponseListe
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
         <#Module Was Released#>
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        <#Handle Error#>
     }
 });
 sdlManager.sendRPC(releaseInteriorVehicleDataModule);

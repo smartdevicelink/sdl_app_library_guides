@@ -304,11 +304,6 @@ sendLocation.setOnRPCResponseListener(new OnRPCResponseListener() {
             // Your app is not allowed to use `SendLocation`
         }
     }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
-    }
 });
 
 sdlManager.sendRPC(sendLocation);
