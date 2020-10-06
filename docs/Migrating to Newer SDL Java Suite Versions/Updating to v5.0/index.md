@@ -109,7 +109,7 @@ subscribeButtonLeft.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
         if(response.getSuccess()){
-                   // Add if statement to check success
+            // Add if statement to check success
         }
     }
 });
@@ -166,6 +166,7 @@ sdlManager.sendRPCs(Arrays.asList(subscribeButtonLeft, subscribeButtonRight), ne
 
 
 ## Use Multiplex instead of legacy BT & USB
+`BTTransportConfig.java` and `USBTransportConfig` have been removed form the library. You should use `MultiplexBluetoothTransport.java` and `MultiplexUsbTransport.java` instead.
 
 ## ScreenManager Template Managment
 You can now use the ScreenManager to change screen templatas and day/night color schems. See ... for more.
@@ -196,7 +197,28 @@ Now:
 Alert alert = new Alert().setAlertText1("text1").setDuration(5000).setPlayTone(true);
 ```
 
-## Use the new DebugTool methods(especially in javaSE, there is no log.x() methods anymore)
+## New DebugTool methods
+There is a new way of logging infromation in debug mode. Before for example we would use Log.e to log errors, now we use the DebugTool.logError.
+
+`Log.i` to `DebugTool.logInfo`
+`Log.w` to `DebugTool.logWarnin`
+`Log.e` to `DebugTool.logError`
+
+Before:
+
+```Java
+Log.e(TAG, "There is an error");
+```
+
+Now:
+```Java
+DebugTool.logError(TAG, "There is an error");
+```
+
+!!! NOTE
+In JavaSE you must use the DebugTool, the old log methods will not work.
+!!!
+
 
 ## TTSChunkFactory removal
 `TTSChunkFactory.java` was removed. To create a voice command you should now use `TTSChunk` An example of creating and sending a voice command:
