@@ -83,25 +83,25 @@ Image turnIcon =  <#Create Image#>
 ShowConstantTbt turnByTurn = new ShowConstantTbt()
     .setNavigationText1("Turn Right")
     .setNavigationText2("3 mi")
-    .setTurnIcon(turnIcon)
-    .setOnRPCResponseListener(new OnRPCResponseListener() {
-        @Override
-        public void onResponse(int correlationId, RPCResponse response) {
-            if (!response.getSuccess()){
-                Log.e(TAG, "onResponse: Error sending TBT");
-                return;
-            }
+    .setTurnIcon(turnIcon);
+turnByTurn.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        if (!response.getSuccess()){
+            Log.e(TAG, "onResponse: Error sending TBT");
+            return;
+        }
 
             AlertManeuver alertManeuver = new AlertManeuver();
-            alertManeuver.setTtsChunks(TTSChunkFactory.createSimpleTTSChunks("In 3 miles turn right"))
-                .setOnRPCResponseListener(new OnRPCResponseListener() {
-                    @Override
-                    public void onResponse(int correlationId, RPCResponse response) {
+            alertManeuver.setTtsChunks(TTSChunkFactory.createSimpleTTSChunks("In 3 miles turn right"));
+            alertManeuver.setOnRPCResponseListener(new OnRPCResponseListener() {
+                @Override
+                public void onResponse(int correlationId, RPCResponse response) {
                     if (!response.getSuccess()){
                         Log.e(TAG, "onResponse: Error sending AlertManeuver");
                     }
                 }
-                });
+            });
             sdlManager.sendRPC(alertManeuver);
         }
     });
@@ -149,15 +149,15 @@ sdlManager.send(request: clearTurnByTurn) { (request, response, error) in
 @![android]
 ```java
 ShowConstantTbt turnByTurn = new ShowConstantTbt()
-    .setManeuverComplete(true)
-    .setOnRPCResponseListener(new OnRPCResponseListener() {
-        @Override
-        public void onResponse(int correlationId, RPCResponse response) {
-            if (!response.getSuccess()){
-                Log.e(TAG, "onResponse: Error sending TBT");
-            }
+    .setManeuverComplete(true);
+turnByTurn.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        if (!response.getSuccess()){
+            Log.e(TAG, "onResponse: Error sending TBT");
         }
-    });
+    }
+});
 sdlManager.sendRPC(turnByTurn);
 ```
 !@

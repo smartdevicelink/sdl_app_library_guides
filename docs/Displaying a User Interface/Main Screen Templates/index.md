@@ -30,17 +30,18 @@ sdlManager.send(request: display) { (request, response, error) in
 @![android, javaSE, javaEE]
 ```java
 SetDisplayLayout setDisplayLayoutRequest = new SetDisplayLayout()
-    .setDisplayLayout(PredefinedLayout.GRAPHIC_WITH_TEXT.toString())
-    .setOnRPCResponseListener(new OnRPCResponseListener() {
-        @Override
-        public void onResponse(int correlationId, RPCResponse response) {
-            if (((SetDisplayLayoutResponse) response).getSuccess()) {
-                Log.i("SdlService", "Display layout set successfully.");
-            } else {
-                Log.i("SdlService", "Display layout request rejected.");
-            }
+    .setDisplayLayout(PredefinedLayout.GRAPHIC_WITH_TEXT.toString());
+
+setDisplayLayoutRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        if (((SetDisplayLayoutResponse) response).getSuccess()) {
+            Log.i("SdlService", "Display layout set successfully.");
+        } else {
+            Log.i("SdlService", "Display layout request rejected.");
         }
-    });
+    }
+});
 
 sdlManager.sendRPC(setDisplayLayoutRequest);
 ```

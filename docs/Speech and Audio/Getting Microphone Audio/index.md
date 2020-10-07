@@ -112,20 +112,20 @@ PerformAudioPassThru audioPassThru = new PerformAudioPassThru()
     .setMaxDuration(7000)
     .setBitsPerSample(BitsPerSample._16_BIT)
     .setAudioType(AudioType.PCM)
-    .setMuteAudio(false)
-    .setOnRPCResponseListener(new OnRPCResponseListener() {
-	    @Override
-	    public void onResponse (int correlationId, RPCResponse response) {
-		    switch (response.getResultCode()) {
-			    case SUCCESS:
-				    // The audio pass thru ended successfully. Process the audio data
-			    case ABORTED:
-				    // The audio pass thru was aborted by the user. You should cancel any usage of the audio data.
-			    default:
-				    // Some other error occurred. Handle the error.
-		    }
-	    }
-    });
+    .setMuteAudio(false);
+audioPassThru.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+	public void onResponse (int correlationId, RPCResponse response) {
+        switch (response.getResultCode()) {
+            case SUCCESS:
+                // The audio pass thru ended successfully. Process the audio data
+			case ABORTED:
+			    // The audio pass thru was aborted by the user. You should cancel any usage of the audio data.
+			default:
+			    // Some other error occurred. Handle the error.
+        }
+    }
+});
 
 sdlManager.sendRPC(audioPassThru);
 ```
@@ -269,18 +269,18 @@ sdlManager.send(request: endAudioPassThru) { (request, response, error) in
 
 @![android,javaSE,javaEE]
 ```java
-EndAudioPassThru endAudioPassThru = new EndAudioPassThru()
-    .setOnRPCResponseListener(new OnRPCResponseListener() {
-        @Override
-        public void onResponse (int correlationId, RPCResponse response) {
-            if (!response.getSuccess())) {
-                // There was an error sending the end audio pass thru
-                return;
-            }
-
-            // The end audio pass thru was sent successfully
+EndAudioPassThru endAudioPassThru = new EndAudioPassThru();
+endAudioPassThru.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse (int correlationId, RPCResponse response) {
+        if (!response.getSuccess())) {
+            // There was an error sending the end audio pass thru
+            return;
         }
-    });
+
+        // The end audio pass thru was sent successfully
+    }
+});
 
 sdlManager.sendRPC(endAudioPassThru);
 ```

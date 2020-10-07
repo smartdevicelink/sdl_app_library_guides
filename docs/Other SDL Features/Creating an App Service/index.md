@@ -217,18 +217,18 @@ sdlManager.send(request: publishServiceRequest) { (req, res, err) in
 @![android,javaSE,javaEE]
 ```java
 PublishAppService publishServiceRequest = new PublishAppService()
-    .setAppServiceManifest(manifest)
-    .setOnRPCResponseListener(new OnRPCResponseListener() {
-	    @Override
-	    public void onResponse(int correlationId, RPCResponse response) {
-            if (response.getSuccess()) {
-                <#Use the response#>
-            } else {
-                <#Error Handling#>
-            }
+    .setAppServiceManifest(manifest);
+publishServiceRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+	public void onResponse(int correlationId, RPCResponse response) {
+        if (response.getSuccess()) {
+            <#Use the response#>
+        } else {
+            <#Error Handling#>
+        }
 		
-	    }
-    });
+    }
+});
 sdlManager.sendRPC(publishServiceRequest);
 ```
 !@

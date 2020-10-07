@@ -290,20 +290,20 @@ OasisAddress address = new OasisAddress()
     .setCountryCode("US-SD")
     .setCountryName("United States");
 
-sendLocation.setAddress(address)
-    .setOnRPCResponseListener(new OnRPCResponseListener() {
-        @Override
-        public void onResponse(int correlationId, RPCResponse response) {
-            Result result = response.getResultCode();
-            if(result.equals(Result.SUCCESS)){
-                // `SendLocation` successfully sent
-            }else if(result.equals(Result.INVALID_DATA)){
-                // `SendLocation` was rejected. The request contained invalid data
-            }else if(result.equals(Result.DISALLOWED)){
-                // Your app is not allowed to use `SendLocation`
-            }
+sendLocation.setAddress(address);
+sendLocation.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        Result result = response.getResultCode();
+        if(result.equals(Result.SUCCESS)){
+            // `SendLocation` successfully sent
+        }else if(result.equals(Result.INVALID_DATA)){
+            // `SendLocation` was rejected. The request contained invalid data
+        }else if(result.equals(Result.DISALLOWED)){
+            // Your app is not allowed to use `SendLocation`
         }
-    });
+    }
+});
 
 sdlManager.sendRPC(sendLocation);
 ```

@@ -126,15 +126,16 @@ TemplateColorScheme nightColorScheme = new TemplateColorScheme()
 
 SetDisplayLayout setDisplayLayout = new SetDisplayLayout(PredefinedLayout.GRAPHIC_WITH_TEXT.toString())
     .setDayColorScheme(dayColorScheme)
-    .setNightColorScheme(nightColorScheme)
-    .setOnRPCResponseListener(new OnRPCResponseListener() {
-        @Override
-        public void onResponse(int correlationId, RPCResponse response) {
-            if (response.getSuccess()){
-                // Success
-            }
+    .setNightColorScheme(nightColorScheme);
+
+setDisplayLayout.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        if (response.getSuccess()){
+            // Success
         }
-    });
+    }
+});
 sdlManager.sendRPC(setDisplayLayout);
 ```
 !@
@@ -210,15 +211,16 @@ sdlManager.send(request: setGlobals) { (request, response, error) in
 // The image must be uploaded before referencing the image name here
 SetGlobalProperties setGlobalProperties = new SetGlobalProperties()
     .setMenuTitle("customTitle")
-    .setMenuIcon(<#Image#>)
-    .setOnRPCResponseListener(new OnRPCResponseListener() {
-        @Override
-        public void onResponse(int correlationId, RPCResponse response) {
-            if (response.getSuccess()){
-                // Success
-            }
+    .setMenuIcon(<#Image#>);
+
+setGlobalProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        if (response.getSuccess()){
+            // Success
         }
-    });
+    }
+});
 sdlManager.sendRPC(setGlobalProperties);
 ```
 !@

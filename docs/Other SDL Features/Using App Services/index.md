@@ -245,16 +245,16 @@ sdlManager.send(request: getServiceData) { (req, res, err) in
 ```java
 // Get service data once
 GetAppServiceData getAppServiceData = new GetAppServiceData(AppServiceType.MEDIA.toString())
-    .setSubscribe(true) // Subscribe to future updates if you want them
-    .setOnRPCResponseListener(new OnRPCResponseListener() {
-        @Override
-        public void onResponse(int correlationId, RPCResponse response) {
-            if (response != null){
-                GetAppServiceDataResponse serviceResponse = (GetAppServiceDataResponse) response;
-                MediaServiceData mediaServiceData = serviceResponse.getServiceData().getMediaServiceData();
-            }
+    .setSubscribe(true); // Subscribe to future updates if you want them
+getAppServiceData.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        if (response != null){
+            GetAppServiceDataResponse serviceResponse = (GetAppServiceDataResponse) response;
+            MediaServiceData mediaServiceData = serviceResponse.getServiceData().getMediaServiceData();
         }
-    });
+    }
+});
 sdlManager.sendRPC(getAppServiceData);
 
 ...
@@ -356,13 +356,13 @@ sdlManager.send(request: buttonPress) { (req, res, err) in
 ButtonPress buttonPress = new ButtonPress()
     .setButtonPressMode(ButtonPressMode.SHORT)
     .setButtonName(ButtonName.OK)
-    .setModuleType(ModuleType.AUDIO)
-    .setOnRPCResponseListener(new OnRPCResponseListener() {
-        @Override
-        public void onResponse(int correlationId, RPCResponse response) {
-            <#Use the response#>
-        }
-    });
+    .setModuleType(ModuleType.AUDIO);
+buttonPress.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        <#Use the response#>
+    }
+});
 sdlManager.sendRPC(buttonPress);
 ```
 !@
@@ -527,16 +527,16 @@ if (weatherServiceData == null || weatherServiceData.getCurrentForecast() == nul
 String currentForecastImageName = weatherServiceData.getCurrentForecast().getWeatherIcon().getValue();
 
 GetFile getFile = new GetFile(currentForecastImageName)
-    .setAppServiceId(<#Service ID>)
-    .setOnRPCResponseListener(new OnRPCResponseListener() {
-        @Override
-        public void onResponse(int correlationId, RPCResponse response) {
-            GetFileResponse getFileResponse = (GetFileResponse) response;
-            byte[] fileData = getFileResponse.getBulkData();
-            SdlArtwork sdlArtwork = new SdlArtwork(fileName, FileType.GRAPHIC_PNG, fileData, false);
-            // Use the sdlArtwork 
-        }
-    });
+    .setAppServiceId(<#Service ID>);
+getFile.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        GetFileResponse getFileResponse = (GetFileResponse) response;
+        byte[] fileData = getFileResponse.getBulkData();
+        SdlArtwork sdlArtwork = new SdlArtwork(fileName, FileType.GRAPHIC_PNG, fileData, false);
+        // Use the sdlArtwork 
+    }
+});
 sdlManager.sendRPC(getFile);
 ```
 !@

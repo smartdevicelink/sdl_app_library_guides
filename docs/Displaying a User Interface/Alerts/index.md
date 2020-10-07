@@ -404,15 +404,15 @@ sdlManager.send(request: cancelInteraction) { (request, response, error) in
 @![android,javaSE,javaEE]
 ```java
 // `cancelID` is the ID that you assigned when creating and sending the alert
-CancelInteraction cancelInteraction = new CancelInteraction(FunctionID.ALERT.getId(), cancelID)
-    .setOnRPCResponseListener(new OnRPCResponseListener() {
-	    @Override
-	    public void onResponse(int correlationId, RPCResponse response) {
-		    if (response.getSuccess()){
-			    Log.i(TAG, "Alert was dismissed successfully");
-		    }
-	    }
-    });
+CancelInteraction cancelInteraction = new CancelInteraction(FunctionID.ALERT.getId(), cancelID);
+cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+	public void onResponse(int correlationId, RPCResponse response) {
+        if (response.getSuccess()){
+            Log.i(TAG, "Alert was dismissed successfully");
+        }
+    }
+});
 sdlManager.sendRPC(cancelInteraction);
 ```
 !@
@@ -469,15 +469,15 @@ sdlManager.send(request: cancelInteraction) { (request, response, error) in
 
 @![android,javaSE,javaEE]
 ```java
-CancelInteraction cancelInteraction = new CancelInteraction(FunctionID.ALERT.getId())
-    .setOnRPCResponseListener(new OnRPCResponseListener() {
-	    @Override
-	    public void onResponse(int correlationId, RPCResponse response) {
-		    if (response.getSuccess()){
-			    Log.i(TAG, "Alert was dismissed successfully");
-		    }
-	    }
-    });
+CancelInteraction cancelInteraction = new CancelInteraction(FunctionID.ALERT.getId());
+cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+	public void onResponse(int correlationId, RPCResponse response) {
+        if (response.getSuccess()){
+            Log.i(TAG, "Alert was dismissed successfully");
+        }
+    }
+});
 sdlManager.sendRPC(cancelInteraction);
 ```
 !@  
