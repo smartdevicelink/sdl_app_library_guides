@@ -80,10 +80,10 @@ sdlManager.send(request: turnByTurn) { (request, response, error) in
 ```java
 Image turnIcon =  <#Create Image#>
 
-ShowConstantTbt turnByTurn = new ShowConstantTbt();
-turnByTurn.setNavigationText1("Turn Right");
-turnByTurn.setNavigationText2("3 mi");
-turnByTurn.setTurnIcon(turnIcon);
+ShowConstantTbt turnByTurn = new ShowConstantTbt()
+    .setNavigationText1("Turn Right")
+    .setNavigationText2("3 mi")
+    .setTurnIcon(turnIcon);
 turnByTurn.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
@@ -92,19 +92,19 @@ turnByTurn.setOnRPCResponseListener(new OnRPCResponseListener() {
             return;
         }
 
-        AlertManeuver alertManeuver = new AlertManeuver();
-        alertManeuver.setTtsChunks(TTSChunkFactory.createSimpleTTSChunks("In 3 miles turn right"));
-        alertManeuver.setOnRPCResponseListener(new OnRPCResponseListener() {
-            @Override
-            public void onResponse(int correlationId, RPCResponse response) {
-                if (!response.getSuccess()){
-                    Log.e(TAG, "onResponse: Error sending AlertManeuver");
+            AlertManeuver alertManeuver = new AlertManeuver()
+                .setTtsChunks(TTSChunkFactory.createSimpleTTSChunks("In 3 miles turn right"));
+            alertManeuver.setOnRPCResponseListener(new OnRPCResponseListener() {
+                @Override
+                public void onResponse(int correlationId, RPCResponse response) {
+                    if (!response.getSuccess()){
+                        Log.e(TAG, "onResponse: Error sending AlertManeuver");
+                    }
                 }
-            }
-        });
-        sdlManager.sendRPC(alertManeuver);
-    }
-});
+            });
+            sdlManager.sendRPC(alertManeuver);
+        }
+    });
 sdlManager.sendRPC(turnByTurn);
 ```
 !@
@@ -148,8 +148,8 @@ sdlManager.send(request: clearTurnByTurn) { (request, response, error) in
 
 @![android]
 ```java
-ShowConstantTbt turnByTurn = new ShowConstantTbt();
-turnByTurn.setManeuverComplete(true);
+ShowConstantTbt turnByTurn = new ShowConstantTbt()
+    .setManeuverComplete(true);
 turnByTurn.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {

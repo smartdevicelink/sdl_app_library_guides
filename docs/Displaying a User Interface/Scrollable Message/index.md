@@ -98,10 +98,10 @@ softButton2.setText("Button 2");
 List<SoftButton> softButtonList = Arrays.asList(softButton1, softButton2);
 
 // Create ScrollableMessage Object
-ScrollableMessage scrollableMessage = new ScrollableMessage();
-scrollableMessage.setScrollableMessageBody(scrollableMessageText);
-scrollableMessage.setTimeout(50000);
-scrollableMessage.setSoftButtons(softButtonList);
+ScrollableMessage scrollableMessage = new ScrollableMessage()
+    .setScrollableMessageBody(scrollableMessageText)
+    .setTimeout(50000)
+    .setSoftButtons(softButtonList);
 
 // Set cancelId
 scrollableMessage.setCancelID(<#Integer>);
