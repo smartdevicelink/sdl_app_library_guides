@@ -1,8 +1,13 @@
 # Main Screen Templates
-Each head unit manufacturer supports a set of user interface templates. These templates determine the position and size of the text, images, and buttons on the screen. Once the app has connected successfully with an SDL enabled head unit, a list of supported templates is available on @![iOS]`SDLManager.systemCapabilityManager.defaultMainWindowCapability.templatesAvailable`!@@![android, javaSE, javaEE, javascript]`sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getTemplatesAvailable()`!@.
+Each head unit manufacturer supports a set of user interface templates. These templates determine the position and size of the text, images, and buttons on the screen. Once the app has connected successfully with an SDL enabled head unit, a list of supported templates is available on @![iOS]`SDLManager.systemCapabilityManager.defaultMainWindowCapability.templatesAvailable`!@@![android, javaSE, javaEE, javascript]`sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getTemplatesAvailable()`!@. 
 
 ## Change the Template
-To change a template at any time, send a `SetDisplayLayout` RPC to Core.
+To change a template at any time, with the ScreenManager use changeLayout
+
+!!! NOTE
+This guide requires SDL @![android, javaSE, javaEE] Java Suite version 5.0 !@ @![iOS] iOS version 7.0 !@ @![javascript] JavaScript Suite version 1.2 !@ If using an older version use `SetDisplayLayout` RPC.
+!!!
+
 
 @![iOS]
 ##### Objective-C
