@@ -513,11 +513,11 @@ Depending on the platform, a subtle alert can have up to two lines of text and u
 ## Subtle Alert Layouts
 ###### Subtle Alert With No Soft Buttons
 
-![Generic - Subtle Alert](assets/Generic_alert.png)
+![Generic - Subtle Alert](assets/Generic_subtleAlert.png)
 
 ###### Subtle Alert With Soft Buttons
 
-![Generic - Subtle Alert](assets/Generic_alert_buttons.png)
+![Generic - Subtle Alert](assets/Generic_subtleAlert_buttons.png)
 
 ## Creating the Subtle Alert
 
@@ -637,7 +637,7 @@ sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.ON_BUTTON_PRESS, function (on
 ### Subtle Alert Icon
 A subtle alert can include a custom or static (built-in) image that will be displayed within the alert. Before you add the image to the alert make sure the image is uploaded to the head unit using the @![iOS]`SDLFileManager`!@@![android,javaSE,javaEE,javascript]FileManager!@. If the image is already uploaded, you can set the `alertIcon` property.
 
-![Generic - Subtle Alert](assets/Generic_alertIcon.png)
+![Generic - Subtle Alert](assets/Generic_subtleAlertIcon.png)
 
 @![iOS]
 ##### Objective-C
