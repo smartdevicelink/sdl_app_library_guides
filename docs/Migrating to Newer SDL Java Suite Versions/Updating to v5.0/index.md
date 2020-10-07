@@ -29,7 +29,8 @@ SDL now uses AndroidX. To migrate your app to use AndroidX, In Android Stuido or
 To migrate to AndroidX you must set the `compileSdkVersion` to 28 in the apps build.gradle file
 !!!
 
-## New imports due to package changes
+## Change import for OnSystemCapabilityListener
+OnSystemCapabilityListener has moved packages from `import com.smartdevicelink.proxy.interfaces.OnSystemCapabilityListener;` to `import com.smartdevicelink.managers.lifecycle.OnSystemCapabilityListener;` 
 
 ## SdlManagerListener managerShouldUpdateLifecycle changes
 In 4.12 a new managerShouldUpdateLifecycle method was added and the old managerShouldUpdateLifecycle method was deprecated. In 5.0 the deprecated method was removed. Add link to details...
