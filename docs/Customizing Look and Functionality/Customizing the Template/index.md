@@ -78,7 +78,7 @@ You may change the template coloring in the `lifecycleConfiguration` and the `Se
 !!!
 
 ### Customizing Future Layouts
-You can change the template color scheme when you change layouts in the @![iOS]`SDLSetDisplayLayout` (any RPC version) or `SDLShow` (RPC v6.0+)!@@![android, javaSE, javaEE, javascript]`SetDisplayLayout` (any RPC version) or `Show` (RPC v6.0+)!@ request.
+You can change the template color scheme when you change layouts. This guide requires SDL @![android, javaSE, javaEE] Java Suite version 5.0!@ @![iOS] iOS version 7.0!@ @![javascript] JavaScript Suite version 1.2!@. If using an older version, use @![iOS]`SDLSetDisplayLayout` (any RPC version) or `SDLShow` (RPC v6.0+)!@@![android, javaSE, javaEE, javascript]`SetDisplayLayout` (any RPC version) or `Show` (RPC v6.0+)!@ request.
 
 @![iOS]
 ##### Objective-C
@@ -117,26 +117,29 @@ TemplateColorScheme dayColorScheme = new TemplateColorScheme()
     .setBackgroundColor(white)
     .setPrimaryColor(green)
     .setSecondaryColor(grey);
-builder.setDayColorScheme(dayColorScheme);
 
 TemplateColorScheme nightColorScheme = new TemplateColorScheme()
     .setBackgroundColor(white)
     .setPrimaryColor(green)
     .setSecondaryColor(darkGrey);
 
-SetDisplayLayout setDisplayLayout = new SetDisplayLayout(PredefinedLayout.GRAPHIC_WITH_TEXT.toString())
+TemplateConfiguration templateConfiguration = new TemplateConfiguration()
+    .setTemplate(PredefinedLayout.GRAPHIC_WITH_TEXT.toString())
     .setDayColorScheme(dayColorScheme)
     .setNightColorScheme(nightColorScheme);
 
-setDisplayLayout.setOnRPCResponseListener(new OnRPCResponseListener() {
+sdlManager.getScreenManager().changeLayout(templateConfiguration, new CompletionListener() {
     @Override
-    public void onResponse(int correlationId, RPCResponse response) {
-        if (response.getSuccess()){
-            // Success
+    public void onComplete(boolean success) {
+        if (success) {
+            // Color set with template change
+        } else {
+            // Color and template not changed 
         }
     }
 });
-sdlManager.sendRPC(setDisplayLayout);
+
+
 ```
 !@
 @![javascript]
