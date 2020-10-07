@@ -226,8 +226,8 @@ sdlManager.send(request: dialNumber) { (request, response, error) in
 
 @![android,javaSE,javaEE]
 ```java
-DialNumber dialNumber = new DialNumber();
-dialNumber.setNumber("1238675309");
+DialNumber dialNumber = new DialNumber()
+    .setNumber("1238675309");
 dialNumber.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {

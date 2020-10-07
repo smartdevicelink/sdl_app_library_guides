@@ -33,11 +33,11 @@ let alert = SDLAlert(alertText: <#String?#>, softButtons: <#[SDLSoftButton]?#>, 
 
 @![android,javaSE,javaEE]
 ```java
-Alert alert = new Alert();
-alert.setAlertText1("Line 1");
-alert.setAlertText2("Line 2");
-alert.setAlertText3("Line 3");
-alert.setCancelID(<#Integer>);
+Alert alert = new Alert()
+    .setAlertText1("Line 1")
+    .setAlertText2("Line 2")
+    .setAlertText3("Line 3")
+    .setCancelID(<#Integer>);
 ```
 !@
 
@@ -93,8 +93,8 @@ alert.softButtons = [button1, button2]
 ```java
 // Soft buttons
 final int softButtonId = 123; // Set it to any unique ID
-SoftButton okButton = new SoftButton(SoftButtonType.SBT_TEXT, softButtonId);
-okButton.setText("OK");
+SoftButton okButton = new SoftButton(SoftButtonType.SBT_TEXT, softButtonId)
+    .setText("OK");
 
 // Set the softbuttons(s) to the alert
 alert.setSoftButtons(Collections.singletonList(okButton));
@@ -406,12 +406,12 @@ sdlManager.send(request: cancelInteraction) { (request, response, error) in
 // `cancelID` is the ID that you assigned when creating and sending the alert
 CancelInteraction cancelInteraction = new CancelInteraction(FunctionID.ALERT.getId(), cancelID);
 cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
-	@Override
+    @Override
 	public void onResponse(int correlationId, RPCResponse response) {
-		if (response.getSuccess()){
-			Log.i(TAG, "Alert was dismissed successfully");
-		}
-	}
+        if (response.getSuccess()){
+            Log.i(TAG, "Alert was dismissed successfully");
+        }
+    }
 });
 sdlManager.sendRPC(cancelInteraction);
 ```
@@ -471,12 +471,12 @@ sdlManager.send(request: cancelInteraction) { (request, response, error) in
 ```java
 CancelInteraction cancelInteraction = new CancelInteraction(FunctionID.ALERT.getId());
 cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
-	@Override
+    @Override
 	public void onResponse(int correlationId, RPCResponse response) {
-		if (response.getSuccess()){
-			Log.i(TAG, "Alert was dismissed successfully");
-		}
-	}
+        if (response.getSuccess()){
+            Log.i(TAG, "Alert was dismissed successfully");
+        }
+    }
 });
 sdlManager.sendRPC(cancelInteraction);
 ```
