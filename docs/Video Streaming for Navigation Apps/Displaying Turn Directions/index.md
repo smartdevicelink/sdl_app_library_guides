@@ -88,7 +88,7 @@ turnByTurn.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
         if (!response.getSuccess()){
-            Log.e(TAG, "onResponse: Error sending TBT");
+            DebugTool.logError(TAG, "onResponse: Error sending TBT");
             return;
         }
 
@@ -98,7 +98,7 @@ turnByTurn.setOnRPCResponseListener(new OnRPCResponseListener() {
                 @Override
                 public void onResponse(int correlationId, RPCResponse response) {
                     if (!response.getSuccess()){
-                        Log.e(TAG, "onResponse: Error sending AlertManeuver");
+                        DebugTool.logError(TAG, "onResponse: Error sending AlertManeuver");
                     }
                 }
             });
@@ -154,7 +154,7 @@ turnByTurn.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
         if (!response.getSuccess()){
-            Log.e(TAG, "onResponse: Error sending TBT");
+            DebugTool.logError(TAG, "onResponse: Error sending TBT");
         }
     }
 });

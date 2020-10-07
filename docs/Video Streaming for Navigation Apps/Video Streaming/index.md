@@ -181,7 +181,7 @@ if (sdlManager.getVideoStreamManager() != null) {
             if (success) {
                 sdlManager.getVideoStreamManager().startRemoteDisplayStream(getApplicationContext(), MyDisplay.class, null, false);
             } else {
-                Log.e(TAG, "Failed to start video streaming manager");
+                DebugTool.logError(TAG, "Failed to start video streaming manager");
             }
         }
     });
