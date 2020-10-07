@@ -235,7 +235,7 @@ alert.ttsChunks = SDLTTSChunk.textChunks(from: "<#Text to speak#>")
 
 @![android,javaSE,javaEE]
 ```java
-alert.setTtsChunks(TTSChunkFactory.createSimpleTTSChunks("Text to Speak"));
+alert.setTtsChunks(Collections.singletonList(new TTSChunk("Text to Speak", SpeechCapabilities.TEXT)));
 ```
 !@
 
