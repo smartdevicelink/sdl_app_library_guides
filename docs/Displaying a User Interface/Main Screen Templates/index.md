@@ -8,23 +8,12 @@ To change a template at any time, with the ScreenManager use changeLayout. This 
 @![iOS]
 ##### Objective-C
 ```objc
-SDLSetDisplayLayout* display = [[SDLSetDisplayLayout alloc] initWithPredefinedLayout:SDLPredefinedLayoutGraphicWithText];
-[self.sdlManager sendRequest:display withResponseHandler:^(SDLRPCRequest *request, SDLRPCResponse *response, NSError *error) {
-     if (!response.success.boolValue) { 
-        // Print out the error if there is one and return early
-        return;
-     }
-     // The template has been set successfully
-}];
+
 ```
 
 ##### Swift
 ```swift
-let display = SDLSetDisplayLayout(predefinedLayout: .graphicWithText)
-sdlManager.send(request: display) { (request, response, error) in
-    guard response?.success.boolValue == true else { return }
-        // The template has been set successfully
-}
+
 ```
 !@
 
@@ -46,28 +35,7 @@ sdlManager.getScreenManager().changeLayout(templateConfiguration, new Completion
 
 @![javascript]
 ```js
-// sdl_javascript_suite v1.1+
-const setDisplayLayoutRequest = new SDL.rpc.messages.SetDisplayLayout();
-setDisplayLayoutRequest.setDisplayLayout(SDL.rpc.enums.PredefinedLayout.GRAPHIC_WITH_TEXT);
-const response = await sdlManager.sendRpcResolve(alert);
-if (response.getSuccess()) {
-    console.log('Display layout set successfully.');
-} else {
-    console.log('Display layout request rejected.');
-}
-// thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.1
-const setDisplayLayoutRequest = new SDL.rpc.messages.SetDisplayLayout();
-setDisplayLayoutRequest.setDisplayLayout(SDL.rpc.enums.PredefinedLayout.GRAPHIC_WITH_TEXT);
-const response = await sdlManager.sendRpc(setDisplayLayoutRequest).catch(function (error) {
-    // Handle Error
-});
-if (response.getSuccess()) {
-    console.log('Display layout set successfully.');
-} else {
-    console.log('Display layout request rejected.');
-}
 ```
 !@
 
@@ -92,7 +60,7 @@ sdlManager.getScreenManager().setTextField1("Line of Text");
 sdlManager.getScreenManager().changeLayout(templateConfiguration, new CompletionListener() {
     @Override
     public void onComplete(boolean success) {
-        // This listener will be ignored, and will use the Completion Listener sent in commit. You can send null in place of the CompletionListener
+        // This listener will be ignored, and will use the Completion Listener sent in commit.
     }
 });
 sdlManager.getScreenManager().setPrimaryGraphic(<#SDLArtwork#>);
@@ -112,11 +80,6 @@ sdlManager.getScreenManager().commit(new CompletionListener() {
 
 ```
 !@
-
-!!! NOTE
-If a @![android, javaSE, javaEE] CompletionListener !@ is sent with a  @![android, javaSE, javaEE] `commit` !@
-!!!
-
 
 ## Available Templates
 There are fifteen standard templates to choose from, however some head units may only support a subset of these templates. The following examples show how templates will appear on the [Generic HMI](https://github.com/smartdevicelink/generic_hmi) and [Ford's SYNC 3 HMI](https://developer.ford.com).
