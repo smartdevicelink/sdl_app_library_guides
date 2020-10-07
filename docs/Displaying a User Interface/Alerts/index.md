@@ -105,7 +105,7 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
       public void onNotified(RPCNotification notification) {
           OnButtonPress onButtonPress = (OnButtonPress) notification;
           if (onButtonPress.getCustomButtonID() == softButtonId){
-               Log.i(TAG, "Ok button pressed");
+               DebugTool.logInfo(TAG, "Ok button pressed");
           }
       }
 });
@@ -336,7 +336,7 @@ alert.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
       if (response.getSuccess()){
-        Log.i(TAG, "Alert was shown successfully");
+        DebugTool.logInfo(TAG, "Alert was shown successfully");
       }
     }
 });
@@ -409,7 +409,7 @@ cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
 	public void onResponse(int correlationId, RPCResponse response) {
         if (response.getSuccess()){
-            Log.i(TAG, "Alert was dismissed successfully");
+            DebugTool.logInfo(TAG, "Alert was dismissed successfully");
         }
     }
 });
@@ -474,7 +474,7 @@ cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
 	public void onResponse(int correlationId, RPCResponse response) {
         if (response.getSuccess()){
-            Log.i(TAG, "Alert was dismissed successfully");
+            DebugTool.logInfo(TAG, "Alert was dismissed successfully");
         }
     }
 });

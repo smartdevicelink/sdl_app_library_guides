@@ -320,7 +320,7 @@ cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
         if (response.getSuccess()){
-            Log.i(TAG, "Slider was dismissed successfully");
+            DebugTool.logInfo(TAG, "Slider was dismissed successfully");
         }
     }
 });
@@ -387,7 +387,7 @@ cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
         if (response.getSuccess()){
-            Log.i(TAG, "Slider was dismissed successfully");
+            DebugTool.logInfo(TAG, "Slider was dismissed successfully");
         }
     }
 });

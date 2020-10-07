@@ -139,7 +139,7 @@ public static class MyDisplay extends SdlRemoteDisplay{
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i(TAG, "Button Clicked");
+                DebugTool.logInfo(TAG, "Button Clicked");
             }
         });
     }
