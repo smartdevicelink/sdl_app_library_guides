@@ -101,8 +101,8 @@ sdlManager.send(request: getGPSData) { (request, response, error) in
 
 @![android, javaSE, javaEE]
 ```java
-GetVehicleData vdRequest = new GetVehicleData();
-vdRequest.setPrndl(true);
+GetVehicleData vdRequest = new GetVehicleData()
+    .setPrndl(true);
 vdRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
@@ -276,8 +276,8 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_VEHICLE_DATA, new OnRPCNot
 **Second**, send the `SubscribeVehicleData` request:
 
 ```java
-SubscribeVehicleData subscribeRequest = new SubscribeVehicleData();
-subscribeRequest.setPrndl(true);
+SubscribeVehicleData subscribeRequest = new SubscribeVehicleData()
+    .setPrndl(true);
 subscribeRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
@@ -403,8 +403,8 @@ sdlManager.send(request: unsubscribeGPSData) { (request, response, error) in
 
 @![android, javaSE, javaEE]
 ```java
-UnsubscribeVehicleData unsubscribeRequest = new UnsubscribeVehicleData();
-unsubscribeRequest.setPrndl(true); // unsubscribe to PRNDL data
+UnsubscribeVehicleData unsubscribeRequest = new UnsubscribeVehicleData()
+    .setPrndl(true); // unsubscribe to PRNDL data
 unsubscribeRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
@@ -516,18 +516,18 @@ sdlManager.send(request: getCustomData) { (request, response, error) in
 
 ```java
 
-GetVehicleData vdRequest = new GetVehicleData();
-vdRequest.setOEMCustomVehicleData("OEM-X-Vehicle-Data", true);
+GetVehicleData vdRequest = new GetVehicleData()
+    .setOEMCustomVehicleData("OEM-X-Vehicle-Data", true);
 vdRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
-        @Override
-        public void onResponse(int correlationId, RPCResponse response) {
-            if(response.getSuccess()){
-                Object CustomData = ((GetVehicleDataResponse) response).getOEMCustomVehicleData("OEM-X-Vehicle-Data");
-            }else{
-                Log.i("SdlService", "GetVehicleData was rejected.");
-            }
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        if(response.getSuccess()){
+            Object CustomData = ((GetVehicleDataResponse) response).getOEMCustomVehicleData("OEM-X-Vehicle-Data");
+        }else{
+            Log.i("SdlService", "GetVehicleData was rejected.");
         }
-    });
+    }
+});
 sdlManager.sendRPC(vdRequest);
 ```
 !@

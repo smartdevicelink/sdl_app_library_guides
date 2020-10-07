@@ -29,8 +29,9 @@ sdlManager.send(request: display) { (request, response, error) in
 
 @![android, javaSE, javaEE]
 ```java
-SetDisplayLayout setDisplayLayoutRequest = new SetDisplayLayout();
-setDisplayLayoutRequest.setDisplayLayout(PredefinedLayout.GRAPHIC_WITH_TEXT.toString());
+SetDisplayLayout setDisplayLayoutRequest = new SetDisplayLayout()
+    .setDisplayLayout(PredefinedLayout.GRAPHIC_WITH_TEXT.toString());
+
 setDisplayLayoutRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
