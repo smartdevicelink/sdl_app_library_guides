@@ -1,7 +1,7 @@
 # Alerts
 An alert is a pop-up window showing a short message with optional buttons. When an alert is activated, it will abort any SDL operation that is in-progress, except the already-in-progress alert. If an alert is issued while another alert is still in progress, the newest alert will simply be ignored.
 
-Depending the platform, an alert can have up to three lines of text, a progress indicator (e.g. a spinning wheel or hourglass), and up to four soft buttons.
+Depending on the platform, an alert can have up to three lines of text, a progress indicator (e.g. a spinning wheel or hourglass), and up to four soft buttons.
 
 ## Alert Layouts
 ###### Alert With No Soft Buttons
@@ -500,5 +500,291 @@ const response = await sdlManager.sendRpc(cancelInteraction).catch(function (err
 if (response.getSuccess()) {
     console.log('Alert was dismissed successfully');
 }
+```
+!@
+
+# Subtle Alerts (RPC 7.0+)
+A Subtle Alert is a notification style alert window showing a short message with optional buttons. When a subtle alert is activated, it will NOT abort other SDL operations that are in-progress. If a subtle Alert is issued while another subtle alert is still in progress, the newest subtle alert will simply be ignored.
+ 
+Touching outside of the subtle alert should close the alert and touching inside the subtle alert should open the app.
+
+Depending on the platform, a subtle alert can have up to two lines of text and up to two soft buttons.
+
+## Subtle Alert Layouts
+###### Subtle Alert With No Soft Buttons
+
+![Generic - Alert](assets/Generic_alert.png)
+
+###### Subtle Alert With Soft Buttons
+
+![Generic - Alert](assets/Generic_alert_buttons.png)
+
+## Creating the Subtle Alert
+
+### Text
+@![iOS]
+##### Objective-C
+```objc
+```
+
+##### Swift
+```swift
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+SubtleAlert subtleAlert = new SubtleAlert()
+    .setAlertText1("Line 1")
+    .setAlertText2("Line 2")
+    .setCancelID(<#Integer>);
+```
+!@
+
+@![javascript]
+```js
+```
+!@
+
+### Buttons
+
+@![iOS]
+##### Objective-C
+```objc
+```
+
+##### Swift
+```swift
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+// Soft buttons
+final int softButtonId = 123; // Set it to any unique ID
+SoftButton okButton = new SoftButton(SoftButtonType.SBT_TEXT, softButtonId);
+okButton.setText("OK");
+
+// Set the softbuttons(s) to the subtle alert
+subtleAlert.setSoftButtons(Collections.singletonList(okButton));
+
+// This listener is only needed once, and will work for all of soft buttons you send with your subtle alert
+sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNotificationListener() {
+      @Override
+      public void onNotified(RPCNotification notification) {
+          OnButtonPress onButtonPress = (OnButtonPress) notification;
+          if (onButtonPress.getCustomButtonID() == softButtonId){
+               Log.i(TAG, "Ok button pressed");
+          }
+      }
+});
+```
+!@
+
+@![javascript]
+```js
+```
+!@
+
+### Subtle Alert Icon
+A subtle alert can include a custom or static (built-in) image that will be displayed within the alert. Before you add the image to the alert make sure the image is uploaded to the head unit using the @![iOS]`SDLFileManager`!@@![android,javaSE,javaEE,javascript]FileManager!@. If the image is already uploaded, you can set the `alertIcon` property.
+
+![Generic - Alert](assets/Generic_alertIcon.png)
+
+@![iOS]
+##### Objective-C
+```objc
+```
+##### Swift
+```swift
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+subtleAlert.setAlertIcon(new Image(<#artworkName#>, ImageType.DYNAMIC));
+```
+!@
+
+@![javascript]
+```js
+```
+!@
+
+### Timeouts
+An optional timeout can be added that will dismiss the subtle alert when the duration is over. Typical timeouts are between 3 and 10 seconds. If omitted a default of 5 seconds is used.
+
+@![iOS]
+##### Objective-C
+```objc
+```
+
+##### Swift
+```swift
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+subtleAlert.setDuration(5000);
+```
+!@
+
+@![javascript]
+```js
+```
+!@
+
+### Text-To-Speech
+A subtle alert can also speak a prompt or play a sound file when the subtle alert appears on the screen. This is done by setting the `ttsChunks` parameter.
+
+#### Text
+@![iOS]
+##### Objective-C
+```objc
+```
+
+##### Swift
+```swift
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+subtleAlert.setTtsChunks(TTSChunkFactory.createSimpleTTSChunks("Text to Speak"));
+```
+!@
+
+@![javascript]
+```js
+```
+!@
+
+#### Sound File
+The `ttsChunks` parameter can also take a file to play/speak. For more information on how to upload the file please refer to the [Playing Audio Indications](Speech and Audio/Playing Audio Indications) guide.
+
+@![iOS]
+##### Objective-C
+```objc
+```
+
+##### Swift
+```swift
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+TTSChunk ttsChunk = new TTSChunk(sdlFile.getName(), SpeechCapabilities.FILE);
+subtleAlert.setTtsChunks(Collections.singletonList(ttsChunk));
+```
+!@
+
+@![javascript]
+```js
+```
+!@
+
+## Showing the Subtle Alert
+
+@![iOS]
+##### Objective-C
+```objc
+```
+
+##### Swift
+```swift
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+// Handle RPC response
+subtleAlert.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+      if (response.getSuccess()){
+        Log.i(TAG, "Subtle Alert was shown successfully");
+      }
+    }
+});
+sdlManager.sendRPC(subtleAlert);
+```
+!@
+
+@![javascript]
+```js
+```
+!@
+
+## Dismissing the Subtle Alert
+You can dismiss a displayed subtle alert before the timeout has elapsed.
+
+Please note that canceling the subtle alert will only dismiss the displayed alert. If you have set the `ttsChunk` property, the speech will play in its entirety even when the displayed subtle alert has been dismissed. If you know you will cancel a subtle alert, consider setting a short `ttsChunk`.
+
+There are two ways to dismiss a subtle alert. The first way is to dismiss a specific subtle alert using a unique `cancelID` assigned to the subtle alert. The second way is to dismiss whichever subtle alert is currently on-screen.
+
+### Dismissing a Specific Alert
+
+@![iOS]
+##### Objective-C
+```objc
+```
+
+##### Swift
+```swift
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+// `cancelID` is the ID that you assigned when creating and sending the alert
+CancelInteraction cancelInteraction = new CancelInteraction(FunctionID.SUBTLE_ALERT.getId(), cancelID);
+cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
+	@Override
+	public void onResponse(int correlationId, RPCResponse response) {
+		if (response.getSuccess()){
+			Log.i(TAG, "Subtle alert was dismissed successfully");
+		}
+	}
+});
+sdlManager.sendRPC(cancelInteraction);
+```
+!@
+
+@![javascript]
+```js
+```
+!@
+
+### Dismissing the Current Alert
+
+@![iOS]
+##### Objective-C
+```objc
+```
+
+##### Swift
+```swift
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+CancelInteraction cancelInteraction = new CancelInteraction(FunctionID.SUBTLE_ALERT.getId());
+cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
+	@Override
+	public void onResponse(int correlationId, RPCResponse response) {
+		if (response.getSuccess()){
+			Log.i(TAG, "Subtle Alert was dismissed successfully");
+		}
+	}
+});
+sdlManager.sendRPC(cancelInteraction);
+```
+!@  
+
+@![javascript]
+```js
 ```
 !@
