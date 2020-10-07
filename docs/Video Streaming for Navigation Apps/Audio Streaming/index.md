@@ -138,7 +138,7 @@ if (sdlManager.getAudioStreamManager() != null) {
                                 }
                             });
                         } else {
-                            Log.d(TAG, "Audio stream failed to start!");
+                            DebugTool.logInfo(TAG, "Audio stream failed to start!");
                         }
                     }
                 });
