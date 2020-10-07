@@ -767,11 +767,11 @@ sdlManager.addOnRPCRequestListener(FunctionID.BUTTON_PRESS, new OnRPCRequestList
     public void onRequest(RPCRequest request) {
         ButtonPress buttonPress = (ButtonPress) request;
 
-        ButtonPressResponse response = new ButtonPressResponse()
-            .setSuccess(true)
-            .setResultCode(Result.SUCCESS)
-            .setCorrelationID(buttonPress.getCorrelationID())
-            .setInfo("<#Use to provide more information about an error#>");
+        ButtonPressResponse response = new ButtonPressResponse();
+        response.setSuccess(true);
+        response.setResultCode(Result.SUCCESS);
+        response.setCorrelationID(buttonPress.getCorrelationID());
+        response.setInfo("<#Use to provide more information about an error#>");
         sdlManager.sendRPC(response);
     }
 });
@@ -893,11 +893,11 @@ sdlManager.addOnRPCRequestListener(FunctionID.PERFORM_APP_SERVICES_INTERACTION, 
 
         // A result you want to send to the consumer app.
         PerformAppServiceInteractionResponse response = new PerformAppServiceInteractionResponse()
-            .setServiceSpecificResult("Some Result")
-            .setCorrelationID(performAppServiceInteraction.getCorrelationID())
-            .setInfo("<#Use to provide more information about an error#>")
-            .setSuccess(true)
-            .setResultCode(Result.SUCCESS);
+            .setServiceSpecificResult("Some Result");
+        responsesetCorrelationID(performAppServiceInteraction.getCorrelationID());
+        response.setInfo("<#Use to provide more information about an error#>");
+        response.setSuccess(true);
+        response.setResultCode(Result.SUCCESS);
         sdlManager.sendRPC(response);
     }
 });
