@@ -894,7 +894,7 @@ sdlManager.addOnRPCRequestListener(FunctionID.PERFORM_APP_SERVICES_INTERACTION, 
         // A result you want to send to the consumer app.
         PerformAppServiceInteractionResponse response = new PerformAppServiceInteractionResponse()
             .setServiceSpecificResult("Some Result");
-        responsesetCorrelationID(performAppServiceInteraction.getCorrelationID());
+        response.setCorrelationID(performAppServiceInteraction.getCorrelationID());
         response.setInfo("<#Use to provide more information about an error#>");
         response.setSuccess(true);
         response.setResultCode(Result.SUCCESS);
