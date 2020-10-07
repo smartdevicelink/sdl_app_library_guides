@@ -525,12 +525,12 @@ Depending on the platform, a subtle alert can have up to two lines of text and u
 @![iOS]
 ##### Objective-C
 ```objc
-SDLSubtleAlert *subtleAlert = [[SDLSubtleAlert alloc] initWithAlertText:<#NSString#> softButtons:<#[SDLSoftButton]#> ttsChunks:<#[SDLTTSChunk]#> alertIcon:<#SDLImage#> cancelID:<#UInt32#>];
+SDLSubtleAlert *subtleAlert = [[SDLSubtleAlert alloc] initWithAlertText1:<#NSString#> alertText2:<#NSString#> alertIcon:<#SDLImage#> ttsChunks:<#[SDLTTSChunk]#> duration:<#UInt32#> softButtons:<#[SDLSoftButton]#> cancelID:<#UInt32#>];
 ```
 
 ##### Swift
 ```swift
-let subtleAlert = SDLSubtleAlert(alertText: <#String?#>, softButtons: <#[SDLSoftButton]?#>, ttsChunks: <#[SDLTTSChunk]?#>, alertIcon: <#SDLImage?#>, cancelID: <#UInt32#>)
+let subtleAlert = SDLSubtleAlert(alertText1: <#String?#>, alertText2: <#String?#>, alertIcon: <#SDLImage?#>, ttsChunks: <#[SDLTTSChunk]?#>, duration: <#UInt32#>, softButtons: <#[SDLSoftButton]?#>, cancelID: <#UInt32#>)
 ```
 !@
 
