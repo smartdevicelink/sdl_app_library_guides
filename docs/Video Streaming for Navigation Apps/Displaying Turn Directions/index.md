@@ -92,8 +92,8 @@ turnByTurn.setOnRPCResponseListener(new OnRPCResponseListener() {
             return;
         }
 
-            AlertManeuver alertManeuver = new AlertManeuver();
-            alertManeuver.setTtsChunks(TTSChunkFactory.createSimpleTTSChunks("In 3 miles turn right"));
+            AlertManeuver alertManeuver = new AlertManeuver()
+                .setTtsChunks(TTSChunkFactory.createSimpleTTSChunks("In 3 miles turn right"));
             alertManeuver.setOnRPCResponseListener(new OnRPCResponseListener() {
                 @Override
                 public void onResponse(int correlationId, RPCResponse response) {

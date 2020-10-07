@@ -651,12 +651,12 @@ sdlManager.addOnRPCRequestListener(FunctionID.GET_APP_SERVICE_DATA, new OnRPCReq
         GetAppServiceData getAppServiceData = (GetAppServiceData) request;
 
         // Send a response
-        GetAppServiceDataResponse response = new GetAppServiceDataResponse()
-            .setSuccess(true)
-            .setCorrelationID(getAppServiceData.getCorrelationID())
-            .setResultCode(Result.SUCCESS)
-            .setInfo("<#Use to provide more information about an error#>")
-            .setServiceData(<#Your App Service Data#>);
+        GetAppServiceDataResponse response = new GetAppServiceDataResponse();
+        response.setSuccess(true);
+        response.setCorrelationID(getAppServiceData.getCorrelationID());
+        response.setResultCode(Result.SUCCESS);
+        response.setInfo("<#Use to provide more information about an error#>");
+        response.setServiceData(<#Your App Service Data#>);
         sdlManager.sendRPC(response);
     }
 });

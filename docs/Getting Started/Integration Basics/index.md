@@ -821,7 +821,7 @@ public class SdlService {
 
             // The manager builder sets options for your session
             SdlManager.Builder builder = new SdlManager.Builder(APP_ID, APP_NAME, listener);
-            sdlManager = builder.setAppTypes(appType);
+            builder.setAppTypes(appType);
             builder.setTransportType(transport);
             builder.setAppIcon(appIcon);
             sdlManager = builder.build();
