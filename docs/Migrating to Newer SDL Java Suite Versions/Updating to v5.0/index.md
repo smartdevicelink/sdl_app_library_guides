@@ -7,7 +7,7 @@ This guide is to help developers get setup with the SDL Java library version 5.0
 The full release notes are published [here](https://github.com/smartdevicelink/sdl_java_suite/releases).
 
 ## New minimum SDK 
-SDL now has a new minimun required SDK version of 16. You can change the minimum SDK version in the apps build.gradle file by changing minSdkVersion to 16. An example:
+SDL now has a new minimum required SDK version of 16. You can change the minimum SDK version in the apps build.gradle file by changing minSdkVersion to 16. An example:
 
 ```Gradle
 defaultConfig {
@@ -21,9 +21,9 @@ defaultConfig {
 ```
 
 ## AndroidX
-SDL now uses AndroidX. To migrate your app to use AndroidX, In Android Stuido or IntelliJ, click on Refactor, then Migrate to AndroidX.
+SDL now uses AndroidX. To migrate your app to use AndroidX, In Android Studio or IntelliJ, click on Refactor, then Migrate to AndroidX.
 
- ![Android Stuido](assets/migrate_androidX.png )
+ ![Android Studio](assets/migrate_androidX.png )
 
 !!! NOTE
 To migrate to AndroidX you must set the `compileSdkVersion` to 28 in the apps build.gradle file
@@ -31,7 +31,9 @@ To migrate to AndroidX you must set the `compileSdkVersion` to 28 in the apps bu
 
 ## OnSystemCapabilityListener moved
 OnSystemCapabilityListener has moved packages from:
- `import com.smartdevicelink.proxy.interfaces.OnSystemCapabilityListener;` to `import com.smartdevicelink.managers.lifecycle.OnSystemCapabilityListener;` 
+ `import com.smartdevicelink.proxy.interfaces.OnSystemCapabilityListener;` 
+ to 
+ `import com.smartdevicelink.managers.lifecycle.OnSystemCapabilityListener;` 
 
 ## SdlManagerListener changes
 In 4.12 a new managerShouldUpdateLifecycle method was added and the old managerShouldUpdateLifecycle method was deprecated. In 5.0 the deprecated method was removed. More detail can be found [here](Getting Started/Adapting to the Head Unit Language).
@@ -88,7 +90,7 @@ SdlManagerListener listener = new SdlManagerListener() {
 ```
 
 ## Sending RPC's listener updates
-When sending RPC's with a listener, onError has been removed from `OnMultipleRequestListener.java` and `OnRPCResponseListener.java`. Instad of onError getting called, onResponse will be called weather its a success or not.
+When sending RPC's with a listener, onError has been removed from `OnMultipleRequestListener.java` and `OnRPCResponseListener.java`. Instead of onError getting called, onResponse will be called whether its a success or not.
 
 OnRPCResponseListener Before:
 
@@ -168,10 +170,10 @@ sdlManager.sendRPCs(Arrays.asList(subscribeButtonLeft, subscribeButtonRight), ne
 
 
 ## Use Multiplex instead of legacy BT & USB
-`BTTransportConfig.java` and `USBTransportConfig` have been removed form the library. You should use `MultiplexBluetoothTransport.java` and `MultiplexUsbTransport.java` instead.
+`BTTransportConfig.java` and `USBTransportConfig` have been removed from the library. You should use `MultiplexBluetoothTransport.java` and `MultiplexUsbTransport.java` instead.
 
-## ScreenManager Template Managment
-You can now use the ScreenManager to change screen templatas and day/night color schems. See ... for more.
+## ScreenManager Template Management
+You can now use the ScreenManager to change screen templatas and day/night color schemes. See ... for more.
 
 Example:
 ```java
@@ -185,7 +187,7 @@ sdlManager.getScreenManager().changeLayout(configuration, new CompletionListener
 ```
 
 ## Chainable RPC setters
-Rpc setters are now chainable. Before you had to either use a constructor that took all paramters or set every one indivually. Now you are able to chain them together.
+Rpc setters are now chainable. Before you had to either use a constructor that took all parameters or set everyone individually. Now you can chain them together.
 
 Before:
 ```Java
@@ -200,7 +202,7 @@ Alert alert = new Alert().setAlertText1("text1").setDuration(5000).setPlayTone(t
 ```
 
 ## New DebugTool methods
-There is a new way of logging infromation in debug mode. Before for example we would use Log.e to log errors, now we use the DebugTool.logError.
+There is a new way of logging information in debug mode. Before for example, we would use Log.e to log errors, now we use the DebugTool.logError.
 
 `Log.i` to `DebugTool.logInfo`
 `Log.w` to `DebugTool.logWarnin`
