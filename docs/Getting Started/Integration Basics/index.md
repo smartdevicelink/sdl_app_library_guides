@@ -804,11 +804,6 @@ public class SdlService {
                 }
 
                 @Override
-                public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language) {
-                    return null;
-                }
-
-                @Override
                 public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language, Language hmiLanguage) {
                   return null;
                 }
