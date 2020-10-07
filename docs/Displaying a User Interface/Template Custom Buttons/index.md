@@ -71,7 +71,7 @@ sdlManager.getScreenManager().setSoftButtonObjects(Collections.singletonList(sof
 sdlManager.getScreenManager().commit(new CompletionListener() {
 	@Override
 	public void onComplete(boolean success) {
-		DebugTool.logInfo((TAG, "ScreenManager update complete: " + success);
+		DebugTool.logInfo(TAG, "ScreenManager update complete: " + success);
 	}
 });
 ```
