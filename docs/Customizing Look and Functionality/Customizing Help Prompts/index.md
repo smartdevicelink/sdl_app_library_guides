@@ -127,7 +127,7 @@ sdlManager.send(request: setGlobals) { (request, response, error) in
 @![android, javaSE, javaEE]
 ```java
 SetGlobalProperties setGlobalProperties = new SetGlobalProperties();
-setGlobalProperties.setHelpPrompt(TTSChunkFactory.createSimpleTTSChunks("Your custom help prompt"));
+setGlobalProperties.setHelpPrompt(Collections.singletonList(new TTSChunk("Your custom help prompt", SpeechCapabilities.TEXT)));
 setGlobalProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
@@ -192,7 +192,7 @@ sdlManager.send(request: setGlobals) { (request, response, error) in
 @![android, javaSE, javaEE]
 ```java
 SetGlobalProperties setGlobalProperties = new SetGlobalProperties();
-setGlobalProperties.setTimeoutPrompt(TTSChunkFactory.createSimpleTTSChunks("Your custom help prompt"));
+setGlobalProperties.setTimeoutPrompt(Collections.singletonList(new TTSChunk("Your custom help prompt", SpeechCapabilities.TEXT)));
 setGlobalProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
