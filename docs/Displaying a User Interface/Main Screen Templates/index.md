@@ -71,7 +71,7 @@ if (response.getSuccess()) {
 ```
 !@
 
-Templates can also be batched with Text and grpahics updates.
+Template changes can also be batched with text and graphics updates.
 
 @![iOS]
 ##### Objective-C
@@ -114,7 +114,7 @@ sdlManager.getScreenManager().commit(new CompletionListener() {
 !@
 
 !!! NOTE
-If a @![android, javaSE, javaEE] CompletionListener @! is sent with a  @![android, javaSE, javaEE] `commit` @!
+If a @![android, javaSE, javaEE] CompletionListener !@ is sent with a  @![android, javaSE, javaEE] `commit` !@
 !!!
 
 
