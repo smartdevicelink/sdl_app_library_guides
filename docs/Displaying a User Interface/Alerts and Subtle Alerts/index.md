@@ -513,11 +513,11 @@ Depending on the platform, a subtle alert can have up to two lines of text and u
 ## Subtle Alert Layouts
 ###### Subtle Alert With No Soft Buttons
 
-![Generic - Alert](assets/Generic_alert.png)
+![Generic - Subtle Alert](assets/Generic_alert.png)
 
 ###### Subtle Alert With Soft Buttons
 
-![Generic - Alert](assets/Generic_alert_buttons.png)
+![Generic - Subtle Alert](assets/Generic_alert_buttons.png)
 
 ## Creating the Subtle Alert
 
@@ -525,10 +525,12 @@ Depending on the platform, a subtle alert can have up to two lines of text and u
 @![iOS]
 ##### Objective-C
 ```objc
+SDLSubtleAlert *subtleAlert = [[SDLSubtleAlert alloc] initWithAlertText:<#NSString#> softButtons:<#[SDLSoftButton]#> ttsChunks:<#[SDLTTSChunk]#> alertIcon:<#SDLImage#> cancelID:<#UInt32#>];
 ```
 
 ##### Swift
 ```swift
+let subtleAlert = SDLSubtleAlert(alertText: <#String?#>, softButtons: <#[SDLSoftButton]?#>, ttsChunks: <#[SDLTTSChunk]?#>, alertIcon: <#SDLImage?#>, cancelID: <#UInt32#>)
 ```
 !@
 
@@ -551,10 +553,36 @@ SubtleAlert subtleAlert = new SubtleAlert()
 @![iOS]
 ##### Objective-C
 ```objc
+SDLSoftButton *button1 = [[SDLSoftButton alloc] initWithType:SDLSoftButtonTypeText text:@"<#Button Text#>" image:nil highlighted:false buttonId:<#Soft Button Id#> systemAction:SDLSystemActionDefaultAction handler:^(SDLOnButtonPress *_Nullable buttonPress, SDLOnButtonEvent *_Nullable buttonEvent) {
+    if (buttonPress == nil) {
+        return;
+    }
+    <#Button has been pressed#>
+}];
+
+SDLSoftButton *button2 = [[SDLSoftButton alloc] initWithType:SDLSoftButtonTypeText text:<#Button Text#> image:nil highlighted:false buttonId:<#Soft Button Id#> systemAction:SDLSystemActionDefaultAction handler:^(SDLOnButtonPress *_Nullable buttonPress, SDLOnButtonEvent *_Nullable buttonEvent) {
+    if (buttonPress == nil) {
+        return;
+    }
+    <#Button has been pressed#>
+}];
+
+subtleAlert.softButtons = @[button1, button2];
 ```
 
 ##### Swift
 ```swift
+let button1 = SDLSoftButton(type: .text, text: <#Button Text#>, image: nil, highlighted: false, buttonId: <#Soft Button Id#>, systemAction: .defaultAction, handler: { buttonPress, buttonEvent in
+    guard buttonPress != nil else { return }
+    <#Button has been pressed#>
+})
+
+let button2 = SDLSoftButton(type: .text, text: <#Button Text#>, image: nil, highlighted: false, buttonId: <#Soft Button Id#>, systemAction: .defaultAction, handler: { buttonPress, buttonEvent in
+    guard buttonPress != nil else { return }
+    <#Button has been pressed#>
+})
+
+subtleAlert.softButtons = [button1, button2]
 ```
 !@
 
@@ -589,14 +617,16 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
 ### Subtle Alert Icon
 A subtle alert can include a custom or static (built-in) image that will be displayed within the alert. Before you add the image to the alert make sure the image is uploaded to the head unit using the @![iOS]`SDLFileManager`!@@![android,javaSE,javaEE,javascript]FileManager!@. If the image is already uploaded, you can set the `alertIcon` property.
 
-![Generic - Alert](assets/Generic_alertIcon.png)
+![Generic - Subtle Alert](assets/Generic_alertIcon.png)
 
 @![iOS]
 ##### Objective-C
 ```objc
+subtleAlert.alertIcon = [[SDLImage alloc] initWithName:<#artworkName#> isTemplate:YES];
 ```
 ##### Swift
 ```swift
+subtleAlert.alertIcon = SDLImage(name: <#artworkName#>, isTemplate: true)
 ```
 !@
 
@@ -617,10 +647,14 @@ An optional timeout can be added that will dismiss the subtle alert when the dur
 @![iOS]
 ##### Objective-C
 ```objc
+// Duration timeout is in milliseconds
+subtleAlert.duration = @(4000);
 ```
 
 ##### Swift
 ```swift
+// Duration timeout is in milliseconds
+subtleAlert.duration = NSNumber(4000)
 ```
 !@
 
@@ -642,10 +676,12 @@ A subtle alert can also speak a prompt or play a sound file when the subtle aler
 @![iOS]
 ##### Objective-C
 ```objc
+subtleAlert.ttsChunks = [SDLTTSChunk textChunksFromString:@"<#Text to speak#>"];
 ```
 
 ##### Swift
 ```swift
+subtleAlert.ttsChunks = SDLTTSChunk.textChunks(from: "<#Text to speak#>")
 ```
 !@
 
@@ -666,10 +702,12 @@ The `ttsChunks` parameter can also take a file to play/speak. For more informati
 @![iOS]
 ##### Objective-C
 ```objc
+subtleAlert.ttsChunks = [SDLTTSChunk fileChunksWithName:@"<#Name#>"];
 ```
 
 ##### Swift
 ```swift
+subtleAlert.ttsChunks = SDLTTSChunk.fileChunks(withName: "<#Name#>")
 ```
 !@
 
@@ -690,10 +728,21 @@ subtleAlert.setTtsChunks(Collections.singletonList(ttsChunk));
 @![iOS]
 ##### Objective-C
 ```objc
+[self.sdlManager sendRequest:subtleAlert withResponseHandler:^(SDLRPCRequest *request, SDLRPCResponse *response, NSError *error) {
+    if (!response.success.boolValue) { 
+        // Print out the error if there is one and return early
+        return;
+    }
+    <#Subtle Alert was shown successfully#>
+}];
 ```
 
 ##### Swift
 ```swift
+sdlManager.send(request: subtleAlert) { (request, response, error) in
+    guard response?.success.boolValue == true else { return }
+    <#Subtle Alert was shown successfully#>
+}
 ```
 !@
 
@@ -724,15 +773,30 @@ Please note that canceling the subtle alert will only dismiss the displayed aler
 
 There are two ways to dismiss a subtle alert. The first way is to dismiss a specific subtle alert using a unique `cancelID` assigned to the subtle alert. The second way is to dismiss whichever subtle alert is currently on-screen.
 
-### Dismissing a Specific Alert
+### Dismissing a Specific Subtle Alert
 
 @![iOS]
 ##### Objective-C
 ```objc
+// `cancelID` is the ID that you assigned when creating and sending the subtle alert
+SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWithAlertCancelID:cancelID];
+[self.sdlManager sendRequest:cancelInteraction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+    if (!response.success.boolValue) { 
+        // Print out the error if there is one and return early
+        return;
+    }
+    <#The subtle alert was canceled successfully#>
+}];
 ```
 
 ##### Swift
 ```swift
+// `cancelID` is the ID that you assigned when creating and sending the subtle alert
+let cancelInteraction = SDLCancelInteraction(alertCancelID: cancelID)
+sdlManager.send(request: cancelInteraction) { (request, response, error) in
+    guard response?.success.boolValue == true else { return }
+    <#The subtle alert was canceled successfully#>
+}
 ```
 !@
 
@@ -757,15 +821,28 @@ sdlManager.sendRPC(cancelInteraction);
 ```
 !@
 
-### Dismissing the Current Alert
+### Dismissing the Current Subtle Alert
 
 @![iOS]
 ##### Objective-C
 ```objc
+SDLCancelInteraction *cancelInteraction = [SDLCancelInteraction subtleAlert];
+[self.sdlManager sendRequest:cancelInteraction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+    if (!response.success.boolValue) { 
+        // Print out the error if there is one and return early
+        return;
+    }
+    <#The subtle alert was canceled successfully#>
+}];
 ```
 
 ##### Swift
 ```swift
+let cancelInteraction = SDLCancelInteraction.subtleAlert()
+sdlManager.send(request: cancelInteraction) { (request, response, error) in
+    guard response?.success.boolValue == true else { return }
+    <#The subtle alert was canceled successfully#>
+}
 ```
 !@
 
