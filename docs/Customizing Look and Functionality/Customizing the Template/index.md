@@ -74,11 +74,11 @@ lifecycleConfig.setNightColorScheme(nightColorScheme);
 !@
 
 !!! NOTE
-You may change the template coloring in the `lifecycleConfiguration` or by using `changeLayout` with the ScreenManager. If you are using a lesser version than SDL @![android, javaSE, javaEE] Java Suite version 5.0!@ @![iOS] iOS version 7.0!@ @![javascript] JavaScript Suite version 1.2!@, instead of using `changLayout` you need to use `SetDisplayLayout` RPC, if connecting to a head unit with RPC v5.0+,  or with the `Show` request if connecting to RPC v6.0+. You may only change the template coloring once per template; that is, you cannot call `changeLayout`, `SetDisplayLayout` or `Show` for the template you are already on and expect the color scheme to update.
+You may only change the template coloring once per template; that is, you cannot call `changeLayout`, `SetDisplayLayout` or `Show` for the template you are already on and expect the color scheme to update.
 !!!
 
 ### Customizing Future Layouts
-You can change the template color scheme when you change layouts. This guide requires SDL @![android, javaSE, javaEE] Java Suite version 5.0!@ @![iOS] iOS version 7.0!@ @![javascript] JavaScript Suite version 1.2!@. If using an older version, use @![iOS]`SDLSetDisplayLayout` (any RPC version) or `SDLShow` (RPC v6.0+)!@@![android, javaSE, javaEE, javascript]`SetDisplayLayout` (any RPC version) or `Show` (RPC v6.0+)!@ request.
+You can change the template color scheme when you change layouts. This guide requires SDL @![android, javaSE, javaEE]Java Suite version 5.0!@@![iOS]iOS version 7.0!@@![javascript]JavaScript Suite version 1.2!@. If using an older version, use @![iOS]`SDLSetDisplayLayout` (any RPC version) or `SDLShow` (RPC v6.0+)!@@![android, javaSE, javaEE, javascript]`SetDisplayLayout` (any RPC version) or `Show` (RPC v6.0+)!@ request.
 
 @![iOS]
 ##### Objective-C
@@ -88,7 +88,8 @@ SDLRGBColor *white = [[SDLRGBColor alloc] initWithRed:249 green:251 blue:254];
 SDLRGBColor *darkGrey = [[SDLRGBColor alloc] initWithRed:57 green:78 blue:96];
 SDLRGBColor *grey = [[SDLRGBColor alloc] initWithRed:186 green:198 blue:210];
 
-//TODO
+SDLTemplateConfiguration *config = [[SDLTemplateConfiguration alloc] initWithTemplate:SDLPredefinedLayoutGraphicWithText dayColorScheme:[[SDLTemplateColorScheme alloc] initWithPrimaryRGBColor:green secondaryRGBColor:grey backgroundRGBColor:white] nightColorScheme:[[SDLTemplateColorScheme alloc] initWithPrimaryRGBColor:green secondaryRGBColor:grey backgroundRGBColor:darkGrey]];
+[self.sdlManager.screenManager changeLayout:config withCompletionHandler:nil];
 ```
 
 ##### Swift
@@ -98,7 +99,8 @@ let white = SDLRGBColor(red: 249, green: 251, blue: 254)
 let grey = SDLRGBColor(red: 186, green: 198, blue: 210)
 let darkGrey = SDLRGBColor(red: 57, green: 78, blue: 96)
 
-//TODO
+let config = SDLTemplateConfiguration(template: .graphicWithText, dayColorScheme: SDLTemplateColorScheme(primaryRGBColor: green, secondaryRGBColor: grey, backgroundRGBColor: white), nightColorScheme: SDLTemplateColorScheme(primaryRGBColor: green, secondaryRGBColor: grey, backgroundRGBColor: darkGrey))
+sdlManager.screenManager.changeLayout(config, withCompletionHandler: nil)
 ```
 !@
 @![android, javaSE, javaEE]
@@ -134,8 +136,6 @@ sdlManager.getScreenManager().changeLayout(templateConfiguration, new Completion
         }
     }
 });
-
-
 ```
 !@
 @![javascript]
