@@ -2,18 +2,33 @@
 Each head unit manufacturer supports a set of user interface templates. These templates determine the position and size of the text, images, and buttons on the screen. Once the app has connected successfully with an SDL enabled head unit, a list of supported templates is available on @![iOS]`SDLManager.systemCapabilityManager.defaultMainWindowCapability.templatesAvailable`!@@![android, javaSE, javaEE, javascript]`sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getTemplatesAvailable()`!@. 
 
 ## Change the Template
-To change a template at any time, with the ScreenManager use changeLayout. This guide requires SDL @![android, javaSE, javaEE] Java Suite version 5.0!@ @![iOS] iOS version 7.0!@ @![javascript] JavaScript Suite version 1.2!@. If using an older version, use `SetDisplayLayout` RPC.
+To change a template at any time, use @![iOS]`[SDLScreenManager changeLayout:]`!@@![android, javaSE, javaEE, javascript]`ScreenManager.changeLayout()`!@. This guide requires SDL @![android, javaSE, javaEE]Java Suite version 5.0!@@![iOS]iOS version 7.0!@ @![javascript]JavaScript Suite version 1.2!@. If using an older version, use `SetDisplayLayout` RPC.
 
+!!!NOTE
+When changing the layout, you may get an error or failure if the update is "superseded." This isn't technically a failure, because changing the layout has not yet been attempted. The layout or batched operation was cancelled before it could be completed because another operation was requested. The layout change will then be inserted into the future operation and completed then.
+!!!
 
 @![iOS]
 ##### Objective-C
 ```objc
-//TODO
+[self.sdlManager.screenManager changeLayout:[[SDLTemplateConfiguration alloc] initWithTemplate:SDLPredefinedLayoutGraphicWithText] withCompletionHandler:^(NSError * _Nullable error) {
+    if (error != nil) {
+        // Print out the error if there is one and return early
+        return;
+    }
+    // The template has been set successfully
+}];
 ```
 
 ##### Swift
 ```swift
-//TODO
+sdlManager.screenManager.changeLayout(SDLTemplateConfiguration(predefinedLayout: .graphicWithText)) { err in
+    if let error = err {
+        // Print out the error if there is one and return early
+        return
+    }
+    // The template has been set successfully
+}
 ```
 !@
 
@@ -39,17 +54,41 @@ sdlManager.getScreenManager().changeLayout(templateConfiguration, new Completion
 ```
 !@
 
-Template changes can also be batched with text and graphics updates.
+Template changes can also be batched with text and graphics updates:
 
 @![iOS]
 ##### Objective-C
 ```objc
-//TODO
+[self.sdlManager.screenManager beginUpdates];
+self.sdlManager.screenManager.textField1 = "Line of Text";
+[self.sdlManager.screenManager changeLayout:[[SDLTemplateConfiguration alloc] initWithTemplate:SDLPredefinedLayoutGraphicWithText] withCompletionHandler:^(NSError * _Nullable error) {
+    // This listener will be ignored, and will use the handler sent in endUpdatesWithCompletionHandler.
+}];
+self.sdlManager.screenManager.primaryGraphic = <#SDLArtwork#>;
+[self.sdlManager.screenManager endUpdatesWithCompletionHandler:^(NSError * _Nullable error) {
+    if (error != nil) {
+        // Print out the error if there is one and return early
+        return
+    }
+    // The data and template has been set successfully
+}];
 ```
 
 ##### Swift
 ```swift
-//TODO
+sdlManager.screenManager.beginUpdates()
+sdlManager.screenManager.textField1 = "Line of Text"
+sdlManager.screenManager.changeLayout(SDLTemplateConfiguration(predefinedLayout: .graphicWithText)) { err in
+    // This listener will be ignored, and will use the handler set in the endUpdates call.
+}
+sdlManager.screenManager.primaryGraphic = <#SDLArtwork#>
+sdlManager.screenManager.endUpdates { err in
+    if let error = err {
+        // Print out the error if there is one and return early
+        return
+    }
+    // The data and template has been set successfully
+}
 ```
 !@
 
@@ -68,7 +107,7 @@ sdlManager.getScreenManager().commit(new CompletionListener() {
     @Override
     public void onComplete(boolean success) {
         if (success) {
-            Log.i(TAG, "Text, Graphic and Template changed successful");
+            DebugTool.logInfo(TAG, "The data and template have been set successfully");
         }
     }
 });
