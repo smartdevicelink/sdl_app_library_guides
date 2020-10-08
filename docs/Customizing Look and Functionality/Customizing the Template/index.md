@@ -74,7 +74,7 @@ lifecycleConfig.setNightColorScheme(nightColorScheme);
 !@
 
 !!! NOTE
-You may change the template coloring in the `lifecycleConfiguration` and the `SetDisplayLayout`, if connecting to a head unit with RPC v5.0+,  or with the `Show` request if connecting to RPC v6.0+. You may only change the template coloring once per template; that is, you cannot call `SetDisplayLayout` or `Show` for the template you are already on and expect the color scheme to update.
+You may change the template coloring in the `lifecycleConfiguration` and using `changeLayout` with the ScreenManager. If using SDL @![android, javaSE, javaEE] Java Suite version 5.0!@ @![iOS] iOS version 7.0!@ @![javascript] JavaScript Suite version 1.2!@  instead of using `changLayout` you need to use `SetDisplayLayout` RPC, if connecting to a head unit with RPC v5.0+,  or with the `Show` request if connecting to RPC v6.0+. You may only change the template coloring once per template; that is, you cannot call `changeLayout`, `SetDisplayLayout` or `Show` for the template you are already on and expect the color scheme to update.
 !!!
 
 ### Customizing Future Layouts
@@ -88,9 +88,7 @@ SDLRGBColor *white = [[SDLRGBColor alloc] initWithRed:249 green:251 blue:254];
 SDLRGBColor *darkGrey = [[SDLRGBColor alloc] initWithRed:57 green:78 blue:96];
 SDLRGBColor *grey = [[SDLRGBColor alloc] initWithRed:186 green:198 blue:210];
 
-SDLSetDisplayLayout *setLayout = [[SDLSetDisplayLayout alloc] initWithPredefinedLayout:SDLPredefinedLayoutGraphicWithText];
-setLayout.dayColorScheme = [[SDLTemplateColorScheme alloc] initWithPrimaryRGBColor:green secondaryRGBColor:grey backgroundRGBColor:white];
-setLayout.nightColorScheme = [[SDLTemplateColorScheme alloc] initWithPrimaryRGBColor:green secondaryRGBColor:grey backgroundRGBColor:darkGrey];
+//TODO
 ```
 
 ##### Swift
@@ -100,9 +98,7 @@ let white = SDLRGBColor(red: 249, green: 251, blue: 254)
 let grey = SDLRGBColor(red: 186, green: 198, blue: 210)
 let darkGrey = SDLRGBColor(red: 57, green: 78, blue: 96)
 
-let setLayout = SDLSetDisplayLayout(predefinedLayout: .graphicWithText)
-setLayout.dayColorScheme = SDLTemplateColorScheme(primaryRGBColor: green, secondaryRGBColor: grey, backgroundRGBColor: white)
-setLayout.nightColorScheme = SDLTemplateColorScheme(primaryRGBColor: green, secondaryRGBColor: grey, backgroundRGBColor: darkGrey)
+//TODO
 ```
 !@
 @![android, javaSE, javaEE]
@@ -161,13 +157,7 @@ nightColorScheme.setBackgroundColor(white);
 nightColorScheme.setPrimaryColor(green);
 nightColorScheme.setSecondaryColor(darkGrey);
 
-const setDisplayLayout = new SDL.rpc.messages.SetDisplayLayout().setDisplayLayout(SDL.rpc.enums.PredefinedLayout.GRAPHIC_WITH_TEXT);
-setDisplayLayout.setDayColorScheme(dayColorScheme);
-setDisplayLayout.setNightColorScheme(nightColorScheme);
-const response = await sdlManager.sendRpc(setDisplayLayout);
-if (response.getSuccess()){
-    // Success
-}
+//TODO
 ```
 !@
 
