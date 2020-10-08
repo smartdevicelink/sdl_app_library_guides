@@ -105,7 +105,7 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
       public void onNotified(RPCNotification notification) {
           OnButtonPress onButtonPress = (OnButtonPress) notification;
           if (onButtonPress.getCustomButtonID() == softButtonId){
-               DebugTool.logInfo(TAG, "Ok button pressed");
+               Log.i(TAG, "Ok button pressed");
           }
       }
 });
@@ -235,7 +235,7 @@ alert.ttsChunks = SDLTTSChunk.textChunks(from: "<#Text to speak#>")
 
 @![android,javaSE,javaEE]
 ```java
-alert.setTtsChunks(Collections.singletonList(new TTSChunk("Text to Speak", SpeechCapabilities.TEXT)));
+alert.setTtsChunks(TTSChunkFactory.createSimpleTTSChunks("Text to Speak"));
 ```
 !@
 
@@ -336,7 +336,7 @@ alert.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
       if (response.getSuccess()){
-        DebugTool.logInfo(TAG, "Alert was shown successfully");
+        Log.i(TAG, "Alert was shown successfully");
       }
     }
 });
@@ -409,7 +409,7 @@ cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
 	public void onResponse(int correlationId, RPCResponse response) {
         if (response.getSuccess()){
-            DebugTool.logInfo(TAG, "Alert was dismissed successfully");
+            Log.i(TAG, "Alert was dismissed successfully");
         }
     }
 });
@@ -474,7 +474,7 @@ cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
 	public void onResponse(int correlationId, RPCResponse response) {
         if (response.getSuccess()){
-            DebugTool.logInfo(TAG, "Alert was dismissed successfully");
+            Log.i(TAG, "Alert was dismissed successfully");
         }
     }
 });
