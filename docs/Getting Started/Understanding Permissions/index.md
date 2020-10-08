@@ -30,7 +30,7 @@ The easiest way to monitor the `hmiLevel` of your SDL app is through a required 
 ##### Objective-C
 ```objc
 - (void)hmiLevel:(SDLHMILevel)oldLevel didChangeToLevel:(SDLHMILevel)newLevel {
-    if (![newLevel isEqualToEnum:SDLHMILevelNone] && (self.firstHMILevel == SDLHMIFirstStateNone)) {
+    if (![newLevel isEqualToEnum:SDLHMILevelNone] && (self.firstHMILevel == SDLHMILevelNone)) {
         // This is our first time in a non-`NONE` state
         self.firstHMILevel = newLevel;
         <#Send static menu RPCs#>

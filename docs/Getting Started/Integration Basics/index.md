@@ -276,14 +276,14 @@ If a head unit is blocked by protocol version, your app icon will never appear o
 
 ##### Objective-C
 ```objc
-lifecycleConfiguration.minimumProtocolVersion = [SDLVersion versionWithString:@"3.0.0"];
-lifecycleConfiguration.minimumRPCVersion = [SDLVersion versionWithString:@"4.0.0"];
+lifecycleConfiguration.minimumProtocolVersion = [SDLVersion versionWithMajor:3 minor:0 patch:0];
+lifecycleConfiguration.minimumRPCVersion = [SDLVersion versionWithMajor:4 minor:0 patch:0];
 ```
 
 ##### Swift
 ```swift
-lifecycleConfiguration.minimumProtocolVersion = SDLVersion(string: "3.0.0")
-lifecycleConfiguration.minimumRPCVersion = SDLVersion(string: "4.0.0")
+lifecycleConfiguration.minimumProtocolVersion = SDLVersion(major: 3, minor: 0, patch: 0)
+lifecycleConfiguration.minimumRPCVersion = SDLVersion(major: 4, minor: 0, patch: 0)
 ```
 
 ### 7. Lock Screen
@@ -334,12 +334,12 @@ The `SDLConfiguration` class is used to set the lifecycle, lock screen, logging,
 
 ##### Objective-C
 ```objc
-SDLConfiguration* configuration = [SDLConfiguration configurationWithLifecycle:lifecycleConfiguration lockScreen:[SDLLockScreenConfiguration enabledConfiguration] logging:[SDLLogConfiguration defaultConfiguration] fileManager:[SDLFileManagerConfiguration defaultConfiguration]];
+SDLConfiguration* configuration = [[SDLConfiguration alloc] initWithLifecycle:lifecycleConfiguration lockScreen:[SDLLockScreenConfiguration enabledConfiguration] logging:[SDLLogConfiguration defaultConfiguration] fileManager:[SDLFileManagerConfiguration defaultConfiguration] encryption:[SDLEncryptionConfiguration defaultConfiguration]];
 ```
 
 ##### Swift
 ```swift
-let configuration = SDLConfiguration(lifecycle: lifecycleConfiguration, lockScreen: .enabled(), logging: .default(), fileManager: .default())
+let configuration = SDLConfiguration(lifecycle: lifecycleConfiguration, lockScreen: .enabled(), logging: .default(), fileManager: .default(), encryption: .default())
 ```
 
 ### 11. Create a SDLManager
