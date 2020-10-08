@@ -20,7 +20,8 @@ let isSubtleAlertAllowed = sdlManager.permissionManager.isRPCNameAllowed(.subtle
 
 @![android,javaSE,javaEE]
 ```java
-// TODO
+boolean isAlertAllowed = sdlManager.getPermissionManager().isRPCAllowed(FunctionID.ALERT);
+boolean isSubtleAlertAllowed = sdlManager.getPermissionManager().isRPCAllowed(FunctionID.SUBTLE_ALERT);
 ```
 !@
 
@@ -861,7 +862,12 @@ sdlManager.subscribe(to: .SDLDidReceiveSubtleAlertPressed, observer: self, selec
 
 @![android,javaSE,javaEE]
 ```java
-// TODO
+sdlManager.addOnRPCNotificationListener(FunctionID.ON_SUBTLE_ALERT_PRESSED, new OnRPCNotificationListener() {
+    @Override
+    public void onNotified(RPCNotification notification) {
+        <#The subtle alert was pressed#>
+    }
+});
 ```
 !@
 
