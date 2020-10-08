@@ -134,7 +134,7 @@ sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.ON_BUTTON_PRESS, function (on
 !@
 
 ### Alert Icon
-An alert can include a custom or static (built-in) image that will be displayed within the alert. Before you add the image to the alert make sure the image is uploaded to the head unit using the @![iOS]`SDLFileManager`!@@![android,javaSE,javaEE,javascript]FileManager!@. If the image is already uploaded, you can set the `alertIcon` property.
+An alert can include a custom or static (built-in) image that will be displayed within the alert. Before you add the image to the alert, make sure the image is uploaded to the head unit using the @![iOS]`SDLFileManager`!@@![android,javaSE,javaEE,javascript]FileManager!@. If the image is already uploaded, you can set the `alertIcon` property.
 
 ![Generic - Alert](assets/Generic_alertIcon.png)
 
@@ -370,7 +370,9 @@ You can dismiss a displayed alert before the timeout has elapsed. This feature i
 If connected to older head units that do not support this feature, the cancel request will be ignored, and the alert will persist on the screen until the timeout has elapsed or the user dismisses the alert by selecting a button.
 !!!
 
-Please note that canceling the alert will only dismiss the displayed alert. If you have set the `ttsChunk` property, the speech will play in its entirety even when the displayed alert has been dismissed. If you know you will cancel an alert, consider setting a short `ttsChunk` like "searching" instead of "searching for coffee shops, please wait."
+!!! NOTE
+Canceling the alert will only dismiss the displayed alert. If you have set the `ttsChunk` property, the speech will play in its entirety even when the displayed alert has been dismissed. If you know you will cancel an alert, consider setting a short `ttsChunk` like "searching" instead of "searching for coffee shops, please wait."
+!!!
 
 There are two ways to dismiss an alert. The first way is to dismiss a specific alert using a unique `cancelID` assigned to the alert. The second way is to dismiss whichever alert is currently on-screen.
 
@@ -635,7 +637,7 @@ sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.ON_BUTTON_PRESS, function (on
 !@
 
 ### Subtle Alert Icon
-A subtle alert can include a custom or static (built-in) image that will be displayed within the alert. Before you add the image to the alert make sure the image is uploaded to the head unit using the @![iOS]`SDLFileManager`!@@![android,javaSE,javaEE,javascript]FileManager!@. If the image is already uploaded, you can set the `alertIcon` property.
+A subtle alert can include a custom or static (built-in) image that will be displayed within the subtle alert. Before you add the image to the subtle alert, make sure the image is uploaded to the head unit using the @![iOS]`SDLFileManager`!@@![android,javaSE,javaEE,javascript]FileManager!@. If the image is already uploaded, you can set the `alertIcon` property.
 
 ![Generic - Subtle Alert](assets/Generic_subtleAlertIcon.png)
 
@@ -808,7 +810,9 @@ if (response.getSuccess()) {
 ## Dismissing the Subtle Alert
 You can dismiss a displayed subtle alert before the timeout has elapsed.
 
-Please note that canceling the subtle alert will only dismiss the displayed alert. If you have set the `ttsChunk` property, the speech will play in its entirety even when the displayed subtle alert has been dismissed. If you know you will cancel a subtle alert, consider setting a short `ttsChunk`.
+!!! NOTE
+Canceling the subtle alert will only dismiss the displayed alert. If you have set the `ttsChunk` property, the speech will play in its entirety even when the displayed subtle alert has been dismissed. If you know you will cancel a subtle alert, consider setting a short `ttsChunk`.
+!!!
 
 There are two ways to dismiss a subtle alert. The first way is to dismiss a specific subtle alert using a unique `cancelID` assigned to the subtle alert. The second way is to dismiss whichever subtle alert is currently on-screen.
 
