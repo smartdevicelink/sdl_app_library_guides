@@ -31,9 +31,16 @@ sdlManager.fileManager.upload(file: audioFile) { (success, bytesAvailable, error
 
 @![android, javaSE, javaEE]
 ```java
-byte[] mp3Data = Get the file data;
+byte[] mp3Data = <#Get the File Data#>;
 SdlFile audioFile = new SdlFile("File Name", FileType.AUDIO_MP3, mp3Data, true);
-sdlManager.sendRPC(audioFile);
+sdlManager.getFileManager().uploadFile(audioFile, new CompletionListener() {
+    @Override
+    public void onComplete(boolean success) {
+        if (success) {
+            <#File upload successful#>
+        }
+    }
+});
 ```
 !@
 
@@ -207,7 +214,7 @@ let isFileOnHeadUnit = sdlManager.fileManager.remoteFileNames.contains(<#Name Up
 
 @![android, javaSE, javaEE]
 ```java
-Boolean fileIsOnHeadUnit = sdlManager.getFileManager().getRemoteFileNames().contains("Name Uploaded As")
+Boolean fileIsOnHeadUnit = sdlManager.getFileManager().getRemoteFileNames().contains("Name Uploaded As");
 ```
 !@
 
