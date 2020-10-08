@@ -30,10 +30,10 @@ let isSubtleAlertAllowed = sdlManager.permissionManager.isRPCNameAllowed(.subtle
 ```
 !@
 
-## Alert Layouts
+## Alerts
 An alert is a large pop-up window showing a short message with optional buttons. When an alert is activated, it will abort any SDL operation that is in-progress, except the already-in-progress alert. If an alert is issued while another alert is still in progress the newest alert will simply be ignored.
 
-Depending on the platform, an alert can have up to three lines of text, a progress indicator (e.g. a spinning wheel or hourglass), and up to four soft buttons.
+Depending on the platform, an alert can have up to three lines of text, a progress indicator (e.g. a spinning wheel or hourglass), and up to four soft buttons.    
 
 ###### Alert With No Soft Buttons
 
@@ -440,7 +440,7 @@ sdlManager.send(request: cancelInteraction) { (request, response, error) in
 CancelInteraction cancelInteraction = new CancelInteraction(FunctionID.ALERT.getId(), cancelID);
 cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
-	public void onResponse(int correlationId, RPCResponse response) {
+    public void onResponse(int correlationId, RPCResponse response) {
         if (response.getSuccess()){
             DebugTool.logInfo(TAG, "Alert was dismissed successfully");
         }
@@ -505,7 +505,7 @@ sdlManager.send(request: cancelInteraction) { (request, response, error) in
 CancelInteraction cancelInteraction = new CancelInteraction(FunctionID.ALERT.getId());
 cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
-	public void onResponse(int correlationId, RPCResponse response) {
+    public void onResponse(int correlationId, RPCResponse response) {
         if (response.getSuccess()){
             DebugTool.logInfo(TAG, "Alert was dismissed successfully");
         }
@@ -909,12 +909,12 @@ sdlManager.send(request: cancelInteraction) { (request, response, error) in
 // `cancelID` is the ID that you assigned when creating and sending the alert
 CancelInteraction cancelInteraction = new CancelInteraction(FunctionID.SUBTLE_ALERT.getId(), cancelID);
 cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
-	@Override
-	public void onResponse(int correlationId, RPCResponse response) {
-		if (response.getSuccess()){
-			DebugTool.logInfo(TAG, "Subtle alert was dismissed successfully");
-		}
-	}
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        if (response.getSuccess()){
+            DebugTool.logInfo(TAG, "Subtle alert was dismissed successfully");
+        }
+    }
 });
 sdlManager.sendRPC(cancelInteraction);
 ```
@@ -966,12 +966,12 @@ sdlManager.send(request: cancelInteraction) { (request, response, error) in
 ```java
 CancelInteraction cancelInteraction = new CancelInteraction(FunctionID.SUBTLE_ALERT.getId());
 cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
-	@Override
-	public void onResponse(int correlationId, RPCResponse response) {
-		if (response.getSuccess()){
-			DebugTool.logInfo(TAG, "Subtle Alert was dismissed successfully");
-		}
-	}
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        if (response.getSuccess()){
+            DebugTool.logInfo(TAG, "Subtle Alert was dismissed successfully");
+        }
+    }
 });
 sdlManager.sendRPC(cancelInteraction);
 ```
