@@ -8,12 +8,12 @@ To change a template at any time, with the ScreenManager use changeLayout. This 
 @![iOS]
 ##### Objective-C
 ```objc
-
+//TODO
 ```
 
 ##### Swift
 ```swift
-
+//TODO
 ```
 !@
 
@@ -35,7 +35,7 @@ sdlManager.getScreenManager().changeLayout(templateConfiguration, new Completion
 
 @![javascript]
 ```js
-
+//TODO
 ```
 !@
 
@@ -44,12 +44,12 @@ Template changes can also be batched with text and graphics updates.
 @![iOS]
 ##### Objective-C
 ```objc
-
+//TODO
 ```
 
 ##### Swift
 ```swift
-
+//TODO
 ```
 !@
 
@@ -60,7 +60,7 @@ sdlManager.getScreenManager().setTextField1("Line of Text");
 sdlManager.getScreenManager().changeLayout(templateConfiguration, new CompletionListener() {
     @Override
     public void onComplete(boolean success) {
-        // This listener will be ignored, and will use the Completion Listener sent in commit.
+        // This listener will be ignored, and will use the CompletionListener sent in commit.
     }
 });
 sdlManager.getScreenManager().setPrimaryGraphic(<#SDLArtwork#>);
@@ -77,7 +77,7 @@ sdlManager.getScreenManager().commit(new CompletionListener() {
 
 @![javascript]
 ```js
-
+//TODO
 ```
 !@
 
