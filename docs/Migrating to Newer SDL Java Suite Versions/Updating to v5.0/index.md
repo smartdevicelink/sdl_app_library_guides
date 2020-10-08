@@ -173,7 +173,7 @@ sdlManager.sendRPCs(Arrays.asList(subscribeButtonLeft, subscribeButtonRight), ne
 `BTTransportConfig.java` and `USBTransportConfig` have been removed from the library. You should use `MultiplexBluetoothTransport.java` and `MultiplexUsbTransport.java` instead.
 
 ## ScreenManager Template Management
-You can now use the ScreenManager to change screen templatas and day/night color schemes. See ... for more.
+You can now use the ScreenManager to change screen templatas and day/night color schemes. See [Main Screen Templates](Displaying a User Interface/Main Screen Templates) for more detail.
 
 Example:
 ```java
