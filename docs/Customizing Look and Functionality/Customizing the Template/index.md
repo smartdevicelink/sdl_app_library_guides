@@ -74,7 +74,7 @@ lifecycleConfig.setNightColorScheme(nightColorScheme);
 !@
 
 !!! NOTE
-You may change the template coloring in the `lifecycleConfiguration` and using `changeLayout` with the ScreenManager. If you are using a lesser version than SDL @![android, javaSE, javaEE] Java Suite version 5.0!@ @![iOS] iOS version 7.0!@ @![javascript] JavaScript Suite version 1.2!@, instead of using `changLayout` you need to use `SetDisplayLayout` RPC, if connecting to a head unit with RPC v5.0+,  or with the `Show` request if connecting to RPC v6.0+. You may only change the template coloring once per template; that is, you cannot call `changeLayout`, `SetDisplayLayout` or `Show` for the template you are already on and expect the color scheme to update.
+You may change the template coloring in the `lifecycleConfiguration` or by using `changeLayout` with the ScreenManager. If you are using a lesser version than SDL @![android, javaSE, javaEE] Java Suite version 5.0!@ @![iOS] iOS version 7.0!@ @![javascript] JavaScript Suite version 1.2!@, instead of using `changLayout` you need to use `SetDisplayLayout` RPC, if connecting to a head unit with RPC v5.0+,  or with the `Show` request if connecting to RPC v6.0+. You may only change the template coloring once per template; that is, you cannot call `changeLayout`, `SetDisplayLayout` or `Show` for the template you are already on and expect the color scheme to update.
 !!!
 
 ### Customizing Future Layouts
