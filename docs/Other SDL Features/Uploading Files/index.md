@@ -138,7 +138,7 @@ Be aware that persistence will not work if space on the head unit is limited. Th
 
 ## Overwriting Stored Files
 @![iOS, android, javaSE, javaEE]
-If a file being uploaded has the same name as an already uploaded file, the new file will be ignored. To override this setting, set the @![iOS]`SDLFile`!@ @![android, javaSE, javaEE, javascript]`SdlFile`!@'s `overwrite` property to `true`.
+If a file being uploaded has the same name as an already uploaded file, the new file will be ignored. To override this setting, set the @![iOS]`SDLFile`!@ @![android, javaSE, javaEE]`SdlFile`!@ 's `overwrite` property to `true`.
 !@
 
 @![iOS]
