@@ -173,7 +173,7 @@ sdlManager.sendRPCs(Arrays.asList(subscribeButtonLeft, subscribeButtonRight), ne
 `BTTransportConfig.java` and `USBTransportConfig` have been removed from the library. You should use `MultiplexBluetoothTransport.java` and `MultiplexUsbTransport.java` instead.
 
 ## ScreenManager Template Management
-You can now use the ScreenManager to change screen templatas and day/night color schemes. See [Main Screen Templates](Displaying a User Interface/Main Screen Templates) for more detail.
+You can now use the ScreenManager to change screen templates and day/night color schemes. See [Main Screen Templates](Displaying a User Interface/Main Screen Templates) for more detail.
 
 Example:
 ```java
@@ -205,7 +205,7 @@ Alert alert = new Alert().setAlertText1("text1").setDuration(5000).setPlayTone(t
 There is a new way of logging information in debug mode. Before for example, we would use Log.e to log errors, now we use the DebugTool.logError.
 
 `Log.i` to `DebugTool.logInfo`
-`Log.w` to `DebugTool.logWarnin`
+`Log.w` to `DebugTool.logWarning`
 `Log.e` to `DebugTool.logError`
 
 Before:
