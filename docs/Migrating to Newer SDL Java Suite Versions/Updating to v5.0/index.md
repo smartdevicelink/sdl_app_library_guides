@@ -59,8 +59,8 @@ SdlManagerListener listener = new SdlManagerListener() {
         return null;
     }
 
-	@Override
-	public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language) {
+    @Override
+    public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language) {
         return null;
     }
 };
