@@ -124,7 +124,7 @@ let artwork = SDLArtwork(image: image, persistent: true, as: .PNG)
 
 @![android, javaSE, javaEE]
 ```java
-SdlArtwork image = new SdlArtwork("<#ArtworkName#>", FileType.GRAPHIC_PNG, <#R.drawable.artworkName#>, true);
+SdlArtwork image = new SdlArtwork("<#ArtworkName#>", FileType.GRAPHIC_PNG, <#image#>, true);
 image.setTemplateImage(true);
 ```
 !@

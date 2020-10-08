@@ -408,7 +408,7 @@ sdlManager.fileManager.upload(file: artwork) { [weak self] (success, bytesAvaila
 
 @![android,javaSE,javaEE]
 ```java
-final SdlArtwork navInstructionArt = new SdlArtwork("turn", FileType.GRAPHIC_PNG, R.drawable.turn, true);
+final SdlArtwork navInstructionArt = new SdlArtwork("turn", FileType.GRAPHIC_PNG, <#image#>, true);
 
 sdlManager.getFileManager().uploadFile(navInstructionArt, new CompletionListener() {
     @Override
@@ -535,7 +535,7 @@ sdlManager.fileManager.upload(file: artwork) { [weak self] (success, bytesAvaila
 
 @![android,javaSE,javaEE]
 ```java
-final SdlArtwork weatherImage = new SdlArtwork("sun", FileType.GRAPHIC_PNG, R.drawable.sun, true);
+final SdlArtwork weatherImage = new SdlArtwork("sun", FileType.GRAPHIC_PNG, <#image#>, true);
 
 sdlManager.getFileManager().uploadFile(weatherImage, new CompletionListener() {
     @Override
