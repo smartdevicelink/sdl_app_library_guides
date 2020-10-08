@@ -1,9 +1,40 @@
-# Alerts
-An alert is a pop-up window showing a short message with optional buttons. When an alert is activated, it will abort any SDL operation that is in-progress, except the already-in-progress alert. If an alert is issued while another alert is still in progress, the newest alert will simply be ignored.
+# Alerts and Subtle Alerts
+SDL supports two types of alerts: a large popup alert that typically takes over the whole screen and a smaller subtle alert that only covers a small part of screen.
+
+## Checking if the Module Supports Alerts 
+Since subtle alert is a new feature that is only supported on the newest modules (RPC v7.0+), we recommend checking if subtle alerts are supported on the connected module before attempting to use the feature.
+
+@![iOS]
+##### Objective-C
+```objc
+BOOL isAlertAllowed = [self.sdlManager.permissionManager isRPCNameAllowed:SDLRPCFunctionNameAlert];
+BOOL isSubtleAlertAllowed = [self.sdlManager.permissionManager isRPCNameAllowed:SDLRPCFunctionNameSubtleAlert];
+```
+
+##### Swift
+```swift
+let isAlertAllowed = sdlManager.permissionManager.isRPCNameAllowed(.alert)
+let isSubtleAlertAllowed = sdlManager.permissionManager.isRPCNameAllowed(.subtleAlert)
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+// TODO
+```
+!@
+
+@![javascript]
+```js
+// TODO 
+```
+!@
+
+## Alert Layouts
+An alert is a large pop-up window showing a short message with optional buttons. When an alert is activated, it will abort any SDL operation that is in-progress, except the already-in-progress alert. If an alert is issued while another alert is still in progress the newest alert will simply be ignored.
 
 Depending on the platform, an alert can have up to three lines of text, a progress indicator (e.g. a spinning wheel or hourglass), and up to four soft buttons.
 
-## Alert Layouts
 ###### Alert With No Soft Buttons
 
 ![Generic - Alert](assets/Generic_alert.png)
@@ -370,7 +401,7 @@ You can dismiss a displayed alert before the timeout has elapsed. This feature i
 If connected to older head units that do not support this feature, the cancel request will be ignored, and the alert will persist on the screen until the timeout has elapsed or the user dismisses the alert by selecting a button.
 !!!
 
-Please note that canceling the alert will only dismiss the displayed alert. If you have set the `ttsChunk` property, the speech will play in its entirety even when the displayed alert has been dismissed. If you know you will cancel an alert, consider setting a short `ttsChunk` like "searching" instead of "searching for coffee shops, please wait."
+Please note that canceling the alert will only dismiss the displayed alert. If you have set the `ttsChunk` property, the speech will play in its entirety even when the displayed alert has been dismissed. If you know you will cancel an alert consider setting a short `ttsChunk` like "searching" instead of "searching for coffee shops, please wait."
 
 There are two ways to dismiss an alert. The first way is to dismiss a specific alert using a unique `cancelID` assigned to the alert. The second way is to dismiss whichever alert is currently on-screen.
 
@@ -503,20 +534,17 @@ if (response.getSuccess()) {
 ```
 !@
 
-# Subtle Alerts (RPC 7.0+)
-A Subtle Alert is a notification style alert window showing a short message with optional buttons. When a subtle alert is activated, it will NOT abort other SDL operations that are in-progress. If a subtle Alert is issued while another subtle alert is still in progress, the newest subtle alert will simply be ignored.
+## Subtle Alerts (RPC 7.0+)
+A subtle alert is a notification style alert window showing a short message with optional buttons. When a subtle alert is activated, it will not abort other SDL operations that are in-progress like the larger pop-up alert does. If a subtle alert is issued while another subtle alert is still in progress the newest subtle alert will simply be ignored.
  
-Touching outside of the subtle alert should close the alert and touching inside the subtle alert should open the app.
+Touching anywhere on the screen when a subtle alert is showing will dismiss the alert. If the SDL app presenting the alert is not currently the active app, touching inside the subtle alert will open the app.
 
 Depending on the platform, a subtle alert can have up to two lines of text and up to two soft buttons.
 
-## Subtle Alert Layouts
 ###### Subtle Alert With No Soft Buttons
-
 ![Generic - Subtle Alert](assets/Generic_subtleAlert.png)
 
 ###### Subtle Alert With Soft Buttons
-
 ![Generic - Subtle Alert](assets/Generic_subtleAlert_buttons.png)
 
 ## Creating the Subtle Alert
@@ -805,10 +833,45 @@ if (response.getSuccess()) {
 ```
 !@
 
+## Checking if the User Dismissed the Subtle Alert 
+If desired, you can be notified when the user tapped on the subtle alert by registering for the @![iOS]`SDLOnSubtleAlertPressed`!@@![android,javaSE,javaEE,javascript]`OnSubtleAlertPressed`!@ notification. 
+
+@![iOS]
+##### Objective-C
+```objc
+[self.sdlManager subscribeToRPC:SDLDidReceiveSubtleAlertPressedNotification withObserver:self selector:@selector(subtleAlertPressed)];
+
+- (void)subtleAlertPressed {
+    <#The subtle alert was pressed#>
+}
+```
+
+##### Swift
+```swift
+sdlManager.subscribe(to: .SDLDidReceiveSubtleAlertPressed, observer: self, selector: #selector(subtleAlertPressed))
+
+@objc func subtleAlertPressed() {
+    <#The subtle alert was pressed#>
+}
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+// TODO
+```
+!@
+
+@![javascript]
+```js
+// TODO
+```
+!@
+
 ## Dismissing the Subtle Alert
 You can dismiss a displayed subtle alert before the timeout has elapsed.
 
-Please note that canceling the subtle alert will only dismiss the displayed alert. If you have set the `ttsChunk` property, the speech will play in its entirety even when the displayed subtle alert has been dismissed. If you know you will cancel a subtle alert, consider setting a short `ttsChunk`.
+Please note that canceling the subtle alert will only dismiss the displayed alert. If you have set the `ttsChunk` property, the speech will play in its entirety even when the displayed subtle alert has been dismissed. If you know you will cancel a subtle alert consider setting a short `ttsChunk`.
 
 There are two ways to dismiss a subtle alert. The first way is to dismiss a specific subtle alert using a unique `cancelID` assigned to the subtle alert. The second way is to dismiss whichever subtle alert is currently on-screen.
 
