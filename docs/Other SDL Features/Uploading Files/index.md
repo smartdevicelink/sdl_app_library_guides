@@ -153,9 +153,9 @@ file.overwrite = true
 !@
 
 @![android, javaSE, javaEE]
-If a file being uploaded has the same name as an already uploaded file, the existing file will be overwritten. To override this setting, so files do not get overwritten, set the `SdlFile`'s `overwrite` property to `false`.
+If a file being uploaded has the same name as an already uploaded file, the new file will be ignored. To override this setting, set the `SDLFile`'s `overwrite` property to `true`.
 ```java
-file.setOverwrite(false);
+file.setOverwrite(true);
 ```
 !@
 
