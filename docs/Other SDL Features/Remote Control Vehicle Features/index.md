@@ -264,13 +264,12 @@ sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapa
         SeatLocationCapability seatLocationCapability = (SeatLocationCapability) capability;
         if (seatLocationCapability.getSeatLocations() != null && seatLocationCapability.getSeatLocations().size() > 0){
             List<SeatLocation> seats = seatLocationCapability.getSeatLocations();
-
             <#Save seat location capabilities#>
         }
     }
 
     @Override
-    public void onError(int correlationId, Result resultCode, String info) {
+    public void onError(String info) {
         <#Handle Error#>
     }
 });
