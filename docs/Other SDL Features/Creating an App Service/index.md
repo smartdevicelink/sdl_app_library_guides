@@ -958,7 +958,7 @@ sdlManager.send(publishServiceRequest)
 @![android,javaSE,javaEE]
 ```java
 AppServiceManifest manifest = new AppServiceManifest(AppServiceType.WEATHER.toString());
-manifest.setWeatherServiceManifest("<#Updated weather service manifest>");
+manifest.setWeatherServiceManifest(<#Updated weather service manifest>);
 
 PublishAppService publishServiceRequest = new PublishAppService(manifest);
 sdlManager.sendRPC(publishServiceRequest);
