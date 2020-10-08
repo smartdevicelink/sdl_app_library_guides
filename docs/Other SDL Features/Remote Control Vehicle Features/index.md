@@ -325,7 +325,7 @@ sdlManager.send(request: seatLocation, responseHandler: { (request, response, er
 @![android,javaEE,javaSE]
 ```java
 SetGlobalProperties seatLocation = new SetGlobalProperties()
-    .setUserLocation(<#Selected Seat#>;);
+    .setUserLocation(<#Selected Seat#>);
 seatLocation.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
@@ -685,7 +685,7 @@ sdlManager.send(request: getInteriorVehicleDataConsent , responseHandler: { (req
 
 @![android, javaEE, javaSE]
 ```java
-GetInteriorVehicleDataConsent getInteriorVehicleDataConsent = new GetInteriorVehicleDataConsent(<#ModuleType#>,<#ModuleIDs#>,);
+GetInteriorVehicleDataConsent getInteriorVehicleDataConsent = new GetInteriorVehicleDataConsent(<#ModuleType#>, <#ModuleIDs#>);
 getInteriorVehicleDataConsent.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
