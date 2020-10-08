@@ -33,7 +33,7 @@ let isSubtleAlertAllowed = sdlManager.permissionManager.isRPCNameAllowed(.subtle
 ## Alerts
 An alert is a large pop-up window showing a short message with optional buttons. When an alert is activated, it will abort any SDL operation that is in-progress, except the already-in-progress alert. If an alert is issued while another alert is still in progress the newest alert will simply be ignored.
 
-Depending on the platform, an alert can have up to three lines of text, a progress indicator (e.g. a spinning wheel or hourglass), and up to four soft buttons.    
+Depending on the platform, an alert can have up to three lines of text, a progress indicator (e.g. a spinning wheel or hourglass), and up to four soft buttons.  
 
 ###### Alert With No Soft Buttons
 
