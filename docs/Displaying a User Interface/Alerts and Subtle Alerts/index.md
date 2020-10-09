@@ -40,7 +40,7 @@ Depending on the platform, an alert can have up to three lines of text, a progre
 ![Generic - Alert](assets/Generic_alert.png)
 
 !!! NOTE
-If no soft buttons are added to an alert some OEMs may add a default "cancel" or "close" button.
+If no soft buttons are added to an alert some modules may add a default "cancel" or "close" button.
 !!!
 
 ##### Alert With Soft Buttons
@@ -243,12 +243,12 @@ An alert can also speak a prompt or play a sound file when the alert appears on 
 
 ##### Text
 @![iOS]
-##### Objective-C
+###### Objective-C
 ```objc
 alert.ttsChunks = [SDLTTSChunk textChunksFromString:<#(nonnull NSString *)#>];
 ```
 
-##### Swift
+###### Swift
 ```swift
 alert.ttsChunks = SDLTTSChunk.textChunks(from: <#String#>)
 ```
@@ -273,12 +273,12 @@ alert.setTtsChunks([chunk]);
 The `ttsChunks` parameter can also take a file to play/speak. For more information on how to upload the file please refer to the [Playing Audio Indications](Speech and Audio/Playing Audio Indications) guide.
 
 @![iOS]
-##### Objective-C
+###### Objective-C
 ```objc
 alert.ttsChunks = [SDLTTSChunk fileChunksWithName:<#(nonnull NSString *)#>];
 ```
 
-##### Swift
+###### Swift
 ```swift
 alert.ttsChunks = SDLTTSChunk.fileChunks(withName: <#String#>)
 ```
