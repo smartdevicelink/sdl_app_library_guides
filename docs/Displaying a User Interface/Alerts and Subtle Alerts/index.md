@@ -2,7 +2,7 @@
 SDL supports two types of alerts: a large popup alert that typically takes over the whole screen and a smaller subtle alert that only covers a small part of screen.
 
 ## Checking if the Module Supports Alerts 
-Since subtle alert is a new feature that is only supported on the newest modules (RPC v7.0+), we recommend checking if subtle alerts are supported on the connected module before attempting to use the feature.
+Your SDL app may be restricted to only being allowed to send an alert when your app is open (i.e. the `hmiLevel` is non-`NONE`) or when it is the currently active app (i.e. the hmiLevel is `FULL`). Please be aware that subtle alert is a new feature (RPC v7.0+) and may not be supported on all modules.
 
 @![iOS]
 ##### Objective-C
@@ -30,30 +30,28 @@ let isSubtleAlertAllowed = sdlManager.permissionManager.isRPCNameAllowed(.subtle
 ```
 !@
 
-## Alerts
+## Alerts (RPC v1.0+)
 An alert is a large pop-up window showing a short message with optional buttons. When an alert is activated, it will abort any SDL operation that is in-progress, except the already-in-progress alert. If an alert is issued while another alert is still in progress the newest alert will simply be ignored.
 
 Depending on the platform, an alert can have up to three lines of text, a progress indicator (e.g. a spinning wheel or hourglass), and up to four soft buttons.  
 
-###### Alert With No Soft Buttons
-
+##### Alert With No Soft Buttons
 ![Generic - Alert](assets/Generic_alert.png)
 
 !!! NOTE
 If no soft buttons are added to an alert some OEMs may add a default "cancel" or "close" button.
 !!!
 
-###### Alert With Soft Buttons
-
+##### Alert With Soft Buttons
 ![Generic - Alert](assets/Generic_alert_buttons.png)
 
-## Creating the Alert
+### Creating the Alert
+#### Text
 
-### Text
 @![iOS]
 ##### Objective-C
 ```objc
-SDLAlert *alert = [[SDLAlert alloc] initWithAlertText:<#NSString#> softButtons:<#[SDLSoftButton]#> playTone:<#BOOL#> ttsChunks:<#[SDLTTSChunk]#> alertIcon:<#SDLImage#> cancelID:<#UInt32#>];
+SDLAlert *alert = [[SDLAlert alloc] initWithAlertText:<#(nullable NSString *)#> softButtons:<#(nullable NSArray<SDLSoftButton *> *)#> playTone:<#(BOOL)#> ttsChunks:<#(nullable NSArray<SDLTTSChunk *> *)#> alertIcon:<#(nullable SDLImage *)#> cancelID:<#(UInt32)#>];
 ```
 
 ##### Swift
@@ -82,7 +80,7 @@ const alert = new SDL.rpc.messages.Alert()
 ```
 !@
 
-### Buttons
+#### Buttons
 
 @![iOS]
 ##### Objective-C
@@ -164,7 +162,7 @@ sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.ON_BUTTON_PRESS, function (on
 ```
 !@
 
-### Alert Icon
+#### Icon
 An alert can include a custom or static (built-in) image that will be displayed within the alert. Before you add the image to the alert, make sure the image is uploaded to the head unit using the @![iOS]`SDLFileManager`!@@![android,javaSE,javaEE,javascript]FileManager!@. If the image is already uploaded, you can set the `alertIcon` property.
 
 ![Generic - Alert](assets/Generic_alertIcon.png)
@@ -192,7 +190,7 @@ alert.setAlertIcon(new SDL.rpc.structs.Image(<#artworkName#>, SDL.rpc.enums.Imag
 ```
 !@
 
-### Timeouts
+#### Timeouts
 An optional timeout can be added that will dismiss the alert when the duration is over. Typical timeouts are between 3 and 10 seconds. If omitted a default of 5 seconds is used.
 
 @![iOS]
@@ -221,8 +219,8 @@ alert.setDuration(5000);
 ```
 !@
 
-### Progress Indicator
-Not all OEMs support a progress indicator. If supported, the alert will show an animation that indicates that the user must wait (e.g. a spinning wheel or hourglass, etc). If omitted, no progress indicator will be shown.
+#### Progress Indicator
+Not all modules support a progress indicator. If supported, the alert will show an animation that indicates that the user must wait (e.g. a spinning wheel or hourglass, etc). If omitted, no progress indicator will be shown.
 
 @![iOS]
 ##### Objective-C
@@ -248,10 +246,10 @@ alert.setProgressIndicator(true);
 ```
 !@
 
-### Text-To-Speech
+#### Text-To-Speech
 An alert can also speak a prompt or play a sound file when the alert appears on the screen. This is done by setting the `ttsChunks` parameter.
 
-#### Text
+##### Text
 @![iOS]
 ##### Objective-C
 ```objc
@@ -279,7 +277,7 @@ alert.setTtsChunks([chunk]);
 ```
 !@
 
-#### Sound File
+##### Sound File
 The `ttsChunks` parameter can also take a file to play/speak. For more information on how to upload the file please refer to the [Playing Audio Indications](Speech and Audio/Playing Audio Indications) guide.
 
 @![iOS]
@@ -310,7 +308,7 @@ alert.setTtsChunk([ttsChunk]);
 ```
 !@
 
-### Play Tone
+#### Play Tone
 To play the alert tone when the alert appears and before the text-to-speech is spoken, set `playTone` to `true`.
 
 @![iOS]
@@ -337,7 +335,7 @@ alert.setPlayTone(true);
 ```
 !@
 
-## Showing the Alert
+### Showing the Alert
 
 @![iOS]
 ##### Objective-C
@@ -395,7 +393,7 @@ if (response.getSuccess()) {
 ```
 @!
 
-## Dismissing the Alert (RPC v6.0+)
+### Dismissing the Alert (RPC v6.0+)
 You can dismiss a displayed alert before the timeout has elapsed. This feature is useful if you want to show users a loading screen while performing a task, such as searching for a list for nearby coffee shops. As soon as you have the search results, you can cancel the alert and show the results. 
 
 !!! NOTE
@@ -408,7 +406,7 @@ Canceling the alert will only dismiss the displayed alert. If you have set the `
 
 There are two ways to dismiss an alert. The first way is to dismiss a specific alert using a unique `cancelID` assigned to the alert. The second way is to dismiss whichever alert is currently on-screen.
 
-### Dismissing a Specific Alert
+#### Dismissing a Specific Alert
 
 @![iOS]
 ##### Objective-C
@@ -476,7 +474,7 @@ if (response.getSuccess()) {
 ```
 !@
 
-### Dismissing the Current Alert
+#### Dismissing the Current Alert
 
 @![iOS]
 ##### Objective-C
@@ -537,7 +535,7 @@ if (response.getSuccess()) {
 ```
 !@
 
-## Subtle Alerts (RPC 7.0+)
+## Subtle Alerts (RPC v7.0+)
 A subtle alert is a notification style alert window showing a short message with optional buttons. When a subtle alert is activated, it will not abort other SDL operations that are in-progress like the larger pop-up alert does. If a subtle alert is issued while another subtle alert is still in progress the newest subtle alert will simply be ignored.
  
 Touching anywhere on the screen when a subtle alert is showing will dismiss the alert. If the SDL app presenting the alert is not currently the active app, touching inside the subtle alert will open the app.
@@ -897,7 +895,7 @@ SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWith
 ##### Swift
 ```swift
 // `cancelID` is the ID that you assigned when creating and sending the subtle alert
-let cancelInteraction = SDLCancelInteraction(alertCancelID: cancelID)
+let cancelInteraction = SDLCancelInteraction(subtleAlertCancelID: cancelID)
 sdlManager.send(request: cancelInteraction) { (request, response, error) in
     guard response?.success.boolValue == true else { return }
     <#The subtle alert was canceled successfully#>
