@@ -54,7 +54,7 @@ sdlSlider.numTicks = @(5);
 ##### Swift
 ```swift
 // Must be a number between 2 and 26
-sdlSlider.numTicks = 5
+sdlSlider.numTicks = NSNumber(5)
 ```
 !@
 
@@ -83,7 +83,7 @@ sdlSlider.position = @(1);
 ##### Swift
 ```swift
 // Must be a number between 1 and 26
-sdlSlider.position = 1
+sdlSlider.position = NSNumber(1)
 ```
 !@
 
@@ -200,7 +200,7 @@ sdlSlider.cancelID = @(45);
 ```
 ##### Swift
 ```swift
-sdlSlider.cancelID = 45
+sdlSlider.cancelID = NSNumber(45)
 ```
 !@
 
@@ -237,7 +237,7 @@ slider.setCancelID(45);
 ```swift
 manager.send(request: sdlSlider, responseHandler: { (req, res, err) in
     // Create a SDLSlider response object from the handler response
-    guard let response = res as? SDLSliderResponse, response.success.boolValue == true, let position = response.sliderPosition.intValue else { return }
+    guard let response = res as? SDLSliderResponse, response.success.boolValue == true, let position = response.sliderPosition?.intValue else { return }
 
     <#Use the slider position#>
 })

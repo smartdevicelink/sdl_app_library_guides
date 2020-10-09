@@ -232,9 +232,11 @@ sdlManager.screenManager.subscribeButton(.playPause) { (buttonPress, buttonEvent
 
     switch buttonPress.buttonPressMode {
     case .short:
-        // The user short pressed the button
+        <#The user short pressed the button#>
     case .long:
-        // The user long pressed the button
+        <#The user long pressed the button#>
+    default:
+        <#code#>
     }
 }
 ```
@@ -354,9 +356,11 @@ sdlManager.screenManager.subscribeButton(.preset2, withObserver: self, selector:
 
     switch buttonName {
     case .preset1:
-        // The user short or long pressed the preset 1 button
+        <#The user short or long pressed the preset 1 button#>
     case .preset2:
-        // The user short or long pressed the preset 2 button
+        <#The user short or long pressed the preset 2 button#>
+    default:
+        <#code#>
     }
 }
 ```
@@ -450,9 +454,11 @@ sdlManager.screenManager.subscribeButton(.navPanUp) { (buttonPress, buttonEvent,
 
     switch buttonPress.buttonPressMode {
     case .short:
-        // The user short pressed the button
+        <#The user short pressed the button#>
     case .long:
-        // The user long pressed the button
+        <#The user long pressed the button#>
+    default:
+        <#code#>
     }
 }
 ```
