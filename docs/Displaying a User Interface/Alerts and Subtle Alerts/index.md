@@ -241,7 +241,6 @@ alert.setProgressIndicator(true);
 #### Text-To-Speech
 An alert can also speak a prompt or play a sound file when the alert appears on the screen. This is done by setting the `ttsChunks` parameter.
 
-##### Text
 @![iOS]
 ###### Objective-C
 ```objc
@@ -269,16 +268,15 @@ alert.setTtsChunks([chunk]);
 ```
 !@
 
-##### Sound File
 The `ttsChunks` parameter can also take a file to play/speak. For more information on how to upload the file please refer to the [Playing Audio Indications](Speech and Audio/Playing Audio Indications) guide.
 
 @![iOS]
-###### Objective-C
+##### Objective-C
 ```objc
 alert.ttsChunks = [SDLTTSChunk fileChunksWithName:<#(nonnull NSString *)#>];
 ```
 
-###### Swift
+##### Swift
 ```swift
 alert.ttsChunks = SDLTTSChunk.fileChunks(withName: <#String#>)
 ```
