@@ -47,6 +47,8 @@ If no soft buttons are added to an alert some OEMs may add a default "cancel" or
 ![Generic - Alert](assets/Generic_alert_buttons.png)
 
 ### Creating the Alert
+The following steps show you how to add text, images, buttons, and sound to your alert. Please note that at least one line of text or the "text-to-speech" chunks must be set in order for your alert to work. 
+
 #### Text
 
 @![iOS]
@@ -86,36 +88,25 @@ const alert = new SDL.rpc.messages.Alert()
 @![iOS]
 ##### Objective-C
 ```objc
-SDLSoftButton *button1 = [[SDLSoftButton alloc] initWithType:SDLSoftButtonTypeText text:@"<#Button Text#>" image:nil highlighted:false buttonId:<#Soft Button Id#> systemAction:SDLSystemActionDefaultAction handler:^(SDLOnButtonPress *_Nullable buttonPress, SDLOnButtonEvent *_Nullable buttonEvent) {
+SDLSoftButton *button1 = [[SDLSoftButton alloc] initWithType:<#(nonnull SDLSoftButtonType)#> text:<#(nullable NSString *)#> image:<#(nullable SDLImage *)#> highlighted:<#(BOOL)#> buttonId:<#(UInt16)#> systemAction:<#(nullable SDLSystemAction)#> handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     if (buttonPress == nil) {
         return;
     }
+
     <#Button has been pressed#>
 }];
 
-SDLSoftButton *button2 = [[SDLSoftButton alloc] initWithType:SDLSoftButtonTypeText text:<#Button Text#> image:nil highlighted:false buttonId:<#Soft Button Id#> systemAction:SDLSystemActionDefaultAction handler:^(SDLOnButtonPress *_Nullable buttonPress, SDLOnButtonEvent *_Nullable buttonEvent) {
-    if (buttonPress == nil) {
-        return;
-    }
-    <#Button has been pressed#>
-}];
-
-alert.softButtons = @[button1, button2];
+alert.softButtons = @[button1];
 ```
 
 ##### Swift
 ```swift
-let button1 = SDLSoftButton(type: .text, text: <#Button Text#>, image: nil, highlighted: false, buttonId: <#Soft Button Id#>, systemAction: .defaultAction, handler: { buttonPress, buttonEvent in
+let button1 = SDLSoftButton(type: <#SDLSoftButtonType#>, text: <#String?#>, image: <#SDLImage?#>, highlighted: <#Bool#>, buttonId: <#UInt16#>, systemAction: <#SDLSystemAction?#>) { (buttonPress, buttonEvent) in
     guard buttonPress != nil else { return }
     <#Button has been pressed#>
-})
+}
 
-let button2 = SDLSoftButton(type: .text, text: <#Button Text#>, image: nil, highlighted: false, buttonId: <#Soft Button Id#>, systemAction: .defaultAction, handler: { buttonPress, buttonEvent in
-    guard buttonPress != nil else { return }
-    <#Button has been pressed#>
-})
-
-alert.softButtons = [button1, button2]
+alert.softButtons = [button1]
 ```
 !@
 
@@ -129,7 +120,7 @@ SoftButton okButton = new SoftButton(SoftButtonType.SBT_TEXT, softButtonId)
 // Set the softbuttons(s) to the alert
 alert.setSoftButtons(Collections.singletonList(okButton));
 
-// This listener is only needed once, and will work for all of soft buttons you send with your alert
+// This listener is only needed once and will work for all of soft buttons you send with your alert
 sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNotificationListener() {
       @Override
       public void onNotified(RPCNotification notification) {
@@ -154,7 +145,7 @@ const okButton = new SDL.rpc.structs.SoftButton()
 // Set the softbuttons(s) to the alert
 alert.setSoftButtons([okButton]);
 
-// This listener is only needed once, and will work for all of soft buttons you send with your alert
+// This listener is only needed once and will work for all of soft buttons you send with your alert
 sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.ON_BUTTON_PRESS, function (onButtonPress) {
     if (onButtonPress.getCustomButtonId() === softButtonId) {
         console.log("OK button pressed");
@@ -164,18 +155,18 @@ sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.ON_BUTTON_PRESS, function (on
 !@
 
 #### Icon
-An alert can include a custom or static (built-in) image that will be displayed within the alert. Before you add the image to the alert, make sure the image is uploaded to the head unit using the @![iOS]`SDLFileManager`!@@![android,javaSE,javaEE,javascript]FileManager!@. If the image is already uploaded, you can set the `alertIcon` property.
+An alert can include a custom or static (built-in) image that will be displayed within the alert. Before you add the image to the alert, make sure the image is uploaded to the head unit using the @![iOS]`SDLFileManager`!@@![android,javaSE,javaEE,javascript]`FileManager`!@. Once the image is uploaded, you can show the alert with the icon.
 
 ![Generic - Alert](assets/Generic_alertIcon.png)
 
 @![iOS]
 ##### Objective-C
 ```objc
-alert.alertIcon = [[SDLImage alloc] initWithName:<#artworkName#> isTemplate:YES];
+alert.alertIcon = [[SDLImage alloc] initWithName:<#(nonnull NSString *)#> isTemplate:<#(BOOL)#>];
 ```
 ##### Swift
 ```swift
-alert.alertIcon = SDLImage(name: <#artworkName#>, isTemplate: true)
+alert.alertIcon = SDLImage(name: <#String#>, isTemplate: <#Bool#>)
 ```
 !@
 
@@ -192,7 +183,7 @@ alert.setAlertIcon(new SDL.rpc.structs.Image(<#artworkName#>, SDL.rpc.enums.Imag
 !@
 
 #### Timeouts
-An optional timeout can be added that will dismiss the alert when the duration is over. Typical timeouts are between 3 and 10 seconds. If omitted a default of 5 seconds is used.
+An optional timeout can be added that will dismiss the alert when the duration is over. Typical timeouts are between 3 and 10 seconds. If omitted, a default of 5 seconds is used.
 
 @![iOS]
 ##### Objective-C
@@ -254,12 +245,12 @@ An alert can also speak a prompt or play a sound file when the alert appears on 
 @![iOS]
 ##### Objective-C
 ```objc
-alert.ttsChunks = [SDLTTSChunk textChunksFromString:@"<#Text to speak#>"];
+alert.ttsChunks = [SDLTTSChunk textChunksFromString:<#(nonnull NSString *)#>];
 ```
 
 ##### Swift
 ```swift
-alert.ttsChunks = SDLTTSChunk.textChunks(from: "<#Text to speak#>")
+alert.ttsChunks = SDLTTSChunk.textChunks(from: <#String#>)
 ```
 !@
 
@@ -284,12 +275,12 @@ The `ttsChunks` parameter can also take a file to play/speak. For more informati
 @![iOS]
 ##### Objective-C
 ```objc
- alert.ttsChunks = [SDLTTSChunk fileChunksWithName:@"<#Name#>"];
+alert.ttsChunks = [SDLTTSChunk fileChunksWithName:<#(nonnull NSString *)#>];
 ```
 
 ##### Swift
 ```swift
- alert.ttsChunks = SDLTTSChunk.fileChunks(withName: "<#Name#>")
+alert.ttsChunks = SDLTTSChunk.fileChunks(withName: <#String#>)
 ```
 !@
 
@@ -310,7 +301,7 @@ alert.setTtsChunk([ttsChunk]);
 !@
 
 #### Play Tone
-To play the alert tone when the alert appears and before the text-to-speech is spoken, set `playTone` to `true`.
+To play a notification sound when the alert appears, set `playTone` to `true`.
 
 @![iOS]
 ##### Objective-C
@@ -343,9 +334,10 @@ alert.setPlayTone(true);
 ```objc
 [self.sdlManager sendRequest:alert withResponseHandler:^(SDLRPCRequest *request, SDLRPCResponse *response, NSError *error) {
     if (!response.success.boolValue) { 
-        // Print out the error if there is one and return early
+        <#Print out the error if there is one#>
         return;
     }
+
     <#Alert was shown successfully#>
 }];
 ```
@@ -353,7 +345,11 @@ alert.setPlayTone(true);
 ##### Swift
 ```swift
 sdlManager.send(request: alert) { (request, response, error) in
-    guard response?.success.boolValue == true else { return }
+    guard response?.success.boolValue == true else {
+        <#Print out the error if there is one#>
+        return
+    }
+
     <#Alert was shown successfully#>
 }
 ```
@@ -416,9 +412,10 @@ There are two ways to dismiss an alert. The first way is to dismiss a specific a
 SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWithAlertCancelID:cancelID];
 [self.sdlManager sendRequest:cancelInteraction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if (!response.success.boolValue) { 
-        // Print out the error if there is one and return early
+        <#Print out the error if there is one#>
         return;
     }
+
     <#The alert was canceled successfully#>
 }];
 ```
@@ -428,7 +425,11 @@ SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWith
 // `cancelID` is the ID that you assigned when creating and sending the alert
 let cancelInteraction = SDLCancelInteraction(alertCancelID: cancelID)
 sdlManager.send(request: cancelInteraction) { (request, response, error) in
-    guard response?.success.boolValue == true else { return }
+    guard response?.success.boolValue == true else {
+        <#Print out the error if there is one#>
+        return
+    }
+
     <#The alert was canceled successfully#>
 }
 ```
@@ -483,9 +484,10 @@ if (response.getSuccess()) {
 SDLCancelInteraction *cancelInteraction = [SDLCancelInteraction alert];
 [self.sdlManager sendRequest:cancelInteraction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if (!response.success.boolValue) { 
-        // Print out the error if there is one and return early
+        <#Print out the error if there is one#>
         return;
     }
+
     <#The alert was canceled successfully#>
 }];
 ```
@@ -494,7 +496,11 @@ SDLCancelInteraction *cancelInteraction = [SDLCancelInteraction alert];
 ```swift
 let cancelInteraction = SDLCancelInteraction.alert()
 sdlManager.send(request: cancelInteraction) { (request, response, error) in
-    guard response?.success.boolValue == true else { return }
+    guard response?.success.boolValue == true else {
+        <#Print out the error if there is one#>
+        return
+    }
+
     <#The alert was canceled successfully#>
 }
 ```
