@@ -4,7 +4,7 @@ Each head unit manufacturer supports a set of user interface templates. These te
 ## Change the Template
 To change a template at any time, use @![iOS]`[SDLScreenManager changeLayout:]`!@@![android, javaSE, javaEE, javascript]`ScreenManager.changeLayout()`!@. This guide requires SDL @![android, javaSE, javaEE]Java Suite version 5.0!@@![iOS]iOS version 7.0!@ @![javascript]JavaScript Suite version 1.2!@. If using an older version, use `SetDisplayLayout` RPC.
 
-!!!NOTE
+!!! NOTE
 When changing the layout, you may get an error or failure if the update is "superseded." This isn't technically a failure, because changing the layout has not yet been attempted. The layout or batched operation was cancelled before it could be completed because another operation was requested. The layout change will then be inserted into the future operation and completed then.
 !!!
 
