@@ -189,7 +189,7 @@ An optional timeout can be added that will dismiss the alert when the duration i
 ##### Objective-C
 ```objc
 // Duration timeout is in milliseconds
-alert.duration = @(4000);
+alert.duration = @4000;
 ```
 
 ##### Swift
@@ -593,36 +593,25 @@ const subtleAlert = new SDL.rpc.messages.SubtleAlert()
 @![iOS]
 ##### Objective-C
 ```objc
-SDLSoftButton *button1 = [[SDLSoftButton alloc] initWithType:SDLSoftButtonTypeText text:@"<#Button Text#>" image:nil highlighted:false buttonId:<#Soft Button Id#> systemAction:SDLSystemActionDefaultAction handler:^(SDLOnButtonPress *_Nullable buttonPress, SDLOnButtonEvent *_Nullable buttonEvent) {
+SDLSoftButton *button1 = [[SDLSoftButton alloc] initWithType:<#(nonnull SDLSoftButtonType)#> text:<#(nullable NSString *)#> image:<#(nullable SDLImage *)#> highlighted:<#(BOOL)#> buttonId:<#(UInt16)#> systemAction:<#(nullable SDLSystemAction)#> handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     if (buttonPress == nil) {
         return;
     }
+
     <#Button has been pressed#>
 }];
 
-SDLSoftButton *button2 = [[SDLSoftButton alloc] initWithType:SDLSoftButtonTypeText text:<#Button Text#> image:nil highlighted:false buttonId:<#Soft Button Id#> systemAction:SDLSystemActionDefaultAction handler:^(SDLOnButtonPress *_Nullable buttonPress, SDLOnButtonEvent *_Nullable buttonEvent) {
-    if (buttonPress == nil) {
-        return;
-    }
-    <#Button has been pressed#>
-}];
-
-subtleAlert.softButtons = @[button1, button2];
+subtleAlert.softButtons = @[button1];
 ```
 
 ##### Swift
 ```swift
-let button1 = SDLSoftButton(type: .text, text: <#Button Text#>, image: nil, highlighted: false, buttonId: <#Soft Button Id#>, systemAction: .defaultAction, handler: { buttonPress, buttonEvent in
+let button1 = SDLSoftButton(type: <#SDLSoftButtonType#>, text: <#String?#>, image: <#SDLImage?#>, highlighted: <#Bool#>, buttonId: <#UInt16#>, systemAction: <#SDLSystemAction?#>) { (buttonPress, buttonEvent) in
     guard buttonPress != nil else { return }
     <#Button has been pressed#>
-})
+}
 
-let button2 = SDLSoftButton(type: .text, text: <#Button Text#>, image: nil, highlighted: false, buttonId: <#Soft Button Id#>, systemAction: .defaultAction, handler: { buttonPress, buttonEvent in
-    guard buttonPress != nil else { return }
-    <#Button has been pressed#>
-})
-
-subtleAlert.softButtons = [button1, button2]
+subtleAlert.softButtons = [button1]
 ```
 !@
 
@@ -671,18 +660,19 @@ sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.ON_BUTTON_PRESS, function (on
 !@
 
 #### Icon
-A subtle alert can include a custom or static (built-in) image that will be displayed within the subtle alert. Before you add the image to the subtle alert, make sure the image is uploaded to the head unit using the @![iOS]`SDLFileManager`!@@![android,javaSE,javaEE,javascript]FileManager!@. If the image is already uploaded, you can set the `alertIcon` property.
+A subtle alert can include a custom or static (built-in) image that will be displayed within the subtle alert. Before you add the image to the subtle alert, make sure the image is uploaded to the head unit using the @![iOS]`SDLFileManager`!@@![android,javaSE,javaEE,javascript]`FileManager`!@. Once the image is uploaded, you can show the alert with the icon.
 
 ![Generic - Subtle Alert](assets/Generic_subtleAlertIcon.png)
 
 @![iOS]
 ##### Objective-C
 ```objc
-subtleAlert.alertIcon = [[SDLImage alloc] initWithName:<#artworkName#> isTemplate:YES];
+subtleAlert.alertIcon = [[SDLImage alloc] initWithName:<#(nonnull NSString *)#> isTemplate:<#(BOOL)#>];
 ```
+
 ##### Swift
 ```swift
-subtleAlert.alertIcon = SDLImage(name: <#artworkName#>, isTemplate: true)
+subtleAlert.alertIcon = SDLImage(name: <#String#>, isTemplate: <#Bool#>)
 ```
 !@
 
@@ -699,13 +689,13 @@ subtleAlert.setAlertIcon(new SDL.rpc.structs.Image(<#artworkName#>, SDL.rpc.enum
 !@
 
 #### Timeouts
-An optional timeout can be added that will dismiss the subtle alert when the duration is over. Typical timeouts are between 3 and 10 seconds. If omitted a default of 5 seconds is used.
+An optional timeout can be added that will dismiss the subtle alert when the duration is over. Typical timeouts are between 3 and 10 seconds. If omitted, a default of 5 seconds is used.
 
 @![iOS]
 ##### Objective-C
 ```objc
 // Duration timeout is in milliseconds
-subtleAlert.duration = @(4000);
+subtleAlert.duration = @4000;
 ```
 
 ##### Swift
@@ -733,12 +723,12 @@ A subtle alert can also speak a prompt or play a sound file when the subtle aler
 @![iOS]
 ##### Objective-C
 ```objc
-subtleAlert.ttsChunks = [SDLTTSChunk textChunksFromString:@"<#Text to speak#>"];
+subtleAlert.ttsChunks = [SDLTTSChunk textChunksFromString:<#(nonnull NSString *)#>];
 ```
 
 ##### Swift
 ```swift
-subtleAlert.ttsChunks = SDLTTSChunk.textChunks(from: "<#Text to speak#>")
+subtleAlert.ttsChunks = SDLTTSChunk.textChunks(from: <#String#>)
 ```
 !@
 
@@ -762,12 +752,12 @@ The `ttsChunks` parameter can also take a file to play/speak. For more informati
 @![iOS]
 ##### Objective-C
 ```objc
-subtleAlert.ttsChunks = [SDLTTSChunk fileChunksWithName:@"<#Name#>"];
+subtleAlert.ttsChunks = [SDLTTSChunk fileChunksWithName:<#(nonnull NSString *)#>];
 ```
 
 ##### Swift
 ```swift
-subtleAlert.ttsChunks = SDLTTSChunk.fileChunks(withName: "<#Name#>")
+subtleAlert.ttsChunks = SDLTTSChunk.fileChunks(withName: <#String#>)
 ```
 !@
 
@@ -794,18 +784,23 @@ subtleAlert.setTtsChunk([ttsChunk]);
 ```objc
 [self.sdlManager sendRequest:subtleAlert withResponseHandler:^(SDLRPCRequest *request, SDLRPCResponse *response, NSError *error) {
     if (!response.success.boolValue) { 
-        // Print out the error if there is one and return early
+        <#Print out the error if there is one#>
         return;
     }
-    <#Subtle Alert was shown successfully#>
+
+    <#Subtle alert was shown successfully#>
 }];
 ```
 
 ##### Swift
 ```swift
 sdlManager.send(request: subtleAlert) { (request, response, error) in
-    guard response?.success.boolValue == true else { return }
-    <#Subtle Alert was shown successfully#>
+    guard response?.success.boolValue == true else {
+        <#Print out the error if there is one#>
+        return
+    }
+
+    <#Subtle alert was shown successfully#>
 }
 ```
 !@
@@ -894,7 +889,7 @@ There are two ways to dismiss a subtle alert. The first way is to dismiss a spec
 ##### Objective-C
 ```objc
 // `cancelID` is the ID that you assigned when creating and sending the subtle alert
-SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWithAlertCancelID:cancelID];
+SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWithSubtleAlertCancelID:cancelID];
 [self.sdlManager sendRequest:cancelInteraction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if (!response.success.boolValue) { 
         // Print out the error if there is one and return early
@@ -909,7 +904,11 @@ SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWith
 // `cancelID` is the ID that you assigned when creating and sending the subtle alert
 let cancelInteraction = SDLCancelInteraction(subtleAlertCancelID: cancelID)
 sdlManager.send(request: cancelInteraction) { (request, response, error) in
-    guard response?.success.boolValue == true else { return }
+    guard response?.success.boolValue == true else {
+        <#Print out the error if there is one#>
+        return
+    }
+
     <#The subtle alert was canceled successfully#>
 }
 ```
@@ -967,7 +966,11 @@ SDLCancelInteraction *cancelInteraction = [SDLCancelInteraction subtleAlert];
 ```swift
 let cancelInteraction = SDLCancelInteraction.subtleAlert()
 sdlManager.send(request: cancelInteraction) { (request, response, error) in
-    guard response?.success.boolValue == true else { return }
+    guard response?.success.boolValue == true else {
+        <#Print out the error if there is one#>
+        return
+    }
+
     <#The subtle alert was canceled successfully#>
 }
 ```
