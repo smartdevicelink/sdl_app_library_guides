@@ -89,7 +89,13 @@ SDLRGBColor *darkGrey = [[SDLRGBColor alloc] initWithRed:57 green:78 blue:96];
 SDLRGBColor *grey = [[SDLRGBColor alloc] initWithRed:186 green:198 blue:210];
 
 SDLTemplateConfiguration *config = [[SDLTemplateConfiguration alloc] initWithTemplate:SDLPredefinedLayoutGraphicWithText dayColorScheme:[[SDLTemplateColorScheme alloc] initWithPrimaryRGBColor:green secondaryRGBColor:grey backgroundRGBColor:white] nightColorScheme:[[SDLTemplateColorScheme alloc] initWithPrimaryRGBColor:green secondaryRGBColor:grey backgroundRGBColor:darkGrey]];
-[self.sdlManager.screenManager changeLayout:config withCompletionHandler:nil];
+[self.sdlManager.screenManager changeLayout:config withCompletionHandler:^(NSError * _Nullable error) {
+    if (error != nil) {
+        // Color set with template change
+    } else {
+        // Color and template not changed
+    }
+}];
 ```
 
 ##### Swift
@@ -100,7 +106,13 @@ let grey = SDLRGBColor(red: 186, green: 198, blue: 210)
 let darkGrey = SDLRGBColor(red: 57, green: 78, blue: 96)
 
 let config = SDLTemplateConfiguration(template: .graphicWithText, dayColorScheme: SDLTemplateColorScheme(primaryRGBColor: green, secondaryRGBColor: grey, backgroundRGBColor: white), nightColorScheme: SDLTemplateColorScheme(primaryRGBColor: green, secondaryRGBColor: grey, backgroundRGBColor: darkGrey))
-sdlManager.screenManager.changeLayout(config, withCompletionHandler: nil)
+sdlManager.screenManager.changeLayout(config) { err in
+    if let error = err {
+        // Color and template not changed
+    } else {
+        // Color set with template change
+    }
+}
 ```
 !@
 @![android, javaSE, javaEE]
