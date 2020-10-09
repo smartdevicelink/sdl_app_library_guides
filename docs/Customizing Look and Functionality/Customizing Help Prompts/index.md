@@ -256,7 +256,7 @@ let resetGlobals = SDLResetGlobalProperties(properties: [.menuIcon, .menuName])
 
 // Reset the spoken prompts
 let resetGlobals = SDLResetGlobalProperties(properties: [.helpPrompt, .timeoutPrompt])
-sdlManager.send(request: resetGlobals) { (req, res, err) in
+sdlManager.send(request: resetGlobals) { (request, response, error) in
     if let error = error {
         // Something went wrong
     }
