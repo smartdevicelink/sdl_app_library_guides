@@ -242,12 +242,12 @@ alert.setProgressIndicator(true);
 An alert can also speak a prompt or play a sound file when the alert appears on the screen. This is done by setting the `ttsChunks` parameter.
 
 @![iOS]
-###### Objective-C
+##### Objective-C
 ```objc
 alert.ttsChunks = [SDLTTSChunk textChunksFromString:<#(nonnull NSString *)#>];
 ```
 
-###### Swift
+##### Swift
 ```swift
 alert.ttsChunks = SDLTTSChunk.textChunks(from: <#String#>)
 ```
@@ -547,24 +547,26 @@ Touching anywhere on the screen when a subtle alert is showing will dismiss the 
 
 Depending on the platform, a subtle alert can have up to two lines of text and up to two soft buttons.
 
-###### Subtle Alert With No Soft Buttons
+##### Subtle Alert With No Soft Buttons
 ![Generic - Subtle Alert](assets/Generic_subtleAlert.png)
 
-###### Subtle Alert With Soft Buttons
+##### Subtle Alert With Soft Buttons
 ![Generic - Subtle Alert](assets/Generic_subtleAlert_buttons.png)
 
-## Creating the Subtle Alert
+### Creating the Subtle Alert
+The following steps show you how to add text, images, buttons, and sound to your subtle alert. Please note that at least one line of text or the "text-to-speech" chunks must be set in order for your subtle alert to work. 
 
-### Text
+#### Text
+
 @![iOS]
 ##### Objective-C
 ```objc
-SDLSubtleAlert *subtleAlert = [[SDLSubtleAlert alloc] initWithAlertText1:<#NSString#> alertText2:<#NSString#> alertIcon:<#SDLImage#> ttsChunks:<#[SDLTTSChunk]#> duration:<#UInt32#> softButtons:<#[SDLSoftButton]#> cancelID:<#UInt32#>];
+SDLSubtleAlert *subtleAlert = [[SDLSubtleAlert alloc] initWithAlertText1:<#(nullable NSString *)#> alertText2:<#(nullable NSString *)#> alertIcon:<#(nullable SDLImage *)#> ttsChunks:<#(nullable NSArray<SDLTTSChunk *> *)#> duration:<#(nullable NSNumber<SDLUInt> *)#> softButtons:<#(nullable NSArray<SDLSoftButton *> *)#> cancelID:<#(nullable NSNumber<SDLInt> *)#>];
 ```
 
 ##### Swift
 ```swift
-let subtleAlert = SDLSubtleAlert(alertText1: <#String?#>, alertText2: <#String?#>, alertIcon: <#SDLImage?#>, ttsChunks: <#[SDLTTSChunk]?#>, duration: <#UInt32#>, softButtons: <#[SDLSoftButton]?#>, cancelID: <#UInt32#>)
+let subtleAlert = SDLSubtleAlert(alertText1: <#String?#>, alertText2: <#String?#>, alertIcon: <#SDLImage?#>, ttsChunks: <#[SDLTTSChunk]?#>, duration: <#(NSNumber & SDLUInt)?#>, softButtons: <#[SDLSoftButton]?#>, cancelID: <#(NSNumber & SDLInt)?#>)
 ```
 !@
 
@@ -586,7 +588,7 @@ const subtleAlert = new SDL.rpc.messages.SubtleAlert()
 ```
 !@
 
-### Buttons
+#### Buttons
 
 @![iOS]
 ##### Objective-C
@@ -668,7 +670,7 @@ sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.ON_BUTTON_PRESS, function (on
 ```
 !@
 
-### Subtle Alert Icon
+#### Icon
 A subtle alert can include a custom or static (built-in) image that will be displayed within the subtle alert. Before you add the image to the subtle alert, make sure the image is uploaded to the head unit using the @![iOS]`SDLFileManager`!@@![android,javaSE,javaEE,javascript]FileManager!@. If the image is already uploaded, you can set the `alertIcon` property.
 
 ![Generic - Subtle Alert](assets/Generic_subtleAlertIcon.png)
@@ -696,7 +698,7 @@ subtleAlert.setAlertIcon(new SDL.rpc.structs.Image(<#artworkName#>, SDL.rpc.enum
 ```
 !@
 
-### Timeouts
+#### Timeouts
 An optional timeout can be added that will dismiss the subtle alert when the duration is over. Typical timeouts are between 3 and 10 seconds. If omitted a default of 5 seconds is used.
 
 @![iOS]
@@ -725,10 +727,9 @@ subtleAlert.setDuration(5000);
 ```
 !@
 
-### Text-To-Speech
+#### Text-To-Speech
 A subtle alert can also speak a prompt or play a sound file when the subtle alert appears on the screen. This is done by setting the `ttsChunks` parameter.
 
-#### Text
 @![iOS]
 ##### Objective-C
 ```objc
@@ -756,7 +757,6 @@ subtleAlert.setTtsChunks([chunk]);
 ```
 !@
 
-#### Sound File
 The `ttsChunks` parameter can also take a file to play/speak. For more information on how to upload the file please refer to the [Playing Audio Indications](Speech and Audio/Playing Audio Indications) guide.
 
 @![iOS]
@@ -787,7 +787,7 @@ subtleAlert.setTtsChunk([ttsChunk]);
 ```
 !@
 
-## Showing the Subtle Alert
+### Showing the Subtle Alert
 
 @![iOS]
 ##### Objective-C
@@ -839,7 +839,7 @@ if (response.getSuccess()) {
 ```
 !@
 
-## Checking if the User Dismissed the Subtle Alert 
+### Checking if the User Dismissed the Subtle Alert 
 If desired, you can be notified when the user tapped on the subtle alert by registering for the @![iOS]`SDLOnSubtleAlertPressed`!@@![android,javaSE,javaEE,javascript]`OnSubtleAlertPressed`!@ notification. 
 
 @![iOS]
@@ -879,7 +879,7 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_SUBTLE_ALERT_PRESSED, new 
 ```
 !@
 
-## Dismissing the Subtle Alert
+### Dismissing the Subtle Alert
 You can dismiss a displayed subtle alert before the timeout has elapsed.
 
 !!! Note
@@ -888,7 +888,7 @@ Canceling the subtle alert will only dismiss the displayed alert. If you have se
 
 There are two ways to dismiss a subtle alert. The first way is to dismiss a specific subtle alert using a unique `cancelID` assigned to the subtle alert. The second way is to dismiss whichever subtle alert is currently on-screen.
 
-### Dismissing a Specific Subtle Alert
+#### Dismissing a Specific Subtle Alert
 
 @![iOS]
 ##### Objective-C
@@ -948,7 +948,7 @@ if (response.getSuccess()) {
 ```
 !@
 
-### Dismissing the Current Subtle Alert
+#### Dismissing the Current Subtle Alert
 
 @![iOS]
 ##### Objective-C
