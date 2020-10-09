@@ -56,7 +56,7 @@ alert.ttsChunks = [SDLTTSChunk fileChunksWithName:<#Audio file name#>];
 
 ##### Swift
 ```swift
-let alert = SDLAlert(alertText1: <#String?#>, alertText2: <#String?#>, duration: <#UInt16#>)
+let alert = SDLAlert(alertText1: <#T##String?#>, alertText2: <#T##String?#>, alertText3: <#T##String?#>, softButtons: <#T##[SDLSoftButton]?#>, playTone: <#T##Bool#>, ttsChunks: <#T##[SDLTTSChunk]?#>, duration: <#T##UInt16#>, progressIndicator: <#T##Bool#>, alertIcon: <#T##SDLImage?#>, cancelID: <#T##UInt32#>)
 alert.ttsChunks = SDLTTSChunk.fileChunks(withName: <#Audio file name#>)
 sdlManager.send(alert)
 ```
