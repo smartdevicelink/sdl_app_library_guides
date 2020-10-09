@@ -892,7 +892,7 @@ There are two ways to dismiss a subtle alert. The first way is to dismiss a spec
 SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWithSubtleAlertCancelID:cancelID];
 [self.sdlManager sendRequest:cancelInteraction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if (!response.success.boolValue) { 
-        // Print out the error if there is one and return early
+        <#Print out the error if there is one#>
         return;
     }
     <#The subtle alert was canceled successfully#>
@@ -955,7 +955,7 @@ if (response.getSuccess()) {
 SDLCancelInteraction *cancelInteraction = [SDLCancelInteraction subtleAlert];
 [self.sdlManager sendRequest:cancelInteraction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if (!response.success.boolValue) { 
-        // Print out the error if there is one and return early
+        <#Print out the error if there is one#>
         return;
     }
     <#The subtle alert was canceled successfully#>
