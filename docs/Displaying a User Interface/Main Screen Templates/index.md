@@ -50,7 +50,15 @@ sdlManager.getScreenManager().changeLayout(templateConfiguration, new Completion
 
 @![javascript]
 ```js
-//TODO
+const templateConfiguration = new SDL.rpc.structs.TemplateConfiguration()
+    .setTemplate(SDL.rpc.enums.PredefinedLayout.GRAPHIC_WITH_TEXT);
+    
+const success = await sdlManager.getScreenManager().changeLayout(templateConfiguration);
+if (success) {
+    console.log('Layout set successfully');
+} else {
+    console.log('Layout not set successfully');
+}
 ```
 !@
 
@@ -116,7 +124,15 @@ sdlManager.getScreenManager().commit(new CompletionListener() {
 
 @![javascript]
 ```js
-//TODO
+sdlManager.getScreenManager().beginTransaction();
+sdlManager.getScreenManager().setTextField1('Line of Text');
+// The promise returned by changeLayout will not resolve because it is part of a batch update, and the await operator should be avoided as a result
+sdlManager.getScreenManager().changeLayout(templateConfiguration);
+sdlManager.getScreenManager().setPrimaryGraphic(<#SDLArtwork#>);
+const success = await sdlManager.getScreenManager().commit();
+if (success) {
+    console.log('Text, Graphic, and Template changed successful');
+}
 ```
 !@
 

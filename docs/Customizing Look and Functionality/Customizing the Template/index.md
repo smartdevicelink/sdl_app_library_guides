@@ -157,7 +157,17 @@ nightColorScheme.setBackgroundColor(white);
 nightColorScheme.setPrimaryColor(green);
 nightColorScheme.setSecondaryColor(darkGrey);
 
-//TODO
+const templateConfiguration = new SDL.rpc.structs.TemplateConfiguration()
+    .setTemplate(SDL.rpc.enums.PredefinedLayout.GRAPHIC_WITH_TEXT)
+    .setDayColorScheme(dayColorScheme)
+    .setNightColorScheme(nightColorScheme);
+    
+const success = await sdlManager.getScreenManager().changeLayout(templateConfiguration);
+if (success) {
+    // Color set with template change
+} else {
+    // Color and template not changed 
+}
 ```
 !@
 
