@@ -21,7 +21,9 @@ id observerId = [self.sdlManager.permissionManager addObserverForRPCs:@[SDLRPCFu
 
 ##### Swift
 ```swift
-let observerId = sdlManager.permissionManager.addObserver(forRPCs: [SDLRPCFunctionName.sendLocation.rawValue.rawValue], groupType: .any, withHandler: { (allChanges, groupStatus) in
+let setSendLocationPermissionElement = SDLPermissionElement(rpcName: SDLRPCFunctionName.sendLocation, parameterPermissions: nil)
+
+let observerId = sdlManager.permissionManager.subscribe(toRPCPermissions: [setSendLocationPermissionElement], groupType: .any, withHandler: { (allChanges, groupStatus) in
     // This handler will be called whenever the permission status changes
     guard groupStatus == .allowed else {
         // Your app does not have permission to send the `SDLSendLocation` request for its current HMI level

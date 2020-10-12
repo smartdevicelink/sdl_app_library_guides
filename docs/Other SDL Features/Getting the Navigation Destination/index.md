@@ -27,15 +27,18 @@ id observerId = [self.sdlManager.permissionManager addObserverForRPCs:@[SDLRPCFu
 
 ##### Swift
 ```swift
-let observerId = sdlManager.permissionManager.addObserver(forRPCs: [SDLRPCFunctionName.getWayPoints.rawValue.rawValue, SDLRPCFunctionName.subscribeWayPoints.rawValue.rawValue], groupType: .any, withHandler: { (allChanges, groupStatus) in
+let getWayPointsPermissionElement = SDLPermissionElement(rpcName: SDLRPCFunctionName.getWayPoints, parameterPermissions: nil)
+let subscribeWayPointsPermissionElement = SDLPermissionElement(rpcName: SDLRPCFunctionName.subscribeWayPoints, parameterPermissions: nil)
+
+let observerId = sdlManager.permissionManager.subscribe(toRPCPermissions: [getWayPointsPermissionElement, subscribeWayPointsPermissionElement], groupType: .any, withHandler: { (allChanges, groupStatus) in
     // This handler will be called whenever the permission status changes
-    if let getWayPointPermissionStatus = allChanges[SDLRPCFunctionName.getWayPoints.rawValue.rawValue], getWayPointPermissionStatus.boolValue == true {
+    if let getWayPointPermissionStatus = allChanges[SDLRPCFunctionName.getWayPoints], getWayPointPermissionStatus.isRPCAllowed == true {
         // Your app has permission to send the `SDLGetWayPoints` request for its current HMI level
     } else {
         // Your app does not have permission to send the `SDLGetWayPoints` request for its current HMI level
     }
 
-    if let subscribeWayPointsPermissionStatus = allChanges[SDLRPCFunctionName.subscribeWayPoints.rawValue.rawValue], subscribeWayPointsPermissionStatus.boolValue == true {
+    if let subscribeWayPointsPermissionStatus = allChanges[SDLRPCFunctionName.subscribeWayPoints], subscribeWayPointsPermissionStatus.isRPCAllowed == true {
         // Your app has permission to send the `SubscribeWayPoints` request for its current HMI level
     } else {
         // Your app does not have permission to send the `SubscribeWayPoints` request for its current HMI level

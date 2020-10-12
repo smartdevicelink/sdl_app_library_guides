@@ -44,7 +44,7 @@ sdlManager.start { [weak self] (success, error) in
     }
 
     let mainWindowCapability = self.sdlManager.systemCapabilityManager.defaultMainWindowCapability
-    let graphicsSupported = (mainWindowCapability.count > 0)
+    let graphicsSupported = (mainWindowCapability?.imageFields?.count ?? 0 > 0)
 }
 ```
 !@
