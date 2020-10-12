@@ -124,31 +124,31 @@ SDLAppServiceRecord *serviceRecord = aCapability.updatedAppServiceRecord;
 ```swift
 // From GetSystemCapabilityResponse
 let getResponse: SDLGetSystemCapabilityResponse = <#From wherever you got it#>
-let capabilities = getResponse.systemCapability.appServicesCapabilities
+let capabilities = getResponse.systemCapability?.appServicesCapabilities
 
 // This array contains all currently available app services on the system
-let appServices: [SDLAppServiceCapability] = capabilities.appServices
-let aCapability = appServices.first
+let appServices: [SDLAppServiceCapability]? = capabilities?.appServices
+let aCapability = appServices?.first
 
 // This will be nil since it's the first update
-let capabilityReason = aCapability.updateReason
+let capabilityReason = aCapability?.updateReason
 
 // The app service record will give you access to a service's generated id, which can be used to address the service directly (see below), it's manifest, used to see what data it supports, whether or not the service is published (it always will be here), and whether or not the service is the active service for its service type (only one service can be active for each type)
-let serviceRecord = aCapability.updatedAppServiceRecord
+let serviceRecord = aCapability?.updatedAppServiceRecord
 
 // From OnSystemCapabilityUpdated
 let serviceNotification: SDLOnSystemCapabilityUpdated = <#From wherever you got it#>
 let capabilities = serviceNotification.systemCapability.appServicesCapabilities
 
 // This array contains all recently updated services
-let appServices: [SDLAppServiceCapability] = capabilities.appServices
-let aCapability = appServices.first
+let appServices: [SDLAppServiceCapability]? = capabilities?.appServices
+let aCapability = appServices?.first
 
 // This won't be nil. It will tell you why a service is in the list of updates
-let capabilityReason = aCapability.updateReason
+let capabilityReason = aCapability?.updateReason
 
 // The app service record will give you access to a service's generated id, which can be used to address the service directly (see below), it's manifest, used to see what data it supports, whether or not the service is published (if it's not, it was just removed and should not be addressed), and whether or not the service is the active service for its service type (only one service can be active for each type)
-let serviceRecord = aCapability.updatedAppServiceRecord
+let serviceRecord = aCapability?.updatedAppServiceRecord
 ```
 !@
 
@@ -220,9 +220,6 @@ unsubscribeServiceData.subscribe = @NO;
 
 ##### Swift
 ```swift
-// Get service data once
-let getServiceData = SDLGetAppServiceData(appServiceType: .media)
-
 // Subscribe to service data in perpetuity via `OnAppServiceData` notifications.
 let subscribeServiceData = SDLGetAppServiceData(andSubscribeToAppServiceType: .media)
 
@@ -486,8 +483,8 @@ NSMutableData *imageData = [[NSMutableData alloc] init];
 ##### Swift
 ```swift
 let data: SDLAppServiceData = <#Get the App Service Data#>
-let weatherData: SDLWeatherServiceData = data.weatherServiceData
-guard let currentForecastImage = weatherData.currentForecast?.weatherIcon else {
+let weatherData: SDLWeatherServiceData? = data.weatherServiceData
+guard let currentForecastImage = weatherData?.currentForecast?.weatherIcon else {
     // The image doesn't exist, exit early
     return
 }

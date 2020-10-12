@@ -203,10 +203,10 @@ SDLGrid *climateModuleLocation = firstClimateModule.moduleInfo.location;
 ##### Swift
 ```swift
 // Get the first climate module's information
-let firstClimateModule = <#Remote Control Capabilities#>.climateControlCapabilities.first;
+let firstClimateModule = <#Remote Control Capabilities#>.climateControlCapabilities?.first;
 
-let climateModuleId = firstClimateModule.moduleInfo.moduleId;
-let climateModuleLocation = firstClimateModule.moduleInfo.location;
+let climateModuleId = firstClimateModule?.moduleInfo?.moduleId;
+let climateModuleLocation = firstClimateModule?.moduleInfo?.location;
 ```
 !@
 
@@ -417,7 +417,7 @@ After you subscribe to the `.SDLDidReceiveInteriorVehicleData` you must also sub
 
 ###### RPC < v6.0
 ```swift
-let getInteriorVehicleData = SDLGetInteriorVehicleData(andSubscribeToModuleType: .radio)
+let getInteriorVehicleData = SDLGetInteriorVehicleData(andSubscribeToModuleType: .radio, moduleId: "<#ModuleID#>")
 sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
     guard let response = res as? SDLGetInteriorVehicleDataResponse else { return }
     // This can now be used to retrieve data

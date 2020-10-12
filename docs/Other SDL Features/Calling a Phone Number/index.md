@@ -19,10 +19,12 @@ id observerId = [self.sdlManager.permissionManager addObserverForRPCs:@[SDLRPCFu
 
 ##### Swift
 ```swift
-let observerId = sdlManager.permissionManager.addObserver(forRPCs: [SDLRPCFunctionName.dialNumber.rawValue.rawValue], groupType: .any, withHandler: { (allChanges, groupStatus) in
-    guard groupStatus == .allowed else { 
+let setDialNumberPermissionElement = SDLPermissionElement(rpcName: SDLRPCFunctionName.dialNumber, parameterPermissions: nil)
+
+let observerId = sdlManager.permissionManager.subscribe(toRPCPermissions: [setDialNumberPermissionElement], groupType: .any, withHandler: { (individualStatuses, groupStatus) in
+    guard groupStatus == .allowed else {
         // Your app does not have permission to send the `SDLDialNumber` request for its current HMI level
-        return 
+        return
     }
 
     // Your app has permission to send the `SDLDialNumber` request for its current HMI level
@@ -207,7 +209,7 @@ sdlManager.send(request: dialNumber) { (request, response, error) in
         return
     }
 
-    guard response?.success.boolValue == true else {
+    guard response.success.boolValue == true else {
         switch response.resultCode {
         case .rejected:
             // `SDLDialNumber` was rejected. Either the call was sent and cancelled or there is no device connected

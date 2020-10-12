@@ -33,8 +33,12 @@ SDLSubscribeButton *subscribeButtonRight = [[SDLSubscribeButton alloc] initWithN
 
 ##### Swift
 ```swift
-let subscribeButtonLeft = SDLSubscribeButton(name: SDLButtonNameSeekLeft)
-let subscribeButtonRight = SDLSubscribeButton(name: SDLButtonNameSeekRight)
+let subscribeButtonLeft = SDLSubscribeButton(buttonName: SDLButtonName.seekLeft) { (onButtonPress, onButtonEvent) in
+    <#code#>
+}
+let subscribeButtonRight = SDLSubscribeButton(buttonName: SDLButtonName.seekRight) { (onButtonPress, onButtonEvent) in
+    <#code#>
+}
 sdlManager.send([subscribeButtonLeft, subscribeButtonRight], progressHandler: { (request, response, error, percentComplete) in
     <#Called as each request completes#>
 }) { success in
