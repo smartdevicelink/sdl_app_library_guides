@@ -69,6 +69,7 @@ Alert alert = new Alert()
     .setAlertText2("Alert Text 2")
     .setDuration(5000)
     .setTtsChunks(Arrays.asList(new TTSChunk("Audio file name", SpeechCapabilities.FILE)));
+sdlManager.sendRPC(alert);
 ```
 !@
 
