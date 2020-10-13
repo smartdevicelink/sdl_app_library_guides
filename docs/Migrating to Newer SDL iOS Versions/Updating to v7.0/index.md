@@ -1,5 +1,5 @@
 # Updating from v6.7 to v7.0
-The iOS library has made a number of breaking changes in SDL v7.0+. This means that your project is unlikely to compile without changes.
+The iOS library has made a number of breaking changes in SDL v7.0. This means that your project is unlikely to compile without changes.
 
 ### iOS Minimum Version Changes
 SDL iOS 7.0 now requires that your app's minimum supported version be iOS 10.0 or greater – previously it was iOS 8.0. If your app's minimum version is already iOS 10.0 or greater, then there's nothing you need to do! However, if you target a lower iOS version as your minimum version, you will need to stay on SDL iOS v6.7 until you can move up your minimum version. SDL iOS 7.0 has removed functionality shims necessary to allow it to function properly on iOS versions below 10.0.
