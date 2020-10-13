@@ -262,9 +262,9 @@ sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapa
     @Override
     public void onCapabilityRetrieved(Object capability) {
         SeatLocationCapability seatLocationCapability = (SeatLocationCapability) capability;
-        if (seatLocationCapability.getSeatLocations() != null && seatLocationCapability.getSeatLocations().size() > 0){
-            List<SeatLocation> seats = seatLocationCapability.getSeatLocations();
-            <#Save seat location capabilities#>
+        if (seatLocationCapability.getSeats() != null && seatLocationCapability.getSeats().size() > 0){
+            List<SeatLocation> seats = seatLocationCapability.getSeats();
+                <#Save seat location capabilities#>
         }
     }
 
