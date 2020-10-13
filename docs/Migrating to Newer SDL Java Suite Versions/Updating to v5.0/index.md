@@ -32,7 +32,7 @@ To migrate to AndroidX you must set the `compileSdkVersion` to 28 in the apps bu
 ## Import changes
  Some classes have moved packages, and imports may need to be changed.
 
- ### Exapmpe:
+ ### Example:
 OnSystemCapabilityListener has moved packages from:
  `import com.smartdevicelink.proxy.interfaces.OnSystemCapabilityListener;` 
  to 
