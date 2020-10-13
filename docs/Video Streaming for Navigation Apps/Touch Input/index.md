@@ -15,7 +15,7 @@ self.sdlManager.streamManager.touchManager.touchEventDelegate = self
 
 ##### Swift
 ```swift
-sdlManager.streamManager.touchManager.touchEventDelegate = self
+sdlManager.streamManager?.touchManager.touchEventDelegate = self
 ```
 
 !!! IMPORTANT

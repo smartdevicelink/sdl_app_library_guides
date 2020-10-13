@@ -13,7 +13,7 @@ SDLConfiguration* configuration = [SDLConfiguration configurationWithLifecycle:l
 
 ##### Swift
 ```swift
-let configuration = SDLConfiguration(lifecycle: lifecycleConfiguration, lockScreen: .enabled(), logging: .debug(), fileManager: .default())
+let configuration = SDLConfiguration(lifecycle: lifecycleConfiguration, lockScreen: .enabled(), logging: .debug(), fileManager: .default(), encryption: .default())
 ```
 
 ### Format Type

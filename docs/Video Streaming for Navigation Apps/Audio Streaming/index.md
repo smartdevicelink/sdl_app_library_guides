@@ -37,7 +37,7 @@ sdlManager.streamManager?.audioManager.playNextWhenReady()
 
 ##### Swift
 ```swift
-sdlManager.streamManager?.audioManager.push(withData: audioData)
+sdlManager.streamManager?.audioManager.push(with: audioData)
 sdlManager.streamManager?.audioManager.playNextWhenReady()
 ```
 
