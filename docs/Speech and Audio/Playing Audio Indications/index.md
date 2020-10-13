@@ -80,5 +80,6 @@ alert.setAlertText1('Alert Text 1');
 alert.setAlertText2('Alert Text 2');
 alert.setDuration(5000);
 alert.setTtsChunks([new SDL.rpc.structs.TTSChunk().setText('Audio file name').setType(SDL.rpc.enums.SpeechCapabilities.FILE)]);
+//TODO send alert rpc
 ```
 !@
