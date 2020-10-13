@@ -7,7 +7,7 @@ To help ensure the validity of the Router Service, you can select the security l
 ```java
 int securityLevel = FLAG_MULTI_SECURITY_MED;
 
-BaseTransport transport = MultiplexTransportConfig(context, appId, securityLevel);
+BaseTransportConfig transport = new MultiplexTransportConfig(context, appId, securityLevel);
 ```
 
 If you create the transport without specifying the security level, it will be set to `FLAG_MULTI_SECURITY_MED` by default.

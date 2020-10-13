@@ -262,15 +262,14 @@ sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapa
     @Override
     public void onCapabilityRetrieved(Object capability) {
         SeatLocationCapability seatLocationCapability = (SeatLocationCapability) capability;
-        if (seatLocationCapability.getSeatLocations() != null && seatLocationCapability.getSeatLocations().size() > 0){
-            List<SeatLocation> seats = seatLocationCapability.getSeatLocations();
-
-            <#Save seat location capabilities#>
+        if (seatLocationCapability.getSeats() != null && seatLocationCapability.getSeats().size() > 0){
+            List<SeatLocation> seats = seatLocationCapability.getSeats();
+                <#Save seat location capabilities#>
         }
     }
 
     @Override
-    public void onError(int correlationId, Result resultCode, String info) {
+    public void onError(String info) {
         <#Handle Error#>
     }
 });
@@ -326,7 +325,7 @@ sdlManager.send(request: seatLocation, responseHandler: { (request, response, er
 @![android,javaEE,javaSE]
 ```java
 SetGlobalProperties seatLocation = new SetGlobalProperties()
-    .setUserLocation(<#Selected Seat#>;);
+    .setUserLocation(<#Selected Seat#>);
 seatLocation.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
@@ -686,7 +685,7 @@ sdlManager.send(request: getInteriorVehicleDataConsent , responseHandler: { (req
 
 @![android, javaEE, javaSE]
 ```java
-GetInteriorVehicleDataConsent getInteriorVehicleDataConsent = new GetInteriorVehicleDataConsent(<#ModuleType#>,<#ModuleIDs#>,);
+GetInteriorVehicleDataConsent getInteriorVehicleDataConsent = new GetInteriorVehicleDataConsent(<#ModuleType#>, <#ModuleIDs#>);
 getInteriorVehicleDataConsent.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {

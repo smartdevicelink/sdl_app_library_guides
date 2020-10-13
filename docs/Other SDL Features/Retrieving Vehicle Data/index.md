@@ -108,9 +108,9 @@ vdRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
     public void onResponse(int correlationId, RPCResponse response) {
         if(response.getSuccess()){
             PRNDL prndl = ((GetVehicleDataResponse) response).getPrndl();
-            Log.i("SdlService", "PRNDL status: " + prndl.toString());
+            DebugTool.logInfo("SdlService", "PRNDL status: " + prndl.toString());
         }else{
-            Log.i("SdlService", "GetVehicleData was rejected.");
+            DebugTool.logInfo("SdlService", "GetVehicleData was rejected.");
         }
     }
 });
@@ -267,7 +267,7 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_VEHICLE_DATA, new OnRPCNot
     public void onNotified(RPCNotification notification) {
         OnVehicleData onVehicleDataNotification = (OnVehicleData) notification;
         if (onVehicleDataNotification.getPrndl() != null) {
-            Log.i("SdlService", "PRNDL status was updated to: " + onVehicleDataNotification.getPrndl());
+            DebugTool.logInfo("SdlService", "PRNDL status was updated to: " + onVehicleDataNotification.getPrndl());
         }
     }
 });
@@ -282,9 +282,9 @@ subscribeRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
         if(response.getSuccess()){
-            Log.i("SdlService", "Successfully subscribed to vehicle data.");
+            DebugTool.logInfo("SdlService", "Successfully subscribed to vehicle data.");
         }else{
-            Log.i("SdlService", "Request to subscribe to vehicle data was rejected.");
+            DebugTool.logInfo("SdlService", "Request to subscribe to vehicle data was rejected.");
         }
     }
 });
@@ -409,9 +409,9 @@ unsubscribeRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
         if(response.getSuccess()){
-            Log.i("SdlService", "Successfully unsubscribed to vehicle data.");
+            DebugTool.logInfo("SdlService", "Successfully unsubscribed to vehicle data.");
         }else{
-            Log.i("SdlService", "Request to unsubscribe to vehicle data was rejected.");
+            DebugTool.logInfo("SdlService", "Request to unsubscribe to vehicle data was rejected.");
         }
     }
 });
@@ -524,7 +524,7 @@ vdRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
         if(response.getSuccess()){
             Object CustomData = ((GetVehicleDataResponse) response).getOEMCustomVehicleData("OEM-X-Vehicle-Data");
         }else{
-            Log.i("SdlService", "GetVehicleData was rejected.");
+            DebugTool.logInfo("SdlService", "GetVehicleData was rejected.");
         }
     }
 });

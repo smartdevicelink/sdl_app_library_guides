@@ -249,9 +249,9 @@ manager.send(request: sdlSlider, responseHandler: { (req, res, err) in
 slider.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
-        if (response.getSuccess()) {}
+        if (response.getSuccess()) {
             SliderResponse sliderResponse = (SliderResponse) response;
-            Log.i(TAG, "Slider Position Set: " + sliderResponse.getSliderPosition());
+            DebugTool.logInfo(TAG, "Slider Position Set: " + sliderResponse.getSliderPosition());
         }
     }
 });
@@ -320,7 +320,7 @@ cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
         if (response.getSuccess()){
-            Log.i(TAG, "Slider was dismissed successfully");
+            DebugTool.logInfo(TAG, "Slider was dismissed successfully");
         }
     }
 });
@@ -387,7 +387,7 @@ cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
         if (response.getSuccess()){
-            Log.i(TAG, "Slider was dismissed successfully");
+            DebugTool.logInfo(TAG, "Slider was dismissed successfully");
         }
     }
 });

@@ -53,6 +53,8 @@ public static class MyPresentation extends SdlRemoteDisplay {
                 // ...Update something on the ui
 
                 MyPresentation.this.invalidate();
+
+                return false;
             }
         });
     }
@@ -93,7 +95,6 @@ It is also possible that you may want to create your own rects instead of using 
 
 ```java
 public void sendHapticData() {
-
 	Rectangle rectangle = new Rectangle()
 	    .setX((float) 1.0)
 	    .setY((float) 1.0)
@@ -102,16 +103,15 @@ public void sendHapticData() {
 
 	HapticRect hapticRect = new HapticRect()
 	    .setId(123)
-	    .setRect(rec);
+	    .setRect(rectangle);
 
 	ArrayList<HapticRect> hapticArray = new ArrayList<HapticRect>();
-	hapticArray.add(0, hr);
+	hapticArray.add(0, hapticRect);
 
 	SendHapticData sendHapticData = new SendHapticData();
 	sendHapticData.setHapticRectData(hapticArray);
 
 	sdlManager.sendRPC(sendHapticData);
-
 }
 ```
 Each `SendHapticData` RPC should contain the entirety of all clickable areas to be accessed via haptic controls.
