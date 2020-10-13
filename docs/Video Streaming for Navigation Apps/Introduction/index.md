@@ -57,7 +57,7 @@ builder.setSdlSecurity(secList, <# Optional serviceEncryptionListener>);
 
 MultiplexTransportConfig mtc = new MultiplexTransportConfig(this, APP_ID, MultiplexTransportConfig.FLAG_MULTI_SECURITY_OFF);
 mtc.setRequiresHighBandwidth(true);
-builder.setTransportType(transport);
+builder.setTransportType(mtc);
 
 sdlManager = builder.build();
 sdlManager.start();
