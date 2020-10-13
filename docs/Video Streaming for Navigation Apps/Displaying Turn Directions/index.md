@@ -78,7 +78,7 @@ sdlManager.send(request: turnByTurn) { (request, response, error) in
 
 @![android]
 ```java
-Image turnIcon =  <#Create Image#>
+Image turnIcon = <#Create Image#>;
 
 ShowConstantTbt turnByTurn = new ShowConstantTbt()
     .setNavigationText1("Turn Right")
