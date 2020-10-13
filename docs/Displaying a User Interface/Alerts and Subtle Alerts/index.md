@@ -27,7 +27,8 @@ boolean isSubtleAlertAllowed = sdlManager.getPermissionManager().isRPCAllowed(Fu
 
 @![javascript]
 ```js
-// TODO 
+const isAlertAllowed = sdlManager.getPermissionManager().isRpcAllowed(SDL.rpc.enums.FunctionID.Alert);
+const isSubtleAlertAllowed = sdlManager.getPermissionManager().isRpcAllowed(SDL.rpc.enums.FunctionID.SubtleAlert);
 ```
 !@
 
@@ -79,7 +80,7 @@ const alert = new SDL.rpc.messages.Alert()
     .setAlertText1('Line 1')
     .setAlertText2('Line 2')
     .setAlertText3('Line 3')
-    .setCancelID(integer);
+    .setCancelID(<#Number#>);
 ```
 !@
 
@@ -146,8 +147,8 @@ const okButton = new SDL.rpc.structs.SoftButton()
 alert.setSoftButtons([okButton]);
 
 // This listener is only needed once and will work for all of soft buttons you send with your alert
-sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.ON_BUTTON_PRESS, function (onButtonPress) {
-    if (onButtonPress.getCustomButtonId() === softButtonId) {
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnButtonPress, function (onButtonPress) {
+    if (onButtonPress.getCustomButtonID() === softButtonId) {
         console.log("OK button pressed");
     }
 })
@@ -178,7 +179,9 @@ alert.setAlertIcon(new Image(<#artworkName#>, ImageType.DYNAMIC));
 
 @![javascript]
 ```js
-alert.setAlertIcon(new SDL.rpc.structs.Image(<#artworkName#>, SDL.rpc.enums.ImageType.DYNAMIC));
+alert.setAlertIcon(new SDL.rpc.structs.Image()
+    .setValueParam(<#artworkName#>)
+    .setImageType(SDL.rpc.enums.ImageType.DYNAMIC));
 ```
 !@
 
@@ -262,7 +265,7 @@ alert.setTtsChunks(Collections.singletonList(new TTSChunk("Text to Speak", Speec
 @![javascript]
 ```js
 const chunk = new SDL.rpc.structs.TTSChunk()
-    .setType(SDL.rpc.enums.SpeechCapabilities.TEXT)
+    .setType(SDL.rpc.enums.SpeechCapabilities.SC_TEXT)
     .setText('Text to Speak');
 alert.setTtsChunks([chunk]);
 ```
@@ -584,7 +587,7 @@ SubtleAlert subtleAlert = new SubtleAlert()
 const subtleAlert = new SDL.rpc.messages.SubtleAlert()
     .setAlertText1('Line 1')
     .setAlertText2('Line 2')
-    .setCancelID(integer);
+    .setCancelID(<#Number#>);
 ```
 !@
 
@@ -651,8 +654,8 @@ const okButton = new SDL.rpc.structs.SoftButton()
 subtleAlert.setSoftButtons([okButton]);
 
 // This listener is only needed once, and will work for all of soft buttons you send with your alert
-sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.ON_BUTTON_PRESS, function (onButtonPress) {
-    if (onButtonPress.getCustomButtonId() === softButtonId) {
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnButtonPress, function (onButtonPress) {
+    if (onButtonPress.getCustomButtonID() === softButtonId) {
         console.log("OK button pressed");
     }
 })
@@ -684,7 +687,9 @@ subtleAlert.setAlertIcon(new Image(<#artworkName#>, ImageType.DYNAMIC));
 
 @![javascript]
 ```js
-subtleAlert.setAlertIcon(new SDL.rpc.structs.Image(<#artworkName#>, SDL.rpc.enums.ImageType.DYNAMIC));
+subtleAlert.setAlertIcon(new SDL.rpc.structs.Image()
+    .setValueParam(<#artworkName#>)
+    .setImageType(SDL.rpc.enums.ImageType.DYNAMIC));
 ```
 !@
 
@@ -741,7 +746,7 @@ subtleAlert.setTtsChunks(Collections.singletonList(new TTSChunk("Text to Speak",
 @![javascript]
 ```js
 const chunk = new SDL.rpc.structs.TTSChunk()
-    .setType(SDL.rpc.enums.SpeechCapabilities.TEXT)
+    .setType(SDL.rpc.enums.SpeechCapabilities.SC_TEXT)
     .setText('Text to Speak');
 subtleAlert.setTtsChunks([chunk]);
 ```
@@ -822,12 +827,17 @@ sdlManager.sendRPC(subtleAlert);
 
 @![javascript]
 ```js
+// sdl_javascript_suite v1.1+
 const response = await sdlManager.sendRpcResolve(subtleAlert);
 if (response.getSuccess()) {
     console.log('Subtle alert was shown successfully');
 }
 // thrown exceptions should be caught by a parent function via .catch()
-
+// Pre sdl_javascript_suite v1.1
+// Handle RPC Response
+const response = await sdlManager.sendRpc(subtleAlert).catch(function (error) {
+    // Handle Error
+});
 if (response.getSuccess()) {
     console.log('Subtle alert was shown successfully');
 }
@@ -870,7 +880,9 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_SUBTLE_ALERT_PRESSED, new 
 
 @![javascript]
 ```js
-// TODO
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnSubtleAlertPressed, function (onSubtleAlertPressed) {
+    <#The subtle alert was pressed#>
+});
 ```
 !@
 
@@ -935,14 +947,20 @@ sdlManager.sendRPC(cancelInteraction);
 const cancelInteraction = new SDL.rpc.messages.CancelInteraction()
     .setFunctionIDParam(SDL.rpc.enums.FunctionID.SubtleAlert)
     .setCancelID(cancelID);
+
+// sdl_javascript_suite v1.1+
 const response = await sdlManager.sendRpcResolve(cancelInteraction);
 if (response.getSuccess()) {
-    console.log('Subtle Alert was dismissed successfully');
+    console.log('Subtle alert was dismissed successfully');
 }
 // thrown exceptions should be caught by a parent function via .catch()
-
+// Pre sdl_javascript_suite v1.1
+// Handle RPC Response
+const response = await sdlManager.sendRpc(cancelInteraction).catch(function (error) {
+    // Handle Error
+});
 if (response.getSuccess()) {
-    console.log('Subtle Alert was dismissed successfully');
+    console.log('Subtle alert was dismissed successfully');
 }
 ```
 !@
@@ -993,15 +1011,21 @@ sdlManager.sendRPC(cancelInteraction);
 
 @![javascript]
 ```js
-const cancelInteraction = new SDL.rpc.messages.CancelInteraction().setFunctionIDParam(SDL.rpc.enums.FunctionID.SubtleAlert);
+const cancelInteraction = new SDL.rpc.messages.CancelInteraction().setFunctionIDParam(SDL.rpc.enums.FunctionID.SubtleAlert)
+
+// sdl_javascript_suite v1.1+
 const response = await sdlManager.sendRpcResolve(cancelInteraction);
 if (response.getSuccess()) {
-    console.log('Subtle Alert was dismissed successfully');
+    console.log('Subtle alert was dismissed successfully');
 }
 // thrown exceptions should be caught by a parent function via .catch()
-
+// Pre sdl_javascript_suite v1.1
+// Handle RPC Response
+const response = await sdlManager.sendRpc(cancelInteraction).catch(function (error) {
+    // Handle Error
+});
 if (response.getSuccess()) {
-    console.log('Subtle Alert was dismissed successfully');
+    console.log('Subtle alert was dismissed successfully');
 }
 ```
 !@
