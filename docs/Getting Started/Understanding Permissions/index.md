@@ -432,11 +432,13 @@ func audioStreamingState(_ oldState: SDLAudioStreamingState?, didChangeToState n
 
 @![android,javaSE,javaEE]
 ```java
-@Override
-public void onNotified(RPCNotification notification) {
-    OnHMIStatus status = (OnHMIStatus) notification;
-    AudioStreamingState streamingState = notification.getAudioStreamingState();
-}
+sdlManager.addOnRPCNotificationListener(FunctionID.ON_HMI_STATUS, new OnRPCNotificationListener() {
+    @Override
+    public void onNotified(RPCNotification notification) {
+        OnHMIStatus status = (OnHMIStatus) notification;
+        AudioStreamingState streamingState = status.getAudioStreamingState();
+    }
+});
 ```
 !@
 
@@ -478,11 +480,13 @@ func systemContext(_ oldContext: SDLSystemContext?, didChangeToContext newContex
 
 @![android,javaSE,javaEE]
 ```java
-@Override
-public void onNotified(RPCNotification notification) {
-    OnHMIStatus status = (OnHMIStatus) notification;
-    SystemContext systemContext = notification.getSystemContext();
-}
+sdlManager.addOnRPCNotificationListener(FunctionID.ON_HMI_STATUS, new OnRPCNotificationListener() {
+    @Override
+    public void onNotified(RPCNotification notification) {
+        OnHMIStatus status = (OnHMIStatus) notification;
+        SystemContext systemContext = status.getSystemContext();
+    }
+});
 ```
 !@
 
