@@ -52,7 +52,7 @@ let resolution = field.imageResolution
 
 @![android, javaSE, javaEE]
 ```java
-ImageField field = sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getImageFields().get(<#index#>);
+ImageField field = sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getImageFields().get(index);
 ImageResolution resolution = field.getImageResolution();
 ```
 !@ 
@@ -143,7 +143,7 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.APP_S
 
     @Override
     public void onError(String info) {
-        <# Handle Error #>
+        // Handle Error
     }
 }, false);
 ```
