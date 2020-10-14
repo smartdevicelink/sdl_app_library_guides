@@ -7,7 +7,9 @@ The @![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ RPC allows y
 @![iOS]
 ##### Objective-C
 ```objc
-id observerId = [self.sdlManager.permissionManager addObserverForRPCs:@[SDLRPCFunctionNameDialNumber] groupType:SDLPermissionGroupTypeAny withHandler:^(NSDictionary<SDLPermissionRPCName,NSNumber *> * _Nonnull allChanges, SDLPermissionGroupStatus groupStatus) {
+SDLPermissionElement *setDialNumberPermissionElement = [[SDLPermissionElement alloc] initWithRPCName:SDLRPCFunctionNameDialNumber parameterPermissions:nil];
+
+id observerId = [self.sdlManager.permissionManager subscribeToRPCPermissions:@[setDialNumberPermissionElement] groupType:SDLPermissionGroupTypeAny withHandler:^(NSDictionary<SDLPermissionRPCName,NSNumber *> * _Nonnull allChanges, SDLPermissionGroupStatus groupStatus) {
     if (groupStatus != SDLPermissionGroupStatusAllowed) {
         // Your app does not have permission to send the `SDLDialNumber` request for its current HMI level
         return;
@@ -183,8 +185,8 @@ SDLDialNumber *dialNumber = [[SDLDialNumber alloc] initWithNumber: @"1238675309"
     }
 
     SDLDialNumberResponse *dialNumber = (SDLDialNumberResponse *)response;
-    SDLResult *resultCode = dialNumber.resultCode;
-    if (!resultCode.success.boolValue) {
+    SDLResult resultCode = dialNumber.resultCode;
+    if (!resultCode.boolValue) {
         if ([resultCode isEqualToEnum:SDLResultRejected]) {
             // `SDLDialNumber` was rejected. Either the call was sent and cancelled or there is no device connected
         } else if ([resultCode isEqualToEnum:SDLResultDisallowed]) {

@@ -733,7 +733,7 @@ manifest.handledRPCs = @[buttonPressRPCID];
 let manifest = SDLAppServiceManifest()
 // Everything else for your manifest
 let buttonPressRPCID = SDLFunctionID.sharedInstance().functionId(forName: .buttonPress)
-manifest.handledRPCs = [buttonPressRPCID]
+manifest.handledRPCs = [buttonPressRPCID!]
 
 sdlManager.subscribe(to: SDLDidReceiveButtonPressRequest, observer: self, selector: #selector(buttonPressRequestReceived(_:)))
 
@@ -939,7 +939,7 @@ Once you have published your app service, you may decide to update its data. For
 ##### Objective-C
 ```objc
 SDLAppServiceManifest *manifest = [[SDLAppServiceManifest alloc] initWithAppServiceType:SDLAppServiceTypeWeather];
-manifest.weatherServiceManifest = <#Updated weather service manifest#>
+manifest.weatherServiceManifest = <#Updated weather service manifest#>;
 
 SDLPublishAppService *publishServiceRequest = [[SDLPublishAppService alloc] initWithAppServiceManifest:manifest];
 [self.sdlManager sendRequest:publishServiceRequest];

@@ -487,10 +487,10 @@ SDLGetVehicleData *getCustomData = [[SDLGetVehicleData alloc] init];
 ##### Swift
 ```swift
 let getCustomData = SDLGetVehicleData()
-getCustomData.setOEMCustom("OEM-X-Vehicle-Data", withVehicleDataState: true)
+getCustomData.setOEMCustomVehicleData(name: "OEM-X-Vehicle-Data", state: true)
 sdlManager.send(request: getCustomData) { (request, response, error) in
     guard let response = response as? SDLGetVehicleDataResponse else { return }
-    guard response?.success.boolValue == true else {
+    guard response.success.boolValue == true else {
         switch response.resultCode {
         case .disallowed:
             <#The app does not have permission to access this vehicle data#>

@@ -23,7 +23,7 @@ UInt16 scrollableMessageTimeout = 50000;
 
 // Create SoftButtons
 SDLSoftButton *scrollableSoftButton = [[SDLSoftButton alloc] initWithType:SDLSoftButtonTypeText text:@"Button 1" image:nil highlighted:NO buttonId:111 systemAction:nil handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
-    if (buttonPress == nil) { return;
+    if (buttonPress == nil) { return; }
     // Create a custom action for the selected button
 }];
 SDLSoftButton *scrollableSoftButton2 = [[SDLSoftButton alloc] initWithType:SDLSoftButtonTypeText text:@"Button 2" image:nil highlighted:NO buttonId:222 systemAction:nil handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
@@ -38,7 +38,7 @@ SDLSoftButton *scrollableSoftButton2 = [[SDLSoftButton alloc] initWithType:SDLSo
 SDLScrollableMessage *scrollableMessage = [[SDLScrollableMessage alloc] initWithMessage:scrollableMessageString timeout:scrollableMessageTimeout softButtons:[softButtons copy] cancelID:<#UInt32#>];
 
 // Send the scrollable message
-[sdlManager sendRequest:scrollableMessage];
+[self.sdlManager sendRequest:scrollableMessage];
 ```
 
 ##### Swift

@@ -49,7 +49,7 @@ Now that the file is uploaded to the remote system, it can be used in various RP
 @![iOS]
 ##### Objective-C
 ```objc
-SDLAlert *alert = [[SDLAlert alloc] initWithAlertText1:<#nullable NSString *#> alertText2:<#nullable NSString *#> duration:<#UInt16#>];
+SDLAlert *alert = [[SDLAlert alloc] initWithAlertText1:<#(nullable NSString *)#> alertText2:<#(nullable NSString *)#> alertText3:<#(nullable NSString *)#> softButtons:<#(nullable NSArray<SDLSoftButton *> *)#> playTone:<#(BOOL)#> ttsChunks:<#(nullable NSArray<SDLTTSChunk *> *)#> duration:<#(UInt16)#> progressIndicator:<#(BOOL)#> alertIcon:<#(nullable SDLImage *)#> cancelID:<#(UInt32)#>];
 alert.ttsChunks = [SDLTTSChunk fileChunksWithName:<#Audio file name#>];
 [self.sdlManager sendRequest:alert];
 ```

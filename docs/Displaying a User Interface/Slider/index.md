@@ -220,7 +220,7 @@ slider.setCancelID(45);
 @![iOS]
 ##### Objective-C
 ```objc
-[manager sendRequest:sdlSlider withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+[self.sdlManager sendRequest:sdlSlider withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if (!response || !response.success.boolValue) {
         SDLLogE(@"Error getting the SDLSlider response");
         return;
