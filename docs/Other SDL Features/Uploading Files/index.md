@@ -31,13 +31,12 @@ sdlManager.fileManager.upload(file: audioFile) { (success, bytesAvailable, error
 
 @![android, javaSE, javaEE]
 ```java
-byte[] mp3Data = <#Get the File Data#>;
 SdlFile audioFile = new SdlFile("File Name", FileType.AUDIO_MP3, mp3Data, true);
 sdlManager.getFileManager().uploadFile(audioFile, new CompletionListener() {
     @Override
     public void onComplete(boolean success) {
         if (success) {
-            <#File upload successful#>
+            // File upload successful
         }
     }
 });
@@ -49,11 +48,11 @@ sdlManager.getFileManager().uploadFile(audioFile, new CompletionListener() {
 const audioFile = new SDL.manager.file.filetypes.SdlFile('File Name', SDL.rpc.enums.FileType.AUDIO_MP3, <#Audio byte array data as a string#>, true);
 const success = await sdlManager.getFileManager().uploadFile(audioFile)
     .catch(error => {
-        // handle errors here
+        // Handle errors here
         return false;
     });
 if (success) {
-    <#File upload successful#>
+    // File upload successful
 }
 ```
 !@

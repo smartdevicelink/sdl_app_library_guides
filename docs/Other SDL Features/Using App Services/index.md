@@ -360,7 +360,7 @@ ButtonPress buttonPress = new ButtonPress()
 buttonPress.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
-        <#Use the response#>
+        // Use the response
     }
 });
 sdlManager.sendRPC(buttonPress);
@@ -414,11 +414,11 @@ sdlManager.send(request: performAction) { (req, res, err) in
 @![android,javaSE,javaEE]
 ##### Java
 ```java
-PerformAppServiceInteraction performAppServiceInteraction = new PerformAppServiceInteraction("sdlexample://x-callback-url/showText?x-source=MyApp&text=My%20Custom%20String","<#Previously Retrieved ServiceID#>","<#Your App Id#>");
+PerformAppServiceInteraction performAppServiceInteraction = new PerformAppServiceInteraction("sdlexample://x-callback-url/showText?x-source=MyApp&text=My%20Custom%20String", "<#Previously Retrieved ServiceID#>", "<#Your App Id#>");
 performAppServiceInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
-        <#Use the response#>
+        // Use the response
     }
 });
 sdlManager.sendRPC(performAppServiceInteraction);
@@ -518,7 +518,6 @@ sdlManager.send(request: getCurrentForecastImage) { (req, res, err) in
 !@
 @![android, javaSE, javaEE]
 ```java
-AppServiceData appServiceData = <#Get the App Service Data#>;
 WeatherServiceData weatherServiceData = appServiceData.getWeatherServiceData();
 if (weatherServiceData == null || weatherServiceData.getCurrentForecast() == null || weatherServiceData.getCurrentForecast().getWeatherIcon() == null) {
     // The image doesn't exist, exit early

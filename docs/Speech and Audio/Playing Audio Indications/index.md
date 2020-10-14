@@ -24,7 +24,7 @@ sdlManager.fileManager.upload(file: audioFile) { (success, bytesAvailable, error
 
 @![android, javaSE, javaEE]
 ```java
-SdlFile audioFile = new SdlFile("Audio file name", FileType.AUDIO_MP3, <#file uri#>, true);
+SdlFile audioFile = new SdlFile("Audio file name", FileType.AUDIO_MP3, fileUri, true);
 sdlManager.getFileManager().uploadFile(audioFile, new CompletionListener() {
 	@Override
 	public void onComplete(boolean success) {
