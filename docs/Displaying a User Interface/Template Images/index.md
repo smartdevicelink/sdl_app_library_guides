@@ -40,7 +40,7 @@ sdlManager.screenManager.endUpdates { (error) in
 
 ```java
 sdlManager.getScreenManager().beginTransaction();
-sdlManager.getScreenManager().setPrimaryGraphic(<#SDLArtwork#>);
+sdlManager.getScreenManager().setPrimaryGraphic(sdlArtwork);
 sdlManager.getScreenManager().commit(new CompletionListener() {
 	@Override
 	public void onComplete(boolean success) {
@@ -124,7 +124,7 @@ let artwork = SDLArtwork(image: image, persistent: true, as: .PNG)
 
 @![android, javaSE, javaEE]
 ```java
-SdlArtwork image = new SdlArtwork("<#ArtworkName#>", FileType.GRAPHIC_PNG, <#image#>, true);
+SdlArtwork image = new SdlArtwork("<#ArtworkName#>", FileType.GRAPHIC_PNG, image, true);
 image.setTemplateImage(true);
 ```
 !@

@@ -222,9 +222,9 @@ publishServiceRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
 	public void onResponse(int correlationId, RPCResponse response) {
         if (response.getSuccess()) {
-            <#Use the response#>
+            // Use the response
         } else {
-            <#Error Handling#>
+            // Error Handling
         }
 		
     }
@@ -408,7 +408,7 @@ sdlManager.fileManager.upload(file: artwork) { [weak self] (success, bytesAvaila
 
 @![android,javaSE,javaEE]
 ```java
-final SdlArtwork navInstructionArt = new SdlArtwork("turn", FileType.GRAPHIC_PNG, <#image#>, true);
+final SdlArtwork navInstructionArt = new SdlArtwork("turn", FileType.GRAPHIC_PNG, image, true);
 
 sdlManager.getFileManager().uploadFile(navInstructionArt, new CompletionListener() {
     @Override
