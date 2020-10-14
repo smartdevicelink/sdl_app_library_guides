@@ -48,7 +48,7 @@ self.sdlManager.screenManager.openSubmenu(<#CellWithSubCells#>)
 
 @![android, javaSE, javaEE]
 ```java
-sdlManager.getScreenManager().openSubMenu(<#CellWithSubCells#>);
+sdlManager.getScreenManager().openSubMenu(cellWithSubCells);
 ```
 !@
 
