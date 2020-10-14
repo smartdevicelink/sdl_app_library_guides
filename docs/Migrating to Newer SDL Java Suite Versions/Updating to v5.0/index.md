@@ -241,8 +241,5 @@ Speak msg = new Speak(Collections.singletonList(new TTSChunk("Voice Message to s
 sdlManager.sendRPC(msg);
 ```
 
-
-
-
-
-
+### CharacterSets 
+Existing `CharacterSet` sets were not standards-compliant and are deprecated. New character sets have been added and will be used in future head units to describe text fields.
