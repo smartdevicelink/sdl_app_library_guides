@@ -74,7 +74,9 @@ let lockScreenConfiguration = SDLLockScreenConfiguration.enabledConfiguration(wi
 
 @![android]
 ```java
+LockScreenConfig lockScreenConfig = new LockScreenConfig();
 lockScreenConfig.setBackgroundColor(resourceColor); // For example, R.color.black
+builder.setLockScreenConfig(lockScreenConfig);
 ```
 !@
 
@@ -95,7 +97,9 @@ let lockScreenConfiguration = SDLLockScreenConfiguration.enabledConfiguration(wi
 
 @![android]
 ```java
+LockScreenConfig lockScreenConfig = new LockScreenConfig();
 lockScreenConfig.setAppIcon(appIconInt); // For example, R.drawable.lockscreen icon
+builder.setLockScreenConfig(lockScreenConfig);
 ```
 !@
 
@@ -127,7 +131,9 @@ lockScreenConfiguration.showDeviceLogo = false
 
 @![android]
 ```java
+LockScreenConfig lockScreenConfig = new LockScreenConfig();
 lockScreenConfig.showDeviceLogo(false);
+builder.setLockScreenConfig(lockScreenConfig);
 ```
 !@
 
@@ -153,7 +159,9 @@ let lockScreenConfiguration = SDLLockScreenConfiguration.enabledConfiguration(wi
 
 @![android]
 ```java
+LockScreenConfig lockScreenConfig = new LockScreenConfig();
 lockScreenConfig.setCustomView(customViewInt);
+builder.setLockScreenConfig(lockScreenConfig);
 ```
 !@
 
@@ -186,6 +194,7 @@ let lockScreenConfiguration = SDLLockScreenConfiguration.disabled()
 ```java
 LockScreenConfig lockScreenConfig = new LockScreenConfig();
 lockScreenConfig.setDisplayMode(LockScreenConfig.DISPLAY_MODE_NEVER);
+builder.setLockScreenConfig(lockScreenConfig);
 ```
 !@
 
@@ -211,6 +220,7 @@ lockScreenConfiguration.displayMode = .always
 ```java
 LockScreenConfig lockScreenConfig = new LockScreenConfig();
 lockScreenConfig.setDisplayMode(LockScreenConfig.DISPLAY_MODE_ALWAYS);
+builder.setLockScreenConfig(lockScreenConfig);
 ```
 !@
 
@@ -244,5 +254,6 @@ lockScreenConfiguration.enableDismissGesture = false
 ```java
 LockScreenConfig lockScreenConfig = new LockScreenConfig();
 lockScreenConfig.enableDismissGesture(false);
+builder.setLockScreenConfig(lockScreenConfig);
 ```
 !@
