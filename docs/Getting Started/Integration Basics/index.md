@@ -1009,6 +1009,25 @@ This is only for specific OEM applications, therefore normal developers do not n
 
 Some OEMs choose to implement custom router services. Setting the `sdl_custom_router` metadata value to `true` means that the app is using something custom over the default router service that is included in the SDL Android library. Do not include this `meta-data` entry unless you know what you are doing.
 
+The final router service entry in the `AndroidManifest.xml` file should look like the following:
+```xml
+<service
+    android:name=".SdlRouterService"
+    android:enabled="true"
+    android:exported="true"
+    android:foregroundServiceType="connectedDevice"
+    android:process="com.smartdevicelink.router">
+
+    <intent-filter>
+        <action android:name="com.smartdevicelink.router.service" />
+    </intent-filter>
+
+    <meta-data
+        android:name="sdl_router_version"
+        android:value="@integer/sdl_router_service_version_value" />
+</service>
+```
+
 
 ## SmartDeviceLink Broadcast Receiver
 The Android implementation of the `SdlManager` relies heavily on the OS's bluetooth and USB intents. When the phone is connected to SDL and the router service has sent a connection intent, the app needs to create an `SdlManager`, which will bind to the already connected router service. As mentioned previously, the `SdlManager` cannot be re-used. When a disconnect between the app and SDL occurs, the current `SdlManager` must be disposed of and a new one created.
