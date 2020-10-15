@@ -1042,7 +1042,7 @@ sdlManager.send(request: releaseInteriorVehicleDataModule) { (request, response,
 @![android, javaEE, javaSE]
 ```java
 ReleaseInteriorVehicleDataModule releaseInteriorVehicleDataModule = new ReleaseInteriorVehicleDataModule(<#ModuleType#>)
-    .setModuleId("<#ModuleID#>");
+    .setModuleId(moduleID);
 releaseInteriorVehicleDataModule.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
