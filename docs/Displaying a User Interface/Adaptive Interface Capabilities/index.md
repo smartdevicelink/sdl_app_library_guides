@@ -242,7 +242,7 @@ sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapa
 
     @Override
     public void onError(String info) {
-        <# Handle Error #>
+        // Handle Error 
     }
 });
 ```
