@@ -42,7 +42,7 @@ let lockScreenConfiguration = SDLLockScreenConfiguration.enabled()
 !@
 
 @![android]
-If you have implemented the `SdlManager` and have defined the `SDLLockScreenActivity` in your manifest but have not defined any lock screen configuration, you are already have a working default configuration.
+If you have implemented the `SdlManager` and defined the `SDLLockScreenActivity` in your manifest, you have a working default lockscreen configuration.
 ![Generic Lock Screen](assets/GenericLockScreen_Android.png)
 !@
 
