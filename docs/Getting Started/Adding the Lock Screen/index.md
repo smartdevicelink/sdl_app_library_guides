@@ -49,6 +49,14 @@ If you have implemented the `SdlManager` and have defined the `SDLLockScreenActi
 
 ## Customizing the Default Lock Screen
 It is possible to customize the background color and app icon in the default provided lockscreen. If you choose not to set your own app icon the library will use the SDL logo.
+@![android]
+When customizing your lock screen please define a `LockScreenConfig` and set it using the builder for your `SdlManager`.
+
+```java
+LockScreenConfig lockScreenConfig = new LockScreenConfig();
+builder.setLockScreenConfig(lockScreenConfig);
+```
+!@
 
 @![iOS]
 ![Custom Lock Screen](assets/CustomLockScreen.png)
