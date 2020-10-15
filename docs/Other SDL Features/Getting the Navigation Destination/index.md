@@ -7,17 +7,20 @@ Both the @![iOS]`SDLGetWayPoints`!@@![android,javaSE,javaEE,javascript]`GetWayPo
 @![iOS]
 ##### Objective-C
 ```objc
-id observerId = [self.sdlManager.permissionManager addObserverForRPCs:@[SDLRPCFunctionNameGetWayPoints, SDLRPCFunctionNameSubscribeWayPoints] groupType:SDLPermissionGroupTypeAny withHandler:^(NSDictionary<SDLPermissionRPCName,NSNumber *> * _Nonnull allChanges, SDLPermissionGroupStatus groupStatus) {
+SDLPermissionElement *getWayPoints = [[SDLPermissionElement alloc] initWithRPCName:SDLRPCFunctionNameGetWayPoints parameterPermissions:nil];
+SDLPermissionElement *subscribeWayPoints = [[SDLPermissionElement alloc] initWithRPCName:SDLRPCFunctionNameSubscribeWayPoints parameterPermissions:nil];
+
+id observerId = [self.sdlManager.permissionManager subscribeToRPCPermissions:@[getWayPoints, subscribeWayPoints] groupType:SDLPermissionGroupTypeAny withHandler:^(NSDictionary<SDLRPCFunctionName,SDLRPCPermissionStatus *> * _Nonnull updatedPermissionStatuses, SDLPermissionGroupStatus status) {
     // This handler will be called whenever the permission status changes
-    BOOL getWayPointPermissionStatus = allChanges[SDLRPCFunctionNameGetWayPoints].boolValue;
-    if (getWayPointPermissionStatus.boolValue) {
+    BOOL getWayPointPermissionStatus = updatedPermissionStatuses[SDLRPCFunctionNameGetWayPoints];
+    if (getWayPointPermissionStatus) {
         // Your app has permission to send the `SDLGetWayPoints` request for its current HMI level
     } else {
         // Your app does not have permission to send the `SDLGetWayPoints` request for its current HMI level
     }
 
-    BOOL subscribeWayPointsPermissionStatus = allChanges[SDLRPCFunctionNameSubscribeWayPoints].boolValue;
-    if (subscribeWayPointsPermissionStatus.boolValue) {
+    BOOL subscribeWayPointsPermissionStatus = updatedPermissionStatuses[SDLRPCFunctionNameSubscribeWayPoints];
+    if (subscribeWayPointsPermissionStatus) {
         // Your app has permission to send the `SDLSubscribeWayPoints` request for its current HMI level
     } else {
         // Your app does not have permission to send the `SDLSubscribeWayPoints` request for its current HMI level
