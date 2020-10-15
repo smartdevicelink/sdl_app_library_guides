@@ -136,7 +136,7 @@ If you would like to use your own lock screen instead of the one provided by the
 
 @![iOS]
 !!!NOTE
-If you do create a custom lock screen view controller, note that the default view controller `view` background will be transparent, and nothing you do will make it opaque. You **must** place a custom view across the entire view controller in order to make your lock screen opaque.
+If you create a custom lock screen view controller, please note that the view controller's default `view` background will be transparent, even if you set a background color for it. You **must** place a custom view across the entire view controller in order to make your lock screen opaque.
 !!!
 !@
 
