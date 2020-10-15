@@ -215,6 +215,10 @@ Glassfish 5.0.0 only works on JDK 8 and lower.
 !!!
 !@
 
+@![android, javaSE, javaEE]
+To Find more information on this pleace read our [README](https://github.com/smartdevicelink/sdl_java_suite).
+!@
+
 @![javascript]
 You can find the most recent release of the SDL JavaScript Suite [here](https://github.com/smartdevicelink/sdl_javascript_suite/releases). The project comes with prebuilt bundles of the library in the form of `SDL.min.js` files. There is a vanilla JavaScript distribution of the library as well as one for Node.js. They are located in the `lib/js/dist` and `lib/node/dist` directories respectively. 
 
