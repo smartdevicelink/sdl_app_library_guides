@@ -15,7 +15,7 @@ Keyboards are unavailable for use in many countries when the driver is distracte
 !!!
 
 ##### Keyboard Search
-![SYNC 3 - Keyboard Search](assets/SYNC3_keyboard_search.bmp)
+![SYNC® 3 - Keyboard Search](assets/SYNC3_keyboard_search.bmp)
 
 !@
 
