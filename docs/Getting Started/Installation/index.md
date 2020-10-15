@@ -216,7 +216,7 @@ Glassfish 5.0.0 only works on JDK 8 and lower.
 !@
 
 @![android, javaSE, javaEE]
-To Find more information on this pleace read our [README](https://github.com/smartdevicelink/sdl_java_suite).
+To Find more information on installation, read our [README](https://github.com/smartdevicelink/sdl_java_suite).
 !@
 
 @![javascript]
