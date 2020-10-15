@@ -444,6 +444,7 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_HMI_STATUS, new OnRPCNotif
 
 @![javascript]
 ```js
+
 function onHMIStatusListener (onHMIStatus) {
     const streamingState = onHMIStatus.getAudioStreamingState();
 }
@@ -492,6 +493,7 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_HMI_STATUS, new OnRPCNotif
 
 @![javascript]
 ```js
+
 function onHmiStatusListener (onHmiStatus) {
     const systemContext = onHmiStatus.getSystemContext();
 }
