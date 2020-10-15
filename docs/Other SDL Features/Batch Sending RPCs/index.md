@@ -59,11 +59,6 @@ sdlManager.sendRPCs(Arrays.asList(subscribeButtonLeft, subscribeButtonLeft), new
     }
 
     @Override
-    public void onError(int correlationId, Result resultCode, String info) {
-
-    }
-
-    @Override
     public void onResponse(int correlationId, RPCResponse response) {
 
     }
@@ -147,11 +142,6 @@ sdlManager.sendSequentialRPCs(Arrays.asList(createInteractionChoiceSet, performI
 
     @Override
     public void onFinished() {
-
-    }
-
-    @Override
-    public void onError(int i, Result result, String s) {
 
     }
 

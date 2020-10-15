@@ -123,8 +123,8 @@ sdlManager.send(getVehicleData)
 
 @![android,javaSE,javaEE]
 ```java
-GetVehicleData getVehicleData = new GetVehicleData();
-getVehicleData.setGps(true);
+GetVehicleData getVehicleData = new GetVehicleData()
+    .setGps(true);
 getVehicleData.setPayloadProtected(true);
 
 sdlManager.sendRPC(getVehicleData);

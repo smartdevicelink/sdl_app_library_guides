@@ -102,35 +102,29 @@ sdlManager.send(request: audioPassThru) { (request, response, error) in
 
 @![android,javaSE,javaEE]
 ```java
-PerformAudioPassThru audioPassThru = new PerformAudioPassThru();
-audioPassThru.setAudioPassThruDisplayText1("Ask me \"What's the weather?\"");
-audioPassThru.setAudioPassThruDisplayText2("or \"What's 1 + 2?\"");
-
 TTSChunk initialPrompt = new TTSChunk("Ask me What's the weather? or What's 1 plus 2?", SpeechCapabilities.TEXT);
-audioPassThru.setInitialPrompt(Arrays.asList(initialPrompt));
-audioPassThru.setSamplingRate(SamplingRate._22KHZ);
-audioPassThru.setMaxDuration(7000);
-audioPassThru.setBitsPerSample(BitsPerSample._16_BIT);
-audioPassThru.setAudioType(AudioType.PCM);
-audioPassThru.setMuteAudio(false);
 
+PerformAudioPassThru audioPassThru = new PerformAudioPassThru()
+    .setAudioPassThruDisplayText1("Ask me \"What's the weather?\"")
+    .setAudioPassThruDisplayText2("or \"What's 1 + 2?\"")
+    .setInitialPrompt(Arrays.asList(initialPrompt))
+    .setSamplingRate(SamplingRate._22KHZ)
+    .setMaxDuration(7000)
+    .setBitsPerSample(BitsPerSample._16_BIT)
+    .setAudioType(AudioType.PCM)
+    .setMuteAudio(false);
 audioPassThru.setOnRPCResponseListener(new OnRPCResponseListener() {
-	@Override
+    @Override
 	public void onResponse (int correlationId, RPCResponse response) {
-		switch (response.getResultCode()) {
-			case SUCCESS:
-				// The audio pass thru ended successfully. Process the audio data
+        switch (response.getResultCode()) {
+            case SUCCESS:
+                // The audio pass thru ended successfully. Process the audio data
 			case ABORTED:
-				// The audio pass thru was aborted by the user. You should cancel any usage of the audio data.
+			    // The audio pass thru was aborted by the user. You should cancel any usage of the audio data.
 			default:
-				// Some other error occurred. Handle the error.
-		}
-	}
-
-	@Override
-	public void onError (int correlationId, Result resultCode, String info) {
-		// Handle error
-	}
+			    // Some other error occurred. Handle the error.
+        }
+    }
 });
 
 sdlManager.sendRPC(audioPassThru);

@@ -55,7 +55,7 @@ sdlManager.getScreenManager().setTextField2("Line 2 of Text");
 sdlManager.getScreenManager().commit(new CompletionListener() {
 	@Override
 	public void onComplete(boolean success) {
-		Log.i(TAG, "ScreenManager update complete: " + success);
+		DebugTool.logInfo(TAG, "ScreenManager update complete: " + success);
 	}
 });
 ```

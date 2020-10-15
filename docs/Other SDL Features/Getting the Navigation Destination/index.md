@@ -315,11 +315,6 @@ subscribeWayPoints.setOnRPCResponseListener(new OnRPCResponseListener() {
             // Handle the errors
         }
     }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info) {
-        // Handle the errors
-    }
 });
 
 sdlManager.sendRPC(subscribeWayPoints);
@@ -406,11 +401,6 @@ unsubscribeWayPoints.setOnRPCResponseListener(new OnRPCResponseListener() {
             // Handle the errors
         }
     }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info) {
-        // Handle the errors
-    }
 });
 
 sdlManager.sendRPC(unsubscribeWayPoints);
@@ -488,11 +478,6 @@ getWayPoints.setOnRPCResponseListener(new OnRPCResponseListener() {
         } else {
             // Handle the errors
         }
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info) {
-        // Handle the errors
     }
 });
 

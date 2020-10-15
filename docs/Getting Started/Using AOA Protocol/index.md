@@ -80,6 +80,8 @@ As long as the app doesn't require high bandwidth, it shouldn't matter which tra
             sdlManager = builder.build();
             sdlManager.start();
         }
+        ...
+    }
 ```
 
 ### Using only USB / AOA

@@ -34,7 +34,7 @@ let observerId = sdlManager.permissionManager.addObserver(forRPCs: [SDLRPCFuncti
 ```java
 UUID listenerId = sdlManager.getPermissionManager().addListener(Arrays.asList(new PermissionElement(FunctionID.DIAL_NUMBER, null)), PermissionManager.PERMISSION_GROUP_TYPE_ANY, new OnPermissionChangeListener() {
     @Override
-    public void onPermissionsChange(@NonNull Map<FunctionID, PermissionStatus> allowedPermissions, @NonNull int permissionGroupStatus) {
+    public void onPermissionsChange(@NonNull Map<FunctionID, PermissionStatus> allowedPermissions, int permissionGroupStatus) {
         if (permissionGroupStatus != PermissionManager.PERMISSION_GROUP_TYPE_ALL_ALLOWED) {
             // Your app does not have permission to send the `DialNumber` request for its current HMI level
             return;
@@ -226,8 +226,8 @@ sdlManager.send(request: dialNumber) { (request, response, error) in
 
 @![android,javaSE,javaEE]
 ```java
-DialNumber dialNumber = new DialNumber();
-dialNumber.setNumber("1238675309");
+DialNumber dialNumber = new DialNumber()
+    .setNumber("1238675309");
 dialNumber.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
@@ -239,11 +239,6 @@ dialNumber.setOnRPCResponseListener(new OnRPCResponseListener() {
         }else if(result.equals(Result.DISALLOWED)){
             // Your app is not allowed to use `DialNumber`
         }
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        // Handle error
     }
 });
 

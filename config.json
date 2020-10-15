@@ -96,7 +96,7 @@
                     "name": "Popup Keyboards"
                 },
                 {
-                    "name": "Alerts"
+                    "name": "Alerts and Subtle Alerts"
                 },
                 {
                     "name": "Media Clock"
@@ -225,8 +225,8 @@
             ]
         },
         {
-            "name": "Migrating to Newer SDL Versions",
-            "platforms": ["Android","iOS", "JavaEE", "JavaSE"],
+            "name": "Migrating to Newer SDL iOS Versions",
+            "platforms": ["iOS"],
             "navigation": [
                 {
                     "name": "Updating to v4.3+",
@@ -236,6 +236,16 @@
                     "name": "Updating to v5.0+",
                     "platforms": ["iOS"]
                 },
+                {
+                    "name": "Updating to v7.0",
+                    "platforms": ["iOS"]
+                }
+            ]
+        },
+        {
+            "name": "Migrating to Newer SDL Java Suite Versions",
+            "platforms": ["Android", "JavaEE", "JavaSE"],
+            "navigation": [
                 {
                     "name": "Updating to v4.4",
                     "platforms": ["Android"]
@@ -254,6 +264,12 @@
                 },
                 {
                     "name": "Updating to v4.9",
+                    "platforms": [
+                        "Android", "JavaEE", "JavaSE"
+                    ]
+                },
+                {
+                    "name": "Updating to v5.0",
                     "platforms": [
                         "Android", "JavaEE", "JavaSE"
                     ]

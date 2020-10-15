@@ -65,11 +65,6 @@ setGlobalProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
     public void onResponse(int correlationId, RPCResponse response) {
         // The help menu is updated
     }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        <#Handle Error#>
-    }
 });
 sdlManager.sendRPC(setGlobalProperties);
 ```
@@ -132,16 +127,15 @@ sdlManager.send(request: setGlobals) { (request, response, error) in
 @![android, javaSE, javaEE]
 ```java
 SetGlobalProperties setGlobalProperties = new SetGlobalProperties();
-setGlobalProperties.setHelpPrompt(TTSChunkFactory.createSimpleTTSChunks("Your custom help prompt"));
+setGlobalProperties.setHelpPrompt(Collections.singletonList(new TTSChunk("Your custom help prompt", SpeechCapabilities.TEXT)));
 setGlobalProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
-        // The help prompt is updated
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        <#Handle Error#>
+        if (response.getSuccess()) {
+            // The help prompt is updated
+        } else {
+            // Handle Error
+        }
     }
 });
 sdlManager.sendRPC(setGlobalProperties);
@@ -198,16 +192,15 @@ sdlManager.send(request: setGlobals) { (request, response, error) in
 @![android, javaSE, javaEE]
 ```java
 SetGlobalProperties setGlobalProperties = new SetGlobalProperties();
-setGlobalProperties.setTimeoutPrompt(TTSChunkFactory.createSimpleTTSChunks("Your custom help prompt"));
+setGlobalProperties.setTimeoutPrompt(Collections.singletonList(new TTSChunk("Your custom help prompt", SpeechCapabilities.TEXT)));
 setGlobalProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
-        // The timeout prompt is updated
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        <#Handle Error#>
+        if (response.getSuccess()) {
+            // The timeout prompt is updated
+        } else {
+            // Handle Error
+        }
     }
 });
 sdlManager.sendRPC(setGlobalProperties);
@@ -288,12 +281,11 @@ ResetGlobalProperties resetGlobalProperties = new ResetGlobalProperties(Arrays.a
 resetGlobalProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
-        // The global properties are reset
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        <#Handle Error#>
+        if (response.getSuccess()) {
+            // The global properties are reset
+        } else {
+            // Handle Error
+        }
     }
 });
 sdlManager.sendRPC(resetGlobalProperties);

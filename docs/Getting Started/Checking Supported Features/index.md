@@ -37,23 +37,17 @@ sdlManager.send(request: <#Your Request#>) { (request, response, error) in
 
 @![android,javaSE,javaEE]
 ```java
-<#Your Request#>.setOnRPCResponseListener(new OnRPCResponseListener() {
-	@Override
-	public void onResponse(int correlationId, RPCResponse response) {
-		if (!response.getSuccess()) {
-			<#The request was not successful, check the onError handler for more information#>
-            return;
-		}
-
-        <#The request was successful#>
-	}
-
-	@Override
-	public void onError(int correlationId, Result resultCode, String info) {
-		<#The request was not successful, check the resultCode and info for more information#>
-	}
+request.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        if (!response.getSuccess()) {
+            // The request was not successful, check the response.getResultCode() and response.getInfo() for more information.
+        } else {
+            // The request was successful
+        }
+    }
 });
-sdlManager.sendRPC(<#Your Request#>);
+sdlManager.sendRPC(request);
 ```
 !@
 
