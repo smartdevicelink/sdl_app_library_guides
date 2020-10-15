@@ -10,7 +10,7 @@ You must have a valid and approved `appId` from an OEM in order to receive touch
 
 ##### Objective-C
 ```objc
-self.sdlManager.streamManager.touchManager.touchEventDelegate = self
+self.sdlManager.streamManager.touchManager.touchEventDelegate = self;
 ```
 
 ##### Swift
