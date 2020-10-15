@@ -173,7 +173,7 @@ alert.alertIcon = SDLImage(name: <#String#>, isTemplate: <#Bool#>)
 
 @![android,javaSE,javaEE]
 ```java
-alert.setAlertIcon(new Image("<#artworkName#>", ImageType.DYNAMIC));
+alert.setAlertIcon(new Image("artworkName", ImageType.DYNAMIC));
 ```
 !@
 
