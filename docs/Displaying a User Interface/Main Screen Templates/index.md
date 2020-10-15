@@ -137,7 +137,7 @@ if (success) {
 !@
 
 ## Available Templates
-There are fifteen standard templates to choose from, however some head units may only support a subset of these templates. The following examples show how templates will appear on the [Generic HMI](https://github.com/smartdevicelink/generic_hmi) and [Ford's SYNC 3 HMI](https://developer.ford.com).
+There are fifteen standard templates to choose from, however some head units may only support a subset of these templates. The following examples show how templates will appear on the [Generic HMI](https://github.com/smartdevicelink/generic_hmi) and [Ford's SYNC® 3 HMI](https://developer.ford.com).
 
 #### Media
 ![Generic - Media without progress bar](assets/GenericHMI/Generic_Default_Media.png)
@@ -158,16 +158,16 @@ There are fifteen standard templates to choose from, however some head units may
 ![Generic - Tiles Only](assets/GenericHMI/Generic_tiles_only.png)
 
 #### Graphic with Tiles
-![SYNC 3 - Graphic with Tiles](assets/SYNC3HMI/SYNC3_graphic_with_tiles.bmp)
+![SYNC® 3 - Graphic with Tiles](assets/SYNC3HMI/SYNC3_graphic_with_tiles.bmp)
 
 #### Tiles with Graphic
-![SYNC 3 - Tiles with Graphic](assets/SYNC3HMI/SYNC3_tiles_with_graphic.bmp)
+![SYNC® 3 - Tiles with Graphic](assets/SYNC3HMI/SYNC3_tiles_with_graphic.bmp)
 
 #### Graphic with Text and Soft Buttons
-![SYNC 3 - Graphic with Text and Soft Buttons](assets/SYNC3HMI/SYNC3_graphic_with_text_and_soft_buttons.bmp)
+![SYNC® 3 - Graphic with Text and Soft Buttons](assets/SYNC3HMI/SYNC3_graphic_with_text_and_soft_buttons.bmp)
 
 #### Text and Soft Buttons with Graphic
-![SYNC 3 Text and Soft Buttons with Graphic](assets/SYNC3HMI/SYNC3_text_and_soft_buttons_with_graphic.bmp)
+![SYNC® 3 Text and Soft Buttons with Graphic](assets/SYNC3HMI/SYNC3_text_and_soft_buttons_with_graphic.bmp)
 
 #### Graphic with Text Buttons
 ![Generic - Graphic with Text Buttons](assets/GenericHMI/Generic_graphic_with_text_buttons.png)

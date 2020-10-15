@@ -83,10 +83,10 @@ sdlManager.getScreenManager().preloadChoices(Arrays.asList(cell, fullCell), new 
 To show a popup menu to the user, you must present the menu. If some or all of the cells in the menu have not yet been preloaded, calling the `present` API will preload the cells and then present the menu once all the cells have been uploaded. Calling `present` without preloading the cells can take longer than if the cells were preloaded earlier in the app's lifecycle especially if your cell has voice commands. Subsequent menu presentations using the same cells will be faster because the library will reuse those cells (unless you have deleted them).
 
 ##### Menu - List
-![SYNC 3 - List Only Interaction Layout](assets/SYNC3_popup_menu_row.bmp)
+![SYNC® 3 - List Only Interaction Layout](assets/SYNC3_popup_menu_row.bmp)
 
 ##### Menu - Icon
-![SYNC 3 - Icon Only Interaction Layout](assets/SYNC3_popup_menu_tiles.bmp)
+![SYNC® 3 - Icon Only Interaction Layout](assets/SYNC3_popup_menu_tiles.bmp)
 
 !!! NOTE
 When you preload a cell, you **do not** need to maintain a reference to it. If you reuse a cell with the same properties that has already been preloaded (or previously presented), the cell will automatically be reused.
@@ -186,10 +186,10 @@ It may seem that the answer is to always use `both`. However, remember that you 
 | Both              | Interactions can occur both manually or through VR |
 
 ##### Menu - Manual Only Mode
-![SYNC 3 - Menu - Manual Only](assets/SYNC3_popup_menu_row.bmp)
+![SYNC® 3 - Menu - Manual Only](assets/SYNC3_popup_menu_row.bmp)
 
 ##### Menu - Voice Only Mode
-![SYNC 3 - Menu - Voice Only](assets/SYNC3_popup_menu_voice_recognition.bmp)
+![SYNC® 3 - Menu - Voice Only](assets/SYNC3_popup_menu_voice_recognition.bmp)
 
 @![iOS]
 ##### Objective-C
@@ -214,7 +214,7 @@ sdlManager.getScreenManager().presentChoiceSet(choiceSet, InteractionMode.MANUAL
 In addition to presenting a standard menu, you can also present a "searchable" menu, that is, a menu with a keyboard input box at the top. For more information on implementing the keyboard callbacks, see the [Popup Keyboards](Displaying a User Interface/Popup Keyboards) guide.
 
 ##### Menu with Search
-![SYNC 3 - Menu with Search Interaction Layout](assets/SYNC3_popup_menu_with_search.bmp)
+![SYNC® 3 - Menu with Search Interaction Layout](assets/SYNC3_popup_menu_with_search.bmp)
 
 @![iOS]
 ##### Objective-C
