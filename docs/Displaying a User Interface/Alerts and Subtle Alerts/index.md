@@ -681,7 +681,7 @@ subtleAlert.alertIcon = SDLImage(name: <#String#>, isTemplate: <#Bool#>)
 
 @![android,javaSE,javaEE]
 ```java
-subtleAlert.setAlertIcon(new Image("<#artworkName#>", ImageType.DYNAMIC));
+subtleAlert.setAlertIcon(new Image("artworkName", ImageType.DYNAMIC));
 ```
 !@
 
