@@ -176,7 +176,7 @@ sdlManager.screenManager.endUpdates { (error) in
 
 @![android, javaSE, javaEE]
 ```java
-SoftButtonState imageState = new SoftButtonState("<#State Name#>", null, <#SdlArtwork#>);
+SoftButtonState imageState = new SoftButtonState("<#State Name#>", null, sdlArtwork);
 SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Collections.singletonList(imageState), imageState.getName(), new SoftButtonObject.OnEventListener() {
     @Override
     public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {

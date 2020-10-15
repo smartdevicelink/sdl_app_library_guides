@@ -469,7 +469,7 @@ sdlManager.sendRPC(getInteriorVehicleData);
 ###### RPC v6.0+
 ```java
 GetInteriorVehicleData getInteriorVehicleData = new GetInteriorVehicleData(ModuleType.RADIO)
-    .setModuleId(<#ModuleID#>);
+    .setModuleId("<#ModuleID#>");
 getInteriorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
