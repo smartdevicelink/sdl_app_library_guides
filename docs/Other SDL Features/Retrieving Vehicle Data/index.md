@@ -32,15 +32,15 @@ You will only have access to vehicle data that is allowed to your `appName` and 
 | My Key | myKey | Information about whether or not the emergency 911 override has been activated ||
 | Odometer | odometer | Odometer reading in km ||
 | PRNDL | prndl | The selected gear the car is in: park, reverse, neutral, drive, sport, low gear, first, second, third, fourth, fifth, sixth, seventh or eighth gear, unknown, or fault ||
+| RPM | rpm | The number of revolutions per minute of the engine ||
 | Speed | speed | Speed in KPH ||
 | Stability Control Status | stabilityControlsStatus | Status of the vehicle's stability control and trailer sway control ||
 | Steering Wheel Angle | steeringWheelAngle | Current angle of the steering wheel (in degrees) ||
 | Tire Pressure | tirePressure | Tire status of each wheel in the vehicle: normal, low, fault, alert, or not supported. Warning light status for the tire pressure: off, on, flash, or not used ||
 | Turn Signal | turnSignal | The status of the turn signal. Available states: off, left, right, both ||
-| RPM | rpm | The number of revolutions per minute of the engine ||
 | VIN | vin | The Vehicle Identification Number ||
+| Window Status | windowStatus | An array of window locations and approximate position ||
 | Wiper Status | wiperStatus | The status of the wipers: off, automatic off, off moving, manual interaction off, manual interaction on, manual low, manual high, manual flick, wash, automatic low, automatic high, courtesy wipe, automatic adjust, stalled, no data exists ||
-| Window Status | windowStatus | An array of window locations and open/close state ||
 
 ## One-Time Vehicle Data Retrieval
 To get vehicle data a single time, use the @![iOS]`SDLGetVehicleData`!@@![android, javaSE, javaEE,javascript]`GetVehicleData`!@ RPC.
