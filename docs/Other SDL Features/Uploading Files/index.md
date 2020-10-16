@@ -31,9 +31,15 @@ sdlManager.fileManager.upload(file: audioFile) { (success, bytesAvailable, error
 
 @![android, javaSE, javaEE]
 ```java
-byte[] mp3Data = Get the file data;
 SdlFile audioFile = new SdlFile("File Name", FileType.AUDIO_MP3, mp3Data, true);
-sdlManager.sendRPC(audioFile);
+sdlManager.getFileManager().uploadFile(audioFile, new CompletionListener() {
+    @Override
+    public void onComplete(boolean success) {
+        if (success) {
+            // File upload successful
+        }
+    }
+});
 ```
 !@
 
@@ -137,10 +143,11 @@ Be aware that persistence will not work if space on the head unit is limited. Th
 
 
 ## Overwriting Stored Files
+@![iOS, android, javaEE, javaSE]
+If a file being uploaded has the same name as an already uploaded file, the new file will be ignored. To override this setting, set the !@@![iOS]`SDLFile`!@@![android, javaSE, javaEE]`SdlFile`!@@![iOS, android, javaEE, javaSE]'s `overwrite` property to `true`.
+!@
+
 @![iOS]
-If a file being uploaded has the same name as an already uploaded file, the new file will be ignored. To override this setting, set the `SDLFile`'s `overwrite` property to true.
-
-
 ##### Objective-C
 ```objc
 file.overwrite = YES;
@@ -153,9 +160,8 @@ file.overwrite = true
 !@
 
 @![android, javaSE, javaEE]
-If a file being uploaded has the same name as an already uploaded file, the existing file will be overwritten. To override this setting, so files do not get overwritten, set the `SdlFile`'s `overwrite` property to `false`.
 ```java
-file.setOverwrite(false);
+file.setOverwrite(true);
 ```
 !@
 
@@ -207,7 +213,7 @@ let isFileOnHeadUnit = sdlManager.fileManager.remoteFileNames.contains(<#Name Up
 
 @![android, javaSE, javaEE]
 ```java
-Boolean fileIsOnHeadUnit = sdlManager.getFileManager().getRemoteFileNames().contains("Name Uploaded As")
+Boolean fileIsOnHeadUnit = sdlManager.getFileManager().getRemoteFileNames().contains("Name Uploaded As");
 ```
 !@
 

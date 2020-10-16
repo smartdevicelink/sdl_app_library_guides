@@ -153,8 +153,11 @@ target '<#Your Project Name#>' do
 end
 ```
 
+#### Swift Package Manager
+If the SDL iOS library was installed using [Swift Package Manager](https://swift.org/package-manager/), install the `SmartDeviceLinkSwift` target to your SPM installation. Then, where you want to log, `import SmartDeviceLinkSwift`.
+
 #### Logging in Swift
-After the submodule has been installed, you can use the `SDLLog` functions in your project.
+Once you have access to the SmartDeviceLinkSwift enhancements, you can use the `SDLLog` functions in your project.
 
 ```swift
 SDLLog.v("This is a verbose log")
@@ -195,22 +198,22 @@ The SDL debug tool can be used to log messages with different log levels. The lo
 
 To log an info message:
 ```java
-DebugTool.logInfo("info message goes here");
+DebugTool.logInfo(TAG, "info message goes here");
 ```
 
 To log a warning message:
 ```java
-DebugTool.logWarning("warning message goes here");
+DebugTool.logWarning(TAG, "warning message goes here");
 ```
 
 To log an error message:
 ```java
-DebugTool.logError("error message goes here");
+DebugTool.logError(TAG, "error message goes here");
 ```
 
 If you want to log error message with exception, you can add the exception as a second parameter to the `logError` method:
 ```java
-DebugTool.logError("error message goes here", new SdlException("Sdl connection failed", SdlExceptionCause.SDL_CONNECTION_FAILED));
+DebugTool.logError(TAG, "error message goes here", new SdlException("Sdl connection failed", SdlExceptionCause.SDL_CONNECTION_FAILED));
 ```
 !@
 

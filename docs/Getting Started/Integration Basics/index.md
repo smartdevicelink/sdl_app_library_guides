@@ -235,7 +235,7 @@ Persistent files are used when the image ought to remain on the remote system be
 !!!
 
 ### 4. App Type (optional)
-The app type is used by car manufacturers to decide how to categorize your app. Each car manufacturer has a different categorization system. For example, if you set your app type as media, your app will also show up in the audio tab as well as the apps tab of Ford’s SYNC3 head unit. The app type options are: default, communication, media (i.e. music/podcasts/radio), messaging, navigation, projection, information, and social.
+The app type is used by car manufacturers to decide how to categorize your app. Each car manufacturer has a different categorization system. For example, if you set your app type as media, your app will also show up in the audio tab as well as the apps tab of Ford’s SYNC® 3 head unit. The app type options are: default, communication, media (i.e. music/podcasts/radio), messaging, navigation, projection, information, and social.
 
 !!! NOTE
 Navigation and projection applications both use video and audio byte streaming. However, navigation apps require special permissions from OEMs, and projection apps are only for internal use by OEMs.
@@ -635,24 +635,25 @@ Starting with Android API 29 please include `android:foregroundServiceType='conn
 Because of Android Oreo's requirements, it is mandatory that services enter the foreground for long running tasks. The first bit of integration is ensuring that happens in the `onCreate` method of the `SdlService` or similar. Within the service that implements the SDL lifecycle you will need to add a call to start the service in the foreground. This will include creating a notification to sit in the status bar tray. This information and icons should be relevant for what the service is doing/going to do. If you already start your service in the foreground, you can ignore this section.
 
 ```java
-
+@Override
 public void onCreate() {
     super.onCreate();
     //...
-    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-    	NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-     	notificationManager.createNotificationChannel(...);
-     	Notification serviceNotification = new Notification.Builder(this, *Notification Channel*)
-         	.setContentTitle(...)
-         	.setSmallIcon(....)
-         	.setLargeIcon(...)
-         	.setContentText(...)
-         	.setChannelId(channel.getId())
-         	.build();
-     	startForeground(id, serviceNotification);
-     }
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        NotificationChannel channel = new NotificationChannel("channelId", "channelName", NotificationManager.IMPORTANCE_DEFAULT);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notificationManager != null) {
+            notificationManager.createNotificationChannel(channel);
+            Notification serviceNotification = new Notification.Builder(this, channel.getId())
+                    .setContentTitle(...)
+                    .setSmallIcon(...)
+                    .setContentText(...)
+                    .setChannelId(channel.getId())
+                    .build();
+            startForeground(FOREGROUND_SERVICE_ID, serviceNotification);
+        }
+    }
 }
-
 ```
 !!! NOTE
 The sample code checks if the OS is of Android Oreo or newer to start a foreground service. It is up to the app developer if they wish to start the notification in previous versions.
@@ -697,45 +698,40 @@ public class SdlService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
+    
         if (sdlManager == null) {
             MultiplexTransportConfig transport = new MultiplexTransportConfig(this, APP_ID, MultiplexTransportConfig.FLAG_MULTI_SECURITY_OFF);
-
+    
             // The app type to be used
             Vector<AppHMIType> appType = new Vector<>();
             appType.add(AppHMIType.MEDIA);
-
+    
             // The manager listener helps you know when certain events that pertain to the SDL Manager happen
             SdlManagerListener listener = new SdlManagerListener() {
-
+    
                 @Override
                 public void onStart() {
-                	// After this callback is triggered the SdlManager can be used to interact with the connected SDL session (updating the display, sending RPCs, etc)
+                    // After this callback is triggered the SdlManager can be used to interact with the connected SDL session (updating the display, sending RPCs, etc)
                 }
-
+    
                 @Override
                 public void onDestroy() {
                     SdlService.this.stopSelf();
                 }
-
+    
                 @Override
                 public void onError(String info, Exception e) {
                 }
-
-                @Override
-                public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language) {
-                    return null;
-                }
-
+    
                 @Override
                 public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language, Language hmiLanguage) {
-                  return null;
+                    return null;
                 }
             };
-
+    
             // Create App Icon, this is set in the SdlManager builder
             SdlArtwork appIcon = new SdlArtwork(ICON_FILENAME, FileType.GRAPHIC_PNG, R.mipmap.ic_launcher, true);
-
+    
             // The manager builder sets options for your session
             SdlManager.Builder builder = new SdlManager.Builder(this, APP_ID, APP_NAME, listener);
             builder.setAppTypes(appType);
@@ -744,7 +740,9 @@ public class SdlService extends Service {
             sdlManager = builder.build();
             sdlManager.start();
         }
-
+    
+        return START_STICKY;
+    }
 }
 ```
 
@@ -806,11 +804,6 @@ public class SdlService {
                 }
 
                 @Override
-                public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language) {
-                    return null;
-                }
-
-                @Override
                 public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language, Language hmiLanguage) {
                   return null;
                 }
@@ -848,7 +841,7 @@ builder.setAppIcon(appIcon);
 ```
 
 ##### App Type 
-The app type is used by car manufacturers to decide how to categorize your app. Each car manufacturer has a different categorization system. For example, if you set your app type as media, your app will also show up in the audio tab as well as the apps tab of Ford’s SYNC3 head unit. The app type options are: default, communication, media (i.e. music/podcasts/radio), messaging, navigation, projection, information, and social.
+The app type is used by car manufacturers to decide how to categorize your app. Each car manufacturer has a different categorization system. For example, if you set your app type as media, your app will also show up in the audio tab as well as the apps tab of Ford’s SYNC® 3 head unit. The app type options are: default, communication, media (i.e. music/podcasts/radio), messaging, navigation, projection, information, and social.
 
 ```java
 Vector<AppHMIType> appHMITypes = new Vector<>();

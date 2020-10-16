@@ -249,13 +249,10 @@ manager.send(request: sdlSlider, responseHandler: { (req, res, err) in
 slider.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
-        SliderResponse sliderResponse = (SliderResponse) response;
-        Log.i(TAG, "Slider Position Set: " + sliderResponse.getSliderPosition());
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info) {
-        Log.e(TAG, "onError: " + resultCode + " | Info: " + info);
+        if (response.getSuccess()) {
+            SliderResponse sliderResponse = (SliderResponse) response;
+            DebugTool.logInfo(TAG, "Slider Position Set: " + sliderResponse.getSliderPosition());
+        }
     }
 });
 sdlManager.sendRPC(slider);
@@ -323,13 +320,8 @@ cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
         if (response.getSuccess()){
-            Log.i(TAG, "Slider was dismissed successfully");
+            DebugTool.logInfo(TAG, "Slider was dismissed successfully");
         }
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info) {
-        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
     }
 });
 sdlManager.sendRPC(cancelInteraction);
@@ -395,13 +387,8 @@ cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
         if (response.getSuccess()){
-            Log.i(TAG, "Slider was dismissed successfully");
+            DebugTool.logInfo(TAG, "Slider was dismissed successfully");
         }
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info) {
-        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
     }
 });
 sdlManager.sendRPC(cancelInteraction);

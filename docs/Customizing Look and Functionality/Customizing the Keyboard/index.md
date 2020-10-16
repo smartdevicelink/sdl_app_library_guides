@@ -32,9 +32,9 @@ sdlManager.screenManager.keyboardConfiguration = keyboardConfig
 
 @![android, javaSE, javaEE]
 ```java
-KeyboardProperties keyboardProperties = new KeyboardProperties();
-keyboardProperties.setLanguage(Language.HE_IL); // Set to Israeli Hebrew
-keyboardProperties.setKeyboardLayout(KeyboardLayout.AZERTY); // Set to AZERTY
+KeyboardProperties keyboardProperties = new KeyboardProperties()
+    .setLanguage(Language.HE_IL) // Set to Israeli Hebrew
+    .setKeyboardLayout(KeyboardLayout.AZERTY); // Set to AZERTY
 
 sdlManager.getScreenManager().setKeyboardConfiguration(keyboardProperties);
 ```

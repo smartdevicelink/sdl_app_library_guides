@@ -24,7 +24,7 @@ sdlManager.fileManager.upload(file: audioFile) { (success, bytesAvailable, error
 
 @![android, javaSE, javaEE]
 ```java
-SdlFile audioFile = new SdlFile("Audio file name", FileType.AUDIO_MP3, Uri.parse("File Location"), true);
+SdlFile audioFile = new SdlFile("Audio file name", FileType.AUDIO_MP3, fileUri, true);
 sdlManager.getFileManager().uploadFile(audioFile, new CompletionListener() {
 	@Override
 	public void onComplete(boolean success) {
@@ -64,11 +64,12 @@ sdlManager.send(alert)
 
 @![android, javaSE, javaEE]
 ```java
-Alert alert = new Alert();
-alert.setAlertText1("Alert Text 1");
-alert.setAlertText2("Alert Text 2");
-alert.setDuration(5000);
-alert.setTtsChunks(Arrays.asList(new TTSChunk("Audio file name", SpeechCapabilities.FILE)));
+Alert alert = new Alert()
+    .setAlertText1("Alert Text 1")
+    .setAlertText2("Alert Text 2")
+    .setDuration(5000)
+    .setTtsChunks(Arrays.asList(new TTSChunk("Audio file name", SpeechCapabilities.FILE)));
+sdlManager.sendRPC(alert);
 ```
 !@
 
@@ -79,5 +80,9 @@ alert.setAlertText1('Alert Text 1');
 alert.setAlertText2('Alert Text 2');
 alert.setDuration(5000);
 alert.setTtsChunks([new SDL.rpc.structs.TTSChunk().setText('Audio file name').setType(SDL.rpc.enums.SpeechCapabilities.FILE)]);
+// sdl_javascript_suite v1.1+
+sdlManager.sendRpcResolve(alert);
+// Pre sdl_javascript_suite v1.1
+sdlManager.sendRpc(alert);
 ```
 !@
