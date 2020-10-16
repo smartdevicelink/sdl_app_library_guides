@@ -60,9 +60,9 @@ You can install this library using the [Swift Package Manager](https://swift.org
 
 3\. Use the default rules or customize the rules to use a specific version or branch. This library added SPM support in version 7.0.0, so please use at least that version.
 
-4\. You will be asked which package project to use. If you are using a swift project, then you should use the `SmartDeviceLinkSwift` project. If not, then you should use the `SmartDeviceLink` project. You can use the `SmartDeviceLink` project in a Swift project as well, but you will miss some Swift specific customizations, which are currently limited to logging enhancements.
+4\. You will be asked which package project to use. If you are using a Swift project, then you should use the `SmartDeviceLinkSwift` project. If not, then you should use the `SmartDeviceLink` project. You can use the `SmartDeviceLink` project in a Swift project as well, but you will miss some Swift specific customizations, which are currently limited to logging enhancements.
 
-5\. In your SDL related code, use `import SmartDeviceLink` to call most SDL-related code. If you want to use the Swift-specific [logging enhancements](/developer-tools/configuring-sdl-logging/#logging-with-the-sdl-logger) you must also use `import SmartDeviceLinkSwift`.
+5\. In your SDL related code, use `import SmartDeviceLink` to call most SDL-related code. If you want to use the Swift-specific [logging enhancements](Developer Tools/Configuring SDL Logging#logging-with-the-sdl-logger) you must also use `import SmartDeviceLinkSwift`.
 
 ### Accio Installation
 You can install this library using [Accio](https://github.com/JamitLabs/Accio), which is based on SwiftPM syntax. Please follow the steps on the Accio README linked above to initialize Accio into your application. Once installed and initialized into your Xcode project, the root directory should contain a Package.swift file.
