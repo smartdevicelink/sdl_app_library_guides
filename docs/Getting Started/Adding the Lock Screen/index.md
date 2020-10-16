@@ -143,12 +143,13 @@ If you create a custom lock screen view controller, please note that the view co
 @![iOS]
 ##### Objective-C
 ```objc
-UIViewController *lockScreenViewController = <# Initialize Your View Controller #>;
+MySDLLockScreenViewControllerSubclass *lockScreenViewController = <# Initialize Your View Controller #>;
 SDLLockScreenConfiguration *lockScreenConfiguration = [SDLLockScreenConfiguration enabledConfigurationWithViewController:lockScreenViewController];
 ```
 
 ##### Swift
 ```swift
+// This view controller should be a `SDLLockScreenViewController` subclass
 let lockScreenViewController = <# Initialize Your View Controller #>
 let lockScreenConfiguration = SDLLockScreenConfiguration.enabledConfiguration(with: lockScreenViewController)
 ```
