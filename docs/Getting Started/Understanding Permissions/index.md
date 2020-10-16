@@ -444,10 +444,9 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_HMI_STATUS, new OnRPCNotif
 
 @![javascript]
 ```js
-
-function onHMIStatusListener (onHMIStatus) {
-    const streamingState = onHMIStatus.getAudioStreamingState();
-}
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnHMIStatus, onHmiStatus => {
+    const streamingState = onHmiStatus.getAudioStreamingState();
+});
 ```
 The code snippet above will get the AudioStreamingState which reflects the HMI's ability to stream audio. However, the JavaScript Suite does not yet support audio and video streaming. This will be addressed in a future version.
 !@
@@ -493,9 +492,8 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_HMI_STATUS, new OnRPCNotif
 
 @![javascript]
 ```js
-
-function onHmiStatusListener (onHmiStatus) {
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnHMIStatus, onHmiStatus => {
     const systemContext = onHmiStatus.getSystemContext();
-}
+});
 ```
 !@
