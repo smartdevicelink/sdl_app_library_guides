@@ -135,7 +135,7 @@ lockScreenConfig.showDeviceLogo(false);
 If you would like to use your own lock screen instead of the one provided by the library, but still use the logic we provide, you can use a new initializer within @![iOS]`SDLLockScreenConfiguration`!@@![android]`LockScreenConfig`!@. @![iOS]Any custom lock screen you create should be a subclass of `SDLLockScreenViewController` to ensure that it is configured correctly and can receive all of the information necessary to customize your lock screen such as the OEM icon.!@
 
 @![iOS]
-!!!NOTE
+!!! NOTE
 If you create a custom lock screen view controller, please note that the view controller's default `view` background will be transparent, even if you set a background color for it. You **must** place a custom view across the entire view controller in order to make your lock screen opaque.
 !!!
 !@
@@ -144,14 +144,12 @@ If you create a custom lock screen view controller, please note that the view co
 ##### Objective-C
 ```objc
 UIViewController *lockScreenViewController = <# Initialize Your View Controller #>;
-lockScreenViewController.modalPresentationStyle = UIModalPresentationFullScreen;
 SDLLockScreenConfiguration *lockScreenConfiguration = [SDLLockScreenConfiguration enabledConfigurationWithViewController:lockScreenViewController];
 ```
 
 ##### Swift
 ```swift
 let lockScreenViewController = <# Initialize Your View Controller #>
-lockScreenViewController.modalPresentationStyle = .fullScreen
 let lockScreenConfiguration = SDLLockScreenConfiguration.enabledConfiguration(with: lockScreenViewController)
 ```
 
