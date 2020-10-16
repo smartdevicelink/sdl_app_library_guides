@@ -72,7 +72,7 @@ sdlManager.screenManager.preloadChoices(<#choices: [SDLChoiceCell]#>) { (error) 
 sdlManager.getScreenManager().preloadChoices(Arrays.asList(cell, fullCell), new CompletionListener() {
     @Override
     public void onComplete(boolean b) {
-        // <#code#>
+        // code
     }
 });
 ```
@@ -129,12 +129,12 @@ ChoiceSet choiceSet = new ChoiceSet("ChoiceSet Title", Arrays.asList(cell, fullC
     @Override
     public void onChoiceSelected(ChoiceCell choiceCell, TriggerSource triggerSource, int rowIndex) {
         // You will be passed the `cell` that was selected, the manner in which it was selected (voice or text), and the index of the cell that was passed.      
-        // <#handle selection#>    
+        // handle selection
     }
 
     @Override
     public void onError(String error) {
-        // <#handle error#>              
+        // handle error            
     }
 });
 ```

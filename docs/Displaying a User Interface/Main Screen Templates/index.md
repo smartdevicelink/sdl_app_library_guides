@@ -110,7 +110,7 @@ sdlManager.getScreenManager().changeLayout(templateConfiguration, new Completion
         // This listener will be ignored, and will use the CompletionListener sent in commit.
     }
 });
-sdlManager.getScreenManager().setPrimaryGraphic(<#SDLArtwork#>);
+sdlManager.getScreenManager().setPrimaryGraphic(sdlArtwork);
 sdlManager.getScreenManager().commit(new CompletionListener() {
     @Override
     public void onComplete(boolean success) {

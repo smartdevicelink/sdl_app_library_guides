@@ -138,10 +138,10 @@ KeyboardListener keyboardListener = new KeyboardListener() {
     public void onUserDidSubmitInput(String inputText, KeyboardEvent event) {
         switch (event) {
             case ENTRY_VOICE:
-                // <#The user decided to start voice input, you should start an AudioPassThru session if supported#>
+                // The user decided to start voice input, you should start an AudioPassThru session if supported
                 break;
             case ENTRY_SUBMITTED:
-                // <#The user submitted some text with the keyboard#>
+                // The user submitted some text with the keyboard
                 break;
             default:
                 break;
@@ -152,10 +152,10 @@ KeyboardListener keyboardListener = new KeyboardListener() {
     public void onKeyboardDidAbortWithReason(KeyboardEvent event) {
         switch (event) {
             case ENTRY_CANCELLED:
-                // <#The user cancelled the keyboard interaction#>
+                // The user cancelled the keyboard interaction
                 break;
             case ENTRY_ABORTED:
-                // <#The system aborted the keyboard interaction#>
+                // The system aborted the keyboard interaction
                 break;
             default:
                 break;
@@ -164,18 +164,18 @@ KeyboardListener keyboardListener = new KeyboardListener() {
 
     @Override
     public void updateAutocompleteWithInput(String currentInputText, KeyboardAutocompleteCompletionListener keyboardAutocompleteCompletionListener) {
-        // <#Check the input text and return a list of autocomplete results#>
-        // keyboardAutocompleteCompletionListener.onUpdatedAutoCompleteList(<#String results to be displayed#>]);
+        // Check the input text and return a list of autocomplete results
+        keyboardAutocompleteCompletionListener.onUpdatedAutoCompleteList(updatedAutoCompleteList);
     }
 
     @Override
     public void updateCharacterSetWithInput(String currentInputText, KeyboardCharacterSetCompletionListener keyboardCharacterSetCompletionListener) {
-        // <#Check the input text and return a set of characters to allow the user to enter#>
+        // Check the input text and return a set of characters to allow the user to enter
     }
 
     @Override
     public void onKeyboardDidSendEvent(KeyboardEvent event, String currentInputText) {
-        // <#This is sent upon every event, such as keypresses, cancellations, and aborting#>
+        // This is sent upon every event, such as keypresses, cancellations, and aborting
     }
 };
 ```

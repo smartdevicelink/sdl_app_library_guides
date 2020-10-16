@@ -226,7 +226,7 @@ sdlManager.send(request: setGlobals) { (request, response, error) in
 // The image must be uploaded before referencing the image name here
 SetGlobalProperties setGlobalProperties = new SetGlobalProperties()
     .setMenuTitle("customTitle")
-    .setMenuIcon(<#Image#>);
+    .setMenuIcon(image);
 
 setGlobalProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override

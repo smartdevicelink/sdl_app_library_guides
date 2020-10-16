@@ -70,7 +70,7 @@ Alert alert = new Alert()
     .setAlertText1("Line 1")
     .setAlertText2("Line 2")
     .setAlertText3("Line 3")
-    .setCancelID(<#Integer>);
+    .setCancelID(cancelId);
 ```
 !@
 
@@ -173,7 +173,7 @@ alert.alertIcon = SDLImage(name: <#String#>, isTemplate: <#Bool#>)
 
 @![android,javaSE,javaEE]
 ```java
-alert.setAlertIcon(new Image(<#artworkName#>, ImageType.DYNAMIC));
+alert.setAlertIcon(new Image("artworkName", ImageType.DYNAMIC));
 ```
 !@
 
@@ -578,7 +578,7 @@ let subtleAlert = SDLSubtleAlert(alertText1: <#String?#>, alertText2: <#String?#
 SubtleAlert subtleAlert = new SubtleAlert()
     .setAlertText1("Line 1")
     .setAlertText2("Line 2")
-    .setCancelID(<#Integer>);
+    .setCancelID(cancelId);
 ```
 !@
 
@@ -681,7 +681,7 @@ subtleAlert.alertIcon = SDLImage(name: <#String#>, isTemplate: <#Bool#>)
 
 @![android,javaSE,javaEE]
 ```java
-subtleAlert.setAlertIcon(new Image(<#artworkName#>, ImageType.DYNAMIC));
+subtleAlert.setAlertIcon(new Image("artworkName", ImageType.DYNAMIC));
 ```
 !@
 
@@ -872,7 +872,7 @@ sdlManager.subscribe(to: .SDLDidReceiveSubtleAlertPressed, observer: self, selec
 sdlManager.addOnRPCNotificationListener(FunctionID.ON_SUBTLE_ALERT_PRESSED, new OnRPCNotificationListener() {
     @Override
     public void onNotified(RPCNotification notification) {
-        <#The subtle alert was pressed#>
+        // The subtle alert was pressed
     }
 });
 ```

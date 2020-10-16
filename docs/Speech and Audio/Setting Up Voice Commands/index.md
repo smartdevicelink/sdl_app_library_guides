@@ -36,7 +36,7 @@ sdlManager.screenManager.voiceCommands = [voiceCommand]
 VoiceCommand voiceCommand = new VoiceCommand(Collections.singletonList("Command One"), new VoiceCommandSelectionListener() {
     @Override
     public void onVoiceCommandSelected() {
-        // <#Handle the VoiceCommand's Selection#>
+        // Handle the VoiceCommand's Selection
     }
 });
 

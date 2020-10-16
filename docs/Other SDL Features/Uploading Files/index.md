@@ -31,13 +31,12 @@ sdlManager.fileManager.upload(file: audioFile) { (success, bytesAvailable, error
 
 @![android, javaSE, javaEE]
 ```java
-byte[] mp3Data = <#Get the File Data#>;
 SdlFile audioFile = new SdlFile("File Name", FileType.AUDIO_MP3, mp3Data, true);
 sdlManager.getFileManager().uploadFile(audioFile, new CompletionListener() {
     @Override
     public void onComplete(boolean success) {
         if (success) {
-            <#File upload successful#>
+            // File upload successful
         }
     }
 });

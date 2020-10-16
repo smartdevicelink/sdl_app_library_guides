@@ -176,7 +176,7 @@ sdlManager.screenManager.endUpdates { (error) in
 
 @![android, javaSE, javaEE]
 ```java
-SoftButtonState imageState = new SoftButtonState("<#State Name#>", null, <#SdlArtwork#>);
+SoftButtonState imageState = new SoftButtonState("<#State Name#>", null, sdlArtwork);
 SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Collections.singletonList(imageState), imageState.getName(), new SoftButtonObject.OnEventListener() {
     @Override
     public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
@@ -265,7 +265,7 @@ sdlManager.screenManager.endUpdates { (error) in
 
 @![android, javaSE, javaEE]
 ```java
-SoftButtonState textAndImageState = new SoftButtonState("<#State Name#>", "<#Button Label Text#>", <#SdlArtwork#>);
+SoftButtonState textAndImageState = new SoftButtonState("<#State Name#>", "<#Button Label Text#>", sdlArtwork);
 SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Collections.singletonList(textAndImageState), textAndImageState.getName(), new SoftButtonObject.OnEventListener() {
     @Override
     public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
@@ -354,9 +354,9 @@ let highlightButton = SDLSoftButtonObject(name: "HighlightButton", states: [high
 
 @![android,javaSE,javaEE]
 ```java
-SoftButtonState softButtonState1 = new SoftButtonState("Soft Button State Name", "On", <#SdlArtwork#>);
+SoftButtonState softButtonState1 = new SoftButtonState("Soft Button State Name", "On", sdlArtwork);
 softButtonState1.setHighlighted(true);
-SoftButtonState softButtonState2 = new SoftButtonState("Soft Button State Name 2", "Off", <#SdlArtwork#>);
+SoftButtonState softButtonState2 = new SoftButtonState("Soft Button State Name 2", "Off", sdlArtwork);
 softButtonState2.setHighlighted(false);
 SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Arrays.asList(softButtonState1, softButtonState2), softButtonState1.getName(), new SoftButtonObject.OnEventListener() {
      @Override
@@ -440,8 +440,8 @@ retrievedSoftButtonObject?.transitionToNextState()
 
 @![android, javaSE, javaEE]
 ```java
-SoftButtonState state1 = new SoftButtonState("<#State1 Name#>", "<#Button1 Label Text#>", <#SdlArtwork#>);
-SoftButtonState state2 = new SoftButtonState("<#State2 Name#>", "<#Button2 Label Text#>", <#SdlArtwork#>);
+SoftButtonState state1 = new SoftButtonState("<#State1 Name#>", "<#Button1 Label Text#>", sdlArtwork);
+SoftButtonState state2 = new SoftButtonState("<#State2 Name#>", "<#Button2 Label Text#>", sdlArtwork);
 
 SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Arrays.asList(state1, state2), state1.getName(), new SoftButtonObject.OnEventListener() {
     @Override

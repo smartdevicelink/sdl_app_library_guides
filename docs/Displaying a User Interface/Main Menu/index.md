@@ -31,7 +31,7 @@ sdlManager.screenManager.menuConfiguration = menuConfiguration
 
 @![android, javaSE, javaEE]
 ```java
-MenuConfiguration menuConfiguration = new MenuConfiguration(<#mainMenuLayout>, <#submenuLayout>);
+MenuConfiguration menuConfiguration = new MenuConfiguration(mainMenuLayout, submenuLayout);
 sdlManager.getScreenManager().setMenuConfiguration(menuConfiguration);
 ```
 !@
@@ -74,7 +74,7 @@ MenuCell cell = new MenuCell("Cell text", null, Collections.singletonList("cell 
     @Override
     public void onTriggered(TriggerSource trigger) {
         // Menu item was selected, check the `triggerSource` to know if the user used touch or voice to activate it
-        // <#Handle the Cell's Selection#>
+        // Handle the Cell's Selection
     }
 });
 
@@ -121,7 +121,7 @@ MenuCell innerCell = new MenuCell("inner menu cell", null, Collections.singleton
     @Override
     public void onTriggered(TriggerSource trigger) {
         // Menu item was selected, check the `triggerSource` to know if the user used touch or voice to activate it
-        // <#Handle the cell's selection#>
+        // Handle the cell's selection
     }
 });
 

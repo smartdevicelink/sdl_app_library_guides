@@ -54,10 +54,10 @@ SetGlobalProperties setGlobalProperties = new SetGlobalProperties();
 setGlobalProperties.setVrHelpTitle("What Can I Say?");
 
 VrHelpItem item1 = new VrHelpItem("Show Artists", 1);
-item1.setImage(<#image#>); // a previously uploaded image or null
+item1.setImage(image); // a previously uploaded image or null
 
 VrHelpItem item2 = new VrHelpItem("Show Albums", 2);
-item2.setImage(<#image#>); // a previously uploaded image or null
+item2.setImage(image); // a previously uploaded image or null
 
 setGlobalProperties.setVrHelp(Arrays.asList(item1, item2));
 setGlobalProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
