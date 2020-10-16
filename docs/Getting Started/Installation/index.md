@@ -2,12 +2,12 @@
 In order to build your app on a SmartDeviceLink (SDL) Core, the SDL software development kit (SDK) must be installed in your app. The following steps will guide you through adding the SDL SDK to your workspace and configuring the environment.
 
 !!! NOTE
-The SDL SDK is currently supported on @![iOS]iOS 8.0!@@![android]Android 2.2 (Froyo)!@@![javaSE, javaEE]Java 7 (1.7)!@@![javascript]Node 9.11.2!@ and above.
+The SDL SDK is currently supported on @![iOS]iOS 10.0!@@![android]Android 2.2 (Froyo)!@@![javaSE, javaEE]Java 7 (1.7)!@@![javascript]Node 9.11.2!@ and above.
 !!!
 
 ## Install SDL SDK
 @![iOS]
-There are four different ways to install the SDL SDK in your project: Accio, CocoaPods, Carthage, or manually.
+There are five different ways to install the SDL SDK in your project: Accio, Carthage, CocoaPods, Swift Package Manager, or manually.
 
 ### CocoaPods Installation
 
@@ -62,7 +62,7 @@ You can install this library using the [Swift Package Manager](https://swift.org
 
 4\. You will be asked which package project to use. If you are using a swift project, then you should use the `SmartDeviceLinkSwift` project. If not, then you should use the `SmartDeviceLink` project. You can use the `SmartDeviceLink` project in a Swift project as well, but you will miss some Swift specific customizations, which are currently limited to logging enhancements.
 
-5\. In your SDL related code, use `import SmartDeviceLink` to call most SDL-related code. Use `import SmartDeviceLinkSwift` to use the logging enhancements.
+5\. In your SDL related code, use `import SmartDeviceLink` to call most SDL-related code. If you want to use the Swift-specific [logging enhancements](/developer-tools/configuring-sdl-logging/#logging-with-the-sdl-logger) you must also use `import SmartDeviceLinkSwift`.
 
 ### Accio Installation
 You can install this library using [Accio](https://github.com/JamitLabs/Accio), which is based on SwiftPM syntax. Please follow the steps on the Accio README linked above to initialize Accio into your application. Once installed and initialized into your Xcode project, the root directory should contain a Package.swift file.

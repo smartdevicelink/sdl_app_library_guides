@@ -153,8 +153,11 @@ target '<#Your Project Name#>' do
 end
 ```
 
+#### Swift Package Manager
+If the SDL iOS library was installed using [Swift Package Manager](https://swift.org/package-manager/), install the `SmartDeviceLinkSwift` target to your SPM installation. Then, where you want to log, `import SmartDeviceLinkSwift`.
+
 #### Logging in Swift
-After the submodule has been installed, you can use the `SDLLog` functions in your project.
+Once you have access to the SmartDeviceLinkSwift enhancements, you can use the `SDLLog` functions in your project.
 
 ```swift
 SDLLog.v("This is a verbose log")
