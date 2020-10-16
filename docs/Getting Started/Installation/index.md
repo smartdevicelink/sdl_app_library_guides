@@ -2,12 +2,12 @@
 In order to build your app on a SmartDeviceLink (SDL) Core, the SDL software development kit (SDK) must be installed in your app. The following steps will guide you through adding the SDL SDK to your workspace and configuring the environment.
 
 !!! NOTE
-The SDL SDK is currently supported on @![iOS]iOS 8.0!@@![android]Android 2.2 (Froyo)!@@![javaSE, javaEE]Java 7 (1.7)!@@![javascript]Node 9.11.2!@ and above.
+The SDL SDK is currently supported on @![iOS]iOS 10.0!@@![android]Android 2.2 (Froyo)!@@![javaSE, javaEE]Java 7 (1.7)!@@![javascript]Node 9.11.2!@ and above.
 !!!
 
 ## Install SDL SDK
 @![iOS]
-There are four different ways to install the SDL SDK in your project: Accio, CocoaPods, Carthage, or manually.
+There are five different ways to install the SDL SDK in your project: Accio, Carthage, CocoaPods, Swift Package Manager, or manually.
 
 ### CocoaPods Installation
 
@@ -50,6 +50,19 @@ pod install
 ```
 open <#Your Project Name#>.xcworkspace
 ```
+
+### Swift Package Manager Installation
+You can install this library using the [Swift Package Manager](https://swift.org/package-manager/). You can install SDL into your iOS project using Xcode 12 by following these steps:
+
+1\. Open File -> Swift Packages -> Add Package Dependency...
+
+2\. Enter the URL `https://github.com/smartdevicelink/sdl_ios.git` into the search box.
+
+3\. Use the default rules or customize the rules to use a specific version or branch. This library added SPM support in version 7.0.0, so please use at least that version.
+
+4\. You will be asked which package project to use. If you are using a Swift project, then you should use the `SmartDeviceLinkSwift` project. If not, then you should use the `SmartDeviceLink` project. You can use the `SmartDeviceLink` project in a Swift project as well, but you will miss some Swift specific customizations, which are currently limited to logging enhancements.
+
+5\. In your SDL related code, use `import SmartDeviceLink` to call most SDL-related code. If you want to use the Swift-specific [logging enhancements](Developer Tools/Configuring SDL Logging#logging-with-the-sdl-logger) you must also use `import SmartDeviceLinkSwift`.
 
 ### Accio Installation
 You can install this library using [Accio](https://github.com/JamitLabs/Accio), which is based on SwiftPM syntax. Please follow the steps on the Accio README linked above to initialize Accio into your application. Once installed and initialized into your Xcode project, the root directory should contain a Package.swift file.
