@@ -457,8 +457,6 @@ sdlManager.screenManager.subscribeButton(.navPanUp) { (buttonPress, buttonEvent,
         <#The user short pressed the button#>
     case .long:
         <#The user long pressed the button#>
-    default:
-        <#code#>
     }
 }
 ```
