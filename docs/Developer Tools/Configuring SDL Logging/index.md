@@ -53,7 +53,7 @@ Although the `default` log level is defined in the SDLLogLevel enum, it should n
 !!!
 
 ### Targets
-Targets are the output locations where the log will appear. By default, in both default and debug configurations, only the Apple System Logger target (iOS 9 and below) or OSLog (iOS 10+) will be enabled.
+Targets are the output locations where the log will appear. By default only the OSLog log target will be enabled in both default and debug configurations. You may configure additional pre-built targets or create your own targets and add them.
 
 #### Apple System Log Target (Deprecated)
 The Apple System Logger target, `SDLLogTargetAppleSystemLogger` is now deprecated in favor of the OS Log target which will do the same thing. It will be removed in a future release. This target will log to the Xcode console and the device console.
