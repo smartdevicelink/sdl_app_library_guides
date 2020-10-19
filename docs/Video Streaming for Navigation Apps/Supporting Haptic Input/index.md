@@ -11,11 +11,7 @@ You will also need to implement [touch input support](Video Streaming for Naviga
 SDL has support for automatically detecting focusable views within your UI and sending that data to the head unit. You will still need to tell SDL when your UI changes so that it can re-scan and detect the views to be sent.
 
 @![iOS]
-!!! IMPORTANT
-This is only supported on iOS 9 devices and above. If you want to support this feature on iOS 8, see "Manual Focusable Rects" below.
-!!!
-
-In order to use the automatic focusable item locator, you must set the `UIWindow` of your streaming content on `SDLStreamingMediaConfiguration.window`. So long as the device is on iOS 9+ and the window is set, the focusable item locator will start running. Whenever your app UI updates, you will need to send a notification:
+In order to use the automatic focusable item locator, you must set the `UIWindow` of your streaming content on `SDLStreamingMediaConfiguration.window`. So long as the window is set, the focusable item locator will start running. Whenever your app UI updates, you will need to send a notification:
 
 ##### Objective-C
 ```objc
@@ -67,7 +63,7 @@ This will go through your view that was passed in and then find and send the rec
 
 ## Manual Focusable Rects
 @![iOS]
-If you need to supplement the automatic focusable item locator, or do all of the location yourself (e.g. devices lower than iOS 9, or views that are not focusable such as custom UIViews or OpenGL views), then you will have to manually send and update the focusable rects using `SDLSendHapticData`. This request, when sent replaces all current rects with new rects; so, if you want to clear all of the rects, you would send the RPC with an empty array. Or, if you want to add a single rect, you must re-send all previous rects in the same request.
+If you need to supplement the automatic focusable item locator, or do all of the location yourself (e.g. views that are not focusable such as custom UIViews or OpenGL views), then you will have to manually send and update the focusable rects using `SDLSendHapticData`. This request, when sent replaces all current rects with new rects; so, if you want to clear all of the rects, you would send the RPC with an empty array. Or, if you want to add a single rect, you must re-send all previous rects in the same request.
 
 Usage is simple, you create the rects using `SDLHapticRect`, add a unique id, and send all the rects using `SDLSendHapticData`.
 
