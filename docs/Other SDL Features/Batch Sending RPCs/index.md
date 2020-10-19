@@ -126,7 +126,7 @@ SDLPerformInteraction *performInteraction = [[SDLPerformInteraction alloc] initW
 let choice = SDLChoice(id: <#Choice Id#>, menuName: "<#Menu Name#>", vrCommands: ["<#VR Command#>"])
 let createInteractionChoiceSet = SDLCreateInteractionChoiceSet(id: <#Choice Set Id#>, choiceSet: [choice])
 let performInteraction = SDLPerformInteraction(interactionChoiceSetId: <#Choice Set Id#>)
-let performInteraction = SDLPerformInteraction(initialText: <#T##String#>, interactionMode: <#T##SDLInteractionMode#>, interactionChoiceSetIDList: <#T##[NSNumber & SDLUInt]#>, cancelID: <#T##UInt32#>)
+let performInteraction = SDLPerformInteraction(initialText: <#String#>, interactionMode: <#SDLInteractionMode#>, interactionChoiceSetIDList: <#[NSNumber & SDLUInt]#>, cancelID: <#UInt32#>)
 
 sdlManager.sendSequential(requests: [createInteractionChoiceSet, performInteraction], progressHandler: { (request, response, error, percentageCompleted) -> Bool in
     <#Called as each request completes#>

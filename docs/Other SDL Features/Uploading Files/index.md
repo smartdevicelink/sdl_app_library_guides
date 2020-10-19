@@ -261,7 +261,7 @@ const success = await sdlManager.getFileManager().deleteRemoteFileWithName('<#Fi
 @![iOS]
 ##### Objective-C
 ```objc
-[self.sdlManager.fileManager deleteRemoteFilesWithNames:@[@"Name Uploaded As", @"Name Uploaded As 2"] completionHandler:^(NSError * _Nullable error) {
+[self.sdlManager.fileManager deleteRemoteFilesWithNames:@[@"<#Name Uploaded As#>", @"<#Name Uploaded As 2#>"] completionHandler:^(NSError * _Nullable error) {
     if (error == nil) {
         <#Images were deleted successfully#>
     }

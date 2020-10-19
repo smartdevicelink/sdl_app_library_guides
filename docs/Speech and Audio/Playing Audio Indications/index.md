@@ -49,14 +49,14 @@ Now that the file is uploaded to the remote system, it can be used in various RP
 @![iOS]
 ##### Objective-C
 ```objc
-SDLAlert *alert = [[SDLAlert alloc] initWithAlertText1:<#(nullable NSString *)#> alertText2:<#(nullable NSString *)#> alertText3:<#(nullable NSString *)#> softButtons:<#(nullable NSArray<SDLSoftButton *> *)#> playTone:<#(BOOL)#> ttsChunks:<#(nullable NSArray<SDLTTSChunk *> *)#> duration:<#(UInt16)#> progressIndicator:<#(BOOL)#> alertIcon:<#(nullable SDLImage *)#> cancelID:<#(UInt32)#>];
+SDLAlert *alert = [[SDLAlert alloc] init];
 alert.ttsChunks = [SDLTTSChunk fileChunksWithName:<#Audio file name#>];
 [self.sdlManager sendRequest:alert];
 ```
 
 ##### Swift
 ```swift
-let alert = SDLAlert(alertText1: <#T##String?#>, alertText2: <#T##String?#>, alertText3: <#T##String?#>, softButtons: <#T##[SDLSoftButton]?#>, playTone: <#T##Bool#>, ttsChunks: <#T##[SDLTTSChunk]?#>, duration: <#T##UInt16#>, progressIndicator: <#T##Bool#>, alertIcon: <#T##SDLImage?#>, cancelID: <#T##UInt32#>)
+let alert = SDLAlert(alertText1: <#String?#>, alertText2: <#String?#>, alertText3: <#String?#>, softButtons: <#[SDLSoftButton]?#>, playTone: <#Bool#>, ttsChunks: <#[SDLTTSChunk]?#>, duration: <#UInt16#>, progressIndicator: <#Bool#>, alertIcon: <#SDLImage?#>, cancelID: <#UInt32#>)
 alert.ttsChunks = SDLTTSChunk.fileChunks(withName: <#Audio file name#>)
 sdlManager.send(alert)
 ```

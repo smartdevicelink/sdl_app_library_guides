@@ -11,7 +11,7 @@ The @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE,javascript]`SendLocation`
 ```objc
 SDLPermissionElement *setSendLocationPermissionElement = [[SDLPermissionElement alloc] initWithRPCName:SDLRPCFunctionNameSendLocation parameterPermissions:nil];
 
-id observerId = [self.sdlManager.permissionManager subscribeToRPCPermissions:@[setSendLocationPermissionElement] groupType:SDLPermissionGroupTypeAny withHandler:^(NSDictionary<SDLRPCFunctionName,SDLRPCPermissionStatus *> * _Nonnull updatedPermissionStatuses, SDLPermissionGroupStatus status) {
+id observerId = [self.sdlManager.permissionManager subscribeToRPCPermissions:@[setSendLocationPermissionElement] groupType:SDLPermissionGroupTypeAny withHandler:^(NSDictionary<SDLRPCFunctionName, SDLRPCPermissionStatus *> * _Nonnull updatedPermissionStatuses, SDLPermissionGroupStatus status) {
     if (status != SDLPermissionGroupStatusAllowed) {
         // Your app does not have permission to send the `SDLSendLocation` request for its current HMI level
         return;
@@ -23,7 +23,7 @@ id observerId = [self.sdlManager.permissionManager subscribeToRPCPermissions:@[s
 
 ##### Swift
 ```swift
-let setSendLocationPermissionElement = SDLPermissionElement(rpcName: SDLRPCFunctionName.sendLocation, parameterPermissions: nil)
+let setSendLocationPermissionElement = SDLPermissionElement(rpcName: .sendLocation, parameterPermissions: nil)
 
 let observerId = sdlManager.permissionManager.subscribe(toRPCPermissions: [setSendLocationPermissionElement], groupType: .any, withHandler: { (allChanges, groupStatus) in
     // This handler will be called whenever the permission status changes

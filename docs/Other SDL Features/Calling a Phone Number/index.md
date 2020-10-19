@@ -9,7 +9,7 @@ The @![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE]`DialNumber`!@ RPC allows y
 ```objc
 SDLPermissionElement *setDialNumberPermissionElement = [[SDLPermissionElement alloc] initWithRPCName:SDLRPCFunctionNameDialNumber parameterPermissions:nil];
 
-id observerId = [self.sdlManager.permissionManager subscribeToRPCPermissions:@[setDialNumberPermissionElement] groupType:SDLPermissionGroupTypeAny withHandler:^(NSDictionary<SDLPermissionRPCName,NSNumber *> * _Nonnull allChanges, SDLPermissionGroupStatus groupStatus) {
+id observerId = [self.sdlManager.permissionManager subscribeToRPCPermissions:@[setDialNumberPermissionElement] groupType:SDLPermissionGroupTypeAny withHandler:^(NSDictionary<SDLPermissionRPCName, NSNumber *> * _Nonnull allChanges, SDLPermissionGroupStatus groupStatus) {
     if (groupStatus != SDLPermissionGroupStatusAllowed) {
         // Your app does not have permission to send the `SDLDialNumber` request for its current HMI level
         return;
@@ -21,7 +21,7 @@ id observerId = [self.sdlManager.permissionManager subscribeToRPCPermissions:@[s
 
 ##### Swift
 ```swift
-let setDialNumberPermissionElement = SDLPermissionElement(rpcName: SDLRPCFunctionName.dialNumber, parameterPermissions: nil)
+let setDialNumberPermissionElement = SDLPermissionElement(rpcName: .dialNumber, parameterPermissions: nil)
 
 let observerId = sdlManager.permissionManager.subscribe(toRPCPermissions: [setDialNumberPermissionElement], groupType: .any, withHandler: { (individualStatuses, groupStatus) in
     guard groupStatus == .allowed else {

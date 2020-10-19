@@ -360,7 +360,7 @@ sdlManager.screenManager.subscribeButton(.preset2, withObserver: self, selector:
     case .preset2:
         <#The user short or long pressed the preset 2 button#>
     default:
-        <#code#>
+        <#The user pressed another preset button#>
     }
 }
 ```

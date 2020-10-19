@@ -10,7 +10,7 @@ Both the @![iOS]`SDLGetWayPoints`!@@![android,javaSE,javaEE,javascript]`GetWayPo
 SDLPermissionElement *getWayPoints = [[SDLPermissionElement alloc] initWithRPCName:SDLRPCFunctionNameGetWayPoints parameterPermissions:nil];
 SDLPermissionElement *subscribeWayPoints = [[SDLPermissionElement alloc] initWithRPCName:SDLRPCFunctionNameSubscribeWayPoints parameterPermissions:nil];
 
-id observerId = [self.sdlManager.permissionManager subscribeToRPCPermissions:@[getWayPoints, subscribeWayPoints] groupType:SDLPermissionGroupTypeAny withHandler:^(NSDictionary<SDLRPCFunctionName,SDLRPCPermissionStatus *> * _Nonnull updatedPermissionStatuses, SDLPermissionGroupStatus status) {
+id observerId = [self.sdlManager.permissionManager subscribeToRPCPermissions:@[getWayPoints, subscribeWayPoints] groupType:SDLPermissionGroupTypeAny withHandler:^(NSDictionary<SDLRPCFunctionName, SDLRPCPermissionStatus *> * _Nonnull updatedPermissionStatuses, SDLPermissionGroupStatus status) {
     // This handler will be called whenever the permission status changes
     BOOL getWayPointPermissionStatus = updatedPermissionStatuses[SDLRPCFunctionNameGetWayPoints];
     if (getWayPointPermissionStatus) {
@@ -30,18 +30,18 @@ id observerId = [self.sdlManager.permissionManager subscribeToRPCPermissions:@[g
 
 ##### Swift
 ```swift
-let getWayPointsPermissionElement = SDLPermissionElement(rpcName: SDLRPCFunctionName.getWayPoints, parameterPermissions: nil)
-let subscribeWayPointsPermissionElement = SDLPermissionElement(rpcName: SDLRPCFunctionName.subscribeWayPoints, parameterPermissions: nil)
+let getWayPointsPermissionElement = SDLPermissionElement(rpcName: .getWayPoints, parameterPermissions: nil)
+let subscribeWayPointsPermissionElement = SDLPermissionElement(rpcName: .subscribeWayPoints, parameterPermissions: nil)
 
 let observerId = sdlManager.permissionManager.subscribe(toRPCPermissions: [getWayPointsPermissionElement, subscribeWayPointsPermissionElement], groupType: .any, withHandler: { (allChanges, groupStatus) in
     // This handler will be called whenever the permission status changes
-    if let getWayPointPermissionStatus = allChanges[SDLRPCFunctionName.getWayPoints], getWayPointPermissionStatus.isRPCAllowed == true {
+    if let getWayPointPermissionStatus = allChanges[.getWayPoints], getWayPointPermissionStatus.isRPCAllowed == true {
         // Your app has permission to send the `SDLGetWayPoints` request for its current HMI level
     } else {
         // Your app does not have permission to send the `SDLGetWayPoints` request for its current HMI level
     }
 
-    if let subscribeWayPointsPermissionStatus = allChanges[SDLRPCFunctionName.subscribeWayPoints], subscribeWayPointsPermissionStatus.isRPCAllowed == true {
+    if let subscribeWayPointsPermissionStatus = allChanges[.subscribeWayPoints], subscribeWayPointsPermissionStatus.isRPCAllowed == true {
         // Your app has permission to send the `SubscribeWayPoints` request for its current HMI level
     } else {
         // Your app does not have permission to send the `SubscribeWayPoints` request for its current HMI level

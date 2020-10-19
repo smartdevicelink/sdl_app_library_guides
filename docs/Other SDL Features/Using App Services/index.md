@@ -124,11 +124,12 @@ SDLAppServiceRecord *serviceRecord = aCapability.updatedAppServiceRecord;
 ```swift
 // From GetSystemCapabilityResponse
 let getResponse: SDLGetSystemCapabilityResponse = <#From wherever you got it#>
-let capabilities = getResponse.systemCapability?.appServicesCapabilities
 
 // This array contains all currently available app services on the system
-let appServices: [SDLAppServiceCapability]? = capabilities?.appServices
-let aCapability = appServices?.first
+guard let capabilities = getResponse.systemCapability?.appServicesCapabilities, let appServices : [SDLAppServiceCapability] = capabilities.appServices else {
+    return
+}
+let aCapability = appServices.first
 
 // This will be nil since it's the first update
 let capabilityReason = aCapability?.updateReason
@@ -483,7 +484,7 @@ NSMutableData *imageData = [[NSMutableData alloc] init];
 ##### Swift
 ```swift
 let data: SDLAppServiceData = <#Get the App Service Data#>
-let weatherData: SDLWeatherServiceData? = data.weatherServiceData
+let weatherData = data.weatherServiceData
 guard let currentForecastImage = weatherData?.currentForecast?.weatherIcon else {
     // The image doesn't exist, exit early
     return

@@ -200,7 +200,7 @@ If connected to older head units that do not support this feature, the cancel re
 ##### Swift
 ```swift
 // Use the saved cancelID from above to dismiss the keyboard
-sdlManager.screenManager.dismissKeyboard(withCancelID: cancelID!)
+sdlManager.screenManager.dismissKeyboard(withCancelID: cancelID)
 ```
 !@
 

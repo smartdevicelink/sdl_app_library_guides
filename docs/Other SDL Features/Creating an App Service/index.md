@@ -732,8 +732,8 @@ manifest.handledRPCs = @[buttonPressRPCID];
 ```swift
 let manifest = SDLAppServiceManifest()
 // Everything else for your manifest
-let buttonPressRPCID = SDLFunctionID.sharedInstance().functionId(forName: .buttonPress)
-manifest.handledRPCs = [buttonPressRPCID!]
+let buttonPressRPCID = SDLFunctionID.sharedInstance().functionId(forName: .buttonPress)!
+manifest.handledRPCs = [buttonPressRPCID]
 
 sdlManager.subscribe(to: SDLDidReceiveButtonPressRequest, observer: self, selector: #selector(buttonPressRequestReceived(_:)))
 
