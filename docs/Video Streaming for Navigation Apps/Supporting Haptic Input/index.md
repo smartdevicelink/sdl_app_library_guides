@@ -10,6 +10,7 @@ You will also need to implement [touch input support](Video Streaming for Naviga
 ## Automatic Focusable Rects
 SDL has support for automatically detecting focusable views within your UI and sending that data to the head unit. You will still need to tell SDL when your UI changes so that it can re-scan and detect the views to be sent.
 
+@[iOS]
 In order to use the automatic focusable item locator, you must set the `UIWindow` of your streaming content on `SDLStreamingMediaConfiguration.window`. So long as the window is set, the focusable item locator will start running. Whenever your app UI updates, you will need to send a notification:
 
 ##### Objective-C
