@@ -141,13 +141,24 @@
             ]
         },
         {
+            "name": "Vehicle Data",
+            "navigation": [
+                {
+                    "name": "Retrieving Vehicle Data"
+                },
+                {
+                    "name": "Setting the Navigation Destination"
+                },
+                {
+                    "name": "Getting the Navigation Destination"
+                }
+            ]
+        },
+        {
             "name": "Other SDL Features",
             "navigation": [
                 {
                     "name": "Batch Sending RPCs"
-                },
-                {
-                    "name": "Retrieving Vehicle Data"
                 },
                 {
                     "name": "Remote Control Vehicle Features"
@@ -161,12 +172,6 @@
                 {
                     "name": "Calling a Phone Number",
                     "platforms": ["Android","iOS", "JavaEE", "JavaSE"]
-                },
-                {
-                    "name": "Setting the Navigation Destination"
-                },
-                {
-                    "name": "Getting the Navigation Destination"
                 },
                 {
                     "name": "Uploading Files"
