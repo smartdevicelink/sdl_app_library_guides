@@ -160,7 +160,7 @@ sdlManager.systemCapabilityManager.subscribe(capabilityType: .remoteControl) { (
 
 @![android,javaEE,javaSE]
 ```java
-sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.REMOTE_CONTROL, new OnSystemCapabilityListener() {
+sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapabilityType.REMOTE_CONTROL, new OnSystemCapabilityListener() {
     @Override
     public void onCapabilityRetrieved(Object capability) {
         RemoteControlCapabilities remoteControlCapabilities = (RemoteControlCapabilities) capability;
@@ -171,7 +171,7 @@ sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.REMOT
     public void onError(String info) {
         // Handle Error
     }
-}, false);
+});
 ```
 !@
 
