@@ -131,10 +131,10 @@ guard let capabilities = getResponse.systemCapability?.appServicesCapabilities, 
 }
 
 // This will be nil since it's the first update
-let capabilityReason = aCapability?.updateReason
+let capabilityReason = aCapability.updateReason
 
 // The app service record will give you access to a service's generated id, which can be used to address the service directly (see below), it's manifest, used to see what data it supports, whether or not the service is published (it always will be here), and whether or not the service is the active service for its service type (only one service can be active for each type)
-let serviceRecord = aCapability?.updatedAppServiceRecord
+let serviceRecord = aCapability.updatedAppServiceRecord
 
 // From OnSystemCapabilityUpdated
 let serviceNotification: SDLOnSystemCapabilityUpdated = <#From wherever you got it#>
@@ -145,10 +145,10 @@ guard let capabilities = serviceNotification.systemCapability.appServicesCapabil
 }
 
 // This won't be nil. It will tell you why a service is in the list of updates
-let capabilityReason = aCapability?.updateReason
+let capabilityReason = aCapability.updateReason
 
 // The app service record will give you access to a service's generated id, which can be used to address the service directly (see below), it's manifest, used to see what data it supports, whether or not the service is published (if it's not, it was just removed and should not be addressed), and whether or not the service is the active service for its service type (only one service can be active for each type)
-let serviceRecord = aCapability?.updatedAppServiceRecord
+let serviceRecord = aCapability.updatedAppServiceRecord
 ```
 !@
 
