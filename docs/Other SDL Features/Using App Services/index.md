@@ -126,10 +126,9 @@ SDLAppServiceRecord *serviceRecord = aCapability.updatedAppServiceRecord;
 let getResponse: SDLGetSystemCapabilityResponse = <#From wherever you got it#>
 
 // This array contains all currently available app services on the system
-guard let capabilities = getResponse.systemCapability?.appServicesCapabilities, let appServices : [SDLAppServiceCapability] = capabilities.appServices else {
+guard let capabilities = getResponse.systemCapability?.appServicesCapabilities, let appServices = capabilities.appServices, let aCapability = appServices.first else {
     return
 }
-let aCapability = appServices.first
 
 // This will be nil since it's the first update
 let capabilityReason = aCapability?.updateReason
@@ -139,11 +138,11 @@ let serviceRecord = aCapability?.updatedAppServiceRecord
 
 // From OnSystemCapabilityUpdated
 let serviceNotification: SDLOnSystemCapabilityUpdated = <#From wherever you got it#>
-let capabilities = serviceNotification.systemCapability.appServicesCapabilities
 
 // This array contains all recently updated services
-let appServices: [SDLAppServiceCapability]? = capabilities?.appServices
-let aCapability = appServices?.first
+guard let capabilities = serviceNotification.systemCapability.appServicesCapabilities, let appServices = capabilities.appServices, let aCapability = appServices.first  else {
+    return
+}
 
 // This won't be nil. It will tell you why a service is in the list of updates
 let capabilityReason = aCapability?.updateReason
