@@ -22,7 +22,16 @@
                     "name": "SDK Configuration"
                 },
                 {
-                    "name": "Integration Basics"
+                    "name": "Java Suite Integration Basics",
+                    "platforms": ["Android", "JavaSE", "JavaEE"]
+                },
+                {
+                    "name": "iOS Integration Basics",
+                    "platforms": ["iOS"]
+                },
+                {
+                    "name": "JavaScript Suite Integration Basics",
+                    "platforms": ["JavaScript"]
                 },
                 {
                     "name": "Connecting to an Infotainment System"
