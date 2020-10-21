@@ -102,7 +102,7 @@ To present a keyboard (such as for searching for navigation destinations), you s
 Head units supporting RPC v6.0+ may support navigation-specific subscription buttons for the navigation template. These subscription buttons allow your user to manipulate the map using hard buttons located on car's center console or steering wheel. It is important to support these subscription buttons in order to provide your user with the expected in-car navigation user experience. This is especially true on head units that don't support touch input as there will be no other way for your user to manipulate the map. See [Template Subscription Buttons](Displaying a User Interface/Template Subscription Buttons) for a list of these navigation buttons.
 
 ## Canceling the Route
-When your navigation service is no longer the active service your app should cancel its route.
+Between your navigation app and the embedded navigation app, only one route should be in progress at a time. When your navigation service is no longer the active service your app will need to cancel its route.
 
 @![iOS]
 !@
@@ -115,7 +115,7 @@ sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapa
         AppServicesCapabilities appServicesCapabilities = (AppServicesCapabilities) capability;
         if (appServicesCapabilities.getAppServices() != null && appServicesCapabilities.getAppServices().size() > 0) {
             for (AppServiceCapability appServiceCapability : appServicesCapabilities.getAppServices()) {
-                if (appServiceCapability.getUpdatedAppServiceRecord().getServiceManifest().getServiceName().equals(NAVIGATION_SERVICE_NAME)) {
+                if (appServiceCapability.getUpdatedAppServiceRecord().getServiceManifest().getServiceName().equals("NAVIGATION_SERVICE_NAME")) {
                     boolean serviceActive = appServiceCapability.getUpdatedAppServiceRecord().getServiceActive();
                     if (!serviceActive) {
                         //Cancel your active route
