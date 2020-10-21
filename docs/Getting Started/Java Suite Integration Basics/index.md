@@ -2,6 +2,22 @@
 ### How SDL Works
 SmartDeviceLink works by sending remote procedure calls (RPCs) back and forth between a smartphone application and the SDL Core. These RPCs allow you to build the user interface, detect button presses, play audio, and get vehicle data, among other things. You will use the SDL library to build your app on the SDL Core.
 
+@![android]
+In this guide, we exclusively use Android Studio. We are going to set-up a bare-bones application so you get started using SDL.
+
+!!! NOTE
+The SDL Mobile library supports [Android 2.2.x (API Level 8)](https://developer.android.com/about/versions/android-2.2.html) or higher.
+!!!
+!@
+
+@![javaSE,javaEE]
+In this guide, we exclusively use IntelliJ. We are going to set-up a bare-bones application so you get started using SDL.
+
+!!! NOTE
+The SDL Java library supports Java 7 and above.
+!!!
+!@
+
 ## SmartDeviceLink Service
 A SmartDeviceLink Service should be created to manage the lifecycle of the SDL session. The `SdlService` should build and start an instance of the `SdlManager` which will automatically connect with a head unit when available. This `SdlManager` will handle sending and receiving messages to and from SDL after it is connected.
 
