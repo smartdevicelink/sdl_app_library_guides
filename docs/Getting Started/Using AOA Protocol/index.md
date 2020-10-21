@@ -6,7 +6,7 @@ Prerequisites:
 
 * [Installation guide](Getting Started/Installation)
 * [SDK Configuration guide](Getting Started/SDK Configuration)
-* [Integration Basics guide](Getting Started/Java Suite Integration Basics)
+* [Java Suite Integration Basics guide](Getting Started/Java Suite Integration Basics)
 
 We will add or make changes to:
 

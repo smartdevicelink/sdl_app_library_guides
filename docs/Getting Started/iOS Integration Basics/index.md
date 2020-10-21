@@ -559,19 +559,3 @@ extension ProxyManager: SDLManagerDelegate {
 ## Where to Go From Here
 You should now be able to connect to a head unit or emulator. From here, [learn about designing your main interface](Displaying a User Interface/Main Screen Templates). For further details on connecting, see [Connecting to a SDL Core](Getting Started/Connecting to an Infotainment System).
 !@
-
-@![android]
-In this guide, we exclusively use Android Studio. We are going to set-up a bare-bones application so you get started using SDL.
-
-!!! NOTE
-The SDL Mobile library supports [Android 2.2.x (API Level 8)](https://developer.android.com/about/versions/android-2.2.html) or higher.
-!!!
-!@
-
-@![javaSE,javaEE]
-In this guide, we exclusively use IntelliJ. We are going to set-up a bare-bones application so you get started using SDL.
-
-!!! NOTE
-The SDL Java library supports Java 7 and above.
-!!!
-!@
