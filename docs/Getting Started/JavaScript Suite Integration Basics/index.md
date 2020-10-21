@@ -2,7 +2,6 @@
 ### How SDL Works
 SmartDeviceLink works by sending remote procedure calls (RPCs) back and forth between a smartphone application and the SDL Core. These RPCs allow you to build the user interface, detect button presses, play audio, and get vehicle data, among other things. You will use the SDL library to build your app on the SDL Core.
 
-@![javascript]
 The type of app you can make will depend on the build library you select. If you are using the Node.js build, your app can run as a WebSocket server or as a TCP client. If you are using the vanilla JavaScript build (a minified JS file not tied to any specific build system or server structure), your app can run as a WebSocket client. This guide will cover topics that apply to both Node.js and vanilla JS library builds.
 
 ## Basic Configuration
@@ -154,4 +153,3 @@ For WebEngine apps, there are slight modifications for integrating the library, 
     </body>
 </html>
 ```
-!@

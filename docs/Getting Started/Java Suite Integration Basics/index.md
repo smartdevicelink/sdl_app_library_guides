@@ -2,10 +2,8 @@
 ### How SDL Works
 SmartDeviceLink works by sending remote procedure calls (RPCs) back and forth between a smartphone application and the SDL Core. These RPCs allow you to build the user interface, detect button presses, play audio, and get vehicle data, among other things. You will use the SDL library to build your app on the SDL Core.
 
-@![android,javaSE,javaEE]
 ## SmartDeviceLink Service
 A SmartDeviceLink Service should be created to manage the lifecycle of the SDL session. The `SdlService` should build and start an instance of the `SdlManager` which will automatically connect with a head unit when available. This `SdlManager` will handle sending and receiving messages to and from SDL after it is connected.
-!@
 
 @![android]
 !!! NOTE
@@ -13,9 +11,7 @@ Please be aware that using an Activity to host the SDL implementation will not w
 !!!
 !@
 
-@![android,javaSE,javaEE]
 Create a new service and name it appropriately, for this guide we are going to call it `SdlService`.
-!@
 
 @![android]
 ```java
@@ -103,14 +99,12 @@ public void onDestroy(){
 ```
 !@
 
-@![android,javaSE,javaEE]
 ### Implementing SDL Manager
 In order to correctly connect to an SDL enabled head unit developers need to implement methods for the proper creation and disposing of an `SdlManager` in our `SdlService`.
 
 !!! NOTE
 An instance of SdlManager cannot be reused after it is closed and properly disposed of. Instead, a new instance must be created. Only one instance of SdlManager should be in use at any given time.
 !!!
-!@
 
 @![android]
 ```java
@@ -255,7 +249,6 @@ The `sdlManager` must be shutdown properly if this class is shutting down in the
 !!!
 !@
 
-@![android,javaSE,javaEE]
 #### Optional SdlManager Builder Parameters
 
 ##### App Icon
@@ -274,15 +267,12 @@ appHMITypes.add(AppHMIType.MEDIA);
 
 builder.setAppTypes(appHMITypes);
 ```
-!@
 
 @![android]
 !!! NOTE
 Navigation and projection applications both use video and audio byte streaming. However, navigation apps require special permissions from OEMs, and projection apps are only for internal use by OEMs.
 !!!
 !@
-
-@![android,javaSE,javaEE]
 
 ##### Short App Name 
 This is a shortened version of your app name that is substituted when the full app name will not be visible due to character count constraints. You will want to make this as short as possible.
@@ -304,7 +294,6 @@ If a head unit is blocked by protocol version, your app icon will never appear o
 builder.setMinimumProtocolVersion(new Version("3.0.0"));
 builder.setMinimumRPCVersion(new Version("4.0.0"));
 ```
-!@
 
 @![android]
 ##### Lock Screen Configuration
@@ -320,7 +309,6 @@ builder.setLockScreenConfig(lockScreenConfig);
 You should also declare the `SDLLockScreenActivity` in your manifest. For more information, please refer to the [Adding the Lock Screen](Getting Started/Adding the Lock Screen) section.
 !@
 
-@![android,javaSE,javaEE]
 ##### SdlSecurity
 Some OEMs may want to encrypt messages passed between your SDL app and the head unit. If this is the case, when you submit your app to the OEM for review, they will ask you to add a security library to your SDL app. See the [Encryption](Other SDL Features/Encryption) section.
 
@@ -365,7 +353,6 @@ Set a `hashID` for your application that can be used over connection cycles (i.e
 ```java
 builder.setResumeHash(hashID);
 ```
-!@
 
 @![android]
 ## SmartDeviceLink Router Service
