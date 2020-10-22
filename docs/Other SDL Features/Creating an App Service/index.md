@@ -489,6 +489,41 @@ if (success) {
 ```
 !@
 
+## Canceling the Route
+Between your navigation app and the embedded navigation app, only one route should be in progress at a time. When your navigation service is no longer the active service your app will need to cancel its route.
+
+@![iOS]
+!@
+
+@![android]
+```java
+sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapabilityType.APP_SERVICES, new OnSystemCapabilityListener() {
+    @Override
+    public void onCapabilityRetrieved(Object capability) {
+        AppServicesCapabilities appServicesCapabilities = (AppServicesCapabilities) capability;
+        if (appServicesCapabilities.getAppServices() != null && appServicesCapabilities.getAppServices().size() > 0) {
+            for (AppServiceCapability appServiceCapability : appServicesCapabilities.getAppServices()) {
+                if (appServiceCapability.getUpdatedAppServiceRecord().getServiceManifest().getServiceName().equals("NAVIGATION_SERVICE_NAME")) {
+                    boolean serviceActive = appServiceCapability.getUpdatedAppServiceRecord().getServiceActive();
+                    if (!serviceActive) {
+                        //Cancel your active route
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onError(String info) {
+        // Handle Error
+    }
+});
+```
+!@
+
+@![javascript]
+!@
+
 #### Weather Service Data
 @![iOS]
 
