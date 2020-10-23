@@ -85,7 +85,7 @@ If the app is targeting Android P (API Level 28) or higher, the Android Manifest
 !!!
 
 !!! NOTE
-If the app is targeting Android R (API Level 30) or higher, the Android Manifest file should also have the following permission
+If the app is targeting Android R (API Level 30) or higher, the Android Manifest file should also have the following permission:
 
 ```xml
 <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
