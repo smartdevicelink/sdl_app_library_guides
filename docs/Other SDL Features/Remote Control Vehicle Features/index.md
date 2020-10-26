@@ -748,6 +748,7 @@ SDLClimateControlData *climateControlData = [[SDLClimateControlData alloc] initW
 SDLModuleData *moduleData = [[SDLModuleData alloc] initWithClimateControlData:climateControlData];
 moduleData.moduleId = @"<#ModuleID#>";
 SDLSetInteriorVehicleData *setInteriorVehicleData = [[SDLSetInteriorVehicleData alloc] initWithModuleData:moduleData];
+
 [self.sdlManager sendRequest:setInteriorVehicleData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if(!response.success) { return; }
 }];

@@ -233,7 +233,6 @@ SDLResetGlobalProperties *resetGlobals = [[SDLResetGlobalProperties alloc] initW
 // Reset the menu icon and title
 SDLResetGlobalProperties *resetGlobals = [[SDLResetGlobalProperties alloc] initWithProperties:@[SDLGlobalPropertyMenuIcon, SDLGlobalPropertyMenuName]];
 
-
 // Reset the spoken prompts
 SDLResetGlobalProperties *resetGlobals = [[SDLResetGlobalProperties alloc] initWithProperties:@[SDLGlobalPropertyHelpPrompt, SDLGlobalPropertyTimeoutPrompt]];
 

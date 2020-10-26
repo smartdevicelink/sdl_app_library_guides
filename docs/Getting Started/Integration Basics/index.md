@@ -217,16 +217,16 @@ This is a custom icon for your application. Please refer to [Adaptive Interface 
 ```objc
 UIImage* appImage = [UIImage imageNamed:@"<#AppIcon Name#>"];
 if (appImage) {
-  SDLArtwork* appIcon = [SDLArtwork persistentArtworkWithImage:appImage name:@"<#Name to Upload As#>" asImageFormat:SDLArtworkImageFormatPNG /* or SDLArtworkImageFormatJPG */];
-  lifecycleConfiguration.appIcon = appIcon;
+    SDLArtwork* appIcon = [SDLArtwork persistentArtworkWithImage:appImage name:@"<#Name to Upload As#>" asImageFormat:SDLArtworkImageFormatPNG /* or SDLArtworkImageFormatJPG */];
+    lifecycleConfiguration.appIcon = appIcon;
 }
 ```
 
 ##### Swift
 ```swift
 if let appImage = UIImage(named: "<#AppIcon Name#>") {
-  let appIcon = SDLArtwork(image: appImage, name: "<#Name to Upload As#>", persistent: true, as: .JPG /* or .PNG */)
-  lifecycleConfiguration.appIcon = appIcon
+    let appIcon = SDLArtwork(image: appImage, name: "<#Name to Upload As#>", persistent: true, as: .JPG /* or .PNG */)
+    lifecycleConfiguration.appIcon = appIcon
 }
 ```
 
