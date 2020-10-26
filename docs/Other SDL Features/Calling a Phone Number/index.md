@@ -38,7 +38,7 @@ let observerId = sdlManager.permissionManager.subscribe(toRPCPermissions: [setDi
 ```java
 UUID listenerId = sdlManager.getPermissionManager().addListener(Arrays.asList(new PermissionElement(FunctionID.DIAL_NUMBER, null)), PermissionManager.PERMISSION_GROUP_TYPE_ANY, new OnPermissionChangeListener() {
     @Override
-    public void onPermissionsChange(@NonNull Map<FunctionID, PermissionStatus> allowedPermissions, @NonNull int permissionGroupStatus) {
+    public void onPermissionsChange(@NonNull Map<FunctionID, PermissionStatus> allowedPermissions, int permissionGroupStatus) {
         if (permissionGroupStatus != PermissionManager.PERMISSION_GROUP_TYPE_ALL_ALLOWED) {
             // Your app does not have permission to send the `DialNumber` request for its current HMI level
             return;

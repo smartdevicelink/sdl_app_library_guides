@@ -57,7 +57,7 @@ AppServiceManifest manifest = new AppServiceManifest(AppServiceType.MEDIA.toStri
     .setAllowAppConsumers(true) // Whether or not other apps can view your data in addition to the head unit. If set to `false` only the head unit will have access to this data.
     .setRpcSpecVersion(new SdlMsgVersion(5,0)) // An *optional* parameter that limits the RPC spec versions you can understand to the provided version *or below*.
     .setHandledRpcs(List<FunctionID>) // If you add function ids to this *optional* parameter, you can support newer RPCs on older head units (that don't support those RPCs natively) when those RPCs are sent from other connected applications.
-    .setMediaServiceManifest(<#Code#>); // Covered Below
+    .setMediaServiceManifest(mediaManifest); // Covered Below
 ```
 !@
 
@@ -222,9 +222,9 @@ publishServiceRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
 	public void onResponse(int correlationId, RPCResponse response) {
         if (response.getSuccess()) {
-            <#Use the response#>
+            // Use the response
         } else {
-            <#Error Handling#>
+            // Error Handling
         }
 		
     }
@@ -408,7 +408,7 @@ sdlManager.fileManager.upload(file: artwork) { [weak self] (success, bytesAvaila
 
 @![android,javaSE,javaEE]
 ```java
-final SdlArtwork navInstructionArt = new SdlArtwork("turn", FileType.GRAPHIC_PNG, R.drawable.turn, true);
+final SdlArtwork navInstructionArt = new SdlArtwork("turn", FileType.GRAPHIC_PNG, image, true);
 
 sdlManager.getFileManager().uploadFile(navInstructionArt, new CompletionListener() {
     @Override
@@ -535,7 +535,7 @@ sdlManager.fileManager.upload(file: artwork) { [weak self] (success, bytesAvaila
 
 @![android,javaSE,javaEE]
 ```java
-final SdlArtwork weatherImage = new SdlArtwork("sun", FileType.GRAPHIC_PNG, R.drawable.sun, true);
+final SdlArtwork weatherImage = new SdlArtwork("sun", FileType.GRAPHIC_PNG, image, true);
 
 sdlManager.getFileManager().uploadFile(weatherImage, new CompletionListener() {
     @Override
@@ -656,7 +656,7 @@ sdlManager.addOnRPCRequestListener(FunctionID.GET_APP_SERVICE_DATA, new OnRPCReq
         response.setCorrelationID(getAppServiceData.getCorrelationID());
         response.setResultCode(Result.SUCCESS);
         response.setInfo("<#Use to provide more information about an error#>");
-        response.setServiceData(<#Your App Service Data#>);
+        response.setServiceData(appServiceData);
         sdlManager.sendRPC(response);
     }
 });
@@ -958,7 +958,7 @@ sdlManager.send(publishServiceRequest)
 @![android,javaSE,javaEE]
 ```java
 AppServiceManifest manifest = new AppServiceManifest(AppServiceType.WEATHER.toString());
-manifest.setWeatherServiceManifest("<#Updated weather service manifest>");
+manifest.setWeatherServiceManifest(weatherServiceManifest);
 
 PublishAppService publishServiceRequest = new PublishAppService(manifest);
 sdlManager.sendRPC(publishServiceRequest);

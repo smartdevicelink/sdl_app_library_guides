@@ -105,12 +105,12 @@ sdlManager.fileManager.upload(artwork: artwork) { (success, artworkName, bytesAv
 
 @![android,javaSE,javaEE]
 ```java
-SdlArtwork artwork = new SdlArtwork("image_name", FileType.GRAPHIC_PNG, <image byte[]>, false);
+SdlArtwork artwork = new SdlArtwork("image_name", FileType.GRAPHIC_PNG, image, false);
 sdlManager.getFileManager().uploadFile(artwork, new CompletionListener() {
     @Override
     public void onComplete(boolean success) {
         if (success){
-            <#Image Upload Successful#>
+            // Image Upload Successful
         }
     }
 });

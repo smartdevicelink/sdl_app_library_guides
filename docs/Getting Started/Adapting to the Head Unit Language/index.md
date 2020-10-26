@@ -130,7 +130,8 @@ public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language langua
             break;
     }
     if (isNeedUpdate) {
-        return new LifecycleConfigurationUpdate(appName, null, TTSChunkFactory.createSimpleTTSChunks(ttsName), null);
+        Vector<TTSChunk> chunks = new Vector<>(Collections.singletonList(new TTSChunk(ttsName, SpeechCapabilities.TEXT)));
+        return new LifecycleConfigurationUpdate(appName, null, chunks, null);
     } else {
         return null;
     }

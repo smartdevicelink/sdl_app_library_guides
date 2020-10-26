@@ -104,7 +104,7 @@ ScrollableMessage scrollableMessage = new ScrollableMessage()
     .setSoftButtons(softButtonList);
 
 // Set cancelId
-scrollableMessage.setCancelID(<#Integer>);
+scrollableMessage.setCancelID(cancelId);
 
 // Send the scrollable message
 sdlManager.sendRPC(scrollableMessage);
@@ -119,10 +119,10 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
 		OnButtonPress onButtonPress = (OnButtonPress) notification;
 		switch (onButtonPress.getCustomButtonID()){
 			case 0:
-				Log.i(TAG, "Button 1 Pressed");
+				DebugTool.logInfo(TAG, "Button 1 Pressed");
 				break;
 			case 1:
-				Log.i(TAG, "Button 2 Pressed");
+				DebugTool.logInfo(TAG, "Button 2 Pressed");
 				break;
 		}
 	}
@@ -225,7 +225,7 @@ cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
         if (response.getSuccess()){
-            Log.i(TAG, "Scrollable message was dismissed successfully");
+            DebugTool.logInfo(TAG, "Scrollable message was dismissed successfully");
         }
     }
 });
@@ -292,7 +292,7 @@ cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
         if (response.getSuccess()){
-            Log.i(TAG, "Scrollable message was dismissed successfully");
+            DebugTool.logInfo(TAG, "Scrollable message was dismissed successfully");
         }
     }
 });

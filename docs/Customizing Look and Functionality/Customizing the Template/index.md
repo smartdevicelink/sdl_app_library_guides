@@ -74,11 +74,11 @@ lifecycleConfig.setNightColorScheme(nightColorScheme);
 !@
 
 !!! NOTE
-You may change the template coloring in the `lifecycleConfiguration` and the `SetDisplayLayout`, if connecting to a head unit with RPC v5.0+,  or with the `Show` request if connecting to RPC v6.0+. You may only change the template coloring once per template; that is, you cannot call `SetDisplayLayout` or `Show` for the template you are already on and expect the color scheme to update.
+You may only change the template coloring once per template; that is, you cannot call `changeLayout`, `SetDisplayLayout` or `Show` for the template you are already on and expect the color scheme to update.
 !!!
 
 ### Customizing Future Layouts
-You can change the template color scheme when you change layouts in the @![iOS]`SDLSetDisplayLayout` (any RPC version) or `SDLShow` (RPC v6.0+)!@@![android, javaSE, javaEE, javascript]`SetDisplayLayout` (any RPC version) or `Show` (RPC v6.0+)!@ request.
+You can change the template color scheme when you change layouts. This guide requires SDL @![android, javaSE, javaEE]Java Suite version 5.0!@@![iOS]iOS version 7.0!@@![javascript]JavaScript Suite version 1.2!@. If using an older version, use @![iOS]`SDLSetDisplayLayout` (any RPC version) or `SDLShow` (RPC v6.0+)!@@![android, javaSE, javaEE, javascript]`SetDisplayLayout` (any RPC version) or `Show` (RPC v6.0+)!@ request.
 
 @![iOS]
 ##### Objective-C
@@ -88,9 +88,14 @@ SDLRGBColor *white = [[SDLRGBColor alloc] initWithRed:249 green:251 blue:254];
 SDLRGBColor *darkGrey = [[SDLRGBColor alloc] initWithRed:57 green:78 blue:96];
 SDLRGBColor *grey = [[SDLRGBColor alloc] initWithRed:186 green:198 blue:210];
 
-SDLSetDisplayLayout *setLayout = [[SDLSetDisplayLayout alloc] initWithPredefinedLayout:SDLPredefinedLayoutGraphicWithText];
-setLayout.dayColorScheme = [[SDLTemplateColorScheme alloc] initWithPrimaryRGBColor:green secondaryRGBColor:grey backgroundRGBColor:white];
-setLayout.nightColorScheme = [[SDLTemplateColorScheme alloc] initWithPrimaryRGBColor:green secondaryRGBColor:grey backgroundRGBColor:darkGrey];
+SDLTemplateConfiguration *config = [[SDLTemplateConfiguration alloc] initWithTemplate:SDLPredefinedLayoutGraphicWithText dayColorScheme:[[SDLTemplateColorScheme alloc] initWithPrimaryRGBColor:green secondaryRGBColor:grey backgroundRGBColor:white] nightColorScheme:[[SDLTemplateColorScheme alloc] initWithPrimaryRGBColor:green secondaryRGBColor:grey backgroundRGBColor:darkGrey]];
+[self.sdlManager.screenManager changeLayout:config withCompletionHandler:^(NSError * _Nullable error) {
+    if (error != nil) {
+        // Color set with template change
+    } else {
+        // Color and template not changed
+    }
+}];
 ```
 
 ##### Swift
@@ -100,9 +105,14 @@ let white = SDLRGBColor(red: 249, green: 251, blue: 254)
 let grey = SDLRGBColor(red: 186, green: 198, blue: 210)
 let darkGrey = SDLRGBColor(red: 57, green: 78, blue: 96)
 
-let setLayout = SDLSetDisplayLayout(predefinedLayout: .graphicWithText)
-setLayout.dayColorScheme = SDLTemplateColorScheme(primaryRGBColor: green, secondaryRGBColor: grey, backgroundRGBColor: white)
-setLayout.nightColorScheme = SDLTemplateColorScheme(primaryRGBColor: green, secondaryRGBColor: grey, backgroundRGBColor: darkGrey)
+let config = SDLTemplateConfiguration(template: .graphicWithText, dayColorScheme: SDLTemplateColorScheme(primaryRGBColor: green, secondaryRGBColor: grey, backgroundRGBColor: white), nightColorScheme: SDLTemplateColorScheme(primaryRGBColor: green, secondaryRGBColor: grey, backgroundRGBColor: darkGrey))
+sdlManager.screenManager.changeLayout(config) { err in
+    if let error = err {
+        // Color and template not changed
+    } else {
+        // Color set with template change
+    }
+}
 ```
 !@
 @![android, javaSE, javaEE]
@@ -117,26 +127,27 @@ TemplateColorScheme dayColorScheme = new TemplateColorScheme()
     .setBackgroundColor(white)
     .setPrimaryColor(green)
     .setSecondaryColor(grey);
-builder.setDayColorScheme(dayColorScheme);
 
 TemplateColorScheme nightColorScheme = new TemplateColorScheme()
     .setBackgroundColor(white)
     .setPrimaryColor(green)
     .setSecondaryColor(darkGrey);
 
-SetDisplayLayout setDisplayLayout = new SetDisplayLayout(PredefinedLayout.GRAPHIC_WITH_TEXT.toString())
+TemplateConfiguration templateConfiguration = new TemplateConfiguration()
+    .setTemplate(PredefinedLayout.GRAPHIC_WITH_TEXT.toString())
     .setDayColorScheme(dayColorScheme)
     .setNightColorScheme(nightColorScheme);
 
-setDisplayLayout.setOnRPCResponseListener(new OnRPCResponseListener() {
+sdlManager.getScreenManager().changeLayout(templateConfiguration, new CompletionListener() {
     @Override
-    public void onResponse(int correlationId, RPCResponse response) {
-        if (response.getSuccess()){
-            // Success
+    public void onComplete(boolean success) {
+        if (success) {
+            // Color set with template change
+        } else {
+            // Color and template not changed 
         }
     }
 });
-sdlManager.sendRPC(setDisplayLayout);
 ```
 !@
 @![javascript]
@@ -158,12 +169,16 @@ nightColorScheme.setBackgroundColor(white);
 nightColorScheme.setPrimaryColor(green);
 nightColorScheme.setSecondaryColor(darkGrey);
 
-const setDisplayLayout = new SDL.rpc.messages.SetDisplayLayout().setDisplayLayout(SDL.rpc.enums.PredefinedLayout.GRAPHIC_WITH_TEXT);
-setDisplayLayout.setDayColorScheme(dayColorScheme);
-setDisplayLayout.setNightColorScheme(nightColorScheme);
-const response = await sdlManager.sendRpc(setDisplayLayout);
-if (response.getSuccess()){
-    // Success
+const templateConfiguration = new SDL.rpc.structs.TemplateConfiguration()
+    .setTemplate(SDL.rpc.enums.PredefinedLayout.GRAPHIC_WITH_TEXT)
+    .setDayColorScheme(dayColorScheme)
+    .setNightColorScheme(nightColorScheme);
+    
+const success = await sdlManager.getScreenManager().changeLayout(templateConfiguration);
+if (success) {
+    // Color set with template change
+} else {
+    // Color and template not changed 
 }
 ```
 !@
@@ -211,7 +226,7 @@ sdlManager.send(request: setGlobals) { (request, response, error) in
 // The image must be uploaded before referencing the image name here
 SetGlobalProperties setGlobalProperties = new SetGlobalProperties()
     .setMenuTitle("customTitle")
-    .setMenuIcon(<#Image#>);
+    .setMenuIcon(image);
 
 setGlobalProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
