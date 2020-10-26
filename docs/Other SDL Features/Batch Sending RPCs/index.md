@@ -22,8 +22,12 @@ The JavaScript library concurrent `sendRpcs` method will honor the ordering of t
 @![iOS]
 ##### Objective-C
 ```objc
-SDLSubscribeButton *subscribeButtonLeft = [[SDLSubscribeButton alloc] initWithName:SDLButtonNameSeekLeft];
-SDLSubscribeButton *subscribeButtonRight = [[SDLSubscribeButton alloc] initWithName:SDLButtonNameSeekRight];
+SDLSubscribeButton *subscribeButtonLeft = [[SDLSubscribeButton alloc] initWithButtonName:SDLButtonNameSeekLeft handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
+    <#code#>
+}];
+SDLSubscribeButton *subscribeButtonRight = [[SDLSubscribeButton alloc] initWithButtonName:SDLButtonNameSeekRight handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
+    <#code#>
+}];
 [self.sdlManager sendRequests:@[subscribeButtonLeft, subscribeButtonRight] progressHandler:^(__kindof SDLRPCRequest * _Nonnull request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error, float percentComplete) {
     <#Called as each request completes#>
 } completionHandler:^(BOOL success) {
@@ -33,8 +37,12 @@ SDLSubscribeButton *subscribeButtonRight = [[SDLSubscribeButton alloc] initWithN
 
 ##### Swift
 ```swift
-let subscribeButtonLeft = SDLSubscribeButton(name: SDLButtonNameSeekLeft)
-let subscribeButtonRight = SDLSubscribeButton(name: SDLButtonNameSeekRight)
+let subscribeButtonLeft = SDLSubscribeButton(buttonName: SDLButtonName.seekLeft) { (onButtonPress, onButtonEvent) in
+    <#code#>
+}
+let subscribeButtonRight = SDLSubscribeButton(buttonName: SDLButtonName.seekRight) { (onButtonPress, onButtonEvent) in
+    <#code#>
+}
 sdlManager.send([subscribeButtonLeft, subscribeButtonRight], progressHandler: { (request, response, error, percentComplete) in
     <#Called as each request completes#>
 }) { success in
@@ -103,7 +111,7 @@ The code example below shows how to create a perform interaction choice set. Whe
 ```objc
 SDLChoice *choice = [[SDLChoice alloc] initWithId:<#Choice Id#> menuName:@"<#Menu Name#>" vrCommands:@[@"<#VR Command#>"]];
 SDLCreateInteractionChoiceSet *createInteractionChoiceSet = [[SDLCreateInteractionChoiceSet alloc] initWithId:<#Choice Set Id#> choiceSet:@[choice]];
-SDLPerformInteraction *performInteraction = [[SDLPerformInteraction alloc] initWithInteractionChoiceSetId:<#Choice Set Id#>];
+SDLPerformInteraction *performInteraction = [[SDLPerformInteraction alloc] initWithInitialText:<#(nonnull NSString *)#> interactionMode:<#(nonnull SDLInteractionMode)#> interactionChoiceSetIDList:<#(nonnull NSArray<NSNumber<SDLUInt> *> *)#> cancelID:<#(UInt32)#>];
 
 [self.sdlManager sendSequentialRequests:@[createInteractionChoiceSet, performInteraction] progressHandler:^BOOL(__kindof SDLRPCRequest * _Nonnull request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error, float percentComplete) {
     <#Called as each request completes#>
@@ -118,6 +126,7 @@ SDLPerformInteraction *performInteraction = [[SDLPerformInteraction alloc] initW
 let choice = SDLChoice(id: <#Choice Id#>, menuName: "<#Menu Name#>", vrCommands: ["<#VR Command#>"])
 let createInteractionChoiceSet = SDLCreateInteractionChoiceSet(id: <#Choice Set Id#>, choiceSet: [choice])
 let performInteraction = SDLPerformInteraction(interactionChoiceSetId: <#Choice Set Id#>)
+let performInteraction = SDLPerformInteraction(initialText: <#String#>, interactionMode: <#SDLInteractionMode#>, interactionChoiceSetIDList: <#[NSNumber & SDLUInt]#>, cancelID: <#UInt32#>)
 
 sdlManager.sendSequential(requests: [createInteractionChoiceSet, performInteraction], progressHandler: { (request, response, error, percentageCompleted) -> Bool in
     <#Called as each request completes#>

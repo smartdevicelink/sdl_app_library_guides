@@ -93,7 +93,7 @@ SDLSpeak *speak = [[SDLSpeak alloc] initWithTTSChunks:sapiPhonemesTTSChunks];
 ##### Swift
 ```swift
 let sapiPhonemesTTSChunks = SDLTTSChunk.sapiChunks(from: "h eh - l ow 1")
-let speech = SDLSpeak(ttsChunks: sapiPhonemesTTSChunk)
+let speech = SDLSpeak(ttsChunks: sapiPhonemesTTSChunks)
 ```
 !@
 
@@ -139,7 +139,7 @@ const speak = new SDL.rpc.messages.Speak([chunk]);
 ```swift
 sdlManager.send(request: speech) { (request, response, error) in
     guard let response = response as? SDLSpeakResponse else { return }
-    guard response?.success.boolValue == true else {
+    guard response.success.boolValue == true else {
         switch response.resultCode {
         case .disallowed:
             <#The app does not have permission to use the speech request#>

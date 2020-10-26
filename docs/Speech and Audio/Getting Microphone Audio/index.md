@@ -171,7 +171,7 @@ SDLPerformAudioPassThru *audioPassThru = <#SDLPerformAudioPassThru#>;
 audioPassThru.audioDataHandler = ^(NSData * _Nullable audioData) {
     if (audioData.length == 0) { return; }
     <#Do something with current audio data#>
-}
+};
 
 [self.sdlManager sendRequest:audioPassThru];
 ```

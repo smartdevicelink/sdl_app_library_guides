@@ -14,7 +14,7 @@ SDLFile *audioFile = [SDLFile fileWithData:mp3Data name:<#File name#> fileExtens
 [self.sdlManager.fileManager uploadFile:audioFile completionHandler:^(BOOL success, NSUInteger bytesAvailable, NSError * _Nullable error) {
     if (error != nil) { return; }
     <#File upload successful#>
-}];]
+}];
 ```
 
 ##### Swift
@@ -70,7 +70,7 @@ SDLFile *file2 = [SDLFile fileWithData:<#Data#> name:<#File name#> fileExtension
     <#Called as each upload completes#>
     // Return true to continue sending files. Return false to cancel any files that have not yet been sent.
     return YES;
-} completionHandler:^(NSArray<NSString *> * _Nonnull fileNames, NSError * _Nullable error) {
+} completionHandler:^(NSError * _Nullable error) {
     <#Called when all uploads complete#>
 }];
 ```
@@ -267,7 +267,7 @@ const success = await sdlManager.getFileManager().deleteRemoteFileWithName('<#Fi
 @![iOS]
 ##### Objective-C
 ```objc
-[self.sdlManager.fileManager deleteRemoteFileWithNames:@[@"<#Name Uploaded As#>", @"<#Name Uploaded As 2#>"] completionHandler:^(NSError *error) {
+[self.sdlManager.fileManager deleteRemoteFilesWithNames:@[@"<#Name Uploaded As#>", @"<#Name Uploaded As 2#>"] completionHandler:^(NSError * _Nullable error) {
     if (error == nil) {
         <#Images were deleted successfully#>
     }

@@ -73,7 +73,7 @@ SDLRectange *viewRect = [[SDLRectangle alloc] initWithCGRect:view.bounds];
 SDLHapticRect *hapticRect = [[SDLHapticRect alloc] initWithId:1 rect:viewRect];
 SDLSendHapticData *hapticData = [[SDLSendHapticData alloc] initWithHapticRectData:@[hapticRect]];
 
-[self.sdlManager.sendRequest:hapticData];
+[self.sdlManager sendRequest:hapticData];
 ```
 
 ##### Swift

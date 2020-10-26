@@ -116,7 +116,7 @@ BOOL softButtonsSupportImages = self.sdlManager.systemCapabilityManager.defaultM
 
 ##### Swift
 ```swift
-let softButtonsSupportImages = sdlManager.systemCapabilityManager.defaultMainWindowCapability.softButtonCapabilities.first.imageSupported.boolValue ?? false
+let softButtonsSupportImages = sdlManager.systemCapabilityManager.defaultMainWindowCapability?.softButtonCapabilities?.first?.imageSupported.boolValue ?? false
 ```
 !@
 

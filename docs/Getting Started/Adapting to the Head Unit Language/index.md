@@ -61,16 +61,16 @@ To customize the app name for the head unit's current language, implement the fo
     SDLLifecycleConfigurationUpdate *configurationUpdate = [[SDLLifecycleConfigurationUpdate alloc] init];
 
     if ([language isEqualToEnum:SDLLanguageEnUs]) {
-        update.appName = <#App Name in English#>;
+        configurationUpdate.appName = <#App Name in English#>;
     } else if ([language isEqualToEnum:SDLLanguageEsMx]) {
-        update.appName = <#App Name in Spanish#>;
+        configurationUpdate.appName = <#App Name in Spanish#>;
     } else if ([language isEqualToEnum:SDLLanguageFrCa]) {
-        update.appName = <#App Name in French#>;
+        configurationUpdate.appName = <#App Name in French#>;
     } else {
         return nil;
     }
 
-    update.ttsName = [SDLTTSChunk textChunksFromString:update.appName];
+    configurationUpdate.ttsName = [SDLTTSChunk textChunksFromString:configurationUpdate.appName];
     return configurationUpdate;
 }
 ```
@@ -92,7 +92,7 @@ func managerShouldUpdateLifecycle(toLanguage language: SDLLanguage, hmiLanguage:
         return nil
     }
 
-    update.ttsName = [SDLTTSChunk(text: update.appName!, type: .text)]
+    configurationUpdate.ttsName = [SDLTTSChunk(text: configurationUpdate.appName!, type: .text)]
     return configurationUpdate
 }
 ```

@@ -124,11 +124,11 @@ SDLAppServiceRecord *serviceRecord = aCapability.updatedAppServiceRecord;
 ```swift
 // From GetSystemCapabilityResponse
 let getResponse: SDLGetSystemCapabilityResponse = <#From wherever you got it#>
-let capabilities = getResponse.systemCapability.appServicesCapabilities
 
 // This array contains all currently available app services on the system
-let appServices: [SDLAppServiceCapability] = capabilities.appServices
-let aCapability = appServices.first
+guard let capabilities = getResponse.systemCapability?.appServicesCapabilities, let appServices = capabilities.appServices, let aCapability = appServices.first else {
+    return
+}
 
 // This will be nil since it's the first update
 let capabilityReason = aCapability.updateReason
@@ -138,11 +138,11 @@ let serviceRecord = aCapability.updatedAppServiceRecord
 
 // From OnSystemCapabilityUpdated
 let serviceNotification: SDLOnSystemCapabilityUpdated = <#From wherever you got it#>
-let capabilities = serviceNotification.systemCapability.appServicesCapabilities
 
 // This array contains all recently updated services
-let appServices: [SDLAppServiceCapability] = capabilities.appServices
-let aCapability = appServices.first
+guard let capabilities = serviceNotification.systemCapability.appServicesCapabilities, let appServices = capabilities.appServices, let aCapability = appServices.first  else {
+    return
+}
 
 // This won't be nil. It will tell you why a service is in the list of updates
 let capabilityReason = aCapability.updateReason
@@ -220,9 +220,6 @@ unsubscribeServiceData.subscribe = @NO;
 
 ##### Swift
 ```swift
-// Get service data once
-let getServiceData = SDLGetAppServiceData(appServiceType: .media)
-
 // Subscribe to service data in perpetuity via `OnAppServiceData` notifications.
 let subscribeServiceData = SDLGetAppServiceData(andSubscribeToAppServiceType: .media)
 
@@ -486,8 +483,8 @@ NSMutableData *imageData = [[NSMutableData alloc] init];
 ##### Swift
 ```swift
 let data: SDLAppServiceData = <#Get the App Service Data#>
-let weatherData: SDLWeatherServiceData = data.weatherServiceData
-guard let currentForecastImage = weatherData.currentForecast?.weatherIcon else {
+let weatherData = data.weatherServiceData
+guard let currentForecastImage = weatherData?.currentForecast?.weatherIcon else {
     // The image doesn't exist, exit early
     return
 }

@@ -203,10 +203,10 @@ SDLGrid *climateModuleLocation = firstClimateModule.moduleInfo.location;
 ##### Swift
 ```swift
 // Get the first climate module's information
-let firstClimateModule = <#Remote Control Capabilities#>.climateControlCapabilities.first;
+let firstClimateModule = <#Remote Control Capabilities#>.climateControlCapabilities?.first;
 
-let climateModuleId = firstClimateModule.moduleInfo.moduleId;
-let climateModuleLocation = firstClimateModule.moduleInfo.location;
+let climateModuleId = firstClimateModule?.moduleInfo?.moduleId;
+let climateModuleLocation = firstClimateModule?.moduleInfo?.location;
 ```
 !@
 
@@ -383,7 +383,7 @@ After you subscribe to the `SDLDidReceiveInteriorVehicleDataNotification` you mu
 
 ###### RPC < v6.0
 ```objc
-SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData alloc] initAndSubscribeToModuleType:SDLModuleTypeRadio];
+SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData alloc] initAndSubscribeToModuleType:SDLModuleTypeRadio moduleId:<#(nonnull NSString *)#>];
 [self.sdlManager sendRequest:getInteriorVehicleData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     SDLGetInteriorVehicleDataResponse *dataResponse = (SDLGetInteriorVehicleDataResponse *)response;
     // This can now be used to retrieve data
@@ -416,7 +416,7 @@ After you subscribe to the `.SDLDidReceiveInteriorVehicleData` you must also sub
 
 ###### RPC < v6.0
 ```swift
-let getInteriorVehicleData = SDLGetInteriorVehicleData(andSubscribeToModuleType: .radio)
+let getInteriorVehicleData = SDLGetInteriorVehicleData(andSubscribeToModuleType: .radio, moduleId: "<#ModuleID#>")
 sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
     guard let response = res as? SDLGetInteriorVehicleDataResponse else { return }
     // This can now be used to retrieve data
@@ -543,7 +543,7 @@ To get data from a module without subscribing send a @![iOS]`SDLGetInteriorVehic
 ##### Objective-C
 ###### RPC < v6.0
 ```objc
-SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData alloc] initWithModuleType:SDLModuleTypeRadio];
+SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData alloc] initWithModuleType:<#(nonnull SDLModuleType)#> moduleId:<#(nonnull NSString *)#>];
 [self.sdlManager sendRequest:getInteriorVehicleData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     SDLGetInteriorVehicleDataResponse *dataResponse = (SDLGetInteriorVehicleDataResponse *)response;
     // This can now be used to retrieve data
@@ -747,6 +747,7 @@ SDLClimateControlData *climateControlData = [[SDLClimateControlData alloc] initW
 SDLModuleData *moduleData = [[SDLModuleData alloc] initWithClimateControlData:climateControlData];
 moduleData.moduleId = @"<#ModuleID#>";
 SDLSetInteriorVehicleData *setInteriorVehicleData = [[SDLSetInteriorVehicleData alloc] initWithModuleData:moduleData];
+
 [self.sdlManager sendRequest:setInteriorVehicleData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if(!response.success) { return; }
 }];

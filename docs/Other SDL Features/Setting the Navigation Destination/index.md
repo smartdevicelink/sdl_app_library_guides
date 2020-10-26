@@ -9,8 +9,10 @@ The @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE,javascript]`SendLocation`
 @![iOS]
 ##### Objective-C
 ```objc
-id observerId = [self.sdlManager.permissionManager addObserverForRPCs:@[SDLRPCFunctionNameSendLocation] groupType:SDLPermissionGroupTypeAny withHandler:^(NSDictionary<SDLPermissionRPCName,NSNumber *> * _Nonnull allChanges, SDLPermissionGroupStatus groupStatus) {
-    if (groupStatus != SDLPermissionGroupStatusAllowed) {
+SDLPermissionElement *setSendLocationPermissionElement = [[SDLPermissionElement alloc] initWithRPCName:SDLRPCFunctionNameSendLocation parameterPermissions:nil];
+
+id observerId = [self.sdlManager.permissionManager subscribeToRPCPermissions:@[setSendLocationPermissionElement] groupType:SDLPermissionGroupTypeAny withHandler:^(NSDictionary<SDLRPCFunctionName, SDLRPCPermissionStatus *> * _Nonnull updatedPermissionStatuses, SDLPermissionGroupStatus status) {
+    if (status != SDLPermissionGroupStatusAllowed) {
         // Your app does not have permission to send the `SDLSendLocation` request for its current HMI level
         return;
     }
@@ -21,7 +23,9 @@ id observerId = [self.sdlManager.permissionManager addObserverForRPCs:@[SDLRPCFu
 
 ##### Swift
 ```swift
-let observerId = sdlManager.permissionManager.addObserver(forRPCs: [SDLRPCFunctionName.sendLocation.rawValue.rawValue], groupType: .any, withHandler: { (allChanges, groupStatus) in
+let setSendLocationPermissionElement = SDLPermissionElement(rpcName: .sendLocation, parameterPermissions: nil)
+
+let observerId = sdlManager.permissionManager.subscribe(toRPCPermissions: [setSendLocationPermissionElement], groupType: .any, withHandler: { (allChanges, groupStatus) in
     // This handler will be called whenever the permission status changes
     guard groupStatus == .allowed else {
         // Your app does not have permission to send the `SDLSendLocation` request for its current HMI level
@@ -223,7 +227,6 @@ To use the @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE,javascript]`SendLo
 SDLSendLocation *sendLocation = [[SDLSendLocation alloc] initWithLongitude:-97.380967 latitude:42.877737 locationName:@"The Center" locationDescription:@"Center of the United States" address:@[@"900 Whiting Dr", @"Yankton, SD 57078"] phoneNumber:nil image:nil];
 
 [self.sdlManager sendRequest:sendLocation withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    SDLSendLocationResponse *response = (SDLSendLocationResponse *)response;
     if (response == nil) {
         // Encountered an error sending `SendLocation`
         return;

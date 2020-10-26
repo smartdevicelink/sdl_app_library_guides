@@ -217,16 +217,16 @@ This is a custom icon for your application. Please refer to [Adaptive Interface 
 ```objc
 UIImage* appImage = [UIImage imageNamed:@"<#AppIcon Name#>"];
 if (appImage) {
-  SDLArtwork* appIcon = [SDLArtwork persistentArtworkWithImage:appImage name:@"<#Name to Upload As#>" asImageFormat:SDLArtworkImageFormatPNG /* or SDLArtworkImageFormatJPG */];
-  lifecycleConfiguration.appIcon = appIcon;
+    SDLArtwork* appIcon = [SDLArtwork persistentArtworkWithImage:appImage name:@"<#Name to Upload As#>" asImageFormat:SDLArtworkImageFormatPNG /* or SDLArtworkImageFormatJPG */];
+    lifecycleConfiguration.appIcon = appIcon;
 }
 ```
 
 ##### Swift
 ```swift
 if let appImage = UIImage(named: "<#AppIcon Name#>") {
-  let appIcon = SDLArtwork(image: appImage, name: "<#Name to Upload As#>", persistent: true, as: .JPG /* or .PNG */)
-  lifecycleConfiguration.appIcon = appIcon
+    let appIcon = SDLArtwork(image: appImage, name: "<#Name to Upload As#>", persistent: true, as: .JPG /* or .PNG */)
+    lifecycleConfiguration.appIcon = appIcon
 }
 ```
 
@@ -276,14 +276,14 @@ If a head unit is blocked by protocol version, your app icon will never appear o
 
 ##### Objective-C
 ```objc
-lifecycleConfiguration.minimumProtocolVersion = [SDLVersion versionWithString:@"3.0.0"];
-lifecycleConfiguration.minimumRPCVersion = [SDLVersion versionWithString:@"4.0.0"];
+lifecycleConfiguration.minimumProtocolVersion = [SDLVersion versionWithMajor:3 minor:0 patch:0];
+lifecycleConfiguration.minimumRPCVersion = [SDLVersion versionWithMajor:4 minor:0 patch:0];
 ```
 
 ##### Swift
 ```swift
-lifecycleConfiguration.minimumProtocolVersion = SDLVersion(string: "3.0.0")
-lifecycleConfiguration.minimumRPCVersion = SDLVersion(string: "4.0.0")
+lifecycleConfiguration.minimumProtocolVersion = SDLVersion(major: 3, minor: 0, patch: 0)
+lifecycleConfiguration.minimumRPCVersion = SDLVersion(major: 4, minor: 0, patch: 0)
 ```
 
 ### 7. Lock Screen
@@ -334,12 +334,12 @@ The `SDLConfiguration` class is used to set the lifecycle, lock screen, logging,
 
 ##### Objective-C
 ```objc
-SDLConfiguration* configuration = [SDLConfiguration configurationWithLifecycle:lifecycleConfiguration lockScreen:[SDLLockScreenConfiguration enabledConfiguration] logging:[SDLLogConfiguration defaultConfiguration] fileManager:[SDLFileManagerConfiguration defaultConfiguration]];
+SDLConfiguration* configuration = [[SDLConfiguration alloc] initWithLifecycle:lifecycleConfiguration lockScreen:[SDLLockScreenConfiguration enabledConfiguration] logging:[SDLLogConfiguration defaultConfiguration] fileManager:nil encryption:nil];
 ```
 
 ##### Swift
 ```swift
-let configuration = SDLConfiguration(lifecycle: lifecycleConfiguration, lockScreen: .enabled(), logging: .default(), fileManager: .default())
+let configuration = SDLConfiguration(lifecycle: lifecycleConfiguration, lockScreen: .enabled(), logging: .default(), fileManager: nil, encryption: nil)
 ```
 
 ### 11. Create a SDLManager

@@ -92,7 +92,7 @@ SDLMsgVersion *rpcSpecVersion = self.sdlManager.registerResponse.sdlMsgVersion;
 
 ##### Swift
 ```swift
-let rpcSpecVersion = sdlManager.registerResponse.sdlMsgVersion
+let rpcSpecVersion = sdlManager.registerResponse?.sdlMsgVersion
 ```
 !@
 

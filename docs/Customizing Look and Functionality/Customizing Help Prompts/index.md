@@ -233,7 +233,6 @@ SDLResetGlobalProperties *resetGlobals = [[SDLResetGlobalProperties alloc] initW
 // Reset the menu icon and title
 SDLResetGlobalProperties *resetGlobals = [[SDLResetGlobalProperties alloc] initWithProperties:@[SDLGlobalPropertyMenuIcon, SDLGlobalPropertyMenuName]];
 
-
 // Reset the spoken prompts
 SDLResetGlobalProperties *resetGlobals = [[SDLResetGlobalProperties alloc] initWithProperties:@[SDLGlobalPropertyHelpPrompt, SDLGlobalPropertyTimeoutPrompt]];
 
@@ -256,7 +255,7 @@ let resetGlobals = SDLResetGlobalProperties(properties: [.menuIcon, .menuName])
 
 // Reset the spoken prompts
 let resetGlobals = SDLResetGlobalProperties(properties: [.helpPrompt, .timeoutPrompt])
-sdlManager.send(request: resetGlobals) { (req, res, err) in
+sdlManager.send(request: resetGlobals) { (request, response, error) in
     if let error = error {
         // Something went wrong
     }

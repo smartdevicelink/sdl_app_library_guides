@@ -47,7 +47,7 @@ Once you have subscribed to the button with a block handler, the handler will be
 
 ##### Objective-C
 ```objc
-NSObject *observer = [self.sdlManager.screenManager subscribeButton:SDLButtonNamePlayPause withUpdateHandler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent, NSError * _Nullable error) {
+id<NSObject> observer = [self.sdlManager.screenManager subscribeButton:SDLButtonNamePlayPause withUpdateHandler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent, NSError * _Nullable error) {
     if (error != nil) {
         // There was an error subscribing to the button
         return;
@@ -120,7 +120,7 @@ sdlManager.screenManager.subscribeButton(.playPause, withObserver: self, selecto
         // Contains information about whether the button was short or long pressed
     }
 
-    if let buttonPress = buttonPress {
+    if let buttonEvent = buttonEvent {
         // Contains information about when the button is depressed or released
     }
 }
@@ -232,9 +232,11 @@ sdlManager.screenManager.subscribeButton(.playPause) { (buttonPress, buttonEvent
 
     switch buttonPress.buttonPressMode {
     case .short:
-        // The user short pressed the button
+        <#The user short pressed the button#>
     case .long:
-        // The user long pressed the button
+        <#The user long pressed the button#>
+    default:
+        <#code#>
     }
 }
 ```
@@ -354,9 +356,11 @@ sdlManager.screenManager.subscribeButton(.preset2, withObserver: self, selector:
 
     switch buttonName {
     case .preset1:
-        // The user short or long pressed the preset 1 button
+        <#The user short or long pressed the preset 1 button#>
     case .preset2:
-        // The user short or long pressed the preset 2 button
+        <#The user short or long pressed the preset 2 button#>
+    default:
+        <#The user pressed another preset button#>
     }
 }
 ```
@@ -450,9 +454,9 @@ sdlManager.screenManager.subscribeButton(.navPanUp) { (buttonPress, buttonEvent,
 
     switch buttonPress.buttonPressMode {
     case .short:
-        // The user short pressed the button
+        <#The user short pressed the button#>
     case .long:
-        // The user long pressed the button
+        <#The user long pressed the button#>
     }
 }
 ```

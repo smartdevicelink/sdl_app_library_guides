@@ -90,7 +90,7 @@ lockScreenConfig.setBackgroundColor(resourceColor); // For example, R.color.blac
 @![iOS]
 ##### Objective-C
 ```objc
-let appIcon: UIImage = <# Retrieve App Icon #>
+UIImage *appIcon = <# Retrieve App Icon #>
 SDLLockScreenConfiguration *lockScreenConfiguration = [SDLLockScreenConfiguration enabledConfigurationWithAppIcon:appIcon backgroundColor:<# Desired Background Color #>];
 ```
 

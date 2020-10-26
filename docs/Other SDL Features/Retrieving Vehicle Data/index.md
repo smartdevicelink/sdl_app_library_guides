@@ -81,7 +81,7 @@ let getGPSData = SDLGetVehicleData()
 getGPSData.gps = NSNumber(true)
 sdlManager.send(request: getGPSData) { (request, response, error) in
     guard let response = response as? SDLGetVehicleDataResponse else { return }
-    guard response?.success.boolValue == true else {
+    guard response.success.boolValue == true else {
         switch response.resultCode {
         case .disallowed:
             <#The app does not have permission to access this vehicle data#>
@@ -213,7 +213,7 @@ subscribeGPSData.gps = NSNumber(true)
 
 sdlManager.send(request: subscribeGPSData) { (request, response, error) in
     guard let response = response as? SDLSubscribeVehicleDataResponse else { return }
-    guard response?.success.boolValue == true else {
+    guard response.success.boolValue == true else {
         switch response.resultCode {
         case .disallowed:
             <#The app does not have permission to access this vehicle data#>
@@ -380,7 +380,7 @@ unsubscribeGPSData.gps = NSNumber(true)
 sdlManager.send(request: unsubscribeGPSData) { (request, response, error) in
     guard let response = response as? SDLUnsubscribeVehicleDataResponse else { return }
 
-    guard response?.success.boolValue == true else {
+    guard response.success.boolValue == true else {
         switch response.resultCode {
         case .disallowed:
             <#The app does not have permission to access this vehicle data#>
@@ -491,10 +491,10 @@ SDLGetVehicleData *getCustomData = [[SDLGetVehicleData alloc] init];
 ##### Swift
 ```swift
 let getCustomData = SDLGetVehicleData()
-getCustomData.setOEMCustom("OEM-X-Vehicle-Data", withVehicleDataState: true)
+getCustomData.setOEMCustomVehicleData(name: "OEM-X-Vehicle-Data", state: true)
 sdlManager.send(request: getCustomData) { (request, response, error) in
     guard let response = response as? SDLGetVehicleDataResponse else { return }
-    guard response?.success.boolValue == true else {
+    guard response.success.boolValue == true else {
         switch response.resultCode {
         case .disallowed:
             <#The app does not have permission to access this vehicle data#>
