@@ -84,7 +84,7 @@ sdlManager.getScreenManager().setMenu(Arrays.asList(mainCell1, mainCell2));
 
 ## Choice Set Manager
 
-Previously it required a lot of code to use `PerformInteraction`s with SDL. To alleviate some of this pain, we have introduced the Choice Set Manager which is accessible via the `ScreenManager`. Because the Choice Set Manager covers so many items, we will do a brief overview here. You may continue to the [Popup Menus and Keyboards](Displaying a User Interface/Popup Menus and Keyboards) section for more detailed information.
+Previously it required a lot of code to use `PerformInteraction`s with SDL. To alleviate some of this pain, we have introduced the Choice Set Manager which is accessible via the `ScreenManager`. Because the Choice Set Manager covers so many items, we will do a brief overview here. You may continue to the [Popup Menus](Displaying a User Interface/Popup Menus) section for more detailed information.
 
 There are 2 main use cases for using this manager, one is to display a choice set, and the other is to display a keyboard.
 
