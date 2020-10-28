@@ -1,6 +1,6 @@
 # Customizing the Keyboard
 @![iOS, android, javaEE, javaSE]
-If you present keyboards in your app – such as in searchable interactions or another custom keyboard – you may wish to customize the keyboard for your users. The best way to do this is through the !@@![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@@![iOS, android, javaEE, javaSE]. For more information presenting keyboards, see the [Popup Menus and Keyboards guide](Displaying a User Interface/Popup Menus and Keyboards).
+If you present keyboards in your app – such as in searchable interactions or another custom keyboard – you may wish to customize the keyboard for your users. The best way to do this is through the !@@![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@@![iOS, android, javaEE, javaSE]. For more information presenting keyboards, see the [Popup Keyboards](Displaying a User Interface/Popup Keyboards) section.
 !@
 
 @![javascript]
