@@ -100,3 +100,62 @@ To present a keyboard (such as for searching for navigation destinations), you s
 
 ## Navigation Subscription Buttons
 Head units supporting RPC v6.0+ may support navigation-specific subscription buttons for the navigation template. These subscription buttons allow your user to manipulate the map using hard buttons located on car's center console or steering wheel. It is important to support these subscription buttons in order to provide your user with the expected in-car navigation user experience. This is especially true on head units that don't support touch input as there will be no other way for your user to manipulate the map. See [Template Subscription Buttons](Displaying a User Interface/Template Subscription Buttons) for a list of these navigation buttons.
+
+## When to Cancel Your Route
+Between your navigation app, other navigation apps, and embedded navigation, only one route should be in progress at a time. To know when the embedded navigation or another navigation app has started a route, [create a navigation service](Other SDL Features/Creating an App Service) and when your service becomes inactive, your app should cancel any active route.
+
+@![iOS]
+##### Objective-C
+```objc
+[self.sdlManager.systemCapabilityManager subscribeToCapabilityType:SDLSystemCapabilityTypeAppServices withUpdateHandler:^(SDLSystemCapability * _Nullable capability, BOOL subscribed, NSError * _Nullable error) {
+    SDLAppServicesCapabilities *serviceCapabilities = capability.appServicesCapabilities;
+    for (SDLAppServiceCapability *serviceCapability in serviceCapabilities.appServices) {
+        if ([serviceCapability.updatedAppServiceRecord.serviceManifest.serviceName isEqualToString:<#Your service name#>]) {
+            if (!serviceCapability.updatedAppServiceRecord.serviceActive) {
+                // Cancel your active route
+            }
+        }
+    }
+}];
+```
+
+##### Swift
+```swift
+sdlManager.systemCapabilityManager.subscribe(capabilityType: .appServices) { (systemCapability, subscribed, error) in
+    guard let serviceCapabilities = systemCapability?.appServicesCapabilities?.appServices else { return }
+    for serviceCapability in serviceCapabilities {
+        if serviceCapability.updatedAppServiceRecord.serviceManifest.serviceName == <#Your service name#> {
+            if !serviceCapability.updatedAppServiceRecord.serviceActive.boolValue {
+                // Cancel your active route
+            }
+        }
+    }
+}
+```
+!@
+
+@![android]
+```java
+sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapabilityType.APP_SERVICES, new OnSystemCapabilityListener() {
+    @Override
+    public void onCapabilityRetrieved(Object capability) {
+        AppServicesCapabilities appServicesCapabilities = (AppServicesCapabilities) capability;
+        if (appServicesCapabilities.getAppServices() != null && appServicesCapabilities.getAppServices().size() > 0) {
+            for (AppServiceCapability appServiceCapability : appServicesCapabilities.getAppServices()) {
+                if (appServiceCapability.getUpdatedAppServiceRecord().getServiceManifest().getServiceName().equals("NAVIGATION_SERVICE_NAME")) {
+                    boolean serviceActive = appServiceCapability.getUpdatedAppServiceRecord().getServiceActive();
+                    if (!serviceActive) {
+                        //Cancel your active route
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onError(String info) {
+        // Handle Error
+    }
+});
+```
+!@
