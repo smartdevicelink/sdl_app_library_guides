@@ -22,15 +22,15 @@
                     "name": "SDK Configuration"
                 },
                 {
-                    "name": "Java Suite Integration Basics",
+                    "name": "Integration Basics - Java",
                     "platforms": ["Android", "JavaSE", "JavaEE"]
                 },
                 {
-                    "name": "iOS Integration Basics",
+                    "name": "Integration Basics- iOS",
                     "platforms": ["iOS"]
                 },
                 {
-                    "name": "JavaScript Suite Integration Basics",
+                    "name": "Integration Basics - JS",
                     "platforms": ["JavaScript"]
                 },
                 {

@@ -14,7 +14,7 @@ In order to use SDL's Mobile Navigation feature, the app must have a minimum req
 !@
 
 ## Configuring a Navigation App
-The basic connection setup is similar for all apps. Please follow the @![iOS][iOS Integration Basics](Getting Started/iOS Integration Basics)!@@![android,javaEE,javaSE][Java Suite Integration Basics](Getting Started/Java Suite Integration Basics)!@ guide for more information.
+The basic connection setup is similar for all apps. Please follow the @![iOS][Integration Basics](Getting Started/Integration Basics - iOS)!@@![android,javaEE,javaSE][Integration Basics](Getting Started/Integration Basics - Java)!@ guide for more information.
 
 In order to create a navigation app an @![iOS]`appType`!@@![android,javaSE,javaEE]`appHMIType`!@ of @![iOS]`SDLAppHMITypeNavigation`!@@![android,javaSE,javaEE]`NAVIGATION`!@ must be set in the @![iOS]`SDLManager`'s `SDLLifecycleConfiguration`!@@![android,javaSE,javaEE]`SdlManager`'s `Builder`!@.
 

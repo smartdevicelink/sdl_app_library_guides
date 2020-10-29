@@ -4,7 +4,7 @@ The lock screen is a vital part of your SDL app because it prevents the user fro
 @![iOS]
 If you would not like to use any of the following code, you may use the `SDLLockScreenConfiguration` class function `disabledConfiguration`, and manage the entire lifecycle of the lock screen yourself. However, it is strongly recommended that you use the provided lock screen manager, even if you use your own view controller.
 
-To see where the `SDLLockScreenConfiguration` is used, refer to the [iOS Integration Basics](Getting Started/iOS Integration Basics) guide.
+To see where the `SDLLockScreenConfiguration` is used, refer to the [Integration Basics](Getting Started/Integration Basics - iOS) guide.
 !@
 
 @![android]
