@@ -207,7 +207,7 @@ SDLConfiguration *config = [[SDLConfiguration alloc] initWithLifecycle:lifecycle
 
 When you have a `NAVIGATION` or `PROJECTION` app and set this streaming configuration, SDL will automatically start the video streaming session on behalf of your app. When you receive the `SDLVideoStreamDidStartNotification`, you're good to go!
 
-For more information about Video Streaming, see the [dedicated section](Video Streaming for Navigation Apps/Video Streaming).
+For more information about Video Streaming, see the [dedicated section](Video Streaming for Navigation Apps/Video Streaming - iOS).
 
 ### Touch Manager Delegate Changes
 The touch manager delegate calls have all changed and previous delegate methods won't work. If you are streaming video and set the window, the new callbacks may return the view that was touched, otherwise it will return nil. For example:
