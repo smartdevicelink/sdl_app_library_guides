@@ -26,7 +26,7 @@
                     "platforms": ["Android", "JavaSE", "JavaEE"]
                 },
                 {
-                    "name": "Integration Basics- iOS",
+                    "name": "Integration Basics - iOS",
                     "platforms": ["iOS"]
                 },
                 {
