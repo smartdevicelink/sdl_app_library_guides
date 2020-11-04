@@ -1,7 +1,4 @@
 # Integration Basics
-### How SDL Works
-SmartDeviceLink works by sending remote procedure calls (RPCs) back and forth between a smartphone application and the SDL Core. These RPCs allow you to build the user interface, detect button presses, play audio, and get vehicle data, among other things. You will use the SDL library to build your app on the SDL Core.
-
 ## Set Up a Proxy Manager Class
 You will need a class that manages the connection between your app and SDL Core. Since there should be only one active connection to the SDL Core, you may wish to implement this proxy class using the singleton pattern.
 
