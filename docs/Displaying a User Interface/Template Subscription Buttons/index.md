@@ -34,10 +34,8 @@ There are three general types of subscriptions buttons: audio related buttons on
 | Rotate Counter-Clockwise | Navigation only | v6.0+ |
 | Toggle Heading | Navigation only | v6.0+ |
 
-@![iOS,android,javaSE,javaEE,javascript]
 ## Subscribing to Subscription Buttons
-You can easily subscribe to subscription buttons using the !@@![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE, javascript]`ScreenManager`!@@![iOS,android,javaSE,javaEE,javascript]. Simply tell the manager which button to subscribe and you will be notified when the user selects the button.
-!@
+You can easily subscribe to subscription buttons using the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE, javascript]`ScreenManager`!@. Simply tell the manager which button to subscribe and you will be notified when the user selects the button.
 
 @![iOS]
 There are two different ways to receive button press notifications. The first is to pass a block handler that will get called when the button is selected. The second is to pass a selector that will be notified when the button is selected.
@@ -174,9 +172,7 @@ await sdlManager.getScreenManager()
 ```
 !@
 
-@![iOS,android,javaSE,javaEE,javascript]
 ## Unsubscribing from Subscription Buttons
-!@
 
 @![iOS]
 When unsubscribing, you will need to pass the observer object and which button name that you want to unsubscribe. If you subscribed using a handler, use the observer object returned when you subscribed. If you subscribed using a selector, use the same observer object you passed when subscribing. 
@@ -295,7 +291,7 @@ sdlManager.getScreenManager().addButtonListener(ButtonName.PLAY_PAUSE, new OnBut
 !@
 
 @![javascript]
-```js
+```javascript
 await sdlManager.getScreenManager().addButtonListener(SDL.rpc.enums.ButtonName.PLAY_PAUSE, function (buttonName, onButton) {
     if (onButton instanceof SDL.rpc.messages.OnButtonPress) {
         switch (onButton.getButtonPressMode()) {
@@ -341,7 +337,7 @@ Integer numOfCustomPresetsAvailable = sdlManager.getSystemCapabilityManager().ge
 !@
 
 @![javascript]
-```js
+```javascript
 const numOfCustomPresetsAvailable = sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getNumCustomPresetsAvailable();
 ```
 !@
@@ -422,7 +418,7 @@ sdlManager.getScreenManager().addButtonListener(ButtonName.PRESET_2, onButtonLis
 !@
 
 @![javascript]
-```js
+```javascript
 function onButtonListener (buttonName, onButton) {
     if (onButton instanceof SDL.rpc.messages.OnButtonPress) {
         switch (onButton.getButtonPressMode()) {
@@ -513,7 +509,7 @@ sdlManager.getScreenManager().addButtonListener(ButtonName.NAV_PAN_UP, new OnBut
 !@
 
 @![javascript]
-```js
+```javascript
 await sdlManager.getScreenManager().addButtonListener(SDL.rpc.enums.ButtonName.NAV_PAN_UP, function (buttonName, onButton) {
     if (onButton instanceof SDL.rpc.messages.OnButtonPress) {
         switch (onButton.getButtonPressMode()) {
