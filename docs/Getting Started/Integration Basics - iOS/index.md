@@ -289,7 +289,7 @@ A lock screen is used to prevent the user from interacting with the app on the s
 
 The SDL SDK can take care of the lock screen implementation for you, automatically using your app logo and the connected vehicle logo. If you do not want to use the default lock screen, you can implement your own custom lock screen.
 
-For more information, please refer to the [Adding the Lock Screen](Getting Started/Adding the Lock Screen) section, for this guide we will be using `SDLLockScreenConfiguration`'s basic `enabledConfiguration`.
+For more information, please refer to the [Adding the Lock Screen](Getting Started/Adding the Lock Screen) section; for this guide we will be using `SDLLockScreenConfiguration`'s basic `enabledConfiguration`.
 
 ##### Objective-C
 ```objc
