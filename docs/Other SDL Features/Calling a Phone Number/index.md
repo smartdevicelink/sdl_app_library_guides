@@ -59,7 +59,7 @@ const listenerId = sdlManager.getPermissionManager().addListener([new SDL.manage
     }
 
     // Your app has permission to send the `DialNumber` request for its current HMI level
-})
+});
 ```
 !@
 
