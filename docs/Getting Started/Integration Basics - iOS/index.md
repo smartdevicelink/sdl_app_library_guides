@@ -192,7 +192,7 @@ let lifecycleConfiguration = SDLLifecycleConfiguration(appName: "<#App Name#>", 
 ```
 
 !!! NOTE
-If you are connecting your app to an emulator using a TCP connection, the IP address is your computer or virtual machine’s IP address, and the port number is usually 12345.
+If you are connecting your app to an emulator using a TCP connection, the IP address is your computer or virtual machine’s IP address, and the port number is usually 12345. If you are connecting to [Manticore](https://smartdevicelink.com/resources/manticore/), the Manticore UI will give you your IP / Port to connect to.
 !!!
 
 ### 2. Short App Name (optional)
