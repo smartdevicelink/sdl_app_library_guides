@@ -115,7 +115,6 @@ The `SDLManager` is the main class of SmartDeviceLink. It will handle setting up
 ##### Objective-C
 ```objc
 #import "ProxyManager.h"
-#import "SmartDeviceLink.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
