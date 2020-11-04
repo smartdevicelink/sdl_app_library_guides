@@ -14,12 +14,11 @@ Like the lifecycle of the video stream, the lifecycle of the audio stream is mai
 !@
 
 ### Audio Stream Manager
-@![iOS]
-The `SDLAudioStreamManager` will help you to do on-the-fly transcoding and streaming of your files in mp3 or other formats, or prepare raw PCM data to be queued and played.
-!@
+The @![iOS]`SDLAudioStreamManager`!@@![android]`AudioStreamManager`!@ will help you to do on-the-fly transcoding and streaming of your files in mp3 or other formats, or prepare raw PCM data to be queued and played.
 
 @![android]
-To stream audio, we call `sdlManager.getAudioStreamManager().start()` which will start the manager. When that callback returns successful, you call `sdlManager.getAudioStreamManager().startAudioStream()`. When the callback for that is successful, you can push the audio source using `sdlManager.getAudioStreamManager().pushResource()`. Below is an example of playing an `mp3` file that we have in our resource directory:
+### Starting the Audio Manager 
+To stream audio, we call `sdlManager.getAudioStreamManager().start()` which will start the manager. When that callback returns successful, you call `sdlManager.getAudioStreamManager().startAudioStream()`. ONce this callback is successful you can push your audio source to the `AudioStreamManager`.
 
 ```java
 if (sdlManager.getAudioStreamManager() != null) {
@@ -32,16 +31,7 @@ if (sdlManager.getAudioStreamManager() != null) {
                     @Override
                     public void onComplete(boolean success) {
                         if (success) {
-                            sdlManager.getAudioStreamManager().pushResource(R.raw.exampleMp3, new CompletionListener() {
-                                @Override
-                                public void onComplete(boolean success) {
-                                    if (success) {
-                                        DebugTool.logInfo(TAG, "Audio file played successfully!");
-                                    } else {
-                                        DebugTool.logInfo(TAG, "Audio file failed to play!");
-                                    }
-                                }
-                            });
+                            // Push Audio Source
                         } else {
                             DebugTool.logInfo(TAG, "Audio stream failed to start!");
                         }
@@ -72,9 +62,8 @@ sdlManager.streamManager?.audioManager.playNextWhenReady()
 !@
 
 @![android]
-You can also send an Audio Source Uri to the `AudioStreamManager` to be played. To use it, replace the `pushResource` call in the example above to the `pushAudioSource` call shown below:
-
 ```java
+//Push from Uri Audio Source
 sdlManager.getAudioStreamManager().pushAudioSource(audioSourceUri, new CompletionListener() {
     @Override
     public void onComplete(boolean success) {
@@ -82,6 +71,18 @@ sdlManager.getAudioStreamManager().pushAudioSource(audioSourceUri, new Completio
             DebugTool.logInfo(TAG, "Audio Uri played successfully!");
         } else {
             DebugTool.logInfo(TAG, "Audio Uri failed to play!");
+        }
+    }
+});
+
+//Push from Raw Audio Source
+sdlManager.getAudioStreamManager().pushResource(R.raw.exampleMp3, new CompletionListener() {
+    @Override
+    public void onComplete(boolean success) {
+        if (success) {
+            DebugTool.logInfo(TAG, "Audio file played successfully!");
+        } else {
+            DebugTool.logInfo(TAG, "Audio file failed to play!");
         }
     }
 });
@@ -104,9 +105,8 @@ sdlManager.streamManager?.audioManager.playNextWhenReady()
 !@
 
 @![android]
-You can also send `ByteBuffer`s to the `AudioStreamManager` to be played. To use it, replace the `pushResource` call in the example above to the `pushBuffer` call shown below:
-
 ```java
+//Push from ByteBuffer Audio Source
 sdlManager.getAudioStreamManager().pushBuffer(byteBuffer, new CompletionListener() {
     @Override
     public void onComplete(boolean success) {
