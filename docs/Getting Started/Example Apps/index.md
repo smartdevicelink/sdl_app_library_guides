@@ -115,7 +115,7 @@ First, make sure you download or clone the latest release from [GitHub](https://
 !@
 
 @![javaEE]
-Make sure that you follow the steps in [Installation](Getting Started/Installation) and [Integration Basics](Getting Started/Integration Basics) sections to create a new JavaEE SDL project before continuing this section.
+Make sure that you follow the steps in [Installation](Getting Started/Installation) and [Integration Basics](Getting Started/Integration Basics - Java) sections to create a new JavaEE SDL project before continuing this section.
 
 !!! NOTE
 The [Hello Sdl JavaEE](https://github.com/smartdevicelink/sdl_java_suite/tree/master/hello_sdl_java_ee) has some code commented out and cannot be compiled. The project just includes samples for `SdlService` and `Main` classes that can be copied to the new JavaEE project that you create by following the steps in [Installation page](Getting Started/Installation).
@@ -139,7 +139,7 @@ This workaround for older versions of Core is also necessary for WebEngine apps.
 ### Connecting as a WebSocket Server
 SDL Core acts as the WebSocket client in this case. The information about your app and how Core should connect to it must go into the policy table. Check the [Connecting to an Infotainment System](Getting Started/Connecting to an Infotainment System) guide's **Configuring the Connection** section for how to set up your policy table to point to your app
 
-The following snippet is a truncated version of what is needed to set up the WebSocket server to accept and pass connections to the SDL library. This example uses the `ws` npm module for WebSocket connections. Refer to [the integration basics guide](Getting Started/Integration Basics) for the full integration setup.
+The following snippet is a truncated version of what is needed to set up the WebSocket server to accept and pass connections to the SDL library. This example uses the `ws` npm module for WebSocket connections. Refer to [the integration basics guide](Getting Started/Integration Basics - JS) for the full integration setup.
 
 ```js
 const SDL = require('./SDL.min.js');
