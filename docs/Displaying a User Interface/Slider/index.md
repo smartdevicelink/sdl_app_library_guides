@@ -54,7 +54,7 @@ sdlSlider.numTicks = @(5);
 ##### Swift
 ```swift
 // Must be a number between 2 and 26
-sdlSlider.numTicks = 5
+sdlSlider.numTicks = NSNumber(5)
 ```
 !@
 
@@ -83,7 +83,7 @@ sdlSlider.position = @(1);
 ##### Swift
 ```swift
 // Must be a number between 1 and 26
-sdlSlider.position = 1
+sdlSlider.position = NSNumber(1)
 ```
 !@
 
@@ -200,7 +200,7 @@ sdlSlider.cancelID = @(45);
 ```
 ##### Swift
 ```swift
-sdlSlider.cancelID = 45
+sdlSlider.cancelID = NSNumber(45)
 ```
 !@
 
@@ -220,7 +220,7 @@ slider.setCancelID(45);
 @![iOS]
 ##### Objective-C
 ```objc
-[manager sendRequest:sdlSlider withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+[self.sdlManager sendRequest:sdlSlider withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if (!response || !response.success.boolValue) {
         SDLLogE(@"Error getting the SDLSlider response");
         return;
@@ -237,7 +237,7 @@ slider.setCancelID(45);
 ```swift
 manager.send(request: sdlSlider, responseHandler: { (req, res, err) in
     // Create a SDLSlider response object from the handler response
-    guard let response = res as? SDLSliderResponse, response.success.boolValue == true, let position = response.sliderPosition.intValue else { return }
+    guard let response = res as? SDLSliderResponse, response.success.boolValue == true, let position = response.sliderPosition?.intValue else { return }
 
     <#Use the slider position#>
 })
@@ -249,13 +249,10 @@ manager.send(request: sdlSlider, responseHandler: { (req, res, err) in
 slider.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
-        SliderResponse sliderResponse = (SliderResponse) response;
-        Log.i(TAG, "Slider Position Set: " + sliderResponse.getSliderPosition());
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info) {
-        Log.e(TAG, "onError: " + resultCode + " | Info: " + info);
+        if (response.getSuccess()) {
+            SliderResponse sliderResponse = (SliderResponse) response;
+            DebugTool.logInfo(TAG, "Slider Position Set: " + sliderResponse.getSliderPosition());
+        }
     }
 });
 sdlManager.sendRPC(slider);
@@ -323,13 +320,8 @@ cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
         if (response.getSuccess()){
-            Log.i(TAG, "Slider was dismissed successfully");
+            DebugTool.logInfo(TAG, "Slider was dismissed successfully");
         }
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info) {
-        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
     }
 });
 sdlManager.sendRPC(cancelInteraction);
@@ -395,13 +387,8 @@ cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
         if (response.getSuccess()){
-            Log.i(TAG, "Slider was dismissed successfully");
+            DebugTool.logInfo(TAG, "Slider was dismissed successfully");
         }
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info) {
-        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
     }
 });
 sdlManager.sendRPC(cancelInteraction);

@@ -44,7 +44,7 @@ sdlManager.start { [weak self] (success, error) in
     }
 
     let mainWindowCapability = self.sdlManager.systemCapabilityManager.defaultMainWindowCapability
-    let graphicsSupported = (mainWindowCapability.count > 0)
+    let graphicsSupported = ((mainWindowCapability?.imageFields?.count ?? 0) > 0)
 }
 ```
 !@
@@ -105,12 +105,12 @@ sdlManager.fileManager.upload(artwork: artwork) { (success, artworkName, bytesAv
 
 @![android,javaSE,javaEE]
 ```java
-SdlArtwork artwork = new SdlArtwork("image_name", FileType.GRAPHIC_PNG, <image byte[]>, false);
+SdlArtwork artwork = new SdlArtwork("image_name", FileType.GRAPHIC_PNG, image, false);
 sdlManager.getFileManager().uploadFile(artwork, new CompletionListener() {
     @Override
     public void onComplete(boolean success) {
         if (success){
-            <#Image Upload Successful#>
+            // Image Upload Successful
         }
     }
 });

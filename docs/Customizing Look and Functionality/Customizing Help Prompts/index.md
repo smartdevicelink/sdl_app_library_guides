@@ -54,21 +54,16 @@ SetGlobalProperties setGlobalProperties = new SetGlobalProperties();
 setGlobalProperties.setVrHelpTitle("What Can I Say?");
 
 VrHelpItem item1 = new VrHelpItem("Show Artists", 1);
-item1.setImage(<#image#>); // a previously uploaded image or null
+item1.setImage(image); // a previously uploaded image or null
 
 VrHelpItem item2 = new VrHelpItem("Show Albums", 2);
-item2.setImage(<#image#>); // a previously uploaded image or null
+item2.setImage(image); // a previously uploaded image or null
 
 setGlobalProperties.setVrHelp(Arrays.asList(item1, item2));
 setGlobalProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
         // The help menu is updated
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        <#Handle Error#>
     }
 });
 sdlManager.sendRPC(setGlobalProperties);
@@ -132,16 +127,15 @@ sdlManager.send(request: setGlobals) { (request, response, error) in
 @![android, javaSE, javaEE]
 ```java
 SetGlobalProperties setGlobalProperties = new SetGlobalProperties();
-setGlobalProperties.setHelpPrompt(TTSChunkFactory.createSimpleTTSChunks("Your custom help prompt"));
+setGlobalProperties.setHelpPrompt(Collections.singletonList(new TTSChunk("Your custom help prompt", SpeechCapabilities.TEXT)));
 setGlobalProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
-        // The help prompt is updated
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        <#Handle Error#>
+        if (response.getSuccess()) {
+            // The help prompt is updated
+        } else {
+            // Handle Error
+        }
     }
 });
 sdlManager.sendRPC(setGlobalProperties);
@@ -198,16 +192,15 @@ sdlManager.send(request: setGlobals) { (request, response, error) in
 @![android, javaSE, javaEE]
 ```java
 SetGlobalProperties setGlobalProperties = new SetGlobalProperties();
-setGlobalProperties.setTimeoutPrompt(TTSChunkFactory.createSimpleTTSChunks("Your custom help prompt"));
+setGlobalProperties.setTimeoutPrompt(Collections.singletonList(new TTSChunk("Your custom help prompt", SpeechCapabilities.TEXT)));
 setGlobalProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
-        // The timeout prompt is updated
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        <#Handle Error#>
+        if (response.getSuccess()) {
+            // The timeout prompt is updated
+        } else {
+            // Handle Error
+        }
     }
 });
 sdlManager.sendRPC(setGlobalProperties);
@@ -240,7 +233,6 @@ SDLResetGlobalProperties *resetGlobals = [[SDLResetGlobalProperties alloc] initW
 // Reset the menu icon and title
 SDLResetGlobalProperties *resetGlobals = [[SDLResetGlobalProperties alloc] initWithProperties:@[SDLGlobalPropertyMenuIcon, SDLGlobalPropertyMenuName]];
 
-
 // Reset the spoken prompts
 SDLResetGlobalProperties *resetGlobals = [[SDLResetGlobalProperties alloc] initWithProperties:@[SDLGlobalPropertyHelpPrompt, SDLGlobalPropertyTimeoutPrompt]];
 
@@ -263,7 +255,7 @@ let resetGlobals = SDLResetGlobalProperties(properties: [.menuIcon, .menuName])
 
 // Reset the spoken prompts
 let resetGlobals = SDLResetGlobalProperties(properties: [.helpPrompt, .timeoutPrompt])
-sdlManager.send(request: resetGlobals) { (req, res, err) in
+sdlManager.send(request: resetGlobals) { (request, response, error) in
     if let error = error {
         // Something went wrong
     }
@@ -288,12 +280,11 @@ ResetGlobalProperties resetGlobalProperties = new ResetGlobalProperties(Arrays.a
 resetGlobalProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
-        // The global properties are reset
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        <#Handle Error#>
+        if (response.getSuccess()) {
+            // The global properties are reset
+        } else {
+            // Handle Error
+        }
     }
 });
 sdlManager.sendRPC(resetGlobalProperties);

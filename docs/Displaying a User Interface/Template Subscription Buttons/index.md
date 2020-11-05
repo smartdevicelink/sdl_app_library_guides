@@ -47,7 +47,7 @@ Once you have subscribed to the button with a block handler, the handler will be
 
 ##### Objective-C
 ```objc
-NSObject *observer = [self.sdlManager.screenManager subscribeButton:SDLButtonNamePlayPause withUpdateHandler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent, NSError * _Nullable error) {
+id<NSObject> observer = [self.sdlManager.screenManager subscribeButton:SDLButtonNamePlayPause withUpdateHandler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent, NSError * _Nullable error) {
     if (error != nil) {
         // There was an error subscribing to the button
         return;
@@ -120,7 +120,7 @@ sdlManager.screenManager.subscribeButton(.playPause, withObserver: self, selecto
         // Contains information about whether the button was short or long pressed
     }
 
-    if let buttonPress = buttonPress {
+    if let buttonEvent = buttonEvent {
         // Contains information about when the button is depressed or released
     }
 }
@@ -193,7 +193,7 @@ sdlManager.getScreenManager().removeButtonListener(ButtonName.PLAY_PAUSE, playPa
 !@
 
 ## Media Buttons
-The play/pause, seek left, seek right, tune up, and tune down subscribe buttons can only be used if the app type is `MEDIA`. Depending on the OEM, the subscribed button could show up as an on-screen button in the `MEDIA` template, work as a physical button on the car console or steering wheel, or both. For example, Ford's SYNC 3 HMI will add the play/pause, seek right, and seek left soft buttons to the media template when you subscribe to those buttons. However, those buttons will also trigger when the user uses the seek left / seek right buttons on the steering wheel.
+The play/pause, seek left, seek right, tune up, and tune down subscribe buttons can only be used if the app type is `MEDIA`. Depending on the OEM, the subscribed button could show up as an on-screen button in the `MEDIA` template, work as a physical button on the car console or steering wheel, or both. For example, Ford's SYNC® 3 HMI will add the play/pause, seek right, and seek left soft buttons to the media template when you subscribe to those buttons. However, those buttons will also trigger when the user uses the seek left / seek right buttons on the steering wheel.
 
 If desired, you can toggle the play/pause button image between a play, stop, or pause icon by updating the audio streaming state as described in the [Media Clock](Displaying a User Interface/Media Clock#pausing-resuming) guide. 
 
@@ -232,9 +232,11 @@ sdlManager.screenManager.subscribeButton(.playPause) { (buttonPress, buttonEvent
 
     switch buttonPress.buttonPressMode {
     case .short:
-        // The user short pressed the button
+        <#The user short pressed the button#>
     case .long:
-        // The user long pressed the button
+        <#The user long pressed the button#>
+    default:
+        <#code#>
     }
 }
 ```
@@ -286,7 +288,7 @@ sdlManager.sendRpc(subscribeButtonRequest);
 !@
 
 ## Preset Buttons
-All app types can subscribe to preset buttons. Depending on the OEM, the preset buttons may be added to the template when subscription occurs. Preset buttons can also be physical buttons on the console that will notify the subscriber when selected. An OEM may support only template buttons or only hard buttons or they may support both template and hard buttons. The screenshot below shows how the Ford SYNC 3 HMI displays the preset buttons on the HMI. 
+All app types can subscribe to preset buttons. Depending on the OEM, the preset buttons may be added to the template when subscription occurs. Preset buttons can also be physical buttons on the console that will notify the subscriber when selected. An OEM may support only template buttons or only hard buttons or they may support both template and hard buttons. The screenshot below shows how the Ford SYNC® 3 HMI displays the preset buttons on the HMI. 
 
 ![Ford - Preset Soft Button Menu Button](assets/ford_sync_presetMenu.bmp)
 ![Ford - Preset Soft Buttons List](assets/ford_sync_presetOptions.png)
@@ -354,9 +356,11 @@ sdlManager.screenManager.subscribeButton(.preset2, withObserver: self, selector:
 
     switch buttonName {
     case .preset1:
-        // The user short or long pressed the preset 1 button
+        <#The user short or long pressed the preset 1 button#>
     case .preset2:
-        // The user short or long pressed the preset 2 button
+        <#The user short or long pressed the preset 2 button#>
+    default:
+        <#The user pressed another preset button#>
     }
 }
 ```
@@ -450,9 +454,9 @@ sdlManager.screenManager.subscribeButton(.navPanUp) { (buttonPress, buttonEvent,
 
     switch buttonPress.buttonPressMode {
     case .short:
-        // The user short pressed the button
+        <#The user short pressed the button#>
     case .long:
-        // The user long pressed the button
+        <#The user long pressed the button#>
     }
 }
 ```

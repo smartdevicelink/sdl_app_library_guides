@@ -8,12 +8,12 @@ When setting up your `SDLConfiguration` you can pass a different log configurati
 
 ##### Objective-C
 ```objc
-SDLConfiguration* configuration = [SDLConfiguration configurationWithLifecycle:lifecycleConfiguration lockScreen:[SDLLockScreenConfiguration enabledConfiguration] logging:[SDLLogConfiguration debugConfiguration] fileManager:[SDLFileManagerConfiguration defaultConfiguration]];
+SDLConfiguration* configuration = [[SDLConfiguration alloc] initWithLifecycle:lifecycleConfiguration lockScreen:[SDLLockScreenConfiguration enabledConfiguration] logging:[SDLLogConfiguration debugConfiguration] fileManager:nil encryption:nil];
 ```
 
 ##### Swift
 ```swift
-let configuration = SDLConfiguration(lifecycle: lifecycleConfiguration, lockScreen: .enabled(), logging: .debug(), fileManager: .default())
+let configuration = SDLConfiguration(lifecycle: lifecycleConfiguration, lockScreen: .enabled(), logging: .debug(), fileManager: nil, encryption: nil)
 ```
 
 ### Format Type
@@ -53,13 +53,13 @@ Although the `default` log level is defined in the SDLLogLevel enum, it should n
 !!!
 
 ### Targets
-Targets are the output locations where the log will appear. By default, in both default and debug configurations, only the Apple System Logger target (iOS 9 and below) or OSLog (iOS 10+) will be enabled.
+Targets are the output locations where the log will appear. By default only the OSLog log target will be enabled in both default and debug configurations. You may configure additional pre-built targets or create your own targets and add them.
 
-#### Apple System Log Target
-The Apple System Logger target, `SDLLogTargetAppleSystemLogger`, is the default log target for both default and debug configurations on devices running iOS 9 or older. This will log to the Xcode console and the device console.
+#### Apple System Log Target (Deprecated)
+The Apple System Logger target, `SDLLogTargetAppleSystemLogger` is now deprecated in favor of the OS Log target which will do the same thing. It will be removed in a future release. This target will log to the Xcode console and the device console.
 
 #### OS Log Target
-The OSLog target, `SDLLogTargetOSLog`, is the default log target in both default and debug configurations for devices running iOS 10 or newer. For more information on this logging system see [Apple's documentation](https://developer.apple.com/reference/os/logging). SDL's OSLog target will take advantage of subsystems and levels to allow you powerful runtime filtering capabilities through the MacOS Console app with a connected device.
+The OSLog target, `SDLLogTargetOSLog`, is the default log target in both default and debug configurations. For more information on this logging system see [Apple's documentation](https://developer.apple.com/reference/os/logging). SDL's OSLog target will take advantage of subsystems and levels to allow you powerful runtime filtering capabilities through the MacOS Console app with a connected device.
 
 #### File Target
 The File target, `SDLLogTargetFile`, allows you to log messages to a rolling set of files which will be stored on the device, specifically in the `Documents/smartdevicelink/log/` folder. The file names will be timestamped with the start time.
@@ -153,8 +153,11 @@ target '<#Your Project Name#>' do
 end
 ```
 
+#### Swift Package Manager
+If the SDL iOS library was installed using [Swift Package Manager](https://swift.org/package-manager/), install the `SmartDeviceLinkSwift` target to your SPM installation. Then, where you want to log, `import SmartDeviceLinkSwift`.
+
 #### Logging in Swift
-After the submodule has been installed, you can use the `SDLLog` functions in your project.
+Once you have access to the SmartDeviceLinkSwift enhancements, you can use the `SDLLog` functions in your project.
 
 ```swift
 SDLLog.v("This is a verbose log")
@@ -195,22 +198,22 @@ The SDL debug tool can be used to log messages with different log levels. The lo
 
 To log an info message:
 ```java
-DebugTool.logInfo("info message goes here");
+DebugTool.logInfo(TAG, "info message goes here");
 ```
 
 To log a warning message:
 ```java
-DebugTool.logWarning("warning message goes here");
+DebugTool.logWarning(TAG, "warning message goes here");
 ```
 
 To log an error message:
 ```java
-DebugTool.logError("error message goes here");
+DebugTool.logError(TAG, "error message goes here");
 ```
 
 If you want to log error message with exception, you can add the exception as a second parameter to the `logError` method:
 ```java
-DebugTool.logError("error message goes here", new SdlException("Sdl connection failed", SdlExceptionCause.SDL_CONNECTION_FAILED));
+DebugTool.logError(TAG, "error message goes here", new SdlException("Sdl connection failed", SdlExceptionCause.SDL_CONNECTION_FAILED));
 ```
 !@
 

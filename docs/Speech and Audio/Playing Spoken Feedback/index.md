@@ -93,7 +93,7 @@ SDLSpeak *speak = [[SDLSpeak alloc] initWithTTSChunks:sapiPhonemesTTSChunks];
 ##### Swift
 ```swift
 let sapiPhonemesTTSChunks = SDLTTSChunk.sapiChunks(from: "h eh - l ow 1")
-let speech = SDLSpeak(ttsChunks: sapiPhonemesTTSChunk)
+let speech = SDLSpeak(ttsChunks: sapiPhonemesTTSChunks)
 ```
 !@
 
@@ -139,7 +139,7 @@ const speak = new SDL.rpc.messages.Speak([chunk]);
 ```swift
 sdlManager.send(request: speech) { (request, response, error) in
     guard let response = response as? SDLSpeakResponse else { return }
-    guard response?.success.boolValue == true else {
+    guard response.success.boolValue == true else {
         switch response.resultCode {
         case .disallowed:
             <#The app does not have permission to use the speech request#>
@@ -167,25 +167,20 @@ speak.setOnRPCResponseListener(new OnRPCResponseListener() {
         if (!speakResponse.getSuccess()){
             switch (speakResponse.getResultCode()){
                 case DISALLOWED:
-                    Log.i(TAG, "The app does not have permission to use the speech request");
+                    DebugTool.logInfo(TAG, "The app does not have permission to use the speech request");
                     break;
                 case REJECTED:
-                    Log.i(TAG, "The request was rejected because a higher priority request is in progress");
+                    DebugTool.logInfo(TAG, "The request was rejected because a higher priority request is in progress");
                     break;
                 case ABORTED:
-                    Log.i(TAG, "The request was aborted by another higher priority request");
+                    DebugTool.logInfo(TAG, "The request was aborted by another higher priority request");
                     break;
                 default:
-                    Log.i(TAG, "Some other error occurred");
+                    DebugTool.logInfo(TAG, "Some other error occurred");
             }
             return;
         }
-        Log.i(TAG, "Speech was successfully spoken");
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info) {
-        Log.i(TAG, "onError: " + info);
+        DebugTool.logInfo(TAG, "Speech was successfully spoken");
     }
 });
 sdlManager.sendRPC(speak);

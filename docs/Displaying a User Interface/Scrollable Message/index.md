@@ -23,7 +23,7 @@ UInt16 scrollableMessageTimeout = 50000;
 
 // Create SoftButtons
 SDLSoftButton *scrollableSoftButton = [[SDLSoftButton alloc] initWithType:SDLSoftButtonTypeText text:@"Button 1" image:nil highlighted:NO buttonId:111 systemAction:nil handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
-    if (buttonPress == nil) { return;
+    if (buttonPress == nil) { return; }
     // Create a custom action for the selected button
 }];
 SDLSoftButton *scrollableSoftButton2 = [[SDLSoftButton alloc] initWithType:SDLSoftButtonTypeText text:@"Button 2" image:nil highlighted:NO buttonId:222 systemAction:nil handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
@@ -38,7 +38,7 @@ SDLSoftButton *scrollableSoftButton2 = [[SDLSoftButton alloc] initWithType:SDLSo
 SDLScrollableMessage *scrollableMessage = [[SDLScrollableMessage alloc] initWithMessage:scrollableMessageString timeout:scrollableMessageTimeout softButtons:[softButtons copy] cancelID:<#UInt32#>];
 
 // Send the scrollable message
-[sdlManager sendRequest:scrollableMessage];
+[self.sdlManager sendRequest:scrollableMessage];
 ```
 
 ##### Swift
@@ -98,13 +98,13 @@ softButton2.setText("Button 2");
 List<SoftButton> softButtonList = Arrays.asList(softButton1, softButton2);
 
 // Create ScrollableMessage Object
-ScrollableMessage scrollableMessage = new ScrollableMessage();
-scrollableMessage.setScrollableMessageBody(scrollableMessageText);
-scrollableMessage.setTimeout(50000);
-scrollableMessage.setSoftButtons(softButtonList);
+ScrollableMessage scrollableMessage = new ScrollableMessage()
+    .setScrollableMessageBody(scrollableMessageText)
+    .setTimeout(50000)
+    .setSoftButtons(softButtonList);
 
 // Set cancelId
-scrollableMessage.setCancelID(<#Integer>);
+scrollableMessage.setCancelID(cancelId);
 
 // Send the scrollable message
 sdlManager.sendRPC(scrollableMessage);
@@ -119,10 +119,10 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
 		OnButtonPress onButtonPress = (OnButtonPress) notification;
 		switch (onButtonPress.getCustomButtonID()){
 			case 0:
-				Log.i(TAG, "Button 1 Pressed");
+				DebugTool.logInfo(TAG, "Button 1 Pressed");
 				break;
 			case 1:
-				Log.i(TAG, "Button 2 Pressed");
+				DebugTool.logInfo(TAG, "Button 2 Pressed");
 				break;
 		}
 	}
@@ -225,13 +225,8 @@ cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
         if (response.getSuccess()){
-            Log.i(TAG, "Scrollable message was dismissed successfully");
+            DebugTool.logInfo(TAG, "Scrollable message was dismissed successfully");
         }
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info) {
-        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
     }
 });
 sdlManager.sendRPC(cancelInteraction);
@@ -297,13 +292,8 @@ cancelInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
         if (response.getSuccess()){
-            Log.i(TAG, "Scrollable message was dismissed successfully");
+            DebugTool.logInfo(TAG, "Scrollable message was dismissed successfully");
         }
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info) {
-        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
     }
 });
 sdlManager.sendRPC(cancelInteraction);

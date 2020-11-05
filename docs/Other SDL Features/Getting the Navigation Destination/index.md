@@ -7,17 +7,20 @@ Both the @![iOS]`SDLGetWayPoints`!@@![android,javaSE,javaEE,javascript]`GetWayPo
 @![iOS]
 ##### Objective-C
 ```objc
-id observerId = [self.sdlManager.permissionManager addObserverForRPCs:@[SDLRPCFunctionNameGetWayPoints, SDLRPCFunctionNameSubscribeWayPoints] groupType:SDLPermissionGroupTypeAny withHandler:^(NSDictionary<SDLPermissionRPCName,NSNumber *> * _Nonnull allChanges, SDLPermissionGroupStatus groupStatus) {
+SDLPermissionElement *getWayPoints = [[SDLPermissionElement alloc] initWithRPCName:SDLRPCFunctionNameGetWayPoints parameterPermissions:nil];
+SDLPermissionElement *subscribeWayPoints = [[SDLPermissionElement alloc] initWithRPCName:SDLRPCFunctionNameSubscribeWayPoints parameterPermissions:nil];
+
+id observerId = [self.sdlManager.permissionManager subscribeToRPCPermissions:@[getWayPoints, subscribeWayPoints] groupType:SDLPermissionGroupTypeAny withHandler:^(NSDictionary<SDLRPCFunctionName, SDLRPCPermissionStatus *> * _Nonnull updatedPermissionStatuses, SDLPermissionGroupStatus status) {
     // This handler will be called whenever the permission status changes
-    BOOL getWayPointPermissionStatus = allChanges[SDLRPCFunctionNameGetWayPoints].boolValue;
-    if (getWayPointPermissionStatus.boolValue) {
+    BOOL getWayPointPermissionStatus = updatedPermissionStatuses[SDLRPCFunctionNameGetWayPoints];
+    if (getWayPointPermissionStatus) {
         // Your app has permission to send the `SDLGetWayPoints` request for its current HMI level
     } else {
         // Your app does not have permission to send the `SDLGetWayPoints` request for its current HMI level
     }
 
-    BOOL subscribeWayPointsPermissionStatus = allChanges[SDLRPCFunctionNameSubscribeWayPoints].boolValue;
-    if (subscribeWayPointsPermissionStatus.boolValue) {
+    BOOL subscribeWayPointsPermissionStatus = updatedPermissionStatuses[SDLRPCFunctionNameSubscribeWayPoints];
+    if (subscribeWayPointsPermissionStatus) {
         // Your app has permission to send the `SDLSubscribeWayPoints` request for its current HMI level
     } else {
         // Your app does not have permission to send the `SDLSubscribeWayPoints` request for its current HMI level
@@ -27,15 +30,18 @@ id observerId = [self.sdlManager.permissionManager addObserverForRPCs:@[SDLRPCFu
 
 ##### Swift
 ```swift
-let observerId = sdlManager.permissionManager.addObserver(forRPCs: [SDLRPCFunctionName.getWayPoints.rawValue.rawValue, SDLRPCFunctionName.subscribeWayPoints.rawValue.rawValue], groupType: .any, withHandler: { (allChanges, groupStatus) in
+let getWayPointsPermissionElement = SDLPermissionElement(rpcName: .getWayPoints, parameterPermissions: nil)
+let subscribeWayPointsPermissionElement = SDLPermissionElement(rpcName: .subscribeWayPoints, parameterPermissions: nil)
+
+let observerId = sdlManager.permissionManager.subscribe(toRPCPermissions: [getWayPointsPermissionElement, subscribeWayPointsPermissionElement], groupType: .any, withHandler: { (allChanges, groupStatus) in
     // This handler will be called whenever the permission status changes
-    if let getWayPointPermissionStatus = allChanges[SDLRPCFunctionName.getWayPoints.rawValue.rawValue], getWayPointPermissionStatus.boolValue == true {
+    if let getWayPointPermissionStatus = allChanges[.getWayPoints], getWayPointPermissionStatus.isRPCAllowed == true {
         // Your app has permission to send the `SDLGetWayPoints` request for its current HMI level
     } else {
         // Your app does not have permission to send the `SDLGetWayPoints` request for its current HMI level
     }
 
-    if let subscribeWayPointsPermissionStatus = allChanges[SDLRPCFunctionName.subscribeWayPoints.rawValue.rawValue], subscribeWayPointsPermissionStatus.boolValue == true {
+    if let subscribeWayPointsPermissionStatus = allChanges[.subscribeWayPoints], subscribeWayPointsPermissionStatus.isRPCAllowed == true {
         // Your app has permission to send the `SubscribeWayPoints` request for its current HMI level
     } else {
         // Your app does not have permission to send the `SubscribeWayPoints` request for its current HMI level
@@ -315,11 +321,6 @@ subscribeWayPoints.setOnRPCResponseListener(new OnRPCResponseListener() {
             // Handle the errors
         }
     }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info) {
-        // Handle the errors
-    }
 });
 
 sdlManager.sendRPC(subscribeWayPoints);
@@ -406,11 +407,6 @@ unsubscribeWayPoints.setOnRPCResponseListener(new OnRPCResponseListener() {
             // Handle the errors
         }
     }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info) {
-        // Handle the errors
-    }
 });
 
 sdlManager.sendRPC(unsubscribeWayPoints);
@@ -488,11 +484,6 @@ getWayPoints.setOnRPCResponseListener(new OnRPCResponseListener() {
         } else {
             // Handle the errors
         }
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info) {
-        // Handle the errors
     }
 });
 

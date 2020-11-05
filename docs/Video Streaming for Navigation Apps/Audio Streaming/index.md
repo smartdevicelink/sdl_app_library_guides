@@ -37,7 +37,7 @@ sdlManager.streamManager?.audioManager.playNextWhenReady()
 
 ##### Swift
 ```swift
-sdlManager.streamManager?.audioManager.push(withData: audioData)
+sdlManager.streamManager?.audioManager.push(with: audioData)
 sdlManager.streamManager?.audioManager.playNextWhenReady()
 ```
 
@@ -118,7 +118,7 @@ To stream audio, we call `sdlManager.getAudioStreamManager().start()` which will
 
 ```java
 if (sdlManager.getAudioStreamManager() != null) {
-    Log.i(TAG, "Trying to start audio streaming");
+    DebugTool.logInfo(TAG, "Trying to start audio streaming");
     sdlManager.getAudioStreamManager().start(new CompletionListener() {
         @Override
         public void onComplete(boolean success) {
@@ -131,19 +131,19 @@ if (sdlManager.getAudioStreamManager() != null) {
                                 @Override
                                 public void onComplete(boolean success) {
                                     if (success) {
-                                        Log.i(TAG, "Audio file played successfully!");
+                                        DebugTool.logInfo(TAG, "Audio file played successfully!");
                                     } else {
-                                        Log.i(TAG, "Audio file failed to play!");
+                                        DebugTool.logInfo(TAG, "Audio file failed to play!");
                                     }
                                 }
                             });
                         } else {
-                            Log.d(TAG, "Audio stream failed to start!");
+                            DebugTool.logInfo(TAG, "Audio stream failed to start!");
                         }
                     }
                 });
             } else {
-                Log.i(TAG, "Failed to start audio streaming manager");
+                DebugTool.logInfo(TAG, "Failed to start audio streaming manager");
             }
         }
     });
@@ -159,9 +159,9 @@ sdlManager.getAudioStreamManager().pushBuffer(byteBuffer, new CompletionListener
     @Override
     public void onComplete(boolean success) {
         if (success) {
-            Log.i(TAG, "Buffer played successfully!");
+            DebugTool.logInfo(TAG, "Buffer played successfully!");
         } else {
-            Log.i(TAG, "Buffer failed to play!");
+            DebugTool.logInfo(TAG, "Buffer failed to play!");
         }
     }
 });
