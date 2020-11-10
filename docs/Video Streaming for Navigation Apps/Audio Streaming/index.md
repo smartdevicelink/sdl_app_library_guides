@@ -22,7 +22,7 @@ To stream audio, we call `sdlManager.getAudioStreamManager().start()` which will
 
 ```java
 if (sdlManager.getAudioStreamManager() != null) {
-    DebugTool.logInfo(TAG, "Trying to start audio streaming");
+    DebugTool.logInfo(TAG, "Trying to start audio stream manager");
     sdlManager.getAudioStreamManager().start(new CompletionListener() {
         @Override
         public void onComplete(boolean success) {
