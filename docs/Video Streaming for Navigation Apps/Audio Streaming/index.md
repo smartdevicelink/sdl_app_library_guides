@@ -27,6 +27,7 @@ if (sdlManager.getAudioStreamManager() != null) {
         @Override
         public void onComplete(boolean success) {
             if (success) {
+                DebugTool.logInfo(TAG, "Trying to start the audio stream");
                 sdlManager.getAudioStreamManager().startAudioStream(false, new CompletionListener() {
                     @Override
                     public void onComplete(boolean success) {
