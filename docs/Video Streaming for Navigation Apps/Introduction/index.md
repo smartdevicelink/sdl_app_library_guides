@@ -14,7 +14,7 @@ In order to use SDL's Mobile Navigation feature, the app must have a minimum req
 !@
 
 ## Configuring a Navigation App
-The basic connection setup is similar for all apps. Please follow the [Integration Basics](Getting Started/Integration Basics) guide for more information.
+The basic connection setup is similar for all apps. Please follow the @![iOS][Integration Basics](Getting Started/Integration Basics - iOS)!@@![android,javaEE,javaSE][Integration Basics](Getting Started/Integration Basics - Java)!@ guide for more information.
 
 In order to create a navigation app an @![iOS]`appType`!@@![android,javaSE,javaEE]`appHMIType`!@ of @![iOS]`SDLAppHMITypeNavigation`!@@![android,javaSE,javaEE]`NAVIGATION`!@ must be set in the @![iOS]`SDLManager`'s `SDLLifecycleConfiguration`!@@![android,javaSE,javaEE]`SdlManager`'s `Builder`!@.
 
@@ -96,7 +96,7 @@ func hmiLevel(_ oldLevel: SDLHMILevel, didChangeToLevel newLevel: SDLHMILevel) {
 !@
 
 ## Keyboard Input
-To present a keyboard (such as for searching for navigation destinations), you should use the @![iOS]`SDLScreenManager`!@@![android]`ScreenManager`!@'s keyboard presentation feature. For more information, see the [Popup Menus and Keyboards](Displaying a User Interface/Popup Menus and Keyboards) guide.
+To present a keyboard (such as for searching for navigation destinations), you should use the @![iOS]`SDLScreenManager`!@@![android]`ScreenManager`!@'s keyboard presentation feature. For more information, see the [Popup Keyboards](Displaying a User Interface/Popup Keyboards) guide.
 
 ## Navigation Subscription Buttons
 Head units supporting RPC v6.0+ may support navigation-specific subscription buttons for the navigation template. These subscription buttons allow your user to manipulate the map using hard buttons located on car's center console or steering wheel. It is important to support these subscription buttons in order to provide your user with the expected in-car navigation user experience. This is especially true on head units that don't support touch input as there will be no other way for your user to manipulate the map. See [Template Subscription Buttons](Displaying a User Interface/Template Subscription Buttons) for a list of these navigation buttons.
@@ -158,4 +158,5 @@ sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapa
     }
 });
 ```
+!@
 !@
