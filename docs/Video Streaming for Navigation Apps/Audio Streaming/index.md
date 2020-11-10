@@ -18,7 +18,7 @@ The @![iOS]`SDLAudioStreamManager`!@@![android]`AudioStreamManager`!@ will help 
 
 @![android]
 ### Starting the Audio Manager 
-To stream audio, we call `sdlManager.getAudioStreamManager().start()` which will start the manager. When that callback returns successful, you call `sdlManager.getAudioStreamManager().startAudioStream()`. ONce this callback is successful you can push your audio source to the `AudioStreamManager`.
+To stream audio, we call `sdlManager.getAudioStreamManager().start()` which will start the manager. When that callback returns with a success, call `sdlManager.getAudioStreamManager().startAudioStream()`. Once this callback returns successfully you can send and play audio.
 
 ```java
 if (sdlManager.getAudioStreamManager() != null) {
