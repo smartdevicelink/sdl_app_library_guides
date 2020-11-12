@@ -432,7 +432,7 @@ function onButtonListener (buttonName, onButton) {
     }
 }
 
-function onError (String info) {
+function onError (info) {
     // There was an error subscribing to the button
 }
 
