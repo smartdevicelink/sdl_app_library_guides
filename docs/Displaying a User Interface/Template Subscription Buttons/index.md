@@ -421,11 +421,11 @@ sdlManager.getScreenManager().addButtonListener(ButtonName.PRESET_2, onButtonLis
 ```javascript
 function onButtonListener (buttonName, onButton) {
     if (onButton instanceof SDL.rpc.messages.OnButtonPress) {
-        switch (onButton.getButtonPressMode()) {
+        switch (buttonName) {
             case SDL.rpc.enums.ButtonName.PRESET_1:
-                // The user short pressed the button
+                // The user short or long pressed the preset 1 button
             case SDL.rpc.enums.ButtonName.PRESET_2:
-                // The user long pressed the button
+                // The user short or long pressed the preset 2 button
         }
     } else if (onButton instanceof SDL.rpc.messages.OnButtonEvent) {
         // OnButtonEvent
