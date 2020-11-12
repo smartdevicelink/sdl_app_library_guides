@@ -513,7 +513,7 @@ sdlManager.getScreenManager().addButtonListener(ButtonName.NAV_PAN_UP, new OnBut
 await sdlManager.getScreenManager().addButtonListener(SDL.rpc.enums.ButtonName.NAV_PAN_UP, function (buttonName, onButton) {
     if (onButton instanceof SDL.rpc.messages.OnButtonPress) {
         switch (onButton.getButtonPressMode()) {
-            case SDL.rpc.enums.ButtonName.PRESET_1:
+            case SDL.rpc.enums.ButtonPressMode.SHORT:
                 // The user short pressed the button
             case SDL.rpc.enums.ButtonName.PRESET_2:
                 // The user long pressed the button
