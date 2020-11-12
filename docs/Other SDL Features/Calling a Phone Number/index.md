@@ -52,8 +52,8 @@ UUID listenerId = sdlManager.getPermissionManager().addListener(Arrays.asList(ne
 
 @![javascript]
 ```js
-const listenerId = sdlManager.getPermissionManager().addListener([new SDL.manager.permission.PermissionElement(SDL.rpc.enums.FunctionID.DIAL_NUMBER, null)], SDL.manager.permission.enums.PermissionGroupType.ANY, function (allowedPermissions, permissionGroupStatus) {
-    if (permissionGroupStatus != PermissionManager.PERMISSION_GROUP_TYPE_ALL_ALLOWED) {
+const listenerId = sdlManager.getPermissionManager().addListener([new SDL.manager.permission.PermissionElement(SDL.rpc.enums.FunctionID.DialNumber, null)], SDL.manager.permission.enums.PermissionGroupType.ANY, function (allowedPermissions, permissionGroupStatus) {
+    if (permissionGroupStatus !== SDL.manager.permission.enums.PermissionGroupStatus.ALLOWED) {
         // Your app does not have permission to send the `DialNumber` request for its current HMI level
         return;
     }
@@ -189,7 +189,7 @@ function isDialNumberSupported () {
 
     // Legacy modules (pre-RPC Spec v4.5) do not support system capabilities, so for versions less than 4.5 we will assume `DialNumber` is supported if `isCapabilitySupported()` returns true
     const sdlMsgVersion = sdlManager.getRegisterAppInterfaceResponse().getSdlMsgVersion();
-    if (sdlMsgVersion == null) {
+    if (sdlMsgVersion === null) {
         return true;
     }
     const rpcSpecVersion = new SDL.util.Version(sdlMsgVersion);
@@ -198,12 +198,8 @@ function isDialNumberSupported () {
     }
 
     // Retrieve the phone capability
-    const capability = sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.PHONE_CALL);
-    if (capabilty !== null) {
-            return phoneCapability != null ? phoneCapability.getDialNumberEnabled() : false;
-    } else {
-        // Not supported
-    }
+    const phoneCapability = sdlManager.getSystemCapabilityManager().getCapability(SDL.rpc.enums.SystemCapabilityType.PHONE_CALL);
+    return phoneCapability !== null ? phoneCapability.getDialNumberEnabled() : false;
 }
 ```
 !@
@@ -296,7 +292,7 @@ sdlManager.sendRPC(dialNumber);
 ```js
 const dialNumber = new SDL.rpc.messages.DialNumber()
     .setNumber('1238675309');
-const response = sdlManager.sendRpcResolve(dialNumber);
+const response = await sdlManager.sendRpcResolve(dialNumber);
 const result = response.getResultCode();
 if (result === SDL.rpc.enums.Result.SUCCESS) {
     // `DialNumber` successfully sent
