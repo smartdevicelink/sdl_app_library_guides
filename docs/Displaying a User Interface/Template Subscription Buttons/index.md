@@ -515,7 +515,7 @@ await sdlManager.getScreenManager().addButtonListener(SDL.rpc.enums.ButtonName.N
         switch (onButton.getButtonPressMode()) {
             case SDL.rpc.enums.ButtonPressMode.SHORT:
                 // The user short pressed the button
-            case SDL.rpc.enums.ButtonName.PRESET_2:
+            case SDL.rpc.enums.ButtonPressMode.LONG:
                 // The user long pressed the button
         }
     } else if (onButton instanceof SDL.rpc.messages.OnButtonEvent) {
