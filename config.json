@@ -168,8 +168,7 @@
                     "name": "Using App Services"
                 },
                 {
-                    "name": "Calling a Phone Number",
-                    "platforms": ["Android","iOS", "JavaEE", "JavaSE"]
+                    "name": "Calling a Phone Number"
                 },
                 {
                     "name": "Setting the Navigation Destination"
