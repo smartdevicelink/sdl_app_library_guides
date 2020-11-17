@@ -19,29 +19,32 @@ Like the lifecycle of the video stream, the lifecycle of the audio stream is mai
 To stream audio, we call `sdlManager.getAudioStreamManager().start()` which will start the manager. When that callback returns with a success, call `sdlManager.getAudioStreamManager().startAudioStream()`. Once this callback returns successfully you can send and play audio.
 
 ```java
-if (sdlManager.getAudioStreamManager() != null) {
-    DebugTool.logInfo(TAG, "Trying to start audio stream manager");
-    sdlManager.getAudioStreamManager().start(new CompletionListener() {
-        @Override
-        public void onComplete(boolean success) {
-            if (!success) {
-                DebugTool.logInfo(TAG, "Failed to start audio streaming manager");
-                return;
-            }
-            DebugTool.logInfo(TAG, "Trying to start the audio stream");
-            sdlManager.getAudioStreamManager().startAudioStream(false, new CompletionListener() {
-                @Override
-                public void onComplete(boolean success) {
-                    if (!success) {
-                        DebugTool.logInfo(TAG, "Audio stream failed to start!");
-                        return;
-                    }
-                    // Push Audio Source
-                }
-            });
-        }
-    });
+// Check if the manager is null
+if (sdlManager.getAudioStreamManager() == null) {
+    //Handle the failure
+    return null;
 }
+DebugTool.logInfo(TAG, "Trying to start audio stream manager");
+sdlManager.getAudioStreamManager().start(new CompletionListener() {
+    @Override
+    public void onComplete(boolean success) {
+        if (!success) {
+            DebugTool.logInfo(TAG, "Failed to start audio streaming manager");
+            return;
+        }
+        DebugTool.logInfo(TAG, "Trying to start the audio stream");
+        sdlManager.getAudioStreamManager().startAudioStream(false, new CompletionListener() {
+            @Override
+            public void onComplete(boolean success) {
+                if (!success) {
+                    DebugTool.logInfo(TAG, "Audio stream failed to start!");
+                    return;
+                }
+                // Push Audio Source
+            }
+        });
+    }
+});
 ```
 !@
 
