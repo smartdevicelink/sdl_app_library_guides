@@ -159,4 +159,3 @@ sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapa
 });
 ```
 !@
-!@

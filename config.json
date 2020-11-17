@@ -203,7 +203,12 @@
                     "name": "Introduction"
                 },
                 {
-                    "name": "Video Streaming"
+                    "name": "Video Streaming - iOS",
+                    "platforms": ["iOS"]
+                },
+                {
+                    "name": "Video Streaming - Java",
+                    "platforms": ["Android"]
                 },
                 {
                     "name": "Audio Streaming"
