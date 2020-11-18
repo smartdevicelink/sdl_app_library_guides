@@ -20,7 +20,7 @@ To stream audio, we call `sdlManager.getAudioStreamManager().start()` which will
 
 ```java
 if (sdlManager.getAudioStreamManager() == null) {
-    //Handle the failure
+    // Handle the failure
     return;
 }
 
@@ -35,7 +35,7 @@ sdlManager.getAudioStreamManager().start(new CompletionListener() {
             @Override
             public void onComplete(boolean success) {
                 if (!success) {
-                    //Failed to start audio stream
+                    // Failed to start audio stream
                     return;
                 }
                 // Push Audio Source
