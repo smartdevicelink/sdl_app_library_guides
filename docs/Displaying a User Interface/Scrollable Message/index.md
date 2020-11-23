@@ -1,4 +1,4 @@
-# Scrollable Message
+# Scrollable Message (RPC v2.0+)
 A @![iOS]`SDLScrollableMessage`!@@![android,javaSE,javaEE,javascript]`ScrollableMessage`!@ creates an overlay containing a large block of formatted text that can be scrolled. It contains a body of text, a message timeout, and up to eight soft buttons. To display a scrollable message in your SDL app, you simply send @![iOS]an `SDLScrollableMessage`!@@![android,javaSE,javaEE,javascript]a `ScrollableMessage`!@ RPC request.
 
 !!! NOTE

@@ -1,4 +1,4 @@
-# Supporting Haptic Input
+# Supporting Haptic Input (RPC v4.5+)
 SDL now supports "haptic" input: input from something other than a touch screen. This could include trackpads, click-wheels, etc. These kinds of inputs work by knowing which views on the screen are touchable and focusing / highlighting on those areas when the user moves the trackpad or click wheel. When the user selects within a view, the center of that area will be "touched".
 
 !!! NOTE

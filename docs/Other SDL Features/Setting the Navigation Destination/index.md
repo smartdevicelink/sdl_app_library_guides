@@ -1,4 +1,4 @@
-# Setting the Navigation Destination
+# Setting the Navigation Destination (RPC v3.0+)
 The @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE,javascript]`SendLocation`!@ RPC gives you the ability to send a GPS location to the active navigation app on the module.
 
 When using the @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE,javascript]`SendLocation`!@ RPC, you will not have access to any information about how the user interacted with this location, only if the request was successfully sent. The request will be handled by the module from that point on using the active navigation system.
