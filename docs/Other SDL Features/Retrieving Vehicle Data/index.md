@@ -11,30 +11,30 @@ You will only have access to vehicle data that is allowed to your `appName` and 
 | Airbag Status | airbagStatus | Status of each of the airbags in the vehicle: yes, no, no event, not supported, fault |||
 | Belt Status | beltStatus | The status of each of the seat belts: no, yes, not supported, fault, or no event |||
 | Body Information | bodyInformation | Door ajar status for each door. The Ignition status. The ignition stable status. The park brake active status. |||
-| Cloud App Vehicle Id | cloudAppVehicleID | The id for the vehicle when connecting to cloud applications | RPC 5.1+ ||
+| Cloud App Vehicle Id | cloudAppVehicleID | The id for the vehicle when connecting to cloud applications | RPC v5.1+ ||
 | Cluster Mode Status | clusterModeStatus | Whether or not the power mode is active. The power mode qualification status: power mode undefined, power mode evaluation in progress, not defined, power mode ok. The car mode status: normal, factory, transport, or crash. The power mode status: key out, key recently out, key approved, post accessory, accessory, post ignition, ignition on, running, crank |||
 | Device Status | deviceStatus | Contains information about the smartphone device. Is voice recognition on or off, has a bluetooth connection been established, is a call active, is the phone in roaming mode, is a text message available, the battery level, the status of the mono and stereo output channels, the signal level, the primary audio source, whether or not an emergency call is currently taking place |||
 | Driver Braking | driverBraking | The status of the brake pedal: yes, no, no event, fault, not supported |||
 | E-Call Information | eCallInfo | Information about the status of an emergency call |||
-| Electronic Parking Brake Status | electronicParkingBrakeStatus | The status of the electronic parking brake. Available states: closed, transition, open, drive active, fault | RPC 5.0+ ||
+| Electronic Parking Brake Status | electronicParkingBrakeStatus | The status of the electronic parking brake. Available states: closed, transition, open, drive active, fault | RPC v5.0+ ||
 | Emergency event | emergencyEvent | The type of emergency: frontal, side, rear, rollover, no event, not supported, fault. Fuel cutoff status: normal operation, fuel is cut off, fault. The roll over status: yes, no, no event, not supported, fault. The maximum change in velocity. Whether or not multiple emergency events have occurred |||
-| Engine Oil Life | engineOilLife | The estimated percentage (0% - 100%) of remaining oil life of the engine | RPC 5.0+ ||
+| Engine Oil Life | engineOilLife | The estimated percentage (0% - 100%) of remaining oil life of the engine | RPC v5.0+ ||
 | Engine Torque | engineTorque | Torque value for engine (in Nm) on non-diesel variants |  ||
 | External Temperature | externalTemperature | The external temperature in degrees celsius |||
-| Fuel Level | fuelLevel | The fuel level in the tank (percentage) || RPC 7.0 |
-| Fuel Level State | fuelLevel_State | The fuel level state: Unknown, Normal, Low, Fault, Alert, or Not Supported || RPC 7.0 |
+| Fuel Level | fuelLevel | The fuel level in the tank (percentage) || RPC v7.0 |
+| Fuel Level State | fuelLevel_State | The fuel level state: Unknown, Normal, Low, Fault, Alert, or Not Supported || RPC v7.0 |
 | Fuel Range | fuelRange | The estimate range in KM the vehicle can travel based on fuel level and consumption. As of RPC 7.0, this also contains Fuel Level and Fuel Level State information. | RPC 5.0+ ||
-| Gear Status | gearStatus | Includes information about the transmission, the user's selected gear, and the actual gear of the vehicle.  | RPC 7.0+ ||
+| Gear Status | gearStatus | Includes information about the transmission, the user's selected gear, and the actual gear of the vehicle.  | RPC v7.0+ ||
 | GPS | gps | Longitude and latitude, current time in UTC, degree of precision, altitude, heading, speed, satellite data vs dead reckoning, and supported dimensions of the GPS |||
-| Hands Off Steering | handsOffSteering | Status of hands on steering wheels capability | RPC 7.0+ ||
+| Hands Off Steering | handsOffSteering | Status of hands on steering wheels capability | RPC v7.0+ ||
 | Head Lamp Status | headLampStatus | Status of the head lamps: whether or not the low and high beams are on or off. The ambient light sensor status: night, twilight 1, twilight 2, twilight 3, twilight 4, day, unknown, invalid |||
 | Instant Fuel Consumption | instantFuelConsumption | The instantaneous fuel consumption in microlitres |||
 | My Key | myKey | Information about whether or not the emergency 911 override has been activated |||
 | Odometer | odometer | Odometer reading in km |||
-| PRNDL | prndl | The selected gear the car is in: park, reverse, neutral, drive, sport, low gear, first, second, third, fourth, fifth, sixth, seventh or eighth gear, unknown, or fault ||RPC 7.0 |
+| PRNDL | prndl | The selected gear the car is in: park, reverse, neutral, drive, sport, low gear, first, second, third, fourth, fifth, sixth, seventh or eighth gear, unknown, or fault ||RPC v7.0 |
 | RPM | rpm | The number of revolutions per minute of the engine |||
 | Speed | speed | Speed in KPH |||
-| Stability Control Status | stabilityControlsStatus | Status of the vehicle's stability control and trailer sway control | RPC 7.0+ ||
+| Stability Control Status | stabilityControlsStatus | Status of the vehicle's stability control and trailer sway control | RPC v7.0+ ||
 | Steering Wheel Angle | steeringWheelAngle | Current angle of the steering wheel (in degrees) |||
 | Tire Pressure | tirePressure | Tire status of each wheel in the vehicle: normal, low, fault, alert, or not supported. Warning light status for the tire pressure: off, on, flash, or not used |||
 | Turn Signal | turnSignal | The status of the turn signal. Available states: off, left, right, both | RPC 5.0+ ||
