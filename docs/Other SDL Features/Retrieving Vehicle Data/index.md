@@ -23,7 +23,7 @@ You will only have access to vehicle data that is allowed to your `appName` and 
 | External Temperature | externalTemperature | The external temperature in degrees celsius |||
 | Fuel Level | fuelLevel | The fuel level in the tank (percentage) || RPC v7.0 |
 | Fuel Level State | fuelLevel_State | The fuel level state: Unknown, Normal, Low, Fault, Alert, or Not Supported || RPC v7.0 |
-| Fuel Range | fuelRange | The estimate range in KM the vehicle can travel based on fuel level and consumption. As of RPC 7.0, this also contains Fuel Level and Fuel Level State information. | RPC 5.0+ ||
+| Fuel Range | fuelRange | The estimate range in KM the vehicle can travel based on fuel level and consumption. As of RPC 7.0, this also contains Fuel Level and Fuel Level State information. | RPC v5.0+ ||
 | Gear Status | gearStatus | Includes information about the transmission, the user's selected gear, and the actual gear of the vehicle.  | RPC v7.0+ ||
 | GPS | gps | Longitude and latitude, current time in UTC, degree of precision, altitude, heading, speed, satellite data vs dead reckoning, and supported dimensions of the GPS |||
 | Hands Off Steering | handsOffSteering | Status of hands on steering wheels capability | RPC v7.0+ ||
@@ -37,9 +37,9 @@ You will only have access to vehicle data that is allowed to your `appName` and 
 | Stability Control Status | stabilityControlsStatus | Status of the vehicle's stability control and trailer sway control | RPC v7.0+ ||
 | Steering Wheel Angle | steeringWheelAngle | Current angle of the steering wheel (in degrees) |||
 | Tire Pressure | tirePressure | Tire status of each wheel in the vehicle: normal, low, fault, alert, or not supported. Warning light status for the tire pressure: off, on, flash, or not used |||
-| Turn Signal | turnSignal | The status of the turn signal. Available states: off, left, right, both | RPC 5.0+ ||
+| Turn Signal | turnSignal | The status of the turn signal. Available states: off, left, right, both | RPC v5.0+ ||
 | VIN | vin | The Vehicle Identification Number |||
-| Window Status | windowStatus | An array of window locations and approximate position | RPC 7.0+ ||
+| Window Status | windowStatus | An array of window locations and approximate position | RPC v7.0+ ||
 | Wiper Status | wiperStatus | The status of the wipers: off, automatic off, off moving, manual interaction off, manual interaction on, manual low, manual high, manual flick, wash, automatic low, automatic high, courtesy wipe, automatic adjust, stalled, no data exists |||
 
 ## One-Time Vehicle Data Retrieval
