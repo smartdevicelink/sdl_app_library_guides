@@ -1,4 +1,4 @@
-# Customizing the Keyboard
+# Customizing the Keyboard (RPC v3.0+)
 @![iOS, android, javaEE, javaSE]
 If you present keyboards in your app – such as in searchable interactions or another custom keyboard – you may wish to customize the keyboard for your users. The best way to do this is through the !@@![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@@![iOS, android, javaEE, javaSE]. For more information presenting keyboards, see the [Popup Keyboards](Displaying a User Interface/Popup Keyboards) section.
 !@
@@ -7,7 +7,7 @@ If you present keyboards in your app – such as in searchable interactions or a
 The `ChoiceSetManager` used to customize the keyboard is currently missing from the SDL JavaScript Suite. This will be addressed in a future release. However you can still customize the keyboard through the `SetGlobalProperties` RPC.
 !@
 
-## Setting Keyboard Properties  (RPC v3.0+)
+## Setting Keyboard Properties
 You can modify the language of the keyboard to change the characters that are displayed.
 
 @![iOS]

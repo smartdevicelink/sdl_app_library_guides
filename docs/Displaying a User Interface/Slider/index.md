@@ -1,4 +1,4 @@
-# Slider (RPC v2.0+)
+# Slider
 A @![iOS]`SDLSlider`!@@![android,javaSE,javaEE,javascript]`Slider`!@ creates a full screen or pop-up overlay (depending on platform) that a user can control. There are two main @![iOS]`SDLSlider`!@@![android,javaSE,javaEE,javascript]`Slider`!@ layouts, one with a static footer and one with a dynamic footer.
 
 !!! NOTE
