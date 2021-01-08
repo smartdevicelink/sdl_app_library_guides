@@ -1,4 +1,4 @@
-# Getting the Navigation Destination
+# Getting the Navigation Destination (RPC v4.1+)
 The @![iOS]`SDLGetWayPoints`!@@![android,javaSE,javaEE,javascript]`GetWayPoints`!@ and @![iOS]`SDLSubscribeWayPoints`!@@![android,javaSE,javaEE,javascript]`SubscribeWayPoints`!@ RPCs are designed to allow you to get the navigation destination(s) from the active navigation app when the user has activated in-car navigation.
 
 ## Checking Your App's Permissions

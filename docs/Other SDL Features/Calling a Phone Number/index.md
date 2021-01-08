@@ -1,4 +1,4 @@
-# Calling a Phone Number
+# Calling a Phone Number (RPC v3.0+)
 The @![iOS]`SDLDialNumber`!@@![android,javaSE,javaEE,javascript]`DialNumber`!@ RPC allows you make a phone call via the user's phone. In order to dial a phone number you must be sure that the device is connected via Bluetooth (even if your device is also connected using a USB cord) for this request to work. If the phone is not connected via Bluetooth, you will receive a result of `REJECTED` from the module.
 
 ## Checking Your App's Permissions

@@ -1,4 +1,4 @@
-# Video Streaming
+# Video Streaming (RPC v4.5+)
 To stream video from a SDL app use the `SDLStreamingMediaManager` class. A reference to this class is available from the `SDLManager`. You can choose to create your own video streaming manager or you can use the `CarWindow` API to easily stream video to the head unit.
 
 !!! NOTE

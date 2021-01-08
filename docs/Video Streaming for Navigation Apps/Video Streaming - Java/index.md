@@ -1,4 +1,4 @@
-# Video Streaming
+# Video Streaming (RPV v4.5+)
 In order to stream video from an SDL app, we only need to manage a few things. For the most part, the library will handle the majority of logic needed to perform video streaming.
 
 ## SDL Remote Display

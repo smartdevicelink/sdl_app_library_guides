@@ -1,4 +1,4 @@
-# Multiple Transports (Protocol 5.1+)
+# Multiple Transports (Protocol v5.1+)
 The multiple transports feature allows apps to carry their SDL session over multiple transports. The first transport that the app connects with is referred to as the primary transport and a transport connected at a later point is the secondary transport. For example, apps can register over Bluetooth or USB as a primary transport, then connect over WiFi when necessary (ex. to allow video/audio streaming) as a secondary transport. This feature is supported on connections with protocol version 5.1+, which is supported on SDL @![android]Android 4.7+!@@![iOS]iOS 6.1+!@ and SDL Core 5.0+.
 
 ## Primary Transports
