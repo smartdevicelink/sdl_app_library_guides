@@ -3,7 +3,7 @@
 The library has not been fully tested when being referenced from a Kotlin environment. Everything should work as expected, but if you find errors please report them to the github.
 
 ## Are there any currently known issues with Kotlin?
-Even though Java is compatible with Kotlin, Kotlin has more strict rules for access modifiers than Java. For that reason, you may see this warning when using `SdlManager`'s `Builder` class:
+Even though Kotlin is compatible with Java, Kotlin has more strict rules for access modifiers than Java. For that reason, you may see this warning when using `SdlManager`'s `Builder` class:
 ```
 Type BaseSdlManager.Builder! is inaccessible in this context due to: public open class Builder defined in com.smartdevicelink.managers.BaseSdlManager
 ```
@@ -26,6 +26,6 @@ public class SdlManagerFactory {
 Then from the Kotlin side:
 
 ```kotlin 
-val sdlManager = SdlManagerFactory.createSdlManager(this, APP_ID, APP_NAME, listener, appTypes, appIcon);
+sdlManager = SdlManagerFactory.createSdlManager(this, APP_ID, APP_NAME, listener, appTypes, appIcon);
 ```
 
