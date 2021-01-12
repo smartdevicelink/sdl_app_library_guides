@@ -170,7 +170,7 @@ If a file being uploaded has the same name as an already uploaded file, the exis
 !@
 
 ## Checking the Amount of File Storage Left
-To find the amount of file storage left for your app on the head unit, use the @![iOS]`SDLFileManager`’s `bytesAvailable` property!@ @![android, javaSE, javaEE, javascript]`ListFiles` RPC!@.
+To find the amount of file storage left for your app on the head unit, use the @![iOS]`SDLFileManager`!@@![android, javaSE, javaEE, javascript]`FileManager`!@’s `bytesAvailable` property.
 
 @![iOS]
 ##### Objective-C
