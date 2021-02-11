@@ -124,6 +124,8 @@ extension <#Class Name#>: SDLKeyboardDelegate {
     func customKeyboardConfiguration() -> SDLKeyboardProperties {
         <#Use an alternate keyboard configuration. The keypressMode, limitedCharacterSet, and autoCompleteText will be overridden by the screen manager#>
     }
+
+    // @todo implement onKeyboardInputMaskHasChanged
 }
 ```
 !@
@@ -176,6 +178,20 @@ KeyboardListener keyboardListener = new KeyboardListener() {
     @Override
     public void onKeyboardDidSendEvent(KeyboardEvent event, String currentInputText) {
         // This is sent upon every event, such as keypresses, cancellations, and aborting
+    }
+
+    @Override
+    public void onKeyboardInputMaskHasChanged(KeyboardEvent event) {
+        switch (event) {
+            case INPUT_KEY_MASK_ENABLED:
+                // The user enabled input key masking
+                break;
+            case INPUT_KEY_MASK_DISABLED:
+                // The user disabled input key masking
+                break;
+            default:
+                break;
+        }
     }
 };
 ```
