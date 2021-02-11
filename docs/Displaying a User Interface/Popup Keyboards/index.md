@@ -132,7 +132,7 @@ extension <#Class Name#>: SDLKeyboardDelegate {
 
 @![android, javaSE, javaEE]
 ### Implementing the Keyboard Listeners
-Using the `KeyboardListener` involves implementing five methods: 
+Using the `KeyboardListener` involves implementing several methods: 
 
 ```java
 KeyboardListener keyboardListener = new KeyboardListener() {
@@ -199,7 +199,7 @@ KeyboardListener keyboardListener = new KeyboardListener() {
 
 @![iOS, android, javaSE, javaEE]
 ### Configuring the Keyboard Properties
-You can change the default keyboard properties like language, layout, and whether or not you want the input to be masked by sending a `SetGlobalProperties` request. If you are using the screen manager, you can change the keyboard configuration by calling `setKeyboardConfiguration()` with the new `KeyboardProperties` that you would like to set. For example, to set the keyboard layout to NUMERIC and make the input masked, you can set the properties as the following: 
+You can change the default keyboard properties such as language, layout, and whether or not you want the input to be masked, by sending a `SetGlobalProperties` request. If you are using the screen manager, you can change the keyboard properties by calling `setKeyboardConfiguration()` with the new `KeyboardProperties` that you would like to set. For example, to set the keyboard layout to `NUMERIC` and make the input masked, you can set the properties as the following: 
 
 @![iOS]
 ##### Objective-C
@@ -226,7 +226,6 @@ sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
 
 !!! NOTE
 If you want to change the keyboard configuration for only one present keyboard session and you want to keep the default global keyboard configuration unchanged, you can instead pass the `KeyboardProperties` to the `presentKeyboard()` that was discussed in the aforementioned `Presenting a Keyboard` section !!!
-!@
 
 @![iOS, android, javaSE, javaEE]
 ### Dismissing the Keyboard (RPC v6.0+)
