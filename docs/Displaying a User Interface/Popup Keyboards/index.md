@@ -198,6 +198,37 @@ KeyboardListener keyboardListener = new KeyboardListener() {
 !@
 
 @![iOS, android, javaSE, javaEE]
+### Configuring the Keyboard Properties
+You can change the default keyboard properties like language, layout, and whether or not you want the input to be masked by sending a `SetGlobalProperties` request. If you are using the screen manager, you can change the keyboard configuration by calling `setKeyboardConfiguration()` with the new `KeyboardProperties` that you would like to set. For example, to set the keyboard layout to NUMERIC and make the input masked, you can set the properties as the following: 
+
+@![iOS]
+##### Objective-C
+```objc
+// todo add code to set keyboard properties 
+```
+
+##### Swift
+```swift
+// todo add code to set keyboard properties 
+```
+!@
+
+@![android, javaSE, javaEE]
+```java
+KeyboardProperties keyboardConfiguration = new KeyboardProperties()
+        .setLanguage(Language.EN_US)
+        .setKeyboardLayout(KeyboardLayout.NUMERIC)
+        .setMaskInputCharacters(KeyboardInputMask.ENABLE_INPUT_KEY_MASK);
+
+sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
+```
+!@
+
+!!! NOTE
+If you want to change the keyboard configuration for only one present keyboard session and you want to keep the default global keyboard configuration unchanged, you can instead pass the `KeyboardProperties` to the `presentKeyboard()` that was discussed in the aforementioned `Presenting a Keyboard` section !!!
+!@
+
+@![iOS, android, javaSE, javaEE]
 ### Dismissing the Keyboard (RPC v6.0+)
 You can dismiss a displayed keyboard before the timeout has elapsed by sending a `CancelInteraction` request. If you presented the keyboard using the screen manager, you can dismiss the choice set by calling `dismissKeyboard` with the `cancelID` that was returned (if one was returned) when presenting.
 
