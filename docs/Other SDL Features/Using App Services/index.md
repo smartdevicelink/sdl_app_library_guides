@@ -92,8 +92,8 @@ Once you've retrieved the initial list of app service capabilities (in the `GetS
 ##### Objective-C
 ```objc
 // From GetSystemCapabilityResponse
-SDLGetSystemCapabilityResponse *getResponse = <#From wherever you got it#>;
-SDLAppServicesCapabilities *capabilities = getResponse.systemCapability.appServicesCapabilities;
+SDLSystemCapabilityManager *systemCapabilityManager = <#From wherever you got it#>;
+SDLAppServicesCapabilities *capabilities = systemCapabilityManager.appServicesCapabilities;
 
 // This array contains all currently available app services on the system
 NSArray<SDLAppServiceCapability *> *appServices = capabilities.appServices;
@@ -123,10 +123,10 @@ SDLAppServiceRecord *serviceRecord = aCapability.updatedAppServiceRecord;
 ##### Swift
 ```swift
 // From GetSystemCapabilityResponse
-let getResponse: SDLGetSystemCapabilityResponse = <#From wherever you got it#>
+let systemCapabilityManager: SDLSystemCapabilityManager = <#From wherever you got it#>
 
 // This array contains all currently available app services on the system
-guard let capabilities = getResponse.systemCapability?.appServicesCapabilities, let appServices = capabilities.appServices, let aCapability = appServices.first else {
+guard let capabilities = systemCapabilityManager.appServicesCapabilities, let appServices = capabilities.appServices, let aCapability = appServices.first else {
     return
 }
 
