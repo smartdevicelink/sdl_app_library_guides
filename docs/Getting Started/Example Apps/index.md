@@ -81,7 +81,7 @@ If your app compiles and but does not show up on the HMI, there are a few things
 1. Make sure there is no firewall blocking the incoming port `12345` on the machine or VM running the SDL Core emulator. Also make sure your firewall allows that outgoing port.
 1. Your SDL app will not work when the device app is in the background, because the OS will terminate background tasks after a short amount of time. This is not an issue with production IAP connections because Apple's External Accessory framework allows your app unlimited background time.
 1. If you have a media SDL app, audio will not play on the emulator. Only production IAP connections are currently able to play audio because this happens over the standard Bluetooth / USB system audio channel.
-1. You cannot connect to any of our open-source emulators using a USB cord or Bluetooth because Apple's [MFi Program](https://mfi.apple.com/MFiWeb/getFAQ.action#4-6) is confidential and can not be used in open source projects.
+1. You cannot connect to any of our open-source emulators using a USB cord or Bluetooth because Apple's [MFi Program](https://mfi.apple.com/) is confidential and can not be used in open source projects.
 
 ### iAP Production Transport
 1. Make sure to use the default `SDLLifecycleConfiguration`.
@@ -111,14 +111,14 @@ If your app compiles and but does not show up on the HMI, there are a few things
 !@
 
 @![javaSE]
-First, make sure you download or clone the latest release from [GitHub](https://github.com/smartdevicelink/sdl_java_suite). It is a [project](https://github.com/smartdevicelink/sdl_java_suite/tree/master/hello_sdl_java) within the SDL Java Suite root directory. Then, open the _Hello Sdl_ project in [IntelliJ IDEA](https://www.jetbrains.com/idea/).
+First, make sure you download or clone the latest release from [GitHub](https://github.com/smartdevicelink/sdl_java_suite). It is a [project](https://github.com/smartdevicelink/sdl_java_suite/tree/master/javaSE/hello_sdl_java) within the SDL Java Suite root directory. Then, open the _Hello Sdl_ project in [IntelliJ IDEA](https://www.jetbrains.com/idea/).
 !@
 
 @![javaEE]
 Make sure that you follow the steps in [Installation](Getting Started/Installation) and [Integration Basics](Getting Started/Integration Basics - Java) sections to create a new JavaEE SDL project before continuing this section.
 
 !!! NOTE
-The [Hello Sdl JavaEE](https://github.com/smartdevicelink/sdl_java_suite/tree/master/hello_sdl_java_ee) has some code commented out and cannot be compiled. The project just includes samples for `SdlService` and `Main` classes that can be copied to the new JavaEE project that you create by following the steps in [Installation page](Getting Started/Installation).
+The [Hello Sdl JavaEE](https://github.com/smartdevicelink/sdl_java_suite/tree/master/javaEE/hello_sdl_java_ee) has some code commented out and cannot be compiled. The project just includes samples for `SdlService` and `Main` classes that can be copied to the new JavaEE project that you create by following the steps in [Installation page](Getting Started/Installation).
 !!!
 !@
 

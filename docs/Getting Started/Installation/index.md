@@ -119,7 +119,7 @@ repositories {
 
 ### Gradle Build
 
-To compile with the a release of SDL Android, include the following line in your app's `build.gradle` file,
+To compile with a release of SDL Android, include the following line in your app's `build.gradle` file,
 
 ```
 dependencies {
@@ -162,7 +162,7 @@ repositories {
 
 ### Gradle Build
 
-To compile with the a release of SDL JavaSE, include the following line in your app's `build.gradle` file,
+To compile with a release of SDL JavaSE, include the following line in your app's `build.gradle` file,
 
 ```
 dependencies {
