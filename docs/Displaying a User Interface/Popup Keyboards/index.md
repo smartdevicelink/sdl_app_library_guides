@@ -181,7 +181,7 @@ KeyboardListener keyboardListener = new KeyboardListener() {
     }
 
     @Override
-    public void onKeyboardInputMaskHasChanged(KeyboardEvent event) {
+    public void onKeyboardDidUpdateInputMask(KeyboardEvent event) {
         switch (event) {
             case INPUT_KEY_MASK_ENABLED:
                 // The user enabled input key masking
