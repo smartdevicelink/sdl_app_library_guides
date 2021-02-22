@@ -42,7 +42,7 @@ You will only have access to vehicle data that is allowed to your `appName` and 
 | Window Status | windowStatus | An array of window locations and approximate position | RPC v7.0+ ||
 | Wiper Status | wiperStatus | The status of the wipers: off, automatic off, off moving, manual interaction off, manual interaction on, manual low, manual high, manual flick, wash, automatic low, automatic high, courtesy wipe, automatic adjust, stalled, no data exists |||
 | Seat Occupancy | seatOccupancy | The status of the seats that show whether each seat is occupied and belted or not | RPC v7.1+ ||
-| Climate Data | climateData | Information about cabin temperature, atmospheric pressure and external temperature | RPC v7.1+ ||
+| Climate Data | climateData | Information about cabin temperature, atmospheric pressure, and external temperature | RPC v7.1+ ||
 
 ## One-Time Vehicle Data Retrieval
 To get vehicle data a single time, use the @![iOS]`SDLGetVehicleData`!@@![android, javaSE, javaEE,javascript]`GetVehicleData`!@ RPC.
