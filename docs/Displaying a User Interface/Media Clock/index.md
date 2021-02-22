@@ -232,3 +232,43 @@ sdlManager.sendRpc(mediaClock);
 The audio indicator is, essentially, the play / pause button. You can tell the system which icon to display on the play / pause button to correspond with how your app works. For example, if audio is currently playing you can update the play/pause button to show the pause icon. On older head units, the audio indicator shows an icon with both the play and pause indicators and the icon can not be updated.
 
 For example, a radio app will probably want two button states: play and stop. A music app, in contrast, will probably want a play and pause button. If you don't send any audio indicator information, a play / pause button will be displayed.
+
+## Setting Media Skip Indicators (RPC v7.1+)
+The media skip indicators are media controls that affects the next and previous buttons. They should have the ability to show time skip buttons that are commonly used by podcast & audiobook media.
+
+Currently there are 2 types supported for seek indicators, Track and Time.
+If the type is Time, this number of seconds may be present alongside the skip indicator. It will indicate the number of seconds that the currently playing media will skip forward or backward.
+
+### Seek Indicator type TRACK
+@![iOS]
+##### Objective-C
+```objc
+SDLSeekStreamingIndicator *seekStreamingIndicatorTypeTrack = [[SDLSeekStreamingIndicator alloc] initWithType:SDLSeekIndicatorTypeTrack];
+SDLSetMediaClockTimer *mediaClock = [SDLSetMediaClockTimer countUpFromStartTimeInterval:30 toEndTimeInterval:253 playPauseIndicator:SDLAudioStreamingIndicatorPause forwardSeekIndicator:seekStreamingIndicatorTypeTrack backSeekIndicator:seekStreamingIndicatorTypeTrack countRate:nil];
+[self.sdlManager sendRequest:mediaClock];
+```
+
+##### Swift
+```swift
+let seekStreamingIndicatorTypeTrack = SDLSeekStreamingIndicator(type: .track)
+let mediaClock = SDLSetMediaClockTimer.countUp(from: 30, to: 253, playPauseIndicator: .pause, forwardSeekIndicator: seekStreamingIndicatorTypeTrack, backSeekIndicator: seekStreamingIndicatorTypeTrack, countRate: nil)
+sdlManager.send(mediaClock)
+```
+!@
+
+### Seek Indicator type TIME
+@![iOS]
+##### Objective-C
+```objc
+SDLSeekStreamingIndicator *seekStreamingIndicatorTypeTime = [[SDLSeekStreamingIndicator alloc] initWithType:SDLSeekIndicatorTypeTrack seekTime:@(10)];
+SDLSetMediaClockTimer *mediaClock = [SDLSetMediaClockTimer countUpFromStartTimeInterval:30 toEndTimeInterval:253 playPauseIndicator:SDLAudioStreamingIndicatorPause forwardSeekIndicator:seekStreamingIndicatorTypeTime backSeekIndicator:seekStreamingIndicatorTypeTime countRate:nil];
+[self.sdlManager sendRequest:mediaClock];
+```
+
+##### Swift
+```swift
+let seekStreamingIndicatorTypeTime = SDLSeekStreamingIndicator(type: .time, seekTime: 10 as NSNumber)
+let mediaClock = SDLSetMediaClockTimer.countUp(from: 30, to: 253, playPauseIndicator: .pause, forwardSeekIndicator: seekStreamingIndicatorTypeTime, backSeekIndicator: seekStreamingIndicatorTypeTime, countRate: nil)
+sdlManager.send(mediaClock)
+```
+!@
