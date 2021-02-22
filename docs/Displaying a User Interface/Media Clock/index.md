@@ -240,6 +240,7 @@ Currently there are 2 types supported for seek indicators, Track and Time.
 If the type is Time, this number of seconds may be present alongside the skip indicator. It will indicate the number of seconds that the currently playing media will skip forward or backward.
 
 ### Seek Indicator type TRACK
+![Generic - Seek Indicator Type TRACK](assets/generic_sdlSeekStreamingIndicatorType_Track)
 @![iOS]
 ##### Objective-C
 ```objc
@@ -257,6 +258,7 @@ sdlManager.send(mediaClock)
 !@
 
 ### Seek Indicator type TIME
+![Generic - Seek Indicator Type TIME](assets/generic_sdlSeekStreamingIndicatorType_Time)
 @![iOS]
 ##### Objective-C
 ```objc
