@@ -11,6 +11,7 @@ You will only have access to vehicle data that is allowed to your `appName` and 
 | Airbag Status | airbagStatus | Status of each of the airbags in the vehicle: yes, no, no event, not supported, fault |||
 | Belt Status | beltStatus | The status of each of the seat belts: no, yes, not supported, fault, or no event |||
 | Body Information | bodyInformation | Door ajar status for each door. Roof status. Trunk & hood Status. The Ignition status. The ignition stable status. The park brake active status |||
+| Climate Data | climateData | Information about cabin temperature, atmospheric pressure, and external temperature | RPC v7.1+ ||
 | Cloud App Vehicle Id | cloudAppVehicleID | The id for the vehicle when connecting to cloud applications | RPC v5.1+ ||
 | Cluster Mode Status | clusterModeStatus | Whether or not the power mode is active. The power mode qualification status: power mode undefined, power mode evaluation in progress, not defined, power mode ok. The car mode status: normal, factory, transport, or crash. The power mode status: key out, key recently out, key approved, post accessory, accessory, post ignition, ignition on, running, crank |||
 | Device Status | deviceStatus | Contains information about the smartphone device. Is voice recognition on or off, has a bluetooth connection been established, is a call active, is the phone in roaming mode, is a text message available, the battery level, the status of the mono and stereo output channels, the signal level, the primary audio source, whether or not an emergency call is currently taking place |||
@@ -33,6 +34,7 @@ You will only have access to vehicle data that is allowed to your `appName` and 
 | Odometer | odometer | Odometer reading in km |||
 | PRNDL | prndl | The selected gear the car is in: park, reverse, neutral, drive, sport, low gear, first, second, third, fourth, fifth, sixth, seventh or eighth gear, unknown, or fault ||RPC v7.0 |
 | RPM | rpm | The number of revolutions per minute of the engine |||
+| Seat Occupancy | seatOccupancy | The status of the seats that show whether each seat is occupied and belted or not | RPC v7.1+ ||
 | Speed | speed | Speed in KPH |||
 | Stability Control Status | stabilityControlsStatus | Status of the vehicle's stability control and trailer sway control | RPC v7.0+ ||
 | Steering Wheel Angle | steeringWheelAngle | Current angle of the steering wheel (in degrees) |||
@@ -41,8 +43,6 @@ You will only have access to vehicle data that is allowed to your `appName` and 
 | VIN | vin | The Vehicle Identification Number |||
 | Window Status | windowStatus | An array of window locations and approximate position | RPC v7.0+ ||
 | Wiper Status | wiperStatus | The status of the wipers: off, automatic off, off moving, manual interaction off, manual interaction on, manual low, manual high, manual flick, wash, automatic low, automatic high, courtesy wipe, automatic adjust, stalled, no data exists |||
-| Seat Occupancy | seatOccupancy | The status of the seats that show whether each seat is occupied and belted or not | RPC v7.1+ ||
-| Climate Data | climateData | Information about cabin temperature, atmospheric pressure, and external temperature | RPC v7.1+ ||
 
 ## One-Time Vehicle Data Retrieval
 To get vehicle data a single time, use the @![iOS]`SDLGetVehicleData`!@@![android, javaSE, javaEE,javascript]`GetVehicleData`!@ RPC.
