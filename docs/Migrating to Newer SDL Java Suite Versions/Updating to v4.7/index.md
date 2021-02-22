@@ -1133,7 +1133,7 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_LANGUAGE_CHANGE, new OnRPC
 });
 ```
 
-Fore more information about handling language changes please visit [this page](https://smartdevicelink.com/en/guides/android/getting-started/adapting-to-the-head-unit-language/).
+For more information about handling language changes please visit [this page](https://smartdevicelink.com/en/guides/android/getting-started/adapting-to-the-head-unit-language/).
 
 
 ## Remote Control
