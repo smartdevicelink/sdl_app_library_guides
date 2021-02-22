@@ -227,7 +227,7 @@ sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
 
 @![iOS, android, javaSE, javaEE]
 !!! NOTE
-If you want to change the keyboard properties for only one present keyboard session and keep the default global keyboard properties unchanged, you can instead pass the `KeyboardProperties` to the `presentKeyboard()` that was discussed in the aforementioned `Presenting a Keyboard` section !!!
+If you want to change the keyboard properties for only one present keyboard session and keep the default global keyboard properties unchanged, you can instead pass the `KeyboardProperties` to the `presentKeyboard()` that was discussed in the aforementioned `Presenting a Keyboard` section
 !!!
 !@
 
