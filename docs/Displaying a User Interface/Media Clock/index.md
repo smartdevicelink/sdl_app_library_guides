@@ -257,6 +257,12 @@ sdlManager.send(mediaClock)
 ```
 !@
 
+@![android, javaSE, javaEE]
+```java
+// TODO: Add code example that sets backSeekIndicator and forwardSeekIndicator in for type TRACK
+```
+!@
+
 ### Seek Indicator type TIME
 ![Generic - Seek Indicator Type TIME](assets/generic_sdlSeekStreamingIndicatorType_Time.png)
 @![iOS]
@@ -272,5 +278,11 @@ SDLSetMediaClockTimer *mediaClock = [SDLSetMediaClockTimer countUpFromStartTimeI
 let seekStreamingIndicatorTypeTime = SDLSeekStreamingIndicator(type: .time, seekTime: 10 as NSNumber)
 let mediaClock = SDLSetMediaClockTimer.countUp(from: 30, to: 253, playPauseIndicator: .pause, forwardSeekIndicator: seekStreamingIndicatorTypeTime, backSeekIndicator: seekStreamingIndicatorTypeTime, countRate: nil)
 sdlManager.send(mediaClock)
+```
+!@
+
+@![android, javaSE, javaEE]
+```java
+// TODO: Add code example that sets backSeekIndicator and forwardSeekIndicator in for type TIME
 ```
 !@
