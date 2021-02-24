@@ -19,7 +19,7 @@ Please note that if you are integrating an sdl_ios version less than v6.3, the e
 !@
 
 ### 1. Getting and Subscribing to Available Services
-To get information on all services published on the system, as well as on changes to published services, you will use the @![iOS]`GetSystemCapability` request / response as well as the `OnSystemCapabilityUpdated` notification. !@ @![android,javaSE,javaEE] `SystemCapabilityManager` to get the information. Because this information is initially available asynchronously, we have to attach an `OnSystemCapabilityListener` to the `getCapability` request.!@@![javascript] `SystemCapabilityManager` and await the `updateCapability` method to get the information!@
+To get information on all services published on the system, as well as on changes to published services, you will use the `SystemCapabilityManager` to get the information.@![android,javaSE,javaEE] Because this information is initially available asynchronously, we have to attach an `OnSystemCapabilityListener` to the `getCapability` request.!@@![javascript] `SystemCapabilityManager` and await the `updateCapability` method to get the information!@
 
 @![iOS]
 ##### Objective-C
@@ -86,13 +86,11 @@ sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SDL.rpc.en
 !@
 
 #### Checking the App Service Capability
-Once you've retrieved the initial list of app service capabilities (in the `GetSystemCapability` response), or an updated list of app service capabilities (from the `OnSystemCapabilityUpdated` notification), you may want to inspect the data to find what you are looking for. Below is example code with comments explaining what each part of the app service capability is used for.
+Once you've retrieved the initial list of app service capabilities or an updated list of app service capabilities, you may want to inspect the data to find what you are looking for. Below is example code with comments explaining what each part of the app service capability is used for.
 
 @![iOS]
 ##### Objective-C
 ```objc
-// From GetSystemCapabilityResponse
-SDLSystemCapabilityManager *systemCapabilityManager = <#From wherever you got it#>;
 SDLAppServicesCapabilities *capabilities = systemCapabilityManager.appServicesCapabilities;
 
 // This array contains all currently available app services on the system
@@ -122,9 +120,6 @@ SDLAppServiceRecord *serviceRecord = aCapability.updatedAppServiceRecord;
 
 ##### Swift
 ```swift
-// From GetSystemCapabilityResponse
-let systemCapabilityManager: SDLSystemCapabilityManager = <#From wherever you got it#>
-
 // This array contains all currently available app services on the system
 guard let capabilities = systemCapabilityManager.appServicesCapabilities, let appServices = capabilities.appServices, let aCapability = appServices.first else {
     return
