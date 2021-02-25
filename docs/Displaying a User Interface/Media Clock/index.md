@@ -232,3 +232,45 @@ sdlManager.sendRpc(mediaClock);
 The audio indicator is, essentially, the play / pause button. You can tell the system which icon to display on the play / pause button to correspond with how your app works. For example, if audio is currently playing you can update the play/pause button to show the pause icon. On older head units, the audio indicator shows an icon with both the play and pause indicators and the icon can not be updated.
 
 For example, a radio app will probably want two button states: play and stop. A music app, in contrast, will probably want a play and pause button. If you don't send any audio indicator information, a play / pause button will be displayed.
+
+## Adding Custom Playback Rate (RPC v7.1+)
+Many audio apps that support podcasts and audiobooks have features that allow users to adjust the audio playback rate.
+For example, a user can play a podcast at 125% speed or at 75% speed.
+
+@![iOS]
+##### Objective-C
+```objc
+//TODO add obj-c code
+```
+
+##### Swift
+```swift
+//TODO add swift code
+```
+!@
+
+@![android, javaSE, javaEE]
+```java
+//Play Audio at 50% or half speed
+SetMediaClockTimer mediaClock = new SetMediaClockTimer().countUpFromStartTimeInterval(30, 253, AudioStreamingIndicator.PAUSE);
+mediaClockTimer.setCountRate(0.5f);
+sdlManager.sendRPC(mediaClockTimer);
+```
+```java
+//Play Audio at 200% or double speed
+SetMediaClockTimer mediaClock = new SetMediaClockTimer().countUpFromStartTimeInterval(30, 253, AudioStreamingIndicator.PAUSE);
+mediaClockTimer.setCountRate(2.0f);
+sdlManager.sendRPC(mediaClockTimer);
+```
+!@
+
+@![javascript]
+```js
+//TODO add javascript code
+```
+!@
+
+!!! NOTE
+CountRate has a default Value of 1.0 and will the CountRate will be reset to 1.0 if this parameter is omitted from the SetMediaClockTimer request.
+To ensure that you maintain the correct CountRate in your application make sure to set the parameter in all SetMediaClockTimer requests (including when sending a RESUME request).
+!!!
