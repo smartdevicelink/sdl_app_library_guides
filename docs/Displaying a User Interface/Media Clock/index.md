@@ -234,7 +234,7 @@ The audio indicator is, essentially, the play / pause button. You can tell the s
 For example, a radio app will probably want two button states: play and stop. A music app, in contrast, will probably want a play and pause button. If you don't send any audio indicator information, a play / pause button will be displayed.
 
 ## Adding Custom Playback Rate (RPC v7.1+)
-Many audio apps that support podcasts and audiobooks have features that allow users to adjust the audio playback rate.
+Many audio apps that support podcasts and audiobooks allow the user to adjust the audio playback rate.
 You can tell the system the rate that the audio is playing at to ensure the media clock accurately reflects the audio.
 
 For example, a user can play a podcast at 125% speed or at 75% speed.
@@ -273,6 +273,6 @@ sdlManager.sendRPC(mediaClockTimer);
 !@
 
 !!! NOTE
-CountRate has a default Value of 1.0 and will the CountRate will be reset to 1.0 if this parameter is omitted from the SetMediaClockTimer request.
+CountRate has a default Value of 1.0, and the CountRate will be reset to 1.0 if any SetMediaClockTimer request does not have the parameter set.
 To ensure that you maintain the correct CountRate in your application make sure to set the parameter in all SetMediaClockTimer requests (including when sending a RESUME request).
 !!!
