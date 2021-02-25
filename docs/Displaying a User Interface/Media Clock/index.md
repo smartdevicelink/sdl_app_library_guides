@@ -235,6 +235,8 @@ For example, a radio app will probably want two button states: play and stop. A 
 
 ## Adding Custom Playback Rate (RPC v7.1+)
 Many audio apps that support podcasts and audiobooks have features that allow users to adjust the audio playback rate.
+You can tell the system the rate that the audio is playing at to ensure the media clock accurately reflects the audio.
+
 For example, a user can play a podcast at 125% speed or at 75% speed.
 
 @![iOS]
