@@ -144,7 +144,7 @@ There are new method names and locations that mimic previous functionality for s
 // single RPC
 proxy.sendRPCRequest(request);
 
-// muliple RPCs, non-sequential
+// multiple RPCs, non-sequential
 proxy.sendRequests(rpcs, new OnMultipleRequestListener() {
 	//...
 });
@@ -163,7 +163,7 @@ In 4.7, we use the `SdlManager` to send the requests.
 // single RPC
 sdlManager.sendRPC(request);
 
-// muliple RPCs, non-sequential
+// multiple RPCs, non-sequential
 sdlManager.sendRPCs(rpcs, new OnMultipleRequestListener() {
 	//...
 });
@@ -180,7 +180,7 @@ If your app uses USB to connect to SDL, this update provides a very useful enhan
 
 #### SdlBroadcastReceiver
 
-Since the AOA transport will now use the multiplexing feature, it is important that your app correctly adds funcitonality for the `SdlRouterService`. This starts in the `SdlBroadcastReciever`.
+Since the AOA transport will now use the multiplexing feature, it is important that your app correctly adds functionality for the `SdlRouterService`. This starts in the `SdlBroadcastReciever`.
 
 ##### 4.6:
 ```java
@@ -400,7 +400,7 @@ builder.setLockScreenConfig(lockScreenConfig);
 
 #### Using the new LockScreenManager
 
-If you want SDL to handle the lock screen logic for you, it is simple. You will remove the classes that currently handle your lock screen, and set the variables you want for your new lock screen as defined in the [lock screen guide](https://smartdevicelink.com/en/guides/android/adding-the-lock-screen/). This simple addition is handled during the instantiation of the the `SdlManager` within `SdlService.java`.
+If you want SDL to handle the lock screen logic for you, it is simple. You will remove the classes that currently handle your lock screen, and set the variables you want for your new lock screen as defined in the [lock screen guide](https://smartdevicelink.com/en/guides/android/getting-started/adding-the-lock-screen). This simple addition is handled during the instantiation of the `SdlManager` within `SdlService.java`.
 
 
 ##### Lock Screen Activity
@@ -418,7 +418,7 @@ This manifest entry must be added for the lock screen feature to work.
 
 ##### Configurations
 
-The default configurations should work for most app developers and is simple to get up and and running. However, it is easy to perform deeper configurations to the lock screen for your app. Below are the options that are available to customize your lock screen which builds on top of the logic already implemented in the `LockScreenManager`.
+The default configurations should work for most app developers and is simple to get up and running. However, it is easy to perform deeper configurations to the lock screen for your app. Below are the options that are available to customize your lock screen which builds on top of the logic already implemented in the `LockScreenManager`.
 
 There is a setter in the `SdlManager.Builder` that allows you to set a `LockScreenConfig` by calling `builder.setLockScreenConfig(lockScreenConfig)`. The following options are available to be configured with the`LockScreenConfig`.
 
@@ -745,7 +745,7 @@ sdlManager.sendRPC(setDisplayLayoutRequest);
 
 SDL Android 4.7 introduces the `FileManager`, which is accessible through the `SdlManager`. Previous methods of uploading files and performing their functions still work, but now there are a set of convenience methods that do a lot of the boilerplate work for you.
 
-Check out the [Uploading Files and Graphics](https://smartdevicelink.com/en/guides/android/uploading-files-and-graphics/) guide for code examples and detailed explanations.
+Check out the [Uploading Files](https://smartdevicelink.com/en/guides/android/other-sdl-features/uploading-files/) and [Uploading Images](https://smartdevicelink.com/en/guides/android/other-sdl-features/uploading-images/) for code examples and detailed explanations.
 
 ### SDL File and SDL Artwork
 
@@ -1100,7 +1100,7 @@ UUID listenerId = sdlManager.getPermissionManager().addListener(permissionElemen
 });
 ```
 
-For more information about `PermissionManager`, you can check [this page](/guides/android/permission-manager/).
+For more information about `PermissionManager`, you can check [this page](https://smartdevicelink.com/en/docs/android/master/com/smartdevicelink/managers/permission/PermissionManager/).
 
 
 ### Handling a Language Change
@@ -1133,7 +1133,7 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_LANGUAGE_CHANGE, new OnRPC
 });
 ```
 
-Fore more information about handling language changes please visit [this page](/guides/android/handling-language-change/)
+For more information about handling language changes please visit [this page](https://smartdevicelink.com/en/guides/android/getting-started/adapting-to-the-head-unit-language/).
 
 
 ## Remote Control

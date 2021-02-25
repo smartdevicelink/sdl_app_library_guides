@@ -70,7 +70,7 @@ builder.setLockScreenConfig(lockScreenConfig);
 ##### Objective-C
 ```objc
 UIColor *backgroundColor = <# Desired Background Color #>
-SDLLockScreenConfiguration *lockScreenConfiguration = [SDLLockScreenConfiguration enabledConfigurationWithAppIcon:<# Retreive App Icon #> backgroundColor:backgroundColor];
+SDLLockScreenConfiguration *lockScreenConfiguration = [SDLLockScreenConfiguration enabledConfigurationWithAppIcon:<# Retrieve App Icon #> backgroundColor:backgroundColor];
 ```
 
 ##### Swift

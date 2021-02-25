@@ -386,7 +386,7 @@ Actions are generic URI-based strings sent to any app service (active or not). Y
 @![iOS]
 ##### Objective-C
 ```objc
-SDLPerformAppServiceInteraction *performAction = [[SDLPerformAppServiceInteraction alloc] initWithServiceUri:@"<#sdlexample://x-callback-url/showText?x-source=MyApp&text=My%20Custom%20String#>" serviceID:@"<#Previously Retrived ServiceID#>" originApp:@"<#Your App Id#>" requestServiceActive:NO];
+SDLPerformAppServiceInteraction *performAction = [[SDLPerformAppServiceInteraction alloc] initWithServiceUri:@"<#sdlexample://x-callback-url/showText?x-source=MyApp&text=My%20Custom%20String#>" serviceID:@"<#Previously Retrieved ServiceID#>" originApp:@"<#Your App Id#>" requestServiceActive:NO];
 [self.sdlManager sendRequest:performAction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if (!response || !response.success.boolValue) {
         SDLLogE(@"Error sending perform action: Req %@, Res %@, err %@", request, response, error);
@@ -400,7 +400,7 @@ SDLPerformAppServiceInteraction *performAction = [[SDLPerformAppServiceInteracti
 
 ##### Swift
 ```swift
-let performAction = SDLPerformAppServiceInteraction(serviceUri: "<#sdlexample://x-callback-url/showText?x-source=MyApp&text=My%20Custom%20String#>", serviceID: "<#Previously Retrived ServiceID#>", originApp: "<#Your App Id#>", requestServiceActive: false)
+let performAction = SDLPerformAppServiceInteraction(serviceUri: "<#sdlexample://x-callback-url/showText?x-source=MyApp&text=My%20Custom%20String#>", serviceID: "<#Previously Retrieved ServiceID#>", originApp: "<#Your App Id#>", requestServiceActive: false)
 sdlManager.send(request: performAction) { (req, res, err) in
     guard let response = res as? SDLPerformAppServiceInteractionResponse else { return }
     <#Check the error and response#>
