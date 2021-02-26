@@ -10,7 +10,8 @@ You will only have access to vehicle data that is allowed to your `appName` and 
 | Acceleration Pedal Position | accPedalPosition | Accelerator pedal position (percentage depressed) |||
 | Airbag Status | airbagStatus | Status of each of the airbags in the vehicle: yes, no, no event, not supported, fault |||
 | Belt Status | beltStatus | The status of each of the seat belts: no, yes, not supported, fault, or no event |||
-| Body Information | bodyInformation | Door ajar status for each door. The Ignition status. The ignition stable status. The park brake active status. |||
+| Body Information | bodyInformation | Door ajar status for each door. Roof status. Trunk & hood Status. The Ignition status. The ignition stable status. The park brake active status |||
+| Climate Data | climateData | Information about cabin temperature, atmospheric pressure, and external temperature | RPC v7.1+ ||
 | Cloud App Vehicle Id | cloudAppVehicleID | The id for the vehicle when connecting to cloud applications | RPC v5.1+ ||
 | Cluster Mode Status | clusterModeStatus | Whether or not the power mode is active. The power mode qualification status: power mode undefined, power mode evaluation in progress, not defined, power mode ok. The car mode status: normal, factory, transport, or crash. The power mode status: key out, key recently out, key approved, post accessory, accessory, post ignition, ignition on, running, crank |||
 | Device Status | deviceStatus | Contains information about the smartphone device. Is voice recognition on or off, has a bluetooth connection been established, is a call active, is the phone in roaming mode, is a text message available, the battery level, the status of the mono and stereo output channels, the signal level, the primary audio source, whether or not an emergency call is currently taking place |||
@@ -20,7 +21,7 @@ You will only have access to vehicle data that is allowed to your `appName` and 
 | Emergency event | emergencyEvent | The type of emergency: frontal, side, rear, rollover, no event, not supported, fault. Fuel cutoff status: normal operation, fuel is cut off, fault. The roll over status: yes, no, no event, not supported, fault. The maximum change in velocity. Whether or not multiple emergency events have occurred |||
 | Engine Oil Life | engineOilLife | The estimated percentage (0% - 100%) of remaining oil life of the engine | RPC v5.0+ ||
 | Engine Torque | engineTorque | Torque value for engine (in Nm) on non-diesel variants |  ||
-| External Temperature | externalTemperature | The external temperature in degrees celsius |||
+| External Temperature | externalTemperature | The external temperature in degrees celsius || RPC v7.1 |
 | Fuel Level | fuelLevel | The fuel level in the tank (percentage) || RPC v7.0 |
 | Fuel Level State | fuelLevel_State | The fuel level state: Unknown, Normal, Low, Fault, Alert, or Not Supported || RPC v7.0 |
 | Fuel Range | fuelRange | The estimate range in KM the vehicle can travel based on fuel level and consumption. As of RPC 7.0, this also contains Fuel Level and Fuel Level State information. | RPC v5.0+ ||
@@ -33,6 +34,7 @@ You will only have access to vehicle data that is allowed to your `appName` and 
 | Odometer | odometer | Odometer reading in km |||
 | PRNDL | prndl | The selected gear the car is in: park, reverse, neutral, drive, sport, low gear, first, second, third, fourth, fifth, sixth, seventh or eighth gear, unknown, or fault ||RPC v7.0 |
 | RPM | rpm | The number of revolutions per minute of the engine |||
+| Seat Occupancy | seatOccupancy | The status of the seats that show whether each seat is occupied and belted or not | RPC v7.1+ ||
 | Speed | speed | Speed in KPH |||
 | Stability Control Status | stabilityControlsStatus | Status of the vehicle's stability control and trailer sway control | RPC v7.0+ ||
 | Steering Wheel Angle | steeringWheelAngle | Current angle of the steering wheel (in degrees) |||
