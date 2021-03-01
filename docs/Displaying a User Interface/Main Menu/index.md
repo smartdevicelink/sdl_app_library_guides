@@ -148,8 +148,8 @@ The `AddCommand` RPC can be used to add items to the root menu or to a submenu. 
 To create a submenu using RPCs, you must use a `AddSubMenu` RPC with a unique id. When a response is received from the SDL Core, check if the submenu was added successfully. If it was, send an `AddCommand` RPC for each item in the submenu.
 
 @![iOS, android, javaEE, javaSE]
-## Duplicate Menu Titles (SDL @![android, javaEE, javaSE]v5.0+!@@![iOS]v7.1+!@)
-Starting with SDL @![android, javaEE, javaSE]v5.0+!@@![iOS]v7.1+!@ menu cells and sub menu cells no longer require unique titles inorder to be presented.
+## Duplicate Menu Titles (SDL @![android, javaEE, javaSE]v5.1+!@@![iOS]v7.1+!@)
+Starting with SDL @![android, javaEE, javaSE]v5.1+!@@![iOS]v7.1+!@ menu cells and sub menu cells no longer require unique titles inorder to be presented.
 
 For example if you are trying to display points of interest as a list you can now have multiple locations with the same name that but are not the same location.
 

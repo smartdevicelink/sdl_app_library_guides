@@ -288,8 +288,8 @@ choiceSet.cancel();
 If you don't want to use the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE,javascript]`ScreenManager`!@, you can do this manually using the `Choice`, `CreateInteractionChoiceSet`. You will need to create `Choice`s, bundle them into `CreateInteractionChoiceSet`s. As this is no longer a recommended course of action, we will leave it to you to figure out how to manually do it.
 
 @![iOS, android, javaEE, javaSE]
-## Duplicate Choice Cell Titles (SDL @![android, javaEE, javaSE]v5.0+!@@![iOS]v7.1+!@)
-Starting with SDL @![android, javaEE, javaSE]v5.0+!@@![iOS]v7.1+!@ choice cells no longer require unique titles inorder to be presented.
+## Duplicate Choice Cell Titles (SDL @![android, javaEE, javaSE]v5.1+!@@![iOS]v7.1+!@)
+Starting with SDL @![android, javaEE, javaSE]v5.1+!@@![iOS]v7.1+!@ choice cells no longer require unique titles inorder to be presented.
 
 For example if you are trying to display points of interest as a list you can now have multiple locations with the same name that but are not the same location.
 
