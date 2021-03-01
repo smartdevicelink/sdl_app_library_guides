@@ -2,6 +2,7 @@
 The media clock is used by media apps to present the current timing information of a playing media item such as a song, podcast, or audiobook.
 
 The media clock consists of three parts: the progress bar, a current position label and a remaining time label. In addition you may want to update the play/pause button icon to reflect the current state of the audio. 
+You can adjust the media forward / back buttons as well, they could be of type Track or Time. Find more details [here](#setting-media-skip-indicators-rpc-v71)
 
 !!! NOTE
 Ensure your app has an `appType` of media and you are using the media template before implementing this feature.
@@ -233,26 +234,26 @@ The audio indicator is, essentially, the play / pause button. You can tell the s
 
 For example, a radio app will probably want two button states: play and stop. A music app, in contrast, will probably want a play and pause button. If you don't send any audio indicator information, a play / pause button will be displayed.
 
-## Setting Media Skip Indicators (RPC v7.1+)
-The media skip indicators are media controls that affects the next and previous buttons. They should have the ability to show time skip buttons that are commonly used by podcast & audiobook media.
+## Setting The Media Forward / Back Button Style (RPC v7.1+)
+As of RPC v7.1, you can set the style of the media forward / back buttons to show icons for skipping time (in seconds) forward and backward instead of skipping tracks. The skipping time style is common in podcast & audiobook media apps.
 
-Currently there are 2 types supported for seek indicators, Track and Time.
-If the type is Time, this number of seconds may be present alongside the skip indicator. It will indicate the number of seconds that the currently playing media will skip forward or backward.
+When you set the skip indicator style, you can set type `TRACK`, which is the default style that shows "skip forward" and "skip back" indicators. You can also set the new type `TIME`, which will allow you to set the number of seconds and display indicators for skipping forward and backward in time.
 
 ### Seek Indicator type TRACK
 ![Generic - Seek Indicator Type TRACK](assets/generic_sdlSeekStreamingIndicatorType_Track.png)
+
 @![iOS]
 ##### Objective-C
 ```objc
-SDLSeekStreamingIndicator *seekStreamingIndicatorTypeTrack = [[SDLSeekStreamingIndicator alloc] initWithType:SDLSeekIndicatorTypeTrack];
-SDLSetMediaClockTimer *mediaClock = [SDLSetMediaClockTimer countUpFromStartTimeInterval:30 toEndTimeInterval:253 playPauseIndicator:SDLAudioStreamingIndicatorPause forwardSeekIndicator:seekStreamingIndicatorTypeTrack backSeekIndicator:seekStreamingIndicatorTypeTrack countRate:nil];
+SDLSeekStreamingIndicator *trackStyle = [[SDLSeekStreamingIndicator alloc] initWithType:SDLSeekIndicatorTypeTrack];
+SDLSetMediaClockTimer *mediaClock = [SDLSetMediaClockTimer countUpFromStartTimeInterval:0 toEndTimeInterval:300 playPauseIndicator:SDLAudioStreamingIndicatorPause forwardSeekIndicator:trackStyle backSeekIndicator:trackStyle countRate:nil];
 [self.sdlManager sendRequest:mediaClock];
 ```
 
 ##### Swift
 ```swift
-let seekStreamingIndicatorTypeTrack = SDLSeekStreamingIndicator(type: .track)
-let mediaClock = SDLSetMediaClockTimer.countUp(from: 30, to: 253, playPauseIndicator: .pause, forwardSeekIndicator: seekStreamingIndicatorTypeTrack, backSeekIndicator: seekStreamingIndicatorTypeTrack, countRate: nil)
+let trackStyle = SDLSeekStreamingIndicator(type: .track)
+let mediaClock = SDLSetMediaClockTimer.countUp(from: 0, to: 300, playPauseIndicator: .pause, forwardSeekIndicator: trackStyle, backSeekIndicator: trackStyle, countRate: nil)
 sdlManager.send(mediaClock)
 ```
 !@
@@ -263,26 +264,41 @@ sdlManager.send(mediaClock)
 ```
 !@
 
+@![javascript]
+```js
+// TODO: Add code example that sets backSeekIndicator and forwardSeekIndicator in for type TRACK
+```
+!@
+
 ### Seek Indicator type TIME
 ![Generic - Seek Indicator Type TIME](assets/generic_sdlSeekStreamingIndicatorType_Time.png)
+
 @![iOS]
 ##### Objective-C
 ```objc
-SDLSeekStreamingIndicator *seekStreamingIndicatorTypeTime = [[SDLSeekStreamingIndicator alloc] initWithType:SDLSeekIndicatorTypeTrack seekTime:@(10)];
-SDLSetMediaClockTimer *mediaClock = [SDLSetMediaClockTimer countUpFromStartTimeInterval:30 toEndTimeInterval:253 playPauseIndicator:SDLAudioStreamingIndicatorPause forwardSeekIndicator:seekStreamingIndicatorTypeTime backSeekIndicator:seekStreamingIndicatorTypeTime countRate:nil];
+SDLSeekStreamingIndicator *seek10Style = [SDLSeekStreamingIndicator seekIndicatorWithSeekTime: @10];
+SDLSeekStreamingIndicator *seek45Style = [SDLSeekStreamingIndicator seekIndicatorWithSeekTime: @45];
+SDLSetMediaClockTimer *mediaClock = [SDLSetMediaClockTimer countUpFromStartTimeInterval:0 toEndTimeInterval:300 playPauseIndicator:SDLAudioStreamingIndicatorPause forwardSeekIndicator:seek45Style backSeekIndicator:seek10Style countRate:nil];
 [self.sdlManager sendRequest:mediaClock];
 ```
 
 ##### Swift
 ```swift
-let seekStreamingIndicatorTypeTime = SDLSeekStreamingIndicator(type: .time, seekTime: 10 as NSNumber)
-let mediaClock = SDLSetMediaClockTimer.countUp(from: 30, to: 253, playPauseIndicator: .pause, forwardSeekIndicator: seekStreamingIndicatorTypeTime, backSeekIndicator: seekStreamingIndicatorTypeTime, countRate: nil)
+let seek10Style = SDLSeekStreamingIndicator.seekIndicator(withSeekTime: NSNumber(10))
+let seek45Style = SDLSeekStreamingIndicator.seekIndicator(withSeekTime: NSNumber(45))
+let mediaClock = SDLSetMediaClockTimer.countUp(from: 0, to: 300, playPauseIndicator: .pause, forwardSeekIndicator: seek45Style, backSeekIndicator: seek10Style, countRate: nil)
 sdlManager.send(mediaClock)
 ```
 !@
 
 @![android, javaSE, javaEE]
 ```java
+// TODO: Add code example that sets backSeekIndicator and forwardSeekIndicator in for type TIME
+```
+!@
+
+@![javascript]
+```js
 // TODO: Add code example that sets backSeekIndicator and forwardSeekIndicator in for type TIME
 ```
 !@
