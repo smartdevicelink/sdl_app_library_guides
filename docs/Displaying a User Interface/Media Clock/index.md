@@ -2,7 +2,8 @@
 The media clock is used by media apps to present the current timing information of a playing media item such as a song, podcast, or audiobook.
 
 The media clock consists of three parts: the progress bar, a current position label and a remaining time label. In addition you may want to update the play/pause button icon to reflect the current state of the audio. 
-You can adjust the media forward / back buttons as well, they could be of type Track or Time. Find more details [here](#setting-media-skip-indicators-rpc-v71)
+
+You can adjust the media forward / back buttons as well, they could be of type Track or Time. Find more details [here](#setting-the-media-forward-back-button-style-rpc-v71).
 
 !!! NOTE
 Ensure your app has an `appType` of media and you are using the media template before implementing this feature.
