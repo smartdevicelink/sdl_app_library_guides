@@ -43,7 +43,7 @@ The best way to create and update your menu is to the use the Screen Manager API
 To find out more information on how to create `voiceCommands` see the [related documentation](Speech and Audio/Setting Up Voice Commands).
 !@
 
-Newer head units (RPC v7.1+) supports the implementation of secondaryText, tertiaryText and secondaryArtwork. This new feature is displayed [above](#menu-template).
+Newer head units (RPC v7.1+) supports the implementation of secondaryText, tertiaryText and secondaryArtwork which gives the user a richer experience when there is a need to display more data. This new feature is shown [above](#menu-template).
 
 @![iOS]
 ##### Objective-C
