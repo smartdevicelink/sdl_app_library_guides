@@ -30,6 +30,7 @@ sdlManager.send(mediaClock)
 
 @![android, javaSE, javaEE]
 ```java
+// TODO: Update mediaClock to support forward/back seek indicator
 SetMediaClockTimer mediaClock = new SetMediaClockTimer().countUpFromStartTimeInterval(30, 253, AudioStreamingIndicator.PAUSE);
 sdlManager.sendRPC(mediaClock);
 ```
@@ -37,6 +38,7 @@ sdlManager.sendRPC(mediaClock);
 
 @![javascript]
 ```js
+// TODO: Update mediaClock to support forward/back seek indicator
 const mediaClock = new SDL.rpc.messages.SetMediaClockTimer()
     .setUpdateMode(SDL.rpc.enums.UpdateMode.COUNTUP)
     .setStartTime(
@@ -73,6 +75,7 @@ sdlManager.send(mediaClock)
 
 @![android, javaSE, javaEE]
 ```java
+// TODO: Update mediaClock to support forward/back seek indicator
 SetMediaClockTimer mediaClock = new SetMediaClockTimer().countDownFromStartTimeInterval(600, 0, AudioStreamingIndicator.PAUSE);
 sdlManager.sendRPC(mediaClock);
 ```
@@ -80,6 +83,7 @@ sdlManager.sendRPC(mediaClock);
 
 @![javascript]
 ```js
+// TODO: Update mediaClock to support forward/back seek indicator
 const mediaClock = new SDL.rpc.messages.SetMediaClockTimer()
     .setUpdateMode(SDL.rpc.enums.UpdateMode.COUNTDOWN)
     .setStartTime(
@@ -141,6 +145,7 @@ sdlManager.sendRPC(mediaClock);
 ```
 
 ```java
+// TODO: Update mediaClock to support forward/back seek indicator
 SetMediaClockTimer mediaClock = new SetMediaClockTimer().resumeWithPlayPauseIndicator(AudioStreamingIndicator.PAUSE);
 sdlManager.sendRPC(mediaClock);
 ```
@@ -164,6 +169,7 @@ sdlManager.sendRpc(mediaClock);
 ```
 
 ```js
+// TODO: Update mediaClock to support forward/back seek indicator
 // Resume the progress bar from its current location and set the play / pause indicator to PAUSE
 const mediaClock = new SDL.rpc.messages.SetMediaClockTimer()
     .setUpdateMode(SDL.rpc.enums.UpdateMode.RESUME)
