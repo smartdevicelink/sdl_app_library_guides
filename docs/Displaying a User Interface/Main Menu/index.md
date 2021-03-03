@@ -43,13 +43,13 @@ The best way to create and update your menu is to the use the Screen Manager API
 To find out more information on how to create `voiceCommands` see the [related documentation](Speech and Audio/Setting Up Voice Commands).
 !@
 
-Newer head units (RPC v7.1+) supports the implementation of secondaryText, tertiaryText and secondaryArtwork which gives the user a richer experience when there is a need to display more data. This new feature is shown [above](#menu-template).
+Head units supporting RPC v7.1+ may support displaying `secondaryText`, `tertiaryText`, and `secondaryArtwork`. This gives the user a richer experience by displaying more data.
 
 @![iOS]
 ##### Objective-C
 ```objc
 // Create the menu cell
-SDLMenuCell *cell = [[SDLMenuCell alloc] initWithTitle:<#NSString#> icon:<#SDLArtwork#> voiceCommands:<#@[NSString]#> secondaryText:<#(nullable NSString *)#> tertiaryText:<#(nullable NSString *)#> secondaryArtwork:<#(nullable SDLArtwork *)#> handler:^(SDLTriggerSource  _Nonnull triggerSource) {
+SDLMenuCell *cell = [[SDLMenuCell alloc] initWithTitle:<#NSString#> secondaryText:<#(nullable NSString *)#> tertiaryText:<#(nullable NSString *)#> icon:<#SDLArtwork#> secondaryArtwork:<#(nullable SDLArtwork *)#> voiceCommands:<#@[NSString]#> handler:^(SDLTriggerSource  _Nonnull triggerSource) {
     // Menu item was selected, check the `triggerSource` to know if the user used touch or voice to activate it
     <#Handle the cell's selection#>
 }];
@@ -60,7 +60,7 @@ self.sdlManager.screenManager.menu = @[cell];
 ##### Swift
 ```swift
 // Create the menu cell
-let cell = SDLMenuCell(title: <#String#>, icon: <#SDLArtwork?#>, voiceCommands: <#[String]?#>, secondaryText: <#T##String?#>, tertiaryText: <#T##String?#>, secondaryArtwork: <#T##SDLArtwork?#>) { (triggerSource: SDLTriggerSource) in
+let cell = SDLMenuCell(title: <#String#>, secondaryText: <#T##String?#>, tertiaryText: <#T##String?#>, icon: <#SDLArtwork?#>, secondaryArtwork: <#T##SDLArtwork?#>, voiceCommands: <#[String]?#>) { (triggerSource: SDLTriggerSource) in
     // Menu item was selected, check the `triggerSource` to know if the user used touch or voice to activate it
     <#Handle the cell's selection#>
 }
@@ -94,25 +94,25 @@ Adding a submenu is as simple as adding subcells to a !@@![iOS]`SDLMenuCell`!@@!
 ##### Objective-C
 ```objc
 // Create the inner menu cell
-SDLMenuCell *cell = [[SDLMenuCell alloc] initWithTitle:<#NSString#> icon:<#SDLArtwork#> voiceCommands:<#@[NSString]#> secondaryText:<#(nullable NSString *)#> tertiaryText:<#(nullable NSString *)#> secondaryArtwork:<#(nullable SDLArtwork *)#> handler:^(SDLTriggerSource  _Nonnull triggerSource) {
+SDLMenuCell *cell = [[SDLMenuCell alloc] initWithTitle:<#NSString#> secondaryText:<#(nullable NSString *)#> tertiaryText:<#(nullable NSString *)#> icon:<#SDLArtwork#> secondaryArtwork:<#(nullable SDLArtwork *)#> voiceCommands:<#@[NSString]#> handler:^(SDLTriggerSource  _Nonnull triggerSource) {
     // Menu item was selected, check the `triggerSource` to know if the user used touch or voice to activate it
     <#Handle the cell's selection#>
 }];
 
 // Create and set the submenu cell
-SDLMenuCell *submenuCell = [[SDLMenuCell alloc] initWithTitle:<#NSString#> icon:<#SDLArtwork?#> submenuLayout:<#SDLMenuLayout#> subCells:@[cell] secondaryText:<#(nullable NSString *)#> tertiaryText:<#(nullable NSString *)#> secondaryArtwork:<#(nullable SDLArtwork *)#>];
+SDLMenuCell *submenuCell = [[SDLMenuCell alloc] initWithTitle:<#NSString#> secondaryText:<#(nullable NSString *)#> tertiaryText:<#(nullable NSString *)#> icon:<#SDLArtwork?#> secondaryArtwork:<#(nullable SDLArtwork *)#> submenuLayout:<#SDLMenuLayout#> subCells:@[cell]];
 self.sdlManager.screenManager.menu = @[submenuCell];
 ```
 
 ##### Swift
 ```swift
 // Create the inner menu cell
-let cell = SDLMenuCell(title: <#String#>, icon: <#SDLArtwork?#>, voiceCommands: <#[String]?#>, secondaryText: <#T##String?#>, tertiaryText: <#T##String?#>, secondaryArtwork: <#T##SDLArtwork?#>) { (triggerSource: SDLTriggerSource) in
+let cell = SDLMenuCell(title: <#String#>, secondaryText: <#T##String?#>, tertiaryText: <#T##String?#>, icon: <#SDLArtwork?#>, secondaryArtwork: <#T##SDLArtwork?#>, voiceCommands: <#[String]?#>) { (triggerSource: SDLTriggerSource) in
     // Menu item was selected, check the `triggerSource` to know if the user used touch or voice to activate it
     <#Handle the cell's selection#>
 }
 
-let submenuCell = SDLMenuCell(title: <#String#>, icon: <#SDLArtwork?#>, submenuLayout: <#SDLMenuLayout#>, subCells: [cell], secondaryText: <#T##String?#>, tertiaryText: <#T##String?#>, secondaryArtwork: <#T##SDLArtwork?#>)
+let submenuCell = SDLMenuCell(title: <#String#>, secondaryText: <#T##String?#>, tertiaryText: <#T##String?#>, icon: <#SDLArtwork?#>, secondaryArtwork: <#T##SDLArtwork?#>, submenuLayout: <#SDLMenuLayout#>, subCells: [cell])
 sdlManager.screenManager.menu = [submenuCell]
 ```
 !@
