@@ -19,7 +19,7 @@ Please note that if you are integrating an sdl_ios version less than v6.3, the e
 !@
 
 ### 1. Getting and Subscribing to Available Services
-To get information on all services published on the system, as well as on changes to published services, you will use the `SystemCapabilityManager` to get the information.
+To get information on all services published on the system, as well as on changes to published services, you will use the `SystemCapabilityManager`.
 
 @![iOS]
 ##### Objective-C
