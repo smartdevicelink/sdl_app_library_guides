@@ -125,7 +125,13 @@ extension <#Class Name#>: SDLKeyboardDelegate {
         <#Use an alternate keyboard configuration. The keypressMode, limitedCharacterSet, and autoCompleteText will be overridden by the screen manager#>
     }
 
-    // @todo implement onKeyboardInputMaskHasChanged
+    func keyboardDidUpdateInputMask(_ isEnabled: Bool) {
+        if isEnabled {
+            <#The user turned on masking the input#>
+        } else {
+            <#The user turned off masking the input#>
+        }
+    }
 }
 ```
 !@
@@ -199,18 +205,18 @@ KeyboardListener keyboardListener = new KeyboardListener() {
 
 @![iOS, android, javaSE, javaEE]
 ### Configuring the Keyboard Properties
-You can change the default global keyboard properties such as language, layout, and whether or not you want the input to be masked, by sending a `SetGlobalProperties` request. If you are using the screen manager, you can change the global keyboard properties by calling `setKeyboardConfiguration()` with the new `KeyboardProperties` that you would like to set. For example, to set the keyboard layout to `NUMERIC` and make the input masked, you can set the properties as the following: 
+You can change default keyboard properties such as the language, layout, or whether you want the input to be masked, by updating @![iOS]`sdlManager.screenManager.keyboardConfiguration!@@![android, javaSE, javaEE]sdlManager.getScreenManager().setKeyboardConfiguration()!@. For example, to set the keyboard layout to a US numeric keyboard that allows input masking, you can set the properties as the following: 
 !@
 
 @![iOS]
 ##### Objective-C
 ```objc
-// todo add code to set keyboard properties 
+self.sdlManager.screenManager.keyboardConfiguration = [[SDLKeyboardProperties alloc] initWithLanguage:SDLLanguageEnUs keyboardLayout:SDLKeyboardLayoutNumeric keypressMode:nil limitedCharacterList:nil autoCompleteList:nil maskInputCharacters:SDLKeyboardEventInputKeyMaskEnabled customKeys:nil];
 ```
 
 ##### Swift
 ```swift
-// todo add code to set keyboard properties 
+sdlManager.screenManager.keyboardConfiguration = SDLKeyboardProperties(language: .enUs, keyboardLayout: .numeric, keypressMode: nil, limitedCharacterList: nil, autoCompleteList: nil, maskInputCharacters: .enableInputKeyMask, customKeys: nil)
 ```
 !@
 
@@ -225,9 +231,15 @@ sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
 ```
 !@
 
-@![iOS, android, javaSE, javaEE]
+@![android, javaSE, javaEE]
 !!! NOTE
-If you want to change the keyboard properties for only one present keyboard session and keep the default global keyboard properties unchanged, you can instead pass the `KeyboardProperties` to the `presentKeyboard()` that was discussed in the aforementioned `Presenting a Keyboard` section
+If you want to change the keyboard properties for only one keyboard session and keep the default global keyboard properties unchanged, you can instead pass the `KeyboardProperties` to the `presentKeyboard()` that was discussed in the `Presenting a Keyboard` section.
+!!!
+!@
+
+@![iOS]
+!!! NOTE
+If you want to change the keyboard properties for only one keyboard session and keep the default global keyboard properties unchanged, you can instead return a `SDLKeyboardProperties` in the `SDLKeyboardDelegate.customKeyboardConfiguration` method.
 !!!
 !@
 
