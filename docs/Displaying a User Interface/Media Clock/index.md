@@ -17,13 +17,13 @@ The play / pause indicator parameter is used to update the play / pause button t
 @![iOS]
 ##### Objective-C
 ```objc
-SDLSetMediaClockTimer *mediaClock = [SDLSetMediaClockTimer countUpFromStartTimeInterval:30 toEndTimeInterval:300 playPauseIndicator:SDLAudioStreamingIndicatorPause forwardSeekIndicator:trackStyle backSeekIndicator:trackStyle countRate:nil];
+SDLSetMediaClockTimer *mediaClock = [SDLSetMediaClockTimer countUpFromStartTimeInterval:0 toEndTimeInterval:300 playPauseIndicator:SDLAudioStreamingIndicatorPause forwardSeekIndicator:nil backSeekIndicator:nil countRate:nil];
 [self.sdlManager sendRequest:mediaClock];
 ```
 
 ##### Swift
 ```swift
-let mediaClock = SDLSetMediaClockTimer.countUp(from: 30, to: 253, playPauseIndicator: .pause, forwardSeekIndicator: trackStyle, backSeekIndicator: trackStyle, countRate: nil)
+let mediaClock = SDLSetMediaClockTimer.countUp(from: 0, to: 300, playPauseIndicator: .pause, forwardSeekIndicator: nil, backSeekIndicator: nil, countRate: nil)
 sdlManager.send(mediaClock)
 ```
 !@
@@ -62,13 +62,13 @@ Counting down is the opposite of counting up (I know, right?). In order to count
 @![iOS]
 ##### Objective-C
 ```objc
-SDLSetMediaClockTimer *mediaClock = [SDLSetMediaClockTimer countDownFromStartTime:600 toEndTime:0 playPauseIndicator:SDLAudioStreamingIndicatorPause forwardSeekIndicator:trackStyle backSeekIndicator:trackStyle countRate:nil];
+SDLSetMediaClockTimer *mediaClock = [SDLSetMediaClockTimer countDownFromStartTimeInterval:600 toEndTimeInterval:0 playPauseIndicator:SDLAudioStreamingIndicatorPause forwardSeekIndicator:nil backSeekIndicator:nil countRate:nil];
 [self.sdlManager sendRequest:mediaClock];
 ```
 
 ##### Swift
 ```swift
-let mediaClock = SDLSetMediaClockTimer.countDown(from: 600, to: 0, playPauseIndicator: .pause, forwardSeekIndicator: trackStyle, backSeekIndicator: trackStyle, countRate: nil)
+let mediaClock = SDLSetMediaClockTimer.countDown(from: 600, to: 0, playPauseIndicator: .pause, forwardSeekIndicator: nil, backSeekIndicator: nil, countRate: nil)
 sdlManager.send(mediaClock)
 ```
 !@
@@ -112,7 +112,7 @@ SDLSetMediaClockTimer *mediaClock = [SDLSetMediaClockTimer pauseWithPlayPauseInd
 ```
 
 ```objc
-SDLSetMediaClockTimer *mediaClock = [SDLSetMediaClockTimer resumeWithPlayPauseIndicator:SDLAudioStreamingIndicatorPause forwardSeekIndicator:trackStyle backSeekIndicator:trackStyle countRate:nil];
+SDLSetMediaClockTimer *mediaClock = [SDLSetMediaClockTimer resumeWithPlayPauseIndicator:SDLAudioStreamingIndicatorPause forwardSeekIndicator:nil backSeekIndicator:nil countRate:nil];
 [self.sdlManager sendRequest:mediaClock];
 ```
 
@@ -128,7 +128,7 @@ sdlManager.send(mediaClock)
 ```
 
 ```swift
-let mediaClock = SDLSetMediaClockTimer.resume(playPauseIndicator: .pause, forwardSeekIndicator: trackStyle, backSeekIndicator: trackStyle, countRate: nil)
+let mediaClock = SDLSetMediaClockTimer.resume(playPauseIndicator: .pause, forwardSeekIndicator: nil, backSeekIndicator: nil, countRate: nil)
 sdlManager.send(mediaClock)
 ```
 
