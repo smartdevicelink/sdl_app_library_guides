@@ -43,7 +43,9 @@ The best way to create and update your menu is to the use the Screen Manager API
 To find out more information on how to create `voiceCommands` see the [related documentation](Speech and Audio/Setting Up Voice Commands).
 !@
 
-Head units supporting RPC v7.1+ may support displaying `secondaryText`, `tertiaryText`, and `secondaryArtwork`. This gives the user a richer experience by displaying more data.
+!!! NOTE
+Head units supporting RPC v7.1+ may support displaying `secondaryText`, `tertiaryText`, and `secondaryArtwork`. This gives the user a richer experience by displaying more data. Attempting to set this data on head units that doe not support RPC 7.1+ will result in that data not being displayed to the user. 
+!!!
 
 @![iOS]
 ##### Objective-C
@@ -60,7 +62,7 @@ self.sdlManager.screenManager.menu = @[cell];
 ##### Swift
 ```swift
 // Create the menu cell
-let cell = SDLMenuCell(title: <#String#>, secondaryText: <#T##String?#>, tertiaryText: <#T##String?#>, icon: <#SDLArtwork?#>, secondaryArtwork: <#T##SDLArtwork?#>, voiceCommands: <#[String]?#>) { (triggerSource: SDLTriggerSource) in
+let cell = SDLMenuCell(title: <#String#>, secondaryText: <#String?#>, tertiaryText: <#String?#>, icon: <#SDLArtwork?#>, secondaryArtwork: <#SDLArtwork?#>, voiceCommands: <#[String]?#>) { (triggerSource: SDLTriggerSource) in
     // Menu item was selected, check the `triggerSource` to know if the user used touch or voice to activate it
     <#Handle the cell's selection#>
 }
@@ -71,7 +73,7 @@ sdlManager.screenManager.menu = [cell]
 
 @![android, javaSE, javaEE]
 ```java
-// TODO: Update cell to the new constructor method that supports secondaryText, tertiaryText, secondaryArtwork
+// TODO: Update cell to the new constructor method?
 // Create the menu cell
 MenuCell cell = new MenuCell("Cell text", null, Collections.singletonList("cell text"), new MenuSelectionListener() {
     @Override
@@ -107,19 +109,19 @@ self.sdlManager.screenManager.menu = @[submenuCell];
 ##### Swift
 ```swift
 // Create the inner menu cell
-let cell = SDLMenuCell(title: <#String#>, secondaryText: <#T##String?#>, tertiaryText: <#T##String?#>, icon: <#SDLArtwork?#>, secondaryArtwork: <#T##SDLArtwork?#>, voiceCommands: <#[String]?#>) { (triggerSource: SDLTriggerSource) in
+let cell = SDLMenuCell(title: <#String#>, secondaryText: <#String?#>, tertiaryText: <#String?#>, icon: <#SDLArtwork?#>, secondaryArtwork: <#SDLArtwork?#>, voiceCommands: <#[String]?#>) { (triggerSource: SDLTriggerSource) in
     // Menu item was selected, check the `triggerSource` to know if the user used touch or voice to activate it
     <#Handle the cell's selection#>
 }
 
-let submenuCell = SDLMenuCell(title: <#String#>, secondaryText: <#T##String?#>, tertiaryText: <#T##String?#>, icon: <#SDLArtwork?#>, secondaryArtwork: <#T##SDLArtwork?#>, submenuLayout: <#SDLMenuLayout#>, subCells: [cell])
+let submenuCell = SDLMenuCell(title: <#String#>, secondaryText: <#String?#>, tertiaryText: <#String?#>, icon: <#SDLArtwork?#>, secondaryArtwork: <#SDLArtwork?#>, submenuLayout: <#SDLMenuLayout#>, subCells: [cell])
 sdlManager.screenManager.menu = [submenuCell]
 ```
 !@
 
 @![android, javaSE, javaEE]
 ```java
-// TODO: Update cell to the new constructor method that supports secondaryText, tertiaryText, secondaryArtwork
+// TODO: Update cell to the new constructor method?
 // Create the inner menu cell
 MenuCell innerCell = new MenuCell("inner menu cell", null, Collections.singletonList("inner menu cell"), new MenuSelectionListener() {
     @Override
