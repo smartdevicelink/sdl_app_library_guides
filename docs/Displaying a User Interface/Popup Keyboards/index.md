@@ -273,7 +273,7 @@ sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapa
 });
 ```
 !@
-@![android, javaSE, javaEE]
+@![iOS]
 @todo add iOS implementation 
 !@
 
