@@ -205,7 +205,7 @@ KeyboardListener keyboardListener = new KeyboardListener() {
 
 @![iOS, android, javaSE, javaEE]
 ### Configuring the Keyboard Properties
-You can change default keyboard properties such as the language, layout, or whether you want the input to be masked, by updating @![iOS]`sdlManager.screenManager.keyboardConfiguration!@@![android, javaSE, javaEE]sdlManager.getScreenManager().setKeyboardConfiguration()!@. For example, to set the keyboard layout to a US numeric keyboard that allows input masking, you can set the properties as the following: 
+You can change default keyboard properties such as the language, layout, or whether you want the input to be masked, by updating @![iOS]`sdlManager.screenManager.keyboardConfiguration!@ @![android, javaSE, javaEE]sdlManager.getScreenManager().setKeyboardConfiguration()!@. For example, to set the keyboard layout to a US numeric keyboard that allows input masking, you can set the properties as the following: 
 !@
 
 @![iOS]
