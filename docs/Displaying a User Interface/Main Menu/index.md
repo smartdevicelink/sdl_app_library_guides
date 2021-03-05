@@ -5,9 +5,6 @@ The SDL JavaScript Suite currently does not support the `MenuManager`. This will
 @![iOS, android, javaEE, javaSE]
 You have two different options when creating menus. One is to simply add items to the default menu available in every template. The other is to create a custom menu that pops up when needed. You can find more information about these popups in the [Popup Menus](Displaying a User Interface/Popup Menus) section.
 
-#### Menu Template
-![Generic - Menu Appearance](assets/Generic_menu_dark.png)
-
 !!! NOTE
 Every template has a main menu button. The position of this button varies between templates and cannot be removed from the template. Some OEMs may format certain templates to not display the main menu button if you have no menu items (such as the navigation map view).
 !!!
@@ -44,8 +41,13 @@ To find out more information on how to create `voiceCommands` see the [related d
 !@
 
 !!! NOTE
-Head units supporting RPC v7.1+ may support displaying `secondaryText`, `tertiaryText`, and `secondaryArtwork`. This gives the user a richer experience by displaying more data. Attempting to set this data on head units that doe not support RPC 7.1+ will result in that data not being displayed to the user. 
+Head units supporting RPC v7.1+ may support displaying `secondaryText`, `tertiaryText`, and `secondaryArtwork`. This gives the user a richer experience by displaying more data. Attempting to set this data on head units that do not support RPC 7.1+ will result in that data not being displayed to the user.
+
+To determine if the head unit supports displaying these fields, you can check the `SystemCapabilityManager`'s !@@![iOS]`defaultMainWindowCapability.textFields` / `defaultMainWindowCapability.imageFields`!@@![android,javaEE,javaSE] `getDefaultMainWindowCapability().getTextFields()` / `getDefaultMainWindowCapability().getImageFields()`!@@![iOS, android, javaEE, javaSE] properties after successfully connecting to the head unit. Then check those arrays for objects with the related text / image field names.
+!@
 !!!
+
+![Generic - Menu Appearance](assets/Generic_menu_dark.png)
 
 @![iOS]
 ##### Objective-C
