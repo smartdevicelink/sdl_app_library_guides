@@ -15,7 +15,7 @@ Keyboards are unavailable for use in many countries when the driver is distracte
 !!!
 
 ##### Keyboard Search
-![SYNC® 3 - Keyboard Search](assets/SYNC3_keyboard_search.png)
+![Keyboard Search](assets/keyboard_search.png)
 
 !@
 
@@ -205,19 +205,11 @@ KeyboardListener keyboardListener = new KeyboardListener() {
 
 @![iOS, android, javaSE, javaEE]
 ### Configuring the Keyboard Properties
-You can change default keyboard properties such as the language, layout, or whether you want the input to be masked, by updating !@@![iOS]`sdlManager.screenManager.keyboardConfiguration`!@@![android, javaSE, javaEE]`sdlManager.getScreenManager().setKeyboardConfiguration()`!@@![iOS, android, javaSE, javaEE]. For example, to set the keyboard layout to a US numeric keyboard that allows input masking, you can set the properties as the following: 
-!@
+You can change default keyboard properties by updating !@@![iOS]`sdlManager.screenManager.keyboardConfiguration`!@@![android, javaSE, javaEE]`sdlManager.getScreenManager().setKeyboardConfiguration()`!@@![iOS, android, javaSE, javaEE]. 
 
-@![iOS]
-##### Objective-C
-```objc
-self.sdlManager.screenManager.keyboardConfiguration = [[SDLKeyboardProperties alloc] initWithLanguage:SDLLanguageEnUs keyboardLayout:SDLKeyboardLayoutNumeric keypressMode:nil limitedCharacterList:nil autoCompleteList:nil maskInputCharacters:SDLKeyboardEventInputKeyMaskEnabled customKeys:nil];
-```
-
-##### Swift
-```swift
-sdlManager.screenManager.keyboardConfiguration = SDLKeyboardProperties(language: .enUs, keyboardLayout: .numeric, keypressMode: nil, limitedCharacterList: nil, autoCompleteList: nil, maskInputCharacters: .enableInputKeyMask, customKeys: nil)
-```
+@![iOS, android, javaSE, javaEE]
+For example, to set the keyboard layout to a US numeric keyboard and allow the user to mask the input characters, you can set the properties as the following: 
+![Numeric Keyboard](assets/keyboard_numeric_masked.png)
 !@
 
 @![android, javaSE, javaEE]
@@ -230,6 +222,12 @@ KeyboardProperties keyboardConfiguration = new KeyboardProperties()
 sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
 ```
 !@
+
+@![iOS]
+@todo add iOS implementation 
+!@
+
+![Custom Keys](assets/keyboard_querty_custom_keys.png)
 
 @![android, javaSE, javaEE]
 !!! NOTE
