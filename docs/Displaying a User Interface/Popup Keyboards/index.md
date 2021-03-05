@@ -227,7 +227,25 @@ sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
 @todo add iOS implementation 
 !@
 
+@![iOS, android, javaSE, javaEE]
+Each keyboard layout has a number of keys that can be customized to more serve the app needs. For example, you can set two of the cutomizable keys in QUERY layout to be "!" and "?":
 ![Custom Keys](assets/keyboard_querty_custom_keys.png)
+!@
+
+@![android, javaSE, javaEE]
+```java
+KeyboardProperties keyboardConfiguration = new KeyboardProperties()
+        .setKeyboardLayout(KeyboardLayout.QWERTY)
+        .setCustomKeys(Arrays.asList("!", "?"))
+        .setMaskInputCharacters(KeyboardInputMask.ENABLE_INPUT_KEY_MASK);
+
+sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
+```
+!@
+
+@![iOS]
+@todo add iOS implementation 
+!@
 
 @![android, javaSE, javaEE]
 !!! NOTE
