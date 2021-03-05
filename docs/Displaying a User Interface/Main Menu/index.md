@@ -16,11 +16,13 @@ Every template has a main menu button. The position of this button varies betwee
 On some newer head units, you may have the option to display menu items as a grid of tiles instead of the default list layout. To determine if the head unit supports the tiles layout, check the `SystemCapabilityManager`'s !@@![iOS]`defaultMainWindowCapability.menuLayoutsAvailable`!@@![android,javaEE,javaSE] `getDefaultMainWindowCapability().getMenuLayoutsAvailable()`!@@![iOS, android, javaEE, javaSE] property after successfully connecting to the head unit. To set the menu layout using the screen manager, you will need to set the `ScreenManager.menuConfiguration` property.
 !@
 
+@![iOS, android, javaEE, javaSE]
 #### List Menu Layout
 ![Generic - Menu Appearance List Layout](assets/Generic_list_layout_dark.png)
 
 #### Grid Menu Layout
 ![Generic - Menu Appearance Grid Layout](assets/Generic_grid_layout_dark.png)
+!@
 
 @![iOS]
 ##### Objective-C
