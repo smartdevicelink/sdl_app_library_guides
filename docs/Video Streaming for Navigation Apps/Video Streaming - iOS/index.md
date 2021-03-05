@@ -110,3 +110,44 @@ if !streamManager.sendVideoData(imageBuffer) {
 
 ### Handling HMI Scaling (RPC v6.0+)
 If the HMI scales the video stream, you will have to handle scaling the projected view, touches and haptic rectangles yourself (this is all handled for you behind the scenes in the `CarWindow` API). To find out if the HMI scales the video stream, you must for query and check the `SDLVideoStreamingCapability` for the `scale` property. Please check the [Adaptive Interface Capabilities](Displaying a User Interface/Adaptive Interface Capabilities) section for more information on how to query for this property using the system capability manager.  
+
+### Supporting Different Video Streaming Window Sizes (SDL v7.1+, RPC v7.1+)
+You can specify two `SDLVideoStreamingRange` parameters when you want to start your video stream, one range will be for landscape orientation and one range will be for portrait orientation.
+In these `SDLVideoStreamingRange` parameters you can define different view sizes that you wish to support in the event that the HMI resizes the view during the stream. (i.e. to a collapsed view, split screen, preview mode or picture-in-picture).
+In the `SDLVideoStreamingRange` you will define a minimum and maximum Resolution, minimum diagonal, and a minimum and maximum aspect Ratio. Any values you do not wish to use should be set to `nil`.
+If you want to support all possible landscape or portrait sizes you can simply pass `nil` for `supportedLandscapeStreamingRange`, `supportedPortraitStreamingRange`, or both.
+If you wish to only support landscape orientation or only support portrait orientation you can "disable" the range by passing a `SDLVideoStreamingRange` with all 0 values set.
+
+##### Objective-C
+```objective-c
+//TODO examples
+//disable example
+//example of only resolution set range
+//example of only aspect ratio set range
+```
+
+##### Swift
+```swift
+//TODO examples
+//disable example
+//example of only resolution set range
+//example of only aspect ratio set range
+```
+
+!!! NOTE
+If you disable both the `supportedLandscapeStreamingRange` and `supportedPortraitStreamingRange`, the video will not stream
+!!!
+
+If the HMI resizes the view during the stream, the video stream will automatically restart with the new size.
+If desired, you can subscribe to screen size updates via the SDLStreamingVideoDelegate.
+##### Objective-C
+```objective-c
+//TODO examples
+//Sub to delegate
+```
+
+##### Swift
+```swift
+//TODO examples
+//Sub to delegate
+```

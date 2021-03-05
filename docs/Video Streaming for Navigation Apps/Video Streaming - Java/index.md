@@ -1,4 +1,4 @@
-# Video Streaming (RPV v4.5+)
+# Video Streaming (RPC v4.5+)
 In order to stream video from an SDL app, we only need to manage a few things. For the most part, the library will handle the majority of logic needed to perform video streaming.
 
 ## SDL Remote Display
@@ -31,6 +31,12 @@ public static class MyDisplay extends SdlRemoteDisplay{
             }
         });
     }
+
+    //onViewResized is added in SDL v5.1+
+    @Override
+    public void onViewResized(int width, int height) {
+        DebugTool.logInfo(TAG, "Remote view new width and height ("+ width + ", " + height + ")");
+    }
 }
 ```
 
@@ -39,7 +45,7 @@ If you are obfuscating the code in your app, make sure to exclude your class tha
 !!!
 
 ## Managing the Stream
-The `VideoStreamingManager` can be used to start streaming video after the `SdlManager` has successfully been started. This is performed by calling the method `startRemoteDisplayStream(Context context, final Class<? extends SdlRemoteDisplay> remoteDisplay, final VideoStreamingParameters parameters, final boolean encrypted)`.
+The `VideoStreamingManager` can be used to start streaming video after the `SdlManager` has successfully been started. This is performed by calling the method `startRemoteDisplayStream(Context context, final Class<? extends SdlRemoteDisplay> remoteDisplay, final VideoStreamingParameters parameters, final boolean encrypted, VideoStreamingRange supportedLandscapeStreamingRange, VideoStreamingRange supportedPortraitStreamingRange)`.
 
 ```java
 public static class MyDisplay extends SdlRemoteDisplay {
@@ -58,6 +64,12 @@ public static class MyDisplay extends SdlRemoteDisplay {
         videoView.setVideoURI(Uri.parse(videoUri));
         videoView.start();
     }
+    
+    //onViewResized is added in SDL v5.1+
+    @Override
+    public void onViewResized(int width, int height) {
+        DebugTool.logInfo(TAG, "Remote view new width and height ("+ width + ", " + height + ")");
+    }
 }
 ```
 
@@ -67,7 +79,7 @@ if (sdlManager.getVideoStreamManager() != null) {
         @Override
         public void onComplete(boolean success) {
             if (success) {
-                sdlManager.getVideoStreamManager().startRemoteDisplayStream(getApplicationContext(), MyDisplay.class, null, false);
+                sdlManager.getVideoStreamManager().startRemoteDisplayStream(getApplicationContext(), MyDisplay.class, null, false, null, null);
             } else {
                 DebugTool.logError(TAG, "Failed to start video streaming manager");
             }
@@ -99,4 +111,47 @@ builder.setRPCNotificationListeners(onRPCNotificationListenerMap);
 ```
 
 ### Handling HMI Scaling (RPC v6.0+)
-If the HMI scales the video stream, you will have to handle scaling the projected view, touches and haptic rectangles yourself (this is all handled for you behind the scenes in the `VideoStreamManager`  API). To find out if the HMI scales the video stream, you must for query and check the `VideoStreamingCapability` for the `scale` property. Please check the [Adaptive Interface Capabilities](Displaying a User Interface/Adaptive Interface Capabilities) section for more information on how to query for this property using the system capability manager.  
+If the HMI scales the video stream, you will have to handle scaling the projected view, touches and haptic rectangles yourself (this is all handled for you behind the scenes in the `VideoStreamManager`  API). To find out if the HMI scales the video stream, you must for query and check the `VideoStreamingCapability` for the `scale` property. Please check the [Adaptive Interface Capabilities](Displaying a User Interface/Adaptive Interface Capabilities) section for more information on how to query for this property using the system capability manager.
+
+### Supporting Different Video Streaming Window Sizes (SDL v5.1+, RPC v7.1+)
+You can specify two `VideoStreamingRange` parameters when you want to start your video stream using the `startRemoteDisplay` method, one range will be for landscape orientation and one range will be for portrait orientation.
+In these `VideoStreamingRange` parameters you can define different view sizes that you wish to support in the event that the HMI resizes the view during the stream. (i.e. to a collapsed view, split screen, preview mode or picture-in-picture)
+In the `VideoStreamingRange` you will define a minimum and maximum Resolution, minimum diagonal, and a minimum and maximum aspect Ratio. Any values you do not wish to use should be set to `null`.
+If you want to support all possible landscape or portrait sizes you can simply pass `null` for `supportedLandscapeStreamingRange`, `supportedPortraitStreamingRange`, or both.
+If you wish to only support landscape orientation or only support portrait orientation you "disable" the range by passing a `VideoStreamingRange` with all 0 values set.
+
+```java
+//This VideoStreamingRange represents a disabled Range and can be passed if you do not wish to support landscape orientation or portrait orientation
+VideoStreamingRange disabledRange = new VideoStreamingRange(new Resolution(0, 0), new Resolution(0, 0), 0.0, 0.0, 0.0);
+
+//This VideoStreamingRange represents that we will support any resolution between 500x200 and 800x400 no matter the diagonal size or aspect ratio
+VideoStreamingRange landscapeRange = new VideoStreamingRange(new Resolution(500, 200), new Resolution(800, 400), null, null, null);
+
+//This VideoStreamingRange represents that we will support any aspect ratio between 1.0 and 2.5 no matter the resolution or diagonal size
+VideoStreamingRange portraitRange = new VideoStreamingRange(null, null, null, 1.0, 2.5);
+```
+
+!!! NOTE
+If you disable both the `supportedLandscapeStreamingRange` and `supportedPortraitStreamingRange`, the video will not stream
+!!!
+
+If the HMI resizes the view during the stream, the video stream will automatically restart with the new size and the `onViewResized` method you defined in your presentation class.
+```java
+public static class MyDisplay extends SdlRemoteDisplay{
+    public MyDisplay(Context context, Display display) {
+        super(context, display);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        //...
+    }
+
+    //onViewResized is added in SDL v5.1+
+    @Override
+    public void onViewResized(int width, int height) {
+        DebugTool.logInfo(TAG, "Remote view new width and height ("+ width + ", " + height + ")");
+        //Update presentation based on new resolution
+    }
+}   
+```
