@@ -260,7 +260,8 @@ sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapa
                 if (currentWindowID == PredefinedWindows.DEFAULT_WINDOW.getValue()) {
                     WindowCapability defaultMainWindowCapability = windowCapability;
                     KeyboardCapabilities keyboardCapabilities = windowCapability.getKeyboardCapabilities();
-                    // Check keyboardCapabilities to see what features are supported 
+                    List<KeyboardLayoutCapability> keyboardLayouts = keyboardCapabilities.getSupportedKeyboards(); // List of layouts and number of custom keys supported by each layout
+                    boolean maskInputSupported = keyboardCapabilities.getMaskInputCharactersSupported(); // Boolean represents whether masking is supported or not
                 }
             }
         }
