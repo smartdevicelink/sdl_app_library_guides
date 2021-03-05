@@ -268,7 +268,18 @@ sdlManager.send(mediaClock)
 
 @![javascript]
 ```js
-// TODO: Add code example that sets backSeekIndicator and forwardSeekIndicator in for type TRACK
+const streamingIndicator = new SDL.rpc.structs.SeekStreamingIndicator()
+    .setType(SDL.rpc.enums.SeekIndicatorType.TRACK);
+
+const mediaClock = new SDL.rpc.messages.SetMediaClockTimer()
+    .setUpdateMode(SDL.rpc.enums.UpdateMode.PAUSE)
+    .setForwardSeekIndicator(streamingIndicator)
+    .setBackSeekIndicator(streamingIndicator)
+    .setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PLAY);
+// sdl_javascript_suite v1.1+
+sdlManager.sendRpcResolve(mediaClock);
+// Pre sdl_javascript_suite v1.1
+sdlManager.sendRpc(mediaClock);
 ```
 !@
 
@@ -301,6 +312,14 @@ sdlManager.send(mediaClock)
 
 @![javascript]
 ```js
-// TODO: Add code example that sets backSeekIndicator and forwardSeekIndicator in for type TIME
+const streamingIndicator = new SDL.rpc.structs.SeekStreamingIndicator()
+    .setType(SDL.rpc.enums.SeekIndicatorType.TIME)
+    .setSeekTime(5);
+
+const mediaClock = new SDL.rpc.messages.SetMediaClockTimer()
+    .setUpdateMode(SDL.rpc.enums.UpdateMode.PAUSE)
+    .setForwardSeekIndicator(streamingIndicator)
+    .setBackSeekIndicator(streamingIndicator)
+    .setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PLAY);
 ```
 !@
