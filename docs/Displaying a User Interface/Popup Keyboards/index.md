@@ -244,6 +244,40 @@ If you want to change the keyboard properties for only one keyboard session and 
 !@
 
 @![iOS, android, javaSE, javaEE]
+### Checking Keyboard Capabilities (RPC v7.1+)
+Each head unit can support different set of keyboard layouts and each layout can support different number of custom keys. Also, some head unit may not support masking input. If you want to know what keyboard features are supported on the connected head unit, you can check the `KeyboardCapabilities`:
+!@
+@![android, javaSE, javaEE]
+```java
+sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapabilityType.DISPLAYS, new OnSystemCapabilityListener() {
+    @Override
+    public void onCapabilityRetrieved(Object capability) {
+        List<DisplayCapability> capabilities = SystemCapabilityManager.convertToList(capability, DisplayCapability.class);
+        if (capabilities != null || !capabilities.isEmpty()) {
+            DisplayCapability display = capabilities.get(0);
+            for (WindowCapability windowCapability : display.getWindowCapabilities()) {
+                int currentWindowID = windowCapability.getWindowID() != null ? windowCapability.getWindowID() : PredefinedWindows.DEFAULT_WINDOW.getValue();
+                if (currentWindowID == PredefinedWindows.DEFAULT_WINDOW.getValue()) {
+                    WindowCapability defaultMainWindowCapability = windowCapability;
+                    KeyboardCapabilities keyboardCapabilities = windowCapability.getKeyboardCapabilities();
+                    // Check keyboardCapabilities to see what features are supported 
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onError(String info) {
+        // An error occurred while trying to retrieve the capability 
+    }
+});
+```
+!@
+@![android, javaSE, javaEE]
+@todo add iOS implementation 
+!@
+
+@![iOS, android, javaSE, javaEE]
 ### Dismissing the Keyboard (RPC v6.0+)
 You can dismiss a displayed keyboard before the timeout has elapsed by sending a `CancelInteraction` request. If you presented the keyboard using the screen manager, you can dismiss the choice set by calling `dismissKeyboard` with the `cancelID` that was returned (if one was returned) when presenting.
 
