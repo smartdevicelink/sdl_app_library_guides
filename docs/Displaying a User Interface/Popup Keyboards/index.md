@@ -208,14 +208,13 @@ KeyboardListener keyboardListener = new KeyboardListener() {
 You can change default keyboard properties by updating !@@![iOS]`sdlManager.screenManager.keyboardConfiguration`!@@![android, javaSE, javaEE]`sdlManager.getScreenManager().setKeyboardConfiguration()`!@@![iOS, android, javaSE, javaEE]. 
 
 @![iOS, android, javaSE, javaEE]
-For example, to set the keyboard layout to a US numeric keyboard and allow the user to mask the input characters, you can set the properties as the following: 
+For example, to set the keyboard layout to a `NUMERIC` keyboard and allow the user to mask the input characters, you can set the properties as the following: 
 ![Numeric Keyboard](assets/keyboard_numeric_masked.png)
 !@
 
 @![android, javaSE, javaEE]
 ```java
 KeyboardProperties keyboardConfiguration = new KeyboardProperties()
-        .setLanguage(Language.EN_US)
         .setKeyboardLayout(KeyboardLayout.NUMERIC)
         .setMaskInputCharacters(KeyboardInputMask.ENABLE_INPUT_KEY_MASK);
 
@@ -224,11 +223,11 @@ sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
 !@
 
 @![iOS]
-@todo add iOS implementation 
+todo add iOS implementation 
 !@
 
 @![iOS, android, javaSE, javaEE]
-Each keyboard layout has a number of keys that can be customized to more serve the app needs. For example, you can set two of the cutomizable keys in QUERY layout to be "!" and "?":
+Each keyboard layout has a number of keys that can be customized to more serve the app needs. For example, you can set two of the customizable keys in `QUERY` layout to be "!" and "?":
 ![Custom Keys](assets/keyboard_querty_custom_keys.png)
 !@
 
@@ -236,15 +235,14 @@ Each keyboard layout has a number of keys that can be customized to more serve t
 ```java
 KeyboardProperties keyboardConfiguration = new KeyboardProperties()
         .setKeyboardLayout(KeyboardLayout.QWERTY)
-        .setCustomKeys(Arrays.asList("!", "?"))
-        .setMaskInputCharacters(KeyboardInputMask.ENABLE_INPUT_KEY_MASK);
+        .setCustomKeys(Arrays.asList("!", "?"));
 
 sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
 ```
 !@
 
 @![iOS]
-@todo add iOS implementation 
+todo add iOS implementation 
 !@
 
 @![android, javaSE, javaEE]
