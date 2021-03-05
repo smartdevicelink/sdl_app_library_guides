@@ -205,8 +205,12 @@ KeyboardListener keyboardListener = new KeyboardListener() {
 
 @![iOS, android, javaSE, javaEE]
 ### Configuring the Keyboard Properties
-You can change default keyboard properties by updating !@@![iOS]`sdlManager.screenManager.keyboardConfiguration`!@@![android, javaSE, javaEE]`sdlManager.getScreenManager().setKeyboardConfiguration()`!@@![iOS, android, javaSE, javaEE]. For example, to set the keyboard layout to a `NUMERIC` keyboard and allow the user to mask the input characters, you can set the properties as the following: 
+You can change default keyboard properties by updating !@@![iOS]`sdlManager.screenManager.keyboardConfiguration`!@@![android, javaSE, javaEE]`sdlManager.getScreenManager().setKeyboardConfiguration()`!@@![iOS, android, javaSE, javaEE]. For example, you can set the keyboard layout to a `NUMERIC` keyboard and allow the user to mask the input characters: 
 ![Numeric Keyboard](assets/keyboard_numeric_masked.png)
+!@
+
+@![iOS, android, javaSE, javaEE]
+To do that, you can set keyboard properties as the following 
 !@
 
 @![android, javaSE, javaEE]
@@ -224,8 +228,12 @@ todo add iOS implementation
 !@
 
 @![iOS, android, javaSE, javaEE]
-Each keyboard layout has a number of keys that can be customized to more serve the app needs. For example, you can set two of the customizable keys in `QUERY` layout to be "!" and "?":
+Each keyboard layout has a number of keys that can be customized to more serve the app needs. For example, you can set two of the customizable keys in `QWERTY` layout to be "!" and "?"
 ![Custom Keys](assets/keyboard_querty_custom_keys.png)
+!@
+
+@![iOS, android, javaSE, javaEE]
+To do that, you can set keyboard properties as the following 
 !@
 
 @![android, javaSE, javaEE]
@@ -271,6 +279,8 @@ sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapa
                 if (currentWindowID == PredefinedWindows.DEFAULT_WINDOW.getValue()) {
                     WindowCapability defaultMainWindowCapability = windowCapability;
                     KeyboardCapabilities keyboardCapabilities = windowCapability.getKeyboardCapabilities();
+
+                    // Check the supported keyboard features
                     List<KeyboardLayoutCapability> keyboardLayouts = keyboardCapabilities.getSupportedKeyboards(); // List of layouts and number of custom keys supported by each layout
                     boolean maskInputSupported = keyboardCapabilities.getMaskInputCharactersSupported(); // Boolean represents whether masking is supported or not
                 }
