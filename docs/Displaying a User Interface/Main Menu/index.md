@@ -156,6 +156,6 @@ For example, if you are trying to display points of interest as a list you can n
 On systems supporting RPC v7.1 or higher the titles on the menu will be displayed as provided even if there are duplicate titles.
 ![Menu with duplicate titles RPC 7.1+](assets/Menu_duplicate_titles_7_1.png)
 
-On Systems supporting RPC v7.0 or lower the titles on the menu will have a number appended to them when there are duplicate titles.
+On systems supporting RPC v7.0 or lower, the titles on the menu will have a number appended to them when there are duplicate titles.
 ![Menu with duplicate titles](assets/Menu_duplicate_titles.png)
 !@
