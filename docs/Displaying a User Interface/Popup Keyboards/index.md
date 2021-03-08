@@ -227,7 +227,7 @@ todo add iOS implementation
 
 @![iOS, android, javaSE, javaEE]
 #### Limited Character List
-You can modify the keyboard to enable only some characters by changing the keyboard configuration's `limitedCharacterList`. For example, you can enable ony "a", "b" , and "c" on the keyboard. All other characters will be greyed out (disabled).
+You can modify the keyboard to enable only some characters by changing the keyboard configuration's `limitedCharacterList`. For example, you can enable only "a", "b" , and "c" on the keyboard. All other characters will be greyed out (disabled).
 !@
 
 @![android, javaSE, javaEE]
@@ -251,7 +251,7 @@ You can modify the keyboard to allow an app to pre-populate the text field with 
 @![android, javaSE, javaEE]
 ```java
 KeyboardProperties keyboardConfiguration = new KeyboardProperties()
-        ..setAutoCompleteList(Arrays.asList("Test1", "Test2", "Test3"));
+        .setAutoCompleteList(Arrays.asList("Test1", "Test2", "Test3"));
 
 sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
 ```
