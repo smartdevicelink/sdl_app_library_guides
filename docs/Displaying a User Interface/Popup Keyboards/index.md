@@ -332,33 +332,14 @@ Each head unit may support different keyboard layouts and each layout can suppor
 !@
 @![android, javaSE, javaEE]
 ```java
-sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.DISPLAYS, new OnSystemCapabilityListener() {
-    @Override
-    public void onCapabilityRetrieved(Object capability) {
-        List<DisplayCapability> capabilities = SystemCapabilityManager.convertToList(capability, DisplayCapability.class);
-        if (capabilities != null || !capabilities.isEmpty()) {
-            DisplayCapability display = capabilities.get(0);
-            for (WindowCapability windowCapability : display.getWindowCapabilities()) {
-                int currentWindowID = windowCapability.getWindowID() != null ? windowCapability.getWindowID() : PredefinedWindows.DEFAULT_WINDOW.getValue();
-                if (currentWindowID == PredefinedWindows.DEFAULT_WINDOW.getValue()) {
-                    WindowCapability defaultMainWindowCapability = windowCapability;
-                    KeyboardCapabilities keyboardCapabilities = windowCapability.getKeyboardCapabilities();
+WindowCapability windowCapability = sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability();
+KeyboardCapabilities keyboardCapabilities = windowCapability.getKeyboardCapabilities();
 
-                    // List of layouts and number of custom keys supported by each layout
-                    List<KeyboardLayoutCapability> keyboardLayouts = keyboardCapabilities.getSupportedKeyboards();
+// List of layouts and number of custom keys supported by each layout
+List<KeyboardLayoutCapability> keyboardLayouts = keyboardCapabilities.getSupportedKeyboards();
 
-                    // Boolean represents whether masking is supported or not
-                    boolean maskInputSupported = keyboardCapabilities.getMaskInputCharactersSupported();
-                }
-            }
-        }
-    }
-
-    @Override
-    public void onError(String info) {
-        // An error occurred while trying to retrieve the capability 
-    }
-}, false);
+// Boolean represents whether masking is supported or not
+boolean maskInputSupported = keyboardCapabilities.getMaskInputCharactersSupported();
 ```
 !@
 @![iOS]
