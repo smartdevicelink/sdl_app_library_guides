@@ -266,6 +266,7 @@ You can modify the keyboard layout by changing the keyboard configuration's `key
 
 !!! NOTE
 The numeric keyboard layout is only available on RPC 7.1+. See the section [Checking Keyboard Capabilities](#checking-keyboard-capabilities) to determine if this layout is available.
+!!!
 
 ![Numeric Keyboard](assets/keyboard_numeric.png)
 !@
