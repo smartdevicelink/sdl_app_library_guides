@@ -74,7 +74,6 @@ sdlManager.send(mediaClock)
 
 @![android, javaSE, javaEE]
 ```java
-// TODO: Update constructor?
 SetMediaClockTimer mediaClock = new SetMediaClockTimer().countDownFromStartTimeInterval(600, 0, AudioStreamingIndicator.PAUSE);
 sdlManager.sendRPC(mediaClock);
 ```
@@ -143,7 +142,6 @@ sdlManager.sendRPC(mediaClock);
 ```
 
 ```java
-// TODO: Update constructor?
 SetMediaClockTimer mediaClock = new SetMediaClockTimer().resumeWithPlayPauseIndicator(AudioStreamingIndicator.PAUSE);
 sdlManager.sendRPC(mediaClock);
 ```
@@ -262,7 +260,11 @@ sdlManager.send(mediaClock)
 
 @![android, javaSE, javaEE]
 ```java
-// TODO: Add code example that sets backSeekIndicator and forwardSeekIndicator in for type TRACK
+SetMediaClockTimer mediaClock = new SetMediaClockTimer().countUpFromStartTimeInterval(0, 300, AudioStreamingIndicator.PAUSE);
+SeekStreamingIndicator trackStyle = new SeekStreamingIndicator(SeekIndicatorType.TRACK);
+mediaClock.setForwardSeekIndicator(trackStyle);
+mediaClock.setBackSeekIndicator(trackStyle);
+sdlManager.sendRPC(mediaClock);
 ```
 !@
 
@@ -306,7 +308,14 @@ sdlManager.send(mediaClock)
 
 @![android, javaSE, javaEE]
 ```java
-// TODO: Add code example that sets backSeekIndicator and forwardSeekIndicator in for type TIME
+SetMediaClockTimer mediaClock = new SetMediaClockTimer().countUpFromStartTimeInterval(0, 300, AudioStreamingIndicator.PAUSE);
+SeekStreamingIndicator seek45Style = new SeekStreamingIndicator(SeekIndicatorType.TIME);
+seek45Style.setSeekTime(45);
+SeekStreamingIndicator seek10Style = new SeekStreamingIndicator(SeekIndicatorType.TIME);
+seek10Style.setSeekTime(10);
+mediaClock.setForwardSeekIndicator(seek45Style);
+mediaClock.setBackSeekIndicator(seek10Style);
+sdlManager.sendRPC(mediaClock);
 ```
 !@
 
