@@ -245,13 +245,13 @@ todo add iOS implementation
 
 @![iOS, android, javaSE, javaEE]
 #### Auto Complete List
-You can modify the keyboard to allow an app to pre-populate the text field with a list of suggested or completed entries as the user types by changing the keyboard configuration's `autoCompleteList`. For example, you can pre-populate "Test1", "Test2", and "Test3". 
+You can modify the keyboard to allow an app to pre-populate the text field with a list of suggested or completed entries as the user types by changing the keyboard configuration's `autoCompleteList`. For example, you can pre-populate "test1", "test2", and "test3". 
 !@
 
 @![android, javaSE, javaEE]
 ```java
 KeyboardProperties keyboardConfiguration = new KeyboardProperties()
-        .setAutoCompleteList(Arrays.asList("Test1", "Test2", "Test3"));
+        .setAutoCompleteList(Arrays.asList("test1", "test2", "test3"));
 
 sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
 ```
