@@ -111,6 +111,27 @@ if !streamManager.sendVideoData(imageBuffer) {
 ### Handling HMI Scaling (RPC v6.0+)
 If the HMI scales the video stream, you will have to handle scaling the projected view, touches and haptic rectangles yourself (this is all handled for you behind the scenes in the `CarWindow` API). To find out if the HMI scales the video stream, you must for query and check the `SDLVideoStreamingCapability` for the `scale` property. Please check the [Adaptive Interface Capabilities](Displaying a User Interface/Adaptive Interface Capabilities) section for more information on how to query for this property using the system capability manager.  
 
+### Video Streaming Parameters (SDL v7.1+)
+Starting with SDL version 7.1+ the `customVideoEncoderSettings` you provide will automatically be aligned with the `VideoStreamingCapabilities` provided by the HMI.
+If the HMI provides the scale or resolution in the `VideoStreamingCapabilities` the Video stream will use that scale or resolution. Otherwise, the scale or resolution defined in the `customVideoEncoderSettings` you provided will be used.
+If the HMI provides the BitRate or preferred frame rate in the `VideoStreamingCapabilities` and they are also defined in the `customVideoEncoderSettings` you provided the smaller BitRate or preferred frame rate will be used.
+
+### Video FrameRate (RPC v7.1+)
+Starting with RPC version 7.1+ you can define a frame rate within your `customVideoEncoderSettings` that you would like your video to stream at.
+
+##### Objective-C
+```objective-c
+//TODO examples
+//set prefferedFPS
+```
+
+##### Swift
+```swift
+//TODO examples
+//set prefferedFPS
+```
+
+
 ### Supporting Different Video Streaming Window Sizes (SDL v7.1+, RPC v7.1+)
 You can specify two `SDLVideoStreamingRange` parameters when you want to start your video stream, one range will be for landscape orientation and one range will be for portrait orientation.
 In these `SDLVideoStreamingRange` parameters you can define different view sizes that you wish to support in the event that the HMI resizes the view during the stream. (i.e. to a collapsed view, split screen, preview mode or picture-in-picture).

@@ -113,7 +113,23 @@ builder.setRPCNotificationListeners(onRPCNotificationListenerMap);
 ### Handling HMI Scaling (RPC v6.0+)
 If the HMI scales the video stream, you will have to handle scaling the projected view, touches and haptic rectangles yourself (this is all handled for you behind the scenes in the `VideoStreamManager`  API). To find out if the HMI scales the video stream, you must for query and check the `VideoStreamingCapability` for the `scale` property. Please check the [Adaptive Interface Capabilities](Displaying a User Interface/Adaptive Interface Capabilities) section for more information on how to query for this property using the system capability manager.
 
-### Supporting Different Video Streaming Window Sizes (SDL v5.1+, RPC v7.1+)
+### Video Streaming Parameters (SDL v5.1+)
+Starting with SDL version 5.1+ the `VideoStreamingParameters` you provide will automatically be aligned with the `VideoStreamingCapabilities` provided by the HMI.
+If the HMI provides the scale or resolution in the `VideoStreamingCapabilities` the Video stream will use that scale or resolution. Otherwise, the scale or resolution defined in the `VideoStreamingParameters` you provided will be used.
+If the HMI provides the BitRate or preferred frame rate in the `VideoStreamingCapabilities` and they are also defined in the `VideoStreamingParamerters` you provided the smaller BitRate or preferred frame rate will be used.
+
+### Video FrameRate (RPC v7.1+)
+Starting with RPC version 7.1+ you can define a frame rate within your `VideoStreamingParameters` that you would like your video to stream at. You can also have the option to turn this capability on or off by using the `stableFrameRate` flag in the `VideoStreamingParameters`.
+
+```java
+VideoStreamingParameters params = new VideoStreamingParameters();
+//Turn on use of stable frame rate
+params.setStableFrameRate(true);
+//Set the frame rate that you would wish to stream at
+params.setFrameRate(30);
+```
+
+### Supporting Different Video Streaming Window Sizes (RPC v7.1+)
 You can specify two `VideoStreamingRange` parameters when you want to start your video stream using the `startRemoteDisplay` method, one range will be for landscape orientation and one range will be for portrait orientation.
 In these `VideoStreamingRange` parameters you can define different view sizes that you wish to support in the event that the HMI resizes the view during the stream. (i.e. to a collapsed view, split screen, preview mode or picture-in-picture)
 In the `VideoStreamingRange` you will define a minimum and maximum Resolution, minimum diagonal, and a minimum and maximum aspect Ratio. Any values you do not wish to use should be set to `null`.
@@ -122,13 +138,26 @@ If you wish to only support landscape orientation or only support portrait orien
 
 ```java
 //This VideoStreamingRange represents a disabled Range and can be passed if you do not wish to support landscape orientation or portrait orientation
-VideoStreamingRange disabledRange = new VideoStreamingRange(new Resolution(0, 0), new Resolution(0, 0), 0.0, 0.0, 0.0);
+final VideoStreamingRange disabledRange = new VideoStreamingRange(new Resolution(0, 0), new Resolution(0, 0), 0.0, 0.0, 0.0);
 
 //This VideoStreamingRange represents that we will support any resolution between 500x200 and 800x400 no matter the diagonal size or aspect ratio
-VideoStreamingRange landscapeRange = new VideoStreamingRange(new Resolution(500, 200), new Resolution(800, 400), null, null, null);
+final VideoStreamingRange landscapeRange = new VideoStreamingRange(new Resolution(500, 200), new Resolution(800, 400), null, null, null);
 
 //This VideoStreamingRange represents that we will support any aspect ratio between 1.0 and 2.5 no matter the resolution or diagonal size
-VideoStreamingRange portraitRange = new VideoStreamingRange(null, null, null, 1.0, 2.5);
+final VideoStreamingRange portraitRange = new VideoStreamingRange(null, null, null, 1.0, 2.5);
+
+if (sdlManager.getVideoStreamManager() != null) {
+    sdlManager.getVideoStreamManager().start(new CompletionListener() {
+        @Override
+        public void onComplete(boolean success) {
+            if (success) {
+                sdlManager.getVideoStreamManager().startRemoteDisplayStream(getApplicationContext(), MyDisplay.class, null, false, landscapeRange, portraitRange);
+            } else {
+                DebugTool.logError(TAG, "Failed to start video streaming manager");
+            }
+        }
+    });
+}
 ```
 
 !!! NOTE
