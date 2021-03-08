@@ -211,12 +211,54 @@ You can change default keyboard properties by updating !@@![iOS]`sdlManager.scre
 #### Keyboard Language
 !@
 
+@![android, javaSE, javaEE]
+```java
+KeyboardProperties keyboardConfiguration = new KeyboardProperties()
+        .setKeyboardLayout(KeyboardLayout.NUMERIC)
+        .setMaskInputCharacters(KeyboardInputMask.ENABLE_INPUT_KEY_MASK);
+
+sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
+```
+!@
+
+@![iOS]
+todo add iOS implementation 
+!@
+
 @![iOS, android, javaSE, javaEE]
 #### Limited Character List
 !@
 
+@![android, javaSE, javaEE]
+```java
+KeyboardProperties keyboardConfiguration = new KeyboardProperties()
+        .setKeyboardLayout(KeyboardLayout.NUMERIC)
+        .setMaskInputCharacters(KeyboardInputMask.ENABLE_INPUT_KEY_MASK);
+
+sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
+```
+!@
+
+@![iOS]
+todo add iOS implementation 
+!@
+
 @![iOS, android, javaSE, javaEE]
 #### Auto Complete List
+!@
+
+@![android, javaSE, javaEE]
+```java
+KeyboardProperties keyboardConfiguration = new KeyboardProperties()
+        .setKeyboardLayout(KeyboardLayout.NUMERIC)
+        .setMaskInputCharacters(KeyboardInputMask.ENABLE_INPUT_KEY_MASK);
+
+sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
+```
+!@
+
+@![iOS]
+todo add iOS implementation 
 !@
 
 @![iOS, android, javaSE, javaEE]
@@ -241,6 +283,20 @@ todo add iOS implementation
 
 @![iOS, android, javaSE, javaEE]
 #### Input Masking (RPC 7.1+)
+!@
+
+@![android, javaSE, javaEE]
+```java
+KeyboardProperties keyboardConfiguration = new KeyboardProperties()
+        .setKeyboardLayout(KeyboardLayout.NUMERIC)
+        .setMaskInputCharacters(KeyboardInputMask.ENABLE_INPUT_KEY_MASK);
+
+sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
+```
+!@
+
+@![iOS]
+todo add iOS implementation 
 !@
 
 @![iOS, android, javaSE, javaEE]
