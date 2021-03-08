@@ -225,10 +225,6 @@ You can modify the keyboard layout by changing the keyboard configuration's `key
 ![Numeric Keyboard](assets/keyboard_numeric_masked.png)
 !@
 
-@![iOS, android, javaSE, javaEE]
-To do that, you can set keyboard properties as the following 
-!@
-
 @![android, javaSE, javaEE]
 ```java
 KeyboardProperties keyboardConfiguration = new KeyboardProperties()
