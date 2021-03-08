@@ -14,7 +14,6 @@ You should present a keyboard to users when your app contains a "search" field. 
 Keyboards are unavailable for use in many countries when the driver is distracted. This is often when the vehicle is moving above a certain speed, such as 5 miles per hour. This will be automatically managed by the system. Your keyboard may be disabled or an error returned if the driver is distracted.
 !!!
 
-##### Keyboard Search
 ![Keyboard Search](assets/keyboard_search.png)
 
 !@
@@ -137,7 +136,7 @@ extension <#Class Name#>: SDLKeyboardDelegate {
 !@
 
 @![android, javaSE, javaEE]
-### Implementing the Keyboard Listeners
+### Implementing the Keyboard Listener
 Using the `KeyboardListener` involves implementing several methods: 
 
 ```java
@@ -204,8 +203,10 @@ KeyboardListener keyboardListener = new KeyboardListener() {
 !@
 
 @![iOS, android, javaSE, javaEE]
-### Configuring the Keyboard Properties
-You can change default keyboard properties by updating !@@![iOS]`sdlManager.screenManager.keyboardConfiguration`!@@![android, javaSE, javaEE]`sdlManager.getScreenManager().setKeyboardConfiguration()`!@@![iOS, android, javaSE, javaEE].!@ 
+### Configuring Keyboard Properties
+You can change default keyboard properties by updating !@@![iOS]`sdlManager.screenManager.keyboardConfiguration`!@@![android, javaSE, javaEE]`sdlManager.getScreenManager().setKeyboardConfiguration()`!@@![iOS, android, javaSE, javaEE].!@
+
+If you want to change the keyboard configuration for only one keyboard session and keep the default keyboard configuration unchanged, you can @![iOS]implement the `customKeyboardConfiguration` delegate method and pass back the single-use `KeyboardProperties` for that given keyboard presentation!@@![android, javaSE, javaEE]pass a single-use `KeyboardProperties` to `presentKeyboard()`!@.
 
 @![iOS, android, javaSE, javaEE]
 #### Keyboard Language
@@ -227,7 +228,7 @@ todo add iOS implementation
 
 @![iOS, android, javaSE, javaEE]
 #### Limited Character List
-You can modify the keyboard to enable only some characters by changing the keyboard configuration's `limitedCharacterList`. For example, you can enable only "a", "b" , and "c" on the keyboard. All other characters will be greyed out (disabled).
+You can modify the keyboard to enable only some characters by responding to the @![iOS]`updateCharacterSet:completionHandler:` delegate!@@![android, javaSE, javaEE]`updateCharacterSetWithInput ` listener@! method or by changing the keyboard configuration before displaying the keyboard. For example, you can enable only "a", "b" , and "c" on the keyboard. All other characters will be greyed out (disabled).
 !@
 
 @![android, javaSE, javaEE]
@@ -244,8 +245,8 @@ todo add iOS implementation
 !@
 
 @![iOS, android, javaSE, javaEE]
-#### Auto Complete List
-You can modify the keyboard to allow an app to pre-populate the text field with a list of suggested or completed entries as the user types by changing the keyboard configuration's `autoCompleteList`. For example, you can pre-populate "test1", "test2", and "test3". 
+#### Autocomplete List
+You can modify the keyboard to allow an app to pre-populate the text field with a list of suggested entries as the user types by responding to the @![iOS]`updateAutocompleteWithInput:autoCompleteResultsHandler:` delegate!@@![android, javaSE, javaEE]`updateAutocompleteWithInput` listener@! method or by changing the keyboard configuration before displaying the keyboard. For example, you can display recommended searches "test1", "test2", and "test3" if the user types "tes".
 !@
 
 @![android, javaSE, javaEE]
@@ -262,8 +263,12 @@ todo add iOS implementation
 !@
 
 @![iOS, android, javaSE, javaEE]
-#### Keyboard Layout (RPC 7.1+)
+#### Keyboard Layout
 You can modify the keyboard layout by changing the keyboard configuration's `keyboardLayout`. For example, you can set a `NUMERIC` keyboard. It will default to `QWERTY` if not otherwise set.
+
+!!! NOTE
+The numeric keyboard layout is only available on RPC 7.1+. See the section [Checking Keyboard Capabilities](#checking-keyboard-capabilities) to determine if this layout is available.
+
 ![Numeric Keyboard](assets/keyboard_numeric.png)
 !@
 
@@ -302,7 +307,7 @@ todo add iOS implementation
 
 @![iOS, android, javaSE, javaEE]
 #### Custom Keys (RPC 7.1+)
-Each keyboard layout has a number of keys that can be customized to your app's needs. For example, you could set two of the customizable keys in `QWERTY` layout to be "!" and "?" as seen in the image below. The available number and location of these custom keys is determined by the connected head unit.
+Each keyboard layout has a number of keys that can be customized to your app's needs. For example, you could set two of the customizable keys in `QWERTY` layout to be "!" and "?" as seen in the image below. The available number and location of these custom keys is determined by the connected head unit. See the section [Checking Keyboard Capabilities](#checking-keyboard-capabilities) to determine how many custom keys are available for any given layout.
 
 ![Custom Keys](assets/keyboard_querty_custom_keys.png)
 !@
@@ -321,18 +326,9 @@ sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
 todo add iOS implementation 
 !@
 
-#### Single-Use Keyboard Configuration
-@![android, javaSE, javaEE]
-If you want to change the keyboard configuration for only one keyboard session and keep the default global keyboard properties unchanged, you can instead pass the `KeyboardProperties` to `presentKeyboard()` which was discussed in the `Presenting a Keyboard` section.
-!@
-
-@![iOS]
-If you want to change the keyboard properties for only one keyboard session and keep the default global keyboard properties unchanged, you can instead return a `SDLKeyboardProperties` in the `SDLKeyboardDelegate.customKeyboardConfiguration` method.
-!@
-
 @![iOS, android, javaSE, javaEE]
 ### Checking Keyboard Capabilities (RPC v7.1+)
-Each head unit can support different set of keyboard layouts and each layout can support different number of custom keys. Also, some head unit may not support masking input. If you want to know which keyboard features are supported on the connected head unit, you can check the `KeyboardCapabilities`:
+Each head unit may support different keyboard layouts and each layout can support a different number of custom keys. Head units may not support masking input. If you want to know which keyboard features are supported on the connected head unit, you can check the `KeyboardCapabilities`:
 !@
 @![android, javaSE, javaEE]
 ```java
