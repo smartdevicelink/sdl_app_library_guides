@@ -205,7 +205,10 @@ KeyboardListener keyboardListener = new KeyboardListener() {
 
 @![iOS, android, javaSE, javaEE]
 ### Configuring the Keyboard Properties
-You can change default keyboard properties by updating !@@![iOS]`sdlManager.screenManager.keyboardConfiguration`!@@![android, javaSE, javaEE]`sdlManager.getScreenManager().setKeyboardConfiguration()`!@@![iOS, android, javaSE, javaEE]. For example, you can set the keyboard layout to a `NUMERIC` keyboard and allow the user to mask the input characters.
+You can change default keyboard properties by updating !@@![iOS]`sdlManager.screenManager.keyboardConfiguration`!@@![android, javaSE, javaEE]`sdlManager.getScreenManager().setKeyboardConfiguration()`!@@![iOS, android, javaSE, javaEE]. 
+
+#### Keyboard Layout (RPC 7.1+)
+You can modify the keyboard layout by changing the keyboard configuration's `keyboardLayout`. For example, you can set a `NUMERIC` keyboard. It will default to `QWERTY` if not otherwise set.
 ![Numeric Keyboard](assets/keyboard_numeric_masked.png)
 !@
 
@@ -232,10 +235,6 @@ Each keyboard layout has a number of keys that can be customized to more serve t
 ![Custom Keys](assets/keyboard_querty_custom_keys.png)
 !@
 
-@![iOS, android, javaSE, javaEE]
-To do that, you can set keyboard properties as the following:
-!@
-
 @![android, javaSE, javaEE]
 ```java
 KeyboardProperties keyboardConfiguration = new KeyboardProperties()
@@ -250,9 +249,10 @@ sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
 todo add iOS implementation 
 !@
 
+#### Single-Use Keyboard Configuration
 @![android, javaSE, javaEE]
 !!! NOTE
-If you want to change the keyboard properties for only one keyboard session and keep the default global keyboard properties unchanged, you can instead pass the `KeyboardProperties` to the `presentKeyboard()` that was discussed in the `Presenting a Keyboard` section.
+If you want to change the keyboard configuration for only one keyboard session and keep the default global keyboard properties unchanged, you can instead pass the `KeyboardProperties` to `presentKeyboard()` which was discussed in the `Presenting a Keyboard` section.
 !!!
 !@
 
@@ -264,7 +264,7 @@ If you want to change the keyboard properties for only one keyboard session and 
 
 @![iOS, android, javaSE, javaEE]
 ### Checking Keyboard Capabilities (RPC v7.1+)
-Each head unit can support different set of keyboard layouts and each layout can support different number of custom keys. Also, some head unit may not support masking input. If you want to know what keyboard features are supported on the connected head unit, you can check the `KeyboardCapabilities`:
+Each head unit can support different set of keyboard layouts and each layout can support different number of custom keys. Also, some head unit may not support masking input. If you want to know which keyboard features are supported on the connected head unit, you can check the `KeyboardCapabilities`:
 !@
 @![android, javaSE, javaEE]
 ```java
@@ -280,9 +280,11 @@ sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapa
                     WindowCapability defaultMainWindowCapability = windowCapability;
                     KeyboardCapabilities keyboardCapabilities = windowCapability.getKeyboardCapabilities();
 
-                    // Check the supported keyboard features
-                    List<KeyboardLayoutCapability> keyboardLayouts = keyboardCapabilities.getSupportedKeyboards(); // List of layouts and number of custom keys supported by each layout
-                    boolean maskInputSupported = keyboardCapabilities.getMaskInputCharactersSupported(); // Boolean represents whether masking is supported or not
+                    // List of layouts and number of custom keys supported by each layout
+                    List<KeyboardLayoutCapability> keyboardLayouts = keyboardCapabilities.getSupportedKeyboards();
+
+                    // Boolean represents whether masking is supported or not
+                    boolean maskInputSupported = keyboardCapabilities.getMaskInputCharactersSupported();
                 }
             }
         }
