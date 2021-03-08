@@ -205,8 +205,21 @@ KeyboardListener keyboardListener = new KeyboardListener() {
 
 @![iOS, android, javaSE, javaEE]
 ### Configuring the Keyboard Properties
-You can change default keyboard properties by updating !@@![iOS]`sdlManager.screenManager.keyboardConfiguration`!@@![android, javaSE, javaEE]`sdlManager.getScreenManager().setKeyboardConfiguration()`!@@![iOS, android, javaSE, javaEE]. 
+You can change default keyboard properties by updating !@@![iOS]`sdlManager.screenManager.keyboardConfiguration`!@@![android, javaSE, javaEE]`sdlManager.getScreenManager().setKeyboardConfiguration()`!@@![iOS, android, javaSE, javaEE].!@ 
 
+@![iOS, android, javaSE, javaEE]
+#### Keyboard Language
+!@
+
+@![iOS, android, javaSE, javaEE]
+#### Limited Character List
+!@
+
+@![iOS, android, javaSE, javaEE]
+#### Auto Complete List
+!@
+
+@![iOS, android, javaSE, javaEE]
 #### Keyboard Layout (RPC 7.1+)
 You can modify the keyboard layout by changing the keyboard configuration's `keyboardLayout`. For example, you can set a `NUMERIC` keyboard. It will default to `QWERTY` if not otherwise set.
 ![Numeric Keyboard](assets/keyboard_numeric_masked.png)
@@ -228,6 +241,10 @@ sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
 
 @![iOS]
 todo add iOS implementation 
+!@
+
+@![iOS, android, javaSE, javaEE]
+#### Input Masking (RPC 7.1+)
 !@
 
 @![iOS, android, javaSE, javaEE]
@@ -253,15 +270,11 @@ todo add iOS implementation
 
 #### Single-Use Keyboard Configuration
 @![android, javaSE, javaEE]
-!!! NOTE
 If you want to change the keyboard configuration for only one keyboard session and keep the default global keyboard properties unchanged, you can instead pass the `KeyboardProperties` to `presentKeyboard()` which was discussed in the `Presenting a Keyboard` section.
-!!!
 !@
 
 @![iOS]
-!!! NOTE
 If you want to change the keyboard properties for only one keyboard session and keep the default global keyboard properties unchanged, you can instead return a `SDLKeyboardProperties` in the `SDLKeyboardDelegate.customKeyboardConfiguration` method.
-!!!
 !@
 
 @![iOS, android, javaSE, javaEE]
