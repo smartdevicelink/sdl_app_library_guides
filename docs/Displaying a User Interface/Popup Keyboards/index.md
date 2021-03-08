@@ -209,6 +209,7 @@ You can change default keyboard properties by updating !@@![iOS]`sdlManager.scre
 
 @![iOS, android, javaSE, javaEE]
 #### Keyboard Language
+You can modify the keyboard language by changing the keyboard configuration's `language`. For example, you can set an `EN_US` keyboard. It will default to `EN_US` if not otherwise set.
 !@
 
 @![android, javaSE, javaEE]
@@ -226,6 +227,7 @@ todo add iOS implementation
 
 @![iOS, android, javaSE, javaEE]
 #### Limited Character List
+You can modify the keyboard to enable only some characters by changing the keyboard configuration's `limitedCharacterList`. For example, you can enable ony "a", "b" , and "c" on the keyboard. All other characters will be greyed out (disabled).
 !@
 
 @![android, javaSE, javaEE]
@@ -243,6 +245,7 @@ todo add iOS implementation
 
 @![iOS, android, javaSE, javaEE]
 #### Auto Complete List
+You can modify the keyboard to allow an app to pre-populate the text field with a list of suggested or completed entries as the user types by changing the keyboard configuration's `autoCompleteList`. For example, to pre-populate "Test1", "Test2", and "Test3". 
 !@
 
 @![android, javaSE, javaEE]
@@ -261,7 +264,6 @@ todo add iOS implementation
 @![iOS, android, javaSE, javaEE]
 #### Keyboard Layout (RPC 7.1+)
 You can modify the keyboard layout by changing the keyboard configuration's `keyboardLayout`. For example, you can set a `NUMERIC` keyboard. It will default to `QWERTY` if not otherwise set.
-![Numeric Keyboard](assets/keyboard_numeric_masked.png)
 !@
 
 @![android, javaSE, javaEE]
@@ -279,6 +281,8 @@ todo add iOS implementation
 
 @![iOS, android, javaSE, javaEE]
 #### Input Masking (RPC 7.1+)
+You can modify the keyboard to mask the entered characters by changing the keyboard configuration's `maskInputCharacters`. 
+![Numeric Keyboard](assets/keyboard_numeric_masked.png)
 !@
 
 @![android, javaSE, javaEE]
