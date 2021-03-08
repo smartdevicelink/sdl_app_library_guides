@@ -231,7 +231,9 @@ todo add iOS implementation
 !@
 
 @![iOS, android, javaSE, javaEE]
-Each keyboard layout has a number of keys that can be customized to more serve the app needs. For example, you can set two of the customizable keys in `QWERTY` layout to be "!" and "?"
+#### Custom Keys (RPC 7.1+)
+Each keyboard layout has a number of keys that can be customized to your app's needs. For example, you could set two of the customizable keys in `QWERTY` layout to be "!" and "?" as seen in the image below. The available number and location of these custom keys is determined by the connected head unit.
+
 ![Custom Keys](assets/keyboard_querty_custom_keys.png)
 !@
 
