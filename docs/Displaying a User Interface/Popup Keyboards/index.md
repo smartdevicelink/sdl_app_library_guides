@@ -204,9 +204,7 @@ KeyboardListener keyboardListener = new KeyboardListener() {
 
 @![iOS, android, javaSE, javaEE]
 ### Configuring Keyboard Properties
-You can change default keyboard properties by updating !@@![iOS]`sdlManager.screenManager.keyboardConfiguration`!@@![android, javaSE, javaEE]`sdlManager.getScreenManager().setKeyboardConfiguration()`!@@![iOS, android, javaSE, javaEE].!@
-
-If you want to change the keyboard configuration for only one keyboard session and keep the default keyboard configuration unchanged, you can @![iOS]implement the `customKeyboardConfiguration` delegate method and pass back the single-use `KeyboardProperties` for that given keyboard presentation!@@![android, javaSE, javaEE]pass a single-use `KeyboardProperties` to `presentKeyboard()`!@.
+You can change default keyboard properties by updating !@@![iOS]`sdlManager.screenManager.keyboardConfiguration`!@@![android, javaSE, javaEE]`sdlManager.getScreenManager().setKeyboardConfiguration()`!@@![iOS, android, javaSE, javaEE]. If you want to change the keyboard configuration for only one keyboard session and keep the default keyboard configuration unchanged, you can !@@![iOS]implement the `customKeyboardConfiguration` delegate method and pass back the single-use `KeyboardProperties` for that given keyboard presentation!@@![android, javaSE, javaEE]pass a single-use `KeyboardProperties` to `presentKeyboard()`!@@![iOS, android, javaSE, javaEE].!@
 
 @![iOS, android, javaSE, javaEE]
 #### Keyboard Language
@@ -228,7 +226,7 @@ todo add iOS implementation
 
 @![iOS, android, javaSE, javaEE]
 #### Limited Character List
-You can modify the keyboard to enable only some characters by responding to the @![iOS]`updateCharacterSet:completionHandler:` delegate!@@![android, javaSE, javaEE]`updateCharacterSetWithInput ` listener@! method or by changing the keyboard configuration before displaying the keyboard. For example, you can enable only "a", "b" , and "c" on the keyboard. All other characters will be greyed out (disabled).
+You can modify the keyboard to enable only some characters by responding to the !@@![iOS]`updateCharacterSet:completionHandler:` delegate!@@![android, javaSE, javaEE]`updateCharacterSetWithInput ` listener!@@![iOS, android, javaSE, javaEE] method or by changing the keyboard configuration before displaying the keyboard. For example, you can enable only "a", "b" , and "c" on the keyboard. All other characters will be greyed out (disabled).
 !@
 
 @![android, javaSE, javaEE]
@@ -246,7 +244,7 @@ todo add iOS implementation
 
 @![iOS, android, javaSE, javaEE]
 #### Autocomplete List
-You can modify the keyboard to allow an app to pre-populate the text field with a list of suggested entries as the user types by responding to the @![iOS]`updateAutocompleteWithInput:autoCompleteResultsHandler:` delegate!@@![android, javaSE, javaEE]`updateAutocompleteWithInput` listener@! method or by changing the keyboard configuration before displaying the keyboard. For example, you can display recommended searches "test1", "test2", and "test3" if the user types "tes".
+You can modify the keyboard to allow an app to pre-populate the text field with a list of suggested entries as the user types by responding to the !@@![iOS]`updateAutocompleteWithInput:autoCompleteResultsHandler:` delegate!@@![android, javaSE, javaEE]`updateAutocompleteWithInput` listener!@@![iOS, android, javaSE, javaEE] method or by changing the keyboard configuration before displaying the keyboard. For example, you can display recommended searches "test1", "test2", and "test3" if the user types "tes".
 !@
 
 @![android, javaSE, javaEE]
