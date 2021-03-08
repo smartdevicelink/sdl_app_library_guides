@@ -214,8 +214,7 @@ You can change default keyboard properties by updating !@@![iOS]`sdlManager.scre
 @![android, javaSE, javaEE]
 ```java
 KeyboardProperties keyboardConfiguration = new KeyboardProperties()
-        .setKeyboardLayout(KeyboardLayout.NUMERIC)
-        .setMaskInputCharacters(KeyboardInputMask.ENABLE_INPUT_KEY_MASK);
+        .setLanguage(Language.EN_US);
 
 sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
 ```
@@ -232,8 +231,7 @@ todo add iOS implementation
 @![android, javaSE, javaEE]
 ```java
 KeyboardProperties keyboardConfiguration = new KeyboardProperties()
-        .setKeyboardLayout(KeyboardLayout.NUMERIC)
-        .setMaskInputCharacters(KeyboardInputMask.ENABLE_INPUT_KEY_MASK);
+        .setLimitedCharacterList(Arrays.asList("a", "b", "c"));
 
 sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
 ```
@@ -250,8 +248,7 @@ todo add iOS implementation
 @![android, javaSE, javaEE]
 ```java
 KeyboardProperties keyboardConfiguration = new KeyboardProperties()
-        .setKeyboardLayout(KeyboardLayout.NUMERIC)
-        .setMaskInputCharacters(KeyboardInputMask.ENABLE_INPUT_KEY_MASK);
+        ..setAutoCompleteList(Arrays.asList("Test1", "Test2", "Test3"));
 
 sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
 ```
@@ -270,8 +267,7 @@ You can modify the keyboard layout by changing the keyboard configuration's `key
 @![android, javaSE, javaEE]
 ```java
 KeyboardProperties keyboardConfiguration = new KeyboardProperties()
-        .setKeyboardLayout(KeyboardLayout.NUMERIC)
-        .setMaskInputCharacters(KeyboardInputMask.ENABLE_INPUT_KEY_MASK);
+        .setKeyboardLayout(KeyboardLayout.NUMERIC);
 
 sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
 ```
