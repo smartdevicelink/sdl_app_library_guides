@@ -264,6 +264,7 @@ todo add iOS implementation
 @![iOS, android, javaSE, javaEE]
 #### Keyboard Layout (RPC 7.1+)
 You can modify the keyboard layout by changing the keyboard configuration's `keyboardLayout`. For example, you can set a `NUMERIC` keyboard. It will default to `QWERTY` if not otherwise set.
+![Numeric Keyboard](assets/keyboard_numeric.png)
 !@
 
 @![android, javaSE, javaEE]
