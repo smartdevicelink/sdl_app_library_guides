@@ -30,7 +30,6 @@ sdlManager.send(mediaClock)
 
 @![android, javaSE, javaEE]
 ```java
-// TODO: Update constructor?
 SetMediaClockTimer mediaClock = new SetMediaClockTimer().countUpFromStartTimeInterval(30, 253, AudioStreamingIndicator.PAUSE);
 sdlManager.sendRPC(mediaClock);
 ```
