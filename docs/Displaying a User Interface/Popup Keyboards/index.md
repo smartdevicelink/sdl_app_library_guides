@@ -268,7 +268,7 @@ Each head unit can support different set of keyboard layouts and each layout can
 !@
 @![android, javaSE, javaEE]
 ```java
-sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapabilityType.DISPLAYS, new OnSystemCapabilityListener() {
+sdlManager.getSystemCapabilityManager().getCapability(SystemCapabilityType.DISPLAYS, new OnSystemCapabilityListener() {
     @Override
     public void onCapabilityRetrieved(Object capability) {
         List<DisplayCapability> capabilities = SystemCapabilityManager.convertToList(capability, DisplayCapability.class);
@@ -294,7 +294,7 @@ sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapa
     public void onError(String info) {
         // An error occurred while trying to retrieve the capability 
     }
-});
+}, false);
 ```
 !@
 @![iOS]
