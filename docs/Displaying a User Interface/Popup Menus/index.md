@@ -289,7 +289,7 @@ If you don't want to use the @![iOS]`SDLScreenManager`!@@![android, javaSE, java
 
 @![iOS, android, javaEE, javaSE]
 ## Duplicate Choice Cell Titles (SDL @![android, javaEE, javaSE]v5.1+!@@![iOS]v7.1+!@)
-Starting with SDL @![android, javaEE, javaSE]v5.1+!@@![iOS]v7.1+!@ choice cells no longer require unique titles inorder to be presented.
+Starting with SDL @![android, javaEE, javaSE]v5.1+!@@![iOS]v7.1+!@ choice cells no longer require unique titles in order to be presented.
 
 For example if you are trying to display points of interest as a list you can now have multiple locations with the same name that but are not the same location.
 
