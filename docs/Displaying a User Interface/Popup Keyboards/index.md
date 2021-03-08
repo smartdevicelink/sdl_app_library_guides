@@ -265,7 +265,7 @@ todo add iOS implementation
 You can modify the keyboard layout by changing the keyboard configuration's `keyboardLayout`. For example, you can set a `NUMERIC` keyboard. It will default to `QWERTY` if not otherwise set.
 
 !!! NOTE
-The numeric keyboard layout is only available on RPC 7.1+. See the section [Checking Keyboard Capabilities](#checking-keyboard-capabilities) to determine if this layout is available.
+The numeric keyboard layout is only available on RPC 7.1+. See the section [Checking Keyboard Capabilities](#checking-keyboard-capabilities-rpc-v71) to determine if this layout is available.
 !!!
 
 ![Numeric Keyboard](assets/keyboard_numeric.png)
@@ -306,7 +306,7 @@ todo add iOS implementation
 
 @![iOS, android, javaSE, javaEE]
 #### Custom Keys (RPC 7.1+)
-Each keyboard layout has a number of keys that can be customized to your app's needs. For example, you could set two of the customizable keys in `QWERTY` layout to be "!" and "?" as seen in the image below. The available number and location of these custom keys is determined by the connected head unit. See the section [Checking Keyboard Capabilities](#checking-keyboard-capabilities) to determine how many custom keys are available for any given layout.
+Each keyboard layout has a number of keys that can be customized to your app's needs. For example, you could set two of the customizable keys in `QWERTY` layout to be "!" and "?" as seen in the image below. The available number and location of these custom keys is determined by the connected head unit. See the section [Checking Keyboard Capabilities](#checking-keyboard-capabilities-rpc-v71) to determine how many custom keys are available for any given layout.
 
 ![Custom Keys](assets/keyboard_querty_custom_keys.png)
 !@
