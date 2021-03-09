@@ -346,7 +346,7 @@ const mediaClock = new SDL.rpc.messages.SetMediaClockTimer()
 
 ## Adding Custom Playback Rate (RPC v7.1+)
 Many audio apps that support podcasts and audiobooks allow the user to adjust the audio playback rate.
-You can tell the system the rate that the audio is playing at to ensure the media clock accurately reflects the audio.
+As of RPC v7.1, you can set the rate that the audio is playing at to ensure the media clock accurately reflects the audio.
 
 For example, a user can play a podcast at 125% speed or at 75% speed.
 
