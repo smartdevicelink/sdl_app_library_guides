@@ -43,7 +43,20 @@ ChoiceCell fullCell = new ChoiceCell("cell2 text", "cell2 secondaryText", "cell2
 ```
 !@
 
-@![iOS, android, javaEE, javaSE]
+@![javascript]
+```js
+const cell = new SDL.manager.screen.choiceset.ChoiceCell("cell1 text")
+    .setVoiceCommands(["cell1"])
+const fullCell = new SDL.manager.screen.choiceset.ChoiceCell("cell2 text")
+    .setSecondaryText("cell2 secondaryText")
+    .setTertiaryText("cell2 tertiaryText")
+    .setVoiceCommands(["cell2"])
+    .setArtwork(image1Artwork)
+    .setSecondaryArtwork(image2Artwork)
+```
+!@
+
+@![iOS, android, javaEE, javaSE, javascript]
 ### Preloading Cells
 If you know the content you will show in the popup menu long before the menu is shown to the user, you can "preload" those cells in order to speed up the popup menu presentation at a later time. Once you preload a cell, you can reuse it in multiple popup menus without having to send the cell content to Core again. 
 !@
@@ -75,7 +88,13 @@ sdlManager.getScreenManager().preloadChoices(Arrays.asList(cell, fullCell), new 
 ```
 !@
 
-@![iOS, android, javaEE, javaSE]
+@![javascript]
+```js
+const success = await sdlManager.getScreenManager().preloadChoices([cell, fullCell]);
+```
+!@
+
+@![iOS, android, javaEE, javaSE, javascript]
 ### Presenting a Menu
 To show a popup menu to the user, you must present the menu. If some or all of the cells in the menu have not yet been preloaded, calling the `present` API will preload the cells and then present the menu once all the cells have been uploaded. Calling `present` without preloading the cells can take longer than if the cells were preloaded earlier in the app's lifecycle especially if your cell has voice commands. Subsequent menu presentations using the same cells will be faster because the library will reuse those cells (unless you have deleted them).
 
@@ -90,10 +109,10 @@ When you preload a cell, you **do not** need to maintain a reference to it. If y
 !!!
 
 #### Creating a Choice Set
-In order to present a menu, you must bundle together a bunch of !@@![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`ChoiceCell`!@@![iOS, android, javaEE, javaSE]s into an !@@![iOS]`SDLChoiceSet`!@ @![android, javaSE, javaEE]`ChoiceSet`!@@![iOS, android, javaEE, javaSE].
+In order to present a menu, you must bundle together a bunch of !@@![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE, javascript]`ChoiceCell`!@@![iOS, android, javaEE, javaSE, javascript]s into an !@@![iOS]`SDLChoiceSet`!@ @![android, javaSE, javaEE, javascript]`ChoiceSet`!@@![iOS, android, javaEE, javaSE, javascript].
 
 !!! IMPORTANT
-If the !@@![iOS]`SDLChoiceSet`!@ @![android, javaSE, javaEE]`ChoiceSet`!@@![iOS, android, javaEE, javaSE] contains an invalid set of !@@![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`ChoiceCell`!@@![iOS, android, javaEE, javaSE]s, !@@![iOS]the initializer will return `nil`!@ @![android, javaSE, javaEE]presenting the `ChoiceSet` will fail!@@![iOS, android, javaEE, javaSE]. This can happen, for example, if you have duplicate title text or if some, but not all choices have voice commands.
+If the !@@![iOS]`SDLChoiceSet`!@ @![android, javaSE, javaEE, javascript]`ChoiceSet`!@@![iOS, android, javaEE, javaSE, javascript] contains an invalid set of !@@![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE, javascript]`ChoiceCell`!@@![iOS, android, javaEE, javaSE, javascript]s, !@@![iOS]the initializer will return `nil`!@ @![android, javaSE, javaEE, javascript]presenting the `ChoiceSet` will fail!@@![iOS, android, javaEE, javaSE, javascript]. This can happen, for example, if you have duplicate title text or if some, but not all choices have voice commands.
 !!!
 
 Some notes on various parameters (full documentation is available as API documentation on this website):
@@ -101,11 +120,11 @@ Some notes on various parameters (full documentation is available as API documen
 - Title: This is the title of the menu when presented
 !@@![iOS]- Delegate: You must implement this delegate to receive callbacks based on the user's interaction with the menu
 !@
-@![android, javaSE, javaEE]
+@![android, javaSE, javaEE, javascript]
 - Listeners: You must implement this listener interface to receive callbacks based on the user's interaction with the menu
 !@
-@![iOS, android, javaEE, javaSE]
-- Layout: You may present your menu as a set of tiles (like a !@@![iOS]`UICollectionView`!@ @![android, javaSE, javaEE]`GridView`!@@![iOS, android, javaEE, javaSE]) or a list (like a !@@![iOS]`UITableView`!@ @![android, javaSE, javaEE]`RecyclerView`!@@![iOS, android, javaEE, javaSE]). If you are using tiles, it's recommended to use artworks on each item.
+@![iOS, android, javaEE, javaSE, javascript]
+- Layout: You may present your menu as a set of tiles !@@![iOS](like a `UICollectionView`) !@@![android, javaSE, javaEE](like a `GridView`) !@@![iOS, android, javaEE, javaSE])or a list (like a !@@![iOS]`UITableView`!@ @![android, javaSE, javaEE]`RecyclerView`!@@![iOS, android, javaEE, javaSE]). If you are using tiles, it's recommended to use artworks on each item.
 !@
 
 @![iOS]
