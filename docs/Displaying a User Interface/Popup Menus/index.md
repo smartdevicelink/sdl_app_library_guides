@@ -1,5 +1,4 @@
 # Popup Menus
-@![iOS, android, javaEE, javaSE, javascript]
 SDL supports modal menus. The user can respond to the list of menu options via touch, voice (if voice recognition is supported by the head unit), or by keyboard input to search or filter the menu.
 
 There are several UX considerations to take into account when designing your menus. The main menu should not be updated often and should act as navigation for your app. Popup menus should be used to present a selection of options to your user.
@@ -15,12 +14,11 @@ Presenting a popup menu is similar to presenting a modal view to request input f
 | Present Searchable as List | A vertical list of text with a search field in the HMI |
 
 ### Creating Cells
-!@@![iOS]An `SDLChoiceCell`!@ @![android, javaSE, javaEE]A `ChoiceCell`!@@![iOS, android, javaEE, javaSE] is similar to a !@@![iOS]`UITableViewCell`!@ @![android, javaSE, javaEE]`RecyclerView`!@@![iOS, android, javaEE, javaSE] without the ability to configure your own UI. !@@![iOS, android, javaEE, javaSE, javascript]We provide several properties on the !@@![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE, javascript]`ChoiceCell`!@@![iOS, android, javaEE, javaSE, javascript] to set your data, but the layout itself is determined by the manufacturer of the head unit.
+@![iOS]An `SDLChoiceCell`!@ @![android, javaSE, javaEE]A `ChoiceCell`!@@![iOS, android, javaEE, javaSE] is similar to a !@@![iOS]`UITableViewCell`!@ @![android, javaSE, javaEE]`RecyclerView`!@@![iOS, android, javaEE, javaSE] without the ability to configure your own UI. !@We provide several properties on the @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE, javascript]`ChoiceCell`!@ to set your data, but the layout itself is determined by the manufacturer of the head unit.
 
 !!! IMPORTANT
 On many systems, including VR commands will be *exponentially* slower than not including them. However, including them is necessary for a user to be able to respond to your prompt with their voice.
 !!!
-!@
 
 @![iOS]
 ##### Objective-C
@@ -56,10 +54,8 @@ const fullCell = new SDL.manager.screen.choiceset.ChoiceCell("cell2 text")
 ```
 !@
 
-@![iOS, android, javaEE, javaSE, javascript]
 ### Preloading Cells
 If you know the content you will show in the popup menu long before the menu is shown to the user, you can "preload" those cells in order to speed up the popup menu presentation at a later time. Once you preload a cell, you can reuse it in multiple popup menus without having to send the cell content to Core again. 
-!@
 
 @![iOS]
 ##### Objective-C
@@ -94,7 +90,6 @@ const success = await sdlManager.getScreenManager().preloadChoices([cell, fullCe
 ```
 !@
 
-@![iOS, android, javaEE, javaSE, javascript]
 ### Presenting a Menu
 To show a popup menu to the user, you must present the menu. If some or all of the cells in the menu have not yet been preloaded, calling the `present` API will preload the cells and then present the menu once all the cells have been uploaded. Calling `present` without preloading the cells can take longer than if the cells were preloaded earlier in the app's lifecycle especially if your cell has voice commands. Subsequent menu presentations using the same cells will be faster because the library will reuse those cells (unless you have deleted them).
 
@@ -109,23 +104,21 @@ When you preload a cell, you **do not** need to maintain a reference to it. If y
 !!!
 
 #### Creating a Choice Set
-In order to present a menu, you must bundle together a bunch of !@@![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE, javascript]`ChoiceCell`!@@![iOS, android, javaEE, javaSE, javascript]s into an !@@![iOS]`SDLChoiceSet`!@ @![android, javaSE, javaEE, javascript]`ChoiceSet`!@@![iOS, android, javaEE, javaSE, javascript].
+In order to present a menu, you must bundle together a bunch of @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE, javascript]`ChoiceCell`!@s into an @![iOS]`SDLChoiceSet`!@ @![android, javaSE, javaEE, javascript]`ChoiceSet`!@.
 
 !!! IMPORTANT
-If the !@@![iOS]`SDLChoiceSet`!@ @![android, javaSE, javaEE, javascript]`ChoiceSet`!@@![iOS, android, javaEE, javaSE, javascript] contains an invalid set of !@@![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE, javascript]`ChoiceCell`!@@![iOS, android, javaEE, javaSE, javascript]s, !@@![iOS]the initializer will return `nil`!@ @![android, javaSE, javaEE, javascript]presenting the `ChoiceSet` will fail!@@![iOS, android, javaEE, javaSE, javascript]. This can happen, for example, if you have duplicate title text or if some, but not all choices have voice commands.
+If the @![iOS]`SDLChoiceSet`!@ @![android, javaSE, javaEE, javascript]`ChoiceSet`!@ contains an invalid set of @![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE, javascript]`ChoiceCell`!@s, @![iOS]the initializer will return `nil`!@ @![android, javaSE, javaEE, javascript]presenting the `ChoiceSet` will fail!@. This can happen, for example, if you have duplicate title text or if some, but not all choices have voice commands.
 !!!
 
 Some notes on various parameters (full documentation is available as API documentation on this website):
 
 - Title: This is the title of the menu when presented
-!@@![iOS]- Delegate: You must implement this delegate to receive callbacks based on the user's interaction with the menu
+@![iOS]- Delegate: You must implement this delegate to receive callbacks based on the user's interaction with the menu
 !@
 @![android, javaSE, javaEE, javascript]
 - Listeners: You must implement this listener interface to receive callbacks based on the user's interaction with the menu
 !@
-@![iOS, android, javaEE, javaSE, javascript]
-- Layout: You may present your menu as a set of tiles !@@![iOS](like a `UICollectionView`) !@@![android, javaSE, javaEE](like a `GridView`) !@@![iOS, android, javaEE, javaSE, javascript]or a list!@@![iOS](like a `UITableView`) !@@![android, javaSE, javaEE](like a `RecyclerView`)!@@![iOS, android, javaEE, javaSE, javascript]. If you are using tiles, it's recommended to use artworks on each item.
-!@
+- Layout: You may present your menu as a set of tiles @![iOS](like a `UICollectionView`) !@@![android, javaSE, javaEE](like a `GridView`) !@or a list@![iOS](like a `UITableView`) !@@![android, javaSE, javaEE](like a `RecyclerView`)!@. If you are using tiles, it's recommended to use artworks on each item.
 
 @![iOS]
 ##### Objective-C
@@ -201,7 +194,6 @@ extension <#Class Name#>: SDLChoiceSetDelegate {
 ```
 !@
 
-@![iOS, android, javaEE, javaSE, javascript]
 #### Presenting the Menu with a Mode
 Finally, you will present the menu. When you do so, you must choose a `mode` to present it in. If you have no `vrCommands` on the choice cell you should choose `manualOnly`. If `vrCommands` are available, you may choose `voiceRecognitionOnly` or `both`.
 
@@ -245,7 +237,6 @@ sdlManager.getScreenManager().presentChoiceSet(choiceSet, SDL.rpc.enums.Interact
 ```
 !@
 
-@![iOS, android, javaEE, javaSE, javascript]
 ### Presenting a Searchable Menu
 In addition to presenting a standard menu, you can also present a "searchable" menu, that is, a menu with a keyboard input box at the top. For more information on implementing the keyboard callbacks, see the [Popup Keyboards](Displaying a User Interface/Popup Keyboards) guide.
 
@@ -276,10 +267,8 @@ sdlManager.getScreenManager().presentSearchableChoiceSet(choiceSet, SDL.rpc.enum
 ```
 !@
 
-@![iOS, android, javaEE, javaSE, javascript]
 ### Deleting Cells
-You can discover cells that have been preloaded on !@@![iOS]`screenManager.preloadedCells`!@ @![android, javaSE, javaEE, javascript]`sdlManager.getScreenManager().getPreloadedChoices()`!@@![iOS, android, javaEE, javaSE, javascript]. You may then pass an array of cells to delete from the remote system. Many times this is not necessary, but if you have deleted artwork used by cells, for example, you should delete the cells as well.
-!@
+You can discover cells that have been preloaded on @![iOS]`screenManager.preloadedCells`!@ @![android, javaSE, javaEE, javascript]`sdlManager.getScreenManager().getPreloadedChoices()`!@. You may then pass an array of cells to delete from the remote system. Many times this is not necessary, but if you have deleted artwork used by cells, for example, you should delete the cells as well.
 
 @![iOS]
 ##### Objective-C
@@ -305,14 +294,12 @@ sdlManager.getScreenManager().deleteChoices(<List of choices to delete>);
 ```
 !@
 
-@![iOS, android, javaEE, javaSE, javascript]
 ### Dismissing the Popup Menu (RPC v6.0+)
-You can dismiss a displayed choice set before the timeout has elapsed by sending a `CancelInteraction` request. If you presented the choice set using the screen manager, you can dismiss the choice set by calling `cancel` on the !@@![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE, javascript]`ChoiceCell`!@@![iOS, android, javaEE, javaSE, javascript] object that you presented.
+You can dismiss a displayed choice set before the timeout has elapsed by sending a `CancelInteraction` request. If you presented the choice set using the screen manager, you can dismiss the choice set by calling `cancel` on the !@@![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE, javascript]`ChoiceCell`!@ object that you presented.
 
 !!! NOTE
 If connected to older head units that do not support this feature, the cancel request will be ignored, and the choice set will persist on the screen until the timeout has elapsed or the user dismisses it by making a selection.
 !!!
-!@
 
 @![iOS]
 ##### Objective-C
