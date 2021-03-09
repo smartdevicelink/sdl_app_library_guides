@@ -221,7 +221,21 @@ sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
 !@
 
 @![iOS]
-todo add iOS implementation 
+##### Objective-C
+```objc
+SDLKeyboardProperties *keyboardConfiguration = [[SDLKeyboardProperties alloc] init];
+keyboardConfiguration.language = SDLLanguageEnUs;
+
+self.sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration;
+```
+
+##### Swift
+```swift
+let keyboardConfiguration = SDLKeyboardProperties()
+keyboardConfiguration.language = .enUs
+
+sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration
+```
 !@
 
 @![iOS, android, javaSE, javaEE]
@@ -239,7 +253,21 @@ sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
 !@
 
 @![iOS]
-todo add iOS implementation 
+##### Objective-C
+```objc
+SDLKeyboardProperties *keyboardConfiguration = [[SDLKeyboardProperties alloc] init];
+keyboardConfiguration.limitedCharacterList = @[@"a", @"b", @"c"];
+
+self.sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration;
+```
+
+##### Swift
+```swift
+let keyboardConfiguration = SDLKeyboardProperties()
+keyboardConfiguration.limitedCharacterList = ["a", "b", "c"]
+
+sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration
+```
 !@
 
 @![iOS, android, javaSE, javaEE]
@@ -257,7 +285,21 @@ sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
 !@
 
 @![iOS]
-todo add iOS implementation 
+##### Objective-C
+```objc
+SDLKeyboardProperties *keyboardConfiguration = [[SDLKeyboardProperties alloc] init];
+keyboardConfiguration.autoCompleteList = @[@"test1", @"test2", @"test3"];
+
+self.sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration;
+```
+
+##### Swift
+```swift
+let keyboardConfiguration = SDLKeyboardProperties()
+keyboardConfiguration.autoCompleteList = ["test1", "test2", "test3"]
+
+sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration
+```
 !@
 
 @![iOS, android, javaSE, javaEE]
@@ -281,7 +323,21 @@ sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
 !@
 
 @![iOS]
-todo add iOS implementation 
+##### Objective-C
+```objc
+SDLKeyboardProperties *keyboardConfiguration = [[SDLKeyboardProperties alloc] init];
+keyboardConfiguration.keyboardLayout = SDLKeyboardLayoutNumeric;
+
+self.sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration;
+```
+
+##### Swift
+```swift
+let keyboardConfiguration = SDLKeyboardProperties()
+keyboardConfiguration.keyboardLayout = .numeric
+
+sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration
+```
 !@
 
 @![iOS, android, javaSE, javaEE]
@@ -301,7 +357,23 @@ sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
 !@
 
 @![iOS]
-todo add iOS implementation 
+##### Objective-C
+```objc
+SDLKeyboardProperties *keyboardConfiguration = [[SDLKeyboardProperties alloc] init];
+keyboardConfiguration.keyboardLayout = SDLKeyboardLayoutNumeric;
+keyboardConfiguration.maskInputCharacters = SDLKeyboardInputMaskEnableInputKeyMask;
+
+self.sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration;
+```
+
+##### Swift
+```swift
+let keyboardConfiguration = SDLKeyboardProperties()
+keyboardConfiguration.keyboardLayout = .numeric
+keyboardConfiguration.maskInputCharacters = .enableInputKeyMask
+
+sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration
+```
 !@
 
 @![iOS, android, javaSE, javaEE]
@@ -322,7 +394,23 @@ sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
 !@
 
 @![iOS]
-todo add iOS implementation 
+##### Objective-C
+```objc
+SDLKeyboardProperties *keyboardConfiguration = [[SDLKeyboardProperties alloc] init];
+keyboardConfiguration.keyboardLayout = SDLKeyboardLayoutQWERTY;
+keyboardConfiguration.customKeys = @[@"!", @"?"];
+
+self.sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration;
+```
+
+##### Swift
+```swift
+let keyboardConfiguration = SDLKeyboardProperties()
+keyboardConfiguration.keyboardLayout = .qwerty
+keyboardConfiguration.customKeys = ["!", "?"]
+
+sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration
+```
 !@
 
 @![iOS, android, javaSE, javaEE]
@@ -342,7 +430,27 @@ boolean maskInputSupported = keyboardCapabilities.getMaskInputCharactersSupporte
 ```
 !@
 @![iOS]
-@todo add iOS implementation 
+##### Objective-C
+```objc
+SDLKeyboardCapabilities *keyboardCapabilities = self.sdlManager.systemCapabilityManager.defaultMainWindowCapability.keyboardCapabilities;
+
+// List of layouts and number of custom keys supported by each layout or `nil` if no capabilities are available
+NSArray<SDLKeyboardLayoutCapability *> *keyboardLayoutCapabilities = keyboardCapabilities.supportedKeyboards;
+
+// Boolean represents whether masking is supported or not
+BOOL maskInputSupported = keyboardCapabilities.maskInputCharactersSupported.boolValue;
+```
+
+##### Swift
+```swift
+guard let keyboardCapabilities = sdlManager.systemCapabilityManager.defaultMainWindowCapability?.keyboardCapabilities else { return }
+
+// List of layouts and number of custom keys supported by each layout or `nil` if no capabilities are available
+let keyboardLayoutCapabilities = keyboardCapabilities.supportedKeyboards
+
+// Boolean represents whether masking is supported or not
+let maskInputSupported = keyboardCapabilities.maskInputCharactersSupported?.boolValue
+```
 !@
 
 @![iOS, android, javaSE, javaEE]
