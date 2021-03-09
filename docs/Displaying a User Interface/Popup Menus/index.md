@@ -118,7 +118,7 @@ Some notes on various parameters (full documentation is available as API documen
 @![android, javaSE, javaEE, javascript]
 - Listeners: You must implement this listener interface to receive callbacks based on the user's interaction with the menu
 !@
-- Layout: You may present your menu as a set of tiles @![iOS](like a `UICollectionView`) !@@![android, javaSE, javaEE](like a `GridView`) !@or a list@![iOS] (like a `UITableView`) !@@![android, javaSE, javaEE] (like a `RecyclerView`)!@. If you are using tiles, it's recommended to use artworks on each item.
+- Layout: You may present your menu as a set of tiles @![iOS](like a `UICollectionView`) !@@![android, javaSE, javaEE](like a `GridView`) !@or a list@![iOS] (like a `UITableView`)!@@![android, javaSE, javaEE] (like a `RecyclerView`)!@. If you are using tiles, it's recommended to use artworks on each item.
 
 @![iOS]
 ##### Objective-C
