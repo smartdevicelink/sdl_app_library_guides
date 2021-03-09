@@ -124,7 +124,7 @@ Some notes on various parameters (full documentation is available as API documen
 - Listeners: You must implement this listener interface to receive callbacks based on the user's interaction with the menu
 !@
 @![iOS, android, javaEE, javaSE, javascript]
-- Layout: You may present your menu as a set of tiles !@@![iOS](like a `UICollectionView`) !@@![android, javaSE, javaEE](like a `GridView`) !@@![iOS, android, javaEE, javaSE, javascript]or a list !@@![iOS](like a `UITableView`) !@@![android, javaSE, javaEE](like a `RecyclerView`)!@@![iOS, android, javaEE, javaSE, javascript]. If you are using tiles, it's recommended to use artworks on each item.
+- Layout: You may present your menu as a set of tiles !@@![iOS](like a `UICollectionView`) !@@![android, javaSE, javaEE](like a `GridView`) !@@![iOS, android, javaEE, javaSE, javascript]or a list!@@![iOS](like a `UITableView`) !@@![android, javaSE, javaEE](like a `RecyclerView`)!@@![iOS, android, javaEE, javaSE, javascript]. If you are using tiles, it's recommended to use artworks on each item.
 !@
 
 @![iOS]
@@ -201,7 +201,7 @@ extension <#Class Name#>: SDLChoiceSetDelegate {
 ```
 !@
 
-@![iOS, android, javaEE, javaSE]
+@![iOS, android, javaEE, javaSE, javascript]
 #### Presenting the Menu with a Mode
 Finally, you will present the menu. When you do so, you must choose a `mode` to present it in. If you have no `vrCommands` on the choice cell you should choose `manualOnly`. If `vrCommands` are available, you may choose `voiceRecognitionOnly` or `both`.
 
@@ -239,7 +239,13 @@ sdlManager.getScreenManager().presentChoiceSet(choiceSet, InteractionMode.MANUAL
 ```
 !@
 
-@![iOS, android, javaEE, javaSE]
+@![javascript]
+```js
+sdlManager.getScreenManager().presentChoiceSet(choiceSet, SDL.rpc.enums.InteractionMode.MANUAL_ONLY);
+```
+!@
+
+@![iOS, android, javaEE, javaSE, javascript]
 ### Presenting a Searchable Menu
 In addition to presenting a standard menu, you can also present a "searchable" menu, that is, a menu with a keyboard input box at the top. For more information on implementing the keyboard callbacks, see the [Popup Keyboards](Displaying a User Interface/Popup Keyboards) guide.
 
@@ -264,9 +270,15 @@ sdlManager.getScreenManager().presentSearchableChoiceSet(choiceSet, InteractionM
 ```
 !@
 
-@![iOS, android, javaEE, javaSE]
+@![javascript]
+```js
+sdlManager.getScreenManager().presentSearchableChoiceSet(choiceSet, SDL.rpc.enums.InteractionMode.MANUAL_ONLY, keyboardListener);
+```
+!@
+
+@![iOS, android, javaEE, javaSE, javascript]
 ### Deleting Cells
-You can discover cells that have been preloaded on !@@![iOS]`screenManager.preloadedCells`!@ @![android, javaSE, javaEE]`sdlManager.getScreenManager().getPreloadedChoices()`!@@![iOS, android, javaEE, javaSE]. You may then pass an array of cells to delete from the remote system. Many times this is not necessary, but if you have deleted artwork used by cells, for example, you should delete the cells as well.
+You can discover cells that have been preloaded on !@@![iOS]`screenManager.preloadedCells`!@ @![android, javaSE, javaEE, javascript]`sdlManager.getScreenManager().getPreloadedChoices()`!@@![iOS, android, javaEE, javaSE, javascript]. You may then pass an array of cells to delete from the remote system. Many times this is not necessary, but if you have deleted artwork used by cells, for example, you should delete the cells as well.
 !@
 
 @![iOS]
@@ -287,9 +299,15 @@ sdlManager.getScreenManager().deleteChoices(<List of choices to delete>);
 ```
 !@
 
-@![iOS, android, javaEE, javaSE]
+@![javascript]
+```js
+sdlManager.getScreenManager().deleteChoices(<List of choices to delete>);
+```
+!@
+
+@![iOS, android, javaEE, javaSE, javascript]
 ### Dismissing the Popup Menu (RPC v6.0+)
-You can dismiss a displayed choice set before the timeout has elapsed by sending a `CancelInteraction` request. If you presented the choice set using the screen manager, you can dismiss the choice set by calling `cancel` on the !@@![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`ChoiceCell`!@@![iOS, android, javaEE, javaSE] object that you presented.
+You can dismiss a displayed choice set before the timeout has elapsed by sending a `CancelInteraction` request. If you presented the choice set using the screen manager, you can dismiss the choice set by calling `cancel` on the !@@![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE, javascript]`ChoiceCell`!@@![iOS, android, javaEE, javaSE, javascript] object that you presented.
 
 !!! NOTE
 If connected to older head units that do not support this feature, the cancel request will be ignored, and the choice set will persist on the screen until the timeout has elapsed or the user dismisses it by making a selection.
@@ -314,5 +332,11 @@ choiceSet.cancel();
 ```
 !@
 
+@![javascript]
+```js
+choiceSet.cancel();
+```
+!@
+
 ## Using RPCs
-If you don't want to use the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE,javascript]`ScreenManager`!@, you can do this manually using the `Choice`, `CreateInteractionChoiceSet`. You will need to create `Choice`s, bundle them into `CreateInteractionChoiceSet`s. As this is no longer a recommended course of action, we will leave it to you to figure out how to manually do it.
+If you don't want to use the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE, javascript]`ScreenManager`!@, you can do this manually using the `Choice`, `CreateInteractionChoiceSet`. You will need to create `Choice`s, bundle them into `CreateInteractionChoiceSet`s. As this is no longer a recommended course of action, we will leave it to you to figure out how to manually do it.
