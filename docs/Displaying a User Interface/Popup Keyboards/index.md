@@ -273,6 +273,10 @@ sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration
 @![iOS, android, javaSE, javaEE]
 #### Autocomplete List
 You can modify the keyboard to allow an app to pre-populate the text field with a list of suggested entries as the user types by responding to the !@@![iOS]`updateAutocompleteWithInput:autoCompleteResultsHandler:` delegate!@@![android, javaSE, javaEE]`updateAutocompleteWithInput` listener!@@![iOS, android, javaSE, javaEE] method or by changing the keyboard configuration before displaying the keyboard. For example, you can display recommended searches "test1", "test2", and "test3" if the user types "tes".
+
+!!! NOTE
+A list of autocomplete results is only available on RPC 6.0+ connections. On connections < RPC 6.0, only the first item will be available to the user.
+!!!
 !@
 
 @![android, javaSE, javaEE]
