@@ -124,7 +124,7 @@ Some notes on various parameters (full documentation is available as API documen
 - Listeners: You must implement this listener interface to receive callbacks based on the user's interaction with the menu
 !@
 @![iOS, android, javaEE, javaSE, javascript]
-- Layout: You may present your menu as a set of tiles !@@![iOS](like a `UICollectionView`) !@@![android, javaSE, javaEE](like a `GridView`) !@@![iOS, android, javaEE, javaSE])or a list (like a !@@![iOS]`UITableView`!@ @![android, javaSE, javaEE]`RecyclerView`!@@![iOS, android, javaEE, javaSE]). If you are using tiles, it's recommended to use artworks on each item.
+- Layout: You may present your menu as a set of tiles !@@![iOS](like a `UICollectionView`) !@@![android, javaSE, javaEE](like a `GridView`) !@@![iOS, android, javaEE, javaSE, javascript]or a list !@@![iOS](like a `UITableView`) !@@![android, javaSE, javaEE](like a `RecyclerView`)!@@![iOS, android, javaEE, javaSE, javascript]. If you are using tiles, it's recommended to use artworks on each item.
 !@
 
 @![iOS]
@@ -153,6 +153,20 @@ ChoiceSet choiceSet = new ChoiceSet("ChoiceSet Title", Arrays.asList(cell, fullC
         // handle error            
     }
 });
+```
+!@
+
+@![javascript]
+```js
+const listener = new SDL.manager.screen.choiceset.ChoiceSetSelectionListener()
+    .setOnChoiceSelected((choiceCell, triggerSource, rowIndex) => {
+        // You will be passed the `cell` that was selected, the manner in which it was selected (voice or text), and the index of the cell that was passed.      
+        // handle selection
+    })
+    .setOnError((error) => {
+        // handle error            
+    });
+const choiceSet = new SDL.manager.screen.choiceset.ChoiceSet("ChoiceSet Title", [cell, fullCell], listener);
 ```
 !@
 
