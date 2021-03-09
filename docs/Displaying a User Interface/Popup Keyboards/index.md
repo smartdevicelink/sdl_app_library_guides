@@ -14,8 +14,7 @@ You should present a keyboard to users when your app contains a "search" field. 
 Keyboards are unavailable for use in many countries when the driver is distracted. This is often when the vehicle is moving above a certain speed, such as 5 miles per hour. This will be automatically managed by the system. Your keyboard may be disabled or an error returned if the driver is distracted.
 !!!
 
-##### Keyboard Search
-![SYNC® 3 - Keyboard Search](assets/SYNC3_keyboard_search.bmp)
+![Keyboard Search](assets/keyboard_search.png)
 
 !@
 
@@ -124,13 +123,21 @@ extension <#Class Name#>: SDLKeyboardDelegate {
     func customKeyboardConfiguration() -> SDLKeyboardProperties {
         <#Use an alternate keyboard configuration. The keypressMode, limitedCharacterSet, and autoCompleteText will be overridden by the screen manager#>
     }
+
+    func keyboardDidUpdateInputMask(_ isEnabled: Bool) {
+        if isEnabled {
+            <#The user turned on masking the input#>
+        } else {
+            <#The user turned off masking the input#>
+        }
+    }
 }
 ```
 !@
 
 @![android, javaSE, javaEE]
-### Implementing the Keyboard Listeners
-Using the `KeyboardListener` involves implementing five methods: 
+### Implementing the Keyboard Listener
+Using the `KeyboardListener` involves implementing several methods: 
 
 ```java
 KeyboardListener keyboardListener = new KeyboardListener() {
@@ -177,7 +184,276 @@ KeyboardListener keyboardListener = new KeyboardListener() {
     public void onKeyboardDidSendEvent(KeyboardEvent event, String currentInputText) {
         // This is sent upon every event, such as keypresses, cancellations, and aborting
     }
+
+    @Override
+    public void onKeyboardDidUpdateInputMask(KeyboardEvent event) {
+        switch (event) {
+            case INPUT_KEY_MASK_ENABLED:
+                // The user enabled input key masking
+                break;
+            case INPUT_KEY_MASK_DISABLED:
+                // The user disabled input key masking
+                break;
+            default:
+                break;
+        }
+    }
 };
+```
+!@
+
+@![iOS, android, javaSE, javaEE]
+### Configuring Keyboard Properties
+You can change default keyboard properties by updating !@@![iOS]`sdlManager.screenManager.keyboardConfiguration`!@@![android, javaSE, javaEE]`sdlManager.getScreenManager().setKeyboardConfiguration()`!@@![iOS, android, javaSE, javaEE]. If you want to change the keyboard configuration for only one keyboard session and keep the default keyboard configuration unchanged, you can !@@![iOS]implement the `customKeyboardConfiguration` delegate method and pass back the single-use `KeyboardProperties` for that given keyboard presentation!@@![android, javaSE, javaEE]pass a single-use `KeyboardProperties` to `presentKeyboard()`!@@![iOS, android, javaSE, javaEE].!@
+
+@![iOS, android, javaSE, javaEE]
+#### Keyboard Language
+You can modify the keyboard language by changing the keyboard configuration's `language`. For example, you can set an `EN_US` keyboard. It will default to `EN_US` if not otherwise set.
+!@
+
+@![android, javaSE, javaEE]
+```java
+KeyboardProperties keyboardConfiguration = new KeyboardProperties()
+        .setLanguage(Language.EN_US);
+
+sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
+```
+!@
+
+@![iOS]
+##### Objective-C
+```objc
+SDLKeyboardProperties *keyboardConfiguration = [[SDLKeyboardProperties alloc] init];
+keyboardConfiguration.language = SDLLanguageEnUs;
+
+self.sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration;
+```
+
+##### Swift
+```swift
+let keyboardConfiguration = SDLKeyboardProperties()
+keyboardConfiguration.language = .enUs
+
+sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration
+```
+!@
+
+@![iOS, android, javaSE, javaEE]
+#### Limited Character List
+You can modify the keyboard to enable only some characters by responding to the !@@![iOS]`updateCharacterSet:completionHandler:` delegate!@@![android, javaSE, javaEE]`updateCharacterSetWithInput ` listener!@@![iOS, android, javaSE, javaEE] method or by changing the keyboard configuration before displaying the keyboard. For example, you can enable only "a", "b" , and "c" on the keyboard. All other characters will be greyed out (disabled).
+!@
+
+@![android, javaSE, javaEE]
+```java
+KeyboardProperties keyboardConfiguration = new KeyboardProperties()
+        .setLimitedCharacterList(Arrays.asList("a", "b", "c"));
+
+sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
+```
+!@
+
+@![iOS]
+##### Objective-C
+```objc
+SDLKeyboardProperties *keyboardConfiguration = [[SDLKeyboardProperties alloc] init];
+keyboardConfiguration.limitedCharacterList = @[@"a", @"b", @"c"];
+
+self.sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration;
+```
+
+##### Swift
+```swift
+let keyboardConfiguration = SDLKeyboardProperties()
+keyboardConfiguration.limitedCharacterList = ["a", "b", "c"]
+
+sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration
+```
+!@
+
+@![iOS, android, javaSE, javaEE]
+#### Autocomplete List
+You can modify the keyboard to allow an app to pre-populate the text field with a list of suggested entries as the user types by responding to the !@@![iOS]`updateAutocompleteWithInput:autoCompleteResultsHandler:` delegate!@@![android, javaSE, javaEE]`updateAutocompleteWithInput` listener!@@![iOS, android, javaSE, javaEE] method or by changing the keyboard configuration before displaying the keyboard. For example, you can display recommended searches "test1", "test2", and "test3" if the user types "tes".
+
+!!! NOTE
+A list of autocomplete results is only available on RPC 6.0+ connections. On connections < RPC 6.0, only the first item will be available to the user.
+!!!
+!@
+
+@![android, javaSE, javaEE]
+```java
+KeyboardProperties keyboardConfiguration = new KeyboardProperties()
+        .setAutoCompleteList(Arrays.asList("test1", "test2", "test3"));
+
+sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
+```
+!@
+
+@![iOS]
+##### Objective-C
+```objc
+SDLKeyboardProperties *keyboardConfiguration = [[SDLKeyboardProperties alloc] init];
+keyboardConfiguration.autoCompleteList = @[@"test1", @"test2", @"test3"];
+
+self.sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration;
+```
+
+##### Swift
+```swift
+let keyboardConfiguration = SDLKeyboardProperties()
+keyboardConfiguration.autoCompleteList = ["test1", "test2", "test3"]
+
+sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration
+```
+!@
+
+@![iOS, android, javaSE, javaEE]
+#### Keyboard Layout
+You can modify the keyboard layout by changing the keyboard configuration's `keyboardLayout`. For example, you can set a `NUMERIC` keyboard. It will default to `QWERTY` if not otherwise set.
+
+!!! NOTE
+The numeric keyboard layout is only available on RPC 7.1+. See the section [Checking Keyboard Capabilities](#checking-keyboard-capabilities-rpc-v71) to determine if this layout is available.
+!!!
+
+![Numeric Keyboard](assets/keyboard_numeric.png)
+!@
+
+@![android, javaSE, javaEE]
+```java
+KeyboardProperties keyboardConfiguration = new KeyboardProperties()
+        .setKeyboardLayout(KeyboardLayout.NUMERIC);
+
+sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
+```
+!@
+
+@![iOS]
+##### Objective-C
+```objc
+SDLKeyboardProperties *keyboardConfiguration = [[SDLKeyboardProperties alloc] init];
+keyboardConfiguration.keyboardLayout = SDLKeyboardLayoutNumeric;
+
+self.sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration;
+```
+
+##### Swift
+```swift
+let keyboardConfiguration = SDLKeyboardProperties()
+keyboardConfiguration.keyboardLayout = .numeric
+
+sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration
+```
+!@
+
+@![iOS, android, javaSE, javaEE]
+#### Input Masking (RPC 7.1+)
+You can modify the keyboard to mask the entered characters by changing the keyboard configuration's `maskInputCharacters`. 
+![Numeric Keyboard](assets/keyboard_numeric_masked.png)
+!@
+
+@![android, javaSE, javaEE]
+```java
+KeyboardProperties keyboardConfiguration = new KeyboardProperties()
+        .setKeyboardLayout(KeyboardLayout.NUMERIC)
+        .setMaskInputCharacters(KeyboardInputMask.ENABLE_INPUT_KEY_MASK);
+
+sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
+```
+!@
+
+@![iOS]
+##### Objective-C
+```objc
+SDLKeyboardProperties *keyboardConfiguration = [[SDLKeyboardProperties alloc] init];
+keyboardConfiguration.keyboardLayout = SDLKeyboardLayoutNumeric;
+keyboardConfiguration.maskInputCharacters = SDLKeyboardInputMaskEnableInputKeyMask;
+
+self.sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration;
+```
+
+##### Swift
+```swift
+let keyboardConfiguration = SDLKeyboardProperties()
+keyboardConfiguration.keyboardLayout = .numeric
+keyboardConfiguration.maskInputCharacters = .enableInputKeyMask
+
+sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration
+```
+!@
+
+@![iOS, android, javaSE, javaEE]
+#### Custom Keys (RPC 7.1+)
+Each keyboard layout has a number of keys that can be customized to your app's needs. For example, you could set two of the customizable keys in `QWERTY` layout to be "!" and "?" as seen in the image below. The available number and location of these custom keys is determined by the connected head unit. See the section [Checking Keyboard Capabilities](#checking-keyboard-capabilities-rpc-v71) to determine how many custom keys are available for any given layout.
+
+![Custom Keys](assets/keyboard_querty_custom_keys.png)
+!@
+
+@![android, javaSE, javaEE]
+```java
+KeyboardProperties keyboardConfiguration = new KeyboardProperties()
+        .setKeyboardLayout(KeyboardLayout.QWERTY)
+        .setCustomKeys(Arrays.asList("!", "?"));
+
+sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
+```
+!@
+
+@![iOS]
+##### Objective-C
+```objc
+SDLKeyboardProperties *keyboardConfiguration = [[SDLKeyboardProperties alloc] init];
+keyboardConfiguration.keyboardLayout = SDLKeyboardLayoutQWERTY;
+keyboardConfiguration.customKeys = @[@"!", @"?"];
+
+self.sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration;
+```
+
+##### Swift
+```swift
+let keyboardConfiguration = SDLKeyboardProperties()
+keyboardConfiguration.keyboardLayout = .qwerty
+keyboardConfiguration.customKeys = ["!", "?"]
+
+sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration
+```
+!@
+
+@![iOS, android, javaSE, javaEE]
+### Checking Keyboard Capabilities (RPC v7.1+)
+Each head unit may support different keyboard layouts and each layout can support a different number of custom keys. Head units may not support masking input. If you want to know which keyboard features are supported on the connected head unit, you can check the `KeyboardCapabilities`:
+!@
+@![android, javaSE, javaEE]
+```java
+WindowCapability windowCapability = sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability();
+KeyboardCapabilities keyboardCapabilities = windowCapability.getKeyboardCapabilities();
+
+// List of layouts and number of custom keys supported by each layout
+List<KeyboardLayoutCapability> keyboardLayouts = keyboardCapabilities.getSupportedKeyboards();
+
+// Boolean represents whether masking is supported or not
+boolean maskInputSupported = keyboardCapabilities.getMaskInputCharactersSupported();
+```
+!@
+@![iOS]
+##### Objective-C
+```objc
+SDLKeyboardCapabilities *keyboardCapabilities = self.sdlManager.systemCapabilityManager.defaultMainWindowCapability.keyboardCapabilities;
+
+// List of layouts and number of custom keys supported by each layout or `nil` if no capabilities are available
+NSArray<SDLKeyboardLayoutCapability *> *keyboardLayoutCapabilities = keyboardCapabilities.supportedKeyboards;
+
+// Boolean represents whether masking is supported or not
+BOOL maskInputSupported = keyboardCapabilities.maskInputCharactersSupported.boolValue;
+```
+
+##### Swift
+```swift
+guard let keyboardCapabilities = sdlManager.systemCapabilityManager.defaultMainWindowCapability?.keyboardCapabilities else { return }
+
+// List of layouts and number of custom keys supported by each layout or `nil` if no capabilities are available
+let keyboardLayoutCapabilities = keyboardCapabilities.supportedKeyboards
+
+// Boolean represents whether masking is supported or not
+let maskInputSupported = keyboardCapabilities.maskInputCharactersSupported?.boolValue
 ```
 !@
 
