@@ -15,7 +15,7 @@ Presenting a popup menu is similar to presenting a modal view to request input f
 | Present Searchable as List | A vertical list of text with a search field in the HMI |
 
 ### Creating Cells
-@![android, javaSE, javaEE, iOS]An !@@![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`ChoiceCell`!@@![iOS, android, javaEE, javaSE] is similar to a !@@![iOS]`UITableViewCell`!@ @![android, javaSE, javaEE]`RecyclerView`!@@![iOS, android, javaEE, javaSE] without the ability to configure your own UI. @!We provide several properties on the !@@![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE, javascript]`ChoiceCell`!@@![iOS, android, javaEE, javaSE, javascript] to set your data, but the layout itself is determined by the manufacturer of the head unit.
+@![android, javaSE, javaEE, iOS]An !@@![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`ChoiceCell`!@@![iOS, android, javaEE, javaSE] is similar to a !@@![iOS]`UITableViewCell`!@ @![android, javaSE, javaEE]`RecyclerView`!@@![iOS, android, javaEE, javaSE] without the ability to configure your own UI. !@We provide several properties on the !@@![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE, javascript]`ChoiceCell`!@@![iOS, android, javaEE, javaSE, javascript] to set your data, but the layout itself is determined by the manufacturer of the head unit.
 
 !!! IMPORTANT
 On many systems, including VR commands will be *exponentially* slower than not including them. However, including them is necessary for a user to be able to respond to your prompt with their voice.
