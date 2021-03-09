@@ -48,14 +48,15 @@ The best way to create and update your menu is to the use the Screen Manager API
 To find out more information on how to create `voiceCommands` see the [related documentation](Speech and Audio/Setting Up Voice Commands).
 !@
 
+@![iOS, android, javaSE, javaEE]
 ![Generic - Menu Appearance](assets/Generic_menu_dark.png)
 
 !!! NOTE
 Head units supporting RPC v7.1+ may support displaying `secondaryText`, `tertiaryText`, and `secondaryArtwork`. This gives the user a richer experience by displaying more data. Attempting to set this data on head units that do not support RPC 7.1+ will result in that data not being displayed to the user.
 
-To determine if the head unit supports displaying these fields, you can check the `SystemCapabilityManager`'s @![iOS]`defaultMainWindowCapability.textFields` / `defaultMainWindowCapability.imageFields`!@@![android,javaEE,javaSE] `getDefaultMainWindowCapability().getTextFields()` / `getDefaultMainWindowCapability().getImageFields()`!@@![iOS, android, javaEE, javaSE] properties after successfully connecting to the head unit. Then check those arrays for objects with the related text / image field names.
-!@
+To determine if the head unit supports displaying these fields, you can check the `SystemCapabilityManager`'s !@@![iOS]`defaultMainWindowCapability.textFields` / `defaultMainWindowCapability.imageFields`!@@![android,javaEE,javaSE] `getDefaultMainWindowCapability().getTextFields()` / `getDefaultMainWindowCapability().getImageFields()`!@@![iOS, android, javaEE, javaSE] properties after successfully connecting to the head unit. Then check those arrays for objects with the related text / image field names.
 !!!
+!@
 
 @![iOS]
 ##### Objective-C
