@@ -1,8 +1,5 @@
 # Popup Menus
-@![javascript]
-The SDL JavaScript Suite currently does not support the `MenuManager` and `ChoiceSetManager`. This will be addressed in a future release.
-!@
-@![iOS, android, javaEE, javaSE]
+@![iOS, android, javaEE, javaSE, javascript]
 SDL supports modal menus. The user can respond to the list of menu options via touch, voice (if voice recognition is supported by the head unit), or by keyboard input to search or filter the menu.
 
 There are several UX considerations to take into account when designing your menus. The main menu should not be updated often and should act as navigation for your app. Popup menus should be used to present a selection of options to your user.
@@ -18,7 +15,7 @@ Presenting a popup menu is similar to presenting a modal view to request input f
 | Present Searchable as List | A vertical list of text with a search field in the HMI |
 
 ### Creating Cells
-An !@@![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`ChoiceCell`!@@![iOS, android, javaEE, javaSE] is similar to a !@@![iOS]`UITableViewCell`!@ @![android, javaSE, javaEE]`RecyclerView`!@@![iOS, android, javaEE, javaSE] without the ability to configure your own UI. We provide several properties on the !@@![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`ChoiceCell`!@@![iOS, android, javaEE, javaSE] to set your data, but the layout itself is determined by the manufacturer of the head unit.
+@![android, javaSE, javaEE, iOS]An !@@![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE]`ChoiceCell`!@@![iOS, android, javaEE, javaSE] is similar to a !@@![iOS]`UITableViewCell`!@ @![android, javaSE, javaEE]`RecyclerView`!@@![iOS, android, javaEE, javaSE] without the ability to configure your own UI. @!We provide several properties on the !@@![iOS]`SDLChoiceCell`!@ @![android, javaSE, javaEE, javascript]`ChoiceCell`!@@![iOS, android, javaEE, javaSE, javascript] to set your data, but the layout itself is determined by the manufacturer of the head unit.
 
 !!! IMPORTANT
 On many systems, including VR commands will be *exponentially* slower than not including them. However, including them is necessary for a user to be able to respond to your prompt with their voice.
