@@ -12,18 +12,17 @@ If your app does not support the current head unit language, you should decide o
 After starting the `SDLManager` you can check the @![iOS]`registerResponse`!@@![android,javaSE,javaEE,javascript]`sdlManager.getRegisterAppInterfaceResponse()`!@ property for the head unit's `language` and `hmiDisplayLanguage`. The `language` property gives you the current VR system language; `hmiDisplayLanguage` the current display text language.
 
 @![iOS]
-##### Objective-C
 ```objc
 SDLLanguage headUnitLanguage = self.sdlManager.registerResponse.language;
 SDLLanguage headUnitHMIDisplayLanguage = self.sdlManager.registerResponse.hmiDisplayLanguage;
 ```
 
-##### Swift
 ```swift
 let headUnitLanguage = sdlManager.registerResponse?.language
 let headUnitHMIDisplayLanguage = sdlManager.registerResponse?.hmiDisplayLanguage
 ```
 !@
+
 @![android,javaSE,javaEE]
 ```java
 Language headUnitLanguage = sdlManager.getRegisterAppInterfaceResponse().getLanguage();
@@ -54,7 +53,6 @@ To customize the app name for the head unit's current language, implement the fo
 !@
 
 @![iOS]
-##### Objective-C
 ```objc
 // The `hmiLanguage` is the text language of the head unit, the `language` is the VR language of the head unit. These will usually be the same, but not always. You may want to update your `appName` (text) and `ttsName` (VR) separately.
 - (nullable SDLLifecycleConfigurationUpdate *)managerShouldUpdateLifecycleToLanguage:(SDLLanguage)language hmiLanguage:(SDLLanguage)hmiLanguage {
@@ -74,8 +72,6 @@ To customize the app name for the head unit's current language, implement the fo
     return configurationUpdate;
 }
 ```
-
-##### Swift
 ```swift
 // The `hmiLanguage` is the text language of the head unit, the `language` is the VR language of the head unit. These will usually be the same, but not always. You may want to update your `appName` (text) and `ttsName` (VR) separately.
 func managerShouldUpdateLifecycle(toLanguage language: SDLLanguage, hmiLanguage: SDLLanguage) -> SDLLifecycleConfigurationUpdate? {
