@@ -285,4 +285,6 @@ choiceSet.cancel();
 !@
 
 ## Using RPCs
-If you don't want to use the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE,javascript]`ScreenManager`!@, you can do this manually using the `Choice`, `CreateInteractionChoiceSet`. You will need to create `Choice`s, bundle them into `CreateInteractionChoiceSet`s. As this is no longer a recommended course of action, we will leave it to you to figure out how to manually do it.
+If you don't want to use the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE,javascript]`ScreenManager`!@, you can do this manually using the `Choice`, `CreateInteractionChoiceSet`, and `PerformInteraction`. You will need to create `Choice`s, bundle them into `CreateInteractionChoiceSet`s. As this is no longer a recommended course of action, we will leave it to you to figure out how to manually do it.
+
+Note that if you do manually create a `PerformInteraction` and want to set a cancel id, the @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE, javascript]`ScreenManager`!@ takes cancel ids 0 - 10000. Any cancel id you set must be outside of that range.
