@@ -141,8 +141,8 @@ The screen manager will intelligently handle deletions for you. If you want to s
 
 If you are doing this manually, you must use the `DeleteCommand` and `DeleteSubMenu` RPCs, passing the `cmdID`s you wish to delete.
 
-## Duplicate Menu Titles (SDL @![android, javaEE, javaSE]v5.1+!@@![iOS]v7.1+!@)
-Starting with SDL @![android, javaEE, javaSE]v5.1+!@@![iOS]v7.1+!@ menu cells and sub menu cells no longer require unique titles in order to be presented.
+## Duplicate Menu Titles (SDL !@@![android, javaEE, javaSE]v5.1+!@@![iOS]v7.1+!@@![iOS, android, javaEE, javaSE])
+Starting with SDL !@@![android, javaEE, javaSE]v5.1+!@@![iOS]v7.1+!@@![iOS, android, javaEE, javaSE] menu cells and sub menu cells no longer require unique titles in order to be presented.
 
 For example, if you are trying to display points of interest as a list you can now have multiple locations with the same name but are not the same location.
 
