@@ -158,4 +158,5 @@ On systems supporting RPC v7.1 or higher the titles on the menu will be displaye
 
 On systems supporting RPC v7.0 or lower, the titles on the menu will have a number appended to them when there are duplicate titles.
 ![Menu with duplicate titles](assets/Menu_duplicate_titles.png)
+
 !@

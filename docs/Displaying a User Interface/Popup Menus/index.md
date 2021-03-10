@@ -298,4 +298,5 @@ On systems supporting RPC v7.1 or higher the titles on the choice set will be di
 
 On systems supporting RPC v7.0 or lower, the titles on the choice set will have a number appended to them when there are duplicate titles.
 ![Choice Set with duplicate names](assets/Choice_cell_duplicate_names.png)
+
 !@
