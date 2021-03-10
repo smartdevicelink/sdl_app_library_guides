@@ -11,12 +11,12 @@ If your app does not support the current head unit language, you should decide o
 ### Checking the Current Head Unit Language
 After starting the `SDLManager` you can check the @![iOS]`registerResponse`!@@![android,javaSE,javaEE,javascript]`sdlManager.getRegisterAppInterfaceResponse()`!@ property for the head unit's `language` and `hmiDisplayLanguage`. The `language` property gives you the current VR system language; `hmiDisplayLanguage` the current display text language.
 
+
 @![iOS]
 ```objc
 SDLLanguage headUnitLanguage = self.sdlManager.registerResponse.language;
 SDLLanguage headUnitHMIDisplayLanguage = self.sdlManager.registerResponse.hmiDisplayLanguage;
 ```
-
 ```swift
 let headUnitLanguage = sdlManager.registerResponse?.language
 let headUnitHMIDisplayLanguage = sdlManager.registerResponse?.hmiDisplayLanguage
