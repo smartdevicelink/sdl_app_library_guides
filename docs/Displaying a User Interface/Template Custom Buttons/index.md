@@ -524,4 +524,4 @@ sdlManager.getScreenManager().setSoftButtonObjects([]);
 !@
 
 ## Using RPCs
-You can also send soft buttons manually using the `Show` RPC. Note that if you do so, you must not mix the `ScreenManager` soft buttons and manually sending the `Show` RPC. Additionally, the `ScreenManager` takes soft button ids 0 - 10000. Ensure that if you use custom RPCs, that the soft button ids you use are outside of this range.
+You can also send soft buttons manually using the `Show` RPC. Note that if you do so, you must not mix the @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE, javascript]`ScreenManager`!@ soft buttons and manually sending the `Show` RPC. Additionally, the @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE, javascript]`ScreenManager`!@ takes soft button ids 0 - 10000. Ensure that if you use custom RPCs, that the soft button ids you use are outside of this range.
