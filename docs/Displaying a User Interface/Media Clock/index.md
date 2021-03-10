@@ -365,15 +365,14 @@ For example, a user can play a podcast at 125% speed or at 75% speed.
 @![android, javaSE, javaEE]
 ```java
 //Play Audio at 50% or half speed
-SetMediaClockTimer mediaClock = new SetMediaClockTimer().countUpFromStartTimeInterval(30, 253, AudioStreamingIndicator.PAUSE);
-mediaClock.setCountRate(0.5f);
-sdlManager.sendRPC(mediaClock);
-```
-```java
+SetMediaClockTimer mediaClockSlow = new SetMediaClockTimer().countUpFromStartTimeInterval(30, 253, AudioStreamingIndicator.PAUSE);
+mediaClockSlow.setCountRate(0.5f);
+sdlManager.sendRPC(mediaClockSlow);
+
 //Play Audio at 200% or double speed
-SetMediaClockTimer mediaClock = new SetMediaClockTimer().countUpFromStartTimeInterval(30, 253, AudioStreamingIndicator.PAUSE);
-mediaClock.setCountRate(2.0f);
-sdlManager.sendRPC(mediaClock);
+SetMediaClockTimer mediaClockFast = new SetMediaClockTimer().countUpFromStartTimeInterval(30, 253, AudioStreamingIndicator.PAUSE);
+mediaClockFast.setCountRate(2.0f);
+sdlManager.sendRPC(mediaClockFast);
 ```
 !@
 
