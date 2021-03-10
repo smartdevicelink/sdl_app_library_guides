@@ -384,6 +384,6 @@ sdlManager.sendRPC(mediaClock);
 !@
 
 !!! NOTE
-CountRate has a default value of 1.0, and the CountRate will be reset to 1.0 if any SetMediaClockTimer request does not have the parameter set.
-To ensure that you maintain the correct CountRate in your application make sure to set the parameter in all SetMediaClockTimer requests (including when sending a RESUME request).
+`CountRate` has a default value of 1.0, and the `CountRate` will be reset to 1.0 if any `SetMediaClockTimer` request does not have the parameter set.
+To ensure that you maintain the correct `CountRate` in your application make sure to set the parameter in all `SetMediaClockTimer` requests (including when sending a RESUME request).
 !!!
