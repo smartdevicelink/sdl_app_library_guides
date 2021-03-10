@@ -94,6 +94,35 @@ sdlManager.getScreenManager().setPrimaryGraphic(null);
 ```
 !@
 
+### Overwriting Images
+Uploaded images are checked for duplication based on their file names in the @![iOS]`SDLFileManager`!@@![android, javaSE, javaEE, javascript]`FileManager`!@ class. For cases where an image by the same name needs to be reuploaded then the @![iOS]`SDLArtwork`'s !@@![android, javaSE, javaEE, javascript]`SdlArtwork`'s!@ `overwrite` property should be used. Setting `overwrite` to `true` before passing an image to a @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE, javascript]`ScreenManager`!@ method such as `setPrimaryGraphic()` and `setSecondaryGraphic()` will force the image to be reuploaded.
+
+@![iOS]
+##### Objective-C
+```objc
+// TODO: Code that sets an artwork's overwrite property to true before passing to setPrimaryGraphic()
+```
+
+##### Swift
+```swift
+// TODO: Code that sets an artwork's overwrite property to true before passing to setPrimaryGraphic()
+```
+!@
+
+@![android, javaSE, javaEE]
+```java
+// TODO: Code that sets an artwork's overwrite property to true before passing to setPrimaryGraphic()
+```
+!@
+
+@![javascript]
+```js
+// setting the primary graphic with overwrite set to true
+sdlArtwork.setOverwrite(true);
+sdlManager.getScreenManager().setPrimaryGraphic(sdlArtwork);
+```
+!@
+
 ## Templating Images (RPC v5.0+)
 Templated images are tinted by Core so the image is visible regardless of whether your user has set the head unit to day or night mode. For example, if a head unit is in night mode with a dark theme (see [Customizing the Template](Customizing Look and Functionality/Customizing the Template) section for more details on how to customize theme colors), then your templated images will be displayed as white. In the day theme, the image will automatically change to black.
 
