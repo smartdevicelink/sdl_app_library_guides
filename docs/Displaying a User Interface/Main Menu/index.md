@@ -84,9 +84,8 @@ sdlManager.screenManager.menu = [cell]
 
 @![android, javaSE, javaEE]
 ```java
-// TODO: Update cell to the new constructor method?
 // Create the menu cell
-MenuCell cell = new MenuCell("Cell text", null, Collections.singletonList("cell text"), new MenuSelectionListener() {
+MenuCell cell = new MenuCell("Cell text", "Secondary Text", "Tertiary Text", null, null, Collections.singletonList("cell text"), new MenuSelectionListener() {
     @Override
     public void onTriggered(TriggerSource trigger) {
         // Menu item was selected, check the `triggerSource` to know if the user used touch or voice to activate it
@@ -132,9 +131,8 @@ sdlManager.screenManager.menu = [submenuCell]
 
 @![android, javaSE, javaEE]
 ```java
-// TODO: Update cell to the new constructor method?
 // Create the inner menu cell
-MenuCell innerCell = new MenuCell("inner menu cell", null, Collections.singletonList("inner menu cell"), new MenuSelectionListener() {
+MenuCell innerCell = new MenuCell("inner menu cell", "secondary text", "tertiary test", null, null,Collections.singletonList("inner menu cell"), new MenuSelectionListener() {
     @Override
     public void onTriggered(TriggerSource trigger) {
         // Menu item was selected, check the `triggerSource` to know if the user used touch or voice to activate it
@@ -143,7 +141,7 @@ MenuCell innerCell = new MenuCell("inner menu cell", null, Collections.singleton
 });
 
 // Create and set the submenu cell
-MenuCell cell = new MenuCell("cell", MenuLayout.LIST, null, Collections.singletonList(innerCell));
+MenuCell cell = new MenuCell("cell", "secondary text", "tertiary text", MenuLayout.LIST, null, null, Collections.singletonList(innerCell));
 
 sdlManager.getScreenManager().setMenu(Collections.singletonList(cell));
 ```
