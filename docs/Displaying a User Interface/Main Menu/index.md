@@ -149,7 +149,7 @@ To create a submenu using RPCs, you must use a `AddSubMenu` RPC with a unique id
 
 @![iOS, android, javaEE, javaSE]
 ## Duplicate Menu Titles (SDL @![android, javaEE, javaSE]v5.1+!@@![iOS]v7.1+!@)
-Starting with SDL @![android, javaEE, javaSE]v5.1+!@@![iOS]v7.1+!@ menu cells and sub menu cells no longer require unique titles inorder to be presented.
+Starting with SDL @![android, javaEE, javaSE]v5.1+!@@![iOS]v7.1+!@ menu cells and sub menu cells no longer require unique titles in order to be presented.
 
 For example, if you are trying to display points of interest as a list you can now have multiple locations with the same name but are not the same location.
 
@@ -157,6 +157,4 @@ On systems supporting RPC v7.1 or higher the titles on the menu will be displaye
 ![Menu with duplicate titles RPC 7.1+](assets/Menu_duplicate_titles_7_1.png)
 
 On systems supporting RPC v7.0 or lower, the titles on the menu will have a number appended to them when there are duplicate titles.
-![Menu with duplicate titles](assets/Menu_duplicate_titles.png)
-
-!@
+![Menu with duplicate titles](assets/Menu_duplicate_titles.png)!@
