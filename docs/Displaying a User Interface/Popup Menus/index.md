@@ -285,7 +285,7 @@ choiceSet.cancel();
 !@
 
 @![iOS, android, javaEE, javaSE]
-## Duplicate Choice Cell Titles (SDL !@@![android, javaEE, javaSE]v5.1+!@@![iOS]v7.1+!@@![iOS, android, javaEE, javaSE])
+### Duplicate Choice Cell Titles (SDL !@@![android, javaEE, javaSE]v5.1+!@@![iOS]v7.1+!@@![iOS, android, javaEE, javaSE])
 Starting with SDL !@@![android, javaEE, javaSE]v5.1+!@@![iOS]v7.1+!@@![iOS, android, javaEE, javaSE] choice cells no longer require unique titles in order to be presented.
 
 For example, if you are trying to display points of interest as a list you can now have multiple locations with the same name but are not the same location.
