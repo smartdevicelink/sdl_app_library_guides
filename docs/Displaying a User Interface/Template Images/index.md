@@ -95,7 +95,7 @@ sdlManager.getScreenManager().setPrimaryGraphic(null);
 !@
 
 ### Overwriting Images
-Uploaded images are checked for duplication based on their file names in the @![iOS]`SDLFileManager`!@@![android, javaSE, javaEE, javascript]`FileManager`!@ class. For cases where an image by the same name needs to be reuploaded then the @![iOS]`SDLArtwork`'s !@@![android, javaSE, javaEE, javascript]`SdlArtwork`'s!@ `overwrite` property should be used. Setting `overwrite` to `true` before passing an image to a @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE, javascript]`ScreenManager`!@ method such as `setPrimaryGraphic()` and `setSecondaryGraphic()` will force the image to be reuploaded.
+Uploaded images are checked for duplication based on their file names in the @![iOS]`SDLFileManager`!@@![android, javaSE, javaEE, javascript]`FileManager`!@ class. For cases where an image by the same name needs to be reuploaded then the @![iOS]`SDLArtwork`'s !@@![android, javaSE, javaEE, javascript]`SdlArtwork`'s!@ `overwrite` property should be used. Setting `overwrite` to `true` before passing the image to a @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE, javascript]`ScreenManager`!@ method such as `setPrimaryGraphic()` and `setSecondaryGraphic()` will force the image to be reuploaded.
 
 @![iOS]
 ##### Objective-C
