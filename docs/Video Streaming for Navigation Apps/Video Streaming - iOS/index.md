@@ -109,24 +109,45 @@ If the HMI scales the video stream, you will have to handle scaling the projecte
 Starting with SDL v7.1+ the `customVideoEncoderSettings` you provide will automatically be aligned with the `VideoStreamingCapabilities` provided by the HMI. If the HMI provides the bit rate or preferred frame rate in the `VideoStreamingCapabilities` and they are also defined in the `customVideoEncoderSettings` you provided, the smaller bit rate or preferred frame rate will be used.
 
 ### Supporting Different Video Streaming Window Sizes (SDL v7.1+, RPC v7.1+)
-Some HMIs support multiple view sizes and may resize your SDL app's view during video streaming (i.e. to a collapsed view, split screen, preview mode or picture-in-picture). If you you wish to limit support for different aspect ratios or  
-You can specify two `SDLVideoStreamingRange` parameters when you want to start your video stream, one range will be for landscape orientations and one range will be for portrait orientations.
-In these `SDLVideoStreamingRange` parameters you can define different view sizes that you wish to support in the event that the HMI resizes the view during the stream. (i.e. to a collapsed view, split screen, preview mode or picture-in-picture).
-In the `SDLVideoStreamingRange` you will define a minimum and maximum resolution, minimum diagonal, and a minimum and maximum aspect ratio. Any values you do not wish to use should be left set to `nil`.
-If you want to support all possible landscape or portrait sizes you can simply pass `nil` for `supportedLandscapeStreamingRange`, `supportedPortraitStreamingRange`, or both.
-If you wish to only support landscape orientation or only support portrait orientation you can "disable" the range by passing a `SDLVideoStreamingRange` with all 0 values set.
+Some HMIs support multiple view sizes and may resize your SDL app's view during video streaming (i.e. to a collapsed view, split screen, preview mode or picture-in-picture). By default, your app will support all the view sizes and the `CarWindow` will resize the view controller's frame when the HMI notifies the app of the updated screen size. If you you wish to support only some screen sizes, you can configure the `supportedPortraitStreamingRange` and `supportedLandscapeStreamingRange` properties via the `SDLStreamingMediaConfiguration` before starting the video stream. This will allow you to limit support to one or a combination of minimum/maximum resolutions, minimum diagonal, or minimum/maximum aspect ratios. If you want to support all possible landscape or portrait sizes you can simply set `nil` for the streaming range. If you wish to disable support for all possible landscape or portrait orientations you can disable the streaming range using the `SDLVideoStreamingRange.disabled` configuration.
 
+#### Creating the Video Streaming Ranges
 ```objc
-//TODO examples
-//disable example
-//example of only resolution set range
-//example of only aspect ratio set range
+/// Use if you wish to disable support for all landscape orientations or all portrait orientations
+SDLVideoStreamingRange *disabledStreamingRange = SDLVideoStreamingRange.disabled;
+
+// Use if you wish to only support landscape image resolutions between widths: 500-800 and heights: 200-400. All aspect ratios and diagonal screen sizes will be supported.
+SDLVideoStreamingRange *streamingRange = [[SDLVideoStreamingRange alloc] initWithMinimumResolution:[[SDLImageResolution alloc] initWithWidth:500 height:200] maximumResolution:[[SDLImageResolution alloc] initWithWidth:800 height:400]];
+
+/// Use if you wish to only support aspect ratios between 1.0 and 2.5. All image resolutions and diagonal screen sizes will be supported.
+SDLVideoStreamingRange *streamingRange = [[SDLVideoStreamingRange alloc] init];
+streamingRange.minimumAspectRatio = 1.0;
+streamingRange.maximumAspectRatio = 2.5;
+
+streamingMediaConfig.supportedPortraitStreamingRange = disabledStreamingRange;
+streamingMediaConfig.supportedLandscapeStreamingRange = streamingRange;
 ```
 ```swift
-//TODO examples
-//disable example
-//example of only resolution set range
-//example of only aspect ratio set range
+/// Use if you wish to disable support for all landscape orientations or all portrait orientations
+let disabledStreamingRange = SDLVideoStreamingRange.disabled()
+
+// Use if you wish to only support landscape image resolutions between widths: 500-800 and heights: 200-400. All aspect ratios and diagonal screen sizes will be supported.
+let streamingRange = SDLVideoStreamingRange(minimumResolution: SDLImageResolution(width: 500, height: 200), maximumResolution: SDLImageResolution(width: 800, height: 400))
+
+/// Use if you wish to only support aspect ratios between 1.0 and 2.5. All image resolutions and diagonal screen sizes will be supported.
+let streamingRange = SDLVideoStreamingRange()
+streamingRange.minimumAspectRatio = 1.0
+streamingRange.maximumAspectRatio = 2.5
+```
+
+#### Setting the Video Streaming Ranges
+```objc
+streamingMediaConfig.supportedPortraitStreamingRange = disabledStreamingRange;
+streamingMediaConfig.supportedLandscapeStreamingRange = streamingRange;
+```
+```swift
+streamingMediaConfig.supportedPortraitStreamingRange = disabledStreamingRange
+streamingMediaConfig.supportedLandscapeStreamingRange = streamingRange
 ```
 
 !!! NOTE
@@ -136,10 +157,16 @@ If you disable both the `supportedLandscapeStreamingRange` and `supportedPortrai
 If the HMI resizes the view during streaming, the video stream will automatically restart with the new size. If desired, you can subscribe to screen size updates via the `SDLStreamingVideoDelegate`.
 
 ```objc
-//TODO examples
-//Sub to delegate
+streamingMediaConfig.delegate = self;
+
+
 ```
 ```swift
-//TODO examples
-//Sub to delegate
+streamingMediaConfig.delegate = self
+
+extension ProxyManager: SDLStreamingVideoDelegate {
+    func videoStreamingSizeDidUpdate(_ displaySize: CGSize) {
+        <#Use displaySize.width and displaySize.height#>
+    }
+}
 ```
