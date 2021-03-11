@@ -65,7 +65,7 @@ If you must use mirroring to stream video please be aware of the following limit
 ### Showing a New View Controller
 Simply update the streaming media manager's `rootViewController` to the new view controller. This will also automatically update the [haptic parser](Video Streaming for Navigation Apps/Supporting Haptic Input).
 
-### Supporting Different Video Streaming Window Sizes (SDL v7.1+, RPC v7.1+)
+### Supporting Different Video Streaming View Sizes (SDL v7.1+, RPC v7.1+)
 Some HMIs support multiple view sizes and may resize your SDL app's view during video streaming (i.e. to a collapsed view, split screen, preview mode or picture-in-picture). By default, your app will support all the view sizes and the `CarWindow` will resize the view controller's frame when the HMI notifies the app of the updated screen size. If you you wish to support only some screen sizes, you can configure the `supportedPortraitStreamingRange` and `supportedLandscapeStreamingRange` properties via the `SDLStreamingMediaConfiguration` before starting the video stream. This will allow you to limit support to one or a combination of minimum/maximum resolutions, minimum diagonal, or minimum/maximum aspect ratios. If you want to support all possible landscape or portrait sizes you can simply set `nil` for the streaming range. If you wish to disable support for all possible landscape or portrait orientations you can disable the streaming range using the `SDLVideoStreamingRange.disabled` configuration.
 
 #### Creating the Video Streaming Ranges
