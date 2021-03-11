@@ -65,49 +65,6 @@ If you must use mirroring to stream video please be aware of the following limit
 ### Showing a New View Controller
 Simply update the streaming media manager's `rootViewController` to the new view controller. This will also automatically update the [haptic parser](Video Streaming for Navigation Apps/Supporting Haptic Input).
 
-## Sending Raw Video Data
-If you decide to send raw video data instead of relying on the `CarWindow` API to generate that video data from a view controller, you must maintain the lifecycle of the video stream as there are limitations to when video is allowed to stream. The app's HMI state on the head unit and the app's application state on the device determines whether video can stream. Due to an iOS limitation, video cannot be streamed when the app on the device is no longer in the foreground and/or the device is locked/sleeping.
-
-The lifecycle of the video stream is maintained by the SDL library. The `SDLManager.streamingMediaManager` can be accessed once the `start` method of `SDLManager` is called. The `SDLStreamingMediaManager` automatically takes care of determining screen size and encoding to the correct video format.
-
-!!! NOTE
-It is not recommended to alter the default video format and resolution behavior as it can result in distorted video or the video not showing up at all on the head unit. However, that option is available to you by implementing `SDLStreamingMediaConfiguration.dataSource`.
-!!!
-
-### Sending Video Data
-To check whether or not you can start sending data to the video stream, watch for the `SDLVideoStreamDidStartNotification`, `SDLVideoStreamDidStopNotification`, and `SDLVideoStreamSuspendedNotification` notifications. When you receive the start notification, start sending video data; stop when you receive the suspended or stop notifications. You will receive a video stream suspended notification when the app on the device is backgrounded. There are parallel start and stop notifications for audio streaming.
-
-Video data must be provided to the `SDLStreamingMediaManager` as a `CVImageBufferRef` (Apple documentation [here](https://developer.apple.com/library/mac/documentation/QuartzCore/Reference/CVImageBufferRef/)). Once the video stream has started, you will not see video appear until Core has received a few frames. Refer to the code sample below for an example of how to send a video frame:
-
-```objc
-CVPixelBufferRef imageBuffer = <#Acquire Image Buffer#>;
-
-if ([self.sdlManager.streamManager sendVideoData:imageBuffer] == NO) {
-  NSLog(@"Could not send Video Data");
-}
-```
-```swift
-let imageBuffer = <#Acquire Image Buffer#>
-
-guard let streamManager = self.sdlManager.streamManager, !streamManager.isVideoStreamingPaused else {
-    return
-}
-
-if !streamManager.sendVideoData(imageBuffer) {
-    print("Could not send Video Data")
-}
-```
-
-### Best Practices
-* A constant stream of map frames is not necessary to maintain an image on the screen. Because of this, we advise that a batch of frames are only sent on map movement or location movement. This will keep the application's memory consumption lower.
-* For the best user experience, we recommend sending at least 15 frames per second.
-
-### Handling HMI Scaling (RPC v6.0+)
-If the HMI scales the video stream, you will have to handle scaling the projected view, touches and haptic rectangles yourself (this is all handled for you behind the scenes in the `CarWindow` API). To find out if the HMI scales the video stream, you must for query and check the `SDLVideoStreamingCapability` for the `scale` property. Please check the [Adaptive Interface Capabilities](Displaying a User Interface/Adaptive Interface Capabilities) section for more information on how to query for this property using the system capability manager.  
-
-### Video Streaming Parameters (SDL v7.1+)
-Starting with SDL v7.1+ the `customVideoEncoderSettings` you provide will automatically be aligned with the `VideoStreamingCapabilities` provided by the HMI. If the HMI provides the bit rate or preferred frame rate in the `VideoStreamingCapabilities` and they are also defined in the `customVideoEncoderSettings` you provided, the smaller bit rate or preferred frame rate will be used.
-
 ### Supporting Different Video Streaming Window Sizes (SDL v7.1+, RPC v7.1+)
 Some HMIs support multiple view sizes and may resize your SDL app's view during video streaming (i.e. to a collapsed view, split screen, preview mode or picture-in-picture). By default, your app will support all the view sizes and the `CarWindow` will resize the view controller's frame when the HMI notifies the app of the updated screen size. If you you wish to support only some screen sizes, you can configure the `supportedPortraitStreamingRange` and `supportedLandscapeStreamingRange` properties via the `SDLStreamingMediaConfiguration` before starting the video stream. This will allow you to limit support to one or a combination of minimum/maximum resolutions, minimum diagonal, or minimum/maximum aspect ratios. If you want to support all possible landscape or portrait sizes you can simply set `nil` for the streaming range. If you wish to disable support for all possible landscape or portrait orientations you can disable the streaming range using the `SDLVideoStreamingRange.disabled` configuration.
 
@@ -173,3 +130,43 @@ extension ProxyManager: SDLStreamingVideoDelegate {
     }
 }
 ```
+
+## Sending Raw Video Data
+If you decide to send raw video data instead of relying on the `CarWindow` API to generate that video data from a view controller, you must maintain the lifecycle of the video stream as there are limitations to when video is allowed to stream. The app's HMI state on the head unit and the app's application state on the device determines whether video can stream. Due to an iOS limitation, video cannot be streamed when the app on the device is no longer in the foreground and/or the device is locked/sleeping.
+
+The lifecycle of the video stream is maintained by the SDL library. The `SDLManager.streamingMediaManager` can be accessed once the `start` method of `SDLManager` is called. The `SDLStreamingMediaManager` automatically takes care of determining screen size and encoding to the correct video format.
+
+!!! NOTE
+It is not recommended to alter the default video format and resolution behavior as it can result in distorted video or the video not showing up at all on the head unit. However, that option is available to you by implementing `SDLStreamingMediaConfiguration.dataSource`.
+!!!
+
+### Sending Video Data
+To check whether or not you can start sending data to the video stream, watch for the `SDLVideoStreamDidStartNotification`, `SDLVideoStreamDidStopNotification`, and `SDLVideoStreamSuspendedNotification` notifications. When you receive the start notification, start sending video data; stop when you receive the suspended or stop notifications. You will receive a video stream suspended notification when the app on the device is backgrounded. There are parallel start and stop notifications for audio streaming.
+
+Video data must be provided to the `SDLStreamingMediaManager` as a `CVImageBufferRef` (Apple documentation [here](https://developer.apple.com/library/mac/documentation/QuartzCore/Reference/CVImageBufferRef/)). Once the video stream has started, you will not see video appear until Core has received a few frames. Refer to the code sample below for an example of how to send a video frame:
+
+```objc
+CVPixelBufferRef imageBuffer = <#Acquire Image Buffer#>;
+
+if ([self.sdlManager.streamManager sendVideoData:imageBuffer] == NO) {
+  NSLog(@"Could not send Video Data");
+}
+```
+```swift
+let imageBuffer = <#Acquire Image Buffer#>
+
+guard let streamManager = self.sdlManager.streamManager, !streamManager.isVideoStreamingPaused else {
+    return
+}
+
+if !streamManager.sendVideoData(imageBuffer) {
+    print("Could not send Video Data")
+}
+```
+
+### Best Practices
+* A constant stream of map frames is not necessary to maintain an image on the screen. Because of this, we advise that a batch of frames are only sent on map movement or location movement. This will keep the application's memory consumption lower.
+* For the best user experience, we recommend sending at least 15 frames per second.
+
+### Handling HMI Scaling (RPC v6.0+)
+If the HMI scales the video stream, you will have to handle scaling the projected view, touches and haptic rectangles yourself (this is all handled for you behind the scenes in the `CarWindow` API). To find out if the HMI scales the video stream, you must for query and check the `SDLVideoStreamingCapability` for the `scale` property. Please check the [Adaptive Interface Capabilities](Displaying a User Interface/Adaptive Interface Capabilities) section for more information on how to query for this property using the system capability manager.  
