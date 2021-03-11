@@ -159,7 +159,9 @@ If the HMI resizes the view during streaming, the video stream will automaticall
 ```objc
 streamingMediaConfig.delegate = self;
 
-
+- (void)videoStreamingState:(nullable SDLVideoStreamingState)oldState didChangetoState:(SDLVideoStreamingState)newState {
+    <#Use displaySize.width and displaySize.height#>
+}
 ```
 ```swift
 streamingMediaConfig.delegate = self
