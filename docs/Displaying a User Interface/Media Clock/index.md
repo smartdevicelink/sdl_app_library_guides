@@ -353,7 +353,13 @@ For example, a user can play a podcast at 125% speed or at 75% speed.
 @![iOS]
 ##### Objective-C
 ```objc
-//TODO add obj-c code
+//Play Audio at 50% or half speed
+SDLSetMediaClockTimer *mediaClockSlow = [SDLSetMediaClockTimer countUpFromStartTimeInterval:30 toEndTimeInterval:253 playPauseIndicator:SDLAudioStreamingIndicatorPause forwardSeekIndicator:nil backSeekIndicator:nil countRate:@(0.5)];
+[self.sdlManager sendRPC:mediaClockSlow];
+
+//Play Audio at 200% or double speed
+SDLSetMediaClockTimer *mediaClockSlow = [SDLSetMediaClockTimer countUpFromStartTimeInterval:30 toEndTimeInterval:253 playPauseIndicator:SDLAudioStreamingIndicatorPause forwardSeekIndicator:nil backSeekIndicator:nil countRate:@(2.0)];
+[self.sdlManager sendRPC:mediaClockSlow];
 ```
 
 ##### Swift
