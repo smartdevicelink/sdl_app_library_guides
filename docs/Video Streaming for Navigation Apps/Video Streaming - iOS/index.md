@@ -154,6 +154,7 @@ streamingMediaConfig.supportedLandscapeStreamingRange = streamingRange
 If you disable both the `supportedLandscapeStreamingRange` and `supportedPortraitStreamingRange`, video will not stream.
 !!!
 
+#### Getting the Updated Screen Size
 If the HMI resizes the view during streaming, the video stream will automatically restart with the new size. If desired, you can subscribe to screen size updates via the `SDLStreamingVideoDelegate`.
 
 ```objc
