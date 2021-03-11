@@ -21,7 +21,7 @@ There are several customizations you can make to `CarWindow` to optimize it for 
 
 1. Choose how `CarWindow` captures and renders the screen using the `carWindowRenderingType` enum.
 2. By default, when using `CarWindow`, the `SDLTouchManager` will sync its touch updates to the framerate. To disable this feature, set `SDLTouchManager.enableSyncedPanning` to `NO`.
-3. `CarWindow`'s settings dictate the framerate of the app. To change the framerate and other parameters, update `SDLStreamingMediaConfiguration.customVideoEncoderSettings`. These settings will override any settings received from the head unit.
+3. `CarWindow`'s settings dictate the default framerate and average bitrate of the video encoder. If the HMI returns a desired framerate or max bitrate, the HMI's preferred settings will be use to configure the video encoder. You do have the option to change the default parameters via the `SDLStreamingMediaConfiguration.customVideoEncoderSettings`. Please note that your custom settings will override any settings received from the HMI except in the case where your custom framerate or average bitrate is larger than what the HMI says it can support.
 
 Below are the video encoder defaults:
 
@@ -45,13 +45,10 @@ If you are using off-screen rendering, it is recommended that your on-screen vie
 #### Off-Screen
 To set an off-screen view controller all you have to do is instantiate a new `UIViewController` class and use it to set the `rootViewController`.
 
-##### Objective-C
 ```objc
 UIViewController *offScreenViewController = <#Acquire a UIViewController#>;
 self.sdlManager.streamManager.rootViewController = offScreenViewController;
 ```
-
-##### Swift
 ```swift
 let offScreenViewController = <#Acquire a UIViewController#>
 sdlManager.streamManager?.rootViewController = offScreenViewController
@@ -82,16 +79,13 @@ To check whether or not you can start sending data to the video stream, watch fo
 
 Video data must be provided to the `SDLStreamingMediaManager` as a `CVImageBufferRef` (Apple documentation [here](https://developer.apple.com/library/mac/documentation/QuartzCore/Reference/CVImageBufferRef/)). Once the video stream has started, you will not see video appear until Core has received a few frames. Refer to the code sample below for an example of how to send a video frame:
 
-##### Objective-C
-```objective-c
+```objc
 CVPixelBufferRef imageBuffer = <#Acquire Image Buffer#>;
 
 if ([self.sdlManager.streamManager sendVideoData:imageBuffer] == NO) {
   NSLog(@"Could not send Video Data");
 }
 ```
-
-##### Swift
 ```swift
 let imageBuffer = <#Acquire Image Buffer#>
 
@@ -112,42 +106,22 @@ if !streamManager.sendVideoData(imageBuffer) {
 If the HMI scales the video stream, you will have to handle scaling the projected view, touches and haptic rectangles yourself (this is all handled for you behind the scenes in the `CarWindow` API). To find out if the HMI scales the video stream, you must for query and check the `SDLVideoStreamingCapability` for the `scale` property. Please check the [Adaptive Interface Capabilities](Displaying a User Interface/Adaptive Interface Capabilities) section for more information on how to query for this property using the system capability manager.  
 
 ### Video Streaming Parameters (SDL v7.1+)
-Starting with SDL version 7.1+ the `customVideoEncoderSettings` you provide will automatically be aligned with the `VideoStreamingCapabilities` provided by the HMI.
-If the HMI provides the scale or resolution in the `VideoStreamingCapabilities` the Video stream will use that scale or resolution. Otherwise, the scale or resolution defined in the `customVideoEncoderSettings` you provided will be used.
-If the HMI provides the BitRate or preferred frame rate in the `VideoStreamingCapabilities` and they are also defined in the `customVideoEncoderSettings` you provided the smaller BitRate or preferred frame rate will be used.
-
-### Video FrameRate (RPC v7.1+)
-Starting with RPC version 7.1+ you can define a frame rate within your `customVideoEncoderSettings` that you would like your video to stream at.
-
-##### Objective-C
-```objective-c
-//TODO examples
-//set prefferedFPS
-```
-
-##### Swift
-```swift
-//TODO examples
-//set prefferedFPS
-```
-
+Starting with SDL v7.1+ the `customVideoEncoderSettings` you provide will automatically be aligned with the `VideoStreamingCapabilities` provided by the HMI. If the HMI provides the bit rate or preferred frame rate in the `VideoStreamingCapabilities` and they are also defined in the `customVideoEncoderSettings` you provided, the smaller bit rate or preferred frame rate will be used.
 
 ### Supporting Different Video Streaming Window Sizes (SDL v7.1+, RPC v7.1+)
-You can specify two `SDLVideoStreamingRange` parameters when you want to start your video stream, one range will be for landscape orientation and one range will be for portrait orientation.
+Some HMIs support multiple view sizes and may resize your SDL app's view during video streaming (i.e. to a collapsed view, split screen, preview mode or picture-in-picture). If you you wish to limit support for different aspect ratios or  
+You can specify two `SDLVideoStreamingRange` parameters when you want to start your video stream, one range will be for landscape orientations and one range will be for portrait orientations.
 In these `SDLVideoStreamingRange` parameters you can define different view sizes that you wish to support in the event that the HMI resizes the view during the stream. (i.e. to a collapsed view, split screen, preview mode or picture-in-picture).
-In the `SDLVideoStreamingRange` you will define a minimum and maximum Resolution, minimum diagonal, and a minimum and maximum aspect Ratio. Any values you do not wish to use should be set to `nil`.
+In the `SDLVideoStreamingRange` you will define a minimum and maximum resolution, minimum diagonal, and a minimum and maximum aspect ratio. Any values you do not wish to use should be left set to `nil`.
 If you want to support all possible landscape or portrait sizes you can simply pass `nil` for `supportedLandscapeStreamingRange`, `supportedPortraitStreamingRange`, or both.
 If you wish to only support landscape orientation or only support portrait orientation you can "disable" the range by passing a `SDLVideoStreamingRange` with all 0 values set.
 
-##### Objective-C
-```objective-c
+```objc
 //TODO examples
 //disable example
 //example of only resolution set range
 //example of only aspect ratio set range
 ```
-
-##### Swift
 ```swift
 //TODO examples
 //disable example
@@ -156,18 +130,15 @@ If you wish to only support landscape orientation or only support portrait orien
 ```
 
 !!! NOTE
-If you disable both the `supportedLandscapeStreamingRange` and `supportedPortraitStreamingRange`, the video will not stream
+If you disable both the `supportedLandscapeStreamingRange` and `supportedPortraitStreamingRange`, video will not stream.
 !!!
 
-If the HMI resizes the view during the stream, the video stream will automatically restart with the new size.
-If desired, you can subscribe to screen size updates via the SDLStreamingVideoDelegate.
-##### Objective-C
-```objective-c
+If the HMI resizes the view during streaming, the video stream will automatically restart with the new size. If desired, you can subscribe to screen size updates via the `SDLStreamingVideoDelegate`.
+
+```objc
 //TODO examples
 //Sub to delegate
 ```
-
-##### Swift
 ```swift
 //TODO examples
 //Sub to delegate
