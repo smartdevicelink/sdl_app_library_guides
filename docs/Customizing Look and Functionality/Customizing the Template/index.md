@@ -48,7 +48,7 @@ TemplateColorScheme nightColorScheme = new TemplateColorScheme()
     .setBackgroundColor(white)
     .setPrimaryColor(green)
     .setSecondaryColor(darkGrey);
-builder.setDayColorScheme(nightColorScheme);
+builder.setNightColorScheme(nightColorScheme);
 ```
 !@
 @![javascript]
