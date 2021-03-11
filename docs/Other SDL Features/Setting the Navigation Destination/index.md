@@ -1,4 +1,4 @@
-# Setting the Navigation Destination
+# Setting the Navigation Destination (RPC v3.0+)
 The @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE,javascript]`SendLocation`!@ RPC gives you the ability to send a GPS location to the active navigation app on the module.
 
 When using the @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE,javascript]`SendLocation`!@ RPC, you will not have access to any information about how the user interacted with this location, only if the request was successfully sent. The request will be handled by the module from that point on using the active navigation system.
@@ -9,8 +9,10 @@ The @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE,javascript]`SendLocation`
 @![iOS]
 ##### Objective-C
 ```objc
-id observerId = [self.sdlManager.permissionManager addObserverForRPCs:@[SDLRPCFunctionNameSendLocation] groupType:SDLPermissionGroupTypeAny withHandler:^(NSDictionary<SDLPermissionRPCName,NSNumber *> * _Nonnull allChanges, SDLPermissionGroupStatus groupStatus) {
-    if (groupStatus != SDLPermissionGroupStatusAllowed) {
+SDLPermissionElement *setSendLocationPermissionElement = [[SDLPermissionElement alloc] initWithRPCName:SDLRPCFunctionNameSendLocation parameterPermissions:nil];
+
+id observerId = [self.sdlManager.permissionManager subscribeToRPCPermissions:@[setSendLocationPermissionElement] groupType:SDLPermissionGroupTypeAny withHandler:^(NSDictionary<SDLRPCFunctionName, SDLRPCPermissionStatus *> * _Nonnull updatedPermissionStatuses, SDLPermissionGroupStatus status) {
+    if (status != SDLPermissionGroupStatusAllowed) {
         // Your app does not have permission to send the `SDLSendLocation` request for its current HMI level
         return;
     }
@@ -21,7 +23,9 @@ id observerId = [self.sdlManager.permissionManager addObserverForRPCs:@[SDLRPCFu
 
 ##### Swift
 ```swift
-let observerId = sdlManager.permissionManager.addObserver(forRPCs: [SDLRPCFunctionName.sendLocation.rawValue.rawValue], groupType: .any, withHandler: { (allChanges, groupStatus) in
+let setSendLocationPermissionElement = SDLPermissionElement(rpcName: .sendLocation, parameterPermissions: nil)
+
+let observerId = sdlManager.permissionManager.subscribe(toRPCPermissions: [setSendLocationPermissionElement], groupType: .any, withHandler: { (allChanges, groupStatus) in
     // This handler will be called whenever the permission status changes
     guard groupStatus == .allowed else {
         // Your app does not have permission to send the `SDLSendLocation` request for its current HMI level
@@ -223,7 +227,6 @@ To use the @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE,javascript]`SendLo
 SDLSendLocation *sendLocation = [[SDLSendLocation alloc] initWithLongitude:-97.380967 latitude:42.877737 locationName:@"The Center" locationDescription:@"Center of the United States" address:@[@"900 Whiting Dr", @"Yankton, SD 57078"] phoneNumber:nil image:nil];
 
 [self.sdlManager sendRequest:sendLocation withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    SDLSendLocationResponse *response = (SDLSendLocationResponse *)response;
     if (response == nil) {
         // Encountered an error sending `SendLocation`
         return;
@@ -275,23 +278,22 @@ sdlManager.send(request: sendLocation) { (request, response, error) in
 
 @![android, javaSE, javaEE]
 ```java
-SendLocation sendLocation = new SendLocation();
-sendLocation.setLatitudeDegrees(42.877737);
-sendLocation.setLongitudeDegrees(-97.380967);
-sendLocation.setLocationName("The Center");
-sendLocation.setLocationDescription("Center of the United States");
+SendLocation sendLocation = new SendLocation()
+    .setLatitudeDegrees(42.877737)
+    .setLongitudeDegrees(-97.380967)
+    .setLocationName("The Center")
+    .setLocationDescription("Center of the United States");
 
-OasisAddress address = new OasisAddress();
-address.setSubThoroughfare("900");
-address.setThoroughfare("Whiting Dr");
-address.setLocality("Yankton");
-address.setAdministrativeArea("SD");
-address.setPostalCode("57078");
-address.setCountryCode("US-SD");
-address.setCountryName("United States");
+OasisAddress address = new OasisAddress()
+    .setSubThoroughfare("900")
+    .setThoroughfare("Whiting Dr")
+    .setLocality("Yankton")
+    .setAdministrativeArea("SD")
+    .setPostalCode("57078")
+    .setCountryCode("US-SD")
+    .setCountryName("United States");
 
 sendLocation.setAddress(address);
-
 sendLocation.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
@@ -303,11 +305,6 @@ sendLocation.setOnRPCResponseListener(new OnRPCResponseListener() {
         }else if(result.equals(Result.DISALLOWED)){
             // Your app is not allowed to use `SendLocation`
         }
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        Log.e(TAG, "onError: "+ resultCode+ " | Info: "+ info );
     }
 });
 

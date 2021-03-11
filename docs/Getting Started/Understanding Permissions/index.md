@@ -30,7 +30,7 @@ The easiest way to monitor the `hmiLevel` of your SDL app is through a required 
 ##### Objective-C
 ```objc
 - (void)hmiLevel:(SDLHMILevel)oldLevel didChangeToLevel:(SDLHMILevel)newLevel {
-    if (![newLevel isEqualToEnum:SDLHMILevelNone] && (self.firstHMILevel == SDLHMIFirstStateNone)) {
+    if (![newLevel isEqualToEnum:SDLHMILevelNone] && (self.firstHMILevel == SDLHMILevelNone)) {
         // This is our first time in a non-`NONE` state
         self.firstHMILevel = newLevel;
         <#Send static menu RPCs#>
@@ -432,19 +432,21 @@ func audioStreamingState(_ oldState: SDLAudioStreamingState?, didChangeToState n
 
 @![android,javaSE,javaEE]
 ```java
-@Override
-public void onNotified(RPCNotification notification) {
-    OnHMIStatus status = (OnHMIStatus) notification;
-    AudioStreamingState streamingState = notification.getAudioStreamingState();
-}
+sdlManager.addOnRPCNotificationListener(FunctionID.ON_HMI_STATUS, new OnRPCNotificationListener() {
+    @Override
+    public void onNotified(RPCNotification notification) {
+        OnHMIStatus status = (OnHMIStatus) notification;
+        AudioStreamingState streamingState = status.getAudioStreamingState();
+    }
+});
 ```
 !@
 
 @![javascript]
 ```js
-function onHMIStatusListener (onHMIStatus) {
-    const streamingState = onHMIStatus.getAudioStreamingState();
-}
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnHMIStatus, onHmiStatus => {
+    const streamingState = onHmiStatus.getAudioStreamingState();
+});
 ```
 The code snippet above will get the AudioStreamingState which reflects the HMI's ability to stream audio. However, the JavaScript Suite does not yet support audio and video streaming. This will be addressed in a future version.
 !@
@@ -478,18 +480,20 @@ func systemContext(_ oldContext: SDLSystemContext?, didChangeToContext newContex
 
 @![android,javaSE,javaEE]
 ```java
-@Override
-public void onNotified(RPCNotification notification) {
-    OnHMIStatus status = (OnHMIStatus) notification;
-    SystemContext systemContext = notification.getSystemContext();
-}
+sdlManager.addOnRPCNotificationListener(FunctionID.ON_HMI_STATUS, new OnRPCNotificationListener() {
+    @Override
+    public void onNotified(RPCNotification notification) {
+        OnHMIStatus status = (OnHMIStatus) notification;
+        SystemContext systemContext = status.getSystemContext();
+    }
+});
 ```
 !@
 
 @![javascript]
 ```js
-function onHmiStatusListener (onHmiStatus) {
+sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnHMIStatus, onHmiStatus => {
     const systemContext = onHmiStatus.getSystemContext();
-}
+});
 ```
 !@

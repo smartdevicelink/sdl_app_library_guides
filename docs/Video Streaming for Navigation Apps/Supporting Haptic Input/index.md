@@ -1,21 +1,19 @@
-# Supporting Haptic Input
+# Supporting Haptic Input (RPC v4.5+)
 SDL now supports "haptic" input: input from something other than a touch screen. This could include trackpads, click-wheels, etc. These kinds of inputs work by knowing which views on the screen are touchable and focusing / highlighting on those areas when the user moves the trackpad or click wheel. When the user selects within a view, the center of that area will be "touched".
 
 !!! NOTE
 Currently, there are no RPCs for knowing which view is highlighted, so your UI will have to remain static (i.e. you should not create a scrolling menu in your SDL app).
 !!!
 
-You will also need to implement [touch input support](Video Streaming for Navigation Apps/Touch Input) in order to receive touches on the views. @![iOS]In addition, you must support the automatic focusable item manager in order to receive a touched `UIView` in the `SDLTouchManagerDelegate` in addition to the `CGPoint`.!@
+@![iOS]
+You will also need to implement [touch input support](Video Streaming for Navigation Apps/Touch Input) in order to receive touches on the views. In addition, you must support the automatic focusable item manager in order to receive a touched `UIView` in the `SDLTouchManagerDelegate` in addition to the `CGPoint`.
+!@
 
 ## Automatic Focusable Rects
 SDL has support for automatically detecting focusable views within your UI and sending that data to the head unit. You will still need to tell SDL when your UI changes so that it can re-scan and detect the views to be sent.
 
 @![iOS]
-!!! IMPORTANT
-This is only supported on iOS 9 devices and above. If you want to support this feature on iOS 8, see "Manual Focusable Rects" below.
-!!!
-
-In order to use the automatic focusable item locator, you must set the `UIWindow` of your streaming content on `SDLStreamingMediaConfiguration.window`. So long as the device is on iOS 9+ and the window is set, the focusable item locator will start running. Whenever your app UI updates, you will need to send a notification:
+In order to use the automatic focusable item locator, you must set the `UIWindow` of your streaming content on `SDLStreamingMediaConfiguration.window`. So long as the window is set, the focusable item locator will start running. Whenever your app UI updates, you will need to send a notification:
 
 ##### Objective-C
 ```objc
@@ -53,6 +51,8 @@ public static class MyPresentation extends SdlRemoteDisplay {
                 // ...Update something on the ui
 
                 MyPresentation.this.invalidate();
+
+                return false;
             }
         });
     }
@@ -65,7 +65,7 @@ This will go through your view that was passed in and then find and send the rec
 
 ## Manual Focusable Rects
 @![iOS]
-If you need to supplement the automatic focusable item locator, or do all of the location yourself (e.g. devices lower than iOS 9, or views that are not focusable such as custom UIViews or OpenGL views), then you will have to manually send and update the focusable rects using `SDLSendHapticData`. This request, when sent replaces all current rects with new rects; so, if you want to clear all of the rects, you would send the RPC with an empty array. Or, if you want to add a single rect, you must re-send all previous rects in the same request.
+If you need to supplement the automatic focusable item locator, or do all of the location yourself (e.g. views that are not focusable such as custom UIViews or OpenGL views), then you will have to manually send and update the focusable rects using `SDLSendHapticData`. This request, when sent replaces all current rects with new rects; so, if you want to clear all of the rects, you would send the RPC with an empty array. Or, if you want to add a single rect, you must re-send all previous rects in the same request.
 
 Usage is simple, you create the rects using `SDLHapticRect`, add a unique id, and send all the rects using `SDLSendHapticData`.
 
@@ -75,7 +75,7 @@ SDLRectange *viewRect = [[SDLRectangle alloc] initWithCGRect:view.bounds];
 SDLHapticRect *hapticRect = [[SDLHapticRect alloc] initWithId:1 rect:viewRect];
 SDLSendHapticData *hapticData = [[SDLSendHapticData alloc] initWithHapticRectData:@[hapticRect]];
 
-[self.sdlManager.sendRequest:hapticData];
+[self.sdlManager sendRequest:hapticData];
 ```
 
 ##### Swift
@@ -93,25 +93,23 @@ It is also possible that you may want to create your own rects instead of using 
 
 ```java
 public void sendHapticData() {
+	Rectangle rectangle = new Rectangle()
+	    .setX((float) 1.0)
+	    .setY((float) 1.0)
+	    .setWidth((float) 1.0)
+	    .setHeight((float) 1.0);
 
-	Rectangle rectangle = new Rectangle();
-	rectangle.setX((float) 1.0);
-	rectangle.setY((float) 1.0);
-	rectangle.setWidth((float) 1.0);
-	rectangle.setHeight((float) 1.0);
-
-	HapticRect hapticRect = new HapticRect();
-	hapticRect.setId(123);
-	hapticRect.setRect(rec);
+	HapticRect hapticRect = new HapticRect()
+	    .setId(123)
+	    .setRect(rectangle);
 
 	ArrayList<HapticRect> hapticArray = new ArrayList<HapticRect>();
-	hapticArray.add(0, hr);
+	hapticArray.add(0, hapticRect);
 
 	SendHapticData sendHapticData = new SendHapticData();
 	sendHapticData.setHapticRectData(hapticArray);
 
 	sdlManager.sendRPC(sendHapticData);
-
 }
 ```
 Each `SendHapticData` RPC should contain the entirety of all clickable areas to be accessed via haptic controls.

@@ -114,7 +114,7 @@ If you created the service using the Android Studio template then the service sh
 ```
 
 !!! MUST
-The `SdlRouterService` must be placed in a separate process with the name `com.smartdevicelink.router`. If it is not in that process during it's start up it will stop itself.
+The `SdlRouterService` must be placed in a separate process with the name `com.smartdevicelink.router`. If it is not in that process during its start up it will stop itself.
 !!!
 
 ## SmartDeviceLink Broadcast Receiver

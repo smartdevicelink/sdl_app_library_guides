@@ -51,13 +51,13 @@ manifest.mediaServiceManifest = <#Code#> // Covered below
 
 @![android,javaSE,javaEE]
 ```java
-AppServiceManifest manifest = new AppServiceManifest(AppServiceType.MEDIA.toString());
-manifest.setServiceName("My Media App"); // Must be unique across app services.
-manifest.setServiceIcon(new Image("Service Icon Name", ImageType.DYNAMIC)); // Previously uploaded service icon. This could be the same as your app icon.
-manifest.setAllowAppConsumers(true); // Whether or not other apps can view your data in addition to the head unit. If set to `false` only the head unit will have access to this data.
-manifest.setRpcSpecVersion(new SdlMsgVersion(5,0)); // An *optional* parameter that limits the RPC spec versions you can understand to the provided version *or below*.
-manifest.setHandledRpcs(List<FunctionID>); // If you add function ids to this *optional* parameter, you can support newer RPCs on older head units (that don't support those RPCs natively) when those RPCs are sent from other connected applications.
-manifest.setMediaServiceManifest(<#Code#>); // Covered Below
+AppServiceManifest manifest = new AppServiceManifest(AppServiceType.MEDIA.toString())
+    .setServiceName("My Media App") // Must be unique across app services.
+    .setServiceIcon(new Image("Service Icon Name", ImageType.DYNAMIC)) // Previously uploaded service icon. This could be the same as your app icon.
+    .setAllowAppConsumers(true) // Whether or not other apps can view your data in addition to the head unit. If set to `false` only the head unit will have access to this data.
+    .setRpcSpecVersion(new SdlMsgVersion(5,0)) // An *optional* parameter that limits the RPC spec versions you can understand to the provided version *or below*.
+    .setHandledRpcs(List<FunctionID>) // If you add function ids to this *optional* parameter, you can support newer RPCs on older head units (that don't support those RPCs natively) when those RPCs are sent from other connected applications.
+    .setMediaServiceManifest(mediaManifest); // Covered Below
 ```
 !@
 
@@ -163,12 +163,12 @@ manifest.weatherServiceManifest = weatherManifest
 
 @![android,javaSE,javaEE]
 ```java
-WeatherServiceManifest weatherManifest = new WeatherServiceManifest();
-weatherManifest.setCurrentForecastSupported(true);
-weatherManifest.setMaxMultidayForecastAmount(10);
-weatherManifest.setMaxHourlyForecastAmount(24);
-weatherManifest.setMaxMinutelyForecastAmount(60);
-weatherManifest.setWeatherForLocationSupported(true);
+WeatherServiceManifest weatherManifest = new WeatherServiceManifest()
+    .setCurrentForecastSupported(true)
+    .setMaxMultidayForecastAmount(10)
+    .setMaxHourlyForecastAmount(24)
+    .setMaxMinutelyForecastAmount(60)
+    .setWeatherForLocationSupported(true);
 manifest.setWeatherServiceManifest(weatherManifest);
 ```
 !@
@@ -216,17 +216,17 @@ sdlManager.send(request: publishServiceRequest) { (req, res, err) in
 
 @![android,javaSE,javaEE]
 ```java
-PublishAppService publishServiceRequest = new PublishAppService();
-publishServiceRequest.setAppServiceManifest(manifest);
+PublishAppService publishServiceRequest = new PublishAppService()
+    .setAppServiceManifest(manifest);
 publishServiceRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
-    public void onResponse(int correlationId, RPCResponse response) {
-        <#Use the response#>
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        <#Error Handling#>
+	public void onResponse(int correlationId, RPCResponse response) {
+        if (response.getSuccess()) {
+            // Use the response
+        } else {
+            // Error Handling
+        }
+		
     }
 });
 sdlManager.sendRPC(publishServiceRequest);
@@ -293,24 +293,24 @@ sdlManager.sendRPC(onAppData)
 
 @![android,javaSE,javaEE]
 ```java
-MediaServiceData mediaData = new MediaServiceData();
-mediaData.setMediaTitle("Some media title");
-mediaData.setMediaArtist("Some media artist");
-mediaData.setMediaAlbum("Some album");
-mediaData.setMediaImage(new Image("Some image", ImageType.DYNAMIC));
-mediaData.setPlaylistName("Some playlist");
-mediaData.setIsExplicit(true);
-mediaData.setTrackPlaybackProgress(45);
-mediaData.setTrackPlaybackDuration(90);
-mediaData.setQueuePlaybackProgress(45);
-mediaData.setQueuePlaybackDuration(150);
-mediaData.setQueueCurrentTrackNumber(2);
-mediaData.setQueueTotalTrackCount(3);
+MediaServiceData mediaData = new MediaServiceData()
+    .setMediaTitle("Some media title")
+    .setMediaArtist("Some media artist")
+    .setMediaAlbum("Some album")
+    .setMediaImage(new Image("Some image", ImageType.DYNAMIC))
+    .setPlaylistName("Some playlist")
+    .setIsExplicit(true)
+    .setTrackPlaybackProgress(45)
+    .setTrackPlaybackDuration(90)
+    .setQueuePlaybackProgress(45)
+    .setQueuePlaybackDuration(150)
+    .setQueueCurrentTrackNumber(2)
+    .setQueueTotalTrackCount(3);
 
-AppServiceData appData = new AppServiceData();
-appData.setServiceID(myServiceId);
-appData.setServiceType(AppServiceType.MEDIA.toString());
-appData.setMediaServiceData(mediaData);
+AppServiceData appData = new AppServiceData()
+    .setServiceID(myServiceId)
+    .setServiceType(AppServiceType.MEDIA.toString())
+    .setMediaServiceData(mediaData);
 
 OnAppServiceData onAppData = new OnAppServiceData();
 onAppData.setServiceData(appData);
@@ -408,7 +408,7 @@ sdlManager.fileManager.upload(file: artwork) { [weak self] (success, bytesAvaila
 
 @![android,javaSE,javaEE]
 ```java
-final SdlArtwork navInstructionArt = new SdlArtwork("turn", FileType.GRAPHIC_PNG, R.drawable.turn, true);
+final SdlArtwork navInstructionArt = new SdlArtwork("turn", FileType.GRAPHIC_PNG, image, true);
 
 sdlManager.getFileManager().uploadFile(navInstructionArt, new CompletionListener() {
     @Override
@@ -423,18 +423,18 @@ sdlManager.getFileManager().uploadFile(navInstructionArt, new CompletionListener
             NavigationInstruction navigationInstruction = new NavigationInstruction(locationDetails, NavigationAction.TURN);
             navigationInstruction.setImage(navInstructionArt.getImageRPC());
 
-            DateTime dateTime = new DateTime();
-            dateTime.setHour(2);
-            dateTime.setMinute(3);
-            dateTime.setSecond(4);
+            DateTime dateTime = new DateTime()
+                .setHour(2)
+                .setMinute(3)
+                .setSecond(4);
 
             NavigationServiceData navigationData = new NavigationServiceData(dateTime);
             navigationData.setInstructions(Collections.singletonList(navigationInstruction));
 
-            AppServiceData appData = new AppServiceData();
-            appData.setServiceID(myServiceId);
-            appData.setServiceType(AppServiceType.NAVIGATION.toString());
-            appData.setNavigationServiceData(navigationData);
+            AppServiceData appData = new AppServiceData()
+                .setServiceID(myServiceId)
+                .setServiceType(AppServiceType.NAVIGATION.toString())
+                .setNavigationServiceData(navigationData);
 
             OnAppServiceData onAppData = new OnAppServiceData();
             onAppData.setServiceData(appData);
@@ -535,7 +535,7 @@ sdlManager.fileManager.upload(file: artwork) { [weak self] (success, bytesAvaila
 
 @![android,javaSE,javaEE]
 ```java
-final SdlArtwork weatherImage = new SdlArtwork("sun", FileType.GRAPHIC_PNG, R.drawable.sun, true);
+final SdlArtwork weatherImage = new SdlArtwork("sun", FileType.GRAPHIC_PNG, image, true);
 
 sdlManager.getFileManager().uploadFile(weatherImage, new CompletionListener() {
     @Override
@@ -552,10 +552,10 @@ sdlManager.getFileManager().uploadFile(weatherImage, new CompletionListener() {
 
             WeatherServiceData weatherServiceData = new WeatherServiceData(locationDetails);
 
-            AppServiceData appData = new AppServiceData();
-            appData.setServiceID(myServiceId);
-            appData.setServiceType(AppServiceType.WEATHER.toString());
-            appData.setWeatherServiceData(weatherServiceData);
+            AppServiceData appData = new AppServiceData()
+                .setServiceID(myServiceId)
+                .setServiceType(AppServiceType.WEATHER.toString())
+                .setWeatherServiceData(weatherServiceData);
 
             OnAppServiceData onAppData = new OnAppServiceData();
             onAppData.setServiceData(appData);
@@ -656,7 +656,7 @@ sdlManager.addOnRPCRequestListener(FunctionID.GET_APP_SERVICE_DATA, new OnRPCReq
         response.setCorrelationID(getAppServiceData.getCorrelationID());
         response.setResultCode(Result.SUCCESS);
         response.setInfo("<#Use to provide more information about an error#>");
-        response.setServiceData(<#Your App Service Data#>);
+        response.setServiceData(appServiceData);
         sdlManager.sendRPC(response);
     }
 });
@@ -732,7 +732,7 @@ manifest.handledRPCs = @[buttonPressRPCID];
 ```swift
 let manifest = SDLAppServiceManifest()
 // Everything else for your manifest
-let buttonPressRPCID = SDLFunctionID.sharedInstance().functionId(forName: .buttonPress)
+let buttonPressRPCID = SDLFunctionID.sharedInstance().functionId(forName: .buttonPress)!
 manifest.handledRPCs = [buttonPressRPCID]
 
 sdlManager.subscribe(to: SDLDidReceiveButtonPressRequest, observer: self, selector: #selector(buttonPressRequestReceived(_:)))
@@ -892,8 +892,8 @@ sdlManager.addOnRPCRequestListener(FunctionID.PERFORM_APP_SERVICES_INTERACTION, 
         String serviceURI = performAppServiceInteraction.getServiceUri();
 
         // A result you want to send to the consumer app.
-        PerformAppServiceInteractionResponse response = new PerformAppServiceInteractionResponse();
-        response.setServiceSpecificResult("Some Result");
+        PerformAppServiceInteractionResponse response = new PerformAppServiceInteractionResponse()
+            .setServiceSpecificResult("Some Result");
         response.setCorrelationID(performAppServiceInteraction.getCorrelationID());
         response.setInfo("<#Use to provide more information about an error#>");
         response.setSuccess(true);
@@ -939,7 +939,7 @@ Once you have published your app service, you may decide to update its data. For
 ##### Objective-C
 ```objc
 SDLAppServiceManifest *manifest = [[SDLAppServiceManifest alloc] initWithAppServiceType:SDLAppServiceTypeWeather];
-manifest.weatherServiceManifest = <#Updated weather service manifest#>
+manifest.weatherServiceManifest = <#Updated weather service manifest#>;
 
 SDLPublishAppService *publishServiceRequest = [[SDLPublishAppService alloc] initWithAppServiceManifest:manifest];
 [self.sdlManager sendRequest:publishServiceRequest];
@@ -958,7 +958,7 @@ sdlManager.send(publishServiceRequest)
 @![android,javaSE,javaEE]
 ```java
 AppServiceManifest manifest = new AppServiceManifest(AppServiceType.WEATHER.toString());
-manifest.setWeatherServiceManifest("<#Updated weather service manifest>");
+manifest.setWeatherServiceManifest(weatherServiceManifest);
 
 PublishAppService publishServiceRequest = new PublishAppService(manifest);
 sdlManager.sendRPC(publishServiceRequest);

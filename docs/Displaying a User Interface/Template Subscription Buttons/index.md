@@ -34,10 +34,8 @@ There are three general types of subscriptions buttons: audio related buttons on
 | Rotate Counter-Clockwise | Navigation only | v6.0+ |
 | Toggle Heading | Navigation only | v6.0+ |
 
-@![iOS,android,javaSE,javaEE]
 ## Subscribing to Subscription Buttons
-You can easily subscribe to subscription buttons using the !@@![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@@![iOS,android,javaSE,javaEE]. Simply tell the manager which button to subscribe and you will be notified when the user selects the button.
-!@
+You can easily subscribe to subscription buttons using the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE, javascript]`ScreenManager`!@. Simply tell the manager which button to subscribe and you will be notified when the user selects the button.
 
 @![iOS]
 There are two different ways to receive button press notifications. The first is to pass a block handler that will get called when the button is selected. The second is to pass a selector that will be notified when the button is selected.
@@ -47,7 +45,7 @@ Once you have subscribed to the button with a block handler, the handler will be
 
 ##### Objective-C
 ```objc
-NSObject *observer = [self.sdlManager.screenManager subscribeButton:SDLButtonNamePlayPause withUpdateHandler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent, NSError * _Nullable error) {
+id<NSObject> observer = [self.sdlManager.screenManager subscribeButton:SDLButtonNamePlayPause withUpdateHandler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent, NSError * _Nullable error) {
     if (error != nil) {
         // There was an error subscribing to the button
         return;
@@ -120,7 +118,7 @@ sdlManager.screenManager.subscribeButton(.playPause, withObserver: self, selecto
         // Contains information about whether the button was short or long pressed
     }
 
-    if let buttonPress = buttonPress {
+    if let buttonEvent = buttonEvent {
         // Contains information about when the button is depressed or released
     }
 }
@@ -153,9 +151,28 @@ sdlManager.getScreenManager().addButtonListener(ButtonName.PLAY_PAUSE, playPause
 ```
 !@
 
-@![iOS,android,javaSE,javaEE]
-## Unsubscribing from Subscription Buttons
+@![javascript]
+### Subscribe with a Listener
+Once you have subscribed to the button, the listener will be called when the button has been selected. If there is an error subscribing to the button the error message will be returned in the `catch` method.
+
+```javascript
+const playPauseButtonListener = function (buttonName, buttonEvent) {
+    if (onButton instanceof SDL.rpc.messages.OnButtonPress) {
+
+    } else if (onButton instanceof SDL.rpc.messages.OnButtonEvent) {
+
+    }
+}
+
+await sdlManager.getScreenManager()
+    .addButtonListener(SDL.rpc.enums.ButtonName.PLAY_PAUSE, playPauseButtonListener)
+    .catch(function (err) {
+        // Handle error
+    });
+```
 !@
+
+## Unsubscribing from Subscription Buttons
 
 @![iOS]
 When unsubscribing, you will need to pass the observer object and which button name that you want to unsubscribe. If you subscribed using a handler, use the observer object returned when you subscribed. If you subscribed using a selector, use the same observer object you passed when subscribing. 
@@ -192,13 +209,20 @@ sdlManager.getScreenManager().removeButtonListener(ButtonName.PLAY_PAUSE, playPa
 ```
 !@
 
+@![javascript]
+To unsubscribe to a subscription button, simply tell the `ScreenManager` which button name and listener object to unsubscribe.
+```javascript
+await sdlManager.getScreenManager().removeButtonListener(SDL.rpc.enums.ButtonName.PLAY_PAUSE, playPauseButtonListener);
+```
+!@
+
 ## Media Buttons
-The play/pause, seek left, seek right, tune up, and tune down subscribe buttons can only be used if the app type is `MEDIA`. Depending on the OEM, the subscribed button could show up as an on-screen button in the `MEDIA` template, work as a physical button on the car console or steering wheel, or both. For example, Ford's SYNC 3 HMI will add the play/pause, seek right, and seek left soft buttons to the media template when you subscribe to those buttons. However, those buttons will also trigger when the user uses the seek left / seek right buttons on the steering wheel.
+The play/pause, seek left, seek right, tune up, and tune down subscribe buttons can only be used if the app type is `MEDIA`. Depending on the OEM, the subscribed button could show up as an on-screen button in the `MEDIA` template, work as a physical button on the car console or steering wheel, or both. For example, Ford's SYNC® 3 HMI will add the play/pause, seek right, and seek left soft buttons to the media template when you subscribe to those buttons. However, those buttons will also trigger when the user uses the seek left / seek right buttons on the steering wheel.
 
 If desired, you can toggle the play/pause button image between a play, stop, or pause icon by updating the audio streaming state as described in the [Media Clock](Displaying a User Interface/Media Clock#pausing-resuming) guide. 
 
 !!! NOTE
-Before library v.@![iOS]6.1!@@![android, javaSE, javaEE]4.7!@ and RPC v5.0, `Ok` and `PlayPause` were combined into `Ok`. Subscribing to `Ok` will, in v@![iOS]6.1+!@@![android, javaSE, javaEE]4.7+!@, also subscribe you to `PlayPause`. This means that for the time being, *you should not simultaneously subscribe to `Ok` and `PlayPause`*. In a future major version, this will change. For now, only subscribe to either `Ok` or `PlayPause` and the library will execute the right action based on the connected head unit.
+Before @![iOS, android, javaSE, javaEE]library v.!@@![iOS]6.1 and!@@![android, javaSE, javaEE]4.7 and!@ RPC v5.0, `Ok` and `PlayPause` were combined into `Ok`. Subscribing to `Ok` will@![iOS, android, javaSE, javaEE], in v!@@![iOS]6.1+,!@@![android, javaSE, javaEE]4.7+,!@ also subscribe you to `PlayPause`. This means that for the time being, *you should not simultaneously subscribe to `Ok` and `PlayPause`*. In a future major version, this will change. For now, only subscribe to either `Ok` or `PlayPause` and the library will execute the right action based on the connected head unit.
 !!!
 
 @![iOS]
@@ -232,9 +256,11 @@ sdlManager.screenManager.subscribeButton(.playPause) { (buttonPress, buttonEvent
 
     switch buttonPress.buttonPressMode {
     case .short:
-        // The user short pressed the button
+        <#The user short pressed the button#>
     case .long:
-        // The user long pressed the button
+        <#The user long pressed the button#>
+    default:
+        <#code#>
     }
 }
 ```
@@ -265,28 +291,26 @@ sdlManager.getScreenManager().addButtonListener(ButtonName.PLAY_PAUSE, new OnBut
 !@
 
 @![javascript]
-```js
-sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnButtonPress, function (onButtonPress) {
-    if (onButtonPress instanceof SDL.rpc.messages.OnButtonPress) {
-        switch (onButtonPress.getButtonName()) {
-            case SDL.rpc.enums.ButtonName.PLAY_PAUSE:
-                // PLAY_PAUSE subscribe button selected
-                break;
+```javascript
+await sdlManager.getScreenManager().addButtonListener(SDL.rpc.enums.ButtonName.PLAY_PAUSE, function (buttonName, onButton) {
+    if (onButton instanceof SDL.rpc.messages.OnButtonPress) {
+        switch (onButton.getButtonPressMode()) {
+            case SDL.rpc.enums.ButtonPressMode.SHORT:
+                // The user short pressed the button
+            case SDL.rpc.enums.ButtonPressMode.LONG:
+                // The user long pressed the button
         }
+    } else if (onButton instanceof SDL.rpc.messages.OnButtonEvent) {
+        // OnButtonEvent
     }
+}).catch(function (info) {
+    // There was an error subscribing to the button
 });
-
-const subscribeButtonRequest = new SDL.rpc.messages.SubscribeButton();
-subscribeButtonRequest.setButtonName(SDL.rpc.enums.ButtonName.PLAY_PAUSE);
-// sdl_javascript_suite v1.1+
-sdlManager.sendRpcResolve(subscribeButtonRequest);
-// Pre sdl_javascript_suite v1.1
-sdlManager.sendRpc(subscribeButtonRequest);
 ```
 !@
 
 ## Preset Buttons
-All app types can subscribe to preset buttons. Depending on the OEM, the preset buttons may be added to the template when subscription occurs. Preset buttons can also be physical buttons on the console that will notify the subscriber when selected. An OEM may support only template buttons or only hard buttons or they may support both template and hard buttons. The screenshot below shows how the Ford SYNC 3 HMI displays the preset buttons on the HMI. 
+All app types can subscribe to preset buttons. Depending on the OEM, the preset buttons may be added to the template when subscription occurs. Preset buttons can also be physical buttons on the console that will notify the subscriber when selected. An OEM may support only template buttons or only hard buttons or they may support both template and hard buttons. The screenshot below shows how the Ford SYNC® 3 HMI displays the preset buttons on the HMI. 
 
 ![Ford - Preset Soft Button Menu Button](assets/ford_sync_presetMenu.bmp)
 ![Ford - Preset Soft Buttons List](assets/ford_sync_presetOptions.png)
@@ -313,7 +337,7 @@ Integer numOfCustomPresetsAvailable = sdlManager.getSystemCapabilityManager().ge
 !@
 
 @![javascript]
-```js
+```javascript
 const numOfCustomPresetsAvailable = sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getNumCustomPresetsAvailable();
 ```
 !@
@@ -354,9 +378,11 @@ sdlManager.screenManager.subscribeButton(.preset2, withObserver: self, selector:
 
     switch buttonName {
     case .preset1:
-        // The user short or long pressed the preset 1 button
+        <#The user short or long pressed the preset 1 button#>
     case .preset2:
-        // The user short or long pressed the preset 2 button
+        <#The user short or long pressed the preset 2 button#>
+    default:
+        <#The user pressed another preset button#>
     }
 }
 ```
@@ -392,26 +418,26 @@ sdlManager.getScreenManager().addButtonListener(ButtonName.PRESET_2, onButtonLis
 !@
 
 @![javascript]
-```js
-sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnButtonPress, function (onButtonPress) {
-    if (onButtonPress instanceof SDL.rpc.messages.OnButtonPress) {
-        switch (onButtonPress.getButtonName()) {
+```javascript
+function onButtonListener (buttonName, onButton) {
+    if (onButton instanceof SDL.rpc.messages.OnButtonPress) {
+        switch (buttonName) {
             case SDL.rpc.enums.ButtonName.PRESET_1:
-                // PRESET_1 subscribe button selected
-                break;
+                // The user short or long pressed the preset 1 button
             case SDL.rpc.enums.ButtonName.PRESET_2:
-                // PRESET_2 subscribe button selected
-                break;
+                // The user short or long pressed the preset 2 button
         }
+    } else if (onButton instanceof SDL.rpc.messages.OnButtonEvent) {
+        // OnButtonEvent
     }
-});
+}
 
-const preset1 = new SDL.rpc.messages.SubscribeButton(ButtonName.PRESET_1);
-const preset2 = new SDL.rpc.messages.SubscribeButton(ButtonName.PRESET_2);
-// sdl_javascript_suite v1.1+
-sdlManager.sendRpcsResolve([preset1, preset2]);
-// Pre sdl_javascript_suite v1.1
-sdlManager.sendRpcs([preset1, preset2]);
+function onError (info) {
+    // There was an error subscribing to the button
+}
+
+sdlManager.getScreenManager().addButtonListener(SDL.rpc.enums.ButtonName.PRESET_1, onButtonListener).catch(onError);
+sdlManager.getScreenManager().addButtonListener(SDL.rpc.enums.ButtonName.PRESET_2, onButtonListener).catch(onError);
 ```
 !@
 
@@ -450,9 +476,9 @@ sdlManager.screenManager.subscribeButton(.navPanUp) { (buttonPress, buttonEvent,
 
     switch buttonPress.buttonPressMode {
     case .short:
-        // The user short pressed the button
+        <#The user short pressed the button#>
     case .long:
-        // The user long pressed the button
+        <#The user long pressed the button#>
     }
 }
 ```
@@ -483,21 +509,20 @@ sdlManager.getScreenManager().addButtonListener(ButtonName.NAV_PAN_UP, new OnBut
 !@
 
 @![javascript]
-```js
-sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnButtonPress, function (onButtonPress) {
-    if (onButtonPress instanceof SDL.rpc.messages.OnButtonPress) {
-        switch (onButtonPress.getButtonName()) {
-            case SDL.rpc.enums.ButtonName.NAV_PAN_UP:
-                break;
+```javascript
+await sdlManager.getScreenManager().addButtonListener(SDL.rpc.enums.ButtonName.NAV_PAN_UP, function (buttonName, onButton) {
+    if (onButton instanceof SDL.rpc.messages.OnButtonPress) {
+        switch (onButton.getButtonPressMode()) {
+            case SDL.rpc.enums.ButtonPressMode.SHORT:
+                // The user short pressed the button
+            case SDL.rpc.enums.ButtonPressMode.LONG:
+                // The user long pressed the button
         }
+    } else if (onButton instanceof SDL.rpc.messages.OnButtonEvent) {
+        // OnButtonEvent
     }
+}).catch(function (info) {
+    // There was an error subscribing to the button
 });
-
-const subscribeButtonRequest = new SDL.rpc.messages.SubscribeButton();
-subscribeButtonRequest.setButtonName(SDL.rpc.enums.ButtonName.NAV_PAN_UP);
-// sdl_javascript_suite v1.1+
-sdlManager.sendRpcResolve(subscribeButtonRequest);
-// Pre sdl_javascript_suite v1.1
-sdlManager.sendRpc(subscribeButtonRequest);
 ```
 !@

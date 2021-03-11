@@ -3,7 +3,7 @@
 The SDL JavaScript Suite currently does not support the `MenuManager`. This will be addressed in a future release.
 !@
 @![iOS, android, javaEE, javaSE]
-You have two different options when creating menus. One is to simply add items to the default menu available in every template. The other is to create a custom menu that pops up when needed. You can find more information about these popups in the [Popup Menus and Keyboards](Displaying a User Interface/Popup Menus and Keyboards) section.
+You have two different options when creating menus. One is to simply add items to the default menu available in every template. The other is to create a custom menu that pops up when needed. You can find more information about these popups in the [Popup Menus](Displaying a User Interface/Popup Menus) section.
 
 #### Menu Template
 ![Generic - Menu Appearance](assets/Generic_menu_dark.png)
@@ -31,7 +31,7 @@ sdlManager.screenManager.menuConfiguration = menuConfiguration
 
 @![android, javaSE, javaEE]
 ```java
-MenuConfiguration menuConfiguration = new MenuConfiguration(<#mainMenuLayout>, <#submenuLayout>);
+MenuConfiguration menuConfiguration = new MenuConfiguration(mainMenuLayout, submenuLayout);
 sdlManager.getScreenManager().setMenuConfiguration(menuConfiguration);
 ```
 !@
@@ -74,7 +74,7 @@ MenuCell cell = new MenuCell("Cell text", null, Collections.singletonList("cell 
     @Override
     public void onTriggered(TriggerSource trigger) {
         // Menu item was selected, check the `triggerSource` to know if the user used touch or voice to activate it
-        // <#Handle the Cell's Selection#>
+        // Handle the Cell's Selection
     }
 });
 
@@ -121,7 +121,7 @@ MenuCell innerCell = new MenuCell("inner menu cell", null, Collections.singleton
     @Override
     public void onTriggered(TriggerSource trigger) {
         // Menu item was selected, check the `triggerSource` to know if the user used touch or voice to activate it
-        // <#Handle the cell's selection#>
+        // Handle the cell's selection
     }
 });
 

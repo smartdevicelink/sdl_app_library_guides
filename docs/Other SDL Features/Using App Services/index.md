@@ -1,4 +1,4 @@
-# Using App Services
+# Using App Services (RPC v5.1+)
 App services is a powerful feature enabling both a new kind of vehicle-to-app communication and app-to-app communication via SDL.
 
 App services are used to publish navigation, weather and media data (such as temperature, navigation waypoints, or the current playlist name). This data can then be used by both the vehicle head unit and, if the publisher of the app service desires, other SDL apps. Creating an app service is covered [in another guide](Other SDL Features/Creating an App Service).
@@ -19,7 +19,7 @@ Please note that if you are integrating an sdl_ios version less than v6.3, the e
 !@
 
 ### 1. Getting and Subscribing to Available Services
-To get information on all services published on the system, as well as on changes to published services, you will use the @![iOS]`GetSystemCapability` request / response as well as the `OnSystemCapabilityUpdated` notification. !@ @![android,javaSE,javaEE] `SystemCapabilityManager` to get the information. Because this information is initially available asynchronously, we have to attach an `OnSystemCapabilityListener` to the `getCapability` request.!@@![javascript] `SystemCapabilityManager` and await the `updateCapability` method to get the information!@
+To get information on all services published on the system, as well as on changes to published services, you will use the `SystemCapabilityManager`.
 
 @![iOS]
 ##### Objective-C
@@ -86,14 +86,12 @@ sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SDL.rpc.en
 !@
 
 #### Checking the App Service Capability
-Once you've retrieved the initial list of app service capabilities (in the `GetSystemCapability` response), or an updated list of app service capabilities (from the `OnSystemCapabilityUpdated` notification), you may want to inspect the data to find what you are looking for. Below is example code with comments explaining what each part of the app service capability is used for.
+Once you've retrieved the initial list of app service capabilities or an updated list of app service capabilities, you may want to inspect the data to find what you are looking for. Below is example code with comments explaining what each part of the app service capability is used for.
 
 @![iOS]
 ##### Objective-C
 ```objc
-// From GetSystemCapabilityResponse
-SDLGetSystemCapabilityResponse *getResponse = <#From wherever you got it#>;
-SDLAppServicesCapabilities *capabilities = getResponse.systemCapability.appServicesCapabilities;
+SDLAppServicesCapabilities *capabilities = systemCapabilityManager.appServicesCapabilities;
 
 // This array contains all currently available app services on the system
 NSArray<SDLAppServiceCapability *> *appServices = capabilities.appServices;
@@ -122,13 +120,10 @@ SDLAppServiceRecord *serviceRecord = aCapability.updatedAppServiceRecord;
 
 ##### Swift
 ```swift
-// From GetSystemCapabilityResponse
-let getResponse: SDLGetSystemCapabilityResponse = <#From wherever you got it#>
-let capabilities = getResponse.systemCapability.appServicesCapabilities
-
 // This array contains all currently available app services on the system
-let appServices: [SDLAppServiceCapability] = capabilities.appServices
-let aCapability = appServices.first
+guard let capabilities = systemCapabilityManager.appServicesCapabilities, let appServices = capabilities.appServices, let aCapability = appServices.first else {
+    return
+}
 
 // This will be nil since it's the first update
 let capabilityReason = aCapability.updateReason
@@ -138,11 +133,11 @@ let serviceRecord = aCapability.updatedAppServiceRecord
 
 // From OnSystemCapabilityUpdated
 let serviceNotification: SDLOnSystemCapabilityUpdated = <#From wherever you got it#>
-let capabilities = serviceNotification.systemCapability.appServicesCapabilities
 
 // This array contains all recently updated services
-let appServices: [SDLAppServiceCapability] = capabilities.appServices
-let aCapability = appServices.first
+guard let capabilities = serviceNotification.systemCapability.appServicesCapabilities, let appServices = capabilities.appServices, let aCapability = appServices.first  else {
+    return
+}
 
 // This won't be nil. It will tell you why a service is in the list of updates
 let capabilityReason = aCapability.updateReason
@@ -220,9 +215,6 @@ unsubscribeServiceData.subscribe = @NO;
 
 ##### Swift
 ```swift
-// Get service data once
-let getServiceData = SDLGetAppServiceData(appServiceType: .media)
-
 // Subscribe to service data in perpetuity via `OnAppServiceData` notifications.
 let subscribeServiceData = SDLGetAppServiceData(andSubscribeToAppServiceType: .media)
 
@@ -244,11 +236,8 @@ sdlManager.send(request: getServiceData) { (req, res, err) in
 ##### Java
 ```java
 // Get service data once
-GetAppServiceData getAppServiceData = new GetAppServiceData(AppServiceType.MEDIA.toString());
-
-// Subscribe to future updates if you want them
-getAppServiceData.setSubscribe(true);
-
+GetAppServiceData getAppServiceData = new GetAppServiceData(AppServiceType.MEDIA.toString())
+    .setSubscribe(true); // Subscribe to future updates if you want them
 getAppServiceData.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
@@ -257,18 +246,14 @@ getAppServiceData.setOnRPCResponseListener(new OnRPCResponseListener() {
             MediaServiceData mediaServiceData = serviceResponse.getServiceData().getMediaServiceData();
         }
     }
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        // Handle Error
-    }
 });
 sdlManager.sendRPC(getAppServiceData);
 
 ...
 
 // Unsubscribe from updates
-GetAppServiceData unsubscribeServiceData = new GetAppServiceData(AppServiceType.MEDIA.toString());
-unsubscribeServiceData.setSubscribe(false);
+GetAppServiceData unsubscribeServiceData = new GetAppServiceData(AppServiceType.MEDIA.toString())
+    .setSubscribe(false);
 sdlManager.sendRPC(unsubscribeServiceData);
 ```
 !@
@@ -360,18 +345,14 @@ sdlManager.send(request: buttonPress) { (req, res, err) in
 @![android,javaSE,javaEE]
 ##### Java
 ```java
-ButtonPress buttonPress = new ButtonPress();
-buttonPress.setButtonPressMode(ButtonPressMode.SHORT);
-buttonPress.setButtonName(ButtonName.OK);
-buttonPress.setModuleType(ModuleType.AUDIO);
+ButtonPress buttonPress = new ButtonPress()
+    .setButtonPressMode(ButtonPressMode.SHORT)
+    .setButtonName(ButtonName.OK)
+    .setModuleType(ModuleType.AUDIO);
 buttonPress.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
-        <#Use the response#>
-    }
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        <#Handle the Error#>
+        // Use the response
     }
 });
 sdlManager.sendRPC(buttonPress);
@@ -400,7 +381,7 @@ Actions are generic URI-based strings sent to any app service (active or not). Y
 @![iOS]
 ##### Objective-C
 ```objc
-SDLPerformAppServiceInteraction *performAction = [[SDLPerformAppServiceInteraction alloc] initWithServiceUri:@"<#sdlexample://x-callback-url/showText?x-source=MyApp&text=My%20Custom%20String#>" serviceID:@"<#Previously Retrived ServiceID#>" originApp:@"<#Your App Id#>" requestServiceActive:NO];
+SDLPerformAppServiceInteraction *performAction = [[SDLPerformAppServiceInteraction alloc] initWithServiceUri:@"<#sdlexample://x-callback-url/showText?x-source=MyApp&text=My%20Custom%20String#>" serviceID:@"<#Previously Retrieved ServiceID#>" originApp:@"<#Your App Id#>" requestServiceActive:NO];
 [self.sdlManager sendRequest:performAction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if (!response || !response.success.boolValue) {
         SDLLogE(@"Error sending perform action: Req %@, Res %@, err %@", request, response, error);
@@ -414,7 +395,7 @@ SDLPerformAppServiceInteraction *performAction = [[SDLPerformAppServiceInteracti
 
 ##### Swift
 ```swift
-let performAction = SDLPerformAppServiceInteraction(serviceUri: "<#sdlexample://x-callback-url/showText?x-source=MyApp&text=My%20Custom%20String#>", serviceID: "<#Previously Retrived ServiceID#>", originApp: "<#Your App Id#>", requestServiceActive: false)
+let performAction = SDLPerformAppServiceInteraction(serviceUri: "<#sdlexample://x-callback-url/showText?x-source=MyApp&text=My%20Custom%20String#>", serviceID: "<#Previously Retrieved ServiceID#>", originApp: "<#Your App Id#>", requestServiceActive: false)
 sdlManager.send(request: performAction) { (req, res, err) in
     guard let response = res as? SDLPerformAppServiceInteractionResponse else { return }
     <#Check the error and response#>
@@ -425,15 +406,11 @@ sdlManager.send(request: performAction) { (req, res, err) in
 @![android,javaSE,javaEE]
 ##### Java
 ```java
-PerformAppServiceInteraction performAppServiceInteraction = new PerformAppServiceInteraction("sdlexample://x-callback-url/showText?x-source=MyApp&text=My%20Custom%20String","<#Previously Retrieved ServiceID#>","<#Your App Id#>");
+PerformAppServiceInteraction performAppServiceInteraction = new PerformAppServiceInteraction("sdlexample://x-callback-url/showText?x-source=MyApp&text=My%20Custom%20String", previousServiceId, appId);
 performAppServiceInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
-        <#Use the response#>
-    }
-    @Override
-    public void onError(int correlationId, Result resultCode, String info){
-        <#Handle the Error#>
+        // Use the response
     }
 });
 sdlManager.sendRPC(performAppServiceInteraction);
@@ -501,8 +478,8 @@ NSMutableData *imageData = [[NSMutableData alloc] init];
 ##### Swift
 ```swift
 let data: SDLAppServiceData = <#Get the App Service Data#>
-let weatherData: SDLWeatherServiceData = data.weatherServiceData
-guard let currentForecastImage = weatherData.currentForecast?.weatherIcon else {
+let weatherData = data.weatherServiceData
+guard let currentForecastImage = weatherData?.currentForecast?.weatherIcon else {
     // The image doesn't exist, exit early
     return
 }
@@ -533,7 +510,6 @@ sdlManager.send(request: getCurrentForecastImage) { (req, res, err) in
 !@
 @![android, javaSE, javaEE]
 ```java
-AppServiceData appServiceData = <#Get the App Service Data#>;
 WeatherServiceData weatherServiceData = appServiceData.getWeatherServiceData();
 if (weatherServiceData == null || weatherServiceData.getCurrentForecast() == null || weatherServiceData.getCurrentForecast().getWeatherIcon() == null) {
     // The image doesn't exist, exit early
@@ -541,8 +517,8 @@ if (weatherServiceData == null || weatherServiceData.getCurrentForecast() == nul
 }
 String currentForecastImageName = weatherServiceData.getCurrentForecast().getWeatherIcon().getValue();
 
-GetFile getFile = new GetFile(currentForecastImageName);
-getFile.setAppServiceId(<#Service ID>);
+GetFile getFile = new GetFile(currentForecastImageName)
+    .setAppServiceId(serviceId);
 getFile.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
@@ -550,11 +526,6 @@ getFile.setOnRPCResponseListener(new OnRPCResponseListener() {
         byte[] fileData = getFileResponse.getBulkData();
         SdlArtwork sdlArtwork = new SdlArtwork(fileName, FileType.GRAPHIC_PNG, fileData, false);
         // Use the sdlArtwork 
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info) {
-        // Something went wrong, examine the resultCode and info
     }
 });
 sdlManager.sendRPC(getFile);

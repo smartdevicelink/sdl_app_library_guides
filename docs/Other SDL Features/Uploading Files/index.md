@@ -14,7 +14,7 @@ SDLFile *audioFile = [SDLFile fileWithData:mp3Data name:<#File name#> fileExtens
 [self.sdlManager.fileManager uploadFile:audioFile completionHandler:^(BOOL success, NSUInteger bytesAvailable, NSError * _Nullable error) {
     if (error != nil) { return; }
     <#File upload successful#>
-}];]
+}];
 ```
 
 ##### Swift
@@ -31,9 +31,15 @@ sdlManager.fileManager.upload(file: audioFile) { (success, bytesAvailable, error
 
 @![android, javaSE, javaEE]
 ```java
-byte[] mp3Data = Get the file data;
 SdlFile audioFile = new SdlFile("File Name", FileType.AUDIO_MP3, mp3Data, true);
-sdlManager.sendRPC(audioFile);
+sdlManager.getFileManager().uploadFile(audioFile, new CompletionListener() {
+    @Override
+    public void onComplete(boolean success) {
+        if (success) {
+            // File upload successful
+        }
+    }
+});
 ```
 !@
 
@@ -64,7 +70,7 @@ SDLFile *file2 = [SDLFile fileWithData:<#Data#> name:<#File name#> fileExtension
     <#Called as each upload completes#>
     // Return true to continue sending files. Return false to cancel any files that have not yet been sent.
     return YES;
-} completionHandler:^(NSArray<NSString *> * _Nonnull fileNames, NSError * _Nullable error) {
+} completionHandler:^(NSError * _Nullable error) {
     <#Called when all uploads complete#>
 }];
 ```
@@ -137,10 +143,11 @@ Be aware that persistence will not work if space on the head unit is limited. Th
 
 
 ## Overwriting Stored Files
+@![iOS, android, javaEE, javaSE]
+If a file being uploaded has the same name as an already uploaded file, the new file will be ignored. To override this setting, set the !@@![iOS]`SDLFile`!@@![android, javaSE, javaEE]`SdlFile`!@@![iOS, android, javaEE, javaSE]'s `overwrite` property to `true`.
+!@
+
 @![iOS]
-If a file being uploaded has the same name as an already uploaded file, the new file will be ignored. To override this setting, set the `SDLFile`'s `overwrite` property to true.
-
-
 ##### Objective-C
 ```objc
 file.overwrite = YES;
@@ -153,9 +160,8 @@ file.overwrite = true
 !@
 
 @![android, javaSE, javaEE]
-If a file being uploaded has the same name as an already uploaded file, the existing file will be overwritten. To override this setting, so files do not get overwritten, set the `SdlFile`'s `overwrite` property to `false`.
 ```java
-file.setOverwrite(false);
+file.setOverwrite(true);
 ```
 !@
 
@@ -164,7 +170,7 @@ If a file being uploaded has the same name as an already uploaded file, the exis
 !@
 
 ## Checking the Amount of File Storage Left
-To find the amount of file storage left for your app on the head unit, use the @![iOS]`SDLFileManager`’s `bytesAvailable` property!@ @![android, javaSE, javaEE, javascript]`ListFiles` RPC!@.
+To find the amount of file storage left for your app on the head unit, use the @![iOS]`SDLFileManager`!@@![android, javaSE, javaEE, javascript]`FileManager`!@’s `bytesAvailable` property.
 
 @![iOS]
 ##### Objective-C
@@ -207,7 +213,7 @@ let isFileOnHeadUnit = sdlManager.fileManager.remoteFileNames.contains(<#Name Up
 
 @![android, javaSE, javaEE]
 ```java
-Boolean fileIsOnHeadUnit = sdlManager.getFileManager().getRemoteFileNames().contains("Name Uploaded As")
+Boolean fileIsOnHeadUnit = sdlManager.getFileManager().getRemoteFileNames().contains("Name Uploaded As");
 ```
 !@
 
@@ -261,7 +267,7 @@ const success = await sdlManager.getFileManager().deleteRemoteFileWithName('<#Fi
 @![iOS]
 ##### Objective-C
 ```objc
-[self.sdlManager.fileManager deleteRemoteFileWithNames:@[@"<#Name Uploaded As#>", @"<#Name Uploaded As 2#>"] completionHandler:^(NSError *error) {
+[self.sdlManager.fileManager deleteRemoteFilesWithNames:@[@"<#Name Uploaded As#>", @"<#Name Uploaded As 2#>"] completionHandler:^(NSError * _Nullable error) {
     if (error == nil) {
         <#Images were deleted successfully#>
     }

@@ -1,7 +1,7 @@
 # Playing Spoken Feedback
 Since your user will be driving while interacting with your SDL app, speech phrases can provide important feedback to your user. At any time during your app's lifecycle you can send a speech phrase using the @![iOS]`SDLSpeak`!@@![android,javaSE,javaEE,javascript]`Speak`!@ request and the head unit's text-to-speech (TTS) engine will produce synthesized speech from your provided text.
 
-When using the @![iOS]`SDLSpeak`!@@![android,javaSE,javaEE,javascript]`Speak`!@ RPC, you will receive a response from the head unit once the operation has completed. From the response you will be able to tell if the speech was completed, interrupted, rejected or aborted. It is important to keep in mind that a speech request can interrupt another on-going speech request. If you want to chain speech requests you must wait for the current speech request to finish before sending the next speech request. 
+When using the @![iOS]`SDLSpeak`!@@![android,javaSE,javaEE,javascript]`Speak`!@ RPC, you will receive a response from the head unit once the operation has completed. From the response you will be able to tell if the speech was completed, interrupted, rejected or aborted. It is important to keep in mind that a speech request can interrupt another ongoing speech request. If you want to chain speech requests you must wait for the current speech request to finish before sending the next speech request. 
 
 ## Creating the Speak Request
 The speech request you send can simply be a text phrase, which will be played back in accordance with the user's current language settings, or it can consist of phoneme specifications to direct SDL’s TTS engine to speak a language-independent, speech-sculpted phrase. It is also possible to play a pre-recorded sound file (such as an MP3) using the speech request. For more information on how to play a sound file please refer to [Playing Audio Indications](Speech and Audio/Playing Audio Indications). 
@@ -53,7 +53,7 @@ Below is a list of commonly supported speech capabilities.
 | File | A pre-recorded sound file |
 
 ### Creating Different Types of Speak Requests
-Once you know what speech capabilities are supported by the the module, you can create the speak requests.
+Once you know what speech capabilities are supported by the module, you can create the speak requests.
 
 #### Text Phrase
 @![iOS]
@@ -93,7 +93,7 @@ SDLSpeak *speak = [[SDLSpeak alloc] initWithTTSChunks:sapiPhonemesTTSChunks];
 ##### Swift
 ```swift
 let sapiPhonemesTTSChunks = SDLTTSChunk.sapiChunks(from: "h eh - l ow 1")
-let speech = SDLSpeak(ttsChunks: sapiPhonemesTTSChunk)
+let speech = SDLSpeak(ttsChunks: sapiPhonemesTTSChunks)
 ```
 !@
 
@@ -139,7 +139,7 @@ const speak = new SDL.rpc.messages.Speak([chunk]);
 ```swift
 sdlManager.send(request: speech) { (request, response, error) in
     guard let response = response as? SDLSpeakResponse else { return }
-    guard response?.success.boolValue == true else {
+    guard response.success.boolValue == true else {
         switch response.resultCode {
         case .disallowed:
             <#The app does not have permission to use the speech request#>
@@ -167,25 +167,20 @@ speak.setOnRPCResponseListener(new OnRPCResponseListener() {
         if (!speakResponse.getSuccess()){
             switch (speakResponse.getResultCode()){
                 case DISALLOWED:
-                    Log.i(TAG, "The app does not have permission to use the speech request");
+                    DebugTool.logInfo(TAG, "The app does not have permission to use the speech request");
                     break;
                 case REJECTED:
-                    Log.i(TAG, "The request was rejected because a higher priority request is in progress");
+                    DebugTool.logInfo(TAG, "The request was rejected because a higher priority request is in progress");
                     break;
                 case ABORTED:
-                    Log.i(TAG, "The request was aborted by another higher priority request");
+                    DebugTool.logInfo(TAG, "The request was aborted by another higher priority request");
                     break;
                 default:
-                    Log.i(TAG, "Some other error occurred");
+                    DebugTool.logInfo(TAG, "Some other error occurred");
             }
             return;
         }
-        Log.i(TAG, "Speech was successfully spoken");
-    }
-
-    @Override
-    public void onError(int correlationId, Result resultCode, String info) {
-        Log.i(TAG, "onError: " + info);
+        DebugTool.logInfo(TAG, "Speech was successfully spoken");
     }
 });
 sdlManager.sendRPC(speak);

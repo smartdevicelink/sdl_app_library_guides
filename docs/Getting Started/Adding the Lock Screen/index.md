@@ -4,7 +4,7 @@ The lock screen is a vital part of your SDL app because it prevents the user fro
 @![iOS]
 If you would not like to use any of the following code, you may use the `SDLLockScreenConfiguration` class function `disabledConfiguration`, and manage the entire lifecycle of the lock screen yourself. However, it is strongly recommended that you use the provided lock screen manager, even if you use your own view controller.
 
-To see where the `SDLLockScreenConfiguration` is used, refer to the [Integration Basics](Getting Started/Integration Basics) guide.
+To see where the `SDLLockScreenConfiguration` is used, refer to the [Integration Basics](Getting Started/Integration Basics - iOS) guide.
 !@
 
 @![android]
@@ -42,13 +42,21 @@ let lockScreenConfiguration = SDLLockScreenConfiguration.enabled()
 !@
 
 @![android]
-If you have implemented the `SdlManager` and have defined the `SDLLockScreenActivity` in your manifest but have not defined any lock screen configuration, you are already have a working default configuration.
+If you have implemented the `SdlManager` and defined the `SDLLockScreenActivity` in your manifest, you have a working default lockscreen configuration.
 ![Generic Lock Screen](assets/GenericLockScreen_Android.png)
 !@
 
 
 ## Customizing the Default Lock Screen
 It is possible to customize the background color and app icon in the default provided lockscreen. If you choose not to set your own app icon the library will use the SDL logo.
+@![android]
+When customizing your lock screen please define a `LockScreenConfig` and set it using the builder for your `SdlManager`.
+
+```java
+LockScreenConfig lockScreenConfig = new LockScreenConfig();
+builder.setLockScreenConfig(lockScreenConfig);
+```
+!@
 
 @![iOS]
 ![Custom Lock Screen](assets/CustomLockScreen.png)
@@ -62,7 +70,7 @@ It is possible to customize the background color and app icon in the default pro
 ##### Objective-C
 ```objc
 UIColor *backgroundColor = <# Desired Background Color #>
-SDLLockScreenConfiguration *lockScreenConfiguration = [SDLLockScreenConfiguration enabledConfigurationWithAppIcon:<# Retreive App Icon #> backgroundColor:backgroundColor];
+SDLLockScreenConfiguration *lockScreenConfiguration = [SDLLockScreenConfiguration enabledConfigurationWithAppIcon:<# Retrieve App Icon #> backgroundColor:backgroundColor];
 ```
 
 ##### Swift
@@ -82,7 +90,7 @@ lockScreenConfig.setBackgroundColor(resourceColor); // For example, R.color.blac
 @![iOS]
 ##### Objective-C
 ```objc
-let appIcon: UIImage = <# Retrieve App Icon #>
+UIImage *appIcon = <# Retrieve App Icon #>
 SDLLockScreenConfiguration *lockScreenConfiguration = [SDLLockScreenConfiguration enabledConfigurationWithAppIcon:appIcon backgroundColor:<# Desired Background Color #>];
 ```
 
@@ -132,20 +140,25 @@ lockScreenConfig.showDeviceLogo(false);
 !@
 
 ## Creating a Custom Lock Screen
-If you would like to use your own lock screen instead of the one provided by the library, but still use the logic we provide, you can use a new initializer within @![iOS]`SDLLockScreenConfiguration`!@@![android]`LockScreenConfig`!@. @![iOS]As of iOS 13, presented `UIViewController`s are now dismissible by swiping down on the phone screen. Unless the OEM has enabled Passenger Mode, lock screens should not be dismissible by the user. To prevent this, set the `modalPresentationStyle` property of your custom lock screen `UIViewController` to `fullScreen`. Not doing so may result in your app being rejected by OEMs.!@
+If you would like to use your own lock screen instead of the one provided by the library, but still use the logic we provide, you can use a new initializer within @![iOS]`SDLLockScreenConfiguration`!@@![android]`LockScreenConfig`!@. @![iOS]Any custom lock screen you create should be a subclass of `SDLLockScreenViewController` to ensure that it is configured correctly and can receive all of the information necessary to customize your lock screen such as the OEM icon.!@
+
+@![iOS]
+!!! NOTE
+If you create a custom lock screen view controller, please note that the view controller's default `view` background will be transparent, even if you set a background color for it. You **must** place a custom view across the entire view controller in order to make your lock screen opaque.
+!!!
+!@
 
 @![iOS]
 ##### Objective-C
 ```objc
-UIViewController *lockScreenViewController = <# Initialize Your View Controller #>;
-lockScreenViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+MySDLLockScreenViewControllerSubclass *lockScreenViewController = <# Initialize Your View Controller #>;
 SDLLockScreenConfiguration *lockScreenConfiguration = [SDLLockScreenConfiguration enabledConfigurationWithViewController:lockScreenViewController];
 ```
 
 ##### Swift
 ```swift
+// This view controller should be a `SDLLockScreenViewController` subclass
 let lockScreenViewController = <# Initialize Your View Controller #>
-lockScreenViewController.modalPresentationStyle = .fullScreen
 let lockScreenConfiguration = SDLLockScreenConfiguration.enabledConfiguration(with: lockScreenViewController)
 ```
 

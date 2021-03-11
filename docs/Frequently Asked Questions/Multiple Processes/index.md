@@ -54,7 +54,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         
-        isSdlProcessFlag = isSdlProcess()
+        isSdlProcessFlag = isSdlProcess();
         if (isSdlProcessFlag) {
           //This application instance is running in the SDL process
         	return;

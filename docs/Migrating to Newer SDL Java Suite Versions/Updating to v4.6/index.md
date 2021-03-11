@@ -1,7 +1,7 @@
 # Updating from 4.5 to 4.6 
 
 
-This guide is to help developers get setup with the SDL Android library 4.6. It is assumed that the developer is already updated to 4.5 of the library. There are a few important changes that we need to make to the integration to keep things working well. The first is removing some of the BroadcastReceiver's intent filters in `AndroidManifest.xml` that are now unneccessary. Secondly, the gradle integration of our library should now use `implementation` instead of `compile`. Lastly, the `RPCRequestFactory` class has been deprecated and constructors with mandatory parameters have been added for each RPC class.
+This guide is to help developers get setup with the SDL Android library 4.6. It is assumed that the developer is already updated to 4.5 of the library. There are a few important changes that we need to make to the integration to keep things working well. The first is removing some of the BroadcastReceiver's intent filters in `AndroidManifest.xml` that are now unnecessary. Secondly, the gradle integration of our library should now use `implementation` instead of `compile`. Lastly, the `RPCRequestFactory` class has been deprecated and constructors with mandatory parameters have been added for each RPC class.
 
 We will make changes to:
 
@@ -40,7 +40,7 @@ Assuming the manifest was up to date with version 4.5, we can now remove some of
 ```
 
 ## Gradle Update
-The previous way of including the libary via `compile` should now use `implementation`. The dependencies section of your app's `build.gradle` file should now appear as:
+The previous way of including the library via `compile` should now use `implementation`. The dependencies section of your app's `build.gradle` file should now appear as:
 
 ```xml
 dependencies {
