@@ -24,6 +24,7 @@ There are several customizations you can make to `CarWindow` to optimize it for 
 3. As of SDL v7.1, if the HMI returns a desired framerate or max bitrate, the HMI's preferred settings will be use to configure the video encoder. You do have the option to change the default framerate and average bitrate via the `SDLStreamingMediaConfiguration.customVideoEncoderSettings`. Please note that your custom settings will override any settings received from the HMI except in the case where your custom framerate or average bitrate is larger than what the HMI says it can support.
 
 Below are the video encoder defaults:
+
     ```objc
     @{
         (__bridge NSString *)kVTCompressionPropertyKey_ProfileLevel: (__bridge NSString *)kVTProfileLevel_H264_Baseline_AutoLevel,
