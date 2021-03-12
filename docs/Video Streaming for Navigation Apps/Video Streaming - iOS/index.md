@@ -82,9 +82,6 @@ SDLVideoStreamingRange *streamingRange = [[SDLVideoStreamingRange alloc] initWit
 SDLVideoStreamingRange *streamingRange = [[SDLVideoStreamingRange alloc] init];
 streamingRange.minimumAspectRatio = 1.0;
 streamingRange.maximumAspectRatio = 2.5;
-
-streamingMediaConfig.supportedPortraitStreamingRange = disabledStreamingRange;
-streamingMediaConfig.supportedLandscapeStreamingRange = streamingRange;
 ```
 ```swift
 /// Use if you wish to disable support for all landscape orientations or all portrait orientations
