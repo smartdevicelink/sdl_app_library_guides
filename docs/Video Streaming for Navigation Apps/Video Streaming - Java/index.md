@@ -71,9 +71,9 @@ public static class MyDisplay extends SdlRemoteDisplay {
         DebugTool.logInfo(TAG, "Remote view new width and height ("+ width + ", " + height + ")");
     }
 }
-```
 
-```java
+//...
+
 if (sdlManager.getVideoStreamManager() != null) {
     sdlManager.getVideoStreamManager().start(new CompletionListener() {
         @Override
