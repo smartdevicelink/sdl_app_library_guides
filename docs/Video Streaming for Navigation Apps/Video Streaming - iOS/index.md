@@ -25,14 +25,14 @@ There are several customizations you can make to `CarWindow` to optimize it for 
 
 Below are the video encoder defaults:
 
-    ```objc
-    @{
-        (__bridge NSString *)kVTCompressionPropertyKey_ProfileLevel: (__bridge NSString *)kVTProfileLevel_H264_Baseline_AutoLevel,
-        (__bridge NSString *)kVTCompressionPropertyKey_RealTime: @YES,
-        (__bridge NSString *)kVTCompressionPropertyKey_ExpectedFrameRate: @15,
-        (__bridge NSString *)kVTCompressionPropertyKey_AverageBitRate: @600000
-    };
-    ```
+```objc
+ @{
+    __bridge NSString *)kVTCompressionPropertyKey_ProfileLevel: (__bridge NSString *)kVTProfileLevel_H264_Baseline_AutoLevel,
+    (__bridge NSString *)kVTCompressionPropertyKey_RealTime: @YES,
+    (__bridge NSString *)kVTCompressionPropertyKey_ExpectedFrameRate: @15,
+     __bridge NSString *)kVTCompressionPropertyKey_AverageBitRate: @600000
+};
+```
 
 ### Showing a New View Controller
 Simply update `sdlManager.streamManager.rootViewController` to the new view controller. This will also update the [haptic parser](Video Streaming for Navigation Apps/Supporting Haptic Input).
@@ -64,13 +64,13 @@ If you must use mirroring to stream video please be aware of the following limit
 1. If setting the `rootViewController` when the app returns to the foreground, the app should register for the `UIApplicationDidBecomeActive` notification and not the `UIApplicationWillEnterForeground` notification. Setting the frame after a notification from the latter can also cause weird behavior when setting the new frame.
 1. Configure your SDL app so the lock screen is [always visible](Getting Started/Adding the Lock Screen). If you do not do this, video streaming can stop when the device is rotated.
 
-### Showing a New View Controller
-Simply update the streaming media manager's `rootViewController` to the new view controller. This will also automatically update the [haptic parser](Video Streaming for Navigation Apps/Supporting Haptic Input).
 
 ### Supporting Different Video Streaming View Sizes (SDL v7.1+, RPC v7.1+)
 Some HMIs support multiple view sizes and may resize your SDL app's view during video streaming (i.e. to a collapsed view, split screen, preview mode or picture-in-picture). By default, your app will support all the view sizes and the `CarWindow` will resize the view controller's frame when the HMI notifies the app of the updated screen size. If you you wish to support only some screen sizes, you can configure the `supportedPortraitStreamingRange` and `supportedLandscapeStreamingRange` properties via the `SDLStreamingMediaConfiguration` before starting the video stream. This will allow you to limit support to one or a combination of minimum/maximum resolutions, minimum diagonal, or minimum/maximum aspect ratios. If you want to support all possible landscape or portrait sizes you can simply set `nil` for the streaming range. If you wish to disable support for all possible landscape or portrait orientations you can disable the streaming range using the `SDLVideoStreamingRange.disabled` configuration.
 
 #### Creating the Video Streaming Ranges
+Below are some examples of how to configure a supported video streaming range:
+
 ```objc
 /// Use if you wish to disable support for all landscape orientations or all portrait orientations
 SDLVideoStreamingRange *disabledStreamingRange = SDLVideoStreamingRange.disabled;
@@ -100,6 +100,8 @@ streamingRange.maximumAspectRatio = 2.5
 ```
 
 #### Setting the Video Streaming Ranges
+Once you have configured a supported video streaming range, you can use it to set the `supportedLandscapeStreamingRange` or `supportedLandscapeStreamingRange` properties when you are configuring the `SDLStreamingMediaConfiguration`.
+
 ```objc
 streamingMediaConfig.supportedPortraitStreamingRange = disabledStreamingRange;
 streamingMediaConfig.supportedLandscapeStreamingRange = streamingRange;
