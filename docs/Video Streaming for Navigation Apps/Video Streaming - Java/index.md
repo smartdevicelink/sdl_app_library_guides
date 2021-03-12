@@ -131,7 +131,7 @@ params.setFrameRate(30);
 
 ### Supporting Different Video Streaming Window Sizes (RPC v7.1+)
 You can specify two `VideoStreamingRange` parameters when you want to start your video stream using the `startRemoteDisplay` method, one range will be for landscape orientation and one range will be for portrait orientation.
-In these `VideoStreamingRange` parameters you can define different view sizes that you wish to support in the event that the HMI resizes the view during the stream. (i.e. to a collapsed view, split screen, preview mode or picture-in-picture)
+In these `VideoStreamingRange` parameters you can define different view sizes that you wish to support in the event that the HMI resizes the view during the stream.
 In the `VideoStreamingRange` you will define a minimum and maximum resolution, minimum diagonal, and a minimum and maximum aspect ratio. Any values you do not wish to use should be set to `null`.
 If you want to support all possible landscape or portrait sizes you can simply pass `null` for `supportedLandscapeStreamingRange`, `supportedPortraitStreamingRange`, or both.
 If you wish to only support landscape orientation or only support portrait orientation you "disable" the range by passing a `VideoStreamingRange` with all 0 values set.
