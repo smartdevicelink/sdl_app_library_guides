@@ -116,7 +116,7 @@ If the HMI scales the video stream, you will have to handle scaling the projecte
 ### Video Streaming Parameters (SDL v5.1+)
 Starting with SDL version 5.1+ the `VideoStreamingParameters` you provide will automatically be aligned with the `VideoStreamingCapabilities` provided by the HMI.
 If the HMI provides the scale or resolution in the `VideoStreamingCapabilities` the video stream will use that scale or resolution. Otherwise, the scale or resolution you defined in the `VideoStreamingParameters` will be used.
-If the HMI provides the BitRate or preferred frame rate in the `VideoStreamingCapabilities` and they are also defined in the `VideoStreamingParamerters` you provided the smaller BitRate or preferred frame rate will be used.
+If the HMI provides the bitrate or preferred frame rate in the `VideoStreamingCapabilities` and they are also defined in the `VideoStreamingParamerters` you provided, the smaller bitrate or preferred frame rate will be used.
 
 ### Video FrameRate (RPC v7.1+)
 Starting with RPC version 7.1+ you can define a frame rate within your `VideoStreamingParameters` that you would like your video to stream at. You can also have the option to turn this capability on or off by using the `stableFrameRate` flag in the `VideoStreamingParameters`.
