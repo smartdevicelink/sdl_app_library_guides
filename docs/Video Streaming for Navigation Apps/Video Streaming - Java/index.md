@@ -119,7 +119,7 @@ If the HMI provides the scale or resolution in the `VideoStreamingCapabilities` 
 If the HMI provides the bitrate or preferred frame rate in the `VideoStreamingCapabilities` and they are also defined in the `VideoStreamingParamerters` you provided, the smaller bitrate or preferred frame rate will be used.
 
 ### Video Framerate
-Starting with RPC version 7.1+ you can define a frame rate within your `VideoStreamingParameters` that you would like your video to stream at. You can also have the option to turn this capability on or off by using the `stableFrameRate` flag in the `VideoStreamingParameters`.
+Starting with SDL v5.1, the video stream manager works behind the scene to create a consistent video stream that matches the framerate set in `VideoStreamingParameters`. This is the now the default behavior but you have the option to revert to the old behavior by setting the `stableFrameRate` flag to `false` in the `VideoStreamingParameters`.
 
 ```java
 VideoStreamingParameters params = new VideoStreamingParameters();
