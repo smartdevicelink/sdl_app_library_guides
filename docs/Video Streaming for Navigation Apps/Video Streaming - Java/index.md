@@ -161,7 +161,7 @@ if (sdlManager.getVideoStreamManager() != null) {
 ```
 
 !!! NOTE
-If you disable both the `supportedLandscapeStreamingRange` and `supportedPortraitStreamingRange`, the video will not stream
+If you disable both the `supportedLandscapeStreamingRange` and `supportedPortraitStreamingRange`, video will not stream.
 !!!
 
 If the HMI resizes the view during the stream, the video stream will automatically restart with the new size and the `onViewResized` method you defined in your presentation class.
