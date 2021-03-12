@@ -6,7 +6,7 @@ Due to an iOS limitation, video can not be streamed when the app on the phone is
 !!!
 
 ### Transports for Video Streaming
-Transports are automatically handled for you. As of SDL v6.1, the iOS library will automatically manage primary transports and secondary transports for video streaming. If Wi-Fi is available, the app will automatically connect using it *after* connecting over USB / Bluetooth. This is the only way that Wi-Fi will be used in a production setting.
+Transports are automatically handled for you. As of SDL v6.1+, the iOS library will automatically manage primary transports and secondary transports for video streaming. If Wi-Fi is available, the app will automatically connect using it *after* connecting over USB / Bluetooth. This is the only way that Wi-Fi will be used in a production setting.
 
 ## CarWindow
 `CarWindow` is a system to automatically video stream a view controller screen to the head unit. When you set the view controller, `CarWindow` will resize the view controller's frame to match the head unit's screen dimensions. Then, when the video service setup has completed, it will capture the screen and send it to the head unit.
@@ -21,16 +21,17 @@ There are several customizations you can make to `CarWindow` to optimize it for 
 
 1. Choose how `CarWindow` captures and renders the screen using the `carWindowRenderingType` enum.
 2. By default, when using `CarWindow`, the `SDLTouchManager` will sync its touch updates to the framerate. To disable this feature, set `SDLTouchManager.enableSyncedPanning` to `NO`.
-3. `CarWindow`'s settings dictate the default framerate and average bitrate of the video encoder. If the HMI returns a desired framerate or max bitrate, the HMI's preferred settings will be use to configure the video encoder. You do have the option to change the default parameters via the `SDLStreamingMediaConfiguration.customVideoEncoderSettings`. Please note that your custom settings will override any settings received from the HMI except in the case where your custom framerate or average bitrate is larger than what the HMI says it can support.
+3. As of SDL v7.1, if the HMI returns a desired framerate or max bitrate, the HMI's preferred settings will be use to configure the video encoder. You do have the option to change the default framerate and average bitrate via the `SDLStreamingMediaConfiguration.customVideoEncoderSettings`. Please note that your custom settings will override any settings received from the HMI except in the case where your custom framerate or average bitrate is larger than what the HMI says it can support.
 
 Below are the video encoder defaults:
-
+    ```objc
     @{
         (__bridge NSString *)kVTCompressionPropertyKey_ProfileLevel: (__bridge NSString *)kVTProfileLevel_H264_Baseline_AutoLevel,
         (__bridge NSString *)kVTCompressionPropertyKey_RealTime: @YES,
         (__bridge NSString *)kVTCompressionPropertyKey_ExpectedFrameRate: @15,
         (__bridge NSString *)kVTCompressionPropertyKey_AverageBitRate: @600000
     };
+    ```
 
 ### Showing a New View Controller
 Simply update `sdlManager.streamManager.rootViewController` to the new view controller. This will also update the [haptic parser](Video Streaming for Navigation Apps/Supporting Haptic Input).
