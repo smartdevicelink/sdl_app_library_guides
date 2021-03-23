@@ -7,7 +7,7 @@ The SDL SDK is currently supported on @![iOS]iOS 10.0!@@![android]Android 4.1 (J
 
 ## Install SDL SDK
 @![iOS]
-There are five different ways to install the SDL SDK in your project: Accio, Carthage, CocoaPods, Swift Package Manager, or manually.
+There are four different ways to install the SDL SDK in your project: Carthage, CocoaPods, Swift Package Manager, or manually.
 
 ### CocoaPods Installation
 
@@ -63,25 +63,6 @@ You can install this library using the [Swift Package Manager](https://swift.org
 4\. You will be asked which package project to use. If you are using a Swift project, then you should use the `SmartDeviceLinkSwift` project. If not, then you should use the `SmartDeviceLink` project. You can use the `SmartDeviceLink` project in a Swift project as well, but you will miss some Swift specific customizations, which are currently limited to logging enhancements.
 
 5\. In your SDL related code, use `import SmartDeviceLink` to call most SDL-related code. If you want to use the Swift-specific [logging enhancements](Developer Tools/Configuring SDL Logging#logging-with-the-sdl-logger) you must also use `import SmartDeviceLinkSwift`.
-
-### Accio Installation
-You can install this library using [Accio](https://github.com/JamitLabs/Accio), which is based on SwiftPM syntax. Please follow the steps on the Accio README linked above to initialize Accio into your application. Once installed and initialized into your Xcode project, the root directory should contain a Package.swift file.
-
-1\. Open the Package.swift file.
-
-2\. Add the following line to the dependencies array of your package file. We suggest always using the latest release of the SDL library. 
-
-```swift
-.package(url: "https://github.com/smartdevicelink/sdl_ios.git", .upToNextMajor(from: "<#SDL Version#>")),
-```
-
-!!! NOTE
-Please see [package manifest format](https://github.com/apple/swift-package-manager/blob/master/Documentation/PackageDescription.md) to specify dependencies to a specific branch / version of SDL.
-!!!
-
-3\. Add `"SmartDeviceLink"` or `"SmartDeviceLinkSwift"` to the dependencies array in your target. Use `"SmartDeviceLink"`for Objective-C applications and `"SmartDeviceLinkSwift"` for Swift applications.
-            
-4\.  Install the SDK by running `accio install` in the root folder of your project in Terminal.
 
 ### Carthage Installation
 SDL iOS supports Carthage! Install using Carthage by following [this guide](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application).
