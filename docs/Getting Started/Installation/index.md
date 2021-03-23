@@ -7,7 +7,7 @@ The SDL SDK is currently supported on @![iOS]iOS 10.0!@@![android]Android 4.1 (J
 
 ## Install SDL SDK
 @![iOS]
-There are five different ways to install the SDL SDK in your project: Carthage, CocoaPods, Swift Package Manager, or manually.
+There are four different ways to install the SDL SDK in your project: Carthage, CocoaPods, Swift Package Manager, or manually.
 
 ### CocoaPods Installation
 
