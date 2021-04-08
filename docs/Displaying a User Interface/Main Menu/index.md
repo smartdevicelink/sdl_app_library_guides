@@ -5,15 +5,20 @@ The SDL JavaScript Suite currently does not support the `MenuManager`. This will
 @![iOS, android, javaEE, javaSE]
 You have two different options when creating menus. One is to simply add items to the default menu available in every template. The other is to create a custom menu that pops up when needed. You can find more information about these popups in the [Popup Menus](Displaying a User Interface/Popup Menus) section.
 
-#### Menu Template
-![Generic - Menu Appearance](assets/Generic_menu_dark.png)
-
 !!! NOTE
 Every template has a main menu button. The position of this button varies between templates and cannot be removed from the template. Some OEMs may format certain templates to not display the main menu button if you have no menu items (such as the navigation map view).
 !!!
 
 ## Setting the Menu Layout (RPC v6.0+)
 On some newer head units, you may have the option to display menu items as a grid of tiles instead of the default list layout. To determine if the head unit supports the tiles layout, check the `SystemCapabilityManager`'s !@@![iOS]`defaultMainWindowCapability.menuLayoutsAvailable`!@@![android,javaEE,javaSE] `getDefaultMainWindowCapability().getMenuLayoutsAvailable()`!@@![iOS, android, javaEE, javaSE] property after successfully connecting to the head unit. To set the menu layout using the screen manager, you will need to set the `ScreenManager.menuConfiguration` property.
+!@
+
+@![iOS, android, javaEE, javaSE]
+#### List Menu Layout
+![Generic - Menu Appearance List Layout](assets/Generic_list_layout_dark.png)
+
+#### Grid Menu Layout
+![Generic - Menu Appearance Grid Layout](assets/Generic_grid_layout_dark.png)
 !@
 
 @![iOS]
@@ -43,11 +48,21 @@ The best way to create and update your menu is to the use the Screen Manager API
 To find out more information on how to create `voiceCommands` see the [related documentation](Speech and Audio/Setting Up Voice Commands).
 !@
 
+@![iOS, android, javaSE, javaEE]
+![Generic - Menu Appearance](assets/Generic_menu_dark.png)
+
+!!! NOTE
+Head units supporting RPC v7.1+ may support displaying `secondaryText`, `tertiaryText`, and `secondaryArtwork`. This gives the user a richer experience by displaying more data. Attempting to set this data on head units that do not support RPC 7.1+ will result in that data not being displayed to the user.
+
+To determine if the head unit supports displaying these fields, you can check the `SystemCapabilityManager`'s !@@![iOS]`defaultMainWindowCapability.textFields` / `defaultMainWindowCapability.imageFields`!@@![android,javaEE,javaSE] `getDefaultMainWindowCapability().getTextFields()` / `getDefaultMainWindowCapability().getImageFields()`!@@![iOS, android, javaEE, javaSE] properties after successfully connecting to the head unit. Then check those arrays for objects with the related text / image field names.
+!!!
+!@
+
 @![iOS]
 ##### Objective-C
 ```objc
 // Create the menu cell
-SDLMenuCell *cell = [[SDLMenuCell alloc] initWithTitle:<#NSString#> icon:<#SDLArtwork#> voiceCommands:<#@[NSString]#> handler:^(SDLTriggerSource  _Nonnull triggerSource) {
+SDLMenuCell *cell = [[SDLMenuCell alloc] initWithTitle:<#NSString#> secondaryText:<#(nullable NSString *)#> tertiaryText:<#(nullable NSString *)#> icon:<#SDLArtwork#> secondaryArtwork:<#(nullable SDLArtwork *)#> voiceCommands:<#@[NSString]#> handler:^(SDLTriggerSource  _Nonnull triggerSource) {
     // Menu item was selected, check the `triggerSource` to know if the user used touch or voice to activate it
     <#Handle the cell's selection#>
 }];
@@ -58,7 +73,7 @@ self.sdlManager.screenManager.menu = @[cell];
 ##### Swift
 ```swift
 // Create the menu cell
-let cell = SDLMenuCell(title: <#String#>, icon: <#SDLArtwork?#>, voiceCommands: <#[String]?#>) { (triggerSource: SDLTriggerSource) in
+let cell = SDLMenuCell(title: <#String#>, secondaryText: <#String?#>, tertiaryText: <#String?#>, icon: <#SDLArtwork?#>, secondaryArtwork: <#SDLArtwork?#>, voiceCommands: <#[String]?#>) { (triggerSource: SDLTriggerSource) in
     // Menu item was selected, check the `triggerSource` to know if the user used touch or voice to activate it
     <#Handle the cell's selection#>
 }
@@ -70,7 +85,7 @@ sdlManager.screenManager.menu = [cell]
 @![android, javaSE, javaEE]
 ```java
 // Create the menu cell
-MenuCell cell = new MenuCell("Cell text", null, Collections.singletonList("cell text"), new MenuSelectionListener() {
+MenuCell cell = new MenuCell("Cell text", "Secondary Text", "Tertiary Text", null, null, Collections.singletonList("cell text"), new MenuSelectionListener() {
     @Override
     public void onTriggered(TriggerSource trigger) {
         // Menu item was selected, check the `triggerSource` to know if the user used touch or voice to activate it
@@ -91,25 +106,25 @@ Adding a submenu is as simple as adding subcells to a !@@![iOS]`SDLMenuCell`!@@!
 ##### Objective-C
 ```objc
 // Create the inner menu cell
-SDLMenuCell *cell = [[SDLMenuCell alloc] initWithTitle:<#NSString#> icon:<#SDLArtwork#> voiceCommands:<#@[NSString]#> handler:^(SDLTriggerSource  _Nonnull triggerSource) {
+SDLMenuCell *cell = [[SDLMenuCell alloc] initWithTitle:<#NSString#> secondaryText:<#(nullable NSString *)#> tertiaryText:<#(nullable NSString *)#> icon:<#SDLArtwork#> secondaryArtwork:<#(nullable SDLArtwork *)#> voiceCommands:<#@[NSString]#> handler:^(SDLTriggerSource  _Nonnull triggerSource) {
     // Menu item was selected, check the `triggerSource` to know if the user used touch or voice to activate it
     <#Handle the cell's selection#>
 }];
 
 // Create and set the submenu cell
-SDLMenuCell *submenuCell = [[SDLMenuCell alloc] initWithTitle:<#NSString#> icon:<#SDLArtwork?#> submenuLayout:<#SDLMenuLayout#>, subCells:@[cell]];
+SDLMenuCell *submenuCell = [[SDLMenuCell alloc] initWithTitle:<#NSString#> secondaryText:<#(nullable NSString *)#> tertiaryText:<#(nullable NSString *)#> icon:<#SDLArtwork?#> secondaryArtwork:<#(nullable SDLArtwork *)#> submenuLayout:<#SDLMenuLayout#> subCells:@[cell]];
 self.sdlManager.screenManager.menu = @[submenuCell];
 ```
 
 ##### Swift
 ```swift
 // Create the inner menu cell
-let cell = SDLMenuCell(title: <#String#>, icon: <#SDLArtwork?#>, voiceCommands: <#[String]?#>) { (triggerSource: SDLTriggerSource) in
+let cell = SDLMenuCell(title: <#String#>, secondaryText: <#String?#>, tertiaryText: <#String?#>, icon: <#SDLArtwork?#>, secondaryArtwork: <#SDLArtwork?#>, voiceCommands: <#[String]?#>) { (triggerSource: SDLTriggerSource) in
     // Menu item was selected, check the `triggerSource` to know if the user used touch or voice to activate it
     <#Handle the cell's selection#>
 }
 
-let submenuCell = SDLMenuCell(title: <#String#>, icon: <#SDLArtwork?#>, submenuLayout: <#SDLMenuLayout#>, subCells: [cell])
+let submenuCell = SDLMenuCell(title: <#String#>, secondaryText: <#String?#>, tertiaryText: <#String?#>, icon: <#SDLArtwork?#>, secondaryArtwork: <#SDLArtwork?#>, submenuLayout: <#SDLMenuLayout#>, subCells: [cell])
 sdlManager.screenManager.menu = [submenuCell]
 ```
 !@
@@ -117,7 +132,7 @@ sdlManager.screenManager.menu = [submenuCell]
 @![android, javaSE, javaEE]
 ```java
 // Create the inner menu cell
-MenuCell innerCell = new MenuCell("inner menu cell", null, Collections.singletonList("inner menu cell"), new MenuSelectionListener() {
+MenuCell innerCell = new MenuCell("inner menu cell", "secondary text", "tertiary test", null, null,Collections.singletonList("inner menu cell"), new MenuSelectionListener() {
     @Override
     public void onTriggered(TriggerSource trigger) {
         // Menu item was selected, check the `triggerSource` to know if the user used touch or voice to activate it
@@ -126,7 +141,7 @@ MenuCell innerCell = new MenuCell("inner menu cell", null, Collections.singleton
 });
 
 // Create and set the submenu cell
-MenuCell cell = new MenuCell("cell", MenuLayout.LIST, null, Collections.singletonList(innerCell));
+MenuCell cell = new MenuCell("cell", "secondary text", "tertiary text", MenuLayout.LIST, null, null, Collections.singletonList(innerCell));
 
 sdlManager.getScreenManager().setMenu(Collections.singletonList(cell));
 ```
@@ -140,6 +155,17 @@ Artworks will be automatically handled when using the screen manager API. First,
 The screen manager will intelligently handle deletions for you. If you want to show new menu items, simply set a new array of menu cells. If you want to have a blank menu, set an empty array. On supported systems, the library will calculate the optimal adds / deletes to create the new menu. If the system doesn't support this sort of dynamic updating, the entire list will be removed and re-added.
 
 If you are doing this manually, you must use the `DeleteCommand` and `DeleteSubMenu` RPCs, passing the `cmdID`s you wish to delete.
+
+### Duplicate Menu Titles
+Starting with SDL !@@![android, javaEE, javaSE]v5.1+!@@![iOS]v7.1+!@@![iOS, android, javaEE, javaSE] menu cells and sub-menu cells no longer require unique titles in order to be presented. For example, if you are trying to display points of interest as a list you can now have multiple locations with the same name but are not the same location. You cannot present multiple cells that are exactly the same. They must have some property that makes them different, such as `secondaryText` or an artwork.
+
+##### RPC v7.1+ Connections
+The titles on the menu will be displayed as provided even if there are duplicate titles.
+![Menu with duplicate titles RPC 7.1+](assets/Menu_duplicate_titles_7_1.png)
+
+##### RPC v7.0 And Below Connections
+The titles on the menu will have a number appended to them when there are duplicate titles.
+![Menu with duplicate titles RPC 7.0 and below](assets/Menu_duplicate_titles.png)
 !@
 
 ## Using RPCs

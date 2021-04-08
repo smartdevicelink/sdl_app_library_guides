@@ -325,5 +325,18 @@ choiceSet.cancel();
 ```
 !@
 
+@![iOS, android, javaEE, javaSE]
+### Duplicate Cell Titles
+Starting with SDL !@@![android, javaEE, javaSE]v5.1+!@@![iOS]v7.1+!@@![iOS, android, javaEE, javaSE] choice cells no longer require unique titles in order to be presented. For example, if you are trying to display points of interest as a list you can now have multiple locations with the same name but are not the same location. You cannot present multiple cells that are exactly the same. They must have some property that makes them different, such as `secondaryText` or an artwork.
+
+##### RPC v7.1+ Connections
+The titles on the choice set will be displayed as provided even if there are duplicate titles.
+![Choice Set with duplicate names RPC 7.1+](assets/Choice_cell_duplicate_names_7_1.png)
+
+##### RPC v7.0 And Below Connections
+The titles on the choice set will have a number appended to them when there are duplicate titles.
+![Choice Set with duplicate names](assets/Choice_cell_duplicate_names.png)
+!@
+
 ## Using RPCs
 If you don't want to use the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE, javascript]`ScreenManager`!@, you can do this manually using the `Choice`, `CreateInteractionChoiceSet`. You will need to create `Choice`s, bundle them into `CreateInteractionChoiceSet`s. As this is no longer a recommended course of action, we will leave it to you to figure out how to manually do it.

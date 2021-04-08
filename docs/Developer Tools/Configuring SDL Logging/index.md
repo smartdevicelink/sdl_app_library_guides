@@ -125,7 +125,7 @@ let filter = SDLLogFilter(byDisallowingString: "Test", caseSensitive: false)
 In addition to viewing the library logs, you also have the ability to log with the SDL logger. All messages logged through the SDL logger, including your own, will use your `SDLLogConfiguration` settings.
 
 ### Objective-C Projects
-First, import the the `SDLLogMacros` header.
+First, import the `SDLLogMacros` header.
 
 ```
 #import "SDLLogMacros.h"
