@@ -1,10 +1,5 @@
 # Popup Keyboards
-@![javascript]
-The SDL JavaScript Suite's `ScreenManager` currently does not support presenting keyboards. This will be addressed in a future release.
-!@
-
-@![iOS, android, javaSE, javaEE]
-Presenting a keyboard or a popup menu with a search field requires you to implement the !@@![iOS]`SDLKeyboardDelegate`!@@![android, javaSE, javaEE]`KeyboardListener`!@@![iOS, android, javaSE, javaEE]. Note that the `initialText` in the keyboard case often acts as "placeholder text" and not as true initial text.
+Presenting a keyboard or a popup menu with a search field requires you to implement the @![iOS]`SDLKeyboardDelegate`!@@![android, javaSE, javaEE, javascript]`KeyboardListener`!@. Note that the `initialText` in the keyboard case often acts as "placeholder text" and not as true initial text.
 
 ## Presenting a Keyboard
 
@@ -16,7 +11,6 @@ Keyboards are unavailable for use in many countries when the driver is distracte
 
 ![Keyboard Search](assets/keyboard_search.png)
 
-!@
 
 @![iOS]
 ##### Objective-C
@@ -35,6 +29,12 @@ let cancelID = sdlManager.screenManager.presentKeyboard(withInitialText: <#Strin
 @![android, javaSE, javaEE]
 ```java
 int cancelId = sdlManager.getScreenManager().presentKeyboard("Initial text", null, keyboardListener);
+```
+!@
+
+@![javascript]
+```javascript
+const cancelId = sdlManager.getScreenManager().presentKeyboard('Initial text', null, keyboardListener);
 ```
 !@
 
@@ -202,14 +202,66 @@ KeyboardListener keyboardListener = new KeyboardListener() {
 ```
 !@
 
-@![iOS, android, javaSE, javaEE]
-### Configuring Keyboard Properties
-You can change default keyboard properties by updating !@@![iOS]`sdlManager.screenManager.keyboardConfiguration`!@@![android, javaSE, javaEE]`sdlManager.getScreenManager().setKeyboardConfiguration()`!@@![iOS, android, javaSE, javaEE]. If you want to change the keyboard configuration for only one keyboard session and keep the default keyboard configuration unchanged, you can !@@![iOS]implement the `customKeyboardConfiguration` delegate method and pass back the single-use `KeyboardProperties` for that given keyboard presentation!@@![android, javaSE, javaEE]pass a single-use `KeyboardProperties` to `presentKeyboard()`!@@![iOS, android, javaSE, javaEE].!@
+@![javascript]
+```javascript
+const keyboardListener = new KeyboardListener()
+    .setOnUserDidSubmitInput((event) => {
+        switch (event) {
+            case KeyboardEvent.ENTRY_VOICE:
+                // The user decided to start voice input, you should start an AudioPassThru session if supported
+                break;
+            case KeyboardEvent.ENTRY_SUBMITTED:
+                // The user submitted some text with the keyboard
+                break;
+            default:
+                break;
+        }
+    })
+    .setOnKeyboardDidAbortWithReason((event) => {
+        switch (event) {
+            case KeyboardEvent.ENTRY_CANCELLED:
+                // The user cancelled the keyboard interaction
+                break;
+            case KeyboardEvent.ENTRY_ABORTED:
+                // The system aborted the keyboard interaction
+                break;
+            default:
+                break;
+        }
+    })
+    .setUpdateAutocompleteWithInput((currentInputText, keyboardAutocompleteCompletionListener) => {
+        // Check the input text and return a list of autocomplete results
+        keyboardAutocompleteCompletionListener(updatedAutoCompleteList);
+    })
+    .setUpdateCharacterSetWithInput((currentInputText, keyboardCharacterSetCompletionListener) => {
+        // Check the input text and return a set of characters to allow the user to enter
+    })
+    .setOnKeyboardDidSendEvent((event, currentInputText) => {
+        // This is sent upon every event, such as keypresses, cancellations, and aborting
+    })
+    .setOnKeyboardDidUpdateInputMask((event) => {
+        switch (event) {
+            case KeyboardEvent.INPUT_KEY_MASK_ENABLED:
+                // The user enabled input key masking
+                break;
+            case KeyboardEvent.INPUT_KEY_MASK_DISABLED:
+                // The user disabled input key masking
+                break;
+            default:
+                break;
+        }
+    });
+```
+!@
 
-@![iOS, android, javaSE, javaEE]
+
+### Configuring Keyboard Properties
+You can change default keyboard properties by updating @![iOS]`sdlManager.screenManager.keyboardConfiguration`!@@![android, javaSE, javaEE, javascript]`sdlManager.getScreenManager().setKeyboardConfiguration()`!@. If you want to change the keyboard configuration for only one keyboard session and keep the default keyboard configuration unchanged, you can @![iOS]implement the `customKeyboardConfiguration` delegate method and pass back the single-use `KeyboardProperties` for that given keyboard presentation!@@![android, javaSE, javaEE, javascript]pass a single-use `KeyboardProperties` to `presentKeyboard()`!@.
+
+
 #### Keyboard Language
 You can modify the keyboard language by changing the keyboard configuration's `language`. For example, you can set an `EN_US` keyboard. It will default to `EN_US` if not otherwise set.
-!@
+
 
 @![android, javaSE, javaEE]
 ```java
@@ -238,10 +290,19 @@ sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration
 ```
 !@
 
-@![iOS, android, javaSE, javaEE]
-#### Limited Character List
-You can modify the keyboard to enable only some characters by responding to the !@@![iOS]`updateCharacterSet:completionHandler:` delegate!@@![android, javaSE, javaEE]`updateCharacterSetWithInput ` listener!@@![iOS, android, javaSE, javaEE] method or by changing the keyboard configuration before displaying the keyboard. For example, you can enable only "a", "b" , and "c" on the keyboard. All other characters will be greyed out (disabled).
+@![javascript]
+```javascript
+const keyboardConfiguration = new KeyboardProperties()
+    .setLanguage(Language.EN_US);
+
+sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
+```
 !@
+
+
+#### Limited Character List
+You can modify the keyboard to enable only some characters by responding to the @![iOS]`updateCharacterSet:completionHandler:` delegate!@@![android, javaSE, javaEE, javascript]`updateCharacterSetWithInput ` listener!@ method or by changing the keyboard configuration before displaying the keyboard. For example, you can enable only "a", "b" , and "c" on the keyboard. All other characters will be greyed out (disabled).
+
 
 @![android, javaSE, javaEE]
 ```java
@@ -270,14 +331,23 @@ sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration
 ```
 !@
 
-@![iOS, android, javaSE, javaEE]
+@![javascript]
+```javascript
+const keyboardConfiguration = new KeyboardProperties()
+    .setLimitedCharacterList(['a', 'b', 'c']);
+
+sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
+```
+!@
+
+
 #### Autocomplete List
-You can modify the keyboard to allow an app to pre-populate the text field with a list of suggested entries as the user types by responding to the !@@![iOS]`updateAutocompleteWithInput:autoCompleteResultsHandler:` delegate!@@![android, javaSE, javaEE]`updateAutocompleteWithInput` listener!@@![iOS, android, javaSE, javaEE] method or by changing the keyboard configuration before displaying the keyboard. For example, you can display recommended searches "test1", "test2", and "test3" if the user types "tes".
+You can modify the keyboard to allow an app to pre-populate the text field with a list of suggested entries as the user types by responding to the @![iOS]`updateAutocompleteWithInput:autoCompleteResultsHandler:` delegate!@@![android, javaSE, javaEE, javascript]`updateAutocompleteWithInput` listener!@ method or by changing the keyboard configuration before displaying the keyboard. For example, you can display recommended searches "test1", "test2", and "test3" if the user types "tes".
 
 !!! NOTE
 A list of autocomplete results is only available on RPC 6.0+ connections. On connections < RPC 6.0, only the first item will be available to the user.
 !!!
-!@
+
 
 @![android, javaSE, javaEE]
 ```java
@@ -306,7 +376,16 @@ sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration
 ```
 !@
 
-@![iOS, android, javaSE, javaEE]
+@![javascript]
+```javascript
+const keyboardConfiguration = new KeyboardProperties()
+    .setAutoCompleteList(['test1', 'test2', 'test3']);
+
+sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
+```
+!@
+
+
 #### Keyboard Layout
 You can modify the keyboard layout by changing the keyboard configuration's `keyboardLayout`. For example, you can set a `NUMERIC` keyboard. It will default to `QWERTY` if not otherwise set.
 
@@ -315,7 +394,7 @@ The numeric keyboard layout is only available on RPC 7.1+. See the section [Chec
 !!!
 
 ![Numeric Keyboard](assets/keyboard_numeric.png)
-!@
+
 
 @![android, javaSE, javaEE]
 ```java
@@ -344,11 +423,19 @@ sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration
 ```
 !@
 
-@![iOS, android, javaSE, javaEE]
+@![javascript]
+```javascript
+const keyboardConfiguration = new KeyboardProperties()
+    .setKeyboardLayout(KeyboardLayout.NUMERIC);
+
+sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
+```
+!@
+
+
 #### Input Masking (RPC 7.1+)
 You can modify the keyboard to mask the entered characters by changing the keyboard configuration's `maskInputCharacters`. 
 ![Numeric Keyboard](assets/keyboard_numeric_masked.png)
-!@
 
 @![android, javaSE, javaEE]
 ```java
@@ -380,12 +467,22 @@ sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration
 ```
 !@
 
-@![iOS, android, javaSE, javaEE]
+@![javascript]
+```javascript
+const keyboardConfiguration = new KeyboardProperties()
+    .setKeyboardLayout(KeyboardLayout.NUMERIC)
+    .setMaskInputCharacters(KeyboardInputMask.ENABLE_INPUT_KEY_MASK);
+
+sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
+```
+!@
+
+
 #### Custom Keys (RPC 7.1+)
 Each keyboard layout has a number of keys that can be customized to your app's needs. For example, you could set two of the customizable keys in `QWERTY` layout to be "!" and "?" as seen in the image below. The available number and location of these custom keys is determined by the connected head unit. See the section [Checking Keyboard Capabilities](#checking-keyboard-capabilities-rpc-v71) to determine how many custom keys are available for any given layout.
 
 ![Custom Keys](assets/keyboard_querty_custom_keys.png)
-!@
+
 
 @![android, javaSE, javaEE]
 ```java
@@ -417,10 +514,20 @@ sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration
 ```
 !@
 
-@![iOS, android, javaSE, javaEE]
+@![javascript]
+```javascript
+const keyboardConfiguration = new KeyboardProperties()
+    .setKeyboardLayout(KeyboardLayout.QWERTY)
+    .setCustomKeys(['!','?']);
+
+sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
+```
+!@
+
+
 ### Checking Keyboard Capabilities (RPC v7.1+)
 Each head unit may support different keyboard layouts and each layout can support a different number of custom keys. Head units may not support masking input. If you want to know which keyboard features are supported on the connected head unit, you can check the `KeyboardCapabilities`:
-!@
+
 @![android, javaSE, javaEE]
 ```java
 WindowCapability windowCapability = sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability();
@@ -457,14 +564,26 @@ let maskInputSupported = keyboardCapabilities.maskInputCharactersSupported?.bool
 ```
 !@
 
-@![iOS, android, javaSE, javaEE]
+@![javascript]
+```javascript
+const windowCapability = sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability();
+const keyboardCapabilities = windowCapability.getKeyboardCapabilities();
+
+// List of layouts and number of custom keys supported by each layout
+const keyboardLayouts = keyboardCapabilities.getSupportedKeyboards();
+
+// Boolean represents whether masking is supported or not
+const maskInputSupported = keyboardCapabilities.getMaskInputCharactersSupported();
+```
+!@
+
 ### Dismissing the Keyboard (RPC v6.0+)
 You can dismiss a displayed keyboard before the timeout has elapsed by sending a `CancelInteraction` request. If you presented the keyboard using the screen manager, you can dismiss the choice set by calling `dismissKeyboard` with the `cancelID` that was returned (if one was returned) when presenting.
 
 !!! NOTE
 If connected to older head units that do not support this feature, the cancel request will be ignored, and the keyboard will persist on the screen until the timeout has elapsed or the user dismisses it by making a selection.
 !!!
-!@
+
 
 @![iOS]
 ##### Objective-C
@@ -482,6 +601,12 @@ sdlManager.screenManager.dismissKeyboard(withCancelID: cancelID)
 
 @![android, javaSE, javaEE]
 ```java
+sdlManager.getScreenManager().dismissKeyboard(cancelId);
+```
+!@
+
+@![javascript]
+```javascript
 sdlManager.getScreenManager().dismissKeyboard(cancelId);
 ```
 !@
