@@ -47,10 +47,13 @@ If you are using off-screen rendering, it is recommended that your on-screen vie
 #### Off-Screen
 To set an off-screen view controller all you have to do is instantiate a new `UIViewController` class and use it to set the `rootViewController`.
 
+##### Objective-C
 ```objc
 UIViewController *offScreenViewController = <#Acquire a UIViewController#>;
 self.sdlManager.streamManager.rootViewController = offScreenViewController;
 ```
+
+##### Swift
 ```swift
 let offScreenViewController = <#Acquire a UIViewController#>
 sdlManager.streamManager?.rootViewController = offScreenViewController
@@ -71,6 +74,7 @@ Some HMIs support multiple view sizes and may resize your SDL app's view during 
 #### Creating the Video Streaming Ranges
 Below are some examples of how to configure a supported video streaming range:
 
+##### Objective-C
 ```objc
 /// Use if you wish to disable support for all landscape orientations or all portrait orientations
 SDLVideoStreamingRange *disabledStreamingRange = SDLVideoStreamingRange.disabled;
@@ -83,6 +87,8 @@ SDLVideoStreamingRange *streamingRange = [[SDLVideoStreamingRange alloc] init];
 streamingRange.minimumAspectRatio = 1.0;
 streamingRange.maximumAspectRatio = 2.5;
 ```
+
+##### Swift
 ```swift
 /// Use if you wish to disable support for all landscape orientations or all portrait orientations
 let disabledStreamingRange = SDLVideoStreamingRange.disabled()
@@ -99,10 +105,13 @@ streamingRange.maximumAspectRatio = 2.5
 #### Setting the Video Streaming Ranges
 Once you have configured a supported video streaming range, you can use it to set the `supportedLandscapeStreamingRange` or `supportedLandscapeStreamingRange` properties when you are configuring the `SDLStreamingMediaConfiguration`.
 
+##### Objective-C
 ```objc
 streamingMediaConfig.supportedPortraitStreamingRange = disabledStreamingRange;
 streamingMediaConfig.supportedLandscapeStreamingRange = streamingRange;
 ```
+
+##### Swift
 ```swift
 streamingMediaConfig.supportedPortraitStreamingRange = disabledStreamingRange
 streamingMediaConfig.supportedLandscapeStreamingRange = streamingRange
@@ -115,6 +124,7 @@ If you disable both the `supportedLandscapeStreamingRange` and `supportedPortrai
 #### Getting the Updated Screen Size
 If the HMI resizes the view during streaming, the video stream will automatically restart with the new size. If desired, you can subscribe to screen size updates via the `SDLStreamingVideoDelegate`.
 
+##### Objective-C
 ```objc
 streamingMediaConfig.delegate = self;
 
@@ -122,6 +132,8 @@ streamingMediaConfig.delegate = self;
     <#Use displaySize.width and displaySize.height#>
 }
 ```
+
+##### Swift
 ```swift
 streamingMediaConfig.delegate = self
 
@@ -146,6 +158,7 @@ To check whether or not you can start sending data to the video stream, watch fo
 
 Video data must be provided to the `SDLStreamingMediaManager` as a `CVImageBufferRef` (Apple documentation [here](https://developer.apple.com/library/mac/documentation/QuartzCore/Reference/CVImageBufferRef/)). Once the video stream has started, you will not see video appear until Core has received a few frames. Refer to the code sample below for an example of how to send a video frame:
 
+##### Objective-C
 ```objc
 CVPixelBufferRef imageBuffer = <#Acquire Image Buffer#>;
 
@@ -153,6 +166,8 @@ if ([self.sdlManager.streamManager sendVideoData:imageBuffer] == NO) {
   NSLog(@"Could not send Video Data");
 }
 ```
+
+##### Swift
 ```swift
 let imageBuffer = <#Acquire Image Buffer#>
 
