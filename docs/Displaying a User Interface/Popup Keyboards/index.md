@@ -135,10 +135,12 @@ extension <#Class Name#>: SDLKeyboardDelegate {
 ```
 !@
 
-@![android, javaSE, javaEE]
+@![android, javaSE, javaEE, javascript]
 ### Implementing the Keyboard Listener
 Using the `KeyboardListener` involves implementing several methods: 
+!@
 
+@![android, javaSE, javaEE]
 ```java
 KeyboardListener keyboardListener = new KeyboardListener() {
     @Override
@@ -205,7 +207,7 @@ KeyboardListener keyboardListener = new KeyboardListener() {
 @![javascript]
 ```javascript
 const keyboardListener = new KeyboardListener()
-    .setOnUserDidSubmitInput((event) => {
+    .setOnUserDidSubmitInput((inputText, event) => {
         switch (event) {
             case KeyboardEvent.ENTRY_VOICE:
                 // The user decided to start voice input, you should start an AudioPassThru session if supported
