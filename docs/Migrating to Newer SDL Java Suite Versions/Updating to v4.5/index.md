@@ -166,7 +166,7 @@ We realize that pushing a notification to the notification tray is not ideal for
 
 #### The Correct way
 
-The right way to handle the new foreground service requirement is to simply push a full fledged notification to the notification tray.
+The right way to handle the new foreground service requirement is to simply push a full-fledged notification to the notification tray.
 
 ###### How to do it
 
