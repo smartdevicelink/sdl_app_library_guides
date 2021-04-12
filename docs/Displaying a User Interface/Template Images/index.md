@@ -95,7 +95,11 @@ sdlManager.getScreenManager().setPrimaryGraphic(null);
 !@
 
 ### Overwriting Images
-Uploaded images are checked for duplication based on their file names in the @![iOS]`SDLFileManager`!@@![android, javaSE, javaEE, javascript]`FileManager`!@ class. For cases where an image by the same name needs to be reuploaded then the @![iOS]`SDLArtwork`'s !@@![android, javaSE, javaEE, javascript]`SdlArtwork`'s!@ `overwrite` property should be used. Setting `overwrite` to `true` before passing the image to a @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE, javascript]`ScreenManager`!@ method such as `setPrimaryGraphic()` and `setSecondaryGraphic()` will force the image to be reuploaded. This includes methods such as `preloadChoices()` where the arguments passed in contain images.
+When a file is to be uploaded to the module, the @![iOS]`SDLFileManager`!@@![android, javaSE, javaEE, javascript]`FileManager`!@ checks if a file with the same name has already been uploaded to module and skips the upload if the image has already been uploaded. For cases where an image by the same name needs to be reuploaded then the @![iOS]`SDLArtwork`'s !@@![android, javaSE, javaEE, javascript]`SdlArtwork`'s!@ `overwrite` property should be used. Setting `overwrite` to `true` before passing the image to a @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE, javascript]`ScreenManager`!@ method such as `setPrimaryGraphic()` and `setSecondaryGraphic()` will force the image to be reuploaded. This includes methods such as `preloadChoices()` where the arguments passed in contain images.
+
+!!! IMPORTANT
+Please note that many production modules on the road do not refresh the HMI with the new image if the file name has not changed. If you want the image to refresh on the screen immediately, we suggest using two image names and toggling back and forth between the names each time you update the image. 
+!!!
 
 @![iOS]
 ##### Objective-C
