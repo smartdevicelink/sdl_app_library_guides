@@ -390,7 +390,39 @@ sdlManager.sendRPC(mediaClockFast);
 
 @![javascript]
 ```js
-//TODO add javascript code
+//Play Audio at 50% or half speed
+const mediaClockSlow = new SDL.rpc.messages.SetMediaClockTimer()
+    .setUpdateMode(SDL.rpc.enums.UpdateMode.COUNTUP)
+    .setStartTime(
+        new SDL.rpc.structs.StartTime()
+            .setHours(0)
+            .setMinutes(0)
+            .setSeconds(30)
+    ).setEndTime(
+        new SDL.rpc.structs.StartTime()
+            .setHours(0)
+            .setMinutes(4)
+            .setSeconds(13)
+    ).setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PAUSE)
+    .setCountRate(0.5);
+
+sdlManager.sendRpcResolve(mediaClockSlow);
+
+//Play Audio at 200% or double speed
+const mediaClockFast = new SDL.rpc.messages.SetMediaClockTimer()
+    .setUpdateMode(SDL.rpc.enums.UpdateMode.COUNTUP)
+    .setStartTime(
+        new SDL.rpc.structs.StartTime()
+            .setHours(0)
+            .setMinutes(0)
+            .setSeconds(30)
+    ).setEndTime(
+        new SDL.rpc.structs.StartTime()
+            .setHours(0)
+            .setMinutes(4)
+            .setSeconds(13)
+    ).setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PAUSE)
+    .setCountRate(2);
 ```
 !@
 
