@@ -76,13 +76,13 @@ Below are some examples of how to configure a supported video streaming range:
 
 ##### Objective-C
 ```objc
-/// Use if you wish to disable support for all landscape orientations or all portrait orientations
+// Use if you wish to disable support for all landscape orientations or all portrait orientations
 SDLVideoStreamingRange *disabledStreamingRange = SDLVideoStreamingRange.disabled;
 
 // Use if you wish to only support landscape image resolutions between widths: 500-800 and heights: 200-400. All aspect ratios and diagonal screen sizes will be supported.
 SDLVideoStreamingRange *streamingRange = [[SDLVideoStreamingRange alloc] initWithMinimumResolution:[[SDLImageResolution alloc] initWithWidth:500 height:200] maximumResolution:[[SDLImageResolution alloc] initWithWidth:800 height:400]];
 
-/// Use if you wish to only support aspect ratios between 1.0 and 2.5. All image resolutions and diagonal screen sizes will be supported.
+// Use if you wish to only support aspect ratios between 1.0 and 2.5. All image resolutions and diagonal screen sizes will be supported.
 SDLVideoStreamingRange *streamingRange = [[SDLVideoStreamingRange alloc] init];
 streamingRange.minimumAspectRatio = 1.0;
 streamingRange.maximumAspectRatio = 2.5;
@@ -90,20 +90,20 @@ streamingRange.maximumAspectRatio = 2.5;
 
 ##### Swift
 ```swift
-/// Use if you wish to disable support for all landscape orientations or all portrait orientations
+// Use if you wish to disable support for all landscape orientations or all portrait orientations
 let disabledStreamingRange = SDLVideoStreamingRange.disabled()
 
 // Use if you wish to only support landscape image resolutions between widths: 500-800 and heights: 200-400. All aspect ratios and diagonal screen sizes will be supported.
 let streamingRange = SDLVideoStreamingRange(minimumResolution: SDLImageResolution(width: 500, height: 200), maximumResolution: SDLImageResolution(width: 800, height: 400))
 
-/// Use if you wish to only support aspect ratios between 1.0 and 2.5. All image resolutions and diagonal screen sizes will be supported.
+// Use if you wish to only support aspect ratios between 1.0 and 2.5. All image resolutions and diagonal screen sizes will be supported.
 let streamingRange = SDLVideoStreamingRange()
 streamingRange.minimumAspectRatio = 1.0
 streamingRange.maximumAspectRatio = 2.5
 ```
 
 #### Setting the Video Streaming Ranges
-Once you have configured a supported video streaming range, you can use it to set the `supportedLandscapeStreamingRange` or `supportedLandscapeStreamingRange` properties when you are configuring the `SDLStreamingMediaConfiguration`.
+Once you have configured a supported video streaming range, you can use it to set the `supportedPortraitStreamingRange` or `supportedLandscapeStreamingRange` properties when you are configuring the `SDLStreamingMediaConfiguration`.
 
 ##### Objective-C
 ```objc
@@ -128,7 +128,7 @@ If the HMI resizes the view during streaming, the video stream will automaticall
 ```objc
 streamingMediaConfig.delegate = self;
 
-- (void)videoStreamingState:(nullable SDLVideoStreamingState)oldState didChangetoState:(SDLVideoStreamingState)newState {
+- (void)videoStreamingSizeDidUpdate:(CGSize)displaySize {
     <#Use displaySize.width and displaySize.height#>
 }
 ```
@@ -138,7 +138,7 @@ streamingMediaConfig.delegate = self;
 streamingMediaConfig.delegate = self
 
 extension ProxyManager: SDLStreamingVideoDelegate {
-    func videoStreamingSizeDidUpdate(_ displaySize: CGSize) {
+    func videoStreamingSizeDidUpdate(toSize displaySize: CGSize) {
         <#Use displaySize.width and displaySize.height#>
     }
 }
