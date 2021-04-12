@@ -423,6 +423,8 @@ const mediaClockFast = new SDL.rpc.messages.SetMediaClockTimer()
             .setSeconds(13)
     ).setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PAUSE)
     .setCountRate(2);
+
+sdlManager.sendRpcResolve(mediaClockFast);
 ```
 !@
 
