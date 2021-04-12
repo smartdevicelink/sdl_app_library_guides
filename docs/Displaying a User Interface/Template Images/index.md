@@ -100,12 +100,16 @@ Uploaded images are checked for duplication based on their file names in the @![
 @![iOS]
 ##### Objective-C
 ```objc
-// TODO: Code that sets an artwork's overwrite property to true before passing to setPrimaryGraphic()
+SDLArtwork *sdlArtwork = <#SDLArtwork#>;
+sdlArtwork.overwrite = YES;
+sdlManager.screenManager.primaryGraphic = sdlArtwork;
 ```
 
 ##### Swift
 ```swift
-// TODO: Code that sets an artwork's overwrite property to true before passing to setPrimaryGraphic()
+let sdlArtwork = <#SDLArtwork#>
+sdlArtwork.overwrite = true
+sdlManager.screenManager.primaryGraphic = sdlArtwork
 ```
 !@
 
