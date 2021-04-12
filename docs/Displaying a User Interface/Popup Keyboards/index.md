@@ -206,13 +206,13 @@ KeyboardListener keyboardListener = new KeyboardListener() {
 
 @![javascript]
 ```javascript
-const keyboardListener = new KeyboardListener()
+const keyboardListener = new SDL.manager.screen.choiceset.KeyboardListener()
     .setOnUserDidSubmitInput((inputText, event) => {
         switch (event) {
-            case KeyboardEvent.ENTRY_VOICE:
+            case SDL.rpc.enums.KeyboardEvent.ENTRY_VOICE:
                 // The user decided to start voice input, you should start an AudioPassThru session if supported
                 break;
-            case KeyboardEvent.ENTRY_SUBMITTED:
+            case SDL.rpc.enums.KeyboardEvent.ENTRY_SUBMITTED:
                 // The user submitted some text with the keyboard
                 break;
             default:
@@ -221,10 +221,10 @@ const keyboardListener = new KeyboardListener()
     })
     .setOnKeyboardDidAbortWithReason((event) => {
         switch (event) {
-            case KeyboardEvent.ENTRY_CANCELLED:
+            case SDL.rpc.enums.KeyboardEvent.ENTRY_CANCELLED:
                 // The user cancelled the keyboard interaction
                 break;
-            case KeyboardEvent.ENTRY_ABORTED:
+            case SDL.rpc.enums.KeyboardEvent.ENTRY_ABORTED:
                 // The system aborted the keyboard interaction
                 break;
             default:
@@ -243,10 +243,10 @@ const keyboardListener = new KeyboardListener()
     })
     .setOnKeyboardDidUpdateInputMask((event) => {
         switch (event) {
-            case KeyboardEvent.INPUT_KEY_MASK_ENABLED:
+            case SDL.rpc.enums.KeyboardEvent.INPUT_KEY_MASK_ENABLED:
                 // The user enabled input key masking
                 break;
-            case KeyboardEvent.INPUT_KEY_MASK_DISABLED:
+            case SDL.rpc.enums.KeyboardEvent.INPUT_KEY_MASK_DISABLED:
                 // The user disabled input key masking
                 break;
             default:
@@ -294,8 +294,8 @@ sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration
 
 @![javascript]
 ```javascript
-const keyboardConfiguration = new KeyboardProperties()
-    .setLanguage(Language.EN_US);
+const keyboardConfiguration = new SDL.rpc.structs.KeyboardProperties()
+    .setLanguage(SDL.rpc.enums.Language.EN_US);
 
 sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
 ```
@@ -335,7 +335,7 @@ sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration
 
 @![javascript]
 ```javascript
-const keyboardConfiguration = new KeyboardProperties()
+const keyboardConfiguration = new SDL.rpc.structs.KeyboardProperties()
     .setLimitedCharacterList(['a', 'b', 'c']);
 
 sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
@@ -380,7 +380,7 @@ sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration
 
 @![javascript]
 ```javascript
-const keyboardConfiguration = new KeyboardProperties()
+const keyboardConfiguration = new SDL.rpc.structs.KeyboardProperties()
     .setAutoCompleteList(['test1', 'test2', 'test3']);
 
 sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
@@ -427,8 +427,8 @@ sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration
 
 @![javascript]
 ```javascript
-const keyboardConfiguration = new KeyboardProperties()
-    .setKeyboardLayout(KeyboardLayout.NUMERIC);
+const keyboardConfiguration = new SDL.rpc.structs.KeyboardProperties()
+    .setKeyboardLayout(SDL.rpc.enums.KeyboardLayout.NUMERIC);
 
 sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
 ```
@@ -471,9 +471,9 @@ sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration
 
 @![javascript]
 ```javascript
-const keyboardConfiguration = new KeyboardProperties()
-    .setKeyboardLayout(KeyboardLayout.NUMERIC)
-    .setMaskInputCharacters(KeyboardInputMask.ENABLE_INPUT_KEY_MASK);
+const keyboardConfiguration = new SDL.rpc.structs.KeyboardProperties()
+    .setKeyboardLayout(SDL.rpc.enums.KeyboardLayout.NUMERIC)
+    .setMaskInputCharacters(SDL.rpc.enums.KeyboardInputMask.ENABLE_INPUT_KEY_MASK);
 
 sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
 ```
@@ -518,8 +518,8 @@ sdlManager.screenManager.keyboardConfiguration = keyboardConfiguration
 
 @![javascript]
 ```javascript
-const keyboardConfiguration = new KeyboardProperties()
-    .setKeyboardLayout(KeyboardLayout.QWERTY)
+const keyboardConfiguration = new SDL.rpc.structs.KeyboardProperties()
+    .setKeyboardLayout(SDL.rpc.enums.KeyboardLayout.QWERTY)
     .setCustomKeys(['!','?']);
 
 sdlManager.getScreenManager().setKeyboardConfiguration(keyboardConfiguration);
