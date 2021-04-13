@@ -33,7 +33,7 @@ const isSubtleAlertAllowed = sdlManager.getPermissionManager().isRpcAllowed(SDL.
 !@
 
 ## Alerts (RPC v1.0+)
-An alert is a large pop-up window showing a short message with optional buttons. When an alert is activated, it will abort any SDL operation that is in-progress, except the already-in-progress alert. If an alert is issued while another alert is still in progress the newest alert will simply be ignored.
+An alert is a large pop-up window showing a short message with optional buttons. When an alert is activated, it will abort any SDL operation that is in-progress, except the already-in-progress alert. If an alert is issued while another alert is still in progress the newest alert will wait until the current alert has finished.
 
 Depending on the platform, an alert can have up to three lines of text, a progress indicator (e.g. a spinning wheel or hourglass), and up to four soft buttons.  
 
@@ -48,10 +48,10 @@ If no soft buttons are added to an alert some modules may add a default "cancel"
 ![Generic - Alert](assets/Generic_alert_buttons.png)
 
 ### Creating the AlertView
-An `AlertView` is an object that we will create to store all the properties of an `Alert` to be presented.
+An @![android,javaSE,javaEE, javascript]`AlertView`!@@![iOS]`SDLAlertView`!@ is an object that we will create to store all the properties of an `Alert` to be presented.
 
 !!! NOTE
-An `AlertView` must contain at least either text, secondaryText or audio for the Alert to be presented.
+An @![android,javaSE,javaEE, javascript]`AlertView`!@@![iOS]`SDLAlertView`!@ must contain at least either text, secondaryText or audio for the Alert to be presented.
 !!!
 
 #### Text
@@ -59,13 +59,11 @@ An `AlertView` must contain at least either text, secondaryText or audio for the
 @![iOS]
 ##### Objective-C
 ```objc
-TODO: SDLAlert *alert = [[SDLAlert alloc] initWithAlertText:<#(nullable NSString *)#> softButtons:<#(nullable NSArray<SDLSoftButton *> *)#> playTone:<#(BOOL)#> ttsChunks:<#(nullable NSArray<SDLTTSChunk *> *)#> alertIcon:<#(nullable SDLImage *)#> cancelID:<#(UInt32)#>];
 
 ```
 
 ##### Swift
 ```swift
-TODO: let alert = SDLAlert(alertText: <#String?#>, softButtons: <#[SDLSoftButton]?#>, playTone: <#Bool#>, ttsChunks: <#[SDLTTSChunk]?#>, alertIcon: <#SDLImage?#>, cancelID: <#UInt32#>)
 
 ```
 !@
@@ -82,11 +80,6 @@ AlertView alertView = builder.build();
 
 @![javascript]
 ```js
-TODO: const alert = new SDL.rpc.messages.Alert()
-    .setAlertText1('Line 1')
-    .setAlertText2('Line 2')
-    .setAlertText3('Line 3')
-    .setCancelID(<#Number#>);
 
 ```
 !@
@@ -96,25 +89,12 @@ TODO: const alert = new SDL.rpc.messages.Alert()
 @![iOS]
 ##### Objective-C
 ```objc
-TODO: SDLSoftButton *button1 = [[SDLSoftButton alloc] initWithType:<#(nonnull SDLSoftButtonType)#> text:<#(nullable NSString *)#> image:<#(nullable SDLImage *)#> highlighted:<#(BOOL)#> buttonId:<#(UInt16)#> systemAction:<#(nullable SDLSystemAction)#> handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
-    if (buttonPress == nil) {
-        return;
-    }
 
-    <#Button has been pressed#>
-}];
-
-alert.softButtons = @[button1];
 ```
 
 ##### Swift
 ```swift
-TODO: let button1 = SDLSoftButton(type: <#SDLSoftButtonType#>, text: <#String?#>, image: <#SDLImage?#>, highlighted: <#Bool#>, buttonId: <#UInt16#>, systemAction: <#SDLSystemAction?#>) { (buttonPress, buttonEvent) in
-    guard buttonPress != nil else { return }
-    <#Button has been pressed#>
-}
 
-alert.softButtons = [button1]
 ```
 !@
 
@@ -126,38 +106,23 @@ alertView.setSoftButtons(List<SoftButtonObject>)
 
 @![javascript]
 ```js
-TODO: // Soft buttons
-const softButtonId = 123; // Set it to any unique ID
-const okButton = new SDL.rpc.structs.SoftButton()
-    .setType(SDL.rpc.enums.SoftButtonType.SBT_TEXT)
-    .setSoftButtonID(softButtonId)
-    .setText('OK');
 
-// Set the softbuttons(s) to the alert
-alert.setSoftButtons([okButton]);
-
-// This listener is only needed once and will work for all of soft buttons you send with your alert
-sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnButtonPress, function (onButtonPress) {
-    if (onButtonPress.getCustomButtonID() === softButtonId) {
-        console.log("OK button pressed");
-    }
-})
 ```
 !@
 
-#### Icon
-An alert can include a custom or static (built-in) image that will be displayed within the alert. Before you add the image to the alert, make sure the image is uploaded to the head unit using the @![iOS]`SDLFileManager`!@@![android,javaSE,javaEE,javascript]`FileManager`!@. Once the image is uploaded, you can show the alert with the icon.
+#### Icon 
+An alert can include a custom or static (built-in) image that will be displayed within the alert.
 
 ![Generic - Alert](assets/Generic_alertIcon.png)
 
 @![iOS]
 ##### Objective-C
 ```objc
-TODO: alert.alertIcon = [[SDLImage alloc] initWithName:<#(nonnull NSString *)#> isTemplate:<#(BOOL)#>];
+
 ```
 ##### Swift
 ```swift
-TODO: alert.alertIcon = SDLImage(name: <#String#>, isTemplate: <#Bool#>)
+
 ```
 !@
 
@@ -169,9 +134,7 @@ alertView.setIcon(SdlArtwork)
 
 @![javascript]
 ```js
-TODO: alert.setAlertIcon(new SDL.rpc.structs.Image()
-    .setValueParam(<#artworkName#>)
-    .setImageType(SDL.rpc.enums.ImageType.DYNAMIC));
+
 ```
 !@
 
@@ -181,14 +144,11 @@ An optional timeout can be added that will dismiss the alert when the duration i
 @![iOS]
 ##### Objective-C
 ```objc
-TODO: // Duration timeout is in milliseconds
-alert.duration = @4000;
+
 ```
 
 ##### Swift
 ```swift
-TODO: // Duration timeout is in milliseconds
-alert.duration = NSNumber(4000)
 
 ```
 !@
@@ -202,7 +162,7 @@ alertView.setTimeout(5);
 
 @![javascript]
 ```js
-TODO: alert.setDuration(5000);
+
 ```
 !@
 
@@ -212,12 +172,12 @@ Not all modules support a progress indicator. If supported, the alert will show 
 @![iOS]
 ##### Objective-C
 ```objc
-TODO: alert.progressIndicator = @YES;
+
 ```
 
 ##### Swift
 ```swift
-TODO: alert.progressIndicator = NSNumber(true)
+
 ```
 !@
 
@@ -229,7 +189,7 @@ alertView.setProgressIndicator(true);
 
 @![javascript]
 ```js
-TODO: alert.setProgressIndicator(true);
+
 ```
 !@
 
@@ -239,12 +199,12 @@ An alert can also speak a prompt or play a sound file when the alert appears on 
 @![iOS]
 ##### Objective-C
 ```objc
-TODO: alert.ttsChunks = [SDLTTSChunk textChunksFromString:<#(nonnull NSString *)#>];
+
 ```
 
 ##### Swift
 ```swift
-TODO: alert.ttsChunks = SDLTTSChunk.textChunks(from: <#String#>)
+
 ```
 !@
 
@@ -256,10 +216,7 @@ AlertAudioData alertAudioData = new AlertAudioData("Text to Speak");
 
 @![javascript]
 ```js
-TODO: const chunk = new SDL.rpc.structs.TTSChunk()
-    .setType(SDL.rpc.enums.SpeechCapabilities.SC_TEXT)
-    .setText('Text to Speak');
-alert.setTtsChunks([chunk]);
+
 ```
 !@
 
@@ -286,10 +243,7 @@ alertView.setAudio(alertAudioData);
 
 @![javascript]
 ```js
-TODO: const ttsChunk = new SDL.rpc.structs.TTSChunk()
-    .setText(sdlFile.getName())
-    .setType(SDL.rpc.enums.SpeechCapabilities.FILE);
-alert.setTtsChunk([ttsChunk]);
+
 ```
 !@
 
@@ -299,12 +253,12 @@ To play a notification sound when the alert appears, set `playTone` to `true`.
 @![iOS]
 ##### Objective-C
 ```objc
-TODO: alert.playTone = @YES;
+
 ```
 
 ##### Swift
 ```swift
-TODO: alert.playTone = NSNumber(true)
+
 ```
 !@
 
@@ -317,7 +271,7 @@ alertAudioData.setPlayTone(true);
 
 @![javascript]
 ```js
-TODO: alert.setPlayTone(true);
+
 ```
 !@
 
@@ -326,26 +280,12 @@ TODO: alert.setPlayTone(true);
 @![iOS]
 ##### Objective-C
 ```objc
-TODO: [self.sdlManager sendRequest:alert withResponseHandler:^(SDLRPCRequest *request, SDLRPCResponse *response, NSError *error) {
-    if (!response.success.boolValue) { 
-        <#Print out the error if there is one#>
-        return;
-    }
 
-    <#Alert was shown successfully#>
-}];
 ```
 
 ##### Swift
 ```swift
-TODO: sdlManager.send(request: alert) { (request, response, error) in
-    guard response?.success.boolValue == true else {
-        <#Print out the error if there is one#>
-        return
-    }
 
-    <#Alert was shown successfully#>
-}
 ```
 !@
 
@@ -365,21 +305,7 @@ sdlManager.getScreenManager().presentAlert(alertView, new AlertCompletionListene
 
 @![javascript]
 ```js
-// sdl_javascript_suite v1.1+
-const response = await sdlManager.sendRpcResolve(alert);
-if (response.getSuccess()) {
-    console.log('Alert was shown successfully');
-}
-// thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.1
-// Handle RPC Response
-const response = await sdlManager.sendRpc(alert).catch(function (error) {
-    // Handle Error
-});
-if (response.getSuccess()) {
-    console.log('Alert was shown successfully');
-}
 ```
 !@
 
@@ -398,30 +324,12 @@ Canceling the alert will only dismiss the displayed alert. If the alert has audi
 @![iOS]
 ##### Objective-C
 ```objc
-TODO: // `cancelID` is the ID that you assigned when creating and sending the alert
-SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWithAlertCancelID:cancelID];
-[self.sdlManager sendRequest:cancelInteraction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    if (!response.success.boolValue) { 
-        <#Print out the error if there is one#>
-        return;
-    }
 
-    <#The alert was canceled successfully#>
-}];
 ```
 
 ##### Swift
 ```swift
-TODO: // `cancelID` is the ID that you assigned when creating and sending the alert
-let cancelInteraction = SDLCancelInteraction(alertCancelID: cancelID)
-sdlManager.send(request: cancelInteraction) { (request, response, error) in
-    guard response?.success.boolValue == true else {
-        <#Print out the error if there is one#>
-        return
-    }
 
-    <#The alert was canceled successfully#>
-}
 ```
 !@
 
@@ -433,26 +341,7 @@ alertView.cancel();
 
 @![javascript]
 ```js
-TODO: // sdl_javascript_suite v1.1+
-const cancelInteraction = new SDL.rpc.messages.CancelInteraction()
-    .setFunctionIDParam(SDL.rpc.enums.FunctionID.Alert)
-    .setCancelID(cancelID);
-const response = await sdlManager.sendRpcResolve(cancelInteraction);
-if (response.getSuccess()) {
-    console.log('Alert was dismissed successfully');
-}
-// thrown exceptions should be caught by a parent function via .catch()
 
-// Pre sdl_javascript_suite v1.1
-const cancelInteraction = new SDL.rpc.messages.CancelInteraction()
-    .setFunctionIDParam(SDL.rpc.enums.FunctionID.Alert)
-    .setCancelID(cancelID);
-const response = await sdlManager.sendRpc(cancelInteraction).catch(function (error) {
-    // Handle Error
-});
-if (response.getSuccess()) {
-    console.log('Alert was dismissed successfully');
-}
 ```
 !@
 
