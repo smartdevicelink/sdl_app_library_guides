@@ -160,6 +160,12 @@ public class SdlService extends Service {
                 public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language, Language hmiLanguage) {
                     return null;
                 }
+
+                @Override
+                public boolean onSystemInfoReceived(SystemInfo systemInfo) {
+                    // Check the SystemInfo object to ensure that the connection to the device should continue
+                    return true;
+                }
             };
     
             // Create App Icon, this is set in the SdlManager builder
@@ -240,6 +246,12 @@ public class SdlService {
                 public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language language, Language hmiLanguage) {
                   return null;
                 }
+
+                @Override
+                public boolean onSystemInfoReceived(SystemInfo systemInfo) {
+                    // Check the SystemInfo object to ensure that the connection to the device should continue
+                    return true;
+                }
             };
 
             // Create App Icon, this is set in the SdlManager builder
@@ -262,6 +274,24 @@ public class SdlService {
 The `sdlManager` must be shutdown properly if this class is shutting down in the respective method using the method `sdlManager.dispose()`.
 !!!
 !@
+
+#### Configure Module Support
+You have the ability to determine a minimum SDL protocol and minimum SDL RPC version that your app supports. You can also check the connected vehicle type and disconnect if the vehicle module is not supported. We recommend not setting these values until your app is ready for production. The OEMs you support will help you configure correct values during the application review process.
+
+##### Blocking By Version
+If a head unit is blocked by protocol version, your app icon will never appear on the head unit's screen. If you configure your app to block by RPC version, it will appear and then quickly disappear. So while blocking with `minimumProtocolVersion` is preferable, `minimumRpcVersion` allows you more granular control over which RPCs will be present.
+
+```java
+builder.setMinimumProtocolVersion(new Version(3, 0, 0));
+builder.setMinimumRPCVersion(new Version(4, 0, 0));
+```
+
+#### Blocking By Vehicle Type
+If you are blocking by vehicle type and you are connected over RPC v7.1+, your app icon will never appear on the head unit's screen. If you are connected over RPC v7.0 or below, it will appear and then quickly disappear. To implement this type of blocking, you need to modify `onSystemInfoReceived` method in `SdlManagerListener` and return `true` if you want to continue the connection and `false` if you wish to disconnect.
+
+!!! NOTE
+When creating the `SdlManagerListener`, `onSystemInfoReceived` auto generates to false, if you are not implemeting this feature you need to return ture to get your app to connect and run properly
+!!!
 
 #### Optional SdlManager Builder Parameters
 
