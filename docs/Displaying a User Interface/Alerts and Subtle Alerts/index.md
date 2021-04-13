@@ -100,7 +100,7 @@ AlertView alertView = builder.build();
 
 @![android,javaSE,javaEE]
 ```java
-alertView.setSoftButtons(List<SoftButtonObject>)
+alertView.setSoftButtons(List<SoftButtonObject>);
 ```
 !@
 
@@ -128,7 +128,7 @@ An alert can include a custom or static (built-in) image that will be displayed 
 
 @![android,javaSE,javaEE]
 ```java
-alertView.setIcon(SdlArtwork)
+alertView.setIcon(SdlArtwork);
 ```
 !@
 
@@ -183,7 +183,7 @@ Not all modules support a progress indicator. If supported, the alert will show 
 
 @![android,javaSE,javaEE]
 ```java
-alertView.setProgressIndicator(true);
+alertView.setShowWaitIndicator(true);
 ```
 !@
 
@@ -211,7 +211,7 @@ An alert can also speak a prompt or play a sound file when the alert appears on 
 @![android,javaSE,javaEE]
 ```java
 AlertAudioData alertAudioData = new AlertAudioData("Text to Speak");
-alertView.setAudio(alertAudioData)
+alertView.setAudio(alertAudioData);
 ```
 !@
 
@@ -266,7 +266,7 @@ You can have a combination of Audio files and Text-To-Speech.
 ```java
 AlertAudioData alertAudioData = new AlertAudioData(sdlFile);
 List<String> textToSpeech = new ArrayList<>();
-textToSpeech.add("Text to speak")
+textToSpeech.add("Text to speak");
 alertAudioData.addSpeechSynthesizerStrings(textToSpeech);
 ```
 !@
