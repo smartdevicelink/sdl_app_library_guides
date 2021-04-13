@@ -310,7 +310,9 @@ sdlManager.getScreenManager().presentAlert(alertView, new AlertCompletionListene
 !@
 
 ### Canceling/Dismissing the Alert
-You can cancel an alert that has not yet been sent to the head unit or on systems with RPC v6.0+ you can dismiss a displayed alert before the timeout has elapsed. This feature is useful if you want to show users a loading screen while performing a task, such as searching for a list for nearby coffee shops. As soon as you have the search results, you can cancel the alert and show the results. 
+You can cancel an alert that has not yet been sent to the head unit.
+
+On systems with RPC v6.0+ you can dismiss a displayed alert before the timeout has elapsed. This feature is useful if you want to show users a loading screen while performing a task, such as searching for a list for nearby coffee shops. As soon as you have the search results, you can cancel the alert and show the results. 
 
 !!! NOTE
 If connected to older head units that do not support this feature, the cancel request will be ignored, and the alert will persist on the screen until the timeout has elapsed or the user dismisses the alert by selecting a button.
