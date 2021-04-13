@@ -220,7 +220,7 @@ AlertAudioData alertAudioData = new AlertAudioData("Text to Speak");
 ```
 !@
 
-`AlertAudioData`  can also take a file to play/speak. For more information on how to upload the file please refer to the [Playing Audio Indications](Speech and Audio/Playing Audio Indications) guide.
+`AlertAudioData`  can also take a file to play/speak. 
 
 @![iOS]
 ##### Objective-C
@@ -246,6 +246,36 @@ alertView.setAudio(alertAudioData);
 
 ```
 !@
+
+You can have a combination of Audio files and Test-To-Speech.
+
+@![iOS]
+##### Objective-C
+```objc
+
+```
+
+##### Swift
+```swift
+
+```
+!@
+
+@![android,javaSE,javaEE]
+```java
+AlertAudioData alertAudioData = new AlertAudioData(sdlFile);
+List<String> textToSpeech = new ArrayList<>();
+textToSpeech.add("Text to speak")
+alertAudioData.addSpeechSynthesizerStrings(textToSpeech);
+```
+!@
+
+@![javascript]
+```js
+
+```
+!@
+
 
 #### Play Tone
 To play a notification sound when the alert appears, set `playTone` to `true`.
