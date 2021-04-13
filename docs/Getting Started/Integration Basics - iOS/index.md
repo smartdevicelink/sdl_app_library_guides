@@ -275,6 +275,8 @@ If a head unit is blocked by protocol version, your app icon will never appear o
 lifecycleConfiguration.minimumProtocolVersion = [SDLVersion versionWithMajor:3 minor:0 patch:0];
 lifecycleConfiguration.minimumRPCVersion = [SDLVersion versionWithMajor:4 minor:0 patch:0];
 ```
+
+##### Swift
 ```swift
 lifecycleConfiguration.minimumProtocolVersion = SDLVersion(major: 3, minor: 0, patch: 0)
 lifecycleConfiguration.minimumRPCVersion = SDLVersion(major: 4, minor: 0, patch: 0)
@@ -558,7 +560,7 @@ extension ProxyManager: SDLManagerDelegate {
         print("Went from HMI level \(oldLevel) to HMI level \(newLevel)")
     }
 
-    func didReceive(systemInfo: SDLSystemInfo) -> Bool {
+    func didReceiveSystemInfo(_ systemInfo: SDLSystemInfo) -> Bool {
         print("Connected to system: \(systemInfo)")
         return true
     }
