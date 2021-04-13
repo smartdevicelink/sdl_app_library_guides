@@ -194,7 +194,7 @@ alertView.setProgressIndicator(true);
 !@
 
 #### Text-To-Speech
-An alert can also speak a prompt or play a sound file when the alert appears on the screen. This is done by creating an `AlertAudioData` object and setting it in the `AlertView`.
+An alert can also speak a prompt or play a sound file when the alert appears on the screen. This is done by creating an @![android,javaSE,javaEE, javascript]`AlertAudioData`!@@![iOS]`SDLAlertAudioData`!@ object and setting it in the @![android,javaSE,javaEE, javascript]`AlertView`!@@![iOS]`SDLAlertView`!@
 
 @![iOS]
 ##### Objective-C
@@ -220,7 +220,7 @@ AlertAudioData alertAudioData = new AlertAudioData("Text to Speak");
 ```
 !@
 
-`AlertAudioData`  can also take a file to play/speak. 
+@![android,javaSE,javaEE, javascript]`AlertAudioData`!@@![iOS]`SDLAlertAudioData`!@ can also take a file to play/speak. 
 
 @![iOS]
 ##### Objective-C
