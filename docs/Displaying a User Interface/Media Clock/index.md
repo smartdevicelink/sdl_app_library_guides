@@ -343,3 +343,92 @@ const mediaClock = new SDL.rpc.messages.SetMediaClockTimer()
     .setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PLAY);
 ```
 !@
+
+## Adding Custom Playback Rate (RPC v7.1+)
+Many audio apps that support podcasts and audiobooks allow the user to adjust the audio playback rate.
+As of RPC v7.1, you can set the rate that the audio is playing at to ensure the media clock accurately reflects the audio.
+
+For example, a user can play a podcast at 125% speed or at 75% speed.
+
+@![iOS]
+##### Objective-C
+```objc
+//Play Audio at 50% or half speed
+SDLSetMediaClockTimer *mediaClockSlow = [SDLSetMediaClockTimer countUpFromStartTimeInterval:30 toEndTimeInterval:253 playPauseIndicator:SDLAudioStreamingIndicatorPause forwardSeekIndicator:nil backSeekIndicator:nil countRate:@(0.5)];
+[self.sdlManager sendRPC:mediaClockSlow];
+
+//Play Audio at 200% or double speed
+SDLSetMediaClockTimer *mediaClockSlow = [SDLSetMediaClockTimer countUpFromStartTimeInterval:30 toEndTimeInterval:253 playPauseIndicator:SDLAudioStreamingIndicatorPause forwardSeekIndicator:nil backSeekIndicator:nil countRate:@(2.0)];
+[self.sdlManager sendRPC:mediaClockSlow];
+```
+
+##### Swift
+```swift
+//Play Audio at 50% or half speed
+let mediaClockSlow = SDLSetMediaClockTimer.countUp(from: 30, to: 253, playPauseIndicator: .pause, forwardSeekIndicator: nil, backSeekIndicator: nil, countRate: NSNumber(0.5))
+sdlManager.send(mediaClockSlow)
+
+//Play Audio at 200% or double speed
+let mediaClockSlow = SDLSetMediaClockTimer.countUp(from: 30, to: 253, playPauseIndicator: .pause, forwardSeekIndicator: nil, backSeekIndicator: nil, countRate: NSNumber(2.0))
+sdlManager.send(mediaClockSlow)
+```
+!@
+
+@![android, javaSE, javaEE]
+```java
+//Play Audio at 50% or half speed
+SetMediaClockTimer mediaClockSlow = new SetMediaClockTimer().countUpFromStartTimeInterval(30, 253, AudioStreamingIndicator.PAUSE);
+mediaClockSlow.setCountRate(0.5f);
+sdlManager.sendRPC(mediaClockSlow);
+
+//Play Audio at 200% or double speed
+SetMediaClockTimer mediaClockFast = new SetMediaClockTimer().countUpFromStartTimeInterval(30, 253, AudioStreamingIndicator.PAUSE);
+mediaClockFast.setCountRate(2.0f);
+sdlManager.sendRPC(mediaClockFast);
+```
+!@
+
+@![javascript]
+```js
+//Play Audio at 50% or half speed
+const mediaClockSlow = new SDL.rpc.messages.SetMediaClockTimer()
+    .setUpdateMode(SDL.rpc.enums.UpdateMode.COUNTUP)
+    .setStartTime(
+        new SDL.rpc.structs.StartTime()
+            .setHours(0)
+            .setMinutes(0)
+            .setSeconds(30)
+    ).setEndTime(
+        new SDL.rpc.structs.StartTime()
+            .setHours(0)
+            .setMinutes(4)
+            .setSeconds(13)
+    ).setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PAUSE)
+    .setCountRate(0.5);
+
+sdlManager.sendRpcResolve(mediaClockSlow);
+
+//Play Audio at 200% or double speed
+const mediaClockFast = new SDL.rpc.messages.SetMediaClockTimer()
+    .setUpdateMode(SDL.rpc.enums.UpdateMode.COUNTUP)
+    .setStartTime(
+        new SDL.rpc.structs.StartTime()
+            .setHours(0)
+            .setMinutes(0)
+            .setSeconds(30)
+    ).setEndTime(
+        new SDL.rpc.structs.StartTime()
+            .setHours(0)
+            .setMinutes(4)
+            .setSeconds(13)
+    ).setAudioStreamingIndicator(SDL.rpc.enums.AudioStreamingIndicator.PAUSE)
+    .setCountRate(2);
+
+sdlManager.sendRpcResolve(mediaClockFast);
+```
+!@
+
+!!! NOTE
+`CountRate` has a default value of 1.0, and the `CountRate` will be reset to 1.0 if any `SetMediaClockTimer` request does not have the parameter set.
+To ensure that you maintain the correct `CountRate` in your application make sure to set the parameter in all `SetMediaClockTimer` requests (including when sending a RESUME request).
+!!!

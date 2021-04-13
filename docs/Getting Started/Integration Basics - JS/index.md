@@ -58,7 +58,7 @@ lifecycleConfig.setTransportConfig(new SDL.transport.WebSocketClientConfig(HOST,
 There are several additional basic configuration options to set up your app, like the app name and icon.
 
 ### App Icon
-An app icon can be set in the `LifecycleConfig` to automatically upload and set the icon image. Note that although the implementation of retreiving files are different between the JS browser and Node.js environments, the developer can use the same API in both cases, and the SDL library will cover the implementation details for the developer depending on which build they are using.
+An app icon can be set in the `LifecycleConfig` to automatically upload and set the icon image. Note that although the implementation of retrieving files are different between the JS browser and Node.js environments, the developer can use the same API in both cases, and the SDL library will cover the implementation details for the developer depending on which build they are using.
 
 ```js
 const filePath = './app_icon.png';
