@@ -211,6 +211,7 @@ An alert can also speak a prompt or play a sound file when the alert appears on 
 @![android,javaSE,javaEE]
 ```java
 AlertAudioData alertAudioData = new AlertAudioData("Text to Speak");
+alertView.setAudio(alertAudioData)
 ```
 !@
 
