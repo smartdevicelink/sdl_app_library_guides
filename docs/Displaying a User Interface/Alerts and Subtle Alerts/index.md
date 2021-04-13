@@ -72,7 +72,7 @@ An @![android,javaSE,javaEE, javascript]`AlertView`!@@![iOS]`SDLAlertView`!@ mus
 ```java
 AlertView.Builder builder = new AlertView.Builder();
 builder.setText("Text");
-builder.setSecondaryText("secondaryText");
+builder.setSecondaryText("Secondary Text");
 builder.setAudio(AlertAudioData);
 AlertView alertView = builder.build();
 ```
