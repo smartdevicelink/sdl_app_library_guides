@@ -2,7 +2,7 @@
 SDL supports two types of alerts: a large popup alert that typically takes over the whole screen and a smaller subtle alert that only covers a small part of screen.
 
 ## Checking if the Module Supports Alerts 
-Your SDL app may be restricted to only being allowed to send an alert when your app is open (i.e. the `hmiLevel` is non-`NONE`) or when it is the currently active app (i.e. the hmiLevel is `FULL`). Please be aware that subtle alert is a new feature (RPC v7.0+) and may not be supported on all modules.
+Your SDL app may be restricted to only being allowed to send an alert when your app is open (i.e. the `hmiLevel` is non-`NONE`) or when it is the currently active app (i.e. the `hmiLevel` is `FULL`). Subtle alert is a new feature (RPC v7.0+) and may not be supported on all modules.
 
 @![iOS]
 ##### Objective-C
@@ -346,12 +346,19 @@ alertView.cancel();
 !@
 
 
+### Using RPCs
+You can also use RPCs to present alerts. You need to use the `Alert` RPC to do so. Note that if you do so, you must avoid using soft button ids 0 - 10000 and cancel ids 0 - 10000 because these ranges are used by the `ScreenManager`.
+
 ## Subtle Alerts (RPC v7.0+)
 A subtle alert is a notification style alert window showing a short message with optional buttons. When a subtle alert is activated, it will not abort other SDL operations that are in-progress like the larger pop-up alert does. If a subtle alert is issued while another subtle alert is still in progress the newest subtle alert will simply be ignored.
  
 Touching anywhere on the screen when a subtle alert is showing will dismiss the alert. If the SDL app presenting the alert is not currently the active app, touching inside the subtle alert will open the app.
 
 Depending on the platform, a subtle alert can have up to two lines of text and up to two soft buttons.
+
+!!! NOTE
+Because `SubtleAlert` is not currently supported in the `ScreenManager`, you need to be careful when setting soft buttons or cancel ids to ensure that they do not conflict with those used by the `ScreenManager`. The `ScreenManager` takes soft button ids 0 - 10000 and cancel ids 0 - 10000. Ensure that if you use custom RPCs that the soft button ids and cancel ids are outside of this range.
+!!!
 
 ##### Subtle Alert With No Soft Buttons
 ![Generic - Subtle Alert](assets/Generic_subtleAlert.png)

@@ -160,7 +160,7 @@ slider.setSliderFooter(["Static Footer"]);
 !@
 
 ### Dynamic Footer
-This type of footer will have a different message displayed for each position of the slider. The footer is an optional paramater. The footer message displayed will be based off of the slider's current position. The footer array should be the same length as `numTicks` because each footer must correspond to a tick value. Or, you can pass @![iOS]`nil`!@@![android,javaSE,javaEE]`null`!@ to have no footer at all.
+This type of footer will have a different message displayed for each position of the slider. The footer is an optional parameter. The footer message displayed will be based off of the slider's current position. The footer array should be the same length as `numTicks` because each footer must correspond to a tick value. Or, you can pass @![iOS]`nil`!@@![android,javaSE,javaEE]`null`!@ to have no footer at all.
 
 @![iOS]
 ##### Objective-C
@@ -192,27 +192,28 @@ slider.setSliderFooter(["Footer 1","Footer 2","Footer 3"]);
 !@
 
 ### Cancel ID
-An ID for this specific slider to allow cancellation through the `CancelInteraction` RPC.
+An ID for this specific slider to allow cancellation through the `CancelInteraction` RPC. The `ScreenManager` takes cancel ids 0 - 10000, so ensure any cancel id that you set is outside of that range.
+
 @![iOS]
 ##### Objective-C
 ```objc
-sdlSlider.cancelID = @(45);
+sdlSlider.cancelID = @(10045);
 ```
 ##### Swift
 ```swift
-sdlSlider.cancelID = NSNumber(45)
+sdlSlider.cancelID = NSNumber(10045)
 ```
 !@
 
 @![android,javaSE,javaEE]
 ```java
-slider.setCancelID(45);
+slider.setCancelID(10045);
 ```
 !@
 
 @![javascript]
 ```js
-slider.setCancelID(45);
+slider.setCancelID(10045);
 ```
 !@
 

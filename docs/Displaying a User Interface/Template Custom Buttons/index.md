@@ -1,17 +1,17 @@
 # Template Custom Buttons
 You can easily create and update custom buttons (called Soft Buttons in SDL) using the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE, javascript]`ScreenManager`!@. To update the UI, simply give the manager your new data and (optionally) sandwich the update between the manager's @![iOS]`beginUpdates`!@@![android, javaSE, javaEE, javascript]`beginTransaction()`!@ and @![iOS]`endUpdatesWithCompletionHandler`!@@![android, javaSE, javaEE, javascript]`commit()`!@ methods.
 
-### Soft Button Fields
+## Soft Button Fields
 | @![iOS]SDLScreenManager!@@![android, javaSE, javaEE, javascript]ScreenManager!@ Parameter Name | Description |
 |:--------------------------------------------|:--------------|
 | softButtonObjects | An array of buttons. Each template supports a different number of soft buttons |
 
-### Creating Soft Buttons
+## Creating Soft Buttons
 To create a soft button using the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE, javascript]`ScreenManager`!@, you only need to create a custom name for the button and provide the text for the button's label and/or an image for the button's icon. If your button cycles between different states (e.g. a button used to set the repeat state of a song playlist can have three states: repeat-off, repeat-one, and repeat-all), you can create all the states on initialization. 
 
 There are three different ways to create a soft button: with only text, with only an image, or with both text and an image. If creating a button with an image, we recommend that you template the image so its color works well with both the day and night modes of the head unit. For more information on templating images please see the [Template Images](Displaying a User Interface/Template Images) guide. 
 
-#### Text Only Soft Buttons
+### Text Only Soft Buttons
 ![Generic - Text Only Soft Buttons](assets/Generic_Text_Only_Soft_Buttons.png)
 
 @![iOS]
@@ -103,7 +103,7 @@ if (success === true) {
 ```
 !@
 
-#### Image Only Soft Buttons
+### Image Only Soft Buttons
 You can use the @![iOS]`SDLSystemCapabilityManager`!@@![android,javaSE,javaEE,javascript]`SystemCapabilityManager`!@ to check if the HMI supports soft buttons with images. If you send image-only buttons to a HMI that does not support images, then the library will not send the buttons as they will be rejected by the head unit. If all your soft buttons have text in addition to images, the library will send the text-only buttons if the head unit does not support images.
 
 ![Generic - Image Only Soft Buttons](assets/Generic_Image_Only_Soft_Buttons.png)
@@ -222,7 +222,7 @@ if (success === true) {
 ```
 !@
 
-#### Image and Text Soft Buttons
+### Image and Text Soft Buttons
 ![Generic - Text and Image Soft Buttons](assets/Generic_Text_And_Image_Soft_Buttons.png)
 
 @![iOS]
@@ -311,13 +311,13 @@ if (success === true) {
 ```
 !@
 
-#### Highlighting a Soft Button
+### Highlighting a Soft Button
 When a button is highlighted its background color will change to indicate that it has been selected. 
 
-##### Highlight On
+#### Highlight On
 ![Generic HMI](assets/ford_sync3_soft_button_highlight_on.png)
 
-##### Highlight Off
+#### Highlight Off
 ![Generic HMI](assets/ford_sync3_soft_button_highlight_off.png)
 
 @![iOS]
@@ -385,7 +385,7 @@ const softButtonObject = new SDL.manager.screen.utils.SoftButtonObject('softButt
 ```
 !@
 
-### Updating Soft Button States
+## Updating Soft Button States
 When the soft button state needs to be updated, simply tell the `SoftButtonObject` to transition to the next state. If your button states do not cycle in a predictable order, you can also tell the soft button which state to transition to by passing the `stateName` of the new soft button state.
 
 @![iOS]
@@ -496,7 +496,7 @@ if (success === true) {
 ```
 !@
 
-### Deleting Soft Buttons
+## Deleting Soft Buttons
 To delete soft buttons, simply pass the screen manager a new array of soft buttons. To delete all soft buttons, simply pass the screen manager an empty array.
 
 @![iOS]
@@ -522,3 +522,6 @@ sdlManager.getScreenManager().setSoftButtonObjects(Collections.EMPTY_LIST);
 sdlManager.getScreenManager().setSoftButtonObjects([]);
 ```
 !@
+
+## Using RPCs
+You can also send soft buttons manually using the `Show` RPC. Note that if you do so, you must not mix the @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE, javascript]`ScreenManager`!@ soft buttons and manually sending the `Show` RPC. Additionally, the @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE, javascript]`ScreenManager`!@ takes soft button ids 0 - 10000. Ensure that if you use custom RPCs, that the soft button ids you use are outside of this range.
