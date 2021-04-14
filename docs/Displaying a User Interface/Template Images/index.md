@@ -99,6 +99,8 @@ When a file is to be uploaded to the module, the library checks if a file with t
 
 !!! IMPORTANT
 Please note that many production modules on the road do not refresh the HMI with the new image if the file name has not changed. If you want the image to refresh on the screen immediately, we suggest using two image names and toggling back and forth between the names each time you update the image. 
+
+This issue may also extend to menus, alerts, and other UI features even if they're not on-screen at the time. Because of these issues, we do not recommend that you try to overwrite an image. Instead, you can delete an image file using the @![iOS]`SDLFileManager`!@@![android, javaSE, javaEE, javascript]`SdlFileManager`!@.
 !!!
 
 @![iOS]
