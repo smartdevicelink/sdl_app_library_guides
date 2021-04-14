@@ -18,7 +18,7 @@ repositories {
 ```
 
 ## SdlManagerListener changes
-In 5.1 a new onSystemInfoReceived method was added to the SdlManagerListener. More detail can be found [here](Getting Started/Integration Basics - Java)
+In 5.1 a new onSystemInfoReceived method was added to the SdlManagerListener. More detail can be found [here](Getting Started/Integration Basics - Java#Implementing-SDL-Manager)
 
 ```java
 SdlManagerListener listener = new SdlManagerListener() {
@@ -78,6 +78,7 @@ Now:
 }
 ```
 
+@![android]
 ## SDLRemoteDisplay
 In 5.1 a new `onViewResized` method was added to the `SDLRemoteDisplay` class that you will need to implement in your presentation class. More detail can be found [here](Video Streaming for Navigation Apps/Video Streaming - Java).
 
@@ -116,3 +117,4 @@ public static class MyDisplay extends SdlRemoteDisplay{
     }
 }   
 ```
+!@
