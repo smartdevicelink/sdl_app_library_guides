@@ -6,7 +6,7 @@ Due to an iOS limitation, video can not be streamed when the app on the phone is
 !!!
 
 ### Transports for Video Streaming
-Transports are automatically handled for you. As of SDL v6.1, the iOS library will automatically manage primary transports and secondary transports for video streaming. If Wi-Fi is available, the app will automatically connect using it *after* connecting over USB / Bluetooth. This is the only way that Wi-Fi will be used in a production setting.
+Transports are automatically handled for you. As of SDL v6.1+, the iOS library will automatically manage primary transports and secondary transports for video streaming. If Wi-Fi is available, the app will automatically connect using it *after* connecting over USB / Bluetooth. This is the only way that Wi-Fi will be used in a production setting.
 
 ## CarWindow
 `CarWindow` is a system to automatically video stream a view controller screen to the head unit. When you set the view controller, `CarWindow` will resize the view controller's frame to match the head unit's screen dimensions. Then, when the video service setup has completed, it will capture the screen and send it to the head unit.
@@ -21,16 +21,18 @@ There are several customizations you can make to `CarWindow` to optimize it for 
 
 1. Choose how `CarWindow` captures and renders the screen using the `carWindowRenderingType` enum.
 2. By default, when using `CarWindow`, the `SDLTouchManager` will sync its touch updates to the framerate. To disable this feature, set `SDLTouchManager.enableSyncedPanning` to `NO`.
-3. `CarWindow`'s settings dictate the framerate of the app. To change the framerate and other parameters, update `SDLStreamingMediaConfiguration.customVideoEncoderSettings`. These settings will override any settings received from the head unit.
+3. As of SDL v7.1, if the HMI returns a desired framerate or max bitrate, the HMI's preferred settings will be use to configure the video encoder. You do have the option to change the default framerate and average bitrate via the `SDLStreamingMediaConfiguration.customVideoEncoderSettings`. Please note that your custom settings will override any settings received from the HMI except in the case where your custom framerate or average bitrate is larger than what the HMI says it can support.
 
 Below are the video encoder defaults:
 
-    @{
-        (__bridge NSString *)kVTCompressionPropertyKey_ProfileLevel: (__bridge NSString *)kVTProfileLevel_H264_Baseline_AutoLevel,
-        (__bridge NSString *)kVTCompressionPropertyKey_RealTime: @YES,
-        (__bridge NSString *)kVTCompressionPropertyKey_ExpectedFrameRate: @15,
-        (__bridge NSString *)kVTCompressionPropertyKey_AverageBitRate: @600000
-    };
+```objc
+ @{
+    __bridge NSString *)kVTCompressionPropertyKey_ProfileLevel: (__bridge NSString *)kVTProfileLevel_H264_Baseline_AutoLevel,
+    (__bridge NSString *)kVTCompressionPropertyKey_RealTime: @YES,
+    (__bridge NSString *)kVTCompressionPropertyKey_ExpectedFrameRate: @15,
+     __bridge NSString *)kVTCompressionPropertyKey_AverageBitRate: @600000
+};
+```
 
 ### Showing a New View Controller
 Simply update `sdlManager.streamManager.rootViewController` to the new view controller. This will also update the [haptic parser](Video Streaming for Navigation Apps/Supporting Haptic Input).
@@ -65,8 +67,82 @@ If you must use mirroring to stream video please be aware of the following limit
 1. If setting the `rootViewController` when the app returns to the foreground, the app should register for the `UIApplicationDidBecomeActive` notification and not the `UIApplicationWillEnterForeground` notification. Setting the frame after a notification from the latter can also cause weird behavior when setting the new frame.
 1. Configure your SDL app so the lock screen is [always visible](Getting Started/Adding the Lock Screen). If you do not do this, video streaming can stop when the device is rotated.
 
-### Showing a New View Controller
-Simply update the streaming media manager's `rootViewController` to the new view controller. This will also automatically update the [haptic parser](Video Streaming for Navigation Apps/Supporting Haptic Input).
+
+### Supporting Different Video Streaming View Sizes (SDL v7.1+, RPC v7.1+)
+Some HMIs support multiple view sizes and may resize your SDL app's view during video streaming (i.e. to a collapsed view, split screen, preview mode or picture-in-picture). By default, your app will support all the view sizes and the `CarWindow` will resize the view controller's frame when the HMI notifies the app of the updated screen size. If you you wish to support only some screen sizes, you can configure the `supportedPortraitStreamingRange` and `supportedLandscapeStreamingRange` properties via the `SDLStreamingMediaConfiguration` before starting the video stream. This will allow you to limit support to one or a combination of minimum/maximum resolutions, minimum diagonal, or minimum/maximum aspect ratios. If you want to support all possible landscape or portrait sizes you can simply set `nil` for the streaming range. If you wish to disable support for all possible landscape or portrait orientations you can disable the streaming range using the `SDLVideoStreamingRange.disabled` configuration.
+
+#### Creating the Video Streaming Ranges
+Below are some examples of how to configure a supported video streaming range:
+
+##### Objective-C
+```objc
+// Use if you wish to disable support for all landscape orientations or all portrait orientations
+SDLVideoStreamingRange *disabledStreamingRange = SDLVideoStreamingRange.disabled;
+
+// Use if you wish to only support landscape image resolutions between widths: 500-800 and heights: 200-400. All aspect ratios and diagonal screen sizes will be supported.
+SDLVideoStreamingRange *streamingRange = [[SDLVideoStreamingRange alloc] initWithMinimumResolution:[[SDLImageResolution alloc] initWithWidth:500 height:200] maximumResolution:[[SDLImageResolution alloc] initWithWidth:800 height:400]];
+
+// Use if you wish to only support aspect ratios between 1.0 and 2.5. All image resolutions and diagonal screen sizes will be supported.
+SDLVideoStreamingRange *streamingRange = [[SDLVideoStreamingRange alloc] init];
+streamingRange.minimumAspectRatio = 1.0;
+streamingRange.maximumAspectRatio = 2.5;
+```
+
+##### Swift
+```swift
+// Use if you wish to disable support for all landscape orientations or all portrait orientations
+let disabledStreamingRange = SDLVideoStreamingRange.disabled()
+
+// Use if you wish to only support landscape image resolutions between widths: 500-800 and heights: 200-400. All aspect ratios and diagonal screen sizes will be supported.
+let streamingRange = SDLVideoStreamingRange(minimumResolution: SDLImageResolution(width: 500, height: 200), maximumResolution: SDLImageResolution(width: 800, height: 400))
+
+// Use if you wish to only support aspect ratios between 1.0 and 2.5. All image resolutions and diagonal screen sizes will be supported.
+let streamingRange = SDLVideoStreamingRange()
+streamingRange.minimumAspectRatio = 1.0
+streamingRange.maximumAspectRatio = 2.5
+```
+
+#### Setting the Video Streaming Ranges
+Once you have configured a supported video streaming range, you can use it to set the `supportedPortraitStreamingRange` or `supportedLandscapeStreamingRange` properties when you are configuring the `SDLStreamingMediaConfiguration`.
+
+##### Objective-C
+```objc
+streamingMediaConfig.supportedPortraitStreamingRange = disabledStreamingRange;
+streamingMediaConfig.supportedLandscapeStreamingRange = streamingRange;
+```
+
+##### Swift
+```swift
+streamingMediaConfig.supportedPortraitStreamingRange = disabledStreamingRange
+streamingMediaConfig.supportedLandscapeStreamingRange = streamingRange
+```
+
+!!! NOTE
+If you disable both the `supportedLandscapeStreamingRange` and `supportedPortraitStreamingRange`, video will not stream.
+!!!
+
+#### Getting the Updated Screen Size
+If the HMI resizes the view during streaming, the video stream will automatically restart with the new size. If desired, you can subscribe to screen size updates via the `SDLStreamingVideoDelegate`.
+
+##### Objective-C
+```objc
+streamingMediaConfig.delegate = self;
+
+- (void)videoStreamingSizeDidUpdate:(CGSize)displaySize {
+    <#Use displaySize.width and displaySize.height#>
+}
+```
+
+##### Swift
+```swift
+streamingMediaConfig.delegate = self
+
+extension ProxyManager: SDLStreamingVideoDelegate {
+    func videoStreamingSizeDidUpdate(toSize displaySize: CGSize) {
+        <#Use displaySize.width and displaySize.height#>
+    }
+}
+```
 
 ## Sending Raw Video Data
 If you decide to send raw video data instead of relying on the `CarWindow` API to generate that video data from a view controller, you must maintain the lifecycle of the video stream as there are limitations to when video is allowed to stream. The app's HMI state on the head unit and the app's application state on the device determines whether video can stream. Due to an iOS limitation, video cannot be streamed when the app on the device is no longer in the foreground and/or the device is locked/sleeping.
@@ -83,7 +159,7 @@ To check whether or not you can start sending data to the video stream, watch fo
 Video data must be provided to the `SDLStreamingMediaManager` as a `CVImageBufferRef` (Apple documentation [here](https://developer.apple.com/library/mac/documentation/QuartzCore/Reference/CVImageBufferRef/)). Once the video stream has started, you will not see video appear until Core has received a few frames. Refer to the code sample below for an example of how to send a video frame:
 
 ##### Objective-C
-```objective-c
+```objc
 CVPixelBufferRef imageBuffer = <#Acquire Image Buffer#>;
 
 if ([self.sdlManager.streamManager sendVideoData:imageBuffer] == NO) {

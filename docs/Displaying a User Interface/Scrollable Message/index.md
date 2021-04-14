@@ -9,6 +9,12 @@ The message will persist on the screen until the timeout has elapsed or the user
 ![Scrollable Message](assets/ScrollableMessage.png)
 
 ## Creating the Scrollable Message
+Currently, you can only create a scrollable message view to display on the screen using RPCs.
+
+!!! NOTE
+The @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE, javascript]`ScreenManager`!@ takes soft button ids 0 - 10000. Ensure that if you use custom RPCs, that the soft button ids you use are outside of this range.
+!!!
+
 @![iOS]
 ##### Objective-C
 ```objc

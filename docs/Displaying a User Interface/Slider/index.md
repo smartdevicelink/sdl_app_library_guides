@@ -192,27 +192,28 @@ slider.setSliderFooter(["Footer 1","Footer 2","Footer 3"]);
 !@
 
 ### Cancel ID
-An ID for this specific slider to allow cancellation through the `CancelInteraction` RPC.
+An ID for this specific slider to allow cancellation through the `CancelInteraction` RPC. The `ScreenManager` takes cancel ids 0 - 10000, so ensure any cancel id that you set is outside of that range.
+
 @![iOS]
 ##### Objective-C
 ```objc
-sdlSlider.cancelID = @(45);
+sdlSlider.cancelID = @(10045);
 ```
 ##### Swift
 ```swift
-sdlSlider.cancelID = NSNumber(45)
+sdlSlider.cancelID = NSNumber(10045)
 ```
 !@
 
 @![android,javaSE,javaEE]
 ```java
-slider.setCancelID(45);
+slider.setCancelID(10045);
 ```
 !@
 
 @![javascript]
 ```js
-slider.setCancelID(45);
+slider.setCancelID(10045);
 ```
 !@
 
