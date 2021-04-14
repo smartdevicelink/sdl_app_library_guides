@@ -253,7 +253,7 @@ alertView.setAudio(alertAudioData);
 
 @![javascript]
 ```js
-const alertAudioData = new SDL.manager.screen.utils.AlertAudioData(sdlFile);
+const alertAudioData = new SDL.manager.screen.utils.AlertAudioData(null, null, sdlFile);
 alertView.setAudio(alertAudioData);
 ```
 !@
@@ -285,7 +285,7 @@ alertAudioData.addSpeechSynthesizerStrings(textToSpeech);
 
 @![javascript]
 ```js
-const alertAudioData = new SDL.manager.screen.utils.AlertAudioData(sdlFile);
+const alertAudioData = new SDL.manager.screen.utils.AlertAudioData(null, null, sdlFile);
 const textToSpeech = [];
 textToSpeech.push('Text to speak');
 alertAudioData.addSpeechSynthesizerStrings(textToSpeech);
@@ -319,7 +319,7 @@ alertAudioData.setPlayTone(true);
 
 @![javascript]
 ```js
-const alertAudioData = new SDL.AlertAudioData('Text to Speak')
+const alertAudioData = new SDL.manager.screen.utils.AlertAudioData('Text to Speak')
     .setPlaytone(true);
 ```
 !@
