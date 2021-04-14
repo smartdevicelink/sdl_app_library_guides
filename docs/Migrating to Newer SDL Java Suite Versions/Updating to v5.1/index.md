@@ -18,7 +18,7 @@ repositories {
 ```
 
 ## SdlManagerListener changes
-In 5.1 a new onSystemInfoReceived method was added to the SdlManagerListener. More detail can be found [here](Integration-Basics---Java)
+In 5.1 a new onSystemInfoReceived method was added to the SdlManagerListener. More detail can be found [here](Integration Basics - Java)
 
 ```java
 SdlManagerListener listener = new SdlManagerListener() {
@@ -48,7 +48,7 @@ SdlManagerListener listener = new SdlManagerListener() {
 ```
 
 ## Alert View
-In 5.1 rather than sending an Alert RPC we now recommend sending an AlertView through the ScreenManagers presentAlert method. More detail can be found [here](Alerts-and-Subtle-Alerts)
+In 5.1 rather than sending an Alert RPC we now recommend sending an AlertView through the ScreenManagers presentAlert method. More detail can be found [here](Alerts and Subtle Alerts)
 
 Before:
 
@@ -79,7 +79,7 @@ Now:
 ```
 
 ## SDLRemoteDisplay
-In 5.1 a new `onViewResized` method was added to the `SDLRemoteDisplay` class that you will need to implement in your presentation class. More detail can be found [here](Video-Streaming-for-Navigation-Apps/Video-Streaming---Java).
+In 5.1 a new `onViewResized` method was added to the `SDLRemoteDisplay` class that you will need to implement in your presentation class. More detail can be found [here](Video Streaming for Navigation Apps/Video Streaming - Java).
 
 Before:
 
