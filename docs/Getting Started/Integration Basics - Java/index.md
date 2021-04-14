@@ -387,7 +387,7 @@ builder.setMinimumRPCVersion(new Version("4.0.0"));
 ```
 
 ##### Blocking By Vehicle Type
-If you are blocking by vehicle type and you are connected over RPC v7.1+, your app icon will never appear on the head unit's screen. If you are connected over RPC v7.0 or below, it will appear and then quickly disappear. To implement this type of blocking, you need to [set up the SDLManager](###-Implementing-SDL-Manager). You will then implement the optional `onSystemInfoReceived` method and return `true` if you want to continue the connection and `false` if you wish to disconnect.
+If you are blocking by vehicle type and you are connected over RPC v7.1+, your app icon will never appear on the head unit's screen. If you are connected over RPC v7.0 or below, it will appear and then quickly disappear. To implement this type of blocking, you need to [set up the SDLManager](#-Implementing-SDL-Manager). You will then implement the optional `onSystemInfoReceived` method and return `true` if you want to continue the connection and `false` if you wish to disconnect.
 
 @![android]
 ## SmartDeviceLink Router Service
