@@ -119,10 +119,11 @@ In order to correctly connect to an SDL enabled head unit developers need to imp
 !!! NOTE
 An instance of SdlManager cannot be reused after it is closed and properly disposed of. Instead, a new instance must be created. Only one instance of SdlManager should be in use at any given time.
 !!!
+
 !!! IMPORTANT
 `SdlManagerListener` method: `onSystemInfoReceived` auto generates in Android Stuido to returns false. This will cause your app to not connect. You must chage it to true or implement logic to check system info to see if you wish for your app to connect to that system.
 !!!
-!@
+
 
 @![android]
 ```java
