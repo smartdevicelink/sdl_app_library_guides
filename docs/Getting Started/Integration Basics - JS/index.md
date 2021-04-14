@@ -18,6 +18,20 @@ const lifecycleConfig = new SDL.manager.LifecycleConfig()
 For WebEngine apps, most of this configuration will happen in the `manifest.js` file and does not need to be duplicated here.
 !!!
 
+### Configure Module Support
+You have the ability to determine a minimum SDL protocol and minimum SDL RPC version that your app supports. You can also check the connected vehicle type and disconnect if the vehicle module is not supported. We recommend not setting these values until your app is ready for production. The OEMs you support will help you configure correct values during the application review process.
+
+#### Blocking By Version
+If a head unit is blocked by protocol version, your app icon will never appear on the head unit's screen. If you configure your app to block by RPC version, it will appear and then quickly disappear. So while blocking with `minimumProtocolVersion` is preferable, `minimumRpcVersion` allows you more granular control over which RPCs will be present.
+
+```js
+lifecycleConfig.setMinimumProtocolVersion(new SDL.util.Version(3, 0, 0));
+lifecycleConfig.setMinimumRpcVersion(new SDL.util.Version(4, 0, 0));
+```
+
+#### Blocking By Vehicle Type
+If you are blocking by vehicle type and you are connected over RPC v7.1+, your app icon will never appear on the head unit's screen. If you are connected over RPC v7.0 or below, it will appear and then quickly disappear. To implement this type of blocking, you need to [set up the SDLManager](#setting-up-the-sdl-manager). You will then implement the optional `onSystemInfoReceived` method and return `true` if you want to continue the connection and `false` if you wish to disconnect.
+
 ## Transport Configuration
 The transport configuration will depend on the environment you're using. For example, you can make a TCP connection with Node.js, but not with vanilla JS. See below for example transport configurations.
 
@@ -101,6 +115,10 @@ const managerListener = new SDL.manager.SdlManagerListener()
     })
     .setOnError((sdlManager, info) => {
         console.error('Error from SdlManagerListener: ', info);
+    })
+    .setOnSystemInfoReceived((systemInfo) => {
+        console.log(`Connected to system ${systemInfo}`);
+        return true;
     });
 
 const sdlManager = new SDL.manager.SdlManager(appConfig, managerListener)
