@@ -264,9 +264,10 @@ lifecycleConfiguration.additionalAppTypes = [.information];
 ### 5. Template Coloring
 You can customize the color scheme of your templates. For more information, see the [Customizing the Template guide](Customizing Look and Functionality/Customizing the Template) section.
 
-### 6. Configure SDL Version Support
-You have the ability to determine a minimum SDL protocol and minimum SDL RPC version that your app supports. We recommend not setting these values until your app is ready for production. The OEMs you support will help you configure the correct `minimumProtocolVersion` and `minimumRPCVersion` during the application review process.
+### 6. Configure Module Support
+You have the ability to determine a minimum SDL protocol and minimum SDL RPC version that your app supports. You can also check the connected vehicle type and disconnect if the vehicle module is not supported. We recommend not setting these values until your app is ready for production. The OEMs you support will help you configure correct values during the application review process.
 
+#### Blocking By Version
 If a head unit is blocked by protocol version, your app icon will never appear on the head unit's screen. If you configure your app to block by RPC version, it will appear and then quickly disappear. So while blocking with `minimumProtocolVersion` is preferable, `minimumRPCVersion` allows you more granular control over which RPCs will be present.
 
 ##### Objective-C
@@ -280,6 +281,9 @@ lifecycleConfiguration.minimumRPCVersion = [SDLVersion versionWithMajor:4 minor:
 lifecycleConfiguration.minimumProtocolVersion = SDLVersion(major: 3, minor: 0, patch: 0)
 lifecycleConfiguration.minimumRPCVersion = SDLVersion(major: 4, minor: 0, patch: 0)
 ```
+
+#### Blocking By Vehicle Type
+If you are blocking by vehicle type and you are connected over RPC v7.1+, your app icon will never appear on the head unit's screen. If you are connected over RPC v7.0 or below, it will appear and then quickly disappear. To implement this type of blocking, you need to [implement the SDLManager delegate](#implement-the-sdl-manager-delegate). You will then implement the optional `didReceiveSystemInfo` method and return `YES` if you want to continue the connection and `NO` if you wish to disconnect. See the section [example implementation of a proxy class](#example-implementation-of-a-proxy-class) for an example.
 
 ### 7. Lock Screen
 A lock screen is used to prevent the user from interacting with the app on the smartphone while they are driving. When the vehicle starts moving, the lock screen is activated. Similarly, when the vehicle stops moving, the lock screen is removed. You must implement a lock screen in your app for safety reasons. Any application without a lock screen will not get approval for release to the public.
@@ -390,11 +394,13 @@ The `ProxyManager` class should conform to the `SDLManagerDelegate` protocol. Th
 1. `managerDidDisconnect` This function is called when the proxy disconnects from the SDL Core. Do any cleanup you need to do in this function.
 2. `hmiLevel:didChangeToLevel:` This function is called when the HMI level changes for the app. The HMI level can be `FULL`, `LIMITED`, `BACKGROUND`, or `NONE`. It is important to note that most RPCs sent while the HMI is in `BACKGROUND` or `NONE` mode will be ignored by the SDL Core. For more information, please refer to [Understanding Permissions](Getting Started/Understanding Permissions).
 
-In addition, there are three optional methods:
+In addition, there are several optional methods:
 
 1. `audioStreamingState:didChangeToState:` Called when the audio streaming state of this application changes on the remote system. For more information, please refer to [Understanding Permissions](Getting Started/Understanding Permissions).
-1. `systemContext:didChangeToContext:` Called when the system context (i.e. a menu is open, an alert is visible,  a voice recognition session is in progress) of this application changes on the remote system. For more information, please refer to [Understanding Permissions](Getting Started/Understanding Permissions).
-1. `managerShouldUpdateLifecycleToLanguage:hmiLanguage:` Called when the module's HMI language or voice recognition language does not match the `language` set in the `SDLLifecycleConfiguration` but does match a language included in `languagesSupported`. If desired, you can customize the `appName`, the `shortAppName`,  and `ttsName` for the head unit's current language. For more information about supporting more than one language in your app please refer to [Getting Started/Adapting to the Head Unit Language](Getting Started/Adapting to the Head Unit Language).
+2. `videoStreamingState:didChangeToState:` Called when the video streaming state of this application changes on the remote system. For more information, please refer to [Understanding Permissions](Getting Started/Understanding Permissions).
+3. `systemContext:didChangeToContext:` Called when the system context (i.e. a menu is open, an alert is visible,  a voice recognition session is in progress) of this application changes on the remote system. For more information, please refer to [Understanding Permissions](Getting Started/Understanding Permissions).
+4. `managerShouldUpdateLifecycleToLanguage:hmiLanguage:` Called when the module's HMI language or voice recognition language does not match the `language` set in the `SDLLifecycleConfiguration` but does match a language included in `languagesSupported`. If desired, you can customize the `appName`, the `shortAppName`,  and `ttsName` for the head unit's current language. For more information about supporting more than one language in your app please refer to [Getting Started/Adapting to the Head Unit Language](Getting Started/Adapting to the Head Unit Language).
+5. `didReceiveSystemInfo` Called when the module receives vehicle information, which is before RPC connection on RPC v7.1+ and after RPC connection on RPC v7.0 or below. Returning `YES` will continue the connection, and returning `NO` will cause your app to disconnect from the module.
 
 ### Example Implementation of a Proxy Class
 The following code snippet has an example of setting up both a TCP and iAP connection.
@@ -487,6 +493,11 @@ static NSString* const AppId = @"<#App Id#>";
     NSLog(@"Went from HMI level %@ to HMI Level %@", oldLevel, newLevel);
 }
 
+- (BOOL)didReceiveSystemInfo:(SDLSystemInfo *)systemInfo {
+    NSLog(@"Connected to system: %@", systemInfo);
+    return YES;
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
@@ -541,13 +552,18 @@ class ProxyManager: NSObject {
 
 //MARK: SDLManagerDelegate
 extension ProxyManager: SDLManagerDelegate {
-  func managerDidDisconnect() {
-    print("Manager disconnected!")
-  }
+    func managerDidDisconnect() {
+        print("Manager disconnected!")
+    }
 
-  func hmiLevel(_ oldLevel: SDLHMILevel, didChangeToLevel newLevel: SDLHMILevel) {
-    print("Went from HMI level \(oldLevel) to HMI level \(newLevel)")
-  }
+    func hmiLevel(_ oldLevel: SDLHMILevel, didChangeToLevel newLevel: SDLHMILevel) {
+        print("Went from HMI level \(oldLevel) to HMI level \(newLevel)")
+    }
+
+    func didReceiveSystemInfo(_ systemInfo: SDLSystemInfo) -> Bool {
+        print("Connected to system: \(systemInfo)")
+        return true
+    }
 }
 ```
 

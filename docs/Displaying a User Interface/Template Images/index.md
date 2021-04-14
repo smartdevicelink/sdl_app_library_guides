@@ -94,6 +94,15 @@ sdlManager.getScreenManager().setPrimaryGraphic(null);
 ```
 !@
 
+### Overwriting Images
+When a file is to be uploaded to the module, the library checks if a file with the same name has already been uploaded to module and skips the upload if it can. For cases where an image by the same name needs to be re-uploaded, the @![iOS]`SDLArtwork` / `SDLFile`'s !@@![android, javaSE, javaEE, javascript]`SdlArtwork` / `SdlFile`'s!@ `overwrite` property should be used. Setting `overwrite` to `true` before passing the image to a @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE, javascript]`ScreenManager`!@ method such as @![iOS]`primaryGraphic` and `secondaryGraphic`!@@![android, javaSE, javaEE, javascript]`setPrimaryGraphic()` and `setSecondaryGraphic()`!@ will force the image to be re-uploaded. This includes methods such as @![iOS]`preloadChoices:withCompletionHandler:`!@@![android, javaSE, javaEE, javascript]`preloadChoices()`!@ where the arguments passed in contain images.
+
+!!! IMPORTANT
+Please note that many production modules on the road do not refresh the HMI with the new image if the file name has not changed. If you want the image to refresh on the screen immediately, we suggest using two image names and toggling back and forth between the names each time you update the image. 
+
+This issue may also extend to menus, alerts, and other UI features even if they're not on-screen at the time. Because of these issues, we do not recommend that you try to overwrite an image. Instead, you can delete an image file using the @![iOS]`SDLFileManager`!@@![android, javaSE, javaEE, javascript]`SdlFileManager`!@ and re-upload it once the deletion completes, or you may use a different file name.
+!!!
+
 ## Templating Images (RPC v5.0+)
 Templated images are tinted by Core so the image is visible regardless of whether your user has set the head unit to day or night mode. For example, if a head unit is in night mode with a dark theme (see [Customizing the Template](Customizing Look and Functionality/Customizing the Template) section for more details on how to customize theme colors), then your templated images will be displayed as white. In the day theme, the image will automatically change to black.
 
