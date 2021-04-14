@@ -18,7 +18,7 @@ repositories {
 ```
 
 ## SdlManagerListener changes
-In 5.1 a new onSystemInfoReceived method was added to the SdlManagerListener. More detail can be found [here](Getting Started/Integration Basics - Java#smartdevicelink-service)
+In 5.1 a new onSystemInfoReceived method was added to the SdlManagerListener. More detail can be found [here](Getting Started/Integration Basics - Java)
 
 ```java
 SdlManagerListener listener = new SdlManagerListener() {
