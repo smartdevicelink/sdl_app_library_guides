@@ -18,7 +18,7 @@ repositories {
 ```
 
 ## SdlManagerListener changes
-In 5.1 a new onSystemInfoReceived method was added to the SdlManagerListener. More detail can be found [here](Getting Started/Integration Basics - Java#Implementing-SDL-Manager)
+In 5.1 a new onSystemInfoReceived method was added to the SdlManagerListener. More detail can be found [here](Getting Started/Integration Basics - Java#implementing-sdl-manager)
 
 ```java
 SdlManagerListener listener = new SdlManagerListener() {
