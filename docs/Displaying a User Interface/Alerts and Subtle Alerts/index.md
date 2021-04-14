@@ -48,10 +48,10 @@ If no soft buttons are added to an alert some modules may add a default "cancel"
 ![Generic - Alert](assets/Generic_alert_buttons.png)
 
 ### Creating the AlertView
-An @![android,javaSE,javaEE, javascript]`AlertView`!@@![iOS]`SDLAlertView`!@ is an object that we will create to store all the properties of an `Alert` to be presented.
+Use the @![android,javaSE,javaEE, javascript]`AlertView`!@@![iOS]`SDLAlertView`!@ to set all the properties of the alert you want to present.
 
 !!! NOTE
-An @![android,javaSE,javaEE, javascript]`AlertView`!@@![iOS]`SDLAlertView`!@ must contain at least either text, secondaryText or audio for the Alert to be presented.
+An @![android,javaSE,javaEE, javascript]`AlertView`!@@![iOS]`SDLAlertView`!@ must contain at least either `text`, `secondaryText` or `audio` for the alert to be presented.
 !!!
 
 #### Text
@@ -59,12 +59,12 @@ An @![android,javaSE,javaEE, javascript]`AlertView`!@@![iOS]`SDLAlertView`!@ mus
 @![iOS]
 ##### Objective-C
 ```objc
-
+ SDLAlertView *alertView = [[SDLAlertView alloc] initWithText:<#(nullable NSString *)#> secondaryText:<#(nullable NSString *)#> tertiaryText:<#(nullable NSString *)#> timeout:<#(nullable NSNumber<SDLFloat> *)#> showWaitIndicator:<#(nullable NSNumber<SDLBool> *)#> audioIndication:<#(nullable SDLAlertAudioData *)#> buttons:<#(nullable NSArray<SDLSoftButtonObject *> *)#> icon:<#(nullable SDLArtwork *)#>];
 ```
 
 ##### Swift
 ```swift
-
+let alertView = SDLAlertView(text: <#String?#>, secondaryText: <#String?#>, tertiaryText: <#String?#>, timeout: <#NSNumber?#>, showWaitIndicator: <#NSNumber?#>, audioIndication: <#SDLAlertAudioData?#>, buttons: <#[SDLSoftButtonObject]?#>, icon: <#SDLArtwork?#>)
 ```
 !@
 
@@ -89,12 +89,12 @@ AlertView alertView = builder.build();
 @![iOS]
 ##### Objective-C
 ```objc
-
+alertView.softButtons = <#[SDLSoftButtonObject]?#>;
 ```
 
 ##### Swift
 ```swift
-
+alertView.softButtons = <#[SDLSoftButtonObject]?#>
 ```
 !@
 
@@ -118,11 +118,12 @@ An alert can include a custom or static (built-in) image that will be displayed 
 @![iOS]
 ##### Objective-C
 ```objc
-
+alertView.icon = <#(nullable SDLArtwork *)#>;
 ```
+
 ##### Swift
 ```swift
-
+alertView.icon = <#SDLArtwork?#>
 ```
 !@
 
@@ -144,12 +145,12 @@ An optional timeout can be added that will dismiss the alert when the duration i
 @![iOS]
 ##### Objective-C
 ```objc
-
+alertView.timeout = 5;
 ```
 
 ##### Swift
 ```swift
-
+alertView.timeout = 5
 ```
 !@
 
@@ -172,12 +173,12 @@ Not all modules support a progress indicator. If supported, the alert will show 
 @![iOS]
 ##### Objective-C
 ```objc
-
+alertView.showWaitIndicator = YES;
 ```
 
 ##### Swift
 ```swift
-
+alertView.showWaitIndicator = true
 ```
 !@
 
@@ -199,12 +200,14 @@ An alert can also speak a prompt or play a sound file when the alert appears on 
 @![iOS]
 ##### Objective-C
 ```objc
-
+SDLAlertAudioData *alertAudioData = [[SDLAlertAudioData alloc] initWithSpeechSynthesizerString:<#(nonnull NSString *)#>];
+alertView.audio = alertAudioData;
 ```
 
 ##### Swift
 ```swift
-
+let alertAudioData = SDLAlertAudioData(speechSynthesizerString: <#String#>)
+alertView.audio = alertAudioData
 ```
 !@
 
@@ -221,17 +224,19 @@ alertView.setAudio(alertAudioData);
 ```
 !@
 
-@![android,javaSE,javaEE, javascript]`AlertAudioData`!@@![iOS]`SDLAlertAudioData`!@ can also take a file to play/speak. 
+@![android,javaSE,javaEE, javascript]`AlertAudioData`!@@![iOS]`SDLAlertAudioData`!@ can also play an audio file. 
 
 @![iOS]
 ##### Objective-C
 ```objc
-
+SDLAlertAudioData *alertAudioData = [[SDLAlertAudioData alloc] initWithAudioFile:<#(nonnull SDLFile *)#>];
+alertView.audio = alertAudioData;
 ```
 
 ##### Swift
 ```swift
-
+let alertAudioData = SDLAlertAudioData(audioFile: <#SDLFile#>)
+alertView.audio = alertAudioData
 ```
 !@
 
@@ -248,17 +253,19 @@ alertView.setAudio(alertAudioData);
 ```
 !@
 
-You can have a combination of Audio files and Text-To-Speech.
+You can also play a combination of audio files and text-to-speech strings. The audio will be played in the order you add them to the @![android,javaSE,javaEE, javascript]`AlertAudioData`!@@![iOS]`SDLAlertAudioData`!@ object.
 
 @![iOS]
 ##### Objective-C
 ```objc
-
+SDLAlertAudioData *alertAudioData = [[SDLAlertAudioData alloc] initWithAudioFile:<#(nonnull SDLFile *)#>];
+alertAudioData addSpeechSynthesizerStrings:<#(nonnull NSArray<NSString *> *)#>];
 ```
 
 ##### Swift
 ```swift
-
+let alertAudioData = SDLAlertAudioData(audioFile: <#SDLFile#>)
+alertAudioData.addSpeechSynthesizerStrings(<#[String]#>)
 ```
 !@
 
@@ -284,12 +291,14 @@ To play a notification sound when the alert appears, set `playTone` to `true`.
 @![iOS]
 ##### Objective-C
 ```objc
-
+SDLAlertAudioData *alertAudioData = [[SDLAlertAudioData alloc] initWithSpeechSynthesizerString:<#(nonnull NSString *)#>];
+alertAudioData.playTone = YES;
 ```
 
 ##### Swift
 ```swift
-
+let alertAudioData = SDLAlertAudioData(speechSynthesizerString: <#String#>)
+alertAudioData.playTone = true
 ```
 !@
 
@@ -311,12 +320,26 @@ alertAudioData.setPlayTone(true);
 @![iOS]
 ##### Objective-C
 ```objc
+[sdlManager.screenManager presentAlert:alertView withCompletionHandler:^(NSError * _Nullable error) {
+    if (error != nil) {
+        // Something went wrong
+        return;
+    }
 
+    // Alert was presented successfully
+}];
 ```
 
 ##### Swift
 ```swift
+sdlManager.screenManager.presentAlert(alertView) { error in
+    if let error = error {
+        // Something went wrong
+        return
+    }
 
+    // Alert was presented successfully
+}
 ```
 !@
 
@@ -357,12 +380,12 @@ Canceling the alert will only dismiss the displayed alert. If the alert has audi
 @![iOS]
 ##### Objective-C
 ```objc
-
+[alertView cancel];
 ```
 
 ##### Swift
 ```swift
-
+alertView.cancel()
 ```
 !@
 
