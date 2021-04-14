@@ -103,36 +103,6 @@ Please note that many production modules on the road do not refresh the HMI with
 This issue may also extend to menus, alerts, and other UI features even if they're not on-screen at the time. Because of these issues, we do not recommend that you try to overwrite an image. Instead, you can delete an image file using the @![iOS]`SDLFileManager`!@@![android, javaSE, javaEE, javascript]`SdlFileManager`!@.
 !!!
 
-@![iOS]
-##### Objective-C
-```objc
-SDLArtwork *sdlArtwork = <#SDLArtwork#>;
-sdlArtwork.overwrite = YES;
-sdlManager.screenManager.primaryGraphic = sdlArtwork;
-```
-
-##### Swift
-```swift
-let sdlArtwork = <#SDLArtwork#>
-sdlArtwork.overwrite = true
-sdlManager.screenManager.primaryGraphic = sdlArtwork
-```
-!@
-
-@![android, javaSE, javaEE]
-```java
-// TODO: Code that sets an artwork's overwrite property to true before passing to setPrimaryGraphic()
-```
-!@
-
-@![javascript]
-```js
-// setting the primary graphic with overwrite set to true
-sdlArtwork.setOverwrite(true);
-sdlManager.getScreenManager().setPrimaryGraphic(sdlArtwork);
-```
-!@
-
 ## Templating Images (RPC v5.0+)
 Templated images are tinted by Core so the image is visible regardless of whether your user has set the head unit to day or night mode. For example, if a head unit is in night mode with a dark theme (see [Customizing the Template](Customizing Look and Functionality/Customizing the Template) section for more details on how to customize theme colors), then your templated images will be displayed as white. In the day theme, the image will automatically change to black.
 
