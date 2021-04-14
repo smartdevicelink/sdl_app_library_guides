@@ -59,7 +59,7 @@ An @![android,javaSE,javaEE, javascript]`AlertView`!@@![iOS]`SDLAlertView`!@ mus
 @![iOS]
 ##### Objective-C
 ```objc
- SDLAlertView *alertView = [[SDLAlertView alloc] initWithText:<#(nullable NSString *)#> secondaryText:<#(nullable NSString *)#> tertiaryText:<#(nullable NSString *)#> timeout:<#(nullable NSNumber<SDLFloat> *)#> showWaitIndicator:<#(nullable NSNumber<SDLBool> *)#> audioIndication:<#(nullable SDLAlertAudioData *)#> buttons:<#(nullable NSArray<SDLSoftButtonObject *> *)#> icon:<#(nullable SDLArtwork *)#>];
+SDLAlertView *alertView = [[SDLAlertView alloc] initWithText:<#(nullable NSString *)#> secondaryText:<#(nullable NSString *)#> tertiaryText:<#(nullable NSString *)#> timeout:<#(nullable NSNumber<SDLFloat> *)#> showWaitIndicator:<#(nullable NSNumber<SDLBool> *)#> audioIndication:<#(nullable SDLAlertAudioData *)#> buttons:<#(nullable NSArray<SDLSoftButtonObject *> *)#> icon:<#(nullable SDLArtwork *)#>];
 ```
 
 ##### Swift
@@ -259,7 +259,7 @@ You can also play a combination of audio files and text-to-speech strings. The a
 ##### Objective-C
 ```objc
 SDLAlertAudioData *alertAudioData = [[SDLAlertAudioData alloc] initWithAudioFile:<#(nonnull SDLFile *)#>];
-alertAudioData addSpeechSynthesizerStrings:<#(nonnull NSArray<NSString *> *)#>];
+[alertAudioData addSpeechSynthesizerStrings:<#(nonnull NSArray<NSString *> *)#>];
 ```
 
 ##### Swift
