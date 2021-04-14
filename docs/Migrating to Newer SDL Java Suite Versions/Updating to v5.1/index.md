@@ -18,7 +18,7 @@ repositories {
 ```
 
 ## SdlManagerListener changes
-In 5.1 a new onSystemInfoReceived method was added to the SdlManagerListener. More detail can be found [here](Integration Basics - Java)
+In 5.1 a new onSystemInfoReceived method was added to the SdlManagerListener. More detail can be found [here](Getting Started/Integration Basics - Java)
 
 ```java
 SdlManagerListener listener = new SdlManagerListener() {
@@ -48,7 +48,7 @@ SdlManagerListener listener = new SdlManagerListener() {
 ```
 
 ## Alert View
-In 5.1 rather than sending an Alert RPC we now recommend sending an AlertView through the ScreenManagers presentAlert method. More detail can be found [here](Alerts and Subtle Alerts)
+In 5.1 rather than sending an Alert RPC we now recommend sending an AlertView through the ScreenManagers presentAlert method. More detail can be found [here](Displaying a User Interface/Alerts and Subtle Alerts)
 
 Before:
 
