@@ -280,13 +280,6 @@ The `sdlManager` must be shutdown properly if this class is shutting down in the
 !!!
 !@
 
-#### Blocking By Vehicle Type
-If you are blocking by vehicle type and you are connected over RPC v7.1+, your app icon will never appear on the head unit's screen. If you are connected over RPC v7.0 or below, it will appear and then quickly disappear. To implement this type of blocking, you need to modify `onSystemInfoReceived` method in `SdlManagerListener` and return `true` if you want to continue the connection and `false` if you wish to disconnect.
-
-!!! NOTE
-When creating the `SdlManagerListener`, `onSystemInfoReceived` auto generates to false, if you are not implemeting this feature you need to return ture to get your app to connect and run properly
-!!!
-
 #### Optional SdlManager Builder Parameters
 
 ##### App Icon
@@ -393,7 +386,7 @@ builder.setMinimumProtocolVersion(new Version("3.0.0"));
 builder.setMinimumRPCVersion(new Version("4.0.0"));
 ```
 
-###### Blocking By Vehicle Type
+##### Blocking By Vehicle Type
 If you are blocking by vehicle type and you are connected over RPC v7.1+, your app icon will never appear on the head unit's screen. If you are connected over RPC v7.0 or below, it will appear and then quickly disappear. To implement this type of blocking, you need to [set up the SDLManager](####-Implementing-SDL-Manager). You will then implement the optional `onSystemInfoReceived` method and return `true` if you want to continue the connection and `false` if you wish to disconnect.
 
 @![android]
