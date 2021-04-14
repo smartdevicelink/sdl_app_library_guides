@@ -90,19 +90,19 @@ lipo -remove i386 -remove x86_64 -o SmartDeviceLink.framework/SmartDeviceLink Sm
 @![android]
 Each [SDL Android](https://github.com/smartdevicelink/sdl_java_suite) library release is published to JCenter. By adding a few lines in their app's gradle script, developers can compile with the latest SDL Android release.
 
-!!!Note
+!!! NOTE
 Starting with SDL v5.1+ the library releases will be published to MavenCentral instead of JCenter
 !!!
 
 To gain access to the JCenter or MavenCentral repository, make sure your app's `build.gradle` file includes the following:
 
 ```
-//SDL v5.0 or older
+// SDL v5.0 or older
 repositories {
     jcenter()
 }
 
-//SDL v5.1+
+// SDL v5.1+
 repositories {
     mavenCentral()
 }
@@ -142,20 +142,20 @@ dependencies {
 @![javaSE]
 Each [SDL JavaSE](https://github.com/smartdevicelink/sdl_java_suite) library release is published to JCenter. By adding a few lines in their app's gradle script, developers can compile with the latest SDL JavaSE release.
 
-!!!Note
+!!! NOTE
 Starting with SDL v5.1+ the library releases will be published to MavenCentral instead of JCenter
 !!!
 
 To gain access to the JCenter or MavenCentral repository, make sure your app's `build.gradle` file includes the following:
 
 ```
-//SDL v5.0 or older
+// SDL v5.0 or older
 repositories {
     google()
     jcenter()
 }
 
-//SDL v5.1+
+// SDL v5.1+
 repositories {
     google()
     mavenCentral()
