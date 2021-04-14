@@ -119,6 +119,10 @@ In order to correctly connect to an SDL enabled head unit developers need to imp
 !!! NOTE
 An instance of SdlManager cannot be reused after it is closed and properly disposed of. Instead, a new instance must be created. Only one instance of SdlManager should be in use at any given time.
 !!!
+!!! IMPORTANT
+`SdlManagerListener` method `onSystemInfoReceived` by default returns false, you must chage it to true or impement logic to check system info to see if you wish for your app to connect.
+!!!
+!@
 
 @![android]
 ```java
@@ -275,17 +279,6 @@ The `sdlManager` must be shutdown properly if this class is shutting down in the
 !!!
 !@
 
-#### Configure Module Support
-You have the ability to determine a minimum SDL protocol and minimum SDL RPC version that your app supports. You can also check the connected vehicle type and disconnect if the vehicle module is not supported. We recommend not setting these values until your app is ready for production. The OEMs you support will help you configure correct values during the application review process.
-
-##### Blocking By Version
-If a head unit is blocked by protocol version, your app icon will never appear on the head unit's screen. If you configure your app to block by RPC version, it will appear and then quickly disappear. So while blocking with `minimumProtocolVersion` is preferable, `minimumRpcVersion` allows you more granular control over which RPCs will be present.
-
-```java
-builder.setMinimumProtocolVersion(new Version(3, 0, 0));
-builder.setMinimumRPCVersion(new Version(4, 0, 0));
-```
-
 #### Blocking By Vehicle Type
 If you are blocking by vehicle type and you are connected over RPC v7.1+, your app icon will never appear on the head unit's screen. If you are connected over RPC v7.0 or below, it will appear and then quickly disappear. To implement this type of blocking, you need to modify `onSystemInfoReceived` method in `SdlManagerListener` and return `true` if you want to continue the connection and `false` if you wish to disconnect.
 
@@ -329,8 +322,9 @@ builder.setShortAppName(shortAppName);
 You can customize the color scheme of your initial template on head units that support this feature using the `builder`. For more information, see the [Customizing the Template guide](Customizing Look and Functionality/Customizing the Template) section.
 
 ##### Determining SDL Support
-You have the ability to determine a minimum SDL protocol and a minimum SDL RPC version that your app supports. We recommend not setting these values until your app is ready for production. The OEMs you support will help you configure the correct `minimumProtocolVersion` and `minimumRPCVersion` during the application review process.
+You have the ability to determine a minimum SDL protocol and a minimum SDL RPC version that your app supports. You can also check the connected vehicle type and disconnect if the vehicle module is not supported. We recommend not setting these values until your app is ready for production. The OEMs you support will help you configure correct values during the application review process.
 
+###### Blocking By Version
 If a head unit is blocked by protocol version, your app icon will never appear on the head unit's screen. If you configure your app to block by RPC version, it will appear and then quickly disappear. So while blocking with `minimumProtocolVersion` is preferable, `minimumRPCVersion` allows you more granular control over which RPCs will be present.
 
 
@@ -338,6 +332,9 @@ If a head unit is blocked by protocol version, your app icon will never appear o
 builder.setMinimumProtocolVersion(new Version("3.0.0"));
 builder.setMinimumRPCVersion(new Version("4.0.0"));
 ```
+
+###### Blocking By Vehicle Type
+If you are blocking by vehicle type and you are connected over RPC v7.1+, your app icon will never appear on the head unit's screen. If you are connected over RPC v7.0 or below, it will appear and then quickly disappear. To implement this type of blocking, you need to [set up the SDLManager](####-Implementing-SDL-Manager). You will then implement the optional `onSystemInfoReceived` method and return `true` if you want to continue the connection and `false` if you wish to disconnect.
 
 @![android]
 ##### Lock Screen Configuration
