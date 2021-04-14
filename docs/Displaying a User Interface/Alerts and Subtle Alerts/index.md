@@ -80,7 +80,10 @@ AlertView alertView = builder.build();
 
 @![javascript]
 ```js
-
+const alertView = new SDL.manager.screen.utils.AlertView()
+    .setText('Text')
+    .setSecondaryText('SecondaryText')
+    .setAudio(AlertAudioData);
 ```
 !@
 
@@ -106,7 +109,7 @@ alertView.setSoftButtons(List<SoftButtonObject>);
 
 @![javascript]
 ```js
-
+alertView.setSoftButtons(/* List of SoftButtonObjects */);
 ```
 !@
 
@@ -135,7 +138,7 @@ alertView.setIcon(SdlArtwork);
 
 @![javascript]
 ```js
-
+alertView.setIcon(SdlArtwork);
 ```
 !@
 
@@ -163,7 +166,7 @@ alertView.setTimeout(5);
 
 @![javascript]
 ```js
-
+alertView.setTimeout(5);
 ```
 !@
 
@@ -190,7 +193,7 @@ alertView.setShowWaitIndicator(true);
 
 @![javascript]
 ```js
-
+alertView.setShowWaitIndicator(true);
 ```
 !@
 
@@ -220,7 +223,8 @@ alertView.setAudio(alertAudioData);
 
 @![javascript]
 ```js
-
+const alertAudioData = new SDL.manager.screen.utils.AlertAudioData('Text to Speak')
+alertView.setAudio(alertAudioData);
 ```
 !@
 
@@ -249,7 +253,8 @@ alertView.setAudio(alertAudioData);
 
 @![javascript]
 ```js
-
+const alertAudioData = new SDL.manager.screen.utils.AlertAudioData(sdlFile);
+alertView.setAudio(alertAudioData);
 ```
 !@
 
@@ -280,7 +285,10 @@ alertAudioData.addSpeechSynthesizerStrings(textToSpeech);
 
 @![javascript]
 ```js
-
+const alertAudioData = new SDL.manager.screen.utils.AlertAudioData(sdlFile);
+const textToSpeech = [];
+textToSpeech.push('Text to speak');
+alertAudioData.addSpeechSynthesizerStrings(textToSpeech);
 ```
 !@
 
@@ -311,7 +319,8 @@ alertAudioData.setPlayTone(true);
 
 @![javascript]
 ```js
-
+const alertAudioData = new SDL.AlertAudioData('Text to Speak')
+    .setPlaytone(true);
 ```
 !@
 
@@ -359,7 +368,13 @@ sdlManager.getScreenManager().presentAlert(alertView, new AlertCompletionListene
 
 @![javascript]
 ```js
-
+sdlManager.getScreenManager().presentAlert(alertView, new SDL.manager.screen.utils.AlertCompletionListener()
+    .setOnComplete((success, tryAgainTime) => {
+        if(success){
+            // Alert was presented successfully
+        }
+    })
+);
 ```
 !@
 
@@ -397,7 +412,7 @@ alertView.cancel();
 
 @![javascript]
 ```js
-
+alertView.cancel();
 ```
 !@
 
