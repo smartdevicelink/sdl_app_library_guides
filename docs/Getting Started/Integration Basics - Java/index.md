@@ -322,21 +322,6 @@ builder.setShortAppName(shortAppName);
 ##### Template Coloring
 You can customize the color scheme of your initial template on head units that support this feature using the `builder`. For more information, see the [Customizing the Template guide](Customizing Look and Functionality/Customizing the Template) section.
 
-##### Determining SDL Support
-You have the ability to determine a minimum SDL protocol and a minimum SDL RPC version that your app supports. You can also check the connected vehicle type and disconnect if the vehicle module is not supported. We recommend not setting these values until your app is ready for production. The OEMs you support will help you configure correct values during the application review process.
-
-###### Blocking By Version
-If a head unit is blocked by protocol version, your app icon will never appear on the head unit's screen. If you configure your app to block by RPC version, it will appear and then quickly disappear. So while blocking with `minimumProtocolVersion` is preferable, `minimumRPCVersion` allows you more granular control over which RPCs will be present.
-
-
-```java
-builder.setMinimumProtocolVersion(new Version("3.0.0"));
-builder.setMinimumRPCVersion(new Version("4.0.0"));
-```
-
-###### Blocking By Vehicle Type
-If you are blocking by vehicle type and you are connected over RPC v7.1+, your app icon will never appear on the head unit's screen. If you are connected over RPC v7.0 or below, it will appear and then quickly disappear. To implement this type of blocking, you need to [set up the SDLManager](####-Implementing-SDL-Manager). You will then implement the optional `onSystemInfoReceived` method and return `true` if you want to continue the connection and `false` if you wish to disconnect.
-
 @![android]
 ##### Lock Screen Configuration
 A lock screen is used to prevent the user from interacting with the app on the smartphone while they are driving. When the vehicle starts moving, the lock screen is activated. Similarly, when the vehicle stops moving, the lock screen is removed. You must implement a lock screen in your app for safety reasons. Any application without a lock screen will not get approval for release to the public.
@@ -395,6 +380,21 @@ Set a `hashID` for your application that can be used over connection cycles (i.e
 ```java
 builder.setResumeHash(hashID);
 ```
+
+#### Determining SDL Support
+You have the ability to determine a minimum SDL protocol and a minimum SDL RPC version that your app supports. You can also check the connected vehicle type and disconnect if the vehicle module is not supported. We recommend not setting these values until your app is ready for production. The OEMs you support will help you configure correct values during the application review process.
+
+##### Blocking By Version
+If a head unit is blocked by protocol version, your app icon will never appear on the head unit's screen. If you configure your app to block by RPC version, it will appear and then quickly disappear. So while blocking with `minimumProtocolVersion` is preferable, `minimumRPCVersion` allows you more granular control over which RPCs will be present.
+
+
+```java
+builder.setMinimumProtocolVersion(new Version("3.0.0"));
+builder.setMinimumRPCVersion(new Version("4.0.0"));
+```
+
+###### Blocking By Vehicle Type
+If you are blocking by vehicle type and you are connected over RPC v7.1+, your app icon will never appear on the head unit's screen. If you are connected over RPC v7.0 or below, it will appear and then quickly disappear. To implement this type of blocking, you need to [set up the SDLManager](####-Implementing-SDL-Manager). You will then implement the optional `onSystemInfoReceived` method and return `true` if you want to continue the connection and `false` if you wish to disconnect.
 
 @![android]
 ## SmartDeviceLink Router Service
