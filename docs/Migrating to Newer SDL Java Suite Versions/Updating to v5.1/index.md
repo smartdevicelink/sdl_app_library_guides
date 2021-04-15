@@ -1,4 +1,4 @@
-# Upgrading to 5.0
+# Upgrading to 5.1
 
 ## Overview
 
@@ -19,6 +19,10 @@ repositories {
 
 ## SdlManagerListener changes
 In 5.1 a new onSystemInfoReceived method was added to the SdlManagerListener. More detail can be found [here](Getting Started/Integration Basics - Java)
+
+!!! MUST
+`SdlManagerListener` method: `onSystemInfoReceived` auto generates in Android Studio to returns false. This will cause your app to not connect. You must change it to true or implement logic to check system info to see if you wish for your app to connect to that system.
+!!!
 
 ```java
 SdlManagerListener listener = new SdlManagerListener() {
