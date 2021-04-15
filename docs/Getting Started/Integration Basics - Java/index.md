@@ -116,12 +116,12 @@ public void onDestroy(){
 ### Implementing SDL Manager
 In order to correctly connect to an SDL enabled head unit developers need to implement methods for the proper creation and disposing of an `SdlManager` in our `SdlService`.
 
-!!! NOTE
+!!! IMPORTANT
 An instance of SdlManager cannot be reused after it is closed and properly disposed of. Instead, a new instance must be created. Only one instance of SdlManager should be in use at any given time.
 !!!
 
-!!! IMPORTANT
-`SdlManagerListener` method: `onSystemInfoReceived` auto generates in Android Stuido to returns false. This will cause your app to not connect. You must chage it to true or implement logic to check system info to see if you wish for your app to connect to that system.
+!!! MUST
+`SdlManagerListener` method: `onSystemInfoReceived` auto generates in Android Studio to returns false. This will cause your app to not connect. You must change it to true or implement logic to check system info to see if you wish for your app to connect to that system.
 !!!
 
 
@@ -192,7 +192,7 @@ public class SdlService extends Service {
 
 The `onDestroy()` method from the `SdlManagerListener` is called whenever the manager detects some disconnect in the connection, whether initiated by the app, by SDL, or by the device’s connection.
 
-!!! IMPORTANT
+!!! MUST
 The `sdlManager` must be shutdown properly in the `SdlService.onDestroy()` callback using the method `sdlManager.dispose()`.
 !!!
 !@
@@ -275,7 +275,7 @@ public class SdlService {
 }
 ```
 
-!!! IMPORTANT
+!!! MUST
 The `sdlManager` must be shutdown properly if this class is shutting down in the respective method using the method `sdlManager.dispose()`.
 !!!
 !@
