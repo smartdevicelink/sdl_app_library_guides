@@ -54,19 +54,17 @@ sdlManager.getScreenManager().setVoiceCommands([voiceCommand]);
 !@
 
 ## Deleting Voice Commands
-To delete previously set voice commands, you just have to set an empty array or `nil` to the `voiceCommands` array on the screen manager.
+To delete previously set voice commands, you just have to set an empty array to the `voiceCommands` array on the screen manager.
 
 @![iOS]
 ##### Objective-C
 ```objc
 sdlManager.screenManager.voiceCommands = [];
-sdlManager.screenManager.voiceCommands = nil;
 ```
 
 ##### Swift
 ```swift
 sdlManager.screenManager.voiceCommands = []
-sdlManager.screenManager.voiceCommands = nil
 ```
 !@
 
@@ -83,7 +81,7 @@ sdlManager.screenManager.voiceCommands = nil
 !@
 
 !!! NOTE
-Setting voice command strings consisted of whitespace characters only will be considered invalid(e.g.  " ") and your request will be aborted.
+Setting voice command strings composed only of whitespace characters will be considered invalid (e.g.  `" "`) and your request will be aborted by the module.
 !!!
 
 ## Using RPCs
