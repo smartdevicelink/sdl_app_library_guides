@@ -59,7 +59,7 @@ To delete previously set voice commands, you just have to set an empty array to 
 @![iOS]
 ##### Objective-C
 ```objc
-sdlManager.screenManager.voiceCommands = [];
+self.sdlManager.screenManager.voiceCommands = [];
 ```
 
 ##### Swift
