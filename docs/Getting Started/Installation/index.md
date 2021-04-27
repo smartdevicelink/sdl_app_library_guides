@@ -122,11 +122,11 @@ and replace `{version}` with the desired release version in format of `x.x.x`. T
 
 ### Examples
 
-To compile release 5.1.0, use the following line:
+To compile release 5.1.1, use the following line:
 
 ```
 dependencies {
-    implementation 'com.smartdevicelink:sdl_android:5.1.0'
+    implementation 'com.smartdevicelink:sdl_android:5.1.1'
 }
 ```
 
@@ -176,11 +176,11 @@ and replace `{version}` with the desired release version in format of `x.x.x`. T
 
 ### Examples
 
-To compile release 5.1.0, use the following line:
+To compile release 5.1.1, use the following line:
 
 ```
 dependencies {
-    implementation 'com.smartdevicelink:sdl_java_se:5.1.0'
+    implementation 'com.smartdevicelink:sdl_java_se:5.1.1'
 }
 ```
 
