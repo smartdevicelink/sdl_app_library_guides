@@ -97,12 +97,12 @@ Starting with SDL v5.1+ the library releases will be published to MavenCentral i
 To gain access to the JCenter or MavenCentral repository, make sure your app's `build.gradle` file includes the following:
 
 ```
-// SDL v5.0 or older
+// SDL v4.12.1 or older
 repositories {
     jcenter()
 }
 
-// SDL v5.1+
+// SDL v4.12.2+
 repositories {
     mavenCentral()
 }
@@ -149,13 +149,13 @@ Starting with SDL v5.1+ the library releases will be published to MavenCentral i
 To gain access to the JCenter or MavenCentral repository, make sure your app's `build.gradle` file includes the following:
 
 ```
-// SDL v5.0 or older
+// SDL v4.12.1 or older
 repositories {
     google()
     jcenter()
 }
 
-// SDL v5.1+
+// SDL v4.12.2+
 repositories {
     google()
     mavenCentral()
