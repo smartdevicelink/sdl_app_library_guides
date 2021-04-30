@@ -88,21 +88,11 @@ lipo -remove i386 -remove x86_64 -o SmartDeviceLink.framework/SmartDeviceLink Sm
 !@
 
 @![android]
-Each [SDL Android](https://github.com/smartdevicelink/sdl_java_suite) library release is published to JCenter. By adding a few lines in their app's gradle script, developers can compile with the latest SDL Android release.
+Each [SDL Android](https://github.com/smartdevicelink/sdl_java_suite) library release is published to MavenCentral. By adding a few lines in their app's gradle script, developers can compile with the latest SDL Android release.
 
-!!! NOTE
-Starting with SDL v5.1+ the library releases will be published to MavenCentral instead of JCenter
-!!!
-
-To gain access to the JCenter or MavenCentral repository, make sure your app's `build.gradle` file includes the following:
+To gain access to the MavenCentral repository, make sure your app's `build.gradle` file includes the following:
 
 ```
-// SDL v5.0 or older
-repositories {
-    jcenter()
-}
-
-// SDL v5.1+
 repositories {
     mavenCentral()
 }
@@ -122,11 +112,11 @@ and replace `{version}` with the desired release version in format of `x.x.x`. T
 
 ### Examples
 
-To compile release 5.1.0, use the following line:
+To compile release 5.1.1, use the following line:
 
 ```
 dependencies {
-    implementation 'com.smartdevicelink:sdl_android:5.1.0'
+    implementation 'com.smartdevicelink:sdl_android:5.1.1'
 }
 ```
 
@@ -140,22 +130,11 @@ dependencies {
 !@
 
 @![javaSE]
-Each [SDL JavaSE](https://github.com/smartdevicelink/sdl_java_suite) library release is published to JCenter. By adding a few lines in their app's gradle script, developers can compile with the latest SDL JavaSE release.
+Each [SDL JavaSE](https://github.com/smartdevicelink/sdl_java_suite) library release is published to MavenCentral. By adding a few lines in their app's gradle script, developers can compile with the latest SDL JavaSE release.
 
-!!! NOTE
-Starting with SDL v5.1+ the library releases will be published to MavenCentral instead of JCenter
-!!!
-
-To gain access to the JCenter or MavenCentral repository, make sure your app's `build.gradle` file includes the following:
+To gain access to the MavenCentral repository, make sure your app's `build.gradle` file includes the following:
 
 ```
-// SDL v5.0 or older
-repositories {
-    google()
-    jcenter()
-}
-
-// SDL v5.1+
 repositories {
     google()
     mavenCentral()
@@ -176,11 +155,11 @@ and replace `{version}` with the desired release version in format of `x.x.x`. T
 
 ### Examples
 
-To compile release 5.1.0, use the following line:
+To compile release 5.1.1, use the following line:
 
 ```
 dependencies {
-    implementation 'com.smartdevicelink:sdl_java_se:5.1.0'
+    implementation 'com.smartdevicelink:sdl_java_se:5.1.1'
 }
 ```
 
