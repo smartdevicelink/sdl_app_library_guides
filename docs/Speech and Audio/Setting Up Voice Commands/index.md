@@ -70,7 +70,7 @@ sdlManager.screenManager.voiceCommands = []
 
 @![android, javaSE, javaEE]
 ```java
-sdlManager.getScreenManager().setVoiceCommands(new ArrayList<VoiceCommand>());
+sdlManager.getScreenManager().setVoiceCommands(Collections.<VoiceCommand>emptyList());
 ```
 !@
 
