@@ -54,7 +54,7 @@ sdlManager.getScreenManager().setVoiceCommands([voiceCommand]);
 !@
 
 ## Deleting Voice Commands
-To delete previously set voice commands, you just have to set an empty @![iOS, javascript]array!@ @![android, javaSE, javaEE]List!@ to the `voiceCommands` array on the screen manager.
+To delete previously set voice commands, you just have to set an empty @![iOS, javascript]array!@ @![android, javaSE, javaEE]List!@ to the `voiceCommands` @![iOS, javascript]array!@ @![android, javaSE, javaEE]List!@ on the screen manager.
 
 @![iOS]
 ##### Objective-C
