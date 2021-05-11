@@ -9,7 +9,7 @@ You have the ability to create voice command shortcuts to your [Main Menu](Displ
 
 
 ## Creating Voice Commands
-To create voice commands, you simply create and set @![iOS]`SDLVoiceCommand`!@ @![android, javaSE, javaEE, javascript]`VoiceCommand`!@ objects to the `voiceCommands` array on the screen manager.
+To create voice commands, you simply create and set @![iOS]`SDLVoiceCommand`!@ @![android, javaSE, javaEE, javascript]`VoiceCommand`!@ objects to the `voiceCommands`  @![iOS, javascript]array!@ @![android, javaSE, javaEE]List!@ on the screen manager.
 
 @![iOS]
 ##### Objective-C
@@ -52,6 +52,31 @@ const voiceCommand = new SDL.manager.screen.utils.VoiceCommand(['Command One'], 
 sdlManager.getScreenManager().setVoiceCommands([voiceCommand]);
 ```
 !@
+
+## Deleting Voice Commands
+@![iOS, android, javaSE, javaEE]To delete previously set voice commands, you just have to set an empty !@ @![iOS]array!@ @![android, javaSE, javaEE]List!@ @![iOS, android, javaSE, javaEE] to the `voiceCommands` !@ @![iOS]array!@ @![android, javaSE, javaEE]List!@ @![iOS, android, javaSE, javaEE] on the screen manager.!@ @![javascript] The JavaScript Suite currently does not support clearing previously set voice commands without setting new voice commands.!@
+
+@![iOS]
+##### Objective-C
+```objc
+self.sdlManager.screenManager.voiceCommands = [];
+```
+
+##### Swift
+```swift
+sdlManager.screenManager.voiceCommands = []
+```
+!@
+
+@![android, javaSE, javaEE]
+```java
+sdlManager.getScreenManager().setVoiceCommands(Collections.<VoiceCommand>emptyList());
+```
+!@
+
+!!! NOTE
+Setting voice command strings composed only of whitespace characters will be considered invalid (e.g.  `" "`) and your request will be aborted by the module.
+!!!
 
 ## Using RPCs
 If you wish to do this without the aid of the screen manager, you can create @![iOS]`SDLAddCommand`!@ @![android, javaSE, javaEE, javascript]`AddCommand`!@ objects without the `menuParams` parameter to create global voice commands.
