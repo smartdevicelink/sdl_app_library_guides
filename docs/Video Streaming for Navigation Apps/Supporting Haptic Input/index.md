@@ -9,7 +9,7 @@ Currently, there are no RPCs for knowing which view is highlighted, so your UI w
 You will also need to implement [touch input support](Video Streaming for Navigation Apps/Touch Input) in order to receive touches on the views. In addition, you must support the automatic focusable item manager in order to receive a touched `UIView` in the `SDLTouchManagerDelegate` in addition to the `CGPoint`.
 !@
 
-## Automatic Focusable Rects
+## Automatic Focusable Rectangles
 SDL has support for automatically detecting focusable views within your UI and sending that data to the head unit. You will still need to tell SDL when your UI changes so that it can re-scan and detect the views to be sent.
 
 @![iOS]
@@ -27,6 +27,8 @@ NotificationCenter.default.post(name: SDLDidUpdateProjectionView, object: nil)
 
 !!! NOTE
 SDL can only automatically detect `UIButton`s and anything else that responds `true` to `canBecomeFocused`. This means that custom `UIView` objects will *not* be found. You must send these objects manually, see "Manual Focusable Rects".
+
+Before Xcode 12.5, some built-in `UIView` subclasses, such as `UITextField`, responded `true` to `canBecomeFocused`. That is not longer true, and you must subclass these built-in views and implement `canBecomeFocused` to return `true`.
 !!!
 !@
 
