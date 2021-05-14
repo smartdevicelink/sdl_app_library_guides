@@ -54,11 +54,42 @@ sdlManager.getScreenManager().setVoiceCommands([voiceCommand]);
 !@
 
 ### Unsupported Voice Commands
-Voice commands that contains empty strings in their array will be filtered out by the library since they are unsupported by the module. For example in a case where a voice command has the following array values ["\t", "First", " ", "Voice Command"] will be saved as ["First", "Voice Command"].
+Voice commands that contains empty strings in their array will be filtered out by the library since they are unsupported by the module. For example in a case where a voice command has the following array values ["\t", "First", " ", "Voice Command"] will become ["First", "Voice Command"].
+
+@![iOS]
+##### Objective-C
+```objc
+SDLVoiceCommand *voiceCommand = [[SDLVoiceCommand alloc] initWithVoiceCommands:@[@"\t", @"First", @" ", @"Voice Command"] handler:^{
+    <#Voice command selected#>
+}];
+
+self.sdlManager.screenManager.voiceCommands = @[voiceCommand];
+```
+
+##### Swift
+```swift
+let voiceCommand = SDLVoiceCommand(voiceCommands: ["\t", "First", " ", "Voice Command"]) {
+    <#Voice command triggered#>
+}
+
+sdlManager.screenManager.voiceCommands = [voiceCommand]
+```
+!@
+
+@![android, javaSE, javaEE]
+```java
+// TODO: java code snippets
+```
+!@
+
+@![javascript]
+```js
+// TODO: javascript code snippets
+```
+!@
 
 In a case where all the voice commands defined have only empty strings, the upload request will be aborted and the previous voice commands would not get deleted(e.g. " "). 
 More details in the section below.
-
 
 ## Deleting Voice Commands
 @![iOS, android, javaSE, javaEE]To delete previously set voice commands, you just have to set an empty !@ @![iOS]array!@ @![android, javaSE, javaEE]List!@ @![iOS, android, javaSE, javaEE] to the `voiceCommands` !@ @![iOS]array!@ @![android, javaSE, javaEE]List!@ @![iOS, android, javaSE, javaEE] on the screen manager.!@ @![javascript] The JavaScript Suite currently does not support clearing previously set voice commands without setting new voice commands.!@
