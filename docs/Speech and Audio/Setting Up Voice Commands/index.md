@@ -54,9 +54,9 @@ sdlManager.getScreenManager().setVoiceCommands([voiceCommand]);
 !@
 
 ### Unsupported Voice Commands
-A voice command that contains empty strings (or strings only containing whitespace) in its array will have those empty strings filtered out by the library. For example, if a voice command has the following array values: `[" ", "First", "", "Voice Command"]` will become `["First", "Voice Command"]`.
+The library automatically filters out empty strings and whitespace-only strings from a voice command's array of strings. For example, if a voice command has the following array values: `[" ", "First", "", "Voice Command"]` the library will filter it to: `["First", "Voice Command"]`.
 
-If all the voice commands contain only empty strings, the upload request will be aborted and the previous voice commands will remain available.
+If you provide an array of voice commands which only contains empty string and whitespace-only strings across all of the voice commands, the upload request will be aborted and the previous voice commands will remain available.
 
 ## Deleting Voice Commands
 @![iOS, android, javaSE, javaEE]To delete previously set voice commands, you just have to set an empty !@ @![iOS]array!@ @![android, javaSE, javaEE]List!@ @![iOS, android, javaSE, javaEE] to the `voiceCommands` !@ @![iOS]array!@ @![android, javaSE, javaEE]List!@ @![iOS, android, javaSE, javaEE] on the screen manager.!@ @![javascript] The JavaScript Suite currently does not support clearing previously set voice commands without setting new voice commands.!@
