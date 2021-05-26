@@ -59,7 +59,7 @@ The library automatically filters out empty strings and whitespace-only strings 
 If you provide @![iOS, javascript]an array!@@![android, javaSE, javaEE]a list!@ of voice commands which only contains empty string and whitespace-only strings across all of the voice commands, the upload request will be aborted and the previous voice commands will remain available.
 
 ## Deleting Voice Commands
-@![iOS, android, javaSE, javaEE]To delete previously set voice commands, you just have to set an empty !@ @![iOS]array!@ @![android, javaSE, javaEE]List!@ @![iOS, android, javaSE, javaEE] to the `voiceCommands` !@ @![iOS]array!@ @![android, javaSE, javaEE]List!@ @![iOS, android, javaSE, javaEE] on the screen manager.!@ @![javascript] The JavaScript Suite currently does not support clearing previously set voice commands without setting new voice commands.!@
+To delete previously set voice commands, you just have to set an empty @![iOS, javascript]array!@ @![android, javaSE, javaEE]List!@ to the `voiceCommands` @![iOS, javascript]array!@ @![android, javaSE, javaEE]List!@ on the screen manager.
 
 @![iOS]
 ##### Objective-C
@@ -76,6 +76,12 @@ sdlManager.screenManager.voiceCommands = []
 @![android, javaSE, javaEE]
 ```java
 sdlManager.getScreenManager().setVoiceCommands(Collections.<VoiceCommand>emptyList());
+```
+!@
+
+@![javascript]
+```js
+sdlManager.getScreenManager().setVoiceCommands([]);
 ```
 !@
 
