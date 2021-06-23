@@ -27,7 +27,7 @@ The easiest way to monitor the `hmiLevel` of your SDL app is through a required 
 @![android,javaSE,javaEE,javascript]Monitoring HMI Status is possible through an `OnHMIStatus` notification that you can subscribe to via the !@@![android,javaSE,javaEE]`SdlManager.Builder`'s `setRPCNotificationListeners`.!@@![javascript]`LifecycleConfig`'s `setRpcNotificationListeners`.!@
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 - (void)hmiLevel:(SDLHMILevel)oldLevel didChangeToLevel:(SDLHMILevel)newLevel {
     if (![newLevel isEqualToEnum:SDLHMILevelNone] && (self.firstHMILevel == SDLHMILevelNone)) {
@@ -47,8 +47,6 @@ The easiest way to monitor the `hmiLevel` of your SDL app is through a required 
     }
 }
 ```
-
-##### Swift
 ```swift
 fileprivate var firstHMILevel: SDLHMILevel = .none
 func hmiLevel(_ oldLevel: SDLHMILevel, didChangeToLevel newLevel: SDLHMILevel) {
@@ -68,6 +66,7 @@ func hmiLevel(_ oldLevel: SDLHMILevel, didChangeToLevel newLevel: SDLHMILevel) {
     }
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -106,15 +105,14 @@ The PermissionManager allows developers to easily query whether specific RPCs ar
 
 ### Checking Current Permissions of a Single RPC
 @![iOS]
-##### Objective-C
+|~
 ```objc
 BOOL isAllowed = [self.sdlManager.permissionManager isRPCNameAllowed:<#RPC name#>];
 ```
-
-##### Swift
 ```swift
 let isAllowed = sdlManager.permissionManager.isRPCNameAllowed(<#RPC name#>)
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -138,7 +136,7 @@ const isParameterAllowed = sdlManager.getPermissionManager().isPermissionParamet
 You can also retrieve the status of a group of RPCs. First, you can retrieve the permission status of the group of RPCs as a whole: whether or not those RPCs are all allowed, all disallowed, or some are allowed and some are disallowed. This will allow you to know, for example, if a feature you need is allowed based on the status of all the RPCs needed for the feature.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLPermissionElement *showElement = [[SDLPermissionElement alloc] initWithRPCName:SDLRPCFunctionNameShow parameterPermissions:nil];
 SDLPermissionElement *getVehicleDataElement = [[SDLPermissionElement alloc] initWithRPCName:SDLRPCFunctionNameGetVehicleData parameterPermissions:@[@"rpm"]];
@@ -159,8 +157,6 @@ switch (groupStatus) {
         break;
 }
 ```
-
-##### Swift
 ```swift
 let showElement = SDLPermissionElement(rpcName: .show, parameterPermissions: nil)
 let getVehicleDataElement = SDLPermissionElement(rpcName: .getVehicleData, parameterPermissions: ["rpm"])
@@ -180,6 +176,7 @@ case .unknown:
     break;
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -235,6 +232,7 @@ switch (groupStatus) {
 The previous snippet will give a quick generic status for all permissions together. However, if you want to get a more detailed result about the status of every permission or parameter in the group, you can use the @![iOS]`statusesOfRPCPermissions:`!@@![android,javaSE,javaEE,javascript]`getStatusOfPermissions`!@ method.
 
 @![iOS]
+|~
 ```objc
 SDLPermissionElement *showElement = [[SDLPermissionElement alloc] initWithRPCName:SDLRPCFunctionNameShow parameterPermissions:nil];
 SDLPermissionElement *getVehicleDataElement = [[SDLPermissionElement alloc] initWithRPCName:SDLRPCFunctionNameGetVehicleData parameterPermissions:@[@"rpm"]];
@@ -248,7 +246,6 @@ if (status[SDLRPCFunctionNameGetVehicleData].rpcParameters[@"rpm"].boolValue) {
     // RPM parameter in GetVehicleDataRPC is allowed
 }
 ```
-
 ```swift
 let showElement = SDLPermissionElement(rpcName: .show, parameterPermissions: nil)
 let getVehicleDataElement = SDLPermissionElement(rpcName: .getVehicleData, parameterPermissions: ["rpm"])
@@ -262,6 +259,7 @@ if status[.getVehicleData]?.rpcParameters?["rpm"]?.boolValue == true {
     // RPM parameter in GetVehicleDataRPC is allowed
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -304,7 +302,7 @@ if (status[SDL.rpc.enums.FunctionID.GetVehicleData].getAllowedParameters()[SDL.r
 If desired, you can @![iOS]subscribe to!@@![android,javaSE,javaEE,javascript]set a listener for!@ a group of permissions. The @![iOS]subscription's handler!@ @![android,javaSE,javaEE,javascript]listener!@ will be called when the permissions for the group changes. If you want to be notified when the permission status of any of RPCs in the group change, set the `groupType` to @![iOS]`SDLPermissionGroupTypeAny`!@@![android,javaSE,javaEE]`PERMISSION_GROUP_TYPE_ANY`!@@![javascript]`SDL.manager.permission.enums.PermissionGroupType.ANY`!@. If you only want to be notified when all of the RPCs in the group are allowed, or go from allowed to some/all not allowed, set the `groupType` to @![iOS]`SDLPermissionGroupTypeAllAllowed`!@@![android,javaSE,javaEE]`PERMISSION_GROUP_TYPE_ALL_ALLOWED`!@@![javascript]`SDL.manager.permission.enums.PermissionGroupType.ALL_ALLOWED`!@.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLPermissionElement *showElement = [[SDLPermissionElement alloc] initWithRPCName:SDLRPCFunctionNameShow parameterPermissions:nil];
 SDLPermissionElement *getVehicleDataElement = [[SDLPermissionElement alloc] initWithRPCName:SDLRPCFunctionNameGetVehicleData parameterPermissions:@[@"rpm"]];
@@ -318,8 +316,6 @@ SDLPermissionObserverIdentifier subscriptionId = [self.sdlManager.permissionMana
     }
 }];
 ```
-
-##### Swift
 ```swift
 let showElement = SDLPermissionElement(rpcName: .show, parameterPermissions: nil)
 let getVehicleDataElement = SDLPermissionElement(rpcName: .getVehicleData, parameterPermissions: ["rpm", "airbagStatus"])
@@ -333,6 +329,7 @@ let subscriptionId = sdlManager.permissionManager.subscribe(toRPCPermissions: [s
     }
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -378,15 +375,14 @@ const listenerId = sdlManager.getPermissionManager().addListener(permissionEleme
 When you set up the @![iOS]subscription!@@![android,javaSE,javaEE,javascript]listener!@, you will get a unique id back. Use this id to unsubscribe to the permissions at a later date.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 [self.sdlManager.permissionManager removeObserverForIdentifier:observerId];
 ```
-
-##### Swift
 ```swift
 sdlManager.permissionManager.removeObserver(forIdentifier: observerId)
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -416,18 +412,18 @@ ATTENUATED  			| Some kind of audio mixing is occurring between what you are pla
 NOT_AUDIBLE 			| Your streaming audio is not audible. This could occur during a `VRSESSION` System Context.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 - (void)audioStreamingState:(nullable SDLAudioStreamingState)oldState didChangeToState:(SDLAudioStreamingState)newState {
     <#code#>
 }
 ```
-##### Swift
 ```swift
 func audioStreamingState(_ oldState: SDLAudioStreamingState?, didChangeToState newState: SDLAudioStreamingState) {
     <#code#>
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -463,19 +459,18 @@ HMI_OBSCURED    	   | The app's display HMI is being blocked by either a system 
 ALERT 				   | An alert that you have sent is currently visible.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 - (void)systemContext:(nullable SDLSystemContext)oldContext didChangeToContext:(SDLSystemContext)newContext {
     <#code#>
 }
 ```
-
-##### Swift
 ```swift
 func systemContext(_ oldContext: SDLSystemContext?, didChangeToContext newContext: SDLSystemContext) {
     <#code#>
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]

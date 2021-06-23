@@ -19,14 +19,14 @@ Once you launch an instance of Manticore, you will be given an IP address and po
 ### Setting the IP Address and Port
 !@
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLLifecycleConfiguration *lifecycleConfiguration = [SDLLifecycleConfiguration debugConfigurationWithAppName:@"<#App Name#>" fullAppId:@"<#App Id#>" ipAddress:@"<#IP Address#>" port:<#Port#>];
 ```
-##### Swift
 ```swift
 let lifecycleConfiguration = SDLLifecycleConfiguration(appName: "<#App Name#>", fullAppId: "<#App Id#>", ipAddress: "<#IP Address#>", port: <#Port#>)
 ```
+~|
 !@
 
 @![android]
@@ -48,15 +48,14 @@ To connect your device directly to a production vehicle head unit or Test Develo
 !@
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLLifecycleConfiguration *lifecycleConfiguration = [SDLLifecycleConfiguration defaultConfigurationWithAppName:@"<#App Name#>" fullAppId:@"<#App Id#>"];
 ```
-
-##### Swift
 ```swift
 let lifecycleConfiguration = SDLLifecycleConfiguration(appName:"<#App Name#>", fullAppId: "<#App Id#>")
 ```
+~|
 !@
 
 @![android]

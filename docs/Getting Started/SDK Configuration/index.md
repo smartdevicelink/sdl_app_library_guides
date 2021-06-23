@@ -100,6 +100,4 @@ If targeting Android R (API Level 30) or higher, it is required to add the SDL s
 ```
 
 The SDL Android library uses these queries to determine which app should host the router service, what apps to notify when there's an SDL connection, etc. As will be seen in the next sections, these intents are used in the intent filters for the `SdlRouterService` and the `SdlBroadcastReceiver`.
-
-
 !@
