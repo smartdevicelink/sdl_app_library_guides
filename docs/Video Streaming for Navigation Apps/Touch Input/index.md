@@ -8,15 +8,14 @@ You must have a valid and approved `appId` from an OEM in order to receive touch
 ### Using SDLTouchManager
 `SDLTouchManager` has multiple callbacks that will ease the implementation of touch events. You can register for callbacks through the stream manager:
 
-##### Objective-C
+|~
 ```objc
 self.sdlManager.streamManager.touchManager.touchEventDelegate = self;
 ```
-
-##### Swift
 ```swift
 sdlManager.streamManager?.touchManager.touchEventDelegate = self
 ```
+~|
 
 !!! IMPORTANT
 The view passed from the following callbacks are dependent on using the built-in focusable item manager to send haptic rects. See [supporting haptic input](Video Streaming for Navigation Apps/Supporting Haptic Input) "Automatic Focusable Rects" for more information.
@@ -24,7 +23,7 @@ The view passed from the following callbacks are dependent on using the built-in
 
 The following callbacks are provided:
 
-##### Objective-C
+|~
 ```objc
 - (void)touchManager:(SDLTouchManager *)manager didReceiveSingleTapForView:(nullable UIView *)view atPoint:(CGPoint)point;
 - (void)touchManager:(SDLTouchManager *)manager didReceiveDoubleTapForView:(nullable UIView *)view atPoint:(CGPoint)point;
@@ -38,8 +37,6 @@ The following callbacks are provided:
 - (void)touchManager:(SDLTouchManager *)manager pinchDidEndInView:(nullable UIView *)view atCenterPoint:(CGPoint)point;
 - (void)touchManager:(SDLTouchManager *)manager pinchCanceledAtCenterPoint:(CGPoint)point;
 ```
-
-##### Swift
 ```swift
 func touchManager(_ manager: SDLTouchManager, didReceiveSingleTapFor view: UIView?, at point: CGPoint)
 func touchManager(_ manager: SDLTouchManager, didReceiveDoubleTapFor view: UIView?, at point: CGPoint)
@@ -53,8 +50,9 @@ func touchManager(_ manager: SDLTouchManager, didReceivePinchIn view: UIView?, a
 func touchManager(_ manager: SDLTouchManager, pinchDidEndIn view: UIView?, atCenter point: CGPoint)
 func touchManager(_ manager: SDLTouchManager, pinchCanceledAtCenter point: CGPoint)
 ```
+~|
 
-!!! note
+!!! NOTE
 Points that are provided via these callbacks are in the head unit's coordinate space. This is likely to correspond to your own streaming coordinate space. You can retrieve the head unit dimensions from `SDLStreamingMediaManager.screenSize`.
 !!!
 
@@ -77,12 +75,11 @@ timeStamp    | Timestamp of the head unit time. Can be used to compare time pass
 coord        | X and Y coordinates in the head unit coordinate system. (0, 0) is the top left.
 
 #### Example
-
 !!! NOTE
 Please note that if you are integrating an sdl_ios version less than v6.3, the following example code will not work. We recommend updating to the latest release version.
 !!!
 
-##### Objective-C
+|~
 ```objc
 [self.sdlManager subscribeToRPC:SDLDidReceiveTouchEventNotification withObserver:self selector:@selector(touchEventAvailable:)];
 
@@ -95,8 +92,6 @@ Please note that if you are integrating an sdl_ios version less than v6.3, the f
     <#Use the touch data#>
 }
 ```
-
-##### Swift
 ```swift
 sdlManager.subscribe(to: .SDLDidReceiveTouchEvent, observer: self, selector: #selector(touchEventAvailable(_:)))
 
@@ -108,3 +103,4 @@ sdlManager.subscribe(to: .SDLDidReceiveTouchEvent, observer: self, selector: #se
      <#Use the touch data#>
 }
 ```
+~|

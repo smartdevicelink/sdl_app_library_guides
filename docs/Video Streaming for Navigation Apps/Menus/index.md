@@ -10,15 +10,14 @@ The Show Menu RPC allows you to open the menu programmatically. That way, you ca
 To show the top level menu use `sdlManager.screenManager.openMenu`.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 [self.sdlManager.screenManager openMenu];
 ```
-
-##### Swift
 ```swift
 self.sdlManager.screenManager.openMenu()
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -35,15 +34,14 @@ The sub-cell you use in `openSubMenu` must be included in `sdlManager.screenMana
 !!!
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 [self.sdlManager.screenManager openSubmenu:(<#CellWithSubCells#>)];
 ```
-
-##### Swift
 ```swift
 self.sdlManager.screenManager.openSubmenu(<#CellWithSubCells#>)
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -60,17 +58,16 @@ This RPC is unnecessary if you are using `OpenMenu` because OEMs will take care 
 !!!
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLCloseApplication *closeRPC = [[SDLCloseApplication alloc] init];
 [self.sdlManager sendRequest:closeRPC];
 ```
-
-##### Swift
 ```swift
 let closeRPC = SDLCloseApplication()
 self.sdlManager.send(closeRPC)
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]

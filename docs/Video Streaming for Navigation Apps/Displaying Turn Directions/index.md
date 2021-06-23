@@ -15,9 +15,9 @@ The visual data is sent using the @![iOS]`SDLShowConstantTBT`!@@![android]`ShowC
 ### Audio Turn Directions
 The audio data is sent using the @![iOS]`SDLAlertManeuver`!@@![android]`AlertManeuver`!@ RPC. When sent, the head unit will speak the text you provide (e.g. In 3 miles turn right).
 
-## Sending Both Audio and Visual Turn Directions
+## Sending Audio and Visual Turn Directions
 @![iOS]
-#### Objective-C
+|~
 ```objc
 // Create SDLImage object for turnIcon.
 SDLImage* turnIcon = <#Create SDLImage#>;
@@ -46,8 +46,6 @@ __weak typeof(self) weakSelf = self;
     }];
 }];
 ```
-
-##### Swift
 ```swift
 // Create SDLImage object for turnIcon.
 let turnIcon = <#Create SDLImage#>
@@ -74,6 +72,7 @@ sdlManager.send(request: turnByTurn) { (request, response, error) in
     })
 }
 ```
+~|
 !@
 
 @![android]
@@ -113,7 +112,7 @@ Remember when sending a @![iOS]`SDLImage`!@@![android,javaSE,javaEE]`Image`!@, t
 To clear a navigation direction from the screen, send a @![iOS]`SDLShowConstantTBT`!@@![android,javaSE,javaEE]`ShowConstantTbt`!@ with the `maneuverComplete` property set to true. This will also clear the accompanying @![iOS]`SDLAlertManeuver`!@@![android,javaSE,javaEE]`AlertManeuver`!@.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLShowConstantTBT* clearTurnByTurn = [[SDLShowConstantTBT alloc] init];
 clearTurnByTurn.maneuverComplete = @YES;
@@ -127,8 +126,6 @@ clearTurnByTurn.maneuverComplete = @YES;
     <#TBT successfully cleared#>
 }];
 ```
-
-##### Swift
 ```swift
 let clearTurnByTurn = SDLShowConstantTBT()
 clearTurnByTurn.maneuverComplete = NSNumber(true)
@@ -142,6 +139,7 @@ sdlManager.send(request: clearTurnByTurn) { (request, response, error) in
     <#TBT successfully cleared#>
 }
 ```
+~|
 !@
 
 @![android]

@@ -48,17 +48,16 @@ sdlManager.getAudioStreamManager().start(new CompletionListener() {
 
 #### Playing from File
 @![iOS]
-##### Objective-C
+|~
 ```objc
 [self.sdlManager.streamManager.audioManager pushWithFileURL:audioFileURL];
 [self.sdlManager.streamManager.audioManager playNextWhenReady];
 ```
-
-##### Swift
 ```swift
 sdlManager.streamManager?.audioManager.push(withFileURL: url)
 sdlManager.streamManager?.audioManager.playNextWhenReady()
 ```
+~|
 !@
 
 @![android]
@@ -91,17 +90,16 @@ sdlManager.getAudioStreamManager().pushResource(R.raw.exampleMp3, new Completion
 
 #### Playing from Data
 @![iOS]
-##### Objective-C
+|~
 ```objc
 [self.sdlManager.streamManager.audioManager pushWithData:audioData];
 [self.sdlManager.streamManager.audioManager playNextWhenReady];
 ```
-
-##### Swift
 ```swift
 sdlManager.streamManager?.audioManager.push(with: audioData)
 sdlManager.streamManager?.audioManager.playNextWhenReady()
 ```
+~|
 !@
 
 @![android]
@@ -122,7 +120,7 @@ sdlManager.getAudioStreamManager().pushBuffer(byteBuffer, new CompletionListener
 
 @![iOS]
 #### Implementing the Delegate
-##### Objective-C
+|~
 ```objc
 - (void)audioStreamManager:(SDLAudioStreamManager *)audioManager errorDidOccurForFile:(NSURL *)fileURL error:(NSError *)error {
 
@@ -144,8 +142,6 @@ sdlManager.getAudioStreamManager().pushBuffer(byteBuffer, new CompletionListener
     }
 }
 ```
-
-##### Swift
 ```swift
 func audioStreamManager(_ audioManager: SDLAudioStreamManager, errorDidOccurForFile fileURL: URL, error: Error) {
 
@@ -167,21 +163,19 @@ func audioStreamManager(_ audioManager: SDLAudioStreamManager, dataBufferDidFini
     }
 }
 ```
+~|
 
 ### Manually Sending Data
 Once the audio stream is connected, data may be easily passed to the Head Unit. The function `sendAudioData:` provides us with whether or not the PCM Audio Data was successfully transferred to the Head Unit. If your app is in a state that it is unable to send audio data, this method will return a failure. If successful playback will begin immediately.
 
-##### Objective-C
-```objective-c
-
+|~
+```objc
 NSData *audioData = <#Acquire Audio Data#>;
 
 if (![self.sdlManager.streamManager sendAudioData:audioData]) {
     <#Could not send audio data#>
 }
 ```
-
-##### Swift
 ```swift
 let audioData = <#Acquire Audio Data#>
 
@@ -191,6 +185,7 @@ if !streamManager.sendAudioData(audioData) {
     <#Could not send audio data#>
 }
 ```
+~|
 !@
 
 @![android]

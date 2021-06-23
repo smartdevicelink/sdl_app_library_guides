@@ -21,7 +21,7 @@ In order to create a navigation app an @![iOS]`appType`!@@![android,javaSE,javaE
 @![iOS]The second difference is that a `SDLStreamingMediaConfiguration` must be created and passed to the `SDLConfiguration`. A property called `securityManagers` must be set if connecting to a version of Core that requires secure video and audio streaming. This property requires an array of classes of security managers, which will conform to the `SDLSecurityType` protocol.!@ @![android] The second difference is the ability to call the `setSdlSecurity(List<Class<? extends SdlSecurityBase>> secList)` method from the `SdlManager.Builder` if connecting to an implementation of Core that requires secure video and audio streaming. This method requires an array of security libraries, which will extend the `SdlSecurityBase` class.!@ These security libraries are provided by the OEMs themselves, and will only work for that OEM. There is no general catch-all security library.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLLifecycleConfiguration* lifecycleConfig = [SDLLifecycleConfiguration defaultConfigurationWithAppName:@"<#App Name#>" fullAppId:@"<#App Id#>"];
 lifecycleConfig.appType = SDLAppHMITypeNavigation;
@@ -30,8 +30,6 @@ SDLEncryptionConfiguration *encryptionConfig = [[SDLEncryptionConfiguration allo
 SDLStreamingMediaConfiguration *streamingConfig = [SDLStreamingMediaConfiguration secureConfiguration];
 SDLConfiguration *config = [[SDLConfiguration alloc] initWithLifecycle:lifecycleConfig lockScreen:[SDLLockScreenConfiguration enabledConfiguration] logging:[SDLLogConfiguration defaultConfiguration] streamingMedia:streamingConfig fileManager:[SDLFileManagerConfiguration defaultConfiguration] encryption:encryptionConfig];
 ```
-
-##### Swift
 ```swift
 let lifecycleConfig = SDLLifecycleConfiguration(appName: "<#App Name#>", fullAppId: "<#App Id#>")
 lifecycleConfig.appType = .navigation
@@ -40,6 +38,7 @@ let encryptionConfig = SDLEncryptionConfiguration(securityManagers: [OEMSecurity
 let streamingConfig = SDLStreamingMediaConfiguration.secure()
 let config = SDLConfiguration(lifecycle: lifecycleConfig, lockScreen: .enabled(), logging: .default(), streamingMedia: streamingConfig, fileManager: .default(), encryption: encryptionConfig)
 ```
+~|
 !@
 
 @![android]
@@ -72,7 +71,7 @@ When compiling your app for production, make sure to include all possible OEM se
 ### Preventing Device Sleep
 When building a navigation app, you should ensure that the device never sleeps while your app is in the foreground of the device and is in an HMI level other than `NONE`. If your device sleeps, it will be unable to stream video data. To do so, implement the following `SDLManagerDelegate` method.
 
-##### Objective-C
+|~
 ```objc
 - (void)hmiLevel:(SDLHMILevel)oldLevel didChangeToLevel:(SDLHMILevel)newLevel {
     if (![newLevel isEqualToEnum:SDLHMILevelNone]) {
@@ -82,8 +81,6 @@ When building a navigation app, you should ensure that the device never sleeps w
     }
 }
 ```
-
-##### Swift
 ```swift
 func hmiLevel(_ oldLevel: SDLHMILevel, didChangeToLevel newLevel: SDLHMILevel) {
     if newLevel != .none {
@@ -93,6 +90,7 @@ func hmiLevel(_ oldLevel: SDLHMILevel, didChangeToLevel newLevel: SDLHMILevel) {
     }
 }
 ```
+~|
 !@
 
 ## Keyboard Input
@@ -105,7 +103,7 @@ Head units supporting RPC v6.0+ may support navigation-specific subscription but
 Between your navigation app, other navigation apps, and embedded navigation, only one route should be in progress at a time. To know when the embedded navigation or another navigation app has started a route, [create a navigation service](Other SDL Features/Creating an App Service) and when your service becomes inactive, your app should cancel any active route.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 [self.sdlManager.systemCapabilityManager subscribeToCapabilityType:SDLSystemCapabilityTypeAppServices withUpdateHandler:^(SDLSystemCapability * _Nullable capability, BOOL subscribed, NSError * _Nullable error) {
     SDLAppServicesCapabilities *serviceCapabilities = capability.appServicesCapabilities;
@@ -118,8 +116,6 @@ Between your navigation app, other navigation apps, and embedded navigation, onl
     }
 }];
 ```
-
-##### Swift
 ```swift
 sdlManager.systemCapabilityManager.subscribe(capabilityType: .appServices) { (systemCapability, subscribed, error) in
     guard let serviceCapabilities = systemCapability?.appServicesCapabilities?.appServices else { return }
@@ -132,6 +128,7 @@ sdlManager.systemCapabilityManager.subscribe(capabilityType: .appServices) { (sy
     }
 }
 ```
+~|
 !@
 
 @![android]
