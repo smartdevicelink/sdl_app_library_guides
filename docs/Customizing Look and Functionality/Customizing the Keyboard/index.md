@@ -6,7 +6,7 @@ If you present keyboards in your app – such as in searchable interactions or a
 You can modify the language of the keyboard to change the characters that are displayed.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLKeyboardProperties *keyboardConfig = [[SDLKeyboardProperties alloc] init];
 keyboardConfig.language = SDLLanguageHeIl; // Set to Israeli Hebrew
@@ -14,8 +14,6 @@ keyboardConfig.keyboardLayout = SDLKeyboardLayoutAZERTY; // Set to AZERTY
 
 self.sdlManager.screenManager.keyboardConfiguration = keyboardConfig;
 ```
-
-##### Swift
 ```swift
 let keyboardConfig = SDLKeyboardProperties()
 keyboardConfig.language = .heIl // Set to Israeli Hebrew
@@ -23,6 +21,7 @@ keyboardConfig.keyboardLayout = .AZERTY; // Set to AZERTY
 
 sdlManager.screenManager.keyboardConfiguration = keyboardConfig
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
