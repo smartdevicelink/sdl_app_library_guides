@@ -75,8 +75,8 @@ let observer = sdlManager.screenManager.subscribeButton(.playPause) { (buttonPre
         // Contains information about when the button is depressed or released
     }
 }
-~|
 ```
+~|
 
 ### Subscribe with a Selector
 Once you have subscribed to the button, the selector will be called when the button has been selected. If there is an error subscribing to the subscribe button it will be returned in the `error` parameter.

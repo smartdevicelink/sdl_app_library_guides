@@ -5,10 +5,9 @@ A @![iOS]`SDLSlider`!@@![android,javaSE,javaEE,javascript]`Slider`!@ creates a f
 The slider will persist on the screen until the timeout has elapsed or the user dismisses the slider by selecting a position or canceling.
 !!!
 
-## Slider
 A slider popup with a static footer displays a single, optional, footer message below the slider UI. A dynamic footer can show a different message for each slider position.
 
-### Slider UI
+## Slider UI
 ![Slider with Static Footer 1](assets/StaticFooter.png)
 
 ##### Dynamic Slider in Position 1
@@ -17,7 +16,7 @@ A slider popup with a static footer displays a single, optional, footer message 
 ##### Dynamic Slider in Position 2
 ![Slider with Dynamic Footer 2](assets/DynamicFooter2.png)
 
-### Creating the Slider
+## Creating the Slider
 @![iOS]
 |~
 ```objc
