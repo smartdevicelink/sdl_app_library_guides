@@ -7,7 +7,7 @@ When using the @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE,javascript]`Se
 The @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE,javascript]`SendLocation`!@ RPC is restricted by most OEMs. As a result, a module may reject your request if your app does not have the correct permissions. Your SDL app may also be restricted to only being allowed to send a location when your app is open (i.e. the `hmiLevel` is non-`NONE`) or when it is the currently active app (i.e. the `hmiLevel` is `FULL`). 
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLPermissionElement *setSendLocationPermissionElement = [[SDLPermissionElement alloc] initWithRPCName:SDLRPCFunctionNameSendLocation parameterPermissions:nil];
 
@@ -20,8 +20,6 @@ id observerId = [self.sdlManager.permissionManager subscribeToRPCPermissions:@[s
     // Your app has permission to send the `SDLSendLocation` request for its current HMI level
 }];
 ```
-
-##### Swift
 ```swift
 let setSendLocationPermissionElement = SDLPermissionElement(rpcName: .sendLocation, parameterPermissions: nil)
 
@@ -35,6 +33,7 @@ let observerId = sdlManager.permissionManager.subscribe(toRPCPermissions: [setSe
     // Your app has permission to send the `SDLSendLocation` request for its current HMI level
 })
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -77,7 +76,7 @@ If you discover that the module does not support sending a location or that your
 !!!
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 - (void)isSendLocationSupportedWithHandler:(void (^) (BOOL success, NSError * _Nullable error))handler {
     // Check if the module has navigation capabilities
@@ -111,8 +110,6 @@ If you discover that the module does not support sending a location or that your
     }];
 }
 ```
-
-##### Swift
 ```swift
 func isSendLocationSupported(handler: @escaping (_ success: Bool, _ error: Error?) -> Void) {
     // Check if the module has navigation capabilities
@@ -140,6 +137,7 @@ func isSendLocationSupported(handler: @escaping (_ success: Bool, _ error: Error
     }
 }
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -222,7 +220,7 @@ async function isSendLocationSupported() {
 To use the @![iOS]`SDLSendLocation`!@@![android,javaSE,javaEE,javascript]`SendLocation`!@ request, you must at minimum include the longitude and latitude of the location.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLSendLocation *sendLocation = [[SDLSendLocation alloc] initWithLongitude:-97.380967 latitude:42.877737 locationName:@"The Center" locationDescription:@"Center of the United States" address:@[@"900 Whiting Dr", @"Yankton, SD 57078"] phoneNumber:nil image:nil];
 
@@ -247,8 +245,6 @@ SDLSendLocation *sendLocation = [[SDLSendLocation alloc] initWithLongitude:-97.3
     // `SDLSendLocation` successfully sent
 }];
 ```
-
-##### Swift
 ```swift
 let sendLocation = SDLSendLocation(longitude: -97.380967, latitude: 42.877737, locationName: "The Center", locationDescription: "Center of the United States", address: ["900 Whiting Dr", "Yankton, SD 57078"], phoneNumber: nil, image: nil)
 
@@ -274,6 +270,7 @@ sdlManager.send(request: sendLocation) { (request, response, error) in
     // `SDLSendLocation` successfully sent
 }
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]

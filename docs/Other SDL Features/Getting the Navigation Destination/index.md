@@ -5,7 +5,7 @@ The @![iOS]`SDLGetWayPoints`!@@![android,javaSE,javaEE,javascript]`GetWayPoints`
 Both the @![iOS]`SDLGetWayPoints`!@@![android,javaSE,javaEE,javascript]`GetWayPoints`!@ and @![iOS]`SDLSubscribeWayPoints`!@@![android,javaSE,javaEE,javascript]`SubscribeWayPoints`!@ RPCs are restricted by most OEMs. As a result, a module may reject your request if your app does not have the correct permissions. Your SDL app may also be restricted to only being allowed to get waypoints when your app is open (i.e. the `hmiLevel` is non-`NONE`) or when it is the currently active app (i.e. the `hmiLevel` is `FULL`). 
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLPermissionElement *getWayPoints = [[SDLPermissionElement alloc] initWithRPCName:SDLRPCFunctionNameGetWayPoints parameterPermissions:nil];
 SDLPermissionElement *subscribeWayPoints = [[SDLPermissionElement alloc] initWithRPCName:SDLRPCFunctionNameSubscribeWayPoints parameterPermissions:nil];
@@ -27,8 +27,6 @@ id observerId = [self.sdlManager.permissionManager subscribeToRPCPermissions:@[g
     }
 }];
 ```
-
-##### Swift
 ```swift
 let getWayPointsPermissionElement = SDLPermissionElement(rpcName: .getWayPoints, parameterPermissions: nil)
 let subscribeWayPointsPermissionElement = SDLPermissionElement(rpcName: .subscribeWayPoints, parameterPermissions: nil)
@@ -48,6 +46,7 @@ let observerId = sdlManager.permissionManager.subscribe(toRPCPermissions: [getWa
     }
 })
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -103,7 +102,7 @@ If you discover that the module does not support getting navigation waypoints or
 !!!
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 - (void)isGetWaypointsSupportedWithHandler:(void (^) (BOOL success, NSError * _Nullable error))handler {
     // Check if the module has navigation capabilities
@@ -137,8 +136,6 @@ If you discover that the module does not support getting navigation waypoints or
     }];
 }
 ```
-
-##### Swift
 ```swift
 func isGetWaypointsSupported(handler: @escaping (_ success: Bool, _ error: Error?) -> Void) {
     // Check if the module has navigation capabilities
@@ -166,6 +163,7 @@ func isGetWaypointsSupported(handler: @escaping (_ success: Bool, _ error: Error
     }
 }
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -248,7 +246,7 @@ async function isGetWaypointsSupported() {
 To subscribe to the navigation waypoints, you will have to set up your callback for whenever the waypoints are updated, then send the @![iOS]`SDLSubscribeWayPoints`!@@![android,javaSE,javaEE,javascript]`SubscribeWayPoints`!@ RPC.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 // You can subscribe any time before SDL would send the notification (such as when you call `sdlManager.start` or at initialization of your manager)
 [self.sdlManager subscribeToRPC:SDLDidReceiveWaypointNotification withObserver:self selector:@selector(waypointsDidUpdate:)];
@@ -272,8 +270,6 @@ SDLSubscribeWayPoints *subscribeWaypoints = [[SDLSubscribeWayPoints alloc] init]
     // You are now subscribed
 }];
 ```
-
-##### Swift
 ```swift
 // You can subscribe any time before SDL would send the notification (such as when you call `sdlManager.start` or at initialization of your manager)
 sdlManager.subscribe(to: .SDLDidReceiveWaypoint, observer: self, selector: #selector(waypointsDidUpdate(_:)))
@@ -297,6 +293,7 @@ sdlManager.send(request: subscribeWaypoints) { (request, response, error) in
     // You are now subscribed
 }
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -367,7 +364,7 @@ You do not have to unsubscribe from the `sdlManager.subscribe` method, you must 
 !@
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLUnsubscribeWayPoints *unsubscribeWaypoints = [[SDLUnsubscribeWayPoints alloc] init];
 [self.sdlManager sendRequest:unsubscribeWaypoints withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
@@ -379,8 +376,6 @@ SDLUnsubscribeWayPoints *unsubscribeWaypoints = [[SDLUnsubscribeWayPoints alloc]
     // You are now unsubscribed
 }];
 ```
-
-##### Swift
 ```swift
 let unsubscribeWaypoints = SDLUnsubscribeWayPoints()
 sdlManager.send(request: unsubscribeWaypoints) { (request, response, error) in
@@ -392,7 +387,7 @@ sdlManager.send(request: unsubscribeWaypoints) { (request, response, error) in
     // You are now unsubscribed
 }
 ```
-
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -440,7 +435,7 @@ if (response.getSuccess()) {
 If you only need waypoint data once without an ongoing subscription, you can use @![iOS]`SDLGetWayPoints`!@@![android,javaSE,javaEE,javascript]`GetWayPoints`!@ instead of @![iOS]`SDLSubscribeWayPoints`!@@![android,javaSE,javaEE,javascript]`SubscribeWayPoints`!@.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLGetWayPoints *getWaypoints = [[SDLGetWayPoints alloc] initWithType:SDLWayPointTypeAll];
 [self.sdlManager sendRequest:getWaypoints withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
@@ -455,8 +450,6 @@ SDLGetWayPoints *getWaypoints = [[SDLGetWayPoints alloc] initWithType:SDLWayPoin
     <#Use the waypoint data#>
 }];
 ```
-
-##### Swift
 ```swift
 let getWaypoints = SDLGetWayPoints(type: .all)
 sdlManager.send(request: getWaypoints) { (request, response, error) in
@@ -469,7 +462,7 @@ sdlManager.send(request: getWaypoints) { (request, response, error) in
     <#Use the waypoint data#>
 }
 ```
-
+~|
 !@
 
 @![android, javaSE, javaEE]

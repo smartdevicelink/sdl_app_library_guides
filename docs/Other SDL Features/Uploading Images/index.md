@@ -19,7 +19,7 @@ You should be aware of these four things when using images in your SDL app:
 Before uploading images to a head unit you should first check if the head unit supports graphics. If not, you should avoid uploading unnecessary image data. To check if graphics are supported, @![iOS]check the `SDLManager.systemCapabilityManager.defaultMainWindowCapability` property once the `SDLManager` has started successfully.!@@![android,javaSE,javaEE,javascript] check the `getCapability()` method of a valid `SystemCapabilityManager` obtained from `sdlManager.getSystemCapabilityManager()` to find out the display capabilities of the head unit.!@
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 __weak typeof (self) weakSelf = self;
 [self.sdlManager startWithReadyHandler:^(BOOL success, NSError * _Nullable error) {
@@ -32,8 +32,6 @@ __weak typeof (self) weakSelf = self;
     BOOL graphicsSupported = (mainWindowCapability.imageFields.count > 0);
 }];
 ```
-
-##### Swift
 ```swift
 sdlManager.start { [weak self] (success, error) in
     guard let self = self else { return }
@@ -47,6 +45,7 @@ sdlManager.start { [weak self] (success, error) in
     let graphicsSupported = ((mainWindowCapability?.imageFields?.count ?? 0) > 0)
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -66,9 +65,8 @@ const areImagesSupported = (imageFields.length > 0);
 ## Uploading an Image Using the File Manager
 The @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE, javascript]`FileManager`!@ uploads files and keeps track of all the uploaded files names during a session. To send data with the @![iOS]`SDLFileManager`!@ @![android, javaSE, javaEE, javascript]`FileManager`!@, you need to create either a @![iOS]`SDLFile`!@ @![android, javaSE, javaEE, javascript]`SdlFile`!@ or @![iOS]`SDLArtwork`!@ @![android, javaSE, javaEE, javascript]`SdlArtwork`!@object. @![iOS]`SDLFile` objects are created with a local `NSURL` or `NSData`; `SDLArtwork` a `UIImage`.!@ @![android]Both `SdlFile`s and `SdlArtwork`s can be created with a `Uri`, `byte[]`, or `resourceId`.!@ @![javaSE, javaEE]Both `SdlFile`s and `SdlArtwork`s can be created with using `filePath`, or `byte[]`.!@@![javascript]Both `SdlFile`s and `SdlArtwork`s can be created with using `filePath`, or `String`.!@
 
-
 @![iOS]
-##### Objective-C
+|~
 ```objc
 UIImage* image = [UIImage imageNamed:@"<#Image Name#>"];
 if (!image) {
@@ -85,8 +83,6 @@ SDLArtwork *artwork = [SDLArtwork persistentArtworkWithImage:image asImageFormat
     SDLImage *image = [[SDLImage alloc] initWithName:artworkName isTemplate:<#BOOL#>];
 }];
 ```
-
-##### Swift
 ```swift
 guard let image = UIImage(named: "<#Image Name#>") else {
 	<#Error reading from assets#>
@@ -101,6 +97,7 @@ sdlManager.fileManager.upload(artwork: artwork) { (success, artworkName, bytesAv
     let graphic = SDLImage(name: artworkName, isTemplate: <#Bool#>)
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
