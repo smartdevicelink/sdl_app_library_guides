@@ -7,12 +7,11 @@ The head unit manufacturer will determine how these voice commands are triggered
 
 You have the ability to create voice command shortcuts to your [Main Menu](Displaying a User Interface/Main Menu) cells which we highly recommended that you implement. Global voice commands should be created for functions that you wish to make available as voice commands that are **not** available as menu cells. We recommend creating global voice commands for common actions such as the actions performed by your [Soft Buttons](Displaying a User Interface/Template Custom Buttons).
 
-
 ## Creating Voice Commands
 To create voice commands, you simply create and set @![iOS]`SDLVoiceCommand`!@ @![android, javaSE, javaEE, javascript]`VoiceCommand`!@ objects to the `voiceCommands`  @![iOS, javascript]array!@ @![android, javaSE, javaEE]List!@ on the screen manager.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLVoiceCommand *voiceCommand = [[SDLVoiceCommand alloc] initWithVoiceCommands:@[<#NSString#>] handler:^{
     <#Voice command selected#>
@@ -20,8 +19,6 @@ SDLVoiceCommand *voiceCommand = [[SDLVoiceCommand alloc] initWithVoiceCommands:@
 
 self.sdlManager.screenManager.voiceCommands = @[voiceCommand];
 ```
-
-##### Swift
 ```swift
 let voiceCommand = SDLVoiceCommand(voiceCommands: [<#String#>]) {
     <#Voice command triggered#>
@@ -29,6 +26,7 @@ let voiceCommand = SDLVoiceCommand(voiceCommands: [<#String#>]) {
 
 sdlManager.screenManager.voiceCommands = [voiceCommand]
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -57,15 +55,14 @@ sdlManager.getScreenManager().setVoiceCommands([voiceCommand]);
 @![iOS, android, javaSE, javaEE]To delete previously set voice commands, you just have to set an empty !@ @![iOS]array!@ @![android, javaSE, javaEE]List!@ @![iOS, android, javaSE, javaEE] to the `voiceCommands` !@ @![iOS]array!@ @![android, javaSE, javaEE]List!@ @![iOS, android, javaSE, javaEE] on the screen manager.!@ @![javascript] The JavaScript Suite currently does not support clearing previously set voice commands without setting new voice commands.!@
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 self.sdlManager.screenManager.voiceCommands = [];
 ```
-
-##### Swift
 ```swift
 sdlManager.screenManager.voiceCommands = []
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]

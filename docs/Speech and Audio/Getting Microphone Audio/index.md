@@ -14,15 +14,14 @@ Before you start an audio capture session you need to find out what audio pass t
 You must use a sampling rate, bit rate, and audio type supported by the module. Once you have successfully connected to the module, you can access these properties on the @![iOS]`SDLManager.systemCapabilityManager`!@@![android,javaSE,javaEE,javascript]`sdlManager.getSystemCapabilityManager`!@ instance.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 NSArray<SDLAudioPassThruCapabilities *> *audioPassThruCapabilities = self.sdlManager.systemCapabilityManager.audioPassThruCapabilities;
 ```
-
-##### Swift
 ```swift
 let audioPassThruCapabilities = sdlManager.systemCapabilityManager.audioPassThruCapabilities
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -60,7 +59,7 @@ The module may return one or multiple supported audio pass thru capabilities. Ea
 To initiate audio capture, first construct a @![iOS]`SDLPerformAudioPassThru`!@@![android,javaSE,javaEE,javascript]`PerformAudioPassThru`!@ request. 
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLPerformAudioPassThru *audioPassThru = [[SDLPerformAudioPassThru alloc] initWithInitialPrompt:@"<#A speech prompt when the dialog appears#>" audioPassThruDisplayText1:@"<#Ask me \"What's the weather?\"#>" audioPassThruDisplayText2:@"<#or \"What is 1 + 2?\"#>" samplingRate:SDLSamplingRate16KHZ bitsPerSample:SDLBitsPerSample16Bit audioType:SDLAudioTypePCM maxDuration:<#Time in milliseconds to keep the dialog open#> muteAudio:YES];
 
@@ -77,8 +76,6 @@ SDLPerformAudioPassThru *audioPassThru = [[SDLPerformAudioPassThru alloc] initWi
     }
 }];
 ```
-
-##### Swift
 ```swift
 let audioPassThru = SDLPerformAudioPassThru(initialPrompt: "<#A speech prompt when the dialog appears#>", audioPassThruDisplayText1: "<#Ask me \"What's the weather?\"#>", audioPassThruDisplayText2: "<#or \"What is 1 + 2?\"#>", samplingRate: .rate16KHZ, bitsPerSample: .sample16Bit, audioType: .PCM, maxDuration: <#Time in milliseconds to keep the dialog open#>, muteAudio: true)
 
@@ -98,6 +95,7 @@ sdlManager.send(request: audioPassThru) { (request, response, error) in
     }
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -164,7 +162,7 @@ This audio data is only the current chunk of audio data, so the app is in charge
 !!!
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLPerformAudioPassThru *audioPassThru = <#SDLPerformAudioPassThru#>;
 
@@ -175,8 +173,6 @@ audioPassThru.audioDataHandler = ^(NSData * _Nullable audioData) {
 
 [self.sdlManager sendRequest:audioPassThru];
 ```
-
-##### Swift
 ```swift
 let audioPassThru = <#SDLPerformAudioPassThru#>
 
@@ -187,6 +183,7 @@ audioPassThru.audioDataHandler = { (data) in
 
 sdlManager.send(audioPassThru)
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -239,7 +236,7 @@ Audio capture can be ended four ways:
 To force stop audio capture, simply send an @![iOS]`SDLEndAudioPassThru`!@@![android,javaSE,javaEE,javascript]`EndAudioPassThru`!@ request. Your @![iOS]`SDLPerformAudioPassThru`!@@![android,javaSE,javaEE,javascript]`PerformAudioPassThru`!@ request will receive response with a `resultCode` of `SUCCESS` when the audio pass thru has ended.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLEndAudioPassThru *endAudioPassThru = [[SDLEndAudioPassThru alloc] init];
 [self.sdlManager sendRequest:endAudioPassThru withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
@@ -249,11 +246,7 @@ SDLEndAudioPassThru *endAudioPassThru = [[SDLEndAudioPassThru alloc] init];
     }
     // The end audio pass thru was sent successfully
 }];
-
-
 ```
-
-##### Swift
 ```swift
 let endAudioPassThru = SDLEndAudioPassThru()
 sdlManager.send(request: endAudioPassThru) { (request, response, error) in
@@ -265,6 +258,7 @@ sdlManager.send(request: endAudioPassThru) { (request, response, error) in
     // The end audio pass thru was sent successfully
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
