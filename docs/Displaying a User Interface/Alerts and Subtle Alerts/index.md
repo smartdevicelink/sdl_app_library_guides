@@ -5,17 +5,16 @@ SDL supports two types of alerts: a large popup alert that typically takes over 
 Your SDL app may be restricted to only being allowed to send an alert when your app is open (i.e. the `hmiLevel` is non-`NONE`) or when it is the currently active app (i.e. the `hmiLevel` is `FULL`). Subtle alert is a new feature (RPC v7.0+) and may not be supported on all modules.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 BOOL isAlertAllowed = [self.sdlManager.permissionManager isRPCNameAllowed:SDLRPCFunctionNameAlert];
 BOOL isSubtleAlertAllowed = [self.sdlManager.permissionManager isRPCNameAllowed:SDLRPCFunctionNameSubtleAlert];
 ```
-
-##### Swift
 ```swift
 let isAlertAllowed = sdlManager.permissionManager.isRPCNameAllowed(.alert)
 let isSubtleAlertAllowed = sdlManager.permissionManager.isRPCNameAllowed(.subtleAlert)
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -57,15 +56,14 @@ An @![android,javaSE,javaEE, javascript]`AlertView`!@@![iOS]`SDLAlertView`!@ mus
 #### Text
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLAlertView *alertView = [[SDLAlertView alloc] initWithText:<#(nullable NSString *)#> secondaryText:<#(nullable NSString *)#> tertiaryText:<#(nullable NSString *)#> timeout:<#(nullable NSNumber<SDLFloat> *)#> showWaitIndicator:<#(nullable NSNumber<SDLBool> *)#> audioIndication:<#(nullable SDLAlertAudioData *)#> buttons:<#(nullable NSArray<SDLSoftButtonObject *> *)#> icon:<#(nullable SDLArtwork *)#>];
 ```
-
-##### Swift
 ```swift
 let alertView = SDLAlertView(text: <#String?#>, secondaryText: <#String?#>, tertiaryText: <#String?#>, timeout: <#NSNumber?#>, showWaitIndicator: <#NSNumber?#>, audioIndication: <#SDLAlertAudioData?#>, buttons: <#[SDLSoftButtonObject]?#>, icon: <#SDLArtwork?#>)
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -90,15 +88,14 @@ const alertView = new SDL.manager.screen.utils.AlertView()
 #### Buttons
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 alertView.softButtons = <#[SDLSoftButtonObject]?#>;
 ```
-
-##### Swift
 ```swift
 alertView.softButtons = <#[SDLSoftButtonObject]?#>
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -119,15 +116,14 @@ An alert can include a custom or static (built-in) image that will be displayed 
 ![Generic - Alert](assets/Generic_alertIcon.png)
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 alertView.icon = <#(nullable SDLArtwork *)#>;
 ```
-
-##### Swift
 ```swift
 alertView.icon = <#SDLArtwork?#>
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -146,15 +142,14 @@ alertView.setIcon(SdlArtwork);
 An optional timeout can be added that will dismiss the alert when the duration is over. Typical timeouts are between 3 and 10 seconds. If omitted, a default of 5 seconds is used. 
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 alertView.timeout = 5;
 ```
-
-##### Swift
 ```swift
 alertView.timeout = 5
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -175,14 +170,14 @@ Not all modules support a progress indicator. If supported, the alert will show 
 
 @![iOS]
 ##### Objective-C
+|~
 ```objc
 alertView.showWaitIndicator = YES;
 ```
-
-##### Swift
 ```swift
 alertView.showWaitIndicator = true
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -201,17 +196,16 @@ alertView.setShowWaitIndicator(true);
 An alert can also speak a prompt or play a sound file when the alert appears on the screen. This is done by creating an @![android,javaSE,javaEE, javascript]`AlertAudioData`!@@![iOS]`SDLAlertAudioData`!@ object and setting it in the @![android,javaSE,javaEE, javascript]`AlertView`!@@![iOS]`SDLAlertView`!@
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLAlertAudioData *alertAudioData = [[SDLAlertAudioData alloc] initWithSpeechSynthesizerString:<#(nonnull NSString *)#>];
 alertView.audio = alertAudioData;
 ```
-
-##### Swift
 ```swift
 let alertAudioData = SDLAlertAudioData(speechSynthesizerString: <#String#>)
 alertView.audio = alertAudioData
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -231,17 +225,16 @@ alertView.setAudio(alertAudioData);
 @![android,javaSE,javaEE, javascript]`AlertAudioData`!@@![iOS]`SDLAlertAudioData`!@ can also play an audio file. 
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLAlertAudioData *alertAudioData = [[SDLAlertAudioData alloc] initWithAudioFile:<#(nonnull SDLFile *)#>];
 alertView.audio = alertAudioData;
 ```
-
-##### Swift
 ```swift
 let alertAudioData = SDLAlertAudioData(audioFile: <#SDLFile#>)
 alertView.audio = alertAudioData
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -261,17 +254,16 @@ alertView.setAudio(alertAudioData);
 You can also play a combination of audio files and text-to-speech strings. The audio will be played in the order you add them to the @![android,javaSE,javaEE, javascript]`AlertAudioData`!@@![iOS]`SDLAlertAudioData`!@ object.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLAlertAudioData *alertAudioData = [[SDLAlertAudioData alloc] initWithAudioFile:<#(nonnull SDLFile *)#>];
 [alertAudioData addSpeechSynthesizerStrings:<#(nonnull NSArray<NSString *> *)#>];
 ```
-
-##### Swift
 ```swift
 let alertAudioData = SDLAlertAudioData(audioFile: <#SDLFile#>)
 alertAudioData.addSpeechSynthesizerStrings(<#[String]#>)
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -297,17 +289,16 @@ alertAudioData.addSpeechSynthesizerStrings(textToSpeech);
 To play a notification sound when the alert appears, set `playTone` to `true`.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLAlertAudioData *alertAudioData = [[SDLAlertAudioData alloc] initWithSpeechSynthesizerString:<#(nonnull NSString *)#>];
 alertAudioData.playTone = YES;
 ```
-
-##### Swift
 ```swift
 let alertAudioData = SDLAlertAudioData(speechSynthesizerString: <#String#>)
 alertAudioData.playTone = true
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -327,7 +318,7 @@ const alertAudioData = new SDL.manager.screen.utils.AlertAudioData('Text to Spea
 ### Showing the Alert
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 [sdlManager.screenManager presentAlert:alertView withCompletionHandler:^(NSError * _Nullable error) {
     if (error != nil) {
@@ -338,8 +329,6 @@ const alertAudioData = new SDL.manager.screen.utils.AlertAudioData('Text to Spea
     // Alert was presented successfully
 }];
 ```
-
-##### Swift
 ```swift
 sdlManager.screenManager.presentAlert(alertView) { error in
     if let error = error {
@@ -350,6 +339,7 @@ sdlManager.screenManager.presentAlert(alertView) { error in
     // Alert was presented successfully
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -393,15 +383,14 @@ Canceling the alert will only dismiss the displayed alert. If the alert has audi
 
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 [alertView cancel];
 ```
-
-##### Swift
 ```swift
 alertView.cancel()
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -443,15 +432,14 @@ The following steps show you how to add text, images, buttons, and sound to your
 #### Text
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLSubtleAlert *subtleAlert = [[SDLSubtleAlert alloc] initWithAlertText1:<#(nullable NSString *)#> alertText2:<#(nullable NSString *)#> alertIcon:<#(nullable SDLImage *)#> ttsChunks:<#(nullable NSArray<SDLTTSChunk *> *)#> duration:<#(nullable NSNumber<SDLUInt> *)#> softButtons:<#(nullable NSArray<SDLSoftButton *> *)#> cancelID:<#(nullable NSNumber<SDLInt> *)#>];
 ```
-
-##### Swift
 ```swift
 let subtleAlert = SDLSubtleAlert(alertText1: <#String?#>, alertText2: <#String?#>, alertIcon: <#SDLImage?#>, ttsChunks: <#[SDLTTSChunk]?#>, duration: <#(NSNumber & SDLUInt)?#>, softButtons: <#[SDLSoftButton]?#>, cancelID: <#(NSNumber & SDLInt)?#>)
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -475,7 +463,7 @@ const subtleAlert = new SDL.rpc.messages.SubtleAlert()
 #### Buttons
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLSoftButton *button1 = [[SDLSoftButton alloc] initWithType:<#(nonnull SDLSoftButtonType)#> text:<#(nullable NSString *)#> image:<#(nullable SDLImage *)#> highlighted:<#(BOOL)#> buttonId:<#(UInt16)#> systemAction:<#(nullable SDLSystemAction)#> handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     if (buttonPress == nil) {
@@ -487,8 +475,6 @@ SDLSoftButton *button1 = [[SDLSoftButton alloc] initWithType:<#(nonnull SDLSoftB
 
 subtleAlert.softButtons = @[button1];
 ```
-
-##### Swift
 ```swift
 let button1 = SDLSoftButton(type: <#SDLSoftButtonType#>, text: <#String?#>, image: <#SDLImage?#>, highlighted: <#Bool#>, buttonId: <#UInt16#>, systemAction: <#SDLSystemAction?#>) { (buttonPress, buttonEvent) in
     guard buttonPress != nil else { return }
@@ -497,6 +483,7 @@ let button1 = SDLSoftButton(type: <#SDLSoftButtonType#>, text: <#String?#>, imag
 
 subtleAlert.softButtons = [button1]
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -549,15 +536,14 @@ A subtle alert can include a custom or static (built-in) image that will be disp
 ![Generic - Subtle Alert](assets/Generic_subtleAlertIcon.png)
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 subtleAlert.alertIcon = [[SDLImage alloc] initWithName:<#(nonnull NSString *)#> isTemplate:<#(BOOL)#>];
 ```
-
-##### Swift
 ```swift
 subtleAlert.alertIcon = SDLImage(name: <#String#>, isTemplate: <#Bool#>)
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -578,17 +564,16 @@ subtleAlert.setAlertIcon(new SDL.rpc.structs.Image()
 An optional timeout can be added that will dismiss the subtle alert when the duration is over. Typical timeouts are between 3 and 10 seconds. If omitted, a default of 5 seconds is used.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 // Duration timeout is in milliseconds
 subtleAlert.duration = @4000;
 ```
-
-##### Swift
 ```swift
 // Duration timeout is in milliseconds
 subtleAlert.duration = NSNumber(4000)
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -607,15 +592,14 @@ subtleAlert.setDuration(5000);
 A subtle alert can also speak a prompt or play a sound file when the subtle alert appears on the screen. This is done by setting the `ttsChunks` parameter.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 subtleAlert.ttsChunks = [SDLTTSChunk textChunksFromString:<#(nonnull NSString *)#>];
 ```
-
-##### Swift
 ```swift
 subtleAlert.ttsChunks = SDLTTSChunk.textChunks(from: <#String#>)
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -636,15 +620,14 @@ subtleAlert.setTtsChunks([chunk]);
 The `ttsChunks` parameter can also take a file to play/speak. For more information on how to upload the file please refer to the [Playing Audio Indications](Speech and Audio/Playing Audio Indications) guide.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 subtleAlert.ttsChunks = [SDLTTSChunk fileChunksWithName:<#(nonnull NSString *)#>];
 ```
-
-##### Swift
 ```swift
 subtleAlert.ttsChunks = SDLTTSChunk.fileChunks(withName: <#String#>)
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -666,7 +649,7 @@ subtleAlert.setTtsChunk([ttsChunk]);
 ### Showing the Subtle Alert
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 [self.sdlManager sendRequest:subtleAlert withResponseHandler:^(SDLRPCRequest *request, SDLRPCResponse *response, NSError *error) {
     if (!response.success.boolValue) { 
@@ -677,8 +660,6 @@ subtleAlert.setTtsChunk([ttsChunk]);
     <#Subtle alert was shown successfully#>
 }];
 ```
-
-##### Swift
 ```swift
 sdlManager.send(request: subtleAlert) { (request, response, error) in
     guard response?.success.boolValue == true else {
@@ -689,6 +670,7 @@ sdlManager.send(request: subtleAlert) { (request, response, error) in
     <#Subtle alert was shown successfully#>
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -729,7 +711,7 @@ if (response.getSuccess()) {
 If desired, you can be notified when the user tapped on the subtle alert by registering for the @![iOS]`SDLOnSubtleAlertPressed`!@@![android,javaSE,javaEE,javascript]`OnSubtleAlertPressed`!@ notification. 
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 [self.sdlManager subscribeToRPC:SDLDidReceiveSubtleAlertPressedNotification withObserver:self selector:@selector(subtleAlertPressed)];
 
@@ -737,8 +719,6 @@ If desired, you can be notified when the user tapped on the subtle alert by regi
     <#The subtle alert was pressed#>
 }
 ```
-
-##### Swift
 ```swift
 sdlManager.subscribe(to: .SDLDidReceiveSubtleAlertPressed, observer: self, selector: #selector(subtleAlertPressed))
 
@@ -746,6 +726,7 @@ sdlManager.subscribe(to: .SDLDidReceiveSubtleAlertPressed, observer: self, selec
     <#The subtle alert was pressed#>
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -779,7 +760,7 @@ There are two ways to dismiss a subtle alert. The first way is to dismiss a spec
 #### Dismissing a Specific Subtle Alert
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 // `cancelID` is the ID that you assigned when creating and sending the subtle alert
 SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWithSubtleAlertCancelID:cancelID];
@@ -791,8 +772,6 @@ SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWith
     <#The subtle alert was canceled successfully#>
 }];
 ```
-
-##### Swift
 ```swift
 // `cancelID` is the ID that you assigned when creating and sending the subtle alert
 let cancelInteraction = SDLCancelInteraction(subtleAlertCancelID: cancelID)
@@ -805,6 +784,7 @@ sdlManager.send(request: cancelInteraction) { (request, response, error) in
     <#The subtle alert was canceled successfully#>
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -849,7 +829,7 @@ if (response.getSuccess()) {
 #### Dismissing the Current Subtle Alert
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLCancelInteraction *cancelInteraction = [SDLCancelInteraction subtleAlert];
 [self.sdlManager sendRequest:cancelInteraction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
@@ -860,8 +840,6 @@ SDLCancelInteraction *cancelInteraction = [SDLCancelInteraction subtleAlert];
     <#The subtle alert was canceled successfully#>
 }];
 ```
-
-##### Swift
 ```swift
 let cancelInteraction = SDLCancelInteraction.subtleAlert()
 sdlManager.send(request: cancelInteraction) { (request, response, error) in
@@ -873,6 +851,7 @@ sdlManager.send(request: cancelInteraction) { (request, response, error) in
     <#The subtle alert was canceled successfully#>
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]

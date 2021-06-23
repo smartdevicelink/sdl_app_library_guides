@@ -22,16 +22,16 @@ On some newer head units, you may have the option to display menu items as a gri
 !@
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLMenuConfiguration *menuConfiguration = [[SDLMenuConfiguration alloc] initWithMainMenuLayout:<#SDLMenuLayout#> defaultSubmenuLayout:<#SDLMenuLayout#>];
 self.sdlManager.screenManager.menuConfiguration = menuConfiguration;
 ```
-##### Swift
 ```swift
 let menuConfiguration = SDLMenuConfiguration(mainMenuLayout: <#SDLMenuLayout#>, defaultSubmenuLayout: <#SDLMenuLayout#>)
 sdlManager.screenManager.menuConfiguration = menuConfiguration
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -59,7 +59,7 @@ To determine if the head unit supports displaying these fields, you can check th
 !@
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 // Create the menu cell
 SDLMenuCell *cell = [[SDLMenuCell alloc] initWithTitle:<#NSString#> secondaryText:<#(nullable NSString *)#> tertiaryText:<#(nullable NSString *)#> icon:<#SDLArtwork#> secondaryArtwork:<#(nullable SDLArtwork *)#> voiceCommands:<#@[NSString]#> handler:^(SDLTriggerSource  _Nonnull triggerSource) {
@@ -69,8 +69,6 @@ SDLMenuCell *cell = [[SDLMenuCell alloc] initWithTitle:<#NSString#> secondaryTex
 
 self.sdlManager.screenManager.menu = @[cell];
 ```
-
-##### Swift
 ```swift
 // Create the menu cell
 let cell = SDLMenuCell(title: <#String#>, secondaryText: <#String?#>, tertiaryText: <#String?#>, icon: <#SDLArtwork?#>, secondaryArtwork: <#SDLArtwork?#>, voiceCommands: <#[String]?#>) { (triggerSource: SDLTriggerSource) in
@@ -80,6 +78,7 @@ let cell = SDLMenuCell(title: <#String#>, secondaryText: <#String?#>, tertiaryTe
 
 sdlManager.screenManager.menu = [cell]
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -103,7 +102,7 @@ Adding a submenu is as simple as adding subcells to a !@@![iOS]`SDLMenuCell`!@@!
 !@
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 // Create the inner menu cell
 SDLMenuCell *cell = [[SDLMenuCell alloc] initWithTitle:<#NSString#> secondaryText:<#(nullable NSString *)#> tertiaryText:<#(nullable NSString *)#> icon:<#SDLArtwork#> secondaryArtwork:<#(nullable SDLArtwork *)#> voiceCommands:<#@[NSString]#> handler:^(SDLTriggerSource  _Nonnull triggerSource) {
@@ -115,8 +114,6 @@ SDLMenuCell *cell = [[SDLMenuCell alloc] initWithTitle:<#NSString#> secondaryTex
 SDLMenuCell *submenuCell = [[SDLMenuCell alloc] initWithTitle:<#NSString#> secondaryText:<#(nullable NSString *)#> tertiaryText:<#(nullable NSString *)#> icon:<#SDLArtwork?#> secondaryArtwork:<#(nullable SDLArtwork *)#> submenuLayout:<#SDLMenuLayout#> subCells:@[cell]];
 self.sdlManager.screenManager.menu = @[submenuCell];
 ```
-
-##### Swift
 ```swift
 // Create the inner menu cell
 let cell = SDLMenuCell(title: <#String#>, secondaryText: <#String?#>, tertiaryText: <#String?#>, icon: <#SDLArtwork?#>, secondaryArtwork: <#SDLArtwork?#>, voiceCommands: <#[String]?#>) { (triggerSource: SDLTriggerSource) in
@@ -127,6 +124,7 @@ let cell = SDLMenuCell(title: <#String#>, secondaryText: <#String?#>, tertiaryTe
 let submenuCell = SDLMenuCell(title: <#String#>, secondaryText: <#String?#>, tertiaryText: <#String?#>, icon: <#SDLArtwork?#>, secondaryArtwork: <#SDLArtwork?#>, submenuLayout: <#SDLMenuLayout#>, subCells: [cell])
 sdlManager.screenManager.menu = [submenuCell]
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
