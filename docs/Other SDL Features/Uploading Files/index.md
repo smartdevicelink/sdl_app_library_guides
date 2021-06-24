@@ -117,7 +117,7 @@ const files = await sdlManager.getFileManager().uploadFiles(sdlFileList)
 BOOL isPersistent = file.isPersistent;
 ```
 ```swift
-let isPersistent = file.isPersistent;
+let isPersistent = file.isPersistent
 ```
 ~|
 !@
