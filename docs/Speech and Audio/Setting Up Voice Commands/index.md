@@ -54,9 +54,11 @@ sdlManager.getScreenManager().setVoiceCommands([voiceCommand]);
 !@
 
 ### Unsupported Voice Commands
-The library automatically filters out empty strings and whitespace-only strings from a voice command's @![iOS, javascript]array!@@![android, javaSE, javaEE]list!@ of strings. For example, if a voice command has the following @![iOS, javascript]array!@@![android, javaSE, javaEE]list!@ values: `[" ", "First", "", "Voice Command"]` the library will filter it to: `["First", "Voice Command"]`.
+The library automatically filters out empty strings and whitespace-only strings from a voice command's @![iOS, javascript]array!@@![android, javaSE, javaEE]list!@ of strings. For example, if a voice command has the following @![iOS, javascript]array!@@![android, javaSE, javaEE]list!@ values: `[" ", "CommandA", "", "Command A"]` the library will filter it to: `["CommandA", "Command A"]`.
 
-If you provide @![iOS, javascript]an array!@@![android, javaSE, javaEE]a list!@ of voice commands which only contains empty string and whitespace-only strings across all of the voice commands, the upload request will be aborted and the previous voice commands will remain available.
+If you provide @![iOS, javascript]an array!@@![android, javaSE, javaEE]a list!@ of voice commands which only contains empty string and whitespace-only strings across all of the voice commands, or if you send voice commands with duplicate strings in different @![iOS, javascript]arrays!@@![android, javaSE, javaEE]lists!@ the following way `(["Command A", "Command B"], ["Command B", "Command C"], ["Command D", "Command E"])`, the upload request will be aborted and the previous voice commands will remain available.
+
+Voice commands that are sent with duplicate strings in the same @![iOS, javascript]array!@@![android, javaSE, javaEE]list!@ will be reduced to one by the library. For example if the voice commands to be sent are: `["Command A", "Command A", "Command B"], ["Command C", "Command D"]` will become: `["Command A", "Command B"], ["Command C", "Command D"]`
 
 ## Deleting Voice Commands
 To delete previously set voice commands, you just have to set an empty @![iOS, javascript]array!@ @![android, javaSE, javaEE]List!@ to the `voiceCommands` @![iOS, javascript]array!@ @![android, javaSE, javaEE]List!@ on the screen manager.
