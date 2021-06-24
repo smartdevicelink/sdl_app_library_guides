@@ -58,6 +58,7 @@ The library automatically filters out empty strings and whitespace-only strings 
 
 If you provide @![iOS, javascript]an array!@@![android, javaSE, javaEE]a list!@ of voice commands which only contains empty string and whitespace-only strings across all of the voice commands, the upload request will be aborted and the previous voice commands will remain available.
 
+#### Duplicate Strings
 Voice commands that are sent with duplicate strings in different @![iOS, javascript]arrays!@@![android, javaSE, javaEE]lists!@ the following way `(["Command A", "Command B"], ["Command B", "Command C"], ["Command D", "Command E"])`, will also abort the upload request and the previous voice commands will remain available.
 
 In a case where the voice commands contains duplicate strings in the same @![iOS, javascript]array!@@![android, javaSE, javaEE]list!@, they will be reduced to one. For example if the voice commands to be sent are: `(["Command A", "Command A", "Command B"], ["Command C", "Command D"])` will become: `(["Command A", "Command B"], ["Command C", "Command D"])`.
