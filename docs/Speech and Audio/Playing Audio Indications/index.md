@@ -5,21 +5,20 @@ You can pass an uploaded audio file's name to @![iOS]`SDLTTSChunk`!@@![android, 
 The first step is to make sure the audio file is available on the remote system. To upload the file use the @![iOS]`SDLFileManager`!@@![android, javaSE, javaEE, javascript]`FileManager`!@.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLFile *audioFile = [[SDLFile alloc] initWithFileURL:<#File location on disk#> name:<#Audio file name#> persistent:<#True if the file will be used beyond just this session#>];
 [self.sdlManager.fileManager uploadFile:audioFile completionHandler:^(BOOL success, NSUInteger bytesAvailable, NSError * _Nullable error) {
     <#audio file is ready if success is true#>
 }];
 ```
-
-##### Swift
 ```swift
 let audioFile = SDLFile(fileURL: <#File location on disk#>, name: <#Audio file name#>, persistent: <#True if the file will be used beyond just this session#>)
 sdlManager.fileManager.upload(file: audioFile) { (success, bytesAvailable, error) in
     <#audio file is ready if success is true#>
 }
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -47,19 +46,18 @@ For more information about uploading files, see the [Uploading Files guide](Othe
 Now that the file is uploaded to the remote system, it can be used in various RPCs, such as `Speak`, `Alert`, and `AlertManeuver`. To use the audio file in an alert, you simply need to construct a @![iOS]`SDLTTSChunk`!@@![android, javaSE, javaEE, javascript]`TTSChunk`!@ referring to the file's name.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLAlert *alert = [[SDLAlert alloc] init];
 alert.ttsChunks = [SDLTTSChunk fileChunksWithName:<#Audio file name#>];
 [self.sdlManager sendRequest:alert];
 ```
-
-##### Swift
 ```swift
 let alert = SDLAlert()
 alert.ttsChunks = SDLTTSChunk.fileChunks(withName: <#Audio file name#>)
 sdlManager.send(alert)
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]

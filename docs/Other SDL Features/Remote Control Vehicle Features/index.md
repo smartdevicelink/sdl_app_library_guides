@@ -141,21 +141,20 @@ Prior to using any remote control RPCs, you must check that the head unit has th
 When connected to head units supporting RPC v6.0+, you should save this information for future use. The `moduleId` contained within the `moduleInfo` struct on each capability is necessary to control that module.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 [self.sdlManager.systemCapabilityManager subscribeToCapabilityType:SDLSystemCapabilityTypeRemoteControl withUpdateHandler:^(SDLSystemCapability * _Nullable capability, BOOL subscribed, NSError * _Nullable error) {
     if (!capability.remoteControlCapability) { return; }
     <#Save the remote control capabilities#>
 }];
 ```
-
-##### Swift
 ```swift
 sdlManager.systemCapabilityManager.subscribe(capabilityType: .remoteControl) { (capability, subscribed, error) in
     guard capability?.remoteControlCapability != nil else { return }
     <#Save the remote control capabilities#>
 }
 ```
+~|
 !@
 
 @![android,javaEE,javaSE]
@@ -191,7 +190,7 @@ This data is only available when connected to SDL RPC v6.0+ systems. On previous
 !!!
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 // Get the first climate module's information
 SDLClimateControlCapabilities *firstClimateModule = <#Remote Control Capabilities#>.climateControlCapabilities.firstObject;
@@ -199,8 +198,6 @@ SDLClimateControlCapabilities *firstClimateModule = <#Remote Control Capabilitie
 NSString *climateModuleId = firstClimateModule.moduleInfo.moduleId;
 SDLGrid *climateModuleLocation = firstClimateModule.moduleInfo.location;
 ```
-
-##### Swift
 ```swift
 // Get the first climate module's information
 let firstClimateModule = <#Remote Control Capabilities#>.climateControlCapabilities?.first;
@@ -208,6 +205,7 @@ let firstClimateModule = <#Remote Control Capabilities#>.climateControlCapabilit
 let climateModuleId = firstClimateModule?.moduleInfo?.moduleId;
 let climateModuleLocation = firstClimateModule?.moduleInfo?.location;
 ```
+~|
 !@
 
 @![android,javaEE,javaSE]
@@ -235,7 +233,7 @@ Before you attempt to take control of any module, you should have your user sele
 An array of seats can be found in the `seatLocationCapability`'s `seat` array. Each @![iOS]`SDLSeatLocation`!@@![android, javaSE, javaEE, javascript]`SeatLocation`!@ object within the `seats` array will have a `grid` parameter. The `grid` will tell you the seat placement of that particular seat. This information is useful for creating a seat location map from which users can select their seat.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 [self.sdlManager.systemCapabilityManager subscribeToCapabilityType:SDLSystemCapabilityTypeSeatLocation withUpdateHandler:^(SDLSystemCapability * _Nullable capability, BOOL subscribed, NSError * _Nullable error) {
     if (!capability.seatLocationCapability) { return; }
@@ -244,8 +242,6 @@ An array of seats can be found in the `seatLocationCapability`'s `seat` array. E
     <#Save seat location capabilities#>
 }];
 ```
-
-##### Swift
 ```swift
 sdlManager.systemCapabilityManager.subscribe(capabilityType: .seatLocation) { (capability, subscribed, error) in
     guard let seatLocationCapability = capability?.seatLocationCapability else { return }
@@ -254,6 +250,7 @@ sdlManager.systemCapabilityManager.subscribe(capabilityType: .seatLocation) { (c
     <#Save seat location capabilities#>
 }
 ```
+~|
 !@
 
 @![android,javaEE,javaSE]
@@ -301,7 +298,7 @@ The `grid` system starts with the front left corner of the bottom level of the v
 When the user selects their seat, you must send an @![iOS]`SDLSetGlobalProperties`!@@![android, javaSE, javaEE,javascript]`SetGlobalProperties`!@ RPC with the appropriate `userLocation` property in order to update that user's location within the vehicle (The default seat location is `Driver`).
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLSetGlobalProperties *seatLocation = [[SDLSetGlobalProperties alloc] init];
 seatLocation.userLocation = <#Selected Seat#>;
@@ -310,8 +307,6 @@ seatLocation.userLocation = <#Selected Seat#>;
     <#Seat location updated#>
 }];
 ```
-
-##### Swift
 ```swift
 let seatLocation = SDLSetGlobalProperties()
 seatLocation.userLocation = <#Selected Seat#>;
@@ -320,6 +315,7 @@ sdlManager.send(request: seatLocation, responseHandler: { (request, response, er
     <#Seat location updated#>
 })
 ```
+~|
 !@
 
 @![android,javaEE,javaSE]
@@ -366,7 +362,7 @@ Subscribing to the `OnInteriorVehicleData` notification must be done before send
 !!!
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 [self.sdlManager subscribeToRPC:SDLDidReceiveInteriorVehicleDataNotification withBlock:^(__kindof SDLRPCMessage * _Nonnull message) {
     SDLRPCNotificationNotification *dataNotification = (SDLRPCNotificationNotification *)message;
@@ -378,30 +374,6 @@ Subscribing to the `OnInteriorVehicleData` notification must be done before send
     <#Code#>
 }];
 ```
-
-After you subscribe to the `SDLDidReceiveInteriorVehicleDataNotification` you must also subscribe to the module you wish to receive updates for. Subscribing to a module will send a notification when that particular module is changed.
-
-###### RPC < v6.0
-```objc
-SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData alloc] initAndSubscribeToModuleType:SDLModuleTypeRadio moduleId:<#(nonnull NSString *)#>];
-[self.sdlManager sendRequest:getInteriorVehicleData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    SDLGetInteriorVehicleDataResponse *dataResponse = (SDLGetInteriorVehicleDataResponse *)response;
-    // This can now be used to retrieve data
-    <#Code#>
-}];
-```
-
-###### RPC v6.0+
-```objc
-SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData alloc] initAndSubscribeToModuleType:SDLModuleTypeRadio moduleId:@"<#ModuleID#>"];
-[self.sdlManager sendRequest:getInteriorVehicleData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    SDLGetInteriorVehicleDataResponse *dataResponse = (SDLGetInteriorVehicleDataResponse *)response;
-    // This can now be used to retrieve data
-    <#Code#>
-}];
-```
-
-##### Swift
 ```swift
 sdlManager.subscribe(to: .SDLDidReceiveInteriorVehicleData) { (message) in
     guard let onInteriorVehicleData = message as? SDLOnInteriorVehicleData else { return }
@@ -411,10 +383,20 @@ sdlManager.subscribe(to: .SDLDidReceiveInteriorVehicleData) { (message) in
     <#Code#>
 }
 ```
+~|
 
-After you subscribe to the `.SDLDidReceiveInteriorVehicleData` you must also subscribe to the module you wish to receive updates for. Subscribing to a module will send a notification when that particular module is changed.
+After you subscribe to the `SDLDidReceiveInteriorVehicleDataNotification` you must also subscribe to the module you wish to receive updates for. Subscribing to a module will send a notification when that particular module is changed.
 
 ###### RPC < v6.0
+|~
+```objc
+SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData alloc] initAndSubscribeToModuleType:SDLModuleTypeRadio moduleId:<#(nonnull NSString *)#>];
+[self.sdlManager sendRequest:getInteriorVehicleData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+    SDLGetInteriorVehicleDataResponse *dataResponse = (SDLGetInteriorVehicleDataResponse *)response;
+    // This can now be used to retrieve data
+    <#Code#>
+}];
+```
 ```swift
 let getInteriorVehicleData = SDLGetInteriorVehicleData(andSubscribeToModuleType: .radio, moduleId: "<#ModuleID#>")
 sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
@@ -423,8 +405,18 @@ sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
     <#Code#>
 }
 ```
+~|
 
 ###### RPC v6.0+
+|~
+```objc
+SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData alloc] initAndSubscribeToModuleType:SDLModuleTypeRadio moduleId:@"<#ModuleID#>"];
+[self.sdlManager sendRequest:getInteriorVehicleData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+    SDLGetInteriorVehicleDataResponse *dataResponse = (SDLGetInteriorVehicleDataResponse *)response;
+    // This can now be used to retrieve data
+    <#Code#>
+}];
+```
 ```swift
 let getInteriorVehicleData = SDLGetInteriorVehicleData(andSubscribeToModuleType: .radio, moduleId: "<#ModuleID#>")
 sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
@@ -433,6 +425,7 @@ sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
     <#Code#>
 }
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -535,12 +528,11 @@ const response = await sdlManager.sendRpc(getInteriorVehicleData).catch(error =>
 
 After you subscribe to the `InteriorVehicleDataNotification` you must also subscribe to the module you wish to receive updates for. Subscribing to a module will send a notification when that particular module is changed.
 
-
 #### Getting One-Time Data
 To get data from a module without subscribing send a @![iOS]`SDLGetInteriorVehicleData`!@@![android, javaSE, javaEE, javascript]`GetInteriorVehicleData`!@ request with the `subscribe` flag set to `false`.
 
 @![iOS]
-##### Objective-C
+|~
 ###### RPC < v6.0
 ```objc
 SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData alloc] initWithModuleType:<#(nonnull SDLModuleType)#> moduleId:<#(nonnull NSString *)#>];
@@ -549,18 +541,6 @@ SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData 
     // This can now be used to retrieve data
 }];
 ```
-
-###### RPC v6.0+
-```objc
-SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData alloc] initWithModuleType:SDLModuleTypeRadio moduleId:@"<#ModuleID#>"];
-[self.sdlManager sendRequest:getInteriorVehicleData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    SDLGetInteriorVehicleDataResponse *dataResponse = (SDLGetInteriorVehicleDataResponse *)response;
-    // This can now be used to retrieve data
-}];
-```
-
-##### Swift
-###### RPC < v6.0
 ```swift
 let getInteriorVehicleData = SDLGetInteriorVehicleData(moduleType: .radio)
 sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
@@ -569,9 +549,18 @@ sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
     <#Code#>
 }
 ```
+~|
 
 ###### RPC v6.0+
+|~
 ```objc
+SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData alloc] initWithModuleType:SDLModuleTypeRadio moduleId:@"<#ModuleID#>"];
+[self.sdlManager sendRequest:getInteriorVehicleData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+    SDLGetInteriorVehicleDataResponse *dataResponse = (SDLGetInteriorVehicleDataResponse *)response;
+    // This can now be used to retrieve data
+}];
+```
+```swift
 let getInteriorVehicleData =  SDLGetInteriorVehicleData(moduleType: .radio, moduleId: <#ModuleID#>)
 sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
     guard let response = res as? SDLGetInteriorVehicleDataResponse else { return }
@@ -579,6 +568,7 @@ sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
     <#Code#>
 }
 ```
+~|
 !@
 
 @![android, javaEE, javaSE]
@@ -646,8 +636,8 @@ const response = await sdlManager.sendRpc(interiorVehicleData).catch(error => er
 <#Code#>
 ```
 !@
-### Setting Module Data
 
+### Setting Module Data
 Not only do you have the ability to get data from these modules, but, if you have the right permissions, you can also set module data.
 
 #### Getting Consent to Control a Module (RPC v6.0+)
@@ -660,7 +650,7 @@ You should always try to get consent before setting any module data. If consent 
 !!!
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLGetInteriorVehicleDataConsent *getInteriorVehicleDataConsent = [[SDLGetInteriorVehicleDataConsent alloc] initWithModuleType:<#ModuleType#> moduleIds:@[@"<#ModuleID#>", @"<#ModuleID#>", @"<#ModuleID#>"]];
 [self.sdlManager sendRequest:getInteriorVehicleDataConsent withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
@@ -668,7 +658,6 @@ SDLGetInteriorVehicleDataConsent *getInteriorVehicleDataConsent = [[SDLGetInteri
     <#Allowed is an array of true or false values#>
 }];
 ```
-##### Swift
 ```swift
 let getInteriorVehicleDataConsent = SDLGetInteriorVehicleDataConsent(moduleType: <#ModuleType#>, moduleIds: ["<#ModuleID#>", "<#ModuleID#>", "<#ModuleID#>"])
 sdlManager.send(request: getInteriorVehicleDataConsent , responseHandler: { (request, response, error) in
@@ -681,6 +670,7 @@ sdlManager.send(request: getInteriorVehicleDataConsent , responseHandler: { (req
     <#boolAllowed is an array of true or false values#>
 })
 ```
+~|
 !@
 
 @![android, javaEE, javaSE]
@@ -727,8 +717,9 @@ When you received module information above in **Getting Remote Control Module In
 For example, a radio module usually serves all passengers in the vehicle, so its service area will likely cover the entirety of the vehicle grid, while a climate module may only cover a passenger area and not the driver or the back row. If a `serviceArea` is not included, it is assumed that the `serviceArea` is the same as the module's `location`. If neither is included, it is assumed that the `serviceArea` covers the whole area of the vehicle. If a user is not sitting within the `serviceArea`'s `grid`, they will not receive permission to control that module (attempting to set data will fail).
 
 @![iOS]
-##### Objective-C
+|~
 ###### RPC < v6.0
+|~
 ```objc
 SDLTemperature *temperature = [[SDLTemperature alloc] initWithUnit:<#Temp Unit#> value:<#Temp Value#>];
 SDLClimateControlData *climateControlData = [[SDLClimateControlData alloc] initWithFanSpeed:<#Fan Speed#> desiredTemperature:<#Desired Temperature#> acEnable:<#AC Enabled#> circulateAirEnable:<#Circulate Air Enabled#> autoModeEnable:<#Auto Mode Enabled#> defrostZone:<#Defrost Zone#> dualModeEnable:<#Dual Mode Enabled#> acMaxEnable:<#AC Max Enabled#> ventilationMode:<#Ventilation Mode#> heatedSteeringWheelEnable:<#Heated Steering Wheel Enabled#> heatedWindshieldEnable:<#Heated Windshield Enabled#> heatedRearWindowEnable:<#Heated Rear Window Enabled#> heatedMirrorsEnable:<#Heated Mirrors Enabled#> climateEnable:<#Climate System Enabled#>];
@@ -739,8 +730,20 @@ SDLSetInteriorVehicleData *setInteriorVehicleData = [[SDLSetInteriorVehicleData 
     if(!response.success) { return; }
 }];
 ```
+```swift
+let temperature = SDLTemperature(unit: <#Temp Unit#>, value: <#Temp Value#>)
+let climateControlData = SDLClimateControlData(fanSpeed: NSNumber(<#Fan Speed#>), desiredTemperature: <#Desired Temperature#>, acEnable: NSNumber(<#AC Enabled#>), circulateAirEnable: NSNumber(<#Circulate Air Enabled#>), autoModeEnable: NSNumber(<#Auto Mode Enabled#>), defrostZone: <#Defrost Zone#>, dualModeEnable: NSNumber(<#Dual Mode Enabled#>), acMaxEnable: NSNumber(<#AC Max Enabled#>), ventilationMode: <#Ventilation Mode#>, heatedSteeringWheelEnable: NSNumber(<#Heated Steering Wheel Enabled#>), heatedWindshieldEnable: NSNumber(<#Heated Windshield Enabled#>), heatedRearWindowEnable: NSNumber(<#Heated Rear Window Enabled#>), heatedMirrorsEnable: NSNumber(<#Heated Mirrors Enabled#>), climateEnable: NSNumber(<#Climate System Enabled#>))
+let moduleData = SDLModuleData(climateControlData: climateControlData)
+let setInteriorVehicleData = SDLSetInteriorVehicleData(moduleData: moduleData)
+
+sdlManager.send(request: setInteriorVehicleData) { (request, response, error) in
+    guard response?.success.boolValue == true else { return }
+}
+```
+~|
 
 ###### RPC v6.0+
+|~
 ```objc
 SDLTemperature *temperature = [[SDLTemperature alloc] initWithUnit:<#Temp Unit#> value:<#Temp Value#>];
 SDLClimateControlData *climateControlData = [[SDLClimateControlData alloc] initWithFanSpeed:<#Fan Speed#> desiredTemperature:<#Desired Temperature#> acEnable:<#AC Enabled#> circulateAirEnable:<#Circulate Air Enabled#> autoModeEnable:<#Auto Mode Enabled#> defrostZone:<#Defrost Zone#> dualModeEnable:<#Dual Mode Enabled#> acMaxEnable:<#AC Max Enabled#> ventilationMode:<#Ventilation Mode#> heatedSteeringWheelEnable:<#Heated Steering Wheel Enabled#> heatedWindshieldEnable:<#Heated Windshield Enabled#> heatedRearWindowEnable:<#Heated Rear Window Enabled#> heatedMirrorsEnable:<#Heated Mirrors Enabled#> climateEnable:<#Climate System Enabled#>];
@@ -752,21 +755,6 @@ SDLSetInteriorVehicleData *setInteriorVehicleData = [[SDLSetInteriorVehicleData 
     if(!response.success) { return; }
 }];
 ```
-
-##### Swift
-###### RPC < v6.0
-```swift
-let temperature = SDLTemperature(unit: <#Temp Unit#>, value: <#Temp Value#>)
-let climateControlData = SDLClimateControlData(fanSpeed: NSNumber(<#Fan Speed#>), desiredTemperature: <#Desired Temperature#>, acEnable: NSNumber(<#AC Enabled#>), circulateAirEnable: NSNumber(<#Circulate Air Enabled#>), autoModeEnable: NSNumber(<#Auto Mode Enabled#>), defrostZone: <#Defrost Zone#>, dualModeEnable: NSNumber(<#Dual Mode Enabled#>), acMaxEnable: NSNumber(<#AC Max Enabled#>), ventilationMode: <#Ventilation Mode#>, heatedSteeringWheelEnable: NSNumber(<#Heated Steering Wheel Enabled#>), heatedWindshieldEnable: NSNumber(<#Heated Windshield Enabled#>), heatedRearWindowEnable: NSNumber(<#Heated Rear Window Enabled#>), heatedMirrorsEnable: NSNumber(<#Heated Mirrors Enabled#>), climateEnable: NSNumber(<#Climate System Enabled#>))
-let moduleData = SDLModuleData(climateControlData: climateControlData)
-let setInteriorVehicleData = SDLSetInteriorVehicleData(moduleData: moduleData)
-
-sdlManager.send(request: setInteriorVehicleData) { (request, response, error) in
-    guard response?.success.boolValue == true else { return }
-}
-```
-
-###### RPC v6.0+
 ```swift
 let temperature = SDLTemperature(unit: .fahrenheit, value: 74.1)
 let climateControlData = SDLClimateControlData(fanSpeed: NSNumber(<#Fan Speed#>), desiredTemperature: <#Desired Temperature#>, acEnable: NSNumber(<#AC Enabled#>), circulateAirEnable: NSNumber(<#Circulate Air Enabled#>), autoModeEnable: NSNumber(<#Auto Mode Enabled#>), defrostZone: <#Defrost Zone#>, dualModeEnable: NSNumber(<#Dual Mode Enabled#>), acMaxEnable: NSNumber(<#AC Max Enabled#>), ventilationMode: <#Ventilation Mode#>, heatedSteeringWheelEnable: NSNumber(<#Heated Steering Wheel Enabled#>), heatedWindshieldEnable: NSNumber(<#Heated Windshield Enabled#>), heatedRearWindowEnable: NSNumber(<#Heated Rear Window Enabled#>), heatedMirrorsEnable: NSNumber(<#Heated Mirrors Enabled#>), climateEnable: NSNumber(<#Climate System Enabled#>))
@@ -778,13 +766,12 @@ sdlManager.send(request: setInteriorVehicleData) { (request, response, error) in
     guard response?.success.boolValue == true else { return }
 }
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
-
 ###### RPC < v6.0
 ```java
-
 Temperature temp = new Temperature(TemperatureUnit.FAHRENHEIT, 74.1f);
 
 ClimateControlData climateControlData = new ClimateControlData()
@@ -916,7 +903,7 @@ const response = await sdlManager.sendRpc(setInteriorVehicleData).catch(error =>
 Another unique feature of remote control is the ability to send simulated button presses to the associated modules, imitating a button press on the hardware itself. Simply specify the module, the button, and the type of press you would like to simulate.
 
 @![iOS]
-##### Objective-C
+|~
 ###### RPC < v6.0
 ```objc
 SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameEject moduleType:SDLModuleTypeRadio moduleId:nil buttonPressMode:SDLButtonPressModeShort];
@@ -925,18 +912,6 @@ SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButt
     if(!response.success) { return; }
 }];
 ```
-
-###### RPC v6.0+
-```objc
-SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameEject moduleType:SDLModuleTypeRadio moduleId:@"<#ModuleID#>" buttonPressMode:SDLButtonPressModeShort];
-
-[self.sdlManager sendRequest:buttonPress withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    if(!response.success) { return; }
-}];
-``` 
-
-##### Swift
-###### RPC < v6.0
 ```swift
 let buttonPress = SDLButtonPress(buttonName: .eject, moduleType: .radio, moduleId: nil, buttonPressMode: .short)
 buttonPress.buttonPressMode = .short
@@ -945,8 +920,17 @@ sdlManager.send(request: buttonPress) { (request, response, error) in
     guard response?.success.boolValue == true else { return }
 }
 ```
+~|
 
 ###### RPC v6.0+
+|~
+```objc
+SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameEject moduleType:SDLModuleTypeRadio moduleId:@"<#ModuleID#>" buttonPressMode:SDLButtonPressModeShort];
+
+[self.sdlManager sendRequest:buttonPress withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+    if(!response.success) { return; }
+}];
+```
 ```swift
 let buttonPress = SDLButtonPress(buttonName: .eject, moduleType: .radio, moduleId: "<#ModuleID#>", buttonPressMode: .short)
 
@@ -954,10 +938,10 @@ sdlManager.send(request: buttonPress) { (request, response, error) in
     guard response?.success.boolValue == true else { return }
 }
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
-
 ###### RPC < 6.0
 ```java
 ButtonPress buttonPress = new ButtonPress(ModuleType.RADIO, ButtonName.EJECT, ButtonPressMode.SHORT);
@@ -1021,7 +1005,7 @@ const response = await sdlManager.sendRpc(buttonPress).catch(error => error);
 When the user no longer needs control over a module, you should release the module so other users can control it. If you do not release the module, other users who would otherwise be able to control the module may be rejected from doing so.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLReleaseInteriorVehicleDataModule *releaseInteriorVehicleDataModule = [[SDLReleaseInteriorVehicleDataModule alloc] initWithModuleType:<#ModuleType#> moduleId:@"<#ModuleID#>"];
 [self.sdlManager sendRequest:releaseInteriorVehicleDataModule withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
@@ -1029,8 +1013,6 @@ SDLReleaseInteriorVehicleDataModule *releaseInteriorVehicleDataModule = [[SDLRel
     <#Module Was Released#>
 }];
 ```
-
-##### Swift
 ```swift
 let releaseInteriorVehicleDataModule = SDLReleaseInteriorVehicleDataModule(moduleType: <#ModuleType#>, moduleId: "<#ModuleID#>")
 sdlManager.send(request: releaseInteriorVehicleDataModule) { (request, response, error) in
@@ -1038,6 +1020,7 @@ sdlManager.send(request: releaseInteriorVehicleDataModule) { (request, response,
     <#Module Was Released#>
 }
 ```
+~|
 !@
 
 @![android, javaEE, javaSE]

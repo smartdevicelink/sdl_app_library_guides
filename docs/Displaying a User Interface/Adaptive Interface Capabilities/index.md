@@ -37,17 +37,16 @@ Images may be formatted as PNG, JPEG, or BMP. You can find which image types and
 Since the head unit connection is often relatively slow (especially over Bluetooth), you should pay attention to the size of your images to ensure that they are not larger than they need to be. If an image is uploaded that is larger than the supported size, the image will be scaled down by Core.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLImageField *field = self.sdlManager.systemCapabilityManager.defaultMainWindowCapability.imageFields[<#index#>]
 SDLImageResolution *resolution = field.imageResolution;
 ```
-
-##### Swift
 ```swift
 let field = sdlManager.systemCapabilityManager.defaultMainWindowCapability.imageFields[<#index#>]
 let resolution = field.imageResolution
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -85,15 +84,14 @@ Capabilities that can be updated can be queried and subscribed to using the @![i
 You should check if the head unit supports your desired capability before subscribing to or updating the capability.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 BOOL navigationSupported = [self.sdlManager.systemCapabilityManager isCapabilitySupported:SDLSystemCapabilityTypeNavigation];
 ```
-
-##### Swift
 ```swift
 let navigationSupported = sdlManager.systemCapabilityManager.isCapabilitySupported(type: .navigation)
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -112,7 +110,7 @@ const navigationSupported = sdlManager.getSystemCapabilityManager().isCapability
 Most head units provide features that your app can use: making and receiving phone calls, an embedded navigation system, video and audio streaming, as well as supporting app services. To pull information about this capability, use the @![iOS]`SDLSystemCapabilityManager`!@@![android, javaSE, javaEE, javascript]`SystemCapabilityManager`!@ to query the head unit for the desired capability. If a capability is unavailable, the query will return @![iOS]`nil`!@@![android, javaSE, javaEE, javascript]`null`!@.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 [self.sdlManager.systemCapabilityManager updateCapabilityType:SDLSystemCapabilityTypeVideoStreaming completionHandler:^(NSError * _Nullable error, SDLSystemCapabilityManager * _Nonnull systemCapabilityManager) {
     if (error != nil || systemCapabilityManager.videoStreamingCapability == nil) {
@@ -121,8 +119,6 @@ Most head units provide features that your app can use: making and receiving pho
     <#Use the video streaming capability#>
 }];
 ```
-
-##### Swift
 ```swift
 sdlManager.systemCapabilityManager.updateCapabilityType(.videoStreaming) { (error, manager) in
     guard error == nil, let videoStreamingCapability = manager.videoStreamingCapability else {
@@ -131,6 +127,7 @@ sdlManager.systemCapabilityManager.updateCapabilityType(.videoStreaming) { (erro
     <#Use the video streaming capability#>
 }
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -171,27 +168,29 @@ The `DISPLAYS` type can be subscribed on all SDL versions.
 
 #### Checking if the Head Unit Supports Subscriptions
 @![iOS]
-##### Objective-C
+|~
 ```objc
 BOOL supportsSubscriptions = self.sdlManager.systemCapabilityManager.supportsSubscriptions;
 ```
-##### Swift
 ```swift
 let supportsSubscriptions = sdlManager.systemCapabilityManager.supportsSubscriptions;
 ```
+~|
 !@
+
 @![android, javaSE, javaEE]
 ```java
 boolean supportsSubscriptions = sdlManager.getSystemCapabilityManager().supportsSubscriptions();
 ```
 !@
+
 @![javascript]
 The `supportsSubscriptions` method currently is not supported by the JavaScript Suite. This will be addressed in a future release.
 !@
 
 #### Subscribe to a Capability
 @![iOS]
-##### Objective-C
+|~
 ```objc
 // Subscribing to a capability via a selector callback. `success` will be `NO` if the subscription fails.
 BOOL success = [self.sdlManager.systemCapabilityManager subscribeToCapabilityType:SDLSystemCapabilityTypeNavigation withObserver:self selector:@selector(navigationCapabilitySelectorCallback:error:subscribed:)];
@@ -211,8 +210,6 @@ id subscribeToken = [self subscribeToCapabilityType:SDLSystemCapabilityTypeNavig
     <#Use the capability#>
 }];
 ```
-
-##### Swift
 ```swift
 // Subscribing to a capability via a selector callback
 sdlManager.systemCapabilityManager.subscribe(toCapabilityType: .navigation, withObserver: self, selector: #selector(navigationCapabilitySelectorCallback(_:error:subscribed:)))
@@ -231,7 +228,9 @@ sdlManager.systemCapabilityManager.subscribe(capabilityType: .navigation) { (cap
     <#Use the capability#>
 }
 ```
+~|
 !@
+
 @![android, javaSE, javaEE]
 ```java
 sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SystemCapabilityType.APP_SERVICES, new OnSystemCapabilityListener() {

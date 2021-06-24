@@ -15,15 +15,14 @@ SDL has support for automatically detecting focusable views within your UI and s
 @![iOS]
 In order to use the automatic focusable item locator, you must set the `UIWindow` of your streaming content on `SDLStreamingMediaConfiguration.window`. So long as the window is set, the focusable item locator will start running. Whenever your app UI updates, you will need to send a notification:
 
-##### Objective-C
+|~
 ```objc
 [[NSNotificationCenter defaultCenter] postNotificationName:SDLDidUpdateProjectionView object:nil];
 ```
-
-##### Swift
 ```swift
 NotificationCenter.default.post(name: SDLDidUpdateProjectionView, object: nil)
 ```
+~|
 
 !!! NOTE
 SDL can only automatically detect `UIButton`s and anything else that responds `true` to `canBecomeFocused`. This means that custom `UIView` objects will *not* be found. You must send these objects manually, see "Manual Focusable Rects".
@@ -71,7 +70,7 @@ If you need to supplement the automatic focusable item locator, or do all of the
 
 Usage is simple, you create the rects using `SDLHapticRect`, add a unique id, and send all the rects using `SDLSendHapticData`.
 
-##### Objective-C
+|~
 ```objc
 SDLRectange *viewRect = [[SDLRectangle alloc] initWithCGRect:view.bounds];
 SDLHapticRect *hapticRect = [[SDLHapticRect alloc] initWithId:1 rect:viewRect];
@@ -79,8 +78,6 @@ SDLSendHapticData *hapticData = [[SDLSendHapticData alloc] initWithHapticRectDat
 
 [self.sdlManager sendRequest:hapticData];
 ```
-
-##### Swift
 ```swift
 guard let viewRect = SDLRectangle(cgRect: view.bounds) else { return }
 let hapticRect = SDLHapticRect(id: 1, rect: viewRect)
@@ -88,6 +85,7 @@ let hapticData = SDLSendHapticData(hapticRectData: [hapticRect])
 
 self.sdlManager.send(hapticData)
 ```
+~|
 !@
 
 @![android]

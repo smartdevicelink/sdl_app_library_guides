@@ -15,17 +15,16 @@ In order to count up using the timer, you will need to set a start time that is 
 The play / pause indicator parameter is used to update the play / pause button to your desired button type. This is explained below in the section "Updating the Audio Indicator"
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLSetMediaClockTimer *mediaClock = [SDLSetMediaClockTimer countUpFromStartTimeInterval:0 toEndTimeInterval:300 playPauseIndicator:SDLAudioStreamingIndicatorPause forwardSeekIndicator:nil backSeekIndicator:nil countRate:nil];
 [self.sdlManager sendRequest:mediaClock];
 ```
-
-##### Swift
 ```swift
 let mediaClock = SDLSetMediaClockTimer.countUp(from: 0, to: 300, playPauseIndicator: .pause, forwardSeekIndicator: nil, backSeekIndicator: nil, countRate: nil)
 sdlManager.send(mediaClock)
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -62,17 +61,16 @@ sdlManager.sendRpc(mediaClock);
 Counting down is the opposite of counting up (I know, right?). In order to count down using the timer, you will need to set a start time that is greater than the end time. The timer bar moves from right to left and the timer will automatically count down. For example, if you're counting down from `10:00` to `0:00`, the progress bar will be at the leftmost position and start decrementing every second until it reaches `0:00`.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLSetMediaClockTimer *mediaClock = [SDLSetMediaClockTimer countDownFromStartTimeInterval:600 toEndTimeInterval:0 playPauseIndicator:SDLAudioStreamingIndicatorPause forwardSeekIndicator:nil backSeekIndicator:nil countRate:nil];
 [self.sdlManager sendRequest:mediaClock];
 ```
-
-##### Swift
 ```swift
 let mediaClock = SDLSetMediaClockTimer.countDown(from: 600, to: 0, playPauseIndicator: .pause, forwardSeekIndicator: nil, backSeekIndicator: nil, countRate: nil)
 sdlManager.send(mediaClock)
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -109,37 +107,34 @@ sdlManager.sendRpc(mediaClock);
 When pausing the timer, it will stop the timer as soon as the request is received and processed. When a resume request is sent, the timer begins again at the paused time as soon as the request is processed. You can update the start and end times using a pause command to change the timer while remaining paused.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
+// Pause the timer with a play button
 SDLSetMediaClockTimer *mediaClock = [SDLSetMediaClockTimer pauseWithPlayPauseIndicator:SDLAudioStreamingIndicatorPlay];
 [self.sdlManager sendRequest:mediaClock];
-```
 
-```objc
+// Resume the timer with a pause button
 SDLSetMediaClockTimer *mediaClock = [SDLSetMediaClockTimer resumeWithPlayPauseIndicator:SDLAudioStreamingIndicatorPause forwardSeekIndicator:nil backSeekIndicator:nil countRate:nil];
 [self.sdlManager sendRequest:mediaClock];
-```
 
-```objc
+// When paused, update the timer with a new start and end time, and a play button
 SDLSetMediaClockTimer *mediaClock = [SDLSetMediaClockTimer updatePauseWithNewStartTimeInterval:60 endTimeInterval:240 playPauseIndicator:SDLAudioStreamingIndicatorPlay];
 [self.sdlManager sendRequest:mediaClock];
 ```
-
-##### Swift
 ```swift
+// Pause the timer with a play button
 let mediaClock = SDLSetMediaClockTimer.pause(playPauseIndicator: .play)
 sdlManager.send(mediaClock)
-```
 
-```swift
+// Resume the timer with a pause button
 let mediaClock = SDLSetMediaClockTimer.resume(playPauseIndicator: .pause, forwardSeekIndicator: nil, backSeekIndicator: nil, countRate: nil)
 sdlManager.send(mediaClock)
-```
 
-```swift
+// When paused, update the timer with a new start and end time, and a play button
 let mediaClock = SDLSetMediaClockTimer.pause(newStart: 60, newEnd: 240, playPauseIndicator: .play)
 sdlManager.send(mediaClock)
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -208,17 +203,16 @@ sdlManager.sendRpc(mediaClock);
 Clearing the timer removes it from the screen.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLSetMediaClockTimer *mediaClock = [SDLSetMediaClockTimer clearWithPlayPauseIndicator:SDLAudioStreamingIndicatorPlay];
 [self.sdlManager sendRequest:mediaClock];
 ```
-
-##### Swift
 ```swift
 let mediaClock = SDLSetMediaClockTimer.clear(playPauseIndicator: .play)
 sdlManager.send(mediaClock)
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -254,19 +248,18 @@ When you set the skip indicator style, you can set type `TRACK`, which is the de
 ![Generic - Seek Indicator Type TRACK](assets/generic_mediaclock.png)
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLSeekStreamingIndicator *trackStyle = [[SDLSeekStreamingIndicator alloc] initWithType:SDLSeekIndicatorTypeTrack];
 SDLSetMediaClockTimer *mediaClock = [SDLSetMediaClockTimer countUpFromStartTimeInterval:0 toEndTimeInterval:300 playPauseIndicator:SDLAudioStreamingIndicatorPause forwardSeekIndicator:trackStyle backSeekIndicator:trackStyle countRate:nil];
 [self.sdlManager sendRequest:mediaClock];
 ```
-
-##### Swift
 ```swift
 let trackStyle = SDLSeekStreamingIndicator(type: .track)
 let mediaClock = SDLSetMediaClockTimer.countUp(from: 0, to: 300, playPauseIndicator: .pause, forwardSeekIndicator: trackStyle, backSeekIndicator: trackStyle, countRate: nil)
 sdlManager.send(mediaClock)
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -300,21 +293,20 @@ sdlManager.sendRpc(mediaClock);
 ![Generic - Seek Indicator Type TIME](assets/generic_sdlSeekStreamingIndicatorType_Time.png)
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLSeekStreamingIndicator *seek10Style = [SDLSeekStreamingIndicator seekIndicatorWithSeekTime:@10];
 SDLSeekStreamingIndicator *seek45Style = [SDLSeekStreamingIndicator seekIndicatorWithSeekTime:@45];
 SDLSetMediaClockTimer *mediaClock = [SDLSetMediaClockTimer countUpFromStartTimeInterval:0 toEndTimeInterval:300 playPauseIndicator:SDLAudioStreamingIndicatorPause forwardSeekIndicator:seek45Style backSeekIndicator:seek10Style countRate:nil];
 [self.sdlManager sendRequest:mediaClock];
 ```
-
-##### Swift
 ```swift
 let seek10Style = SDLSeekStreamingIndicator.seekIndicator(withSeekTime: NSNumber(10))
 let seek45Style = SDLSeekStreamingIndicator.seekIndicator(withSeekTime: NSNumber(45))
 let mediaClock = SDLSetMediaClockTimer.countUp(from: 0, to: 300, playPauseIndicator: .pause, forwardSeekIndicator: seek45Style, backSeekIndicator: seek10Style, countRate: nil)
 sdlManager.send(mediaClock)
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -351,7 +343,7 @@ As of RPC v7.1, you can set the rate that the audio is playing at to ensure the 
 For example, a user can play a podcast at 125% speed or at 75% speed.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 //Play Audio at 50% or half speed
 SDLSetMediaClockTimer *mediaClockSlow = [SDLSetMediaClockTimer countUpFromStartTimeInterval:30 toEndTimeInterval:253 playPauseIndicator:SDLAudioStreamingIndicatorPause forwardSeekIndicator:nil backSeekIndicator:nil countRate:@(0.5)];
@@ -361,8 +353,6 @@ SDLSetMediaClockTimer *mediaClockSlow = [SDLSetMediaClockTimer countUpFromStartT
 SDLSetMediaClockTimer *mediaClockSlow = [SDLSetMediaClockTimer countUpFromStartTimeInterval:30 toEndTimeInterval:253 playPauseIndicator:SDLAudioStreamingIndicatorPause forwardSeekIndicator:nil backSeekIndicator:nil countRate:@(2.0)];
 [self.sdlManager sendRPC:mediaClockSlow];
 ```
-
-##### Swift
 ```swift
 //Play Audio at 50% or half speed
 let mediaClockSlow = SDLSetMediaClockTimer.countUp(from: 30, to: 253, playPauseIndicator: .pause, forwardSeekIndicator: nil, backSeekIndicator: nil, countRate: NSNumber(0.5))
@@ -372,6 +362,7 @@ sdlManager.send(mediaClockSlow)
 let mediaClockSlow = SDLSetMediaClockTimer.countUp(from: 30, to: 253, playPauseIndicator: .pause, forwardSeekIndicator: nil, backSeekIndicator: nil, countRate: NSNumber(2.0))
 sdlManager.send(mediaClockSlow)
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]

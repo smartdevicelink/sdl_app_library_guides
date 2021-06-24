@@ -10,7 +10,7 @@ The easiest way to check if a feature is supported is to query the library's Sys
 When you are trying to use a feature, you can watch for an error response to the RPC request you sent to the module. If the response contains an error, you may be able to check the `result` enum to determine if the feature is disabled. If the response that comes back is of the type `GenericResponse`, the module doesn't understand your request.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 [self.sdlManager sendRequest:<#Your Request#> withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if (response == nil || !response.success) {
@@ -21,8 +21,6 @@ When you are trying to use a feature, you can watch for an error response to the
     <#The request was successful#>
 }];
 ```
-
-##### Swift
 ```swift
 sdlManager.send(request: <#Your Request#>) { (request, response, error) in
     guard let response = response, !response.success.boolValue else {
@@ -33,6 +31,7 @@ sdlManager.send(request: <#Your Request#>) { (request, response, error) in
     <#The request was successful#>
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -85,15 +84,14 @@ When you connect successfully to a head unit, SDL will automatically negotiate t
 Throughout these guides you may see headers that contain text like "RPC 6.0+". That means that if the negotiated version is 6.0 or greater, then SDL supports the feature but the above caveats may still apply.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLMsgVersion *rpcSpecVersion = self.sdlManager.registerResponse.sdlMsgVersion;
 ```
-
-##### Swift
 ```swift
 let rpcSpecVersion = sdlManager.registerResponse?.sdlMsgVersion
 ```
+~|
 !@
 
 @![android]

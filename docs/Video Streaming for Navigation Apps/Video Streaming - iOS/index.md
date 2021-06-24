@@ -47,17 +47,16 @@ If you are using off-screen rendering, it is recommended that your on-screen vie
 #### Off-Screen
 To set an off-screen view controller all you have to do is instantiate a new `UIViewController` class and use it to set the `rootViewController`.
 
-##### Objective-C
+|~
 ```objc
 UIViewController *offScreenViewController = <#Acquire a UIViewController#>;
 self.sdlManager.streamManager.rootViewController = offScreenViewController;
 ```
-
-##### Swift
 ```swift
 let offScreenViewController = <#Acquire a UIViewController#>
 sdlManager.streamManager?.rootViewController = offScreenViewController
 ```
+~|
 
 #### Mirroring the Device Screen
 If you must use mirroring to stream video please be aware of the following limitations:
@@ -74,7 +73,7 @@ Some HMIs support multiple view sizes and may resize your SDL app's view during 
 #### Creating the Video Streaming Ranges
 Below are some examples of how to configure a supported video streaming range:
 
-##### Objective-C
+|~
 ```objc
 // Use if you wish to disable support for all landscape orientations or all portrait orientations
 SDLVideoStreamingRange *disabledStreamingRange = SDLVideoStreamingRange.disabled;
@@ -87,8 +86,6 @@ SDLVideoStreamingRange *streamingRange = [[SDLVideoStreamingRange alloc] init];
 streamingRange.minimumAspectRatio = 1.0;
 streamingRange.maximumAspectRatio = 2.5;
 ```
-
-##### Swift
 ```swift
 // Use if you wish to disable support for all landscape orientations or all portrait orientations
 let disabledStreamingRange = SDLVideoStreamingRange.disabled()
@@ -101,21 +98,21 @@ let streamingRange = SDLVideoStreamingRange()
 streamingRange.minimumAspectRatio = 1.0
 streamingRange.maximumAspectRatio = 2.5
 ```
+~|
 
 #### Setting the Video Streaming Ranges
 Once you have configured a supported video streaming range, you can use it to set the `supportedPortraitStreamingRange` or `supportedLandscapeStreamingRange` properties when you are configuring the `SDLStreamingMediaConfiguration`.
 
-##### Objective-C
+|~
 ```objc
 streamingMediaConfig.supportedPortraitStreamingRange = disabledStreamingRange;
 streamingMediaConfig.supportedLandscapeStreamingRange = streamingRange;
 ```
-
-##### Swift
 ```swift
 streamingMediaConfig.supportedPortraitStreamingRange = disabledStreamingRange
 streamingMediaConfig.supportedLandscapeStreamingRange = streamingRange
 ```
+~|
 
 !!! NOTE
 If you disable both the `supportedLandscapeStreamingRange` and `supportedPortraitStreamingRange`, video will not stream.
@@ -124,7 +121,7 @@ If you disable both the `supportedLandscapeStreamingRange` and `supportedPortrai
 #### Getting the Updated Screen Size
 If the HMI resizes the view during streaming, the video stream will automatically restart with the new size. If desired, you can subscribe to screen size updates via the `SDLStreamingVideoDelegate`.
 
-##### Objective-C
+|~
 ```objc
 streamingMediaConfig.delegate = self;
 
@@ -132,8 +129,6 @@ streamingMediaConfig.delegate = self;
     <#Use displaySize.width and displaySize.height#>
 }
 ```
-
-##### Swift
 ```swift
 streamingMediaConfig.delegate = self
 
@@ -143,6 +138,7 @@ extension ProxyManager: SDLStreamingVideoDelegate {
     }
 }
 ```
+~|
 
 ## Sending Raw Video Data
 If you decide to send raw video data instead of relying on the `CarWindow` API to generate that video data from a view controller, you must maintain the lifecycle of the video stream as there are limitations to when video is allowed to stream. The app's HMI state on the head unit and the app's application state on the device determines whether video can stream. Due to an iOS limitation, video cannot be streamed when the app on the device is no longer in the foreground and/or the device is locked/sleeping.
@@ -158,7 +154,7 @@ To check whether or not you can start sending data to the video stream, watch fo
 
 Video data must be provided to the `SDLStreamingMediaManager` as a `CVImageBufferRef` (Apple documentation [here](https://developer.apple.com/library/mac/documentation/QuartzCore/Reference/CVImageBufferRef/)). Once the video stream has started, you will not see video appear until Core has received a few frames. Refer to the code sample below for an example of how to send a video frame:
 
-##### Objective-C
+|~
 ```objc
 CVPixelBufferRef imageBuffer = <#Acquire Image Buffer#>;
 
@@ -166,8 +162,6 @@ if ([self.sdlManager.streamManager sendVideoData:imageBuffer] == NO) {
   NSLog(@"Could not send Video Data");
 }
 ```
-
-##### Swift
 ```swift
 let imageBuffer = <#Acquire Image Buffer#>
 
@@ -179,6 +173,7 @@ if !streamManager.sendVideoData(imageBuffer) {
     print("Could not send Video Data")
 }
 ```
+~|
 
 ### Best Practices
 * A constant stream of map frames is not necessary to maintain an image on the screen. Because of this, we advise that a batch of frames are only sent on map movement or location movement. This will keep the application's memory consumption lower.

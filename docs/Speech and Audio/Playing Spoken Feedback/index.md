@@ -10,15 +10,14 @@ The speech request you send can simply be a text phrase, which will be played ba
 Once you have successfully connected to the module, you can access supported speech capabilities properties on the @![iOS]`SDLManager.systemCapabilityManager`!@@![android,javaSE,javaEE,javascript]`sdlManager.getSystemCapabilityManager()`!@ instance.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 NSArray<SDLSpeechCapabilities> *speechCapabilities = self.sdlManager.systemCapabilityManager.speechCapabilities;
 ```
-
-##### Swift
 ```swift
 let speechCapabilities = sdlManager.systemCapabilityManager.speechCapabilities
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -57,15 +56,14 @@ Once you know what speech capabilities are supported by the module, you can crea
 
 #### Text Phrase
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLSpeak *speak = [[SDLSpeak alloc] initWithTTS:@"hello"];
 ```
-
-##### Swift
 ```swift
 let speech = SDLSpeak(tts: "hello")
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -85,16 +83,16 @@ const speak = new SDL.rpc.messages.Speak().setTtsChunks([chunk]);
 
 #### SAPI Phonemes Phrase
 @![iOS]
-##### Objective-C
+|~
 ```objc
 NSArray<SDLTTSChunk *> *sapiPhonemesTTSChunks = [SDLTTSChunk sapiChunksFromString:@"h eh - l ow 1"];
 SDLSpeak *speak = [[SDLSpeak alloc] initWithTTSChunks:sapiPhonemesTTSChunks];
 ```
-##### Swift
 ```swift
 let sapiPhonemesTTSChunks = SDLTTSChunk.sapiChunks(from: "h eh - l ow 1")
 let speech = SDLSpeak(ttsChunks: sapiPhonemesTTSChunks)
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -114,10 +112,10 @@ const speak = new SDL.rpc.messages.Speak([chunk]);
 
 ## Sending the Speak Request
 @![iOS]
-##### Objective-C
+|~
 ```objc
 [self.sdlManager sendRequest:speak withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-     if (!response.success.boolValue) { 
+    if (!response.success.boolValue) { 
         if ([response.resultCode isEqualToEnum:SDLResultDisallowed]) {
             <#The app does not have permission to use the speech request#>
         } else if ([response.resultCode isEqualToEnum:SDLResultRejected]) {
@@ -134,8 +132,6 @@ const speak = new SDL.rpc.messages.Speak([chunk]);
     <#Speech was successfully spoken#>
 }];
 ```
-
-##### Swift
 ```swift
 sdlManager.send(request: speech) { (request, response, error) in
     guard let response = response as? SDLSpeakResponse else { return }
@@ -156,6 +152,7 @@ sdlManager.send(request: speech) { (request, response, error) in
     <#Speech was successfully spoken#>
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]

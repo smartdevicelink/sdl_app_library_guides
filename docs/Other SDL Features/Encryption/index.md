@@ -21,17 +21,16 @@ For optional encryption to work, you must work with each OEM to obtain their pro
 Each OEM that supports SDL will have their own proprietary security library. You must add all required security libraries in the encryption configuration when you are configuring the SDL app. 
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLEncryptionConfiguration *encryptionConfig = [[SDLEncryptionConfiguration alloc] initWithSecurityManagers:@[OEMSecurityManager.self] delegate:self];
 SDLConfiguration *config = [[SDLConfiguration alloc] initWithLifecycle:lifecycleConfig lockScreen:[SDLLockScreenConfiguration enabledConfiguration] logging:[SDLLogConfiguration defaultConfiguration] fileManager:[SDLFileManagerConfiguration defaultConfiguration] encryption:encryptionConfig];
 ```
-
-##### Swift
 ```swift
 let encryptionConfig = SDLEncryptionConfiguration(securityManagers: [OEMSecurityManager.self], delegate: self)
 let config = SDLConfiguration(lifecycle: lifecycleConfig, lockScreen: .enabled(), logging: .default(), fileManager: .default(), encryption: encryptionConfig)
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -46,7 +45,7 @@ builder.setSdlSecurity(secList, serviceEncryptionListener);
 Since it can take a few moments to set up the encryption manager, you must wait until you know that setup has completed before sending encrypted RPCs. If your RPC is sent before setup has completed, your RPC will not be sent. You can implement the @![iOS]`SDLServiceEncryptionDelegate`!@@![android,javaSE,javaEE]`ServiceEncryptionListener`!@, which is set in @![iOS]`SDLEncryptionConfiguration`!@@![android,javaSE,javaEE]`Builder.setSdlSecurity`!@, to get updates to the encryption manager state.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 - (void)serviceEncryptionUpdatedOnService:(SDLServiceType)type encrypted:(BOOL)encrypted error:(nullable NSError *)error {
     if (encrypted) {
@@ -54,8 +53,6 @@ Since it can take a few moments to set up the encryption manager, you must wait 
     }
 }
 ```
-
-##### Swift
 ```swift
 func serviceEncryptionUpdated(serviceType type: SDLServiceType, isEncrypted encrypted: Bool, error: Error?) {
     if encrypted {
@@ -63,6 +60,7 @@ func serviceEncryptionUpdated(serviceType type: SDLServiceType, isEncrypted encr
     }
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -82,15 +80,14 @@ ServiceEncryptionListener serviceEncryptionListener = new ServiceEncryptionListe
 If you want to encrypt a specific RPC, you must configure the payload protected status of the RPC before you send it to the head unit. In order to send RPCs with optional encryption you must call `startRPCEncryption` on the `sdlManager` to make sure the encryption manager gets started correctly. The best place to put `startRPCEncryption` is in the successful callback of @![iOS]`startWithReadyHandler`.!@@![android,javaSE,javaEE]the `SdlManagerListener`'s `onStart` method.!@
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 [self.sdlManager startRPCEncryption];
 ```
-
-##### Swift
 ```swift
 sdlManager.startRPCEncryption()
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -102,7 +99,7 @@ sdlManager.startRPCEncryption();
 Then, once you know the encryption manager has started successfully via encryption manager state updates to your @![iOS]`SDLServiceEncryptionDelegate`!@@![android,javaSE,javaEE]`ServiceEncryptionListener`!@ object, you can start to send encrypted RPCs by setting @![iOS]`payloadProtected`!@@![android,javaSE,javaEE]`setPayloadProtected`!@ to `true`.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLGetVehicleData *getVehicleData = [[SDLGetVehicleData alloc] init];
 getVehicleData.gps = @YES;
@@ -110,8 +107,6 @@ getVehicleData.payloadProtected = @YES;
 
 [self.sdlManager sendRequest:getVehicleData];
 ```
-
-##### Swift
 ```swift
 let getVehicleData = SDLGetVehicleData()
 getVehicleData.gps = NSNumber(true)
@@ -119,6 +114,7 @@ getVehicleData.isPayloadProtected = true
 
 sdlManager.send(getVehicleData)
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]

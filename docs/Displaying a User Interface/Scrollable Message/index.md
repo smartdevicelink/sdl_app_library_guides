@@ -16,7 +16,7 @@ The @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE, javascript]`ScreenMa
 !!!
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 // Create SoftButton Array
 NSMutableArray<SDLSoftButton *> *softButtons = [[NSMutableArray alloc] init];
@@ -46,8 +46,6 @@ SDLScrollableMessage *scrollableMessage = [[SDLScrollableMessage alloc] initWith
 // Send the scrollable message
 [self.sdlManager sendRequest:scrollableMessage];
 ```
-
-##### Swift
 ```swift
 // Create SoftButton Array
 var softButtons = [SDLSoftButton]()
@@ -85,10 +83,10 @@ let scrollableMessage = SDLScrollableMessage(message: scrollableMessageText, tim
 // Send the scrollable message
 sdlManager.send(scrollableMessage)
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
-
 ```java
 // Create Message To Display
 String scrollableMessageText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Vestibulum mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare. Purus in massa tempor nec feugiat nisl pretium fusce id. Pharetra convallis posuere morbi leo urna molestie at elementum eu. Dictum sit amet justo donec enim diam.";
@@ -134,7 +132,6 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
 	}
 });
 ```
-
 !@
 
 @![javascript]
@@ -199,7 +196,7 @@ If connected to older head units that do not support this feature, the cancel re
 ### Dismissing a Specific Scrollable Message
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 // `cancelID` is the ID that you assigned when creating and sending the scrollable message
 SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWithScrollableMessageCancelID:cancelID];
@@ -211,8 +208,6 @@ SDLCancelInteraction *cancelInteraction = [[SDLCancelInteraction alloc] initWith
     <#The scrollable message was canceled successfully#>
 }];
 ```
-
-##### Swift
 ```swift
 // `cancelID` is the ID that you assigned when creating and sending the alert
 let cancelInteraction = SDLCancelInteraction(scrollableMessageCancelID: cancelID)
@@ -221,6 +216,7 @@ sdlManager.send(request: cancelInteraction) { (request, response, error) in
     <#The scrollable message was canceled successfully#>
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -269,7 +265,7 @@ if (response.getSuccess()){
 ### Dismissing the Current Scrollable Message
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLCancelInteraction *cancelInteraction = [SDLCancelInteraction scrollableMessage];
 [self.sdlManager sendRequest:cancelInteraction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
@@ -280,8 +276,6 @@ SDLCancelInteraction *cancelInteraction = [SDLCancelInteraction scrollableMessag
     <#The scrollable message was canceled successfully#>
 }];
 ```
-
-##### Swift
 ```swift
 let cancelInteraction = SDLCancelInteraction.scrollableMessage()
 sdlManager.send(request: cancelInteraction) { (request, response, error) in
@@ -289,6 +283,7 @@ sdlManager.send(request: cancelInteraction) { (request, response, error) in
     <#The scrollable message was canceled successfully#>
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]

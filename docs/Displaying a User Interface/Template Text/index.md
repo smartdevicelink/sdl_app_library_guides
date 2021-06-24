@@ -18,7 +18,7 @@ You can easily display text, images, and buttons using the @![iOS]`SDLScreenMana
 
 ## Showing Text
 @![iOS]
-##### Objective-C
+|~
 ```objc
 [self.sdlManager.screenManager beginUpdates];
 self.sdlManager.screenManager.textField1 = @"<#Line 1 of Text#>";
@@ -31,8 +31,6 @@ self.sdlManager.screenManager.textField2 = @"<#Line 2 of Text#>";
     }
 }];
 ```
-
-##### Swift
 ```swift
 sdlManager.screenManager.beginUpdates()
 sdlManager.screenManager.textField1 = "<#Line 1 of Text#>"
@@ -45,6 +43,7 @@ sdlManager.screenManager.endUpdates { (error) in
     }
 }
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -83,17 +82,16 @@ if (success === true) {
 To remove text from the screen simply set the screen manager property to @![iOS]`nil`!@@![android, javaSE, javaEE]`null`!@.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 self.sdlManager.screenManager.textField1 = nil;
 self.sdlManager.screenManager.textField2 = nil;
 ```
-
-##### Swift
 ```swift
 sdlManager.screenManager.textField1 = nil
 sdlManager.screenManager.textField2 = nil
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]

@@ -21,17 +21,16 @@ On many systems, including VR commands will be *exponentially* slower than not i
 !!!
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLChoiceCell *cell = [[SDLChoiceCell alloc] initWithText:<#(nonnull NSString *)#>];
 SDLChoiceCell *fullCell = [[SDLChoiceCell alloc] initWithText:<#(nonnull NSString *)#> secondaryText:<#(nullable NSString *)#> tertiaryText:<#(nullable NSString *)#> voiceCommands:<#(nullable NSArray<NSString *> *)#> artwork:<#(nullable SDLArtwork *)#> secondaryArtwork:<#(nullable SDLArtwork *)#>];
 ```
-
-##### Swift
 ```swift
 let cell = SDLChoiceCell(text: <#String#>)
 let fullCell = SDLChoiceCell(text: <#String#>, secondaryText: <#String?#>, tertiaryText: <#String?#>, voiceCommands: <#[String]?#>, artwork: <#SDLArtwork?#>, secondaryArtwork: <#SDLArtwork?#>)
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -58,19 +57,18 @@ const fullCell = new SDL.manager.screen.choiceset.ChoiceCell("cell2 text")
 If you know the content you will show in the popup menu long before the menu is shown to the user, you can "preload" those cells in order to speed up the popup menu presentation at a later time. Once you preload a cell, you can reuse it in multiple popup menus without having to send the cell content to Core again. 
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 [self.sdlManager.screenManager preloadChoices:<#(nonnull NSArray<SDLChoiceCell *> *)#> withCompletionHandler:^(NSError * _Nullable error) {
     <#code#>
 }];
 ```
-
-##### Swift
 ```swift
 sdlManager.screenManager.preloadChoices(<#choices: [SDLChoiceCell]#>) { (error) in
     <#code#>
 }
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -121,15 +119,14 @@ Some notes on various parameters (full documentation is available as API documen
 - Layout: You may present your menu as a set of tiles @![iOS](like a `UICollectionView`) !@@![android, javaSE, javaEE](like a `GridView`) !@or a list@![iOS] (like a `UITableView`)!@@![android, javaSE, javaEE] (like a `RecyclerView`)!@. If you are using tiles, it's recommended to use artworks on each item.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLChoiceSet *choiceSet = [[SDLChoiceSet alloc] initWithTitle:<#(nonnull NSString *)#> delegate:<#(nonnull id<SDLChoiceSetDelegate>)#> layout:<#(SDLChoiceSetLayout)#> timeout:<#(NSTimeInterval)#> initialPromptString:<#(nullable NSString *)#> timeoutPromptString:<#(nullable NSString *)#> helpPromptString:<#(nullable NSString *)#> vrHelpList:<#(nullable NSArray<SDLVRHelpItem *> *)#> choices:<#(nonnull NSArray<SDLChoiceCell *> *)#>];
 ```
-
-##### Swift
 ```swift
 let choiceSet = SDLChoiceSet(title: <#String#>, delegate: <#SDLChoiceSetDelegate#>, layout: <#SDLChoiceSetLayout#>, timeout: <#TimeInterval#>, initialPromptString: <#String?#>, timeoutPromptString: <#String?#>, helpPromptString: <#String?#>, vrHelpList: <#[SDLVRHelpItem]?#>, choices: <#[SDLChoiceCell]#>)
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -167,7 +164,7 @@ const choiceSet = new SDL.manager.screen.choiceset.ChoiceSet("ChoiceSet Title", 
 #### Implementing the Choice Set Delegate
 In order to present a menu, you must implement `SDLChoiceSetDelegate` in order to receive the user's input. When a choice is selected, you will be passed the `cell` that was selected, the manner in which it was selected (voice or text), and the index of the cell in the `SDLChoiceSet` that was passed.
 
-##### Objective-C
+|~
 ```objc
 #pragma mark - SDLChoiceSetDelegate
 
@@ -179,8 +176,6 @@ In order to present a menu, you must implement `SDLChoiceSetDelegate` in order t
     <#Code#>
 }
 ```
-
-##### Swift
 ```swift
 extension <#Class Name#>: SDLChoiceSetDelegate {
     func choiceSet(_ choiceSet: SDLChoiceSet, didSelectChoice choice: SDLChoiceCell, withSource source: SDLTriggerSource, atRowIndex rowIndex: UInt) {
@@ -192,6 +187,7 @@ extension <#Class Name#>: SDLChoiceSetDelegate {
     }
 }
 ```
+~|
 !@
 
 #### Presenting the Menu with a Mode
@@ -214,15 +210,14 @@ It may seem that the answer is to always use `both`. However, remember that you 
 ![SYNC® 3 - Menu - Voice Only](assets/SYNC3_popup_menu_voice_recognition.bmp)
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 [self.sdlManager.screenManager presentChoiceSet:<#(nonnull SDLChoiceSet *)#> mode:<#(nonnull SDLInteractionMode)#>];
 ```
-
-##### Swift
 ```swift
 sdlManager.screenManager.present(<#choiceSet: SDLChoiceSet#>, mode: <#SDLInteractionMode#>)
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -244,15 +239,14 @@ In addition to presenting a standard menu, you can also present a "searchable" m
 ![SYNC® 3 - Menu with Search Interaction Layout](assets/SYNC3_popup_menu_with_search.bmp)
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 [self.sdlManager.screenManager presentSearchableChoiceSet:<#(nonnull SDLChoiceSet *)#> mode:<#(nonnull SDLInteractionMode)#> withKeyboardDelegate:<#(nonnull id<SDLKeyboardDelegate>)#>];
 ```
-
-##### Swift
 ```swift
 sdlManager.screenManager.presentSearchableChoiceSet(<#choiceSet: SDLChoiceSet#>, mode: <#SDLInteractionMode#>, with: <#SDLKeyboardDelegate#>)
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -271,15 +265,14 @@ sdlManager.getScreenManager().presentSearchableChoiceSet(choiceSet, SDL.rpc.enum
 You can discover cells that have been preloaded on @![iOS]`screenManager.preloadedCells`!@ @![android, javaSE, javaEE, javascript]`sdlManager.getScreenManager().getPreloadedChoices()`!@. You may then pass an array of cells to delete from the remote system. Many times this is not necessary, but if you have deleted artwork used by cells, for example, you should delete the cells as well.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 [self.sdlManager.screenManager deleteChoices:<#(nonnull NSArray<SDLChoiceCell *> *)#>];
 ```
-
-##### Swift
 ```swift
 sdlManager.screenManager.deleteChoices(<#choices: [SDLChoiceCell]#>)
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -302,15 +295,14 @@ If connected to older head units that do not support this feature, the cancel re
 !!!
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 [choiceSet cancel];
 ```
-
-##### Swift
 ```swift
 choiceSet.cancel()
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
