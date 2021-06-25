@@ -59,7 +59,9 @@ The library automatically filters out empty strings and whitespace-only strings 
 If you provide @![iOS, javascript]an array!@@![android, javaSE, javaEE]a list!@ of voice commands which only contains empty string and whitespace-only strings across all of the voice commands, the upload request will be aborted and the previous voice commands will remain available.
 
 ### Duplicate Strings in Voice Commands
-Voice commands that are sent with duplicate strings in different voice commandsâ€”such as:
+
+#### Duplicates Between Different Commands
+Voice commands that are sent with duplicate strings in different voice commands, such as:
 ```
 {
         Command1: ["Command A", "Command B"],
@@ -69,6 +71,7 @@ Voice commands that are sent with duplicate strings in different voice commandsâ
 ```
 Then the manager will abort the upload request. The previous voice commands will remain available.
 
+#### Duplicates in The Same Command
 If any individual voice command contains duplicate strings, they will be reduced to one. For example, if the voice commands to be sent are:
 ```
 {
@@ -76,6 +79,7 @@ If any individual voice command contains duplicate strings, they will be reduced
         Command2: ["Command C", "Command D"]
 }
 ```
+
 Then the manager will strip the duplicates to:
 ```
 {
