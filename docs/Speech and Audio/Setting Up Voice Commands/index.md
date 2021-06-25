@@ -60,7 +60,8 @@ If you provide @![iOS, javascript]an array!@@![android, javaSE, javaEE]a list!@ 
 
 ### Duplicate Strings in Voice Commands
 Voice commands that are sent with duplicate strings in different voice commandsâ€”such as:
-```{
+```
+{
         Command1: ["Command A", "Command B"],
         Command2: ["Command B", "Command C"],
         Command3: ["Command D", "Command E"]
@@ -69,13 +70,15 @@ Voice commands that are sent with duplicate strings in different voice commandsâ
 Then the manager will abort the upload request. The previous voice commands will remain available.
 
 If any individual voice command contains duplicate strings, they will be reduced to one. For example, if the voice commands to be sent are:
-```{
+```
+{
         Command1: ["Command A", "Command A", "Command B"],
         Command2: ["Command C", "Command D"]
 }
 ```
 Then the manager will strip the duplicates to:
-```{
+```
+{
         Command1: ["Command A", "Command B"],
         Command2: ["Command C", "Command D"]
 }
