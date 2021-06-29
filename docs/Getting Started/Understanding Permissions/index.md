@@ -286,7 +286,7 @@ if (status.get(FunctionID.GET_VEHICLE_DATA).getAllowedParameters().get(GetVehicl
 ```js
 const permissionElements = [];
 permissionElements.push(new SDL.manager.permission.PermissionElement(SDL.rpc.enums.FunctionID.Show, null));
-permissionElements.push(new SDL.manager.permission.PermissionElement(SDL.rpc.enms.FunctionID.GetVehicleData, [SDL.rpc.messages.GetVehicleData.KEY_RPM, SDL.rpc.messages.GetVehicleData.KEY_AIRBAG_STATUS]));
+permissionElements.push(new SDL.manager.permission.PermissionElement(SDL.rpc.enums.FunctionID.GetVehicleData, [SDL.rpc.messages.GetVehicleData.KEY_RPM, SDL.rpc.messages.GetVehicleData.KEY_AIRBAG_STATUS]));
 
 const status = sdlManager.getPermissionManager().getStatusOfPermissions(permissionElements);
 
