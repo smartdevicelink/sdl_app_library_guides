@@ -47,7 +47,7 @@ sdlManager.getScreenManager().setVoiceCommands(Collections.singletonList(voiceCo
 @![javascript]
 ```js
 const voiceCommand = new SDL.manager.screen.utils.VoiceCommand(['Command One'], function () {
-    // <#Handle the VoiceCommand's Selection#>
+    // Handle the VoiceCommand's Selection
 });
 sdlManager.getScreenManager().setVoiceCommands([voiceCommand]);
 ```

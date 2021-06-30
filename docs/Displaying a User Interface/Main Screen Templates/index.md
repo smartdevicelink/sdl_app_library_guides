@@ -128,7 +128,7 @@ sdlManager.getScreenManager().beginTransaction();
 sdlManager.getScreenManager().setTextField1('Line of Text');
 // The promise returned by changeLayout will not resolve because it is part of a batch update, and the await operator should be avoided as a result
 sdlManager.getScreenManager().changeLayout(templateConfiguration);
-sdlManager.getScreenManager().setPrimaryGraphic(<#SDLArtwork#>);
+sdlManager.getScreenManager().setPrimaryGraphic(artwork);
 const success = await sdlManager.getScreenManager().commit();
 if (success) {
     console.log('Text, Graphic, and Template changed successful');
