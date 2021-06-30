@@ -247,7 +247,7 @@ sdlManager.sendRPC(setGlobalProperties);
 const setGlobalProperties = new SDL.rpc.messages.SetGlobalProperties();
 setGlobalProperties.setMenuTitle('customTitle');
 // The image must be uploaded before referencing the image name here
-setGlobalProperties.setMenuIcon(<#Image#>);
+setGlobalProperties.setMenuIcon(image);
 const response = await sdlManager.sendRpc(setGlobalProperties);
 if (response.getSuccess()){
     // Success

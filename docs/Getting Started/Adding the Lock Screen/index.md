@@ -79,7 +79,7 @@ let lockScreenConfiguration = SDLLockScreenConfiguration.enabledConfiguration(wi
 
 @![android]
 ```java
-lockScreenConfig.setBackgroundColor(resourceColor); // For example, R.color.black
+lockScreenConfig.setBackgroundColor(resourceColor); // For example, getResources().getColor(R.color.black) or Color.parseColor("#000000");
 ```
 !@
 

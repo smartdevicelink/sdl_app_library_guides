@@ -44,14 +44,14 @@ sdlManager.getFileManager().uploadFile(audioFile, new CompletionListener() {
 
 @![javascript]
 ```js
-const audioFile = new SDL.manager.file.filetypes.SdlFile('File Name', SDL.rpc.enums.FileType.AUDIO_MP3, <#Audio byte array data as a string#>, true);
+const audioFile = new SDL.manager.file.filetypes.SdlFile('File Name', SDL.rpc.enums.FileType.AUDIO_MP3, mp3Data, true);
 const success = await sdlManager.getFileManager().uploadFile(audioFile)
     .catch(error => {
         // handle errors here
         return false;
     });
 if (success) {
-    <#File upload successful#>
+    // File upload successful
 }
 ```
 !@
@@ -212,7 +212,7 @@ Boolean fileIsOnHeadUnit = sdlManager.getFileManager().getRemoteFileNames().cont
 
 @![javascript]
 ```js
-const fileIsOnHeadUnit = sdlManager.getFileManager().getRemoteFileNames().includes('<#File Name#>');
+const fileIsOnHeadUnit = sdlManager.getFileManager().getRemoteFileNames().includes(fileName);
 ```
 !@
 
@@ -251,7 +251,7 @@ sdlManager.getFileManager().deleteRemoteFileWithName("Name Uploaded As", new Com
 
 @![javascript]
 ```js
-const success = await sdlManager.getFileManager().deleteRemoteFileWithName('<#File Name#>');
+const success = await sdlManager.getFileManager().deleteRemoteFileWithName(fileName);
 ```
 !@
 

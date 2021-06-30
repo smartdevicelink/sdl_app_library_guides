@@ -72,8 +72,8 @@ const manifest = new SDL.rpc.messages.AppServiceManifest()
     .setRpcSpecVersion(new SDL.rpc.structs.SdlMsgVersion()
         .setMajorVersion(5)
         .setMinorVersion(0)) // An *optional* parameter that limits the RPC spec versions you can understand to the provided version *or below*.
-    .setHandledRpcs(<#Array of FunctionIDs#>) // If you add function ids to this *optional* parameter, you can support newer RPCs on older head units (that don't support those RPCs natively) when those RPCs are sent from other connected applications.
-    .setMediaServiceManifest(<#Code#>); // Covered Below
+    .setHandledRpcs([]) // If you add function ids to this *optional* parameter, you can support newer RPCs on older head units (that don't support those RPCs natively) when those RPCs are sent from other connected applications.
+    .setMediaServiceManifest(mediaManifest); // Covered Below
 ```
 !@
 
@@ -438,7 +438,7 @@ sdlManager.getFileManager().uploadFile(navInstructionArt, new CompletionListener
 
 @![javascript]
 ```js
-const navInstructionArt = SDL.manager.file.filetypes.SdlArtwork('turn', SDL.rpc.enums.FileType.GRAPHIC_PNG, <#Binary image data#>, true);
+const navInstructionArt = SDL.manager.file.filetypes.SdlArtwork('turn', SDL.rpc.enums.FileType.GRAPHIC_PNG, image, true);
 // We have to send the image to the system before it's used in the app service.
 const success = await sdlManager.getFileManager().uploadFile(navInstructionArt);
 if (success) {
@@ -557,7 +557,7 @@ sdlManager.getFileManager().uploadFile(weatherImage, new CompletionListener() {
 
 @![javascript]
 ```js
-const weatherImage = SDL.manager.file.filetypes.SdlArtwork('sun', SDL.rpc.enums.FileType.GRAPHIC_PNG, <#Binary image data#>, true);
+const weatherImage = SDL.manager.file.filetypes.SdlArtwork('sun', SDL.rpc.enums.FileType.GRAPHIC_PNG, image, true);
 // We have to send the image to the system before it's used in the app service.
 const success = await sdlManager.getFileManager().uploadFile(weatherImage);
 if (success) {
@@ -661,8 +661,8 @@ sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.GetAppServiceData, (message) 
             .setSuccess(true)
             .setCorrelationID(getAppServiceData.getCorrelationId())
             .setResultCode(SDL.rpc.enums.Result.SUCCESS)
-            .setInfo('<#Use to provide more information about an error#>')
-            .setServiceData(<#Your App Service Data#>);
+            .setInfo('Use to provide more information about an error')
+            .setServiceData(appServiceData);
 
         // sdl_javascript_suite v1.1+
         sdlManager.sendRpcResolve(response);
@@ -779,7 +779,7 @@ sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.ButtonPress, (message) => {
             .setSuccess(true)
             .setResultCode(SDL.rpc.enums.Result.SUCCESS)
             .setCorrelationID(buttonPress.getCorrelationId())
-            .setInfo('<#Use to provide more information about an error#>');
+            .setInfo('Use to provide more information about an error');
 
         // sdl_javascript_suite v1.1+
         sdlManager.sendRpcResolve(response);
@@ -901,7 +901,7 @@ sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.PerformAppServiceInteraction,
         const response = new SDL.rpc.messages.PerformAppServiceInteractionResponse()
             .setServiceSpecificResult('Some Result')
             .setCorrelationID(performAppServiceInteraction.getCorrelationId())
-            .setInfo('<#Use to provide more information about an error#>')
+            .setInfo('Use to provide more information about an error')
             .setSuccess(true)
             .setResultCode(SDL.rpc.enums.Result.SUCCESS);
 
@@ -951,7 +951,7 @@ sdlManager.sendRPC(publishServiceRequest);
 ```js
 const manifest = new SDL.rpc.structs.AppServiceManifest()
     .getServiceType(SDL.rpc.enums.AppServiceType.WEATHER)
-    .setWeatherServiceManifest('<#Updated weather service manifest>');
+    .setWeatherServiceManifest(weatherServiceManifest);
 
 const publishServiceRequest = new SDL.rpc.messages.PublishAppService()
     .setAppServiceManifest(manifest);
@@ -987,7 +987,7 @@ sdlManager.sendRPC(unpublishAppService);
 @![javascript]
 ```js
 const unpublishAppService = new SDL.rpc.messages.UnpublishAppService()
-    .setServiceID('<#The serviceID of the service to unpublish>');
+    .setServiceID(serviceId);
 
 // sdl_javascript_suite v1.1+
 sdlManager.sendRpcResolve(unpublishAppService);

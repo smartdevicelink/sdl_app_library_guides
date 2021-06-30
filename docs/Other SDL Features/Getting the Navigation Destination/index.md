@@ -490,7 +490,7 @@ sdlManager.sendRPC(getWayPoints);
 const getWayPoints = new SDL.rpc.messages.GetWayPoints();
 const response = await sdlManager.sendRpcResolve(getWayPoints);
 if (response.getSuccess()) {
-    <#Use the waypoint information#>
+    // Use the waypoint information
 } else {
     // Handle the errors
 }

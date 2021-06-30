@@ -284,11 +284,11 @@ if (status.get(FunctionID.GET_VEHICLE_DATA).getAllowedParameters().get(GetVehicl
 ```js
 const permissionElements = [];
 permissionElements.push(new SDL.manager.permission.PermissionElement(SDL.rpc.enums.FunctionID.Show, null));
-permissionElements.push(new SDL.manager.permission.PermissionElement(SDL.rpc.enms.FunctionID.GetVehicleData, [SDL.rpc.messages.GetVehicleData.KEY_RPM, SDL.rpc.messages.GetVehicleData.KEY_AIRBAG_STATUS]));
+permissionElements.push(new SDL.manager.permission.PermissionElement(SDL.rpc.enums.FunctionID.GetVehicleData, [SDL.rpc.messages.GetVehicleData.KEY_RPM, SDL.rpc.messages.GetVehicleData.KEY_AIRBAG_STATUS]));
 
 const status = sdlManager.getPermissionManager().getStatusOfPermissions(permissionElements);
 
-if (status[SDL.rpc.enums.FunctionID.GetVehicleData].getIsRPCAllowed()){
+if (status[SDL.rpc.enums.FunctionID.GetVehicleData].getIsRpcAllowed()){
     // GetVehicleData RPC is allowed
 }
 
@@ -360,11 +360,11 @@ permissionElements.push(new SDL.manager.permission.PermissionElement(SDL.rpc.enu
 permissionElements.push(new SDL.manager.permission.PermissionElement(SDL.rpc.enums.FunctionID.GetVehicleData, [SDL.rpc.messages.GetVehicleData.KEY_RPM, SDL.rpc.messages.GetVehicleData.KEY_AIRBAG_STATUS]));
 
 const listenerId = sdlManager.getPermissionManager().addListener(permissionElements, SDL.manager.permission.enums.PermissionGroupType.ANY, function (allowedPermissions, permissionGroupStatus) {
-    if (allowedPermissions[SDL.rpc.enums.FunctionID.GET_VEHICLE_DATA].getIsRPCAllowed()) {
+    if (allowedPermissions[SDL.rpc.enums.FunctionID.GetVehicleData].getIsRpcAllowed()) {
         // GetVehicleData RPC is allowed
     }
 
-    if (allowedPermissions[SDL.rpc.enums.FunctionID.GET_VEHICLE_DATA].getAllowedParameters()[SDL.rpc.messages.GetVehicleData.KEY_RPM]){
+    if (allowedPermissions[SDL.rpc.enums.FunctionID.GetVehicleData].getAllowedParameters()[SDL.rpc.messages.GetVehicleData.KEY_RPM]){
         // rpm parameter in GetVehicleData RPC is allowed
     }
 });

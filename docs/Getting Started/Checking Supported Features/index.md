@@ -56,10 +56,10 @@ sdlManager.sendRPC(request);
 async function send () {
     const response = await sdlManager.sendRpcResolve(alert);
     if (!response.getSuccess()) {
-        <#The request was not successful. Check the response's result code for more information#>
+        // The request was not successful. Check the response's result code for more information
         return;
     }
-    <#The request was successful#>
+    // The request was successful
 }
 send().catch(err => {
     // thrown exceptions will be caught here
@@ -68,12 +68,12 @@ send().catch(err => {
 
 // Pre sdl_javascript_suite v1.1
 (async function () {
-    const response = await sdlManager.sendRpc(<#Your Request#>);
+    const response = await sdlManager.sendRpc(request);
     if (!response.getSuccess()) {
-        <#The request was not successful. Check the response's result code or catch and log the Promise error for more information#>
+        // The request was not successful. Check the response's result code or catch and log the Promise error for more information
         return;
     }
-    <#The request was successful#>
+    // The request was successful
 })();
 ```
 !@

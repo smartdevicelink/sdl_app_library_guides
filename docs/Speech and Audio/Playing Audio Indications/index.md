@@ -35,7 +35,7 @@ sdlManager.getFileManager().uploadFile(audioFile, new CompletionListener() {
 
 @![javascript]
 ```js
-const audioFile = new SDL.manager.file.filetypes.SdlFile('Audio file name', SDL.rpc.enums.FileType.AUDIO_MP3, <#File Data#>, true);
+const audioFile = new SDL.manager.file.filetypes.SdlFile('Audio file name', SDL.rpc.enums.FileType.AUDIO_MP3, fileData, true);
 const success = await sdlManager.getFileManager().uploadFile(audioFile)
 ```
 !@

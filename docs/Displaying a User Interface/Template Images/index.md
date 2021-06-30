@@ -136,7 +136,7 @@ image.setTemplateImage(true);
 
 @![javascript]
 ```js
-const image = new SDL.manager.file.filetypes.SdlArtwork("<#ArtworkName#>", SDL.rpc.enums.FileType.GRAPHIC_PNG, <#FileData#>, true);
+const image = new SDL.manager.file.filetypes.SdlArtwork('artworkName', SDL.rpc.enums.FileType.GRAPHIC_PNG, fileData, true);
 image.setTemplateImage(true);
 ```
 !@

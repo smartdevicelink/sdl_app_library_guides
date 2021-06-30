@@ -456,7 +456,7 @@ SubtleAlert subtleAlert = new SubtleAlert()
 const subtleAlert = new SDL.rpc.messages.SubtleAlert()
     .setAlertText1('Line 1')
     .setAlertText2('Line 2')
-    .setCancelID(<#Number#>);
+    .setCancelID(cancelId);
 ```
 !@
 
@@ -555,7 +555,7 @@ subtleAlert.setAlertIcon(new Image("artworkName", ImageType.DYNAMIC));
 @![javascript]
 ```js
 subtleAlert.setAlertIcon(new SDL.rpc.structs.Image()
-    .setValueParam(<#artworkName#>)
+    .setValueParam('artworkName')
     .setImageType(SDL.rpc.enums.ImageType.DYNAMIC));
 ```
 !@
@@ -743,7 +743,7 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_SUBTLE_ALERT_PRESSED, new 
 @![javascript]
 ```js
 sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnSubtleAlertPressed, function (onSubtleAlertPressed) {
-    <#The subtle alert was pressed#>
+    // The subtle alert was pressed
 });
 ```
 !@
