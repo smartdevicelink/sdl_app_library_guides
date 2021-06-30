@@ -68,7 +68,7 @@ You need a real device to connect the example app to production or debug hardwar
 If using the Bluetooth transport, make sure to first pair your Android phone to the hardware before attempting to connect your SDL app.
 !@
 
-@![iOS,android]
+@![iOS,android,javascript]
 ## Troubleshooting
 If your app compiles and but does not show up on the HMI, there are a few things you should check:
 !@
@@ -108,6 +108,21 @@ If your app compiles and but does not show up on the HMI, there are a few things
 2. Ensure your phone is properly paired with the TDK
 3. Make sure Bluetooth is turned on - on both the TDK and your phone
 4. Make sure apps are enabled on the TDK (in settings)
+!@
+
+@![javascript]
+### TCP Debug Transport
+1. Make sure that your `HOST` and `PORT` environment variables are set to match the machine running SDL Core.
+1. Make sure there is no firewall blocking the incoming port `12345` on the machine or VM running SDL Core. Also, make sure your firewall allows that outgoing port.
+1. There are different network configurations needed for different virtualization software (VirtualBox, VMware, etc). Make sure yours is set up correctly. Or use [Manticore](https://smartdevicelink.com/resources/manticore/).
+
+### Websocket Transport
+1. Make sure that the policy table of SDL Core has the correct app IDs and nicknames as well as `enabled=true`.
+1. Make sure that the cloud endpoint and cloud transport type provided to SDL Core are correct and reachable by SDL core. There are different network configurations needed for different virtualization software (VirtualBox, VMware, etc). Make sure yours is set up correctly.
+
+### WebEngine Transport
+1. Make sure that the `manifest.js` has provided all [necessary fields](https://smartdevicelink.com/en/guides/core/developer-documentation/web-engine-app-support/#webengine-apps) and that the information is correct.
+1. If you're unable to install your app from a cloud app store, make sure that the app has been compressed to a file archive that can be retrieved via the download URL you provided.
 !@
 
 @![javaSE]
