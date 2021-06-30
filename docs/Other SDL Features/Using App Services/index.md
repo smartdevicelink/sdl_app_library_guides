@@ -421,8 +421,8 @@ sdlManager.sendRPC(performAppServiceInteraction);
 ```js
 const performAppServiceInteraction = new SDL.rpc.messages.PerformAppServiceInteraction()
     .setServiceUri("sdlexample://x-callback-url/showText?x-source=MyApp&text=My%20Custom%20String")
-    .setServiceID("<#Previously Retrieved ServiceID#>")
-    .setOriginApp("<#Your App Id#>");
+    .setServiceID(previousServiceId)
+    .setOriginApp(appId);
 
 // sdl_javascript_suite v1.1+
 const response = await sdlManager.sendRpcResolve(performAppServiceInteraction);
@@ -535,7 +535,6 @@ sdlManager.sendRPC(getFile);
 @![javascript]
 ```js
 // sdl_javascript_suite v1.1+
-const appServiceData = <#Get the App Service Data#>;
 const weatherServiceData = appServiceData.getWeatherServiceData();
 
 if (weatherServiceData === null || weatherServiceData.getCurrentForecast() === null || weatherServiceData.getCurrentForecast().getWeatherIcon() === null) {
@@ -546,7 +545,7 @@ const currentForecastImageName = weatherServiceData.getCurrentForecast().getWeat
 
 const getFile = new SDL.rpc.messages.GetFile()
     .setFileName(currentForecastImageName)
-    .setAppServiceId(<#Service ID>);
+    .setAppServiceId(serviceId);
 
 const getFileResponse = await sdlManager.sendRpcResolve(getFile);
 const fileData = getFileResponse.getBulkData();
@@ -556,7 +555,6 @@ const sdlArtwork = new SDL.manager.file.filetypes.SdlArtwork(fileName, FileType.
 
 
 // Pre sdl_javascript_suite v1.1
-const appServiceData = <#Get the App Service Data#>;
 const weatherServiceData = appServiceData.getWeatherServiceData();
 
 if (weatherServiceData === null || weatherServiceData.getCurrentForecast() === null || weatherServiceData.getCurrentForecast().getWeatherIcon() === null) {
@@ -567,7 +565,7 @@ const currentForecastImageName = weatherServiceData.getCurrentForecast().getWeat
 
 const getFile = new SDL.rpc.messages.GetFile()
     .setFileName(currentForecastImageName)
-    .setAppServiceId(<#Service ID>);
+    .setAppServiceId(serviceId);
 
 const getFileResponse = await sdlManager.sendRpc(getFile).catch(error => error);
 const fileData = getFileResponse.getBulkData();

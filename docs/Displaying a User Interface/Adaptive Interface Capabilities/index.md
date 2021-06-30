@@ -59,7 +59,7 @@ ImageResolution resolution = field.getImageResolution();
 
 @![javascript]
 ```js
-const field = sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getImageFields()['<#index#>'];
+const field = sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getImageFields()[index];
 const resolution = field.getImageResolution();
 ```
 !@

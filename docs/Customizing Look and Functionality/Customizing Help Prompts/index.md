@@ -75,9 +75,9 @@ sdlManager.sendRPC(setGlobalProperties);
 const setGlobalProperties = new SDL.rpc.messages.SetGlobalProperties();
 setGlobalProperties.setVrHelpTitle('What Can I Say?');
 
-const item1 = new SDL.rpc.structs.VrHelpItem().setText("Show Artists").setPosition(1).setImage(<#image#>); // a previously uploaded image or null
+const item1 = new SDL.rpc.structs.VrHelpItem().setText("Show Artists").setPosition(1).setImage(image); // a previously uploaded image or null
 
-const item2 = new SDL.rpc.structs.VrHelpItem().setText("Show Albums").setPosition(2).setImage(<#image#>); // a previously uploaded image or null
+const item2 = new SDL.rpc.structs.VrHelpItem().setText("Show Albums").setPosition(2).setImage(image); // a previously uploaded image or null
 
 setGlobalProperties.setVrHelp([item1, item2]);
 sdlManager.sendRpc(setGlobalProperties).catch(err => err); // If there was an error, catch it and return it
