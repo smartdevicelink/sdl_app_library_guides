@@ -15,7 +15,7 @@ There are three different ways to create a soft button: with only text, with onl
 ![Generic - Text Only Soft Buttons](assets/Generic_Text_Only_Soft_Buttons.png)
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLSoftButtonObject *textSoftButton = [[SDLSoftButtonObject alloc] initWithName:@"<#Button Name#>" text:@"<#Button Label Text#>" artwork:nil handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     if (buttonPress == nil) { return; }
@@ -32,8 +32,6 @@ self.sdlManager.screenManager.softButtonObjects = @[textSoftButton];
     }
 }];
 ```
-
-##### Swift
 ```swift
 let textSoftButton = SDLSoftButtonObject(name: "<#Button Name#>", text: "<#Button Label Text#>", artwork: nil) { (buttonPress, buttonEvent) in
     guard let buttonPress = buttonPress else { return }
@@ -50,6 +48,7 @@ sdlManager.screenManager.endUpdates { (error) in
     }
 }
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -109,15 +108,14 @@ You can use the @![iOS]`SDLSystemCapabilityManager`!@@![android,javaSE,javaEE,ja
 ![Generic - Image Only Soft Buttons](assets/Generic_Image_Only_Soft_Buttons.png)
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 BOOL softButtonsSupportImages = self.sdlManager.systemCapabilityManager.defaultMainWindowCapability.softButtonCapabilities.firstObject.imageSupported.boolValue;
 ```
-
-##### Swift
 ```swift
 let softButtonsSupportImages = sdlManager.systemCapabilityManager.defaultMainWindowCapability?.softButtonCapabilities?.first?.imageSupported.boolValue ?? false
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -137,7 +135,7 @@ const imageSupported = (softButtonCapabilitiesList.length !== 0) ? softButtonCap
 Once you know that the HMI supports images in soft buttons you can create and send the image-only soft buttons. 
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLSoftButtonObject *imageSoftButton = [[SDLSoftButtonObject alloc] initWithName:@"<#Button Name#>" text:nil artwork:<#SDLArtwork#> handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     if (buttonPress == nil) { return; }
@@ -154,8 +152,6 @@ self.sdlManager.screenManager.softButtonObjects = @[imageSoftButton];
     }
 }];
 ```
-
-##### Swift
 ```swift
 let imageSoftButton = SDLSoftButtonObject(name: "<#Button Name#>", text: nil, artwork: <#SDLArtwork#>) { (buttonPress, buttonEvent) in
     guard let buttonPress = buttonPress else { return }
@@ -172,6 +168,7 @@ sdlManager.screenManager.endUpdates { (error) in
     }
 }
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -226,7 +223,7 @@ if (success === true) {
 ![Generic - Text and Image Soft Buttons](assets/Generic_Text_And_Image_Soft_Buttons.png)
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLSoftButtonObject *textAndImageSoftButton = [[SDLSoftButtonObject alloc] initWithName:@"<#Button Name#>" text:@"<#Button Label Text#>" artwork:<#SDLArtwork#> handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     if (buttonPress == nil) { return; }
@@ -243,8 +240,6 @@ self.sdlManager.screenManager.softButtonObjects = @[textAndImageSoftButton];
     }
 }];
 ```
-
-##### Swift
 ```swift
 let textAndImageSoftButton = SDLSoftButtonObject(name: "<#Button Name#>", text: "<#Button Label Text#>", artwork: <#SDLArtwork#>) { (buttonPress, buttonEvent) in
     guard let buttonPress = buttonPress else { return }
@@ -261,6 +256,7 @@ sdlManager.screenManager.endUpdates { (error) in
     }
 }
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -321,7 +317,7 @@ When a button is highlighted its background color will change to indicate that i
 ![Generic HMI](assets/ford_sync3_soft_button_highlight_off.png)
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLSoftButtonState *highlightOn = [[SDLSoftButtonState alloc] initWithStateName:@"<#Soft Button State Name#>" text:@"On" artwork:<#SDLArtwork#>];
 highlightOn.highlighted = YES;
@@ -336,8 +332,6 @@ SDLSoftButtonObject *highlightButton = [[SDLSoftButtonObject alloc] initWithName
     [transitionHighlight transitionToNextState];
 }];
 ```
-
-##### Swift
 ```swift
 let highlightOn = SDLSoftButtonState(stateName: "<#Soft Button State Name#>", text: "On", artwork: <#SDLArtwork#>)
 highlightOn.isHighlighted = true
@@ -350,6 +344,7 @@ let highlightButton = SDLSoftButtonObject(name: "HighlightButton", states: [high
     transitionHighlight?.transitionToNextState()
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -389,7 +384,7 @@ const softButtonObject = new SDL.manager.screen.utils.SoftButtonObject('softButt
 When the soft button state needs to be updated, simply tell the `SoftButtonObject` to transition to the next state. If your button states do not cycle in a predictable order, you can also tell the soft button which state to transition to by passing the `stateName` of the new soft button state.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLSoftButtonState *softButtonState1 = [[SDLSoftButtonState alloc] initWithStateName:@"<#Soft Button State Name#>" text:@"<#Button Label Text#>" artwork:<#SDLArtwork#>];
 SDLSoftButtonState *softButtonState2 = [[SDLSoftButtonState alloc] initWithStateName:@"<#Soft Button State Name#>" text:@"<#Button Label Text#>" artwork:<#SDLArtwork#>];
@@ -412,8 +407,6 @@ self.sdlManager.screenManager.softButtonObjects = @[softButtonObject];
 SDLSoftButtonObject *retrievedSoftButtonObject = [self.sdlManager.screenManager softButtonObjectNamed:@"<#Soft Button Object Name#>"];
 [retrievedSoftButtonObject transitionToNextState];
 ```
-
-##### Swift
 ```swift
 let softButtonState1 = SDLSoftButtonState(stateName: "<#Soft Button State Name#>", text: "<#Button Label Text#>", artwork: <#SDLArtwork#>)
 let softButtonState2 = SDLSoftButtonState(stateName: "<#Soft Button State Name#>", text: "<#Button Label Text#>", artwork: <#SDLArtwork#>)
@@ -436,6 +429,7 @@ sdlManager.screenManager.endUpdates { (error) in
 let retrievedSoftButtonObject = sdlManager.screenManager.softButtonObjectNamed("<#Soft Button Object Name#>")
 retrievedSoftButtonObject?.transitionToNextState()
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -500,15 +494,14 @@ if (success === true) {
 To delete soft buttons, simply pass the screen manager a new array of soft buttons. To delete all soft buttons, simply pass the screen manager an empty array.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 self.sdlManager.screenManager.softButtonObjects = @[];
 ```
-
-##### Swift
 ```swift
 sdlManager.screenManager.softButtonObjects = []
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]

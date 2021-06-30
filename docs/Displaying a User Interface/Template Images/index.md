@@ -9,7 +9,7 @@ You can easily display text, images, and buttons using the @![iOS]`SDLScreenMana
 
 ## Showing Images
 @![iOS]
-##### Objective-C
+|~
 ```objc
 [self.sdlManager.screenManager beginUpdates];
 self.sdlManager.screenManager.primaryGraphic = <#SDLArtwork#>;
@@ -21,8 +21,6 @@ self.sdlManager.screenManager.primaryGraphic = <#SDLArtwork#>;
     }
 }];
 ```
-
-##### Swift
 ```swift
 sdlManager.screenManager.beginUpdates()
 sdlManager.screenManager.primaryGraphic = <#SDLArtwork#>
@@ -34,10 +32,10 @@ sdlManager.screenManager.endUpdates { (error) in
     }
 }
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
-
 ```java
 sdlManager.getScreenManager().beginTransaction();
 sdlManager.getScreenManager().setPrimaryGraphic(sdlArtwork);
@@ -71,15 +69,14 @@ if (success === true) {
 To remove an image from the screen you just need to set the screen manager property to @![iOS]`nil`!@@![android, javaSE, javaEE]`null`!@.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 self.sdlManager.screenManager.primaryGraphic = nil;
 ```
-
-##### Swift
 ```swift
 sdlManager.screenManager.primaryGraphic = nil
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -118,17 +115,16 @@ In the screenshots below, the shuffle and repeat icons have been templated. In n
 ![Generic - Template Images Light Mode](assets/Generic_template_media_light.png)
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 UIImage *image = [[UIImage imageNamed:@"<#ArtworkName#>"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 SDLArtwork *artwork = [SDLArtwork artworkWithImage:image asImageFormat:SDLArtworkImageFormatPNG];
 ```
-
-##### Swift
 ```swift
 let image = UIImage(named: "<#ArtworkName#>")?.withRenderingMode(.alwaysTemplate)
 let artwork = SDLArtwork(image: image, persistent: true, as: .PNG)
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -149,15 +145,14 @@ image.setTemplateImage(true);
 Static icons are pre-existing images on the remote system that you may reference and use in your own application. Each OEM will design their own custom static icons but you can get an overview of the available icons from the icons designed for the open source [Generic HMI](https://smartdevicelink.com/en/guides/sdl-overview-guides/user-interface/static-icons/). Static icons are fully supported by the screen manager via an @![iOS]`SDLArtwork`!@@![android, javaSE, javaEE, javascript]`SdlArtwork`!@ initializer. Static icons can be used in primary and secondary graphic fields, soft button image fields, and menu icon fields.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLArtwork *staticIconArt = [[SDLArtwork alloc] initWithStaticIcon:SDLStaticIconNameAlbum];
 ```
-
-##### Swift
 ```swift
 let staticIconArt = SDLArtwork(staticIcon: .album)
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]

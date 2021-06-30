@@ -2,10 +2,9 @@
 ## Set Up a Proxy Manager Class
 You will need a class that manages the connection between your app and SDL Core. Since there should be only one active connection to the SDL Core, you may wish to implement this proxy class using the singleton pattern.
 
-##### Objective-C
-###### ProxyManager.h
-
+|~
 ```objc
+// ProxyManager.h
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -17,10 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
-```
 
-###### ProxyManager.m
-```objc
+// ProxyManager.m
 #import "ProxyManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -52,8 +49,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 NS_ASSUME_NONNULL_END
 ```
-
-##### Swift
 ```swift
 class ProxyManager: NSObject {
   // Singleton
@@ -64,12 +59,13 @@ class ProxyManager: NSObject {
   }
 }
 ```
+~|
 
 Your app should always start passively watching for a connection with a SDL Core as soon as the app launches. The easy way to do this is by instantiating the `ProxyManager` class in the `didFinishLaunchingWithOptions()` method in your `AppDelegate` class.
 
 The connect method will be implemented later. To see a full example, navigate to the bottom of this page.
 
-##### Objective-C
+|~
 ```objc
 @implementation AppDelegate
 
@@ -80,8 +76,6 @@ The connect method will be implemented later. To see a full example, navigate to
 
 @end
 ```
-
-##### Swift
 ```swift
 class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -92,24 +86,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 }
 ```
+~|
 
 ## Importing the SDL Library
 At the top of the `ProxyManager` class, import the SDL for iOS library.
 
-##### Objective-C
+|~
 ```objc
 #import <SmartDeviceLink/SmartDeviceLink.h>
 ```
-
-##### Swift
 ```swift
 import SmartDeviceLink
 ```
+~|
 
 ## Creating the SDL Manager
 The `SDLManager` is the main class of SmartDeviceLink. It will handle setting up the initial connection with the head unit. It will also help you upload images and send RPCs.
 
-##### Objective-C
+|~
 ```objc
 #import "ProxyManager.h"
 
@@ -146,8 +140,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 NS_ASSUME_NONNULL_END
 ```
-
-##### Swift
 ```swift
 class ProxyManager: NSObject {
   // Manager
@@ -161,6 +153,7 @@ class ProxyManager: NSObject {
   }
 }
 ```
+~|
 
 ### 1. Create a Lifecycle Configuration
 In order to instantiate the `SDLManager` class, you must first configure an `SDLConfiguration`. To start, we will look at the `SDLLifecycleConfiguration`. You will at minimum need a `SDLLifecycleConfiguration` instance with the application name and application id. During the development stage, a dummy app id is usually sufficient. For more information about obtaining an application id, please consult the [SDK Configuration](Getting Started/SDK Configuration) section of this guide. You must also decide which network configuration to use to connect the app to the SDL Core. Optional, but recommended, configuration properties include short app name, app icon, and app type.
@@ -169,24 +162,24 @@ In order to instantiate the `SDLManager` class, you must first configure an `SDL
 There are two different ways to connect your app to a SDL Core: with a TCP (Wi-Fi) network connection or with an iAP (USB / Bluetooth) network connection. Use TCP for debugging and use iAP for production level apps.
 
 ##### iAP
-###### Objective-C
+|~
 ```objc
 SDLLifecycleConfiguration* lifecycleConfiguration = [SDLLifecycleConfiguration defaultConfigurationWithAppName:@"<#App Name#>" fullAppId:@"<#App Id#>"];
 ```
-###### Swift
 ```swift
 let lifecycleConfiguration = SDLLifecycleConfiguration(appName:"<#App Name#>", fullAppId: "<#App Id#>")
 ```
+~|
 
 ##### TCP
-###### Objective-C
+|~
 ```objc
 SDLLifecycleConfiguration* lifecycleConfiguration = [SDLLifecycleConfiguration debugConfigurationWithAppName:@"<#App Name#>" fullAppId:@"<#App Id#>" ipAddress:@"<#IP Address#>" port:<#Port#>];
 ```
-###### Swift
 ```swift
 let lifecycleConfiguration = SDLLifecycleConfiguration(appName: "<#App Name#>", fullAppId: "<#App Id#>", ipAddress: "<#IP Address#>", port: <#Port#>)
 ```
+~|
 
 !!! NOTE
 If you are connecting your app to an emulator using a TCP connection, the IP address is your computer or virtual machine’s IP address, and the port number is usually 12345. If you are connecting to [Manticore](https://smartdevicelink.com/resources/manticore/), the Manticore UI will give you your IP / Port to connect to.
@@ -195,20 +188,19 @@ If you are connecting your app to an emulator using a TCP connection, the IP add
 ### 2. Short App Name (optional)
 This is a shortened version of your app name that is substituted when the full app name will not be visible due to character count constraints. You will want to make this as short as possible.
 
-##### Objective-C
+|~
 ```objc
 lifecycleConfiguration.shortAppName = @"<#Shortened App Name#>";
 ```
-
-##### Swift
 ```swift
 lifecycleConfiguration.shortAppName = "<#Shortened App Name#>"
 ```
+~|
 
 ### 3. App Icon
 This is a custom icon for your application. Please refer to [Adaptive Interface Capabilities](Displaying a User Interface/Adaptive Interface Capabilities) for icon sizes.
 
-##### Objective-C
+|~
 ```objc
 UIImage* appImage = [UIImage imageNamed:@"<#AppIcon Name#>"];
 if (appImage) {
@@ -216,14 +208,13 @@ if (appImage) {
     lifecycleConfiguration.appIcon = appIcon;
 }
 ```
-
-##### Swift
 ```swift
 if let appImage = UIImage(named: "<#AppIcon Name#>") {
     let appIcon = SDLArtwork(image: appImage, name: "<#Name to Upload As#>", persistent: true, as: .JPG /* or .PNG */)
     lifecycleConfiguration.appIcon = appIcon
 }
 ```
+~|
 
 !!! NOTE
 Persistent files are used when the image ought to remain on the remote system between ignition cycles. This is commonly used for menu artwork, soft button artwork and app icons. Non-persistent artwork is usually used for dynamic images like music album artwork.
@@ -236,30 +227,26 @@ The app type is used by car manufacturers to decide how to categorize your app. 
 Navigation and projection applications both use video and audio byte streaming. However, navigation apps require special permissions from OEMs, and projection apps are only for internal use by OEMs.
 !!!
 
-##### Objective-C
+|~
 ```objc
 lifecycleConfiguration.appType = SDLAppHMITypeMedia;
 ```
-
-##### Swift
 ```swift
 lifecycleConfiguration.appType = .media
 ```
+~|
 
 #### Additional App Types
 If one app type doesn't cover your full app use-case, you can add additional `AppHMIType`s as well.
 
-##### Objective-C
-
+|~
 ```objc
 lifecycleConfiguration.additionalAppTypes = @[SDLAppHMITypeInformation];
 ```
-
-##### Swift
-
 ```swift
 lifecycleConfiguration.additionalAppTypes = [.information];
 ```
+~|
 
 ### 5. Template Coloring
 You can customize the color scheme of your templates. For more information, see the [Customizing the Template guide](Customizing Look and Functionality/Customizing the Template) section.
@@ -270,17 +257,16 @@ You have the ability to determine a minimum SDL protocol and minimum SDL RPC ver
 #### Blocking By Version
 If a head unit is blocked by protocol version, your app icon will never appear on the head unit's screen. If you configure your app to block by RPC version, it will appear and then quickly disappear. So while blocking with `minimumProtocolVersion` is preferable, `minimumRPCVersion` allows you more granular control over which RPCs will be present.
 
-##### Objective-C
+|~
 ```objc
 lifecycleConfiguration.minimumProtocolVersion = [SDLVersion versionWithMajor:3 minor:0 patch:0];
 lifecycleConfiguration.minimumRPCVersion = [SDLVersion versionWithMajor:4 minor:0 patch:0];
 ```
-
-##### Swift
 ```swift
 lifecycleConfiguration.minimumProtocolVersion = SDLVersion(major: 3, minor: 0, patch: 0)
 lifecycleConfiguration.minimumRPCVersion = SDLVersion(major: 4, minor: 0, patch: 0)
 ```
+~|
 
 #### Blocking By Vehicle Type
 If you are blocking by vehicle type and you are connected over RPC v7.1+, your app icon will never appear on the head unit's screen. If you are connected over RPC v7.0 or below, it will appear and then quickly disappear. To implement this type of blocking, you need to [implement the SDLManager delegate](#implement-the-sdl-manager-delegate). You will then implement the optional `didReceiveSystemInfo` method and return `YES` if you want to continue the connection and `NO` if you wish to disconnect. See the section [example implementation of a proxy class](#example-implementation-of-a-proxy-class) for an example.
@@ -292,74 +278,69 @@ The SDL SDK can take care of the lock screen implementation for you, automatical
 
 For more information, please refer to the [Adding the Lock Screen](Getting Started/Adding the Lock Screen) section; for this guide we will be using `SDLLockScreenConfiguration`'s basic `enabledConfiguration`.
 
-##### Objective-C
+|~
 ```objc
 [SDLLockScreenConfiguration enabledConfiguration]
 ```
-
-##### Swift
 ```swift
 SDLLockScreenConfiguration.enabled()
 ```
+~|
 
 ### 8. Logging
 A logging configuration is used to define where and how often SDL will log. It will also allow you to set your own logging modules and filters. For more information about setting up logging, see [the logging guide](Developer Tools/Configuring SDL Logging).
 
-##### Objective-C
+|~
 ```objc
 [SDLLogConfiguration defaultConfiguration]
 ```
-
-##### Swift
 ```swift
 SDLLogConfiguration.default()
 ```
+~|
 
 ### 9. File Manager
 The file manager configuration allows you to configure retry behavior for uploading files and images. The default configuration attempts one re-upload, but will fail after that.
 
-##### Objective-C
+|~
 ```objc
 [SDLFileManagerConfiguration defaultConfiguration];
 ```
-
-##### Swift
 ```swift
 SDLFileManagerConfiguration.default()
 ```
+~|
 
 ### 10. Set the Configuration
 The `SDLConfiguration` class is used to set the lifecycle, lock screen, logging, and optionally (dependent on if you are a Navigation or Projection app) streaming media configurations for the app. Use the lifecycle configuration settings above to instantiate a `SDLConfiguration` instance.
 
-##### Objective-C
+|~
 ```objc
 SDLConfiguration* configuration = [[SDLConfiguration alloc] initWithLifecycle:lifecycleConfiguration lockScreen:[SDLLockScreenConfiguration enabledConfiguration] logging:[SDLLogConfiguration defaultConfiguration] fileManager:nil encryption:nil];
 ```
-
-##### Swift
 ```swift
 let configuration = SDLConfiguration(lifecycle: lifecycleConfiguration, lockScreen: .enabled(), logging: .default(), fileManager: nil, encryption: nil)
 ```
+~|
 
 ### 11. Create a SDLManager
 Now you can use the `SDLConfiguration` instance to instantiate the `SDLManager`.
 
-##### Objective-C
+|~
 ```objc
 self.sdlManager = [[SDLManager alloc] initWithConfiguration:configuration delegate:self];
 ```
-
-##### Swift
 ```swift
 sdlManager = SDLManager(configuration: configuration, delegate: self)
 ```
+~|
 
 ### 12. Start the SDLManager
 The manager should be started as soon as possible in your application's lifecycle. We suggest doing this in the `didFinishLaunchingWithOptions()` method in your `AppDelegate` class. Once the manager has been initialized, it will immediately start watching for a connection with the remote system. The manager will passively search for a connection with a SDL Core during the entire lifespan of the app. If the manager detects a connection with a SDL Core, the `startWithReadyHandler` will be called.
 
 Create a new function in the `ProxyManager` class called `connect`.
 
-##### Objective-C
+|~
 ```objc
 - (void)connect {
     [self.sdlManager startWithReadyHandler:^(BOOL success, NSError * _Nullable error) {
@@ -369,8 +350,6 @@ Create a new function in the `ProxyManager` class called `connect`.
     }];
 }
 ```
-
-##### Swift
 ```swift
 func connect() {
     // Start watching for a connection with a SDL Core
@@ -381,6 +360,7 @@ func connect() {
     }
 }
 ```
+~|
 
 !!! NOTE
 In production, your app will be watching for connections using iAP, which will not use any more battery power than normal.
@@ -405,9 +385,9 @@ In addition, there are several optional methods:
 ### Example Implementation of a Proxy Class
 The following code snippet has an example of setting up both a TCP and iAP connection.
 
-##### Objective-C
-###### ProxyManager.h
+|~
 ```objc
+// ProxyManager.h
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -420,10 +400,8 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
-```
 
-###### ProxyManager.m
-```objc
+// ProxyManager.m
 #import <SmartDeviceLink/SmartDeviceLink.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -502,8 +480,6 @@ static NSString* const AppId = @"<#App Id#>";
 
 NS_ASSUME_NONNULL_END
 ```
-
-##### Swift
 ```swift
 import SmartDeviceLink
 
@@ -566,6 +542,7 @@ extension ProxyManager: SDLManagerDelegate {
     }
 }
 ```
+~|
 
 ## Where to Go From Here
 You should now be able to connect to a head unit or emulator. From here, [learn about designing your main interface](Displaying a User Interface/Main Screen Templates). For further details on connecting, see [Connecting to a SDL Core](Getting Started/Connecting to an Infotainment System).

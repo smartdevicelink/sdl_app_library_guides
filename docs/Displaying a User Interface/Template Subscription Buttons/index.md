@@ -43,7 +43,7 @@ There are two different ways to receive button press notifications. The first is
 ### Subscribe with a Block Handler
 Once you have subscribed to the button with a block handler, the handler will be called whenever the button has been selected. If an error occurs attempting to subscribe to the button, the error will be returned in the `error` parameter.
 
-##### Objective-C
+|~
 ```objc
 id<NSObject> observer = [self.sdlManager.screenManager subscribeButton:SDLButtonNamePlayPause withUpdateHandler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent, NSError * _Nullable error) {
     if (error != nil) {
@@ -60,8 +60,6 @@ id<NSObject> observer = [self.sdlManager.screenManager subscribeButton:SDLButton
     }
 }];
 ```
-
-##### Swift
 ```swift
 let observer = sdlManager.screenManager.subscribeButton(.playPause) { (buttonPress, buttonEvent, error) in
     guard error == nil else {
@@ -78,13 +76,14 @@ let observer = sdlManager.screenManager.subscribeButton(.playPause) { (buttonPre
     }
 }
 ```
+~|
 
 ### Subscribe with a Selector
 Once you have subscribed to the button, the selector will be called when the button has been selected. If there is an error subscribing to the subscribe button it will be returned in the `error` parameter.
 
 The selector can be created with between zero and four parameters of types in the following order: `SDLButtonName`, `NSError`, `SDLOnButtonPress`, and `SDLOnButtonEvent`. When the fourth parameter, `SDLOnButtonEvent`, is omitted from the selector, then you will only be notified when a button press occurs. When the third parameter, `SDLOnButtonPress` is omitted from the selector, you will be unable to distinguish between short and long button presses.
 
-##### Objective-C
+|~
 ```objc
 [self.sdlManager.screenManager subscribeButton:SDLButtonNamePlayPause withObserver:self selector:@selector(buttonPressEventWithButtonName:error:buttonPress:buttonEvent:)];
 
@@ -103,8 +102,6 @@ The selector can be created with between zero and four parameters of types in th
     }
 }
 ```
-
-##### Swift
 ```swift
 sdlManager.screenManager.subscribeButton(.playPause, withObserver: self, selector: #selector(buttonPressEvent(buttonName:error:buttonPress:buttonEvent:)))
 
@@ -123,6 +120,7 @@ sdlManager.screenManager.subscribeButton(.playPause, withObserver: self, selecto
     }
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -177,7 +175,7 @@ await sdlManager.getScreenManager()
 @![iOS]
 When unsubscribing, you will need to pass the observer object and which button name that you want to unsubscribe. If you subscribed using a handler, use the observer object returned when you subscribed. If you subscribed using a selector, use the same observer object you passed when subscribing. 
 
-##### Objective-C
+|~
 ```objc
 [self.sdlManager.screenManager unsubscribeButton:SDLButtonNamePlayPause withObserver:<#Your observer object#> withCompletionHandler:^(NSError * _Nullable error) {
     if (error != nil) {
@@ -188,8 +186,6 @@ When unsubscribing, you will need to pass the observer object and which button n
     // The button was unsubscribed successfully
 }];
 ```
-
-##### Swift
 ```swift
 sdlManager.screenManager.unsubscribeButton(.playPause, withObserver: <#Your observer object#>) { (error) in
     if let error = error {
@@ -200,6 +196,7 @@ sdlManager.screenManager.unsubscribeButton(.playPause, withObserver: <#Your obse
     // The button was unsubscribed successfully
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -226,7 +223,7 @@ Before @![iOS, android, javaSE, javaEE]library v.!@@![iOS]6.1 and!@@![android, j
 !!!
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 [self.sdlManager.screenManager subscribeButton:SDLButtonNamePlayPause withUpdateHandler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent, NSError * _Nullable error) {
     if (error != nil) {
@@ -243,8 +240,6 @@ Before @![iOS, android, javaSE, javaEE]library v.!@@![iOS]6.1 and!@@![android, j
     }
 }];
 ```
-
-##### Swift
 ```swift
 sdlManager.screenManager.subscribeButton(.playPause) { (buttonPress, buttonEvent, error) in
     if let error = error {
@@ -264,6 +259,7 @@ sdlManager.screenManager.subscribeButton(.playPause) { (buttonPress, buttonEvent
     }
 }
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -319,15 +315,14 @@ All app types can subscribe to preset buttons. Depending on the OEM, the preset 
 You can check if a HMI supports subscribing to preset buttons, and if so, how many preset buttons are supported, by checking the system capability manager.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 NSInteger numberOfCustomPresetsAvailable = self.sdlManager.systemCapabilityManager.defaultMainWindowCapability.numCustomPresetsAvailable.integerValue;
 ```
-
-##### Swift
 ```swift
 let numberOfCustomPresetsAvailable = sdlManager.systemCapabilityManager.defaultMainWindowCapability?.numCustomPresetsAvailable?.intValue
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -344,7 +339,7 @@ const numOfCustomPresetsAvailable = sdlManager.getSystemCapabilityManager().getD
 
 ### Subscribing to Preset Buttons
 @![iOS]
-##### Objective-C
+|~
 ```objc
 [self.sdlManager.screenManager subscribeButton:SDLButtonNamePreset1 withObserver:self selector:@selector(buttonPressEventWithButtonName:error:buttonPress:)];
 [self.sdlManager.screenManager subscribeButton:SDLButtonNamePreset2 withObserver:self selector:@selector(buttonPressEventWithButtonName:error:buttonPress:)];
@@ -362,8 +357,6 @@ const numOfCustomPresetsAvailable = sdlManager.getSystemCapabilityManager().getD
     }
 }
 ```
-
-##### Swift
 ```swift
 sdlManager.screenManager.subscribeButton(.preset1, withObserver: self, selector: #selector(buttonPressEvent(buttonName:error:buttonPress:)))
 sdlManager.screenManager.subscribeButton(.preset2, withObserver: self, selector: #selector(buttonPressEvent(buttonName:error:buttonPress:)))
@@ -386,6 +379,7 @@ sdlManager.screenManager.subscribeButton(.preset2, withObserver: self, selector:
     }
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -446,7 +440,7 @@ Head units supporting RPC v6.0+ may support subscription buttons that allow your
 
 ### Subscribing to Navigation Buttons
 @![iOS]
-##### Objective-C
+|~
 ```objc
 [self.sdlManager.screenManager subscribeButton:SDLButtonNameNavPanUp withUpdateHandler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent, NSError * _Nullable error) {
     if (error != nil) {
@@ -463,8 +457,6 @@ Head units supporting RPC v6.0+ may support subscription buttons that allow your
     }
 }];
 ```
-
-##### Swift
 ```swift
 sdlManager.screenManager.subscribeButton(.navPanUp) { (buttonPress, buttonEvent, error) in
     if let error = error {
@@ -482,6 +474,7 @@ sdlManager.screenManager.subscribeButton(.navPanUp) { (buttonPress, buttonEvent,
     }
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]

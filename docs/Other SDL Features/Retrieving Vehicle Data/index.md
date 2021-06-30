@@ -48,7 +48,7 @@ You will only have access to vehicle data that is allowed to your `appName` and 
 To get vehicle data a single time, use the @![iOS]`SDLGetVehicleData`!@@![android, javaSE, javaEE,javascript]`GetVehicleData`!@ RPC.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLGetVehicleData *getGPSData = [[SDLGetVehicleData alloc] init];
 getGPSData.gps = @YES;
@@ -76,8 +76,6 @@ getGPSData.gps = @YES;
     <#Use the GPS data#>
 }];
 ```
-
-##### Swift
 ```swift
 let getGPSData = SDLGetVehicleData()
 getGPSData.gps = NSNumber(true)
@@ -103,6 +101,7 @@ sdlManager.send(request: getGPSData) { (request, response, error) in
     <#Use the GPS data#>
 }
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -165,19 +164,18 @@ Please note that if you are integrating an sdl_ios version less than v6.3, the f
 @![iOS]
 **First**, register to observe the `SDLDidReceiveVehicleDataNotification` notification:
 
-##### Objective-C
+|~
 ```objc
 [self.sdlManager subscribeToRPC:SDLDidReceiveVehicleDataNotification withObserver:self selector:@selector(vehicleDataAvailable:)];
 ```
-
-##### Swift
 ```swift
 sdlManager.subscribe(to: .SDLDidReceiveVehicleData, observer: self, selector: #selector(vehicleDataAvailable(_:)))
 ```
+~|
 
 **Second**, send the `SubscribeVehicleData` request:
 
-##### Objective-C
+|~
 ```objc
 SDLSubscribeVehicleData *subscribeGPSData = [[SDLSubscribeVehicleData alloc] init];
 subscribeGPSData.gps = @YES;
@@ -207,8 +205,6 @@ subscribeGPSData.gps = @YES;
      <#Successfully subscribed to GPS data#>
  }];
 ```
-
-##### Swift
 ```swift
 let subscribeGPSData = SDLSubscribeVehicleData()
 subscribeGPSData.gps = NSNumber(true)
@@ -240,10 +236,11 @@ sdlManager.send(request: subscribeGPSData) { (request, response, error) in
     <#Successfully subscribed to GPS data#>
 }
 ```
+~|
 
 **Third**, react to the notification when new vehicle data is received:
 
-##### Objective-C
+|~
 ``` objc
 - (void)vehicleDataAvailable:(SDLRPCNotificationNotification *)notification {
     SDLOnVehicleData *onVehicleData = (SDLOnVehicleData *)notification.notification;
@@ -252,8 +249,6 @@ sdlManager.send(request: subscribeGPSData) { (request, response, error) in
     <#Use the GPS data#>
 }
 ```
-
-##### Swift
 ```swift
 func vehicleDataAvailable(_ notification: SDLRPCNotificationNotification) {
     guard let onVehicleData = notification.notification as? SDLOnVehicleData, let gpsData = onVehicleData.gps else {
@@ -262,6 +257,7 @@ func vehicleDataAvailable(_ notification: SDLRPCNotificationNotification) {
     <#Use the GPS data#>
 }
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -344,7 +340,7 @@ if (response.getSuccess()) {
 We suggest that you only subscribe to vehicle data as needed. To stop listening to specific vehicle data use the @![iOS]`SDLUnsubscribeVehicleData`!@@![android, javaSE, javaEE,javascript]`UnsubscribeVehicleData`!@ RPC.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLUnsubscribeVehicleData *unsubscribeGPSData = [[SDLUnsubscribeVehicleData alloc] init];
 unsubscribeGPSData.gps = @YES;
@@ -373,8 +369,6 @@ unsubscribeGPSData.gps = @YES;
     <#Successfully unsubscribed to GPS data#>
 }];
 ```
-
-##### Swift
 ```swift
 let unsubscribeGPSData = SDLUnsubscribeVehicleData()
 unsubscribeGPSData.gps = NSNumber(true)
@@ -405,6 +399,7 @@ sdlManager.send(request: unsubscribeGPSData) { (request, response, error) in
     <#Successfully unsubscribed to GPS data#>
 }
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -461,7 +456,7 @@ This feature is only for OEM-created applications and is not permitted for 3rd-p
 Below is an example of requesting a custom piece of vehicle data with the name `OEM-X-Vehicle-Data`. To adapt this for subscriptions instead, you must look at the section **Subscribing to Vehicle Data** above and adapt the example for subscribing to custom vehicle data based on what you see in the examples below.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLGetVehicleData *getCustomData = [[SDLGetVehicleData alloc] init];
 [getCustomData setOEMCustomVehicleData:@"OEM-X-Vehicle-Data" withVehicleDataState:YES];
@@ -489,8 +484,6 @@ SDLGetVehicleData *getCustomData = [[SDLGetVehicleData alloc] init];
     <#Use the custom data#>
 }];
 ```
-
-##### Swift
 ```swift
 let getCustomData = SDLGetVehicleData()
 getCustomData.setOEMCustomVehicleData(name: "OEM-X-Vehicle-Data", state: true)
@@ -516,12 +509,12 @@ sdlManager.send(request: getCustomData) { (request, response, error) in
     <#Use the custom data#>
 }
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
 
 ```java
-
 GetVehicleData vdRequest = new GetVehicleData()
     .setOEMCustomVehicleData("OEM-X-Vehicle-Data", true);
 vdRequest.setOnRPCResponseListener(new OnRPCResponseListener() {

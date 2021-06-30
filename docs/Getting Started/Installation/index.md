@@ -10,7 +10,6 @@ The SDL SDK is currently supported on @![iOS]iOS 10.0!@@![android]Android 4.1 (J
 There are four different ways to install the SDL SDK in your project: Carthage, CocoaPods, Swift Package Manager, or manually.
 
 ### CocoaPods Installation
-
 1\. Xcode should be closed for the following steps.
 
 2\. Open the terminal app on your Mac.
@@ -99,7 +98,6 @@ repositories {
 ```
 
 ### Gradle Build
-
 To compile with a release of SDL Android, include the following line in your app's `build.gradle` file,
 
 ```
@@ -111,7 +109,6 @@ dependencies {
 and replace `{version}` with the desired release version in format of `x.x.x`. The list of releases can be found [here](https://github.com/smartdevicelink/sdl_java_suite/releases). 
 
 ### Examples
-
 To compile release 5.2.0, use the following line:
 
 ```
@@ -142,7 +139,6 @@ repositories {
 ```
 
 ### Gradle Build
-
 To compile with a release of SDL JavaSE, include the following line in your app's `build.gradle` file,
 
 ```
@@ -154,7 +150,6 @@ dependencies {
 and replace `{version}` with the desired release version in format of `x.x.x`. The list of releases can be found [here](https://github.com/smartdevicelink/sdl_java_suite/releases). 
 
 ### Examples
-
 To compile release 5.2.0, use the following line:
 
 ```

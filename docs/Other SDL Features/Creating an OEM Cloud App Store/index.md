@@ -29,7 +29,7 @@ Only trusted app stores are allowed to set or get `CloudAppProperties` for other
 App stores can set properties for a cloud app by sending a `SetCloudAppProperties` request to Core to store them in the local policy table. For example, in this piece of code, the app store can set the `authToken` to associate a user with a cloud app after the user logs in to the app by using the app store:
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLCloudAppProperties *properties = [[SDLCloudAppProperties alloc] initWithAppID:<#app id#>];
 properties.authToken = <#auth token#>;
@@ -45,8 +45,6 @@ SDLSetCloudAppProperties *setCloud = [[SDLSetCloudAppProperties alloc] initWithP
     <#Use the response#>
 }];
 ```
-
-##### Swift
 ```swift
 let properties = SDLCloudAppProperties(appID: <#app id#>)
 properties.authToken = <#auth token#>
@@ -59,6 +57,7 @@ sdlManager.send(request: setCloud) { (req, res, err) in
     <#Use the response#>
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -112,7 +111,7 @@ if (response.getSuccess()) {
 To retrieve cloud properties for a specific cloud app from local policy table, app stores can send `GetCloudAppProperties` and specify the `appId` for that cloud app as in this example:
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLGetCloudAppProperties *getCloud = [[SDLGetCloudAppProperties alloc] initWithAppID:<#app id#>];
 [self.sdlManager sendRequest:getCloud withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
@@ -125,8 +124,6 @@ SDLGetCloudAppProperties *getCloud = [[SDLGetCloudAppProperties alloc] initWithA
     <#Use the response#>
 }];
 ```
-
-##### Swift
 ```swift
 let getCloud = SDLGetCloudAppProperties(appID: <#app id#>)
 sdlManager.send(request: getCloud) { (req, res, err) in
@@ -137,6 +134,7 @@ sdlManager.send(request: getCloud) { (req, res, err) in
     <#Use the response#>
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -194,15 +192,14 @@ When users install cloud apps from an OEM's app store, they may be asked to logi
 A cloud app can retrieve its `authToken` from local policy table after starting the RPC service. The `authToken` can be used later by the app to authenticate the user:
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 NSString *authToken = self.sdlManager.authToken;
 ```
-
-##### Swift
 ```swift
 let authToken = sdlManager.authToken
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]

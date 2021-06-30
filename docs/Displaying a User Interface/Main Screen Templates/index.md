@@ -9,7 +9,7 @@ When changing the layout, you may get an error or failure if the update is "supe
 !!!
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 [self.sdlManager.screenManager changeLayout:[[SDLTemplateConfiguration alloc] initWithTemplate:SDLPredefinedLayoutGraphicWithText] withCompletionHandler:^(NSError * _Nullable error) {
     if (error != nil) {
@@ -19,8 +19,6 @@ When changing the layout, you may get an error or failure if the update is "supe
     // The template has been set successfully
 }];
 ```
-
-##### Swift
 ```swift
 sdlManager.screenManager.changeLayout(SDLTemplateConfiguration(predefinedLayout: .graphicWithText)) { err in
     if let error = err {
@@ -30,6 +28,7 @@ sdlManager.screenManager.changeLayout(SDLTemplateConfiguration(predefinedLayout:
     // The template has been set successfully
 }
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -65,7 +64,7 @@ if (success) {
 Template changes can also be batched with text and graphics updates:
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 [self.sdlManager.screenManager beginUpdates];
 self.sdlManager.screenManager.textField1 = "Line of Text";
@@ -81,8 +80,6 @@ self.sdlManager.screenManager.primaryGraphic = <#SDLArtwork#>;
     // The data and template has been set successfully
 }];
 ```
-
-##### Swift
 ```swift
 sdlManager.screenManager.beginUpdates()
 sdlManager.screenManager.textField1 = "Line of Text"
@@ -98,6 +95,7 @@ sdlManager.screenManager.endUpdates { err in
     // The data and template has been set successfully
 }
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]

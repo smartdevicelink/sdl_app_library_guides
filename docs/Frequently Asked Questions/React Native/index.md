@@ -65,7 +65,7 @@ Inside the `ProxyManger` class, post a notification for a particular event you w
 
 Inside the `ProxyManager` add a soft button to your SDL HMI. Inside the soft button handler, post the notification and pass along a reference to the `sdlManager` in order to update your React Native UI through the bridge.
 
-##### Objective-C
+|~
 ```objc
 SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"Button" state:[[SDLSoftButtonState alloc] initWithStateName:@"State 1" text:@"Data" artwork:nil] handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     if (buttonPress == nil) { return; }
@@ -76,8 +76,6 @@ SDLSoftButtonObject *softButton = [[SDLSoftButtonObject alloc] initWithName:@"Bu
 
 self.sdlManager.screenManager.softButtonObjects = @[softButton];
 ```
-
-##### Swift
 ```swift
 let softButton = SDLSoftButtonObject(name: "Button", state: SDLSoftButtonState(stateName: "State", text: "Data", artwork: nil), handler: { (buttonPress, butonEvent) in
     guard buttonPress == nil else { return }
@@ -88,9 +86,9 @@ let softButton = SDLSoftButtonObject(name: "Button", state: SDLSoftButtonState(s
 
 self.sdlManager.screenManager.softButtonObjects = [softButton];
 ```
+~|
 
 #### Create the EventEmitter Bridge Class
-
 Create the class that will be the listener for the notification you created above. This class will be sending and receiving messages from your JavaScript code (React Native). The required `supportedEvents` method returns an array of supported event names. Sending an event name that is not included in the array will result in an error. An "event" is sending a message from native code to React Native code.
 
 ##### Objective-C
@@ -227,7 +225,6 @@ If you're making a React Native application and using native Swift code, you wil
 !!! NOTE
 Make sure you add `#import "React/RCTEventEmitter.h"` to the apps bridging header.
 !!!
-
 
 ```objc
 #import "React/RCTBridgeModule.h"

@@ -7,7 +7,7 @@ You can customize the help menu with your own title and/or menu options. If you 
 If you wish to use an image, you should check the @![iOS]`sdlManager.systemCapabilityManager.defaultMainWindowCapability.imageFields`!@@![android, javaSE, javaEE, javascript]`sdlManager.getSystemCapabilityManager().getDefaultMainWindowCapability().getImageFields();`!@ for an `imageField.name` of `vrHelpItem` to see if that image is supported. If `vrHelpItem` is in the `imageFields` array, then it can be used. You will then need to upload the image using the file manager before using it in the request. See the [Uploading Images](Other SDL Features/Uploading Images) section for more information.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLSetGlobalProperties *setGlobals = [[SDLSetGlobalProperties alloc] init];
 setGlobals.vrHelpTitle = <#Custom help title string such as: "What Can I Say?"#>;
@@ -26,8 +26,6 @@ setGlobals.vrHelp = @[item1, item2];
     // The help menu is updated
 }];
 ```
-
-##### Swift
 ```swift
 let setGlobals = SDLSetGlobalProperties()
 setGlobals.vrHelpTitle = <#Custom help title string such as: "What Can I Say?"#>
@@ -46,6 +44,7 @@ sdlManager.send(request: setGlobals) { (request, response, error) in
     // The help menu is updated
 }
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -93,7 +92,7 @@ if (response instanceof SDL.rpc.RpcRespone && response.getSuccess()) {
 On head units that support voice recognition, a user can request assistance by saying "Help." In addition to displaying the help menu discussed above a custom spoken text-to-speech response can be spoken to the user.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLSetGlobalProperties *setGlobals = [[SDLSetGlobalProperties alloc] init];
 setGlobals.helpPrompt = [SDLTTSChunk textChunksFromString:<#Your custom help prompt#>];
@@ -107,8 +106,6 @@ setGlobals.helpPrompt = [SDLTTSChunk textChunksFromString:<#Your custom help pro
     // The help prompt is updated
 }];
 ```
-
-##### Swift
 ```swift
 let setGlobals = SDLSetGlobalProperties()
 setGlobals.helpPrompt = SDLTTSChunk.textChunks(from: <#Your custom help prompt#>)
@@ -122,6 +119,7 @@ sdlManager.send(request: setGlobals) { (request, response, error) in
     // The help prompt is updated
 }
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -160,7 +158,7 @@ if (response instanceof SDL.rpc.RpcRespone && response.getSuccess()) {
 If you display any sort of popup menu or modal interaction that has a timeout – such as an alert, interaction, or slider – you can create a custom text-to-speech response that will be spoken to the user in the event that a timeout occurs.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLSetGlobalProperties *setGlobals = [[SDLSetGlobalProperties alloc] init];
 setGlobals.timeoutPrompt = [SDLTTSChunk textChunksFromString:<#Your custom help prompt#>];
@@ -173,8 +171,6 @@ setGlobals.timeoutPrompt = [SDLTTSChunk textChunksFromString:<#Your custom help 
     // The timeout prompt is updated
 }];
 ```
-
-##### Swift
 ```swift
 let setGlobals = SDLSetGlobalProperties()
 setGlobals.timeoutPrompt = SDLTTSChunk.textChunks(from: <#Your custom help prompt#>)
@@ -187,6 +183,7 @@ sdlManager.send(request: setGlobals) { (request, response, error) in
     // The timeout prompt is updated
 }
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]
@@ -225,7 +222,7 @@ if (response instanceof SDL.rpc.RpcRespone && response.getSuccess()) {
 You can also reset your customizations to the help menu or spoken prompts. To do so, you will send a `ResetGlobalProperties` RPC with the fields that you wish to clear.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 // Reset the help menu
 SDLResetGlobalProperties *resetGlobals = [[SDLResetGlobalProperties alloc] initWithProperties:@[SDLGlobalPropertyVoiceRecognitionHelpItems, SDLGlobalPropertyVoiceRecognitionHelpTitle]];
@@ -244,8 +241,6 @@ SDLResetGlobalProperties *resetGlobals = [[SDLResetGlobalProperties alloc] initW
     // The global properties are reset
 }];
 ```
-
-##### Swift
 ```swift
 // Reset the help menu
 let resetGlobals = SDLResetGlobalProperties(properties: [.voiceRecognitionHelpItems, .voiceRecognitionHelpTitle])
@@ -263,6 +258,7 @@ sdlManager.send(request: resetGlobals) { (request, response, error) in
     // The global properties are reset
 }
 ```
+~|
 !@
 
 @![android, javaSE, javaEE]

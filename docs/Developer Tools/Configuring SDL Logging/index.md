@@ -5,16 +5,14 @@ A powerful built-in logging framework is available to make debugging your SDL ap
 SDL will configure its logging into a production-friendly configuration by default. If you wish to use a debug or a custom configuration, then you will have to specify this yourself. `SDLConfiguration` allows you to pass a `SDLLogConfiguration` with custom values. A few of these values will be covered in this section, the others are in their own sections below.
 
 When setting up your `SDLConfiguration` you can pass a different log configuration:
-
-##### Objective-C
+|~
 ```objc
 SDLConfiguration* configuration = [[SDLConfiguration alloc] initWithLifecycle:lifecycleConfiguration lockScreen:[SDLLockScreenConfiguration enabledConfiguration] logging:[SDLLogConfiguration debugConfiguration] fileManager:nil encryption:nil];
 ```
-
-##### Swift
 ```swift
 let configuration = SDLConfiguration(lifecycle: lifecycleConfiguration, lockScreen: .enabled(), logging: .debug(), fileManager: nil, encryption: nil)
 ```
+~|
 
 ### Format Type
 Currently, SDL provides three output formats for logs (for example into the console or file log), these are "Simple", "Default", and "Detailed".
@@ -85,41 +83,38 @@ To access the file, you can either access it from runtime on the device (for exa
 #### Custom Log Targets
 The protocol all log targets conform to, `SDLLogTarget`, is public. If you wish to make a custom log target in order to, for example, log to a server, it should be fairly easy to do so. If it can be used by other developers and is not specific to your app, then submit it back to the SmartDeviceLink iOS library project! If you want to add targets *in addition* to the default target that will output to the console:
 
-##### Objective-C
+|~
 ```objc
 logConfig.targets = [logConfig.targets setByAddingObjectsFromArray:@[[SDLLogTargetFile logger]]];
 ```
-
-##### Swift
 ```swift
 let _ = logConfig.targets.insert(SDLLogTargetFile())
 ```
+~|
 
 ### Modules
 A module is a set of files packaged together. Create modules using the `SDLLogFileModule` class and add it to the configuration. Modules are used when outputting a log message. The log message may specify a module instead of a specific file name for clarity's sake. The SDL library will automatically add the modules corresponding to its own files after you submit your configuration. For your specific use case, you may wish to provide a module corresponding to your whole app's integration and simply name it with your app's name, or, you could split it up further if desired. To add modules to the configuration:
 
-##### Objective-C
+|~
 ```objc
 logConfig.modules = [logConfig.modules setByAddingObjectsFromArray:@[[SDLLogFileModule moduleWithName:@"Test" files:[NSSet setWithArray:@[@"File1", @"File2"]]]]];
 ```
-
-##### Swift
 ```swift
 logConfig.modules.insert(SDLLogFileModule(name: "Test", files: ["File1, File2"]))
 ```
+~|
 
 ### Filters
 Filters are a compile-time concept of filtering in or out specific log messages based on a variety of possible factors. Call `SDLLogFilter` to easily set up one of the default filters or to create your own using a custom `SDLLogFilterBlock`. You can filter to only allow certain files or modules to log, only allow logs with a certain string contained in the message, or use regular expressions.
 
-##### Objective-C
+|~
 ```objc
 SDLLogFilter *filter = [SDLLogFilter filterByDisallowingString:@"Test" caseSensitive:NO];
 ```
-
-##### Swift
 ```swift
 let filter = SDLLogFilter(byDisallowingString: "Test", caseSensitive: false)
 ```
+~|
 
 ## Logging with the SDL Logger
 In addition to viewing the library logs, you also have the ability to log with the SDL logger. All messages logged through the SDL logger, including your own, will use your `SDLLogConfiguration` settings.
@@ -127,7 +122,7 @@ In addition to viewing the library logs, you also have the ability to log with t
 ### Objective-C Projects
 First, import the `SDLLogMacros` header.
 
-```
+```objc
 #import "SDLLogMacros.h"
 ```
 

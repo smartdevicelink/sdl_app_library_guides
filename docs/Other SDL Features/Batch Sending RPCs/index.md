@@ -20,7 +20,7 @@ The JavaScript library concurrent `sendRpcs` method will honor the ordering of t
 !@
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLSubscribeButton *subscribeButtonLeft = [[SDLSubscribeButton alloc] initWithButtonName:SDLButtonNameSeekLeft handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     <#code#>
@@ -34,8 +34,6 @@ SDLSubscribeButton *subscribeButtonRight = [[SDLSubscribeButton alloc] initWithB
     <#Called when all requests complete#>
 }];
 ```
-
-##### Swift
 ```swift
 let subscribeButtonLeft = SDLSubscribeButton(buttonName: SDLButtonName.seekLeft) { (onButtonPress, onButtonEvent) in
     <#code#>
@@ -49,6 +47,7 @@ sdlManager.send([subscribeButtonLeft, subscribeButtonRight], progressHandler: { 
     <#Called when all requests complete#>
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -107,7 +106,7 @@ Requests sent sequentially are sent in a set order. The next request is only sen
 The code example below shows how to create a perform interaction choice set. When creating a perform interaction choice set, the @![iOS]`SDLPerformInteraction`!@ @![android,javaSE,javaEE,javascript]`PerformInteraction`!@ RPC can only be sent after the @![iOS]`SDLCreateInteractionChoiceSet`!@ @![android,javaSE,javaEE,javascript]`CreateInteractionChoiceSet`!@ RPC has been registered by Core, which is why the requests must be sent sequentially.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLChoice *choice = [[SDLChoice alloc] initWithId:<#Choice Id#> menuName:@"<#Menu Name#>" vrCommands:@[@"<#VR Command#>"]];
 SDLCreateInteractionChoiceSet *createInteractionChoiceSet = [[SDLCreateInteractionChoiceSet alloc] initWithId:<#Choice Set Id#> choiceSet:@[choice]];
@@ -120,8 +119,6 @@ SDLPerformInteraction *performInteraction = [[SDLPerformInteraction alloc] initW
     <#Called when all requests complete#>
 }];
 ```
-
-##### Swift
 ```swift
 let choice = SDLChoice(id: <#Choice Id#>, menuName: "<#Menu Name#>", vrCommands: ["<#VR Command#>"])
 let createInteractionChoiceSet = SDLCreateInteractionChoiceSet(id: <#Choice Set Id#>, choiceSet: [choice])
@@ -135,6 +132,7 @@ sdlManager.sendSequential(requests: [createInteractionChoiceSet, performInteract
     <#Called when all requests complete#>
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]

@@ -27,7 +27,7 @@ Please note that if you are integrating an sdl_ios version less than v6.3, the e
 The first step to publishing an app service is to create an @![iOS]`SDLAppServiceManifest`!@@![android,javaSE,javaEE,javascript]`AppServiceManifest`!@ object. There is a set of generic parameters you will need to fill out as well as service type specific parameters based on the app service type you are creating.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLAppServiceManifest *manifest = [[SDLAppServiceManifest alloc] initWithAppServiceType:SDLAppServiceTypeMedia];
 manifest.serviceName = @"My Media App"; // Must be unique across app services.
@@ -37,8 +37,6 @@ manifest.maxRPCSpecVersion = [[SDLMsgVersion alloc] initWithMajorVersion:5 minor
 manifest.handledRPCs = @[]; // If you add function ids to this *optional* parameter, you can support newer RPCs on older head units (that don't support those RPCs natively) when those RPCs are sent from other connected applications.
 manifest.mediaServiceManifest = <#Code#> // Covered below
 ```
-
-##### Swift
 ```swift
 let manifest = SDLAppServiceManifest(appServiceType: .media)
 manifest.serviceIcon = SDLImage(name:"Service Icon Name", isTemplate: false) // Previously uploaded service icon. This could be the same as your app icon.
@@ -47,6 +45,7 @@ manifest.maxRPCSpecVersion = SDLMsgVersion(majorVersion: 5, minorVersion: 0, pat
 manifest.handledRPCs = [] // If you add function ids to this *optional* parameter, you can support newer RPCs on older head units (that don't support those RPCs natively) when those RPCs are sent from other connected applications.
 manifest.mediaServiceManifest = <#Code#> // Covered below
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -82,18 +81,16 @@ const manifest = new SDL.rpc.messages.AppServiceManifest()
 Currently, there's no information you have to provide in your media service manifest! You'll just have to create an empty media service manifest and set it into your general app service manifest.
 
 @![iOS]
-
-##### Objective-C
+|~
 ```objc
 SDLMediaServiceManifest *mediaManifest = [[SDLMediaServiceManifest alloc] init];
 manifest.mediaServiceManifest = mediaManifest;
 ```
-
-##### Swift
 ```swift
 let mediaManifest = SDLMediaServiceManifest()
 manifest.mediaServiceManifest = mediaManifest
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -114,18 +111,16 @@ manifest.setMediaServiceManifest(mediaManifest);
 You will need to create a navigation manifest if you want to publish a navigation service. You will declare whether or not your navigation app will accept waypoints. That is, if your app will support receiving _multiple_ points of navigation (e.g. go to this McDonalds, then this Walmart, then home).
 
 @![iOS]
-
-##### Objective-C
+|~
 ```objc
 SDLNavigationServiceManifest *navigationManifest = [[SDLNavigationServiceManifest alloc] initWithAcceptsWayPoints:YES];
 manifest.navigationServiceManifest = navigationManifest;
 ```
-
-##### Swift
 ```swift
 let navigationManifest = SDLNavigationServiceManifest(acceptsWayPoints: true)
 manifest.navigationServiceManifest = navigationManifest
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -148,17 +143,16 @@ manifest.setNavigationServiceManifest(navigationManifest);
 You will need to create a weather service manifest if you want to publish a weather service. You will declare the types of data your service provides in its @![iOS]`SDLWeatherServiceData`!@@![android,javaSE,javaEE,javascript]`WeatherServiceData`!@.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLWeatherServiceManifest *weatherManifest = [[SDLWeatherServiceManifest alloc] initWithCurrentForecastSupported:YES maxMultidayForecastAmount:10 maxHourlyForecastAmount:24 maxMinutelyForecastAmount:60 weatherForLocationSupported:YES];
 manifest.weatherServiceManifest = weatherManifest;
 ```
-
-##### Swift
 ```swift
 let weatherManifest = SDLWeatherServiceManifest(currentForecastSupported: true, maxMultidayForecastAmount: 10, maxHourlyForecastAmount: 24, maxMinutelyForecastAmount: 60, weatherForLocationSupported: true)
 manifest.weatherServiceManifest = weatherManifest
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -189,8 +183,7 @@ manifest.setWeatherServiceManifest(weatherManifest);
 Once you have created your service manifest, publishing your app service is simple.
 
 @![iOS]
-
-##### Objective-C
+|~
 ```objc
 SDLPublishAppService *publishServiceRequest = [[SDLPublishAppService alloc] initWithAppServiceManifest:<#Manifest Object#>];
 [self.sdlManager sendRequest:publishServiceRequest withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
@@ -201,8 +194,6 @@ SDLPublishAppService *publishServiceRequest = [[SDLPublishAppService alloc] init
     <#Use the response#>
 }];
 ```
-
-##### Swift
 ```swift
 let publishServiceRequest = SDLPublishAppService(appServiceManifest: <#Manifest Object#>)
 sdlManager.send(request: publishServiceRequest) { (req, res, err) in
@@ -212,6 +203,7 @@ sdlManager.send(request: publishServiceRequest) { (req, res, err) in
     <#Use the response#>
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -270,7 +262,7 @@ First, you will have to create an @![iOS]`SDLMediaServiceData`!@ @![android,java
 
 #### Media Service Data
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLImage *currentImage = [[SDLImage alloc] initWithName:@"some artwork name" isTemplate:NO];
 SDLMediaServiceData *mediaData = [[SDLMediaServiceData alloc] initWithMediaType:SDLMediaTypeMusic mediaImage:currentImage mediaTitle:@"Some media title" mediaArtist:@"Some media artist" mediaAlbum:@"Some album" playlistName:@"Some playlist" isExplicit:YES trackPlaybackProgress:45 trackPlaybackDuration:90 queuePlaybackProgress:45 queuePlaybackDuration:150 queueCurrentTrackNumber:2 queueTotalTrackCount:3];
@@ -279,8 +271,6 @@ SDLAppServiceData *appData = [[SDLAppServiceData alloc] initWithMediaServiceData
 SDLOnAppServiceData *onAppData = [[SDLOnAppServiceData alloc] initWithServiceData:appData];
 [self.sdlManager sendRPC:onAppData];
 ```
-
-##### Swift
 ```swift
 let currentImage = SDLImage(name: "some artwork name", isTemplate: false)
 let mediaData = SDLMediaServiceData(mediaType: .music, mediaImage: currentImage, mediaTitle: "Some media title", mediaArtist: "Some artist", mediaAlbum: "Some album", playlistName: "Some playlist", isExplicit: true, trackPlaybackProgress: 45, trackPlaybackDuration: 90, queuePlaybackProgress: 45, queuePlaybackDuration: 150, queueCurrentTrackNumber: 2, queueTotalTrackCount: 3)
@@ -289,6 +279,7 @@ let appMediaData = SDLAppServiceData(mediaServiceData: mediaData, serviceId: ser
 let onAppData = SDLOnAppServiceData(serviceData: appMediaData)
 sdlManager.sendRPC(onAppData)
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -355,7 +346,7 @@ sdlManager.sendRpc(onAppData);
 
 #### Navigation Service Data
 @![iOS]
-##### Objective-C
+|~
 ```objc
 UIImage *image = [UIImage imageNamed:@"<#Your image name#>"];
 if (image == nil) { return; }
@@ -379,8 +370,6 @@ __weak typeof(self) weakSelf = self;
     [weakSelf.sdlManager sendRPC:onAppServiceData];
 }];
 ```
-
-##### Swift
 ```swift
 guard let image = UIImage(named: "<#Your image name#>") else { return }
 let artwork = SDLArtwork(image: image, persistent: false, as: .PNG)
@@ -404,6 +393,7 @@ sdlManager.fileManager.upload(file: artwork) { [weak self] (success, bytesAvaila
     self?.sdlManager.sendRPC(onAppServiceData)
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -491,8 +481,7 @@ if (success) {
 
 #### Weather Service Data
 @![iOS]
-
-##### Objective-C
+|~
 ```objc
 UIImage *image = [UIImage imageNamed:@"<#Your image name#>"];
 if (image == nil) { return; }
@@ -512,8 +501,6 @@ __weak typeof(self) weakSelf = self;
     [weakSelf.sdlManager sendRPC:onAppServiceData];
 }];
 ```
-
-##### Swift
 ```swift
 guard let image = UIImage(named: "<#Your image name#>") else { return }
 let artwork = SDLArtwork(image: image, persistent: false, as: .PNG)
@@ -531,6 +518,7 @@ sdlManager.fileManager.upload(file: artwork) { [weak self] (success, bytesAvaila
     self?.sdlManager.sendRPC(onAppServiceData)
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -611,7 +599,7 @@ Handling app service subscribers is a two step process. First, you must @![iOS]r
 First, you will need to @![iOS]subscribe to `GetAppServiceDataRequest` notifications.!@@![android,javaSE,javaEE,javascript]setup a listener for `GetAppServiceDataRequest`!@. Then, when you get the request, you will need to respond with your app service data. Therefore, you will need to store your current service data after the most recent update using `OnAppServiceData` (see the section [Update Your Service's Data](#3-update-your-services-data)).
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 __weak typeof(self) weakSelf = self;
 [self.sdlManager subscribeToRPC:SDLDidReceiveGetAppServiceDataRequest withBlock:^(__kindof SDLRPCMessage * _Nonnull message) {
@@ -626,8 +614,6 @@ __weak typeof(self) weakSelf = self;
     [weakSelf.sdlManager sendRPC:response];
 }];
 ```
-
-##### Swift
 ```swift
 sdlManager.subscribe(to: SDLDidReceiveGetAppServiceDataRequest) { [weak self] (message) in
     guard let getAppServiceRequest = message as? SDLGetAppServiceData else { return }
@@ -641,6 +627,7 @@ sdlManager.subscribe(to: SDLDidReceiveGetAppServiceDataRequest) { [weak self] (m
     self?.sdlManager.sendRPC(response)
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -687,7 +674,6 @@ sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.GetAppServiceData, (message) 
 !@
 
 ## Supporting Service RPCs and Actions
-
 ### 5. Service RPCs
 Certain RPCs are related to certain services. The chart below shows the current relationships:
 
@@ -704,7 +690,7 @@ Certain RPCs are related to certain services. The chart below shows the current 
 When you are the active service for your service's type (e.g. media), and you have declared that you support these RPCs in your manifest (see the section [Creating an App Service Manifest](#1-creating-an-app-service-manifest)), then these RPCs will be automatically routed to your app. You will have to set up @![iOS]notifications!@@![android,javaSE,javaEE,javascript]listeners!@ to be aware that they have arrived, and you will then need to respond to those requests.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLAppServiceManifest *manifest = [[SDLAppServiceManifest alloc] init];
 // Everything else for your manifest
@@ -727,8 +713,6 @@ manifest.handledRPCs = @[buttonPressRPCID];
     [self.sdlManager sendRPC:response];
 }
 ```
-
-##### Swift
 ```swift
 let manifest = SDLAppServiceManifest()
 // Everything else for your manifest
@@ -752,6 +736,7 @@ sdlManager.subscribe(to: SDLDidReceiveButtonPressRequest, observer: self, select
     sdlManager.sendRPC(response)
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -815,8 +800,7 @@ If you're wondering how to get started with actions and routing, this is a very 
 In order to support actions through SDL services, you will need to observe and respond to the `PerformAppServiceInteraction` RPC request.
 
 @![iOS]
-
-##### Objective-C
+|~
 ```objc
 // Subscribe to PerformAppServiceInteraction requests
 [self.sdlManager subscribeToRPC:SDLDidReceivePerformAppServiceInteractionRequest withObserver:self selector:@selector(performAppServiceInteractionRequestReceived:)];
@@ -845,8 +829,6 @@ In order to support actions through SDL services, you will need to observe and r
     [self.sdlManager sendRPC:response];
 }
 ```
-
-##### Swift
 ```swift
 // Subscribe to PerformAppServiceInteraction requests
 sdlManager.subscribe(to: SDLDidReceivePerformAppServiceInteractionRequest, observer: self, selector: #selector(performAppServiceInteractionRequestReceived(_:)))
@@ -875,6 +857,7 @@ sdlManager.subscribe(to: SDLDidReceivePerformAppServiceInteractionRequest, obser
     sdlManager.sendRPC(response)
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -936,7 +919,7 @@ Once you have published your app service, you may decide to update its data. For
 
 ### 7. Updating a Published App Service Manifest (RPC v6.0+)
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLAppServiceManifest *manifest = [[SDLAppServiceManifest alloc] initWithAppServiceType:SDLAppServiceTypeWeather];
 manifest.weatherServiceManifest = <#Updated weather service manifest#>;
@@ -944,8 +927,6 @@ manifest.weatherServiceManifest = <#Updated weather service manifest#>;
 SDLPublishAppService *publishServiceRequest = [[SDLPublishAppService alloc] initWithAppServiceManifest:manifest];
 [self.sdlManager sendRequest:publishServiceRequest];
 ```
-
-##### Swift
 ```swift
 let manifest = SDLAppServiceManifest(appServiceType: .weather)
 manifest.weatherServiceManifest = <#Updated weather service manifest#>
@@ -953,6 +934,7 @@ manifest.weatherServiceManifest = <#Updated weather service manifest#>
 let publishServiceRequest = SDLPublishAppService(appServiceManifest: manifest)
 sdlManager.send(publishServiceRequest)
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -983,17 +965,16 @@ sdlManager.sendRpc(publishServiceRequest);
 
 ### 8. Unpublishing a Published App Service Manifest (RPC v6.0+)
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLUnpublishAppService *unpublishAppService = [[SDLUnpublishAppService alloc] initWithServiceID:@"<#The serviceID of the service to unpublish#>"];
 [self.sdlManager sendRequest:unpublishAppService];
 ```
-
-##### Swift
 ```swift
 let unpublishAppService = SDLUnpublishAppService(serviceID: "<#The serviceID of the service to unpublish#>")
 sdlManager.send(unpublishAppService)
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]

@@ -67,15 +67,15 @@ By default, all three transports are set as supported secondary transports.!@
 @![iOS]
 By default, TCP is a configured secondary transport, but this can be disabled.
 
-##### Objective-C
+|~
 ```objc
 SDLLifecycleConfiguration *lifecycleConfig = [SDLLifecycleConfiguration defaultConfigurationWithAppName:<#AppName#> fullAppId:<#AppID#>];
 lifecycleConfig.allowedSecondaryTransports = SDLSecondaryTransportsNone;
 ```
-##### Swift
 ```swift
 let lifecycleConfig = SDLLifecycleConfiguration(appName: <#AppName#>, fullAppId: <#AppID#>)
 lifecycleConfiguration.allowedSecondaryTransports = []
 ```
+~|
 !@
 

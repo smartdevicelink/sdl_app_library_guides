@@ -242,14 +242,6 @@
             "platforms": ["iOS"],
             "navigation": [
                 {
-                    "name": "Updating to v4.3+",
-                    "platforms": ["iOS"]
-                },
-                {
-                    "name": "Updating to v5.0+",
-                    "platforms": ["iOS"]
-                },
-                {
                     "name": "Updating to v7.0",
                     "platforms": ["iOS"]
                 }

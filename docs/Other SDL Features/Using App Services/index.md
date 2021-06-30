@@ -22,21 +22,20 @@ Please note that if you are integrating an sdl_ios version less than v6.3, the e
 To get information on all services published on the system, as well as on changes to published services, you will use the `SystemCapabilityManager`.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 id subscribedObserver = [self.sdlManager.systemCapabilityManager subscribeToCapabilityType:SDLSystemCapabilityTypeAppServices withUpdateHandler:^(SDLSystemCapability * _Nullable capability, BOOL subscribed, NSError * _Nullable error) {
     NSArray<SDLAppServiceCapability *> *appServices = capability.appServicesCapabilities.appServices;
     <#Use the app services records#>
 }];
 ```
-
-##### Swift
 ```swift
 let subscribedObserver = sdlManager.systemCapabilityManager.subscribe(capabilityType: .appServices) { (capability, subscribed, error) in
     let appServices = capability?.appServicesCapabilities?.appServices
     <#Use the app services records#>
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -89,7 +88,7 @@ sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SDL.rpc.en
 Once you've retrieved the initial list of app service capabilities or an updated list of app service capabilities, you may want to inspect the data to find what you are looking for. Below is example code with comments explaining what each part of the app service capability is used for.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLAppServicesCapabilities *capabilities = systemCapabilityManager.appServicesCapabilities;
 
@@ -117,8 +116,6 @@ SDLServiceUpdateReason capabilityReason = aCapability.updateReason;
 // The app service record will give you access to a service's generated id, which can be used to address the service directly (see below), it's manifest, used to see what data it supports, whether or not the service is published (if it's not, it was just removed and should not be addressed), and whether or not the service is the active service for its service type (only one service can be active for each type)
 SDLAppServiceRecord *serviceRecord = aCapability.updatedAppServiceRecord;
 ```
-
-##### Swift
 ```swift
 // This array contains all currently available app services on the system
 guard let capabilities = systemCapabilityManager.appServicesCapabilities, let appServices = capabilities.appServices, let aCapability = appServices.first else {
@@ -145,6 +142,7 @@ let capabilityReason = aCapability.updateReason
 // The app service record will give you access to a service's generated id, which can be used to address the service directly (see below), it's manifest, used to see what data it supports, whether or not the service is published (if it's not, it was just removed and should not be addressed), and whether or not the service is the active service for its service type (only one service can be active for each type)
 let serviceRecord = aCapability.updatedAppServiceRecord
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
@@ -187,7 +185,7 @@ Once you have information about all of the services available, you may want to v
 Note that you will currently only be able to get data for the *active* service of the service type. You can attempt to make another service the active service by using the `PerformAppServiceInteraction` RPC, discussed below in [Sending an Action to a Service Provider](#4-sending-an-action-to-a-service-provider).
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 // Get service data once
 SDLGetAppServiceData *getServiceData = [[SDLGetAppServiceData alloc] initWithAppServiceType:SDLAppServiceTypeMedia];
@@ -212,8 +210,6 @@ unsubscribeServiceData.subscribe = @NO;
     <#Use the mediaData#>
 }];
 ```
-
-##### Swift
 ```swift
 // Subscribe to service data in perpetuity via `OnAppServiceData` notifications.
 let subscribeServiceData = SDLGetAppServiceData(andSubscribeToAppServiceType: .media)
@@ -230,6 +226,7 @@ sdlManager.send(request: getServiceData) { (req, res, err) in
     <#Use the mediaData#>
 }
 ```
+~|
 !@
 
 @![android,javaEE,javaSE]
@@ -317,7 +314,7 @@ Your app may need special permissions to use the RPCs that route to app service 
 !!!
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameOk moduleType:SDLModuleTypeAudio moduleId:nil buttonPressMode:SDLButtonPressModeShort];
 [self.sdlManager sendRequest:buttonPress withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
@@ -330,8 +327,6 @@ SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButt
     <#Use the response#>
 }];
 ```
-
-##### Swift
 ```swift
 let buttonPress = SDLButtonPress(buttonName: .ok, moduleType: .audio, moduleId: nil, buttonPressMode: .short)
 sdlManager.send(request: buttonPress) { (req, res, err) in
@@ -340,10 +335,10 @@ sdlManager.send(request: buttonPress) { (req, res, err) in
     <#Use the response#>
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
-##### Java
 ```java
 ButtonPress buttonPress = new ButtonPress()
     .setButtonPressMode(ButtonPressMode.SHORT)
@@ -379,7 +374,7 @@ const response = await sdlManager.sendRpc(buttonPress).catch(error => error);
 Actions are generic URI-based strings sent to any app service (active or not). You can also use actions to request to the system that they make the service the active service for that service type. Service actions are *schema-less*, i.e. there is no way to define the appropriate URIs through SDL. The service provider must document their list of available actions elsewhere (such as their website).
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLPerformAppServiceInteraction *performAction = [[SDLPerformAppServiceInteraction alloc] initWithServiceUri:@"<#sdlexample://x-callback-url/showText?x-source=MyApp&text=My%20Custom%20String#>" serviceID:@"<#Previously Retrieved ServiceID#>" originApp:@"<#Your App Id#>" requestServiceActive:NO];
 [self.sdlManager sendRequest:performAction withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
@@ -392,8 +387,6 @@ SDLPerformAppServiceInteraction *performAction = [[SDLPerformAppServiceInteracti
     <#Use the response#>
 }];
 ```
-
-##### Swift
 ```swift
 let performAction = SDLPerformAppServiceInteraction(serviceUri: "<#sdlexample://x-callback-url/showText?x-source=MyApp&text=My%20Custom%20String#>", serviceID: "<#Previously Retrieved ServiceID#>", originApp: "<#Your App Id#>", requestServiceActive: false)
 sdlManager.send(request: performAction) { (req, res, err) in
@@ -401,10 +394,10 @@ sdlManager.send(request: performAction) { (req, res, err) in
     <#Check the error and response#>
 }
 ```
+~|
 !@
 
 @![android,javaSE,javaEE]
-##### Java
 ```java
 PerformAppServiceInteraction performAppServiceInteraction = new PerformAppServiceInteraction("sdlexample://x-callback-url/showText?x-source=MyApp&text=My%20Custom%20String", previousServiceId, appId);
 performAppServiceInteraction.setOnRPCResponseListener(new OnRPCResponseListener() {
@@ -437,7 +430,7 @@ const response = await sdlManager.sendRpc(performAppServiceInteraction).catch(er
 In some cases, a service may upload an image that can then be retrieved from the module. First, you will need to get the image name from the @![iOS]`SDLAppServiceData`!@@![android,javaSE,javaEE,javascript]`AppServiceData`!@ (see [point 2](#2-getting-and-subscribing-to-a-service-types-data) above). Then you will use the image name to retrieve the image data. 
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLAppServiceData *data = <#Get the App Service Data#>;
 SDLWeatherServiceData *weatherData = data.weatherServiceData;
@@ -474,8 +467,6 @@ NSMutableData *imageData = [[NSMutableData alloc] init];
     }
 }];
 ```
-
-##### Swift
 ```swift
 let data: SDLAppServiceData = <#Get the App Service Data#>
 let weatherData = data.weatherServiceData
@@ -506,7 +497,7 @@ sdlManager.send(request: getCurrentForecastImage) { (req, res, err) in
     }
 }
 ```
-
+~|
 !@
 @![android, javaSE, javaEE]
 ```java

@@ -10,7 +10,7 @@ You can change the template colors of the initial template layout in the `lifecy
 ![Template Coloring from Above](assets/template-colors-example.png)
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLRGBColor *green = [[SDLRGBColor alloc] initWithRed:126 green:188 blue:121];
 SDLRGBColor *white = [[SDLRGBColor alloc] initWithRed:249 green:251 blue:254];
@@ -19,8 +19,6 @@ SDLRGBColor *grey = [[SDLRGBColor alloc] initWithRed:186 green:198 blue:210];
 lifecycleConfiguration.dayColorScheme = [[SDLTemplateColorScheme alloc] initWithPrimaryRGBColor:green secondaryRGBColor:grey backgroundRGBColor:white];
 lifecycleConfiguration.nightColorScheme = [[SDLTemplateColorScheme alloc] initWithPrimaryRGBColor:green secondaryRGBColor:grey backgroundRGBColor:darkGrey];
 ```
-
-##### Swift
 ```swift
 let green = SDLRGBColor(red: 126, green: 188, blue: 121)
 let white = SDLRGBColor(red: 249, green: 251, blue: 254)
@@ -29,7 +27,9 @@ let darkGrey = SDLRGBColor(red: 57, green: 78, blue: 96)
 lifecycleConfiguration.dayColorScheme = SDLTemplateColorScheme(primaryRGBColor: green, secondaryRGBColor: grey, backgroundRGBColor: white)
 lifecycleConfiguration.nightColorScheme = SDLTemplateColorScheme(primaryRGBColor: green, secondaryRGBColor: grey, backgroundRGBColor: darkGrey)
 ```
+~|
 !@
+
 @![android, javaSE, javaEE]
 ```java
 // Set color schemes
@@ -51,6 +51,7 @@ TemplateColorScheme nightColorScheme = new TemplateColorScheme()
 builder.setNightColorScheme(nightColorScheme);
 ```
 !@
+
 @![javascript]
 ```js
 // Set color schemes
@@ -81,7 +82,7 @@ You may only change the template coloring once per template; that is, you cannot
 You can change the template color scheme when you change layouts. This guide requires SDL @![android, javaSE, javaEE]Java Suite version 5.0!@@![iOS]iOS version 7.0!@@![javascript]JavaScript Suite version 1.2!@. If using an older version, use @![iOS]`SDLSetDisplayLayout` (any RPC version) or `SDLShow` (RPC v6.0+)!@@![android, javaSE, javaEE, javascript]`SetDisplayLayout` (any RPC version) or `Show` (RPC v6.0+)!@ request.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLRGBColor *green = [[SDLRGBColor alloc] initWithRed:126 green:188 blue:121];
 SDLRGBColor *white = [[SDLRGBColor alloc] initWithRed:249 green:251 blue:254];
@@ -97,8 +98,6 @@ SDLTemplateConfiguration *config = [[SDLTemplateConfiguration alloc] initWithTem
     }
 }];
 ```
-
-##### Swift
 ```swift
 let green = SDLRGBColor(red: 126, green: 188, blue: 121)
 let white = SDLRGBColor(red: 249, green: 251, blue: 254)
@@ -114,7 +113,9 @@ sdlManager.screenManager.changeLayout(config) { err in
     }
 }
 ```
+~|
 !@
+
 @![android, javaSE, javaEE]
 ```java
 // Set color schemes
@@ -150,6 +151,7 @@ sdlManager.getScreenManager().changeLayout(templateConfiguration, new Completion
 });
 ```
 !@
+
 @![javascript]
 ```js
 // Set color schemes
@@ -187,7 +189,7 @@ if (success) {
 You can also customize the title and icon of the main menu button that appears on your template layouts. The menu icon must first be uploaded with a specific name through the file manager; see the [Uploading Images](Other SDL Features/Uploading Images) section for more information on how to upload your image.
 
 @![iOS]
-##### Objective-C
+|~
 ```objc
 SDLSetGlobalProperties *setGlobals = [[SDLSetGlobalProperties alloc] init];
 setGlobals.menuTitle = @"<#Custom Title#>";
@@ -203,8 +205,6 @@ setGlobals.menuIcon = [[SDLImage alloc] initWithName:@"<#Custom Icon Name#>" isT
     // The menu title and icon should be updated
 }];
 ```
-
-##### Swift
 ```swift
 let setGlobals = SDLSetGlobalProperties()
 setGlobals.menuTitle = "<#Custom Title#>"
@@ -220,7 +220,9 @@ sdlManager.send(request: setGlobals) { (request, response, error) in
     // The menu title and icon should be updated
 }
 ```
+~|
 !@
+
 @![android, javaSE, javaEE]
 ```java
 // The image must be uploaded before referencing the image name here
@@ -239,6 +241,7 @@ setGlobalProperties.setOnRPCResponseListener(new OnRPCResponseListener() {
 sdlManager.sendRPC(setGlobalProperties);
 ```
 !@
+
 @![javascript]
 ```js
 const setGlobalProperties = new SDL.rpc.messages.SetGlobalProperties();
