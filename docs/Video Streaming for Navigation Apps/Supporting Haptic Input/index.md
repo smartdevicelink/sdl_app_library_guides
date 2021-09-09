@@ -24,8 +24,10 @@ NotificationCenter.default.post(name: SDLDidUpdateProjectionView, object: nil)
 ```
 ~|
 
-!!! NOTE
 SDL can only automatically detect `UIButton`s and anything else that responds `true` to `canBecomeFocused`. This means that custom `UIView` objects will *not* be found. You must send these objects manually, see "Manual Focusable Rects".
+
+!!! NOTE
+In case the renderingType is `SDLCarWindowRenderingTypeLayer`, then the `SDLDidUpdateProjectionView` notification should only be sent in the overridden `viewDidLayoutSubviews` method of your `rootViewController` or else the views might not be rendered as expected.
 
 Before Xcode 12.5, some built-in `UIView` subclasses, such as `UITextField`, responded `true` to `canBecomeFocused`. That is not longer true, and you must subclass these built-in views and implement `canBecomeFocused` to return `true`.
 !!!
