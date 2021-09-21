@@ -194,7 +194,7 @@
                     "platforms": ["javascript"]
                 },
                 {
-                    "name": "Block Androud SdlRouterService by vehicle type",
+                    "name": "Block Android SdlRouterService by vehicle type",
                     "platforms": ["Android"]
                 }
 
