@@ -45,7 +45,7 @@ Add supported vehicle type file as metaData for `SdlRouterService` in AndroidMan
 ## Prevent app from connection to unsupported vehicles 
 Apps can still receive an intent to start when `SDL` is enabled from other apps, to prevent an OEM app from starting their `SdlService`, Vehicle type can be retrieved in `SdlReceiver.onSdlEnabled` and the app can choose to not to start `SdlService` for that app.
 
-```
+```java
 
     @Override
     public void onSdlEnabled(Context context, Intent intent) {
