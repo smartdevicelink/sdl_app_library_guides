@@ -192,7 +192,12 @@
                 {
                     "name": "Encryption - Not Supported",
                     "platforms": ["javascript"]
+                },
+                {
+                    "name": "Block Androud SdlRouterService by vehicle type",
+                    "platforms": ["Android"]
                 }
+
             ]
         },
         {
