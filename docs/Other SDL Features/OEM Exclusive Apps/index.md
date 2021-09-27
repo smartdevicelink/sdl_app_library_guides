@@ -1,4 +1,4 @@
-# Block SdlRouterService by vehicle type
+# OEM Exclusive Apps
 The Android library can prevent apps from starting their `SdlRouterService` based on if they support the vehicle type if the connection is over Bluetooth.
 
 !!! NOTE
