@@ -11,7 +11,7 @@ This does not work over AOA connections.
 
 
 ## Create file for supported vehicle types and add to Android Manifest
-To implement this feature, you will need to define an XML file for supported vehicles in resources of the project called `supported_vehicle_type.xml`, and add it as metaData for `SdlRouterService` in its AndroidManifest.  If an app defines a vehicle-type element, then it should always have a make attribute, all other attributes are optional. However, if the app developers want to use model year or trim, they should define make and model attributes as well. The Java Suite app library will check only the defined attributes. The below example shows a valid vehicle type resource file.
+To implement this feature, you will need to define an XML file for supported vehicles in resources of the project called `supported_vehicle_type.xml`, and add it as metaData for `SdlRouterService` in its AndroidManifest.  If an app defines a vehicle-type element, then it should always have a make attribute, all other attributes; are optional. However, if the you want to use model year or trim, you should define make and model attributes as well. The Java Suite app library will check only the defined attributes. The below example shows a valid vehicle type resource file.
 
 
 ```XML
@@ -43,7 +43,7 @@ Add supported vehicle type file as metaData for `SdlRouterService` in AndroidMan
 ```
 
 ## Prevent app from connecting to unsupported vehicles 
-Apps can still receive an intent to start when `SDL` is enabled from other apps, to prevent an OEM app from starting their `SdlService`, Vehicle type can be retrieved in `SdlReceiver.onSdlEnabled` and the app can choose to not to start `SdlService` for that app.
+Apps can still receive an intent to start when `SDL` is enabled from other apps. To prevent an OEM app from starting their `SdlService`, vehicle type can be retrieved in `SdlReceiver.onSdlEnabled` and the app can choose to not to start `SdlService` for that app.
 
 ```java
 
