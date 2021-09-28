@@ -11,7 +11,7 @@ This does not work over AOA connections.
 
 
 ## Create file for supported vehicle types and add to Android Manifest
-To implement this feature, you will need to define an XML file for supported vehicles called `supported_vehicle_type.xml` in `res/xml` directory of the project, and add it as metaData for `SdlRouterService` in its `AndroidManifest`. If an app defines a `vehicle-type` element, then it should always have a `make` attribute, all other attributes; are optional. However, if you want to use `modelYear` or `trim`, you should define `make` and `model` attributes as well. The Java Suite app library will check only the defined attributes. The below example shows a valid vehicle type resource file.
+To implement this feature, you will need to define an XML file for supported vehicles called `supported_vehicle_type.xml` in `res/xml` directory of the project, and add it as metaData for `SdlRouterService` in its `AndroidManifest`. If an app defines a `vehicle-type` element, then it should always have a `make` attribute; all other attributes are optional. However, if you want to use `modelYear` or `trim`, you should define `make` and `model` attributes as well. The Java Suite app library will check only the defined attributes. The below example shows a valid vehicle type resource file.
 
 
 ```XML
