@@ -127,12 +127,12 @@ sdlManager.sendRPC(vdRequest);
 ```js
 // sdl_javascript_suite v1.1+
 const vdRequest = new SDL.rpc.messages.GetVehicleData()
-    .setPrndl(true);
+    .setGearStatus(true);
 const response = await sdlManager.sendRpcResolve(vdRequest);
 
 if (response.getSuccess()) {
-    const prndl = response.getPrndl();
-    console.log('PRNDL status: ' + prndl);
+    const gearStatus = response.getGearStatus();
+    console.log('GearStatus: ' + gearStatus);
 } else {
     console.log('GetVehicleData was rejected.')
 }
@@ -140,12 +140,12 @@ if (response.getSuccess()) {
 
 // Pre sdl_javascript_suite v1.1
 const vdRequest = new SDL.rpc.messages.GetVehicleData()
-    .setPrndl(true);
+    .getGearStatus(true);
 const response = await sdlManager.sendRpc(vdRequest).catch(error => error);
 
 if (response.getSuccess()) {
-    const prndl = response.getPrndl();
-    console.log('PRNDL status: ' + prndl);
+    const gearStatus = response.getGearStatus();
+    console.log('GearStatus: ' + gearStatus);
 } else {
     console.log('GetVehicleData was rejected.')
 }
@@ -301,8 +301,8 @@ sdlManager.sendRPC(subscribeRequest);
 
 ```js
 sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnVehicleData, (onVehicleDataNotification) => {
-    if (onVehicleDataNotification.getPrndl() !== null) {
-        console.log('PRNDL status was updated to: ' + onVehicleDataNotification.getPrndl());
+    if (onVehicleDataNotification.getGearStatus() !== null) {
+        console.log('GearStatus was updated to: ' + onVehicleDataNotification.getGearStatus());
     }
 });
 ```
@@ -312,7 +312,7 @@ sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnVehicleData, (onVehicleData
 ```js
 // sdl_javascript_suite v1.1+
 const subscribeRequest = new SDL.rpc.messages.SubscribeVehicleData()
-    .setPrndl(true);
+    .getGearStatus(true);
 const response = await sdlManager.sendRpcResolve(subscribeRequest);
 if (response.getSuccess()) {
     console.log('Successfully subscribed to vehicle data.');
@@ -323,7 +323,7 @@ if (response.getSuccess()) {
 
 // Pre sdl_javascript_suite v1.1
 const subscribeRequest = new SDL.rpc.messages.SubscribeVehicleData()
-    .setPrndl(true);
+    .getGearStatus(true);
 const response = await sdlManager.sendRpc(subscribeRequest).catch(error => error);
 if (response.getSuccess()) {
     console.log('Successfully subscribed to vehicle data.');
@@ -424,7 +424,7 @@ sdlManager.sendRPC(unsubscribeRequest);
 ```js
 // sdl_javascript_suite v1.1+
 const unsubscribeRequest = new SDL.rpc.messages.UnsubscribeVehicleData()
-    .setPrndl(true); // unsubscribe to PRNDL data
+    .setGearStatus(true); // unsubscribe to GearStatus data
 const response = await sdlManager.sendRpcResolve(unsubscribeRequest);
 if (response.getSuccess()) {
     console.log('Successfully unsubscribed to vehicle data.');
@@ -435,7 +435,7 @@ if (response.getSuccess()) {
 
 // Pre sdl_javascript_suite v1.1
 const unsubscribeRequest = new SDL.rpc.messages.UnsubscribeVehicleData()
-    .setPrndl(true); // unsubscribe to PRNDL data
+    .setGearStatus(true); // unsubscribe to GearStatus data
 const response = await sdlManager.sendRpc(unsubscribeRequest).catch(error => error);
 if (response.getSuccess()) {
     console.log('Successfully unsubscribed to vehicle data.');
