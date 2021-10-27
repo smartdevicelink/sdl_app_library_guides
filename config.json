@@ -192,7 +192,12 @@
                 {
                     "name": "Encryption - Not Supported",
                     "platforms": ["javascript"]
+                },
+                {
+                    "name": "OEM Exclusive Apps",
+                    "platforms": ["Android"]
                 }
+
             ]
         },
         {

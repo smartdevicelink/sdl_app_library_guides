@@ -107,14 +107,14 @@ sdlManager.send(request: getGPSData) { (request, response, error) in
 @![android, javaSE, javaEE]
 ```java
 GetVehicleData vdRequest = new GetVehicleData()
-    .setPrndl(true);
+    .setGearStatus(true);
 vdRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
-        if(response.getSuccess()){
-            PRNDL prndl = ((GetVehicleDataResponse) response).getPrndl();
-            DebugTool.logInfo("SdlService", "PRNDL status: " + prndl.toString());
-        }else{
+        if (response.getSuccess()) {
+            GearStatus gearStatus = ((GetVehicleDataResponse) response).getGearStatus();
+            DebugTool.logInfo("SdlService", "GearStatus: " + gearStatus.toString());
+        } else {
             DebugTool.logInfo("SdlService", "GetVehicleData was rejected.");
         }
     }
@@ -127,12 +127,12 @@ sdlManager.sendRPC(vdRequest);
 ```js
 // sdl_javascript_suite v1.1+
 const vdRequest = new SDL.rpc.messages.GetVehicleData()
-    .setPrndl(true);
+    .setGearStatus(true);
 const response = await sdlManager.sendRpcResolve(vdRequest);
 
 if (response.getSuccess()) {
-    const prndl = response.getPrndl();
-    console.log('PRNDL status: ' + prndl);
+    const gearStatus = response.getGearStatus();
+    console.log('GearStatus: ' + gearStatus);
 } else {
     console.log('GetVehicleData was rejected.')
 }
@@ -140,12 +140,12 @@ if (response.getSuccess()) {
 
 // Pre sdl_javascript_suite v1.1
 const vdRequest = new SDL.rpc.messages.GetVehicleData()
-    .setPrndl(true);
+    .getGearStatus(true);
 const response = await sdlManager.sendRpc(vdRequest).catch(error => error);
 
 if (response.getSuccess()) {
-    const prndl = response.getPrndl();
-    console.log('PRNDL status: ' + prndl);
+    const gearStatus = response.getGearStatus();
+    console.log('GearStatus: ' + gearStatus);
 } else {
     console.log('GetVehicleData was rejected.')
 }
@@ -268,8 +268,8 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_VEHICLE_DATA, new OnRPCNot
     @Override
     public void onNotified(RPCNotification notification) {
         OnVehicleData onVehicleDataNotification = (OnVehicleData) notification;
-        if (onVehicleDataNotification.getPrndl() != null) {
-            DebugTool.logInfo("SdlService", "PRNDL status was updated to: " + onVehicleDataNotification.getPrndl());
+        if (onVehicleDataNotification.getGearStatus() != null) {
+            DebugTool.logInfo("SdlService", "GearStatus was updated to: " + onVehicleDataNotification.getGearStatus());
         }
     }
 });
@@ -279,13 +279,13 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_VEHICLE_DATA, new OnRPCNot
 
 ```java
 SubscribeVehicleData subscribeRequest = new SubscribeVehicleData()
-    .setPrndl(true);
+        .setGearStatus(true);
 subscribeRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
-        if(response.getSuccess()){
+        if (response.getSuccess()) {
             DebugTool.logInfo("SdlService", "Successfully subscribed to vehicle data.");
-        }else{
+        } else {
             DebugTool.logInfo("SdlService", "Request to subscribe to vehicle data was rejected.");
         }
     }
@@ -301,8 +301,8 @@ sdlManager.sendRPC(subscribeRequest);
 
 ```js
 sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnVehicleData, (onVehicleDataNotification) => {
-    if (onVehicleDataNotification.getPrndl() !== null) {
-        console.log('PRNDL status was updated to: ' + onVehicleDataNotification.getPrndl());
+    if (onVehicleDataNotification.getGearStatus() !== null) {
+        console.log('GearStatus was updated to: ' + onVehicleDataNotification.getGearStatus());
     }
 });
 ```
@@ -312,7 +312,7 @@ sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnVehicleData, (onVehicleData
 ```js
 // sdl_javascript_suite v1.1+
 const subscribeRequest = new SDL.rpc.messages.SubscribeVehicleData()
-    .setPrndl(true);
+    .getGearStatus(true);
 const response = await sdlManager.sendRpcResolve(subscribeRequest);
 if (response.getSuccess()) {
     console.log('Successfully subscribed to vehicle data.');
@@ -323,7 +323,7 @@ if (response.getSuccess()) {
 
 // Pre sdl_javascript_suite v1.1
 const subscribeRequest = new SDL.rpc.messages.SubscribeVehicleData()
-    .setPrndl(true);
+    .getGearStatus(true);
 const response = await sdlManager.sendRpc(subscribeRequest).catch(error => error);
 if (response.getSuccess()) {
     console.log('Successfully subscribed to vehicle data.');
@@ -405,13 +405,13 @@ sdlManager.send(request: unsubscribeGPSData) { (request, response, error) in
 @![android, javaSE, javaEE]
 ```java
 UnsubscribeVehicleData unsubscribeRequest = new UnsubscribeVehicleData()
-    .setPrndl(true); // unsubscribe to PRNDL data
+        .setGearStatus(true); // unsubscribe to GearStatus data
 unsubscribeRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
-        if(response.getSuccess()){
+        if (response.getSuccess()) {
             DebugTool.logInfo("SdlService", "Successfully unsubscribed to vehicle data.");
-        }else{
+        } else {
             DebugTool.logInfo("SdlService", "Request to unsubscribe to vehicle data was rejected.");
         }
     }
@@ -424,7 +424,7 @@ sdlManager.sendRPC(unsubscribeRequest);
 ```js
 // sdl_javascript_suite v1.1+
 const unsubscribeRequest = new SDL.rpc.messages.UnsubscribeVehicleData()
-    .setPrndl(true); // unsubscribe to PRNDL data
+    .setGearStatus(true); // unsubscribe to GearStatus data
 const response = await sdlManager.sendRpcResolve(unsubscribeRequest);
 if (response.getSuccess()) {
     console.log('Successfully unsubscribed to vehicle data.');
@@ -435,7 +435,7 @@ if (response.getSuccess()) {
 
 // Pre sdl_javascript_suite v1.1
 const unsubscribeRequest = new SDL.rpc.messages.UnsubscribeVehicleData()
-    .setPrndl(true); // unsubscribe to PRNDL data
+    .setGearStatus(true); // unsubscribe to GearStatus data
 const response = await sdlManager.sendRpc(unsubscribeRequest).catch(error => error);
 if (response.getSuccess()) {
     console.log('Successfully unsubscribed to vehicle data.');
@@ -520,9 +520,9 @@ GetVehicleData vdRequest = new GetVehicleData()
 vdRequest.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
-        if(response.getSuccess()){
+        if (response.getSuccess()) {
             Object CustomData = ((GetVehicleDataResponse) response).getOEMCustomVehicleData("OEM-X-Vehicle-Data");
-        }else{
+        } else {
             DebugTool.logInfo("SdlService", "GetVehicleData was rejected.");
         }
     }
