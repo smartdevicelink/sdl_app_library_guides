@@ -32,7 +32,7 @@ let lifecycleConfiguration = SDLLifecycleConfiguration(appName: "<#App Name#>", 
 @![android]
 ```java
 // Set the SdlManager.Builder transport
-builder.setTransportType(new TCPTransportConfig(<IP ADDRESS>, <PORT>, false));
+builder.setTransportType(new TCPTransportConfig(<PORT>, <IP ADDRESS>, false));
 ```
 !@
 
