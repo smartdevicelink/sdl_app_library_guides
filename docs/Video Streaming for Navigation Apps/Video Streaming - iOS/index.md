@@ -96,10 +96,6 @@ let streamingRange = SDLVideoStreamingRange(minimumResolution: nil, maximumResol
 ```
 ~|
 
-!!! NOTE
-`streamingRange = SDLVideoStreamingRange()` is deprecated with the release of SDL v8+. We recommend using other appropriate init methods to avoid any video streaming issues.
-!!!
-
 #### Setting the Video Streaming Ranges
 Once you have configured a supported video streaming range, you can use it to set the `supportedPortraitStreamingRange` or `supportedLandscapeStreamingRange` properties when you are configuring the `SDLStreamingMediaConfiguration`.
 
