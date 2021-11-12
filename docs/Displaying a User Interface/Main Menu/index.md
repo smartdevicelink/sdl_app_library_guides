@@ -189,7 +189,7 @@ The screen manager will intelligently handle deletions for you. If you want to s
 If you are doing this manually, you must use the `DeleteCommand` and `DeleteSubMenu` RPCs, passing the `cmdID`s you wish to delete.
 
 ### Duplicate Menu Titles
-@![iOS, android, javaEE, javaSE]Starting with SDL !@@![android, javaEE, javaSE]v5.1+ menu!@@![iOS]v7.1+ menu!@@![javascript]Menu!@ cells and sub-menu cells @![iOS, android, javaEE, javaSE]no longer!@@![javascript]do not!@ require unique titles in order to be presented. For example, if you are trying to display points of interest as a list you can now have multiple locations with the same name but are not the same location. You cannot present multiple cells that are exactly the same. They must have some property that makes them different, such as `secondaryText` or an artwork.
+Starting with SDL @![android, javaEE, javaSE]v5.1+ menu!@@![iOS]v7.1+ menu!@@![javascript]v1.5+ menu!@ cells and sub-menu cells @![iOS, android, javaEE, javaSE]no longer!@@![javascript]do not!@ require unique titles in order to be presented. For example, if you are trying to display points of interest as a list you can now have multiple locations with the same name but are not the same location. You cannot present multiple cells that are exactly the same. They must have some property that makes them different, such as `secondaryText` or an artwork.
 
 ##### RPC v7.1+ Connections
 The titles on the menu will be displayed as provided even if there are duplicate titles.
