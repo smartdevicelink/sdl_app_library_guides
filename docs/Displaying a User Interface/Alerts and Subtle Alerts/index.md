@@ -489,7 +489,7 @@ subtleAlert.softButtons = [button1]
 @![android,javaSE,javaEE]
 ```java
 // Soft buttons
-final int softButtonId = 123; // Set it to any unique ID
+final int softButtonId = 10001; // Set it to any unique ID
 SoftButton okButton = new SoftButton(SoftButtonType.SBT_TEXT, softButtonId);
 okButton.setText("OK");
 
@@ -512,7 +512,7 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
 @![javascript]
 ```js
 // Soft buttons
-const softButtonId = 123; // Set it to any unique ID
+const softButtonId = 10001; // Set it to any unique ID
 const okButton = new SDL.rpc.structs.SoftButton()
     .setType(SDL.rpc.enums.SoftButtonType.SBT_TEXT)
     .setSoftButtonID(softButtonId)
