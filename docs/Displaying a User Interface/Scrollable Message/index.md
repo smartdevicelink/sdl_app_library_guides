@@ -122,10 +122,10 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
 	public void onNotified(RPCNotification notification) {
 		OnButtonPress onButtonPress = (OnButtonPress) notification;
 		switch (onButtonPress.getCustomButtonID()){
-			case 0:
+			case 10001:
 				DebugTool.logInfo(TAG, "Button 1 Pressed");
 				break;
-			case 1:
+			case 10002:
 				DebugTool.logInfo(TAG, "Button 2 Pressed");
 				break;
 		}
@@ -175,10 +175,10 @@ To listen for `OnButtonPress` events for `SoftButton`s, we need to add a listene
 ```js
 sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnButtonPress, function (onButtonPress) {
     switch (onButtonPress.getCustomButtonId()) {
-        case 0:
+        case 10001:
             console.log("Button 1 Pressed");
             break;
-        case 1:
+        case 10002:
             console.log("Button 2 Pressed");
             break;
     }
