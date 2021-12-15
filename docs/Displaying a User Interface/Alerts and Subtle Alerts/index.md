@@ -465,6 +465,7 @@ const subtleAlert = new SDL.rpc.messages.SubtleAlert()
 @![iOS]
 |~
 ```objc
+// Remember that the ids must be > 10000
 SDLSoftButton *button1 = [[SDLSoftButton alloc] initWithType:<#(nonnull SDLSoftButtonType)#> text:<#(nullable NSString *)#> image:<#(nullable SDLImage *)#> highlighted:<#(BOOL)#> buttonId:<#(UInt16)#> systemAction:<#(nullable SDLSystemAction)#> handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     if (buttonPress == nil) {
         return;
@@ -476,6 +477,7 @@ SDLSoftButton *button1 = [[SDLSoftButton alloc] initWithType:<#(nonnull SDLSoftB
 subtleAlert.softButtons = @[button1];
 ```
 ```swift
+// Remember that the ids must be > 10000
 let button1 = SDLSoftButton(type: <#SDLSoftButtonType#>, text: <#String?#>, image: <#SDLImage?#>, highlighted: <#Bool#>, buttonId: <#UInt16#>, systemAction: <#SDLSystemAction?#>) { (buttonPress, buttonEvent) in
     guard buttonPress != nil else { return }
     <#Button has been pressed#>
