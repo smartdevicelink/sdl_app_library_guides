@@ -13,6 +13,11 @@ In order to use SDL's Mobile Navigation feature, the app must have a minimum req
 !!!
 !@
 
+## Configuring a Module to Stream
+In order to view the stream, you need a head unit to connect with that supports streaming. If this is a physical module created by an OEM, such as a Ford TDK, you may need special permissions from that OEM to test streaming. Physical modules often have strict permissions and/or encryption requirements to stream.
+
+The alternative is to stream over TCP to open-source Core. For more details on setting up open-source Core and an HMI, see [the Install and Run guide](https://smartdevicelink.com/en/guides/core/getting-started/install-and-run/), and to set up video streaming for that Core and HMI, see [the Audio and Video Streaming guide](https://smartdevicelink.com/en/guides/core/feature-documentation/audio-and-video-streaming/). We recommend using the built-in [Generic_HMI server streaming](https://github.com/smartdevicelink/generic_hmi#hmi-backend) instead of GStreamer socket or pipe streaming.
+
 ## Configuring a Navigation App
 The basic connection setup is similar for all apps. Please follow the @![iOS][Integration Basics](Getting Started/Integration Basics - iOS)!@@![android,javaEE,javaSE][Integration Basics](Getting Started/Integration Basics - Java)!@ guide for more information.
 
