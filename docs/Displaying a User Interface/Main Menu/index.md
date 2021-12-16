@@ -29,6 +29,8 @@ sdlManager.screenManager.menuConfiguration = menuConfiguration
 
 @![android, javaSE, javaEE]
 ```java
+MenuLayout mainMenuLayout = MenuLayout.TILES;
+MenuLayout submenuLayout = MenuLayout.LIST;
 MenuConfiguration menuConfiguration = new MenuConfiguration(mainMenuLayout, submenuLayout);
 sdlManager.getScreenManager().setMenuConfiguration(menuConfiguration);
 ```
