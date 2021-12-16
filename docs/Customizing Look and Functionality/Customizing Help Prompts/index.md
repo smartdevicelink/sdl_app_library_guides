@@ -143,7 +143,7 @@ sdlManager.sendRPC(setGlobalProperties);
 @![javascript]
 ```js
 const setGlobalProperties = new SDL.rpc.messages.SetGlobalProperties();
-const chunk = new SDL.rpc.structs.TTSChunk().setText('Your custom help prompt').setType(SDL.rpc.enums.SpeechCapabilities.TEXT);
+const chunk = new SDL.rpc.structs.TTSChunk().setText('Your custom help prompt').setType(SDL.rpc.enums.SpeechCapabilities.SC_TEXT);
 setGlobalProperties.setHelpPrompt([chunk]);
 const response = await sdlManager.sendRpc(setGlobalProperties).catch(err => err); // If there was an error, catch it and return it
 if (response instanceof SDL.rpc.RpcRespone && response.getSuccess()) {
@@ -207,7 +207,7 @@ sdlManager.sendRPC(setGlobalProperties);
 @![javascript]
 ```js
 const setGlobalProperties = new SDL.rpc.messages.SetGlobalProperties();
-const chunk = new SDL.rpc.structs.TTSChunk().setText('Your custom help prompt').setType(SDL.rpc.enums.SpeechCapabilities.TEXT);
+const chunk = new SDL.rpc.structs.TTSChunk().setText('Your custom help prompt').setType(SDL.rpc.enums.SpeechCapabilities.SC_TEXT);
 setGlobalProperties.setTimeoutPrompt([chunk]);
 const response = await sdlManager.sendRpc(setGlobalProperties).catch(err => err); // If there was an error, catch it and return it
 if (response instanceof SDL.rpc.RpcRespone && response.getSuccess()) {

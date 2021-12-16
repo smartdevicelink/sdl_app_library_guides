@@ -76,7 +76,7 @@ Speak speak = new Speak(ttsChunkList);
 
 @![javascript]
 ```js
-const chunk = new SDL.rpc.structs.TTSChunk().setText('hello').setType(SDL.rpc.enums.SpeechCapabilities.TEXT);
+const chunk = new SDL.rpc.structs.TTSChunk().setText('hello').setType(SDL.rpc.enums.SpeechCapabilities.SC_TEXT);
 const speak = new SDL.rpc.messages.Speak().setTtsChunks([chunk]);
 ```
 !@
