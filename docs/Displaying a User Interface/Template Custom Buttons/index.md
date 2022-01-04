@@ -78,11 +78,10 @@ sdlManager.getScreenManager().commit(new CompletionListener() {
 
 @![javascript]
 ```js
-const textState = new SDL.manager.screen.utils.SoftButtonState()
-    .setName('State Name')
-    .setText('Button Label Text');
+const textState = new new SDL.manager.screen.utils.SoftButtonState('State Name', 'Button Label Text');
+
 const softButtonObject = new SDL.manager.screen.utils.SoftButtonObject('softButtonObject', [textState], textState.getName(), function (softButtonObject, rpc) {
-    if (rpc instanceof SDL.rpc.messages.OnButtonPress && rpc.getSuccess()) {
+    if (rpc instanceof SDL.rpc.messages.OnButtonPress) {
         console.log('SoftButton pressed!');
     }
 });
