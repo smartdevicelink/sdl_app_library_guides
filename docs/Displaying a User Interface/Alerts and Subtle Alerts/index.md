@@ -465,6 +465,7 @@ const subtleAlert = new SDL.rpc.messages.SubtleAlert()
 @![iOS]
 |~
 ```objc
+// Remember that the ids must be > 10000
 SDLSoftButton *button1 = [[SDLSoftButton alloc] initWithType:<#(nonnull SDLSoftButtonType)#> text:<#(nullable NSString *)#> image:<#(nullable SDLImage *)#> highlighted:<#(BOOL)#> buttonId:<#(UInt16)#> systemAction:<#(nullable SDLSystemAction)#> handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     if (buttonPress == nil) {
         return;
@@ -476,6 +477,7 @@ SDLSoftButton *button1 = [[SDLSoftButton alloc] initWithType:<#(nonnull SDLSoftB
 subtleAlert.softButtons = @[button1];
 ```
 ```swift
+// Remember that the ids must be > 10000
 let button1 = SDLSoftButton(type: <#SDLSoftButtonType#>, text: <#String?#>, image: <#SDLImage?#>, highlighted: <#Bool#>, buttonId: <#UInt16#>, systemAction: <#SDLSystemAction?#>) { (buttonPress, buttonEvent) in
     guard buttonPress != nil else { return }
     <#Button has been pressed#>
@@ -489,7 +491,7 @@ subtleAlert.softButtons = [button1]
 @![android,javaSE,javaEE]
 ```java
 // Soft buttons
-final int softButtonId = 123; // Set it to any unique ID
+final int softButtonId = 10001; // Set it to any unique ID
 SoftButton okButton = new SoftButton(SoftButtonType.SBT_TEXT, softButtonId);
 okButton.setText("OK");
 
@@ -512,7 +514,7 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
 @![javascript]
 ```js
 // Soft buttons
-const softButtonId = 123; // Set it to any unique ID
+const softButtonId = 10001; // Set it to any unique ID
 const okButton = new SDL.rpc.structs.SoftButton()
     .setType(SDL.rpc.enums.SoftButtonType.SBT_TEXT)
     .setSoftButtonID(softButtonId)

@@ -12,7 +12,7 @@ The message will persist on the screen until the timeout has elapsed or the user
 Currently, you can only create a scrollable message view to display on the screen using RPCs.
 
 !!! NOTE
-The @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE, javascript]`ScreenManager`!@ takes soft button ids 0 - 10000. Ensure that if you use custom RPCs, that the soft button ids you use are outside of this range.
+The @![iOS]`SDLScreenManager`!@ @![android, javaSE, javaEE, javascript]`ScreenManager`!@ uses soft button ids 0 – 10000. Ensure that if you use custom RPCs—such as this one—that the soft button ids you use are outside of this range (i.e. > 10000).
 !!!
 
 @![iOS]
@@ -28,11 +28,11 @@ NSString *scrollableMessageString = [NSString stringWithFormat:@"Lorem ipsum dol
 UInt16 scrollableMessageTimeout = 50000;
 
 // Create SoftButtons
-SDLSoftButton *scrollableSoftButton = [[SDLSoftButton alloc] initWithType:SDLSoftButtonTypeText text:@"Button 1" image:nil highlighted:NO buttonId:111 systemAction:nil handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
+SDLSoftButton *scrollableSoftButton = [[SDLSoftButton alloc] initWithType:SDLSoftButtonTypeText text:@"Button 1" image:nil highlighted:NO buttonId:10001 systemAction:nil handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     if (buttonPress == nil) { return; }
     // Create a custom action for the selected button
 }];
-SDLSoftButton *scrollableSoftButton2 = [[SDLSoftButton alloc] initWithType:SDLSoftButtonTypeText text:@"Button 2" image:nil highlighted:NO buttonId:222 systemAction:nil handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
+SDLSoftButton *scrollableSoftButton2 = [[SDLSoftButton alloc] initWithType:SDLSoftButtonTypeText text:@"Button 2" image:nil highlighted:NO buttonId:10002 systemAction:nil handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
     if (buttonPress == nil) { return; }
     // Create a custom action for the selected button
 }];
@@ -63,12 +63,12 @@ Pharetra convallis posuere morbi leo urna molestie at elementum eu. Dictum sit a
 let scrollableTimeout: UInt16 = 50000
 
 // Create SoftButtons
-let scrollableSoftButton = SDLSoftButton(type: .text, text: "Button 1", image: nil, highlighted: false, buttonId: 111, systemAction: .defaultAction, handler: { (buttonPress, buttonEvent) in
+let scrollableSoftButton = SDLSoftButton(type: .text, text: "Button 1", image: nil, highlighted: false, buttonId: 10001, systemAction: .defaultAction, handler: { (buttonPress, buttonEvent) in
     guard let press = buttonPress else { return }
 
     // Create a custom action for the selected button
 })
-let scrollableSoftButton2 = SDLSoftButton(type: .text, text: "Button 2", image: nil, highlighted: false, buttonId: 222, systemAction: .defaultAction, handler: { (buttonPress, buttonEvent) in
+let scrollableSoftButton2 = SDLSoftButton(type: .text, text: "Button 2", image: nil, highlighted: false, buttonId: 10002, systemAction: .defaultAction, handler: { (buttonPress, buttonEvent) in
     guard let press = buttonPress else { return }
 
     // Create a custom action for the selected button
@@ -92,10 +92,10 @@ sdlManager.send(scrollableMessage)
 String scrollableMessageText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Vestibulum mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare. Purus in massa tempor nec feugiat nisl pretium fusce id. Pharetra convallis posuere morbi leo urna molestie at elementum eu. Dictum sit amet justo donec enim diam.";
 		
 // Create SoftButtons
-SoftButton softButton1 = new SoftButton(SoftButtonType.SBT_TEXT, 0);
+SoftButton softButton1 = new SoftButton(SoftButtonType.SBT_TEXT, 10001);
 softButton1.setText("Button 1");
 
-SoftButton softButton2 = new SoftButton(SoftButtonType.SBT_TEXT, 1);
+SoftButton softButton2 = new SoftButton(SoftButtonType.SBT_TEXT, 10002);
 softButton2.setText("Button 2");
 
 // Create SoftButton Array
@@ -122,10 +122,10 @@ sdlManager.addOnRPCNotificationListener(FunctionID.ON_BUTTON_PRESS, new OnRPCNot
 	public void onNotified(RPCNotification notification) {
 		OnButtonPress onButtonPress = (OnButtonPress) notification;
 		switch (onButtonPress.getCustomButtonID()){
-			case 0:
+			case 10001:
 				DebugTool.logInfo(TAG, "Button 1 Pressed");
 				break;
-			case 1:
+			case 10002:
 				DebugTool.logInfo(TAG, "Button 2 Pressed");
 				break;
 		}
@@ -142,12 +142,12 @@ const scrollableMessageText = "Lorem ipsum dolor sit amet, consectetur adipiscin
 // Create SoftButtons
 const softButton1 = new SDL.rpc.structs.SoftButton()
     .setType(SDL.rpc.enums.SoftButtonType.SBT_TEXT)
-    .setSoftButtonID(0)
+    .setSoftButtonID(10001)
     .setText("Button 1");
 
 const softButton2 = new SDL.rpc.structs.SoftButton()
     .setType(SDL.rpc.enums.SoftButtonType.SBT_TEXT)
-    .setSoftButtonID(1)
+    .setSoftButtonID(10002)
     .setText("Button 2");
 
 // Create SoftButton Array
@@ -175,10 +175,10 @@ To listen for `OnButtonPress` events for `SoftButton`s, we need to add a listene
 ```js
 sdlManager.addRpcListener(SDL.rpc.enums.FunctionID.OnButtonPress, function (onButtonPress) {
     switch (onButtonPress.getCustomButtonId()) {
-        case 0:
+        case 10001:
             console.log("Button 1 Pressed");
             break;
-        case 1:
+        case 10002:
             console.log("Button 2 Pressed");
             break;
     }
