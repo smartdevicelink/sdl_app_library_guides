@@ -39,20 +39,16 @@ const headUnitHMILanguage = sdlManager.getRegisterAppInterfaceResponse().getHmiD
 !@
 
 ## Updating the SDL App Name
-@![javascript]
-The SDL JavaScript Suite currently does not support updating the app name. This will be addressed in a future release.
-!@
-
-@![iOS,android,javaSE,javaEE]
+@![iOS,android,javaSE,javaEE,javascript]
 To customize the app name for the head unit's current language, implement the following steps:
 
-1. Set the default `language` in the !@@![iOS]`SDLLifecycleConfiguration`!@@![android,javaSE,javaEE]`Builder`.!@
+1. Set the default `language` in the !@@![iOS]`SDLLifecycleConfiguration`!@@![android,javaSE,javaEE]`Builder`!@@![javascript]LifecyleConfig!@.
 @![iOS]
 2. Add all languages your app supports to `languagesSupported` in the `SDLLifecycleConfiguration`.
 3. Implement the `SDLManagerDelegate`'s `managerShouldUpdateLifecycleToLanguage:hmiLanguage:` method. If the module's current HMI language or voice recognition (VR) language is different from the app's default language, the method will be called with the module's current HMI and/or VR language. Please note that the delegate method will only be called if your app supports the head unit's current language. Return a `SDLLifecycleConfigurationUpdate` object with the new `appName` and/or `ttsName`.
 !@
-@![android,javaSE,javaEE]
-2. Implement the `sdlManagerListener`'s `managerShouldUpdateLifecycle(Language language, Language hmiLanguage)` method. If the module's current HMI language or voice recognition (VR) language is different from the app's default language, the listener will be called with the module's current HMI and/or VR language. Return a `LifecycleConfigurationUpdate` with the new `appName` and/or `ttsName`.
+@![android,javaSE,javaEE,javascript]
+2. Implement the `sdlManagerListener`'s !@@![android,javaSE,javaEE]`managerShouldUpdateLifecycle(Language language, Language hmiLanguage)`!@@![javascript]`managerShouldUpdateLifecycle(language, hmiLanguage)`!@ method. If the module's current HMI language or voice recognition (VR) language is different from the app's default language, the listener will be called with the module's current HMI and/or VR language. Return a `LifecycleConfigurationUpdate` with the new `appName` and/or `ttsName`.
 !@
 
 @![iOS]
@@ -132,6 +128,46 @@ public LifecycleConfigurationUpdate managerShouldUpdateLifecycle(Language langua
     }
     if (isNeedUpdate) {
         Vector<TTSChunk> chunks = new Vector<>(Collections.singletonList(new TTSChunk(ttsName, SpeechCapabilities.TEXT)));
+        return new LifecycleConfigurationUpdate(appName, null, chunks, null);
+    } else {
+        return null;
+    }
+}
+```
+!@
+
+@![javascript]
+```javascript
+managerShouldUpdateLifecycle(language, hmiLanguage) {
+    let isUpdateNeeded = false;
+    let appName = APP_NAME;
+    let ttsName = APP_NAME;
+    switch (language) {
+        case ES_MX:
+            isUpdateNeeded = true;
+            ttsName = APP_NAME_ES;
+            break;
+        case FR_CA:
+            isUpdateNeeded = true;
+            ttsName = APP_NAME_FR;
+            break;
+        default:
+            break;
+    }
+    switch (hmiLanguage) {
+        case ES_MX:
+            isUpdateNeeded = true;
+            appName = APP_NAME_ES;
+            break;
+        case FR_CA:
+            isUpdateNeeded = true;
+            appName = APP_NAME_FR;
+            break;
+        default:
+            break;
+    }
+    if (isUpdateNeeded) {
+        const chunks = [new TTSChunk().setText(ttsName).setType(SpeechCapabilities.SC_TEXT))];
         return new LifecycleConfigurationUpdate(appName, null, chunks, null);
     } else {
         return null;
