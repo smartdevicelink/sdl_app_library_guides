@@ -82,9 +82,7 @@ SDLVideoStreamingRange *disabledStreamingRange = SDLVideoStreamingRange.disabled
 SDLVideoStreamingRange *streamingRange = [[SDLVideoStreamingRange alloc] initWithMinimumResolution:[[SDLImageResolution alloc] initWithWidth:500 height:200] maximumResolution:[[SDLImageResolution alloc] initWithWidth:800 height:400]];
 
 // Use if you wish to only support aspect ratios between 1.0 and 2.5. All image resolutions and diagonal screen sizes will be supported.
-SDLVideoStreamingRange *streamingRange = [[SDLVideoStreamingRange alloc] init];
-streamingRange.minimumAspectRatio = 1.0;
-streamingRange.maximumAspectRatio = 2.5;
+SDLVideoStreamingRange *streamingRange = [[SDLVideoStreamingRange alloc] initWithMinimumResolution:nil maximumResolution:nil minimumAspectRatio:1.0 maximumAspectRatio:2.5 minimumDiagonal:0.0];
 ```
 ```swift
 // Use if you wish to disable support for all landscape orientations or all portrait orientations
@@ -94,9 +92,7 @@ let disabledStreamingRange = SDLVideoStreamingRange.disabled()
 let streamingRange = SDLVideoStreamingRange(minimumResolution: SDLImageResolution(width: 500, height: 200), maximumResolution: SDLImageResolution(width: 800, height: 400))
 
 // Use if you wish to only support aspect ratios between 1.0 and 2.5. All image resolutions and diagonal screen sizes will be supported.
-let streamingRange = SDLVideoStreamingRange()
-streamingRange.minimumAspectRatio = 1.0
-streamingRange.maximumAspectRatio = 2.5
+let streamingRange = SDLVideoStreamingRange(minimumResolution: nil, maximumResolution: nil, minimumAspectRatio: 1.0, maximumAspectRatio: 2.5, minimumDiagonal: 0.0)
 ```
 ~|
 
