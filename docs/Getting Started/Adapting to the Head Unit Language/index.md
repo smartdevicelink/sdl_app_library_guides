@@ -49,7 +49,6 @@ To customize the app name for the head unit's current language, implement the fo
 !@
 @![android,javaSE,javaEE,javascript]
 2. Implement the `sdlManagerListener`'s !@@![android,javaSE,javaEE]`managerShouldUpdateLifecycle(Language language, Language hmiLanguage)`!@@![javascript]`managerShouldUpdateLifecycle(language, hmiLanguage)`!@ method. If the module's current HMI language or voice recognition (VR) language is different from the app's default language, the listener will be called with the module's current HMI and/or VR language. Return a `LifecycleConfigurationUpdate` with the new `appName` and/or `ttsName`.
-!@
 
 @![iOS]
 |~
@@ -143,11 +142,11 @@ managerShouldUpdateLifecycle(language, hmiLanguage) {
     let appName = APP_NAME;
     let ttsName = APP_NAME;
     switch (language) {
-        case ES_MX:
+        case SDL.rpc.enums.Language.ES_MX:
             isUpdateNeeded = true;
             ttsName = APP_NAME_ES;
             break;
-        case FR_CA:
+        case SDL.rpc.enums.Language.FR_CA:
             isUpdateNeeded = true;
             ttsName = APP_NAME_FR;
             break;
@@ -155,11 +154,11 @@ managerShouldUpdateLifecycle(language, hmiLanguage) {
             break;
     }
     switch (hmiLanguage) {
-        case ES_MX:
+        case SDL.rpc.enums.Language.ES_MX:
             isUpdateNeeded = true;
             appName = APP_NAME_ES;
             break;
-        case FR_CA:
+        case SDL.rpc.enums.Language.FR_CA:
             isUpdateNeeded = true;
             appName = APP_NAME_FR;
             break;
@@ -167,8 +166,8 @@ managerShouldUpdateLifecycle(language, hmiLanguage) {
             break;
     }
     if (isUpdateNeeded) {
-        const chunks = [new TTSChunk().setText(ttsName).setType(SpeechCapabilities.SC_TEXT))];
-        return new LifecycleConfigurationUpdate(appName, null, chunks, null);
+        const chunks = [new SDL.rpc.structs.TTSChunk().setText(ttsName).setType(SDL.rpc.enums.SpeechCapabilities.SC_TEXT))];
+        return new SDL.manager.lifecycle.LifecycleConfigurationUpdate(appName, null, chunks, null);
     } else {
         return null;
     }
