@@ -119,6 +119,9 @@ const managerListener = new SDL.manager.SdlManagerListener()
     .setOnSystemInfoReceived((systemInfo) => {
         console.log(`Connected to system ${systemInfo}`);
         return true;
+    })
+    .setManagerShouldUpdateLifecycleToLanguage((language, hmiLanguage) => {
+        return new SDL.manager.lifecycle.LifecycleConfigurationUpdate();
     });
 
 const sdlManager = new SDL.manager.SdlManager(appConfig, managerListener)
@@ -160,6 +163,13 @@ For WebEngine apps, there are slight modifications for integrating the library, 
                 })
                 .setOnError((sdlManager, info) => {
                     console.error('Error from SdlManagerListener: ', info);
+                })
+                .setOnSystemInfoReceived((systemInfo) => {
+                    console.log(`Connected to system ${systemInfo}`);
+                    return true;
+                })
+                .setManagerShouldUpdateLifecycleToLanguage((language, hmiLanguage) => {
+                    return new SDL.manager.lifecycle.LifecycleConfigurationUpdate();
                 });
 
             const sdlManager = new SDL.manager.SdlManager(appConfig, managerListener)

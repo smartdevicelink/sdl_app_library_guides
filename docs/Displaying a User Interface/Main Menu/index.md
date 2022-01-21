@@ -175,7 +175,7 @@ const innerCell = new SDL.manager.screen.menu.MenuCell('inner menu cell')
 const cell = new SDL.manager.screen.menu.MenuCell('cell')
     .setSecondaryText('secondary text')
     .setTertiaryText('tertiary text')
-    .setMenuLayout(SDL.rpc.enums.MenuLayout.LIST)
+    .setSubMenuLayout(SDL.rpc.enums.MenuLayout.LIST)
     .setSubCells([innerCell]);
 
 sdlManager.getScreenManager().setMenu([cell]);
