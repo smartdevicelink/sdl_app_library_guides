@@ -131,7 +131,7 @@ params.setFrameRate(30);
 
 ### Supporting Different Video Streaming Window Sizes (RPC v7.1+)
 Some HMIs support multiple view sizes and may resize your SDL app's view during video streaming (i.e. to a collapsed view, split screen, preview mode or picture-in-picture). By default, your app will support all the view sizes and the `VideoStreamManager` will resize the video stream when the HMI notifies the app of the updated screen size. 
-If you you wish to support only some screen sizes, you can configure the two `VideoStreamingRange` parameters when starting your video stream using the `startRemoteDisplay` method. One range is for landscape orientations and one range is for portrait orientations.
+If you wish to support only some screen sizes, you can configure the two `VideoStreamingRange` parameters when starting your video stream using the `startRemoteDisplay` method. One range is for landscape orientations and one range is for portrait orientations.
 In these `VideoStreamingRange` parameters you can define different view sizes that you wish to support in the event that the HMI resizes the view during the stream.
 In the `VideoStreamingRange` you will define a minimum and maximum resolution, minimum diagonal, and a minimum and maximum aspect ratio. Any values you do not wish to use should be set to `null`.
 If you want to support all possible landscape or portrait sizes you can simply pass `null` for `supportedLandscapeStreamingRange`, `supportedPortraitStreamingRange`, or both.

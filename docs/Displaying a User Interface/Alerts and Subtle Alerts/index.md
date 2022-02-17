@@ -378,7 +378,7 @@ If connected to older head units that do not support this feature, the cancel re
 !!!
 
 !!! NOTE
-Canceling the alert will only dismiss the displayed alert. If the alert has audio, the speech will play in its entirety even when the displayed alert has been dismissed. If you know you will cancel an alert, consider setting a short audo message like "searching" instead of "searching for coffee shops, please wait."
+Canceling the alert will only dismiss the displayed alert. If the alert has audio, the speech will play in its entirety even when the displayed alert has been dismissed. If you know you will cancel an alert, consider setting a short audio message like "searching" instead of "searching for coffee shops, please wait."
 !!!
 
 
