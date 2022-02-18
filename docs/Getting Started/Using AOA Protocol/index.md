@@ -34,7 +34,8 @@ The SDL Android library houses a `USBAccessoryAttachmentActivity` that you need 
 
 ```xml
 <activity android:name="com.smartdevicelink.transport.USBAccessoryAttachmentActivity"
-	android:launchMode="singleTop">
+	android:launchMode="singleTop"
+	android:exported=true>
 	<intent-filter>
 		<action android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED" />
 	</intent-filter>
@@ -44,6 +45,9 @@ The SDL Android library houses a `USBAccessoryAttachmentActivity` that you need 
 		android:resource="@xml/accessory_filter" />
 </activity>
 ```
+!!! MUST
+Android API 31 now requires any activity with an intent filter to explicitly set the exported flag to true (`exported=true`).
+!!!
 
 !!! NOTE
 The accessory_filter.xml file is included with the SDL Android Library 
