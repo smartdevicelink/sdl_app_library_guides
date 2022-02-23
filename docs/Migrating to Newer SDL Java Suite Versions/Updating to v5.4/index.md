@@ -2,14 +2,14 @@
 
 ## Overview
 
-This guide is to help developers get setup with the SDL Java library version 5.4. It is assumed that the developer is already updated to at least version 5.3 of the library.
+This guide is to help developers get set up with the SDL Java Suite library version 5.4. It is assumed that the developer is already updated to at least version 5.3 of the library.
 
 The full release notes are published [here](https://github.com/smartdevicelink/sdl_java_suite/releases).
 
-SDL Java library version 5.4 adds support for Android 12.
+SDL Java Suite library version 5.4 adds support for Android 12.
 
 ## AndroidManifest Exported Flag
-Starting in Android 12, any activities, services, or broadcast receivers that use intent filters will need to explicitly declare the android:exported attribute for the given app components. The SdlRouterService and SdlReceiver should already have the exported attribute defined and set to true, but the USBAccessoryAttachmentActivity will now also require this attribute to be set. Any activity that had an intent-filter would have a default exported value of true. Now we need to explicitly set it.
+Starting in Android 12, any activities, services, or broadcast receivers that use intent filters will need to explicitly declare the `android:exported` attribute for the given app components. The SdlRouterService and SdlReceiver should already have the exported attribute defined and set to true, but the USBAccessoryAttachmentActivity will now also require this attribute to be set. Any activity that had an intent-filter would have a default exported value of true. Now we need to explicitly set it.
 
 ```xml
 <activity
@@ -24,7 +24,7 @@ Starting in Android 12, any activities, services, or broadcast receivers that us
 ```
 
 ##Bluetooth Runtime Permissions
-Starting in Android 12 for the library to be able to connect to the HMI over bluetooth, App Developers will need to request the new `BLUETOOTH_CONNECT` runtime permission.
+Starting in Android 12, for the library to be able to connect to the HMI over Bluetooth, app developers will need to request the new `BLUETOOTH_CONNECT` runtime permission.
 
 This means the permission will need to be listed in the `AndroidManifest.xml` file. The developer will also need to request this permission from the user as it is a runtime permission.
 
@@ -39,7 +39,7 @@ Starting with Android 12, apps cannot start services from the background. In ord
 
 To achieve this there are a few changes that will be required in your application.
 
-First to allow your "SdlService" to be started from an external source (The active router service may belong to another app), you will need to export the service in your `AndroidManifest.xml`.
+First to allow your "SdlService" to be started from an external source (the active router service may belong to another app), you will need to export the service in your `AndroidManifest.xml`.
 
 ```xml
 <service
@@ -180,11 +180,11 @@ public static void setIsForeground(boolean status) {
 
 There is now an overridable method, `getSdlServiceName` in the `SdlBroadcastReceiver` class. This method is used by the `SdlBroadcastReceiver` to catch a possible foreground exception.
 
-When the app tries to start the `SdlService`, if the service does not enter the foreground within a set amount of time (This time is designated by the Android operating system) an exception will be thrown and the app may encounter and ANR.
+When the app tries to start the `SdlService`, if the service does not enter the foreground within a set amount of time (this time is designated by the Android operating system), an exception will be thrown and the app may encounter an ANR.
 
 The `SdlBroadcasterReceiver` can catch this exception and prevent the ANR but will need to know the name of the class that throws the exception.
 
-By default the `getSdlServiceName` method will return "SdlService", if your app uses a name other than "SdlService" you will need to override `getSdlServiceName` in the `SdlReceiver` class to return the correct name.
+By default the `getSdlServiceName` method will return "SdlService". If your app uses a name other than "SdlService" you will need to override `getSdlServiceName` in the `SdlReceiver` class to return the correct name.
 
 
 ```java

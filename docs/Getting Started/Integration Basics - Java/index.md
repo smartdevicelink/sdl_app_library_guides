@@ -621,11 +621,11 @@ The `onSdlEnabled` method will be the main start point for our SDL connection se
 
 There is now an overridable method, `getSdlServiceName` in the `SdlBroadcastReceiver` class. This method is used by the `SdlBroadcastReceiver` to catch a possible foreground exception.
 
-When the app tries to start the `SdlService`, if the service does not enter the foreground within a set amount of time (This time is designated by the Android operating system) an exception will be thrown and the app may encounter and ANR.
+When the app tries to start the `SdlService`, if the service does not enter the foreground within a set amount of time (this time is designated by the Android operating system) an exception will be thrown and the app may encounter an ANR.
 
 The `SdlBroadcasterReceiver` can catch this exception and prevent the ANR but will need to know the name of the class that throws the exception.
 
-By default the `getSdlServiceName` method will return "SdlService", if your app uses a name other than "SdlService" you will need to override `getSdlServiceName` in the `SdlReceiver` class to return the correct name.
+By default the `getSdlServiceName` method will return "SdlService". If your app uses a name other than "SdlService" you will need to override `getSdlServiceName` in the `SdlReceiver` class to return the correct name.
 
 
 ```java
