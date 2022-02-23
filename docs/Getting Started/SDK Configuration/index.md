@@ -78,7 +78,7 @@ Some permissions are required to be granted to the SDL app in order for it to wo
 ```
 
 !!! NOTE
-If the app is targeting Android P (API Level 31) or higher, the Android Manifest file should also have the following permission to allow the app to be notified of Bluetooth Connections:
+If the app is targeting Android S (API Level 31) or higher, the Android Manifest file should also have the following permission to allow the app to be notified of Bluetooth Connections:
 
 This permission is a runtime permission and will require the user to grant the permission.
 
