@@ -195,3 +195,13 @@ public String getSdlServiceName() {
 }
 //...
 ```
+
+## Known Issue
+
+When the user connects their device over USB and the user has not been granted Bluetooth Permissions the user will be presented a notification which will help navigate the user to grant Bluetooth Permissions for the app.
+
+Once the permissions are granted the Router Service will open the Bluetooth connection.
+
+If the user then revokes these permissions, the Android operating system will kill Application running the Router Service and the Router Service process and none of the services callbacks will be called. Even though the Router Service has been killed the apps will still appear on the HMI.
+
+Unplugging the USB cable will remove the apps from the HMI.
