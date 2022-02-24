@@ -198,7 +198,7 @@ public String getSdlServiceName() {
 
 ## Known Issue
 
-When the user connects their device over USB and the user has not been granted Bluetooth Permissions the user will be presented a notification which will help navigate the user to grant Bluetooth Permissions for the app.
+When the user connects their device over USB and the user has not been granted Bluetooth Permissions the user will be presented with a notification which will help navigate the user to grant Bluetooth Permissions for the app.
 
 Once the permissions are granted the Router Service will open the Bluetooth connection.
 
