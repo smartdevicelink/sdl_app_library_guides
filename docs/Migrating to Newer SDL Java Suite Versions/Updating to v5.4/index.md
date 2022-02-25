@@ -26,11 +26,66 @@ Starting in Android 12, any activities, services, or broadcast receivers that us
 ##Bluetooth Runtime Permissions
 Starting in Android 12, for the library to be able to connect to the HMI over Bluetooth, app developers will need to request the new `BLUETOOTH_CONNECT` runtime permission.
 
-This means the permission will need to be listed in the `AndroidManifest.xml` file. The developer will also need to request this permission from the user as it is a runtime permission.
+This means the permission will need to be listed in the `AndroidManifest.xml` file.
 
 ```xml
 <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"
     tools:targetApi="31"/>
+```
+
+The developer will also need to request this permission from the user as it is a runtime permission.
+
+```java
+//MainActivity.java
+
+//.....
+
+private static final int REQUEST_CODE = 200;
+
+
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+
+    //......
+
+    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && !checkPermission()) {
+        requestPermission();
+        return;
+    }
+
+    //We are either not targeting Android 12+ or permissions are granted so we can try to start out SdlService
+    SdlReceiver.queryForConnectedService(this);
+
+    //.....
+
+}
+
+private boolean checkPermission() {
+    return PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(getApplicationContext(), BLUETOOTH_CONNECT);
+}
+
+private void requestPermission() {
+    ActivityCompat.requestPermissions(this, new String[]{BLUETOOTH_CONNECT}, REQUEST_CODE);
+}
+
+@Override
+public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    switch (requestCode) {
+        case REQUEST_CODE:
+            if (grantResults.length > 0) {
+                boolean btConnectGranted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+
+                if (btConnectGranted) {
+                    //Bluetooth permissions have been granted by the user so we can try to start out SdlService.
+                    SdlReceiver.queryForConnectedService(this);
+                }
+            }
+            break;
+    }
+}
+
+//.....
+
 ```
 
 ## Foreground Services
