@@ -1,16 +1,26 @@
 # Video Streaming (RPC v4.5+)
-In order to stream video from an SDL app, we only need to manage a few things. For the most part, the library will handle the majority of logic needed to perform video streaming.
+One of the most powerful features provided by SDL is the ability to stream an interactive Android layout directly to a vehicle's heads up display. The following guide explains the basics of this functionality.
 
 ## SDL Remote Display
 The `SdlRemoteDisplay` base class provides the easiest way to start streaming using SDL. The `SdlRemoteDisplay` is extended from Android's `Presentation` class with modifications to work with other aspects of the SDL Android library.
 
-!!! Note
+!!! NOTE
 It is recommended that you extend this as a local class within the service that has the `SdlManager` instance.
 !!!
 
-Extending this class gives developers a familiar, native experience to handling layouts and events on screen.
+Extending this class gives developers a familiar, native experience to handle layouts and events on screen.
 
+!!! NOTE
+You must have a valid and approved application ID from an OEM in order receive user input from a remote display. 
+!!!
+
+The following example uses a simple layout containing a single button:
+
+__Inside SdlService.java:__
 ```java
+//...
+
+//This class should be nested in SdlService or another class containing the application's SdlManager instance
 public static class MyDisplay extends SdlRemoteDisplay{
     public MyDisplay(Context context, Display display) {
         super(context, display);
@@ -31,13 +41,24 @@ public static class MyDisplay extends SdlRemoteDisplay{
             }
         });
     }
-
-    //onViewResized is added in SDL v5.1+
-    @Override
-    public void onViewResized(int width, int height) {
-        DebugTool.logInfo(TAG, "Remote view new width and height ("+ width + ", " + height + ")");
-    }
 }
+
+//...
+```
+__res/layout/stream.xml:__
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <Button
+    android:id="@+id/button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true" />
+
+</RelativeLayout>
 ```
 
 !!! Note
@@ -45,73 +66,86 @@ If you are obfuscating the code in your app, make sure to exclude your class tha
 !!!
 
 ## Managing the Stream
-The `VideoStreamManager` can be used to start streaming video after the `SdlManager` has successfully been started. This is performed by calling the method `startRemoteDisplayStream(Context context, final Class<? extends SdlRemoteDisplay> remoteDisplay, final VideoStreamingParameters parameters, final boolean encrypted, VideoStreamingRange supportedLandscapeStreamingRange, VideoStreamingRange supportedPortraitStreamingRange)`.
+The `VideoStreamManager` can be used to start streaming a remote display after the `SdlManager` has successfully been started. This is performed by calling the method `startRemoteDisplayStream()`.
 
+__Inside SdlService.java:__
 ```java
-public static class MyDisplay extends SdlRemoteDisplay {
-
-    public MyDisplay(Context context, Display display) {
-        super(context, display);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.stream);
-
-        String videoUri = "android.resource://" + context.getPackageName() + "/" + R.raw.sdl;
-        VideoView videoView = findViewById(R.id.videoView);
-        videoView.setVideoURI(Uri.parse(videoUri));
-        videoView.start();
-    }
-    
-    //onViewResized is added in SDL v5.1+
-    @Override
-    public void onViewResized(int width, int height) {
-        DebugTool.logInfo(TAG, "Remote view new width and height ("+ width + ", " + height + ")");
-    }
-}
-
 //...
 
 if (sdlManager.getVideoStreamManager() != null) {
-    sdlManager.getVideoStreamManager().start(new CompletionListener() {
+    sdlManager.getVideoStreamManager().start(new CompletionListener () {
         @Override
         public void onComplete(boolean success) {
             if (success) {
-                sdlManager.getVideoStreamManager().startRemoteDisplayStream(getApplicationContext(), MyDisplay.class, null, false, null, null);
+                sdlManager.getVideoStreamManager().startRemoteDisplayStream(
+                    getApplicationContext(),
+                    MyDisplay.class,
+                    null,
+                    false,
+                    null,
+                    null
+                );
             } else {
                 DebugTool.logError(TAG, "Failed to start video streaming manager");
             }
         }
     });
 }
+
+//...
 ```
 
 ### Ending the Stream
 When the `HMIStatus` is back to `HMI_NONE` it is time to stop the stream. This is accomplished through a method `stopStreaming()`.
 
+__Inside SdlService.java:__
 ```java
+//...
+
+/*
+ OnRPCNotificationListeners are commonly used to perform tasks at specific HMI levels
+ In this case, it is used to end streaming at HMI_NONE
+*/ 
 Map<FunctionID, OnRPCNotificationListener> onRPCNotificationListenerMap = new HashMap<>();
-onRPCNotificationListenerMap.put(FunctionID.ON_HMI_STATUS, new OnRPCNotificationListener() {
+    onRPCNotificationListenerMap.put(FunctionID.ON_HMI_STATUS, new OnRPCNotificationListener() {
     @Override
     public void onNotified(RPCNotification notification) {
         OnHMIStatus status = (OnHMIStatus) notification;
-		if (status != null && status.getHmiLevel() == HMILevel.HMI_NONE) {
+        
+        //...
 
-			//Stop the stream
-			if (sdlManager.getVideoStreamManager() != null && sdlManager.getVideoStreamManager().isStreaming()) {
-				sdlManager.getVideoStreamManager().stopStreaming();
-			}
+        if (status != null && status.getHmiLevel() == HMILevel.HMI_NONE) {
+            
+            //...
+ 
+            //Stop the stream
+            if (sdlManager.getVideoStreamManager() != null
+                && sdlManager.getVideoStreamManager().isStreaming()) {
+                sdlManager.getVideoStreamManager().stopStreaming();
+            }
 
-		}
+            //...
+
+        }
+
+        //...
+
     }
 });
+
+//...
+
+/*
+ builder refers to an instance of SdlManager.Builder
+ The line below needs to be placed after builder is created and before builder.build() is called
+*/
 builder.setRPCNotificationListeners(onRPCNotificationListenerMap);
+
+//...
 ```
 
 ### Handling HMI Scaling (RPC v6.0+)
-If the HMI scales the video stream, you will have to handle scaling the projected view, touches and haptic rectangles yourself (this is all handled for you behind the scenes in the `VideoStreamManager` API). To find out if the HMI scales the video stream, you must for query and check the `VideoStreamingCapability` for the `scale` property. Please check the [Adaptive Interface Capabilities](Displaying a User Interface/Adaptive Interface Capabilities) section for more information on how to query for this property using the system capability manager.
+If the HMI scales the video stream, you will have to handle scaling the projected view, touches, and haptic rectangles yourself (this is all handled for you behind the scenes in the `VideoStreamManager` API). To find out if the HMI scales the video stream, you must for query and check the `VideoStreamingCapability` for the `scale` property. Please check the [Adaptive Interface Capabilities](Displaying a User Interface/Adaptive Interface Capabilities) section for more information on how to query for this property using the system capability manager. For information on manually handling haptic rectangles, refer to the [Haptic Input](Video Streaming for Navigation Apps/Supporting Haptic Input) guide.
 
 ### Video Streaming Parameters (SDL v5.1+)
 Starting with SDL version 5.1+ the `VideoStreamingParameters` you provide will automatically be aligned with the `VideoStreamingCapabilities` provided by the HMI.
@@ -138,13 +172,28 @@ If you want to support all possible landscape or portrait sizes you can simply p
 If you wish to only support landscape orientation or only support portrait orientation you "disable" the range by passing a `VideoStreamingRange` with all 0 values set.
 
 ```java
-//This VideoStreamingRange represents a disabled Range and can be passed if you do not wish to support landscape orientation or portrait orientation
-final VideoStreamingRange disabledRange = new VideoStreamingRange(new Resolution(0, 0), new Resolution(0, 0), 0.0, 0.0, 0.0);
+/*
+ This VideoStreamingRange represents a disabled range
+ It can be passed if you do not wish to support landscape orientation or portrait orientation
+*/
+final VideoStreamingRange disabledRange = new VideoStreamingRange(
+    new Resolution(0, 0), 
+    new Resolution(0, 0), 
+    0.0, 
+    0.0, 
+    0.0
+);
 
-//This VideoStreamingRange represents that we will support any resolution between 500x200 and 800x400 no matter the diagonal size or aspect ratio
-final VideoStreamingRange landscapeRange = new VideoStreamingRange(new Resolution(500, 200), new Resolution(800, 400), null, null, null);
-
-//This VideoStreamingRange represents that we will support any aspect ratio between 1.0 and 2.5 no matter the resolution or diagonal size
+/*
+ This VideoStreamingRange represents that we will support any resolution between 500x200 and 800x400
+ In this case, it does not directly restrict the diagonal size or aspect ratio
+*/
+final VideoStreamingRange landscapeRange = new VideoStreamingRange(new Resolution(500, 200),
+    new Resolution(800, 400), null, null, null);
+/*
+ This VideoStreamingRange represents that we will support any aspect ratio between 1.0 and 2.5 
+ In this case, the resolution and diagonal size are not directly restricted
+*/
 final VideoStreamingRange portraitRange = new VideoStreamingRange(null, null, null, 1.0, 2.5);
 
 if (sdlManager.getVideoStreamManager() != null) {
@@ -152,7 +201,14 @@ if (sdlManager.getVideoStreamManager() != null) {
         @Override
         public void onComplete(boolean success) {
             if (success) {
-                sdlManager.getVideoStreamManager().startRemoteDisplayStream(getApplicationContext(), MyDisplay.class, null, false, landscapeRange, portraitRange);
+                sdlManager.getVideoStreamManager().startRemoteDisplayStream(
+                    getApplicationContext(),
+                    MyDisplay.class,
+                    null,
+                    false,
+                    landscapeRange,
+                    portraitRange
+                );
             } else {
                 DebugTool.logError(TAG, "Failed to start video streaming manager");
             }
