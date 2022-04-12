@@ -66,14 +66,14 @@ If you are obfuscating the code in your app, make sure to exclude your class tha
 !!!
 
 ## Managing the Stream
-The `VideoStreamManager` can be used to start streaming a remote display after the `SdlManager` has successfully been started. This is performed by calling the method `startRemoteDisplayStream()`.
+The `VideoStreamManager` can be used to start streaming a remote display after the `SdlManager` has successfully been started. This is performed by calling the method `startRemoteDisplayStream(Context context, final Class<? extends SdlRemoteDisplay> remoteDisplay, final VideoStreamingParameters parameters, final boolean encrypted, VideoStreamingRange supportedLandscapeStreamingRange, VideoStreamingRange supportedPortraitStreamingRange)`.
 
 __Inside SdlService.java:__
 ```java
 //...
 
 if (sdlManager.getVideoStreamManager() != null) {
-    sdlManager.getVideoStreamManager().start(new CompletionListener () {
+    sdlManager.getVideoStreamManager().start(new CompletionListener() {
         @Override
         public void onComplete(boolean success) {
             if (success) {
@@ -107,29 +107,17 @@ __Inside SdlService.java:__
  In this case, it is used to end streaming at HMI_NONE
 */ 
 Map<FunctionID, OnRPCNotificationListener> onRPCNotificationListenerMap = new HashMap<>();
-    onRPCNotificationListenerMap.put(FunctionID.ON_HMI_STATUS, new OnRPCNotificationListener() {
+onRPCNotificationListenerMap.put(FunctionID.ON_HMI_STATUS, new OnRPCNotificationListener() {
     @Override
     public void onNotified(RPCNotification notification) {
         OnHMIStatus status = (OnHMIStatus) notification;
-        
-        //...
 
         if (status != null && status.getHmiLevel() == HMILevel.HMI_NONE) {
-            
-            //...
- 
             //Stop the stream
-            if (sdlManager.getVideoStreamManager() != null
-                && sdlManager.getVideoStreamManager().isStreaming()) {
+            if (sdlManager.getVideoStreamManager() != null && sdlManager.getVideoStreamManager().isStreaming()) {
                 sdlManager.getVideoStreamManager().stopStreaming();
             }
-
-            //...
-
         }
-
-        //...
-
     }
 });
 
@@ -176,13 +164,8 @@ If you wish to only support landscape orientation or only support portrait orien
  This VideoStreamingRange represents a disabled range
  It can be passed if you do not wish to support landscape orientation or portrait orientation
 */
-final VideoStreamingRange disabledRange = new VideoStreamingRange(
-    new Resolution(0, 0), 
-    new Resolution(0, 0), 
-    0.0, 
-    0.0, 
-    0.0
-);
+final VideoStreamingRange disabledRange = new VideoStreamingRange(new Resolution(0, 0), 
+    new Resolution(0, 0), 0.0, 0.0, 0.0);
 
 /*
  This VideoStreamingRange represents that we will support any resolution between 500x200 and 800x400
