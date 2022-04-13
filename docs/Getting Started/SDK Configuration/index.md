@@ -72,15 +72,19 @@ Some permissions are required to be granted to the SDL app in order for it to wo
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
 </manifest>
 ```
 
 !!! NOTE
-If the app is targeting Android P (API Level 28) or higher, the Android Manifest file should also have the following permission to allow the app to start a foreground service:
+If the app is targeting Android S (API Level 31) or higher, the Android Manifest file also needs to include the following permission to allow the app to be notified of Bluetooth Connections:
+
+This permission is a runtime permission and will require the user to grant the permission.
 
 ```xml
-<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT"
+    tools:targetApi="31"/>
 ```
 !!!
 
