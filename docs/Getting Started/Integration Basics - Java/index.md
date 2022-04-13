@@ -569,11 +569,11 @@ public class SdlReceiver extends SdlBroadcastReceiver {
 We want to start the `SdlManager` when an SDL connection is made via the `SdlRouterService`. We do this by taking action in the `onSdlEnabled` method:
 
 !!! MUST
-Apps must start their service from a foreground context as of Android API 31.
+Apps must start their service in the foreground as of Android API 26 and as of Android API 31 the service must be started from a foreground context.
 
 Either you will need to ensure the app is in the foreground when you start the SdlService or you will need to start the SdlService from a foreground context.
 
-The intent received in onSdlEnabled will have a PendingIntent extra that will allow you start start the SdlService from the context of the active RouterService.
+The intent received in onSdlEnabled will have a PendingIntent extra that will allow you start the SdlService from the context of the active SdlRouterService.
 !!!
 
 ```java
@@ -596,15 +596,14 @@ public class SdlReceiver extends SdlBroadcastReceiver {
                     e.printStackTrace();
                 }
             }
-        } else {
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // SdlService needs to be foregrounded in Android O and above
             // This will prevent apps in the background from crashing when they try to start SdlService
             // Because Android O doesn't allow background apps to start background services
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                context.startForegroundService(intent);
-            } else {
-                context.startService(intent);
-            }
+            
+            context.startForegroundService(intent);
+        } else {
+            context.startService(intent);
         }
 	}
 
@@ -619,7 +618,7 @@ public class SdlReceiver extends SdlBroadcastReceiver {
 The `onSdlEnabled` method will be the main start point for our SDL connection session. We define exactly what we want to happen when we find out we are connected to SDL enabled hardware.
 !!!
 
-There is now an overridable method, `getSdlServiceName` in the `SdlBroadcastReceiver` class. This method is used by the `SdlBroadcastReceiver` to catch a possible foreground exception.
+There is now an overridable method, `getSdlServiceName` in the `SdlBroadcastReceiver` class. This method is used by the `SdlBroadcastReceiver` to catch possible foreground exceptions.
 
 When the app tries to start the `SdlService`, if the service does not enter the foreground within a set amount of time (this time is designated by the Android operating system) an exception will be thrown and the app may encounter an ANR.
 

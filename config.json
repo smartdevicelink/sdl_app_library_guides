@@ -292,9 +292,7 @@
                 },
                 {
                     "name": "Updating to v5.4",
-                    "platforms": [
-                        "Android", "JavaEE", "JavaSE"
-                    ]
+                    "platforms": ["Android"]
                 }
             ]
         },

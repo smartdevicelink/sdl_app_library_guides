@@ -2,11 +2,11 @@
 
 ## Overview
 
-This guide is to help developers get set up with the SDL Java Suite library version 5.4. It is assumed that the developer is already updated to at least version 5.3 of the library.
+This guide is to help developers get set up with the SDL Java Suite library version 5.4.0. It is assumed that the developer is already updated to at least version 5.3.1 of the library.
 
 The full release notes are published [here](https://github.com/smartdevicelink/sdl_java_suite/releases).
 
-SDL Java Suite library version 5.4 adds support for Android 12.
+SDL Java Suite library version 5.4.0 adds support for Android 12.
 
 ## AndroidManifest Exported Flag
 Starting in Android 12, any activities, services, or broadcast receivers that use intent filters will need to explicitly declare the `android:exported` attribute for the given app components. The SdlRouterService and SdlReceiver should already have the exported attribute defined and set to true, but the USBAccessoryAttachmentActivity will now also require this attribute to be set. Any activity that had an intent-filter would have a default exported value of true. Now we need to explicitly set it.
@@ -23,7 +23,7 @@ Starting in Android 12, any activities, services, or broadcast receivers that us
 </activity>
 ```
 
-##Bluetooth Runtime Permissions
+## Bluetooth Runtime Permissions
 Starting in Android 12, for the library to be able to connect to the HMI over Bluetooth, app developers will need to request the new `BLUETOOTH_CONNECT` runtime permission.
 
 This means the permission will need to be listed in the `AndroidManifest.xml` file.
@@ -88,7 +88,7 @@ public void onRequestPermissionsResult(int requestCode, @NonNull String[] permis
 
 ```
 
-## Foreground Services
+## Starting Services from the Foreground
 
 Starting with Android 12, apps cannot start services from the background. In order to allow the library to work as intended, the library will now need to start the "SdlService" from the context of the active router service.
 
@@ -139,13 +139,13 @@ public void onSdlEnabled(Context context, Intent intent) {
     }
 }
 ```
-
+#### Alternative Method to Avoid Exporting the SdlService
 If you do not wish to export your "SdlService" class then the library will not be able to start the service and there is no way to start the service from the background.
 
 However you can start your own "SdlService" while your app is in a foreground context. To achieve this you will need a way to track if your app is in the foreground. While your app is in the foreground you can start your "SdlService" as you normally would.
 
 ```java
-//MainActivity or where appropriate
+//MainActivity, Application, or where appropriate
 
 //...
 private androidx.lifecycle.LifecycleObserver lifecycleObserver;
@@ -251,7 +251,7 @@ public String getSdlServiceName() {
 //...
 ```
 
-## Known Issue
+## Known Corner Case
 
 When the user connects their device over USB and the user has not been granted Bluetooth Permissions the user will be presented with a notification which will help navigate the user to grant Bluetooth Permissions for the app.
 
