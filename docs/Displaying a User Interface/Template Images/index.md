@@ -8,6 +8,15 @@ You can easily display text, images, and buttons using the @![iOS]`SDLScreenMana
 | secondaryGraphic | The second image in a template that supports multiple images |
 
 ## Showing Images
+### SDLArtwork
+Images should be of type SDLArtwork
+
+@![iOS]
+```swift
+let <#your variable name here#> = SDLArtwork(image: UIImage(named: <#Name to Upload As#>)!, persistent: true, as: .PNG /* or .JPG */)```
+!@
+
+###Setting Primary Graphic
 @![iOS]
 |~
 ```objc
