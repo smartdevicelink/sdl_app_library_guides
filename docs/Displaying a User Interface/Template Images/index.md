@@ -16,7 +16,7 @@ Images should be of type SDLArtwork
 let <#your variable name here#> = SDLArtwork(image: UIImage(named: <#Name to Upload As#>)!, persistent: true, as: .PNG /* or .JPG */)```
 !@
 
-###Setting Primary Graphic
+### Setting Primary Graphic
 @![iOS]
 |~
 ```objc
