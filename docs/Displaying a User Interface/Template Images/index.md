@@ -20,10 +20,11 @@ Create an `SDLArtwork` object which can be manually uploaded or set into the @![
 let <#your variable name here#> = SDLArtwork(image: UIImage(named: <#Name to Upload As#>)!, persistent: true, as: .PNG /* or .JPG */)
 ```
 ~|
-!@ 
+!@
 
 @![android, javaSE, javaEE]
 ```java
+
 <#Stub#>
 ```
 !@
