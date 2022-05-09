@@ -251,9 +251,6 @@ alertView.setAudio(alertAudioData);
 ```
 !@
 
-!!! NOTE
-Audio features are not currently supported for manticore testing.  If using a virtual machine, please use Google chrome for audio testing !!!
-
 @![iOS]
 |~
 ```objc
