@@ -251,7 +251,8 @@ alertView.setAudio(alertAudioData);
 ```
 !@
 
-You can also play a combination of audio files and text-to-speech strings. The audio will be played in the order you add them to the @![android,javaSE,javaEE, javascript]`AlertAudioData`!@@![iOS]`SDLAlertAudioData`!@ object.
+!!! NOTE
+Audio features are not currently supported for manticore testing.  If using a virtual machine, please use Google chrome for audio testing !!!
 
 @![iOS]
 |~
