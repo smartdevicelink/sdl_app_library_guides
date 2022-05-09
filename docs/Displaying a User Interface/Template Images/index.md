@@ -8,16 +8,32 @@ You can easily display text, images, and buttons using the @![iOS]`SDLScreenMana
 | secondaryGraphic | The second image in a template that supports multiple images |
 
 ## Showing Images
-### SDLArtwork
-Images should be of type SDLArtwork
+### Creating an Image to Upload
+Create an `SDLArtwork` object which can be manually uploaded or set into the @![iOS]`SDLScreenManager`@!!@[android, javaSE, javaEE, javascript]`ScreenManager`@! and automatically uploaded. It includes information about whether the image should be persisted between vehicle startups, whether the image is a template image and should be re-colored, and more.
 
 @![iOS]
-```swift 
-
-let <#your variable name here#> = SDLArtwork(image: UIImage(named: <#Name to Upload As#>)!, persistent: true, as: .PNG /* or .JPG */)
-
+|~
+```objc
+<#Stub#>
 ```
+```swift 
+let <#your variable name here#> = SDLArtwork(image: UIImage(named: <#Name to Upload As#>)!, persistent: true, as: .PNG /* or .JPG */)
+```
+~|
 !@ 
+
+@![android, javaSE, javaEE]
+```java
+<#Stub#>
+```
+!@
+
+@![javascript]
+```js
+<#Stub#>
+```
+!@
+
 
 ### Setting Primary Graphic 
 
