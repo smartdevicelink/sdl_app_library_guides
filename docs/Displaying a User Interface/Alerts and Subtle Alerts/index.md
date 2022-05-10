@@ -282,6 +282,9 @@ alertAudioData.addSpeechSynthesizerStrings(textToSpeech);
 ```
 !@
 
+!!! NOTE
+Testing alerts with audio (Text-To-Speech or Tones) works best in Google Chrome, Mozilla Firefox, or Microsoft Edge.  It does not work in Apple Safari at this time.
+!!!
 
 #### Play Tone
 To play a notification sound when the alert appears, set `playTone` to `true`.
