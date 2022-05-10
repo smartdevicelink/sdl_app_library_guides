@@ -283,7 +283,7 @@ alertAudioData.addSpeechSynthesizerStrings(textToSpeech);
 !@
 
 !!! NOTE
-Testing alerts with audio (Text-To-Speech or Tones) works best in Google Chrome, Mozilla Firefox, or Microsoft Edge.  It does not work in Apple Safari at this time.
+Manticore testing of alerts with audio (Text-To-Speech or Tones) work best in Google Chrome, Mozilla Firefox, or Microsoft Edge.  Testing of alerts with audio does not work in Apple Safari at this time.
 !!!
 
 #### Play Tone
