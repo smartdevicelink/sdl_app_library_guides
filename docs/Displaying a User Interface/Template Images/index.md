@@ -26,7 +26,21 @@ let <#Name for artwork#> = SDLArtwork(image: UIImage(named: <#Name for image#>, 
 ~|
 !@
 
-### Upload an Artwork as the Primary Graphic 
+@![android, javaSE, javaEE]
+```java
+
+<#Stub#>
+```
+!@
+
+@![javascript]
+```js
+<#Stub#>
+```
+!@
+
+
+### Setting Primary Graphic 
 
 @![iOS]
 |~
