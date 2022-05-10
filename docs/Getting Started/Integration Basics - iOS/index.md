@@ -202,15 +202,15 @@ This is a custom icon for your application. Please refer to [Adaptive Interface 
 
 |~
 ```objc
-UIImage* appImage = [UIImage imageNamed:@"<#AppIcon Name#>"];
+UIImage* appImage = [UIImage imageNamed:@"<#AppIconName#>"];
 if (appImage) {
-    SDLArtwork* appIcon = [SDLArtwork persistentArtworkWithImage:appImage name:@"<#Name to Upload As#>" asImageFormat:SDLArtworkImageFormatPNG /* or SDLArtworkImageFormatJPG */];
+    SDLArtwork* appIcon = [SDLArtwork persistentArtworkWithImage:appImage name:@"<#ArtworkName#>" asImageFormat:SDLArtworkImageFormatPNG /* or SDLArtworkImageFormatJPG */];
     lifecycleConfiguration.appIcon = appIcon;
 }
 ```
 ```swift
-if let appImage = UIImage(named: "<#AppIcon Name#>") {
-    let appIcon = SDLArtwork(image: appImage, name: "<#Name to Upload As#>", persistent: true, as: .JPG /* or .PNG */)
+if let appImage = UIImage(named: "<#AppIconName#>") {
+    let appIcon = SDLArtwork(image: appImage, name: "<#ArtworkName#>", persistent: true, as: .JPG /* or .PNG */)
     lifecycleConfiguration.appIcon = appIcon
 }
 ```
