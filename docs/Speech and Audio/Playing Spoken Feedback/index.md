@@ -229,3 +229,6 @@ if (!response.getSuccess()){
 }
 ```
 !@
+!!! NOTE
+Manticore testing of spoken feedback works best in Google Chrome, Mozilla Firefox, or Microsoft Edge.  Testing of spoken feedback does not work in Apple Safari at this time.
+!!!
