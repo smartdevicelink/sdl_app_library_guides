@@ -30,7 +30,6 @@ let <#variable for artwork#> = SDLArtwork(image: UIImage(named: <#variable for i
 <#Stub#>
 ```
 !@
-
 @![javascript]
 ```js
 <#Stub#>
