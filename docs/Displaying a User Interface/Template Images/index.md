@@ -17,7 +17,8 @@ Create an `SDLArtwork` object which can be manually uploaded or set into the @![
 SDLArtwork* <#your variable name here#> = [SDLArtwork persistentArtworkWithImage:appImage name:@"<#Name to Upload As#>" asImageFormat:SDLArtworkImageFormatPNG /* or SDLArtworkImageFormatJPG */];
 ```
 ```swift 
-let <#your variable name here#> = SDLArtwork(image: UIImage(named: <#Name to Upload As#>)!, persistent: true, as: .PNG /* or .JPG */)
+var <#variable for image#> = UIImage(named: <#Name to Upload As#>)!
+let <#variable for artwork#> = SDLArtwork(image: UIImage(named: <#variable for image#>, persistent: true, as: .PNG /* or .JPG */)
 ```
 ~|
 !@
