@@ -9,7 +9,7 @@ You can easily display text, images, and buttons using the @![iOS]`SDLScreenMana
 
 ## Showing Images
 ### Creating an SDLArtwork
-Create an `SDLArtwork` object which can be manually uploaded or set into the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@ and automatically uploaded. An SDLArtwork includes information about whether the image should be persisted between vehicle startups, whether the image is a template image and should be re-colored, and more.
+An `SDLArtwork` is an object which can be manually uploaded or set into the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@ and automatically uploaded. It includes information about whether the image should be persisted between vehicle startups, whether the image is a template image and should be re-colored, and more.
 
 @![iOS]
 |~
@@ -19,9 +19,9 @@ SDLArtwork* <#your variable name here#> = [SDLArtwork persistentArtworkWithImage
 ```
 ```swift
 //Create a UIImage 
-var <#variable for image#> = UIImage(named: <#Name to Upload As#>)!  
+var <#Name for image#> = UIImage(named: "<#Name of image set or full filename of image#>")!
 //Create an SDLArtwork from the UIImage
-let <#variable for artwork#> = SDLArtwork(image: UIImage(named: <#variable for image#>, persistent: true, as: .PNG /* or .JPG */)
+let <#Name for artwork#> = SDLArtwork(image: UIImage(named: <#Name for image#>, persistent: true, as: .PNG /* or .JPG */)
 ```
 ~|
 !@
