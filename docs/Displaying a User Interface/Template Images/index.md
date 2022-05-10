@@ -9,7 +9,7 @@ You can easily display text, images, and buttons using the @![iOS]`SDLScreenMana
 
 ## Showing Images
 ### Creating an SDLArtwork
-An `SDLArtwork` is an object that includes information about whether the image should be persisted between vehicle startups, whether the image is a template image and should be re-colored, and more.  It can be manually uploaded or set into the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@ and automatically uploaded.
+An `SDLArtwork` is an object which can be manually uploaded or set into the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE]`ScreenManager`!@ and automatically uploaded. It includes information about whether the image should be persisted between vehicle startups, whether the image is a template image and should be re-colored, and more.
 
 @![iOS]
 |~
