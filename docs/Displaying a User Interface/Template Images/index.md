@@ -25,10 +25,8 @@ let <#variable for artwork#> = SDLArtwork(image: UIImage(named: <#variable for i
 ```
 ~|
 !@
-
 @![android, javaSE, javaEE]
 ```java
-
 <#Stub#>
 ```
 !@
@@ -38,7 +36,6 @@ let <#variable for artwork#> = SDLArtwork(image: UIImage(named: <#variable for i
 <#Stub#>
 ```
 !@
-
 
 ### Setting Primary Graphic 
 
