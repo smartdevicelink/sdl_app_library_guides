@@ -195,6 +195,10 @@ alertView.setShowWaitIndicator(true);
 #### Text-To-Speech
 An alert can also speak a prompt or play a sound file when the alert appears on the screen. This is done by creating an @![android,javaSE,javaEE, javascript]`AlertAudioData`!@@![iOS]`SDLAlertAudioData`!@ object and setting it in the @![android,javaSE,javaEE, javascript]`AlertView`!@@![iOS]`SDLAlertView`!@
 
+!!! NOTE
+Manticore testing of alerts with audio (Text-To-Speech or Tones) work best in Google Chrome, Mozilla Firefox, or Microsoft Edge.  Testing of alerts with audio does not work in Apple Safari at this time.
+!!!
+
 @![iOS]
 |~
 ```objc
@@ -281,10 +285,6 @@ textToSpeech.push('Text to speak');
 alertAudioData.addSpeechSynthesizerStrings(textToSpeech);
 ```
 !@
-
-!!! NOTE
-Manticore testing of alerts with audio (Text-To-Speech or Tones) work best in Google Chrome, Mozilla Firefox, or Microsoft Edge.  Testing of alerts with audio does not work in Apple Safari at this time.
-!!!
 
 #### Play Tone
 To play a notification sound when the alert appears, set `playTone` to `true`.
