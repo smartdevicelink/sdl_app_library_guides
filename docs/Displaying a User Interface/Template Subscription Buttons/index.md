@@ -173,6 +173,7 @@ await sdlManager.getScreenManager()
     });
 ```
 !@
+
 ## Unsubscribing from Subscription Buttons
 
 @![iOS]
@@ -388,6 +389,7 @@ sdlManager.screenManager.subscribeButton(.preset2, withObserver: self, selector:
 ```
 ~|
 !@
+
 @![android,javaSE,javaEE]
 ```java
 OnButtonListener onButtonListener = new OnButtonListener() {
@@ -416,6 +418,7 @@ sdlManager.getScreenManager().addButtonListener(ButtonName.PRESET_1, onButtonLis
 sdlManager.getScreenManager().addButtonListener(ButtonName.PRESET_2, onButtonListener);
 ```
 !@
+
 @![javascript]
 ```javascript
 function onButtonListener (buttonName, onButton) {
@@ -439,6 +442,7 @@ sdlManager.getScreenManager().addButtonListener(SDL.rpc.enums.ButtonName.PRESET_
 sdlManager.getScreenManager().addButtonListener(SDL.rpc.enums.ButtonName.PRESET_2, onButtonListener).catch(onError);
 ```
 !@
+
 ## Navigation Buttons
 Head units supporting RPC v6.0+ may support subscription buttons that allow your user to drag and scale the map using hard buttons located on car's center console or steering wheel. Subscriptions to navigation buttons will only succeed if your app's type is `NAVIGATION`. If subscribing to these buttons succeeds, you can remove any buttons of your own from your map screen. If subscribing to these buttons fails, you can display buttons of your own on your map screen.
 
