@@ -338,6 +338,7 @@ const numOfCustomPresetsAvailable = sdlManager.getSystemCapabilityManager().getD
 !@
 
 ### Subscribing to Preset Buttons
+This code will subscribe to the preset buttons.
 @![iOS]
 |~
 ```objc
@@ -350,6 +351,7 @@ sdlManager.screenManager.subscribeButton(.preset2, withObserver: self, selector:
 ```
 ~|
 !@
+An example for the button press event
 @![iOS]
 |~
 ```objc
