@@ -267,7 +267,6 @@ alertAudioData.addSpeechSynthesizerStrings(<#[String]#>)
 ```
 ~|
 !@
-
 @![android,javaSE,javaEE]
 ```java
 AlertAudioData alertAudioData = new AlertAudioData(sdlFile);
@@ -276,7 +275,6 @@ textToSpeech.add("Text to speak");
 alertAudioData.addSpeechSynthesizerStrings(textToSpeech);
 ```
 !@
-
 @![javascript]
 ```js
 const alertAudioData = new SDL.manager.screen.utils.AlertAudioData(null, null, sdlFile);
@@ -285,7 +283,6 @@ textToSpeech.push('Text to speak');
 alertAudioData.addSpeechSynthesizerStrings(textToSpeech);
 ```
 !@
-
 #### Play Tone
 To play a notification sound when the alert appears, set `playTone` to `true`.
 
