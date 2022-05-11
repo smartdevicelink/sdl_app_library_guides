@@ -250,7 +250,7 @@ const alertAudioData = new SDL.manager.screen.utils.AlertAudioData(null, null, s
 alertView.setAudio(alertAudioData);
 ```
 !@
-
+You can also play a combination of audio files and text-to-speech strings. The audio will be played in the order you add them to the @![android,javaSE,javaEE, javascript]`AlertAudioData`!@@![iOS]`SDLAlertAudioData`!@ object.
 @![iOS]
 |~
 ```objc
