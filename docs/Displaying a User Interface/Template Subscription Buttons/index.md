@@ -353,8 +353,6 @@ sdlManager.screenManager.subscribeButton(.preset1, withObserver: self, selector:
 sdlManager.screenManager.subscribeButton(.preset2, withObserver: self, selector: #selector(buttonPressEvent(buttonName:error:buttonPress:)))
 ```
 ~|
-!@
-@![iOS]
 |~
 ```objc
 - (void)buttonPressEventWithButtonName:(SDLButtonName)buttonName error:(NSError *)error buttonPress:(SDLOnButtonPress *)buttonPress {
