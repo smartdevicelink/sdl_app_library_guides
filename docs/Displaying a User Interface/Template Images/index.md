@@ -34,7 +34,6 @@ let artwork = SDLArtwork(image: UIImage(named: image, persistent: true, as: .PNG
 ```
 !@
 ### Setting Primary Graphic 
-
 @![iOS]
 |~
 ```objc
