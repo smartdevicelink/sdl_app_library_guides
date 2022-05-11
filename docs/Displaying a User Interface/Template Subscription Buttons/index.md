@@ -86,7 +86,13 @@ The selector can be created with between zero and four parameters of types in th
 |~
 ```objc
 [self.sdlManager.screenManager subscribeButton:SDLButtonNamePlayPause withObserver:self selector:@selector(buttonPressEventWithButtonName:error:buttonPress:buttonEvent:)];
-
+```
+```swift
+sdlManager.screenManager.subscribeButton(.playPause, withObserver: self, selector: #selector(buttonPressEvent(buttonName:error:buttonPress:buttonEvent:)))
+```
+~|
+|~
+```objc
 - (void)buttonPressEventWithButtonName:(SDLButtonName)buttonName error:(NSError *)error buttonPress:(SDLOnButtonPress *)buttonPress buttonEvent:(SDLOnButtonEvent *)buttonEvent {
     if (error != nil) {
         // There was an error subscribing to the button
@@ -103,8 +109,6 @@ The selector can be created with between zero and four parameters of types in th
 }
 ```
 ```swift
-sdlManager.screenManager.subscribeButton(.playPause, withObserver: self, selector: #selector(buttonPressEvent(buttonName:error:buttonPress:buttonEvent:)))
-
 @objc private func buttonPressEvent(buttonName: SDLButtonName, error: Error?, buttonPress: SDLOnButtonPress?, buttonEvent: SDLOnButtonEvent?) {
     if let error = error {
         // There was an error subscribing to the button
