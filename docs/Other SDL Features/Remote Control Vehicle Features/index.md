@@ -904,14 +904,14 @@ Another unique feature of remote control is the ability to send simulated button
 |~
 ###### RPC < v6.0
 ```objc
-SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameEject moduleType:SDLModuleTypeRadio moduleId:nil buttonPressMode:SDLButtonPressModeShort];
+SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameTempUp moduleType:SDLModuleTypeClimate moduleId:nil buttonPressMode:SDLButtonPressModeShort];
 
 [self.sdlManager sendRequest:buttonPress withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if(!response.success) { return; }
 }];
 ```
 ```swift
-let buttonPress = SDLButtonPress(buttonName: .eject, moduleType: .radio, moduleId: nil, buttonPressMode: .short)
+let buttonPress = SDLButtonPress(buttonName: .tempUp, moduleType: .climate, moduleId: nil, buttonPressMode: .short)
 buttonPress.buttonPressMode = .short
 
 sdlManager.send(request: buttonPress) { (request, response, error) in
