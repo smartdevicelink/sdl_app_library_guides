@@ -923,14 +923,14 @@ sdlManager.send(request: buttonPress) { (request, response, error) in
 ###### RPC v6.0+
 |~
 ```objc
-SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameEject moduleType:SDLModuleTypeRadio moduleId:@"<#ModuleID#>" buttonPressMode:SDLButtonPressModeShort];
+SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameTempUp moduleType:SDLModuleTypeClimate moduleId:@"<#ModuleID#>" buttonPressMode:SDLButtonPressModeShort];
 
 [self.sdlManager sendRequest:buttonPress withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if(!response.success) { return; }
 }];
 ```
 ```swift
-let buttonPress = SDLButtonPress(buttonName: .eject, moduleType: .radio, moduleId: "<#ModuleID#>", buttonPressMode: .short)
+let buttonPress = SDLButtonPress(buttonName: .tempUp, moduleType: .climate, moduleId: "<#ModuleID#>", buttonPressMode: .short)
 
 sdlManager.send(request: buttonPress) { (request, response, error) in
     guard response?.success.boolValue == true else { return }
