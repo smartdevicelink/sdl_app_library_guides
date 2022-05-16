@@ -227,7 +227,7 @@ const climateModuleLocation = firstClimateModule.getModuleInfo().getModuleLocati
 ```
 !@
 
-An array of seats can be found in the `seatLocationCapability`'s `seat` array. Each @![iOS]`SDLSeatLocation`!@@![android, javaSE, javaEE, javascript]`SeatLocation`!@ object within the `seats` array will have a `grid` parameter. The `grid` will tell you the seat placement of that particular seat. This information is useful for creating a seat location map from which users can select their seat.
+An array of seats can be found in the `seatLocationCapability`'s `seat` array. Each @![iOS]`SDLSeatLocation`!@@![android, javaSE, javaEE, javascript]`SeatLocation`!@ object within the `seats` array will have a `grid` parameter. The `grid` will tell you the seat placement of that particular seat. This information is useful for creating a seat location map from which you can determine module service areas, and from which users can select their seat (see the [Setting the User Seat](#setting-the-users-seat-rpc-v6.0) section).
 
 @![iOS]
 |~
