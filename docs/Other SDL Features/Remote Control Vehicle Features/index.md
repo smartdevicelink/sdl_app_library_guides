@@ -183,7 +183,7 @@ sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SDL.rpc.en
 !@
 
 #### Getting Module Data Location and Service Areas (RPC v6.0+)
-With the saved remote control capabilities struct you can build a UI to display modules to the user by getting the location of the module and the area that it services. This will map to the grid you receive in [Setting the User Seat](#setting-the-users-seat-rpc-v6.0) below.
+With the saved remote control capabilities struct you can get the location of the each module and the area that it services. This will map to the 'grid' [graphic](#the-grid) below.  This information is useful for creating a custom UI. 
 
 !!! Note
 This data is only available when connected to SDL RPC v6.0+ systems. On previous systems, only one module per module type was available, so the module's location didn't matter. You will not be able to build a custom UI for those cases and should use a generic UI instead.
@@ -227,7 +227,7 @@ const climateModuleLocation = firstClimateModule.getModuleInfo().getModuleLocati
 ```
 !@
 
-An array of seats can be found in the `seatLocationCapability`'s `seat` array. Each @![iOS]`SDLSeatLocation`!@@![android, javaSE, javaEE, javascript]`SeatLocation`!@ object within the `seats` array will have a `grid` parameter. The `grid` will tell you the seat placement of that particular seat. This information is useful for creating a seat location map from which you can determine module service areas, and from which users can select their seat (see the [Setting the User Seat](#setting-the-users-seat-rpc-v6.0) section).
+You can also get an array of seats in the `seatLocationCapability`'s `seat` array. Each @![iOS]`SDLSeatLocation`!@@![android, javaSE, javaEE, javascript]`SeatLocation`!@ object within the `seats` array will have a `grid` parameter. The `grid` will tell you the seat placement in the vehicle of that particular seat (See the [graphic](#the-grid) below).
 
 @![iOS]
 |~
@@ -281,6 +281,7 @@ sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SDL.rpc.en
 ```
 !@
 
+### The Grid
 The `grid` system starts with the front left corner of the bottom level of the vehicle being `(col=0, row=0, level=0)`. For example, assuming a vehicle manufactured for sale in the United States with three seats in the backseat, `(0, 0, 0)` would be the drivers' seat. The front passenger location would be at `(2, 0, 0)` and the rear middle seat would be at `(1, 1, 0)`. The `colspan` and `rowspan` properties tell you how many rows and columns that module or seat takes up. The `level` property tells you how many decks the vehicle has (i.e. a double-decker bus would have 2 levels).
 
 ![Car](assets/Car.png)
@@ -582,7 +583,7 @@ const response = await sdlManager.sendRpc(interiorVehicleData).catch(error => er
 Not only do you have the ability to get data from these modules, but, if you have the right permissions, you can also set module data.
 
 #### Setting The User's Seat (RPC v6.0+)
-Before you attempt to take control of any module, you should have your user select their seat location as this affects which modules they have permission to control. You may wish to show the user a map or list of all available seats in your app in order to ask them where they are located. The following example is only meant to show you how to access the available data and not how to build your UI/UX. 
+Before you attempt to take control of any module, you should have your user select their seat location as this affects which modules they have permission to control. You may wish to show the user a map or list of all available seats in your app in order to ask them where they are located. See [Getting Module Data Location and Service Areas](#getting-module-data-location-and-service-areas-rpc-v60) for information useful in creating a custom UI showing module location and service area.  The following example is only meant to show you how to access the available data and not how to build your UI/UX. 
 
 When the user selects their seat, you must send an @![iOS]`SDLSetGlobalProperties`!@@![android, javaSE, javaEE,javascript]`SetGlobalProperties`!@ RPC with the appropriate `userLocation` property in order to update that user's location within the vehicle (The default seat location is `Driver`).
 
