@@ -2,7 +2,7 @@
 You can pass an uploaded audio file's name to @![iOS]`SDLTTSChunk`!@@![android, javaSE, javaEE, javascript]`TTSChunk`!@, allowing any API that takes a text-to-speech parameter to pass and play your audio file. A sports app, for example, could play a distinctive audio chime to notify the user of a score update alongside an `Alert` request.
 
 !!! NOTE
-Manticore testing of Audio Indications works best in Google Chrome, Mozilla Firefox, or Microsoft Edge.  Testing of Audio Indications does not work in Apple Safari at this time.
+On [Manticore](https://smartdevicelink.com/resources/manticore/), audio indications work best in Google Chrome, Mozilla Firefox, or Microsoft Edge. Audio indications do not work in Apple Safari at this time.
 !!!
 
 ## Uploading the Audio File
