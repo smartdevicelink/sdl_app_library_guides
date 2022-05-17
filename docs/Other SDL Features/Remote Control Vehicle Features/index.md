@@ -183,7 +183,7 @@ sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SDL.rpc.en
 !@
 
 #### Getting Module Data Location and Service Areas (RPC v6.0+)
-With the saved remote control capabilities struct you can get the location of the each module and the area that it services. This will map to the `grid` [graphic](#the-grid) below.  This information is useful for creating a custom UI. 
+With the saved remote control capabilities struct you can get the location of the each module and the area that it services. This will map to the `grid` [graphic](#the-grid) below. This information is useful for creating a custom UI.
 
 !!! Note
 This data is only available when connected to SDL RPC v6.0+ systems. On previous systems, only one module per module type was available, so the module's location didn't matter. You will not be able to build a custom UI for those cases and should use a generic UI instead.
