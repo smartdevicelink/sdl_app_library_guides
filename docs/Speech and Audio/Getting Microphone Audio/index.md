@@ -8,7 +8,7 @@ SDL does not support an open microphone. However, SDL is working on wake-word su
 !!!
 
 !!! NOTE
-Testing with [Manticore](https://smartdevicelink.com/resources/manticore/#support-notes) does not currently support the RPC PerformAudioPassThru.
+[Manticore](https://smartdevicelink.com/resources/manticore/) [does not currently support](https://smartdevicelink.com/resources/manticore/#support-notes) the `PerformAudioPassThru` RPC used for getting microphone audio.
 !!!
 
 ## Starting Audio Capture
