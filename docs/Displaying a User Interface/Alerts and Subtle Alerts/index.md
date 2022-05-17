@@ -196,7 +196,7 @@ alertView.setShowWaitIndicator(true);
 An alert can also speak a prompt or play a sound file when the alert appears on the screen. This is done by creating an @![android,javaSE,javaEE, javascript]`AlertAudioData`!@@![iOS]`SDLAlertAudioData`!@ object and setting it in the @![android,javaSE,javaEE, javascript]`AlertView`!@@![iOS]`SDLAlertView`!@
 
 !!! NOTE
-Manticore testing of alerts with audio (Text-To-Speech or Tones) work best in Google Chrome, Mozilla Firefox, or Microsoft Edge.  Testing of alerts with audio does not work in Apple Safari at this time.
+On [Manticore](https://smartdevicelink.com/resources/manticore/), using alerts with audio (Text-To-Speech or Tones) work best in Google Chrome, Mozilla Firefox, or Microsoft Edge. Alerts with audio does not work in Apple Safari at this time.
 !!!
 
 @![iOS]
