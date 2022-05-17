@@ -227,7 +227,7 @@ const climateModuleLocation = firstClimateModule.getModuleInfo().getModuleLocati
 ```
 !@
 
-You can also get an array of seats in the `seatLocationCapability`'s `seat` array. Each @![iOS]`SDLSeatLocation`!@@![android, javaSE, javaEE, javascript]`SeatLocation`!@ object within the `seats` array will have a `grid` parameter. The `grid` will tell you the seat placement in the vehicle of that particular seat (See the [graphic](#the-grid) below).
+You can also get an array of seats in @![iOS]`SDLSeatLocationCapability.seats`!@@![android, javaSE, javaEE, javascript]`SeatLocationCapability.seats!@ array. Each @![iOS]`SDLSeatLocation`!@@![android, javaSE, javaEE, javascript]`SeatLocation`!@ object within the `seats` array will have a `grid` parameter. The `grid` will tell you the location of that particular seat in the vehicle (See the [graphic](#the-grid) below).
 
 @![iOS]
 |~
