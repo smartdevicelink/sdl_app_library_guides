@@ -5,6 +5,10 @@ Voice commands are global commands available anywhere on the head unit to users 
 The head unit manufacturer will determine how these voice commands are triggered, and some head units will not support voice commands.
 !!!
 
+!!! NOTE
+On [Manticore](https://smartdevicelink.com/resources/manticore/), voice commands are viewed and activated by a tab in the right hand section, not through a microphone.
+!!!
+
 You have the ability to create voice command shortcuts to your [Main Menu](Displaying a User Interface/Main Menu) cells which we highly recommended that you implement. Global voice commands should be created for functions that you wish to make available as voice commands that are **not** available as menu cells. We recommend creating global voice commands for common actions such as the actions performed by your [Soft Buttons](Displaying a User Interface/Template Custom Buttons).
 
 ## Creating Voice Commands
