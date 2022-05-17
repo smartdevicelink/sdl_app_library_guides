@@ -7,6 +7,10 @@ SDL does not support automatic speech cancellation detection, so if this feature
 SDL does not support an open microphone. However, SDL is working on wake-word support in the future. You may implement a voice command and start an audio pass thru session when that voice command occurs.
 !!!
 
+!!! NOTE
+Testing with [Manticore](https://smartdevicelink.com/resources/manticore/#support-notes) does not currently support the RPC PerformAudioPassThru.
+!!!
+
 ## Starting Audio Capture
 Before you start an audio capture session you need to find out what audio pass thru capabilities the module supports. You can then use that information to start an audio pass thru session.
 
