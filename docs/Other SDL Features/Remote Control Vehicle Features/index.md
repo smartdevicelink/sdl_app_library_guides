@@ -583,7 +583,7 @@ const response = await sdlManager.sendRpc(interiorVehicleData).catch(error => er
 Not only do you have the ability to get data from these modules, but, if you have the right permissions, you can also set module data.
 
 #### Setting The User's Seat (RPC v6.0+)
-Before you attempt to take control of any module, you should have your user select their seat location as this affects which modules they have permission to control. You may wish to show the user a map or list of all available seats in your app in order to ask them where they are located. See [Getting Module Data Location and Service Areas](#getting-module-data-location-and-service-areas-rpc-v60) for information useful in creating a custom UI showing module location and service area.  The following example is only meant to show you how to access the available data and not how to build your UI/UX. 
+Before you attempt to take control of any module, you should have your user select their seat location as this affects which modules they have permission to control. You may wish to show the user a map or list of all available seats in your app in order to ask them where they are located. See [Getting Module Data Location and Service Areas](#getting-module-data-location-and-service-areas-rpc-v60) for information useful in creating a custom UI showing module location and service area. The following example is only meant to show you how to access the available data and not how to build your UI/UX.
 
 When the user selects their seat, you must send an @![iOS]`SDLSetGlobalProperties`!@@![android, javaSE, javaEE,javascript]`SetGlobalProperties`!@ RPC with the appropriate `userLocation` property in order to update that user's location within the vehicle (The default seat location is `Driver`).
 
