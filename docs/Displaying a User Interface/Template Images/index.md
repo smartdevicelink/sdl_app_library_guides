@@ -30,7 +30,7 @@ let artwork = SDLArtwork(image: UIImage(named: image, persistent: true, as: .PNG
 !@
 @![javascript]
 ```js
-<#Stub#>
+const artwork = new SDL.manager.file.filetypes.SdlArtwork('artworkName', SDL.rpc.enums.FileType.GRAPHIC_PNG, fileData, true);
 ```
 !@
 ### Setting Primary Graphic 
