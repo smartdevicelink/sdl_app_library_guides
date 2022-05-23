@@ -23,9 +23,14 @@ let artwork = SDLArtwork(image: UIImage(named: image, persistent: true, as: .PNG
 ```
 ~|
 !@
-@![android, javaSE, javaEE]
+@![android]
 ```java
-<#Stub#>
+SdlArtwork sdlArtwork = new SdlArtwork("artworkName", FileType.GRAPHIC_PNG, R.resourceID, true);
+```
+!@
+@![javaSE, javaEE]
+```java
+SdlArtwork sdlArtwork = new SdlArtwork("artworkName", FileType.GRAPHIC_PNG, "filePath", true);
 ```
 !@
 @![javascript]
