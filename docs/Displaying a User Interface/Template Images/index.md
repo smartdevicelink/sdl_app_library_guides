@@ -8,6 +8,37 @@ You can easily display text, images, and buttons using the @![iOS]`SDLScreenMana
 | secondaryGraphic | The second image in a template that supports multiple images |
 
 ## Showing Images
+### Creating an SDLArtwork
+Create an @![iOS]`SDLArtwork`!@@![android, javaSE, javaEE, javascript]`SdlArtwork`!@ object which can be manually uploaded or set into the @![iOS]`SDLScreenManager`!@@![android, javaSE, javaEE, javascript]`ScreenManager`!@ and automatically uploaded. An @![iOS]`SDLArtwork`!@@![android, javaSE, javaEE, javascript]`SdlArtwork`!@ includes information about whether the image should be persisted between vehicle startups, whether the image is a template image and should be re-colored, and more.
+
+@![iOS]
+|~
+```objc
+UIImage *image = [UIImage imageNamed:@"<#ArtworkName#>"]
+SDLArtwork *artwork = [SDLArtwork artworkWithImage:image asImageFormat:SDLArtworkImageFormatPNG /* or SDLArtworkImageFormatJPG */];
+```
+```swift
+let image = UIImage(named: <#ArtworkName#>)!  
+let artwork = SDLArtwork(image: UIImage(named: image, persistent: true, as: .PNG /* or .JPG */)
+```
+~|
+!@
+@![android]
+```java
+SdlArtwork sdlArtwork = new SdlArtwork("artworkName", FileType.GRAPHIC_PNG, R.resourceID, true);
+```
+!@
+@![javaSE, javaEE]
+```java
+SdlArtwork sdlArtwork = new SdlArtwork("artworkName", FileType.GRAPHIC_PNG, "filePath", true);
+```
+!@
+@![javascript]
+```js
+const artwork = new SDL.manager.file.filetypes.SdlArtwork('artworkName', SDL.rpc.enums.FileType.GRAPHIC_PNG, fileData, true);
+```
+!@
+### Setting Primary Graphic 
 @![iOS]
 |~
 ```objc
