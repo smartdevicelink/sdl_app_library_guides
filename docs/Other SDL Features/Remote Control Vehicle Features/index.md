@@ -227,7 +227,7 @@ const climateModuleLocation = firstClimateModule.getModuleInfo().getModuleLocati
 ```
 !@
 
-You can also get an array of seats in @![iOS]`SDLSeatLocationCapability.seats`!@@![android, javaSE, javaEE, javascript]`SeatLocationCapability.seats!@ array. Each @![iOS]`SDLSeatLocation`!@@![android, javaSE, javaEE, javascript]`SeatLocation`!@ object within the `seats` array will have a `grid` parameter. The `grid` will tell you the location of that particular seat in the vehicle (See the [graphic](#the-grid) below).
+You can also get an array of seats in the @![iOS]`SDLSeatLocationCapability.seats`!@@![android, javaSE, javaEE, javascript]`SeatLocationCapability.seats`!@ array. Each @![iOS]`SDLSeatLocation`!@@![android, javaSE, javaEE, javascript]`SeatLocation`!@ object within the `seats` array will have a `grid` parameter. The `grid` will tell you the location of that particular seat in the vehicle (See the [graphic](#the-grid) below).
 
 @![iOS]
 |~
@@ -433,7 +433,7 @@ After you subscribe to the `InteriorVehicleDataNotification` you must also subsc
 ```js
 // sdl_javascript_suite v1.1+
 const getInteriorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
-    .setModuleType(SDL.rpc.enums.ModuleType.RADIO);
+    .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE);
 const response = await sdlManager.sendRpcResolve(getInteriorVehicleData);
 // This can now be used to retrieve data
 // Code
@@ -441,7 +441,7 @@ const response = await sdlManager.sendRpcResolve(getInteriorVehicleData);
 
 // Pre sdl_javascript_suite v1.1
 const getInteriorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
-    .setModuleType(SDL.rpc.enums.ModuleType.RADIO);
+    .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE);
 const response = await sdlManager.sendRpc(getInteriorVehicleData).catch(error => error);
 // This can now be used to retrieve data
 // Code
@@ -451,7 +451,7 @@ const response = await sdlManager.sendRpc(getInteriorVehicleData).catch(error =>
 ```js
 // sdl_javascript_suite v1.1+
 const getInteriorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
-    .setModuleType(SDL.rpc.enums.ModuleType.RADIO)
+    .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE)
     .setModuleId(moduleId);
 const response = await sdlManager.sendRpcResolve(getInteriorVehicleData);
 // This can now be used to retrieve data
@@ -460,7 +460,7 @@ const response = await sdlManager.sendRpcResolve(getInteriorVehicleData);
 
 // Pre sdl_javascript_suite v1.1
 const getInteriorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
-    .setModuleType(SDL.rpc.enums.ModuleType.RADIO)
+    .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE)
     .setModuleId(moduleId);
 const response = await sdlManager.sendRpc(getInteriorVehicleData).catch(error => error);
 // This can now be used to retrieve data
@@ -548,13 +548,13 @@ sdlManager.sendRPC(interiorVehicleData);
 ```js
 // sdl_javascript_suite v1.1+
 const interiorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
-    .setModuleType(SDL.rpc.enums.ModuleType.RADIO);
+    .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE);
 const response = await sdlManager.sendRpcResolve(interiorVehicleData);
 // thrown exceptions should be caught by a parent function via .catch()
 
 // Pre sdl_javascript_suite v1.1
 const interiorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
-    .setModuleType(SDL.rpc.enums.ModuleType.RADIO);
+    .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE);
 const response = await sdlManager.sendRpc(interiorVehicleData).catch(error => error);
 // This can now be used to retrieve data
 // Code
@@ -564,14 +564,14 @@ const response = await sdlManager.sendRpc(interiorVehicleData).catch(error => er
 ```js
 // sdl_javascript_suite v1.1+
 const interiorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
-    .setModuleType(SDL.rpc.enums.ModuleType.RADIO)
+    .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE)
     .setModuleId(moduleId);
 const response = await sdlManager.sendRpcResolve(interiorVehicleData);
 // thrown exceptions should be caught by a parent function via .catch()
 
 // Pre sdl_javascript_suite v1.1
 const interiorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
-    .setModuleType(SDL.rpc.enums.ModuleType.RADIO)
+    .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE)
     .setModuleId(moduleId);
 const response = await sdlManager.sendRpc(interiorVehicleData).catch(error => error);
 // This can now be used to retrieve data
@@ -971,7 +971,7 @@ sdlManager.sendRPC(buttonPress);
 ###### RPC < 6.0
 ```js
 const buttonPress = new SDL.rpc.messages.ButtonPress()
-    .setModuleType(SDL.rpc.enums.ModuleType.RADIO)
+    .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE)
     .setButtonName(SDL.rpc.enums.ButtonName.EJECT)
     .setButtonPressMode(SDL.rpc.enums.ButtonPressMode.SHORT);
 
@@ -986,7 +986,7 @@ const response = await sdlManager.sendRpc(buttonPress).catch(error => error);
 ###### RPC 6.0+
 ```js
 const buttonPress = new SDL.rpc.messages.ButtonPress()
-    .setModuleType(SDL.rpc.enums.ModuleType.RADIO)
+    .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE)
     .setButtonName(SDL.rpc.enums.ButtonName.EJECT)
     .setModuleId(moduleId)
     .setButtonPressMode(SDL.rpc.enums.ButtonPressMode.SHORT);
