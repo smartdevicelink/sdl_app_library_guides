@@ -183,7 +183,7 @@ sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SDL.rpc.en
 !@
 
 #### Getting Module Data Location and Service Areas (RPC v6.0+)
-With the saved remote control capabilities struct you can build a UI to display modules to the user by getting the location of the module and the area that it services. This will map to the grid you receive in **Setting the User's Seat** below.
+With the saved remote control capabilities struct you can get the location of the each module and the area that it services. This will map to the `grid` [graphic](#the-grid) below. This information is useful for creating a custom UI.
 
 !!! Note
 This data is only available when connected to SDL RPC v6.0+ systems. On previous systems, only one module per module type was available, so the module's location didn't matter. You will not be able to build a custom UI for those cases and should use a generic UI instead.
@@ -227,10 +227,7 @@ const climateModuleLocation = firstClimateModule.getModuleInfo().getModuleLocati
 ```
 !@
 
-### Setting The User's Seat (RPC v6.0+)
-Before you attempt to take control of any module, you should have your user select their seat location as this affects which modules they have permission to control. You may wish to show the user a map or list of all available seats in your app in order to ask them where they are located. The following example is only meant to show you how to access the available data and not how to build your UI/UX. 
-
-An array of seats can be found in the `seatLocationCapability`'s `seat` array. Each @![iOS]`SDLSeatLocation`!@@![android, javaSE, javaEE, javascript]`SeatLocation`!@ object within the `seats` array will have a `grid` parameter. The `grid` will tell you the seat placement of that particular seat. This information is useful for creating a seat location map from which users can select their seat.
+You can also get an array of seats in the @![iOS]`SDLSeatLocationCapability.seats`!@@![android, javaSE, javaEE, javascript]`SeatLocationCapability.seats`!@ array. Each @![iOS]`SDLSeatLocation`!@@![android, javaSE, javaEE, javascript]`SeatLocation`!@ object within the `seats` array will have a `grid` parameter. The `grid` will tell you the location of that particular seat in the vehicle (See the [graphic](#the-grid) below).
 
 @![iOS]
 |~
@@ -284,6 +281,7 @@ sdlManager.getSystemCapabilityManager().addOnSystemCapabilityListener(SDL.rpc.en
 ```
 !@
 
+### The Grid
 The `grid` system starts with the front left corner of the bottom level of the vehicle being `(col=0, row=0, level=0)`. For example, assuming a vehicle manufactured for sale in the United States with three seats in the backseat, `(0, 0, 0)` would be the drivers' seat. The front passenger location would be at `(2, 0, 0)` and the rear middle seat would be at `(1, 1, 0)`. The `colspan` and `rowspan` properties tell you how many rows and columns that module or seat takes up. The `level` property tells you how many decks the vehicle has (i.e. a double-decker bus would have 2 levels).
 
 ![Car](assets/Car.png)
@@ -293,64 +291,8 @@ The `grid` system starts with the front left corner of the bottom level of the v
 | row=0   | driver's seat: {col=0, row=0, level=0, colspan=1, rowspan=1, levelspan=1} |   | front passenger's seat : {col=2, row=0, level=0, colspan=1, rowspan=1, levelspan=1} |
 | row=1   | rear-left seat : {col=0, row=1, level=0, colspan=1, rowspan=1, levelspan=1} | rear-middle seat :  {col=1, row=1, level=0, colspan=1, rowspan=1, levelspan=1} | rear-right seat : {col=2, row=1, level=0, colspan=1, rowspan=1, levelspan=1} |
 
-#### Updating the User's Seat Location
-
-When the user selects their seat, you must send an @![iOS]`SDLSetGlobalProperties`!@@![android, javaSE, javaEE,javascript]`SetGlobalProperties`!@ RPC with the appropriate `userLocation` property in order to update that user's location within the vehicle (The default seat location is `Driver`).
-
-@![iOS]
-|~
-```objc
-SDLSetGlobalProperties *seatLocation = [[SDLSetGlobalProperties alloc] init];
-seatLocation.userLocation = <#Selected Seat#>;
-[self.sdlManager sendRequest:seatLocation withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
-    if(!response.success) { return; }
-    <#Seat location updated#>
-}];
-```
-```swift
-let seatLocation = SDLSetGlobalProperties()
-seatLocation.userLocation = <#Selected Seat#>;
-sdlManager.send(request: seatLocation, responseHandler: { (request, response, error) in
-    guard response?.success.boolValue == true else { return }
-    <#Seat location updated#>
-})
-```
-~|
-!@
-
-@![android,javaEE,javaSE]
-```java
-SetGlobalProperties seatLocation = new SetGlobalProperties()
-    .setUserLocation(selectedSeat);
-seatLocation.setOnRPCResponseListener(new OnRPCResponseListener() {
-    @Override
-    public void onResponse(int correlationId, RPCResponse response) {
-        // Seat location updated
-    }
-});
-sdlManager.sendRPC(seatLocation);
-```
-!@
-
-@![javascript]
-```js
-// sdl_javascript_suite v1.1+
-const seatLocation = new SDL.rpc.messages.SetGlobalProperties()
-    .setUserLocation(selectedSeat);
-const response = await sdlManager.sendRpcResolve(seatLocation);
-// Seat location updated#>
-// thrown exceptions should be caught by a parent function via .catch()
-
-// Pre sdl_javascript_suite v1.1
-const seatLocation = new SDL.rpc.messages.SetGlobalProperties()
-    .setUserLocation(selectedSeat);
-const response = await sdlManager.sendRpc(seatLocation).catch(error => error);
-// Seat location updated#>
-```
-!@
-
 ### Getting Module Data 
-Seat location does not affect the ability to get data from a module. Once you know you have permission to use the remote control feature and you have `moduleId`s (when connected to RPC v6.0+ systems), you can retrieve the data for any module. The following code is an example of how to subscribe to the data of a radio module. 
+Seat location does not affect the ability to get data from a module. Once you know you have permission to use the remote control feature and you have `moduleId`s (when connected to RPC v6.0+ systems), you can retrieve the data for any module. The following code is an example of how to subscribe to the data of a climate module. 
 
 When connected to head units that only support RPC versions older than v6.0, there can only be one module for each module type (e.g. there can only be one climate module, light module, radio module, etc.), so you will not need to pass a `moduleId`.
 
@@ -390,7 +332,7 @@ After you subscribe to the `SDLDidReceiveInteriorVehicleDataNotification` you mu
 ###### RPC < v6.0
 |~
 ```objc
-SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData alloc] initAndSubscribeToModuleType:SDLModuleTypeRadio moduleId:<#(nonnull NSString *)#>];
+SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData alloc] initAndSubscribeToModuleType:SDLModuleTypeClimate moduleId:<#(nonnull NSString *)#>];
 [self.sdlManager sendRequest:getInteriorVehicleData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     SDLGetInteriorVehicleDataResponse *dataResponse = (SDLGetInteriorVehicleDataResponse *)response;
     // This can now be used to retrieve data
@@ -398,7 +340,7 @@ SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData 
 }];
 ```
 ```swift
-let getInteriorVehicleData = SDLGetInteriorVehicleData(andSubscribeToModuleType: .radio, moduleId: "<#ModuleID#>")
+let getInteriorVehicleData = SDLGetInteriorVehicleData(andSubscribeToModuleType: .climate, moduleId: "<#ModuleID#>")
 sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
     guard let response = res as? SDLGetInteriorVehicleDataResponse else { return }
     // This can now be used to retrieve data
@@ -410,7 +352,7 @@ sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
 ###### RPC v6.0+
 |~
 ```objc
-SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData alloc] initAndSubscribeToModuleType:SDLModuleTypeRadio moduleId:@"<#ModuleID#>"];
+SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData alloc] initAndSubscribeToModuleType:SDLModuleTypeClimate moduleId:@"<#ModuleID#>"];
 [self.sdlManager sendRequest:getInteriorVehicleData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     SDLGetInteriorVehicleDataResponse *dataResponse = (SDLGetInteriorVehicleDataResponse *)response;
     // This can now be used to retrieve data
@@ -418,7 +360,7 @@ SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData 
 }];
 ```
 ```swift
-let getInteriorVehicleData = SDLGetInteriorVehicleData(andSubscribeToModuleType: .radio, moduleId: "<#ModuleID#>")
+let getInteriorVehicleData = SDLGetInteriorVehicleData(andSubscribeToModuleType: .climate, moduleId: "<#ModuleID#>")
 sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
     guard let response = res as? SDLGetInteriorVehicleDataResponse else { return }
     // This can now be used to retrieve data
@@ -491,7 +433,7 @@ After you subscribe to the `InteriorVehicleDataNotification` you must also subsc
 ```js
 // sdl_javascript_suite v1.1+
 const getInteriorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
-    .setModuleType(SDL.rpc.enums.ModuleType.RADIO);
+    .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE);
 const response = await sdlManager.sendRpcResolve(getInteriorVehicleData);
 // This can now be used to retrieve data
 // Code
@@ -499,7 +441,7 @@ const response = await sdlManager.sendRpcResolve(getInteriorVehicleData);
 
 // Pre sdl_javascript_suite v1.1
 const getInteriorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
-    .setModuleType(SDL.rpc.enums.ModuleType.RADIO);
+    .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE);
 const response = await sdlManager.sendRpc(getInteriorVehicleData).catch(error => error);
 // This can now be used to retrieve data
 // Code
@@ -509,7 +451,7 @@ const response = await sdlManager.sendRpc(getInteriorVehicleData).catch(error =>
 ```js
 // sdl_javascript_suite v1.1+
 const getInteriorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
-    .setModuleType(SDL.rpc.enums.ModuleType.RADIO)
+    .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE)
     .setModuleId(moduleId);
 const response = await sdlManager.sendRpcResolve(getInteriorVehicleData);
 // This can now be used to retrieve data
@@ -518,7 +460,7 @@ const response = await sdlManager.sendRpcResolve(getInteriorVehicleData);
 
 // Pre sdl_javascript_suite v1.1
 const getInteriorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
-    .setModuleType(SDL.rpc.enums.ModuleType.RADIO)
+    .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE)
     .setModuleId(moduleId);
 const response = await sdlManager.sendRpc(getInteriorVehicleData).catch(error => error);
 // This can now be used to retrieve data
@@ -542,7 +484,7 @@ SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData 
 }];
 ```
 ```swift
-let getInteriorVehicleData = SDLGetInteriorVehicleData(moduleType: .radio)
+let getInteriorVehicleData = SDLGetInteriorVehicleData(moduleType: .climate)
 sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
     guard let response = res as? SDLGetInteriorVehicleDataResponse else { return }
     // This can now be used to retrieve data
@@ -554,14 +496,14 @@ sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
 ###### RPC v6.0+
 |~
 ```objc
-SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData alloc] initWithModuleType:SDLModuleTypeRadio moduleId:@"<#ModuleID#>"];
+SDLGetInteriorVehicleData *getInteriorVehicleData = [[SDLGetInteriorVehicleData alloc] initWithModuleType:SDLModuleTypeClimate moduleId:@"<#ModuleID#>"];
 [self.sdlManager sendRequest:getInteriorVehicleData withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     SDLGetInteriorVehicleDataResponse *dataResponse = (SDLGetInteriorVehicleDataResponse *)response;
     // This can now be used to retrieve data
 }];
 ```
 ```swift
-let getInteriorVehicleData =  SDLGetInteriorVehicleData(moduleType: .radio, moduleId: <#ModuleID#>)
+let getInteriorVehicleData =  SDLGetInteriorVehicleData(moduleType: .climate, moduleId: <#ModuleID#>)
 sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
     guard let response = res as? SDLGetInteriorVehicleDataResponse else { return }
     // This can now be used to retrieve data
@@ -606,13 +548,13 @@ sdlManager.sendRPC(interiorVehicleData);
 ```js
 // sdl_javascript_suite v1.1+
 const interiorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
-    .setModuleType(SDL.rpc.enums.ModuleType.RADIO);
+    .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE);
 const response = await sdlManager.sendRpcResolve(interiorVehicleData);
 // thrown exceptions should be caught by a parent function via .catch()
 
 // Pre sdl_javascript_suite v1.1
 const interiorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
-    .setModuleType(SDL.rpc.enums.ModuleType.RADIO);
+    .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE);
 const response = await sdlManager.sendRpc(interiorVehicleData).catch(error => error);
 // This can now be used to retrieve data
 // Code
@@ -622,14 +564,14 @@ const response = await sdlManager.sendRpc(interiorVehicleData).catch(error => er
 ```js
 // sdl_javascript_suite v1.1+
 const interiorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
-    .setModuleType(SDL.rpc.enums.ModuleType.RADIO)
+    .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE)
     .setModuleId(moduleId);
 const response = await sdlManager.sendRpcResolve(interiorVehicleData);
 // thrown exceptions should be caught by a parent function via .catch()
 
 // Pre sdl_javascript_suite v1.1
 const interiorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
-    .setModuleType(SDL.rpc.enums.ModuleType.RADIO)
+    .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE)
     .setModuleId(moduleId);
 const response = await sdlManager.sendRpc(interiorVehicleData).catch(error => error);
 // This can now be used to retrieve data
@@ -639,6 +581,63 @@ const response = await sdlManager.sendRpc(interiorVehicleData).catch(error => er
 
 ### Setting Module Data
 Not only do you have the ability to get data from these modules, but, if you have the right permissions, you can also set module data.
+
+#### Setting The User's Seat (RPC v6.0+)
+Before you attempt to take control of any module, you should have your user select their seat location as this affects which modules they have permission to control. You may wish to show the user a map or list of all available seats in your app in order to ask them where they are located. See [Getting Module Data Location and Service Areas](#getting-module-data-location-and-service-areas-rpc-v60) for information useful in creating a custom UI showing module location and service area. The following example is only meant to show you how to access the available data and not how to build your UI/UX.
+
+When the user selects their seat, you must send an @![iOS]`SDLSetGlobalProperties`!@@![android, javaSE, javaEE,javascript]`SetGlobalProperties`!@ RPC with the appropriate `userLocation` property in order to update that user's location within the vehicle (The default seat location is `Driver`).
+
+@![iOS]
+|~
+```objc
+SDLSetGlobalProperties *seatLocation = [[SDLSetGlobalProperties alloc] init];
+seatLocation.userLocation = <#Selected Seat#>;
+[self.sdlManager sendRequest:seatLocation withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
+    if(!response.success) { return; }
+    <#Seat location updated#>
+}];
+```
+```swift
+let seatLocation = SDLSetGlobalProperties()
+seatLocation.userLocation = <#Selected Seat#>;
+sdlManager.send(request: seatLocation, responseHandler: { (request, response, error) in
+    guard response?.success.boolValue == true else { return }
+    <#Seat location updated#>
+})
+```
+~|
+!@
+
+@![android,javaEE,javaSE]
+```java
+SetGlobalProperties seatLocation = new SetGlobalProperties()
+    .setUserLocation(selectedSeat);
+seatLocation.setOnRPCResponseListener(new OnRPCResponseListener() {
+    @Override
+    public void onResponse(int correlationId, RPCResponse response) {
+        // Seat location updated
+    }
+});
+sdlManager.sendRPC(seatLocation);
+```
+!@
+
+@![javascript]
+```js
+// sdl_javascript_suite v1.1+
+const seatLocation = new SDL.rpc.messages.SetGlobalProperties()
+    .setUserLocation(selectedSeat);
+const response = await sdlManager.sendRpcResolve(seatLocation);
+// Seat location updated#>
+// thrown exceptions should be caught by a parent function via .catch()
+
+// Pre sdl_javascript_suite v1.1
+const seatLocation = new SDL.rpc.messages.SetGlobalProperties()
+    .setUserLocation(selectedSeat);
+const response = await sdlManager.sendRpc(seatLocation).catch(error => error);
+// Seat location updated#>
+```
+!@
 
 #### Getting Consent to Control a Module (RPC v6.0+)
 Some OEMs may wish to ask the driver for consent before a user can control a module. The @![iOS]`SDLGetInteriorVehicleDataConsent`!@@![android, javaSE, javaEE, javascript]`GetInteriorVehicleDataConsent`!@ RPC will alert the driver in some OEM head units if the module is not free (another user has control) and `allowMultipleAccess` (multiple users can access/set the data at the same time) is `true`. The `allowMultipleAccess` property is part of the `moduleInfo` in the module object.
@@ -906,14 +905,14 @@ Another unique feature of remote control is the ability to send simulated button
 |~
 ###### RPC < v6.0
 ```objc
-SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameEject moduleType:SDLModuleTypeRadio moduleId:nil buttonPressMode:SDLButtonPressModeShort];
+SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameTempUp moduleType:SDLModuleTypeClimate moduleId:nil buttonPressMode:SDLButtonPressModeShort];
 
 [self.sdlManager sendRequest:buttonPress withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if(!response.success) { return; }
 }];
 ```
 ```swift
-let buttonPress = SDLButtonPress(buttonName: .eject, moduleType: .radio, moduleId: nil, buttonPressMode: .short)
+let buttonPress = SDLButtonPress(buttonName: .tempUp, moduleType: .climate, moduleId: nil, buttonPressMode: .short)
 buttonPress.buttonPressMode = .short
 
 sdlManager.send(request: buttonPress) { (request, response, error) in
@@ -925,14 +924,14 @@ sdlManager.send(request: buttonPress) { (request, response, error) in
 ###### RPC v6.0+
 |~
 ```objc
-SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameEject moduleType:SDLModuleTypeRadio moduleId:@"<#ModuleID#>" buttonPressMode:SDLButtonPressModeShort];
+SDLButtonPress *buttonPress = [[SDLButtonPress alloc] initWithButtonName:SDLButtonNameTempUp moduleType:SDLModuleTypeClimate moduleId:@"<#ModuleID#>" buttonPressMode:SDLButtonPressModeShort];
 
 [self.sdlManager sendRequest:buttonPress withResponseHandler:^(__kindof SDLRPCRequest * _Nullable request, __kindof SDLRPCResponse * _Nullable response, NSError * _Nullable error) {
     if(!response.success) { return; }
 }];
 ```
 ```swift
-let buttonPress = SDLButtonPress(buttonName: .eject, moduleType: .radio, moduleId: "<#ModuleID#>", buttonPressMode: .short)
+let buttonPress = SDLButtonPress(buttonName: .tempUp, moduleType: .climate, moduleId: "<#ModuleID#>", buttonPressMode: .short)
 
 sdlManager.send(request: buttonPress) { (request, response, error) in
     guard response?.success.boolValue == true else { return }
@@ -972,7 +971,7 @@ sdlManager.sendRPC(buttonPress);
 ###### RPC < 6.0
 ```js
 const buttonPress = new SDL.rpc.messages.ButtonPress()
-    .setModuleType(SDL.rpc.enums.ModuleType.RADIO)
+    .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE)
     .setButtonName(SDL.rpc.enums.ButtonName.EJECT)
     .setButtonPressMode(SDL.rpc.enums.ButtonPressMode.SHORT);
 
@@ -987,7 +986,7 @@ const response = await sdlManager.sendRpc(buttonPress).catch(error => error);
 ###### RPC 6.0+
 ```js
 const buttonPress = new SDL.rpc.messages.ButtonPress()
-    .setModuleType(SDL.rpc.enums.ModuleType.RADIO)
+    .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE)
     .setButtonName(SDL.rpc.enums.ButtonName.EJECT)
     .setModuleId(moduleId)
     .setButtonPressMode(SDL.rpc.enums.ButtonPressMode.SHORT);
