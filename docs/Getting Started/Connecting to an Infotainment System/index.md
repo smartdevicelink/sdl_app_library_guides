@@ -113,6 +113,7 @@ Once you know the IP address, you need to set the websocket `endpoint` and app `
      "nicknames": ["<app name>"]
  }
 ```
+@!
 
 @![javaSE,javaEE]
 !!! NOTE
@@ -126,6 +127,7 @@ The `<app name>` value in `"nicknames"` must match the value used in [Integratio
 !!!
 !@
 
+@![javaSE,javaEE,javascript]
 For more information about policy tables please visit the [Policy Table](https://smartdevicelink.com/en/guides/sdl-server/api-reference-documentation/policy-table/overview) guide.
 
 ### Manticore
