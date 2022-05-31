@@ -113,7 +113,7 @@ Once you know the IP address, you need to set the websocket `endpoint` and app `
      "nicknames": ["<app name>"]
  }
 ```
-@!
+!@
 
 @![javaSE,javaEE]
 !!! NOTE
