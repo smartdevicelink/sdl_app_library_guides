@@ -115,7 +115,7 @@ Once you know the IP address, you need to set the websocket `endpoint` and app `
 ```
 
 !!! NOTE
-The `<app name>` value in `"nicknames"` must match the `APP_NAME` value used in [Integration Basics](Integration Basics - Java/#implementing-sdl-manager) when implementing the SDL manager.
+The `<app name>` value in `"nicknames"` must match the `APP_NAME` value used in [Integration Basics](Getting Started/Integration Basics - Java/#implementing-sdl-manager) when implementing the SDL manager.
 !!!
 !@
 
