@@ -390,7 +390,7 @@ After you subscribe to the `InteriorVehicleDataNotification` you must also subsc
 
 ###### RPC < v6.0
 ```java
-GetInteriorVehicleData getInteriorVehicleData = new GetInteriorVehicleData(ModuleType.RADIO);
+GetInteriorVehicleData getInteriorVehicleData = new GetInteriorVehicleData(ModuleType.CLIMATE);
 getInteriorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
@@ -403,7 +403,7 @@ sdlManager.sendRPC(getInteriorVehicleData);
 
 ###### RPC v6.0+
 ```java
-GetInteriorVehicleData getInteriorVehicleData = new GetInteriorVehicleData(ModuleType.RADIO)
+GetInteriorVehicleData getInteriorVehicleData = new GetInteriorVehicleData(ModuleType.CLIMATE)
     .setModuleId(moduleID);
 getInteriorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
@@ -517,7 +517,7 @@ sdlManager.send(request: getInteriorVehicleData) { (req, res, err) in
 
 ###### RPC < v6.0
 ```java
-GetInteriorVehicleData interiorVehicleData = new GetInteriorVehicleData(ModuleType.RADIO);
+GetInteriorVehicleData interiorVehicleData = new GetInteriorVehicleData(ModuleType.CLIMATE);
 interiorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
@@ -530,7 +530,7 @@ sdlManager.sendRPC(interiorVehicleData);
 
 ###### RPC 6.0+
 ```java
-GetInteriorVehicleData interiorVehicleData = new GetInteriorVehicleData(ModuleType.RADIO)
+GetInteriorVehicleData interiorVehicleData = new GetInteriorVehicleData(ModuleType.CLIMATE)
     .setModuleId("<#ModuleID#>");
 interiorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
@@ -943,7 +943,7 @@ sdlManager.send(request: buttonPress) { (request, response, error) in
 @![android, javaSE, javaEE]
 ###### RPC < 6.0
 ```java
-ButtonPress buttonPress = new ButtonPress(ModuleType.RADIO, ButtonName.EJECT, ButtonPressMode.SHORT);
+ButtonPress buttonPress = new ButtonPress(ModuleType.CLIMATE, ButtonName.EJECT, ButtonPressMode.SHORT);
 buttonPress.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
@@ -955,7 +955,7 @@ sdlManager.sendRPC(buttonPress);
 
 ###### RPC 6.0+
 ```java
-ButtonPress buttonPress = new ButtonPress(ModuleType.RADIO, ButtonName.EJECT, ButtonPressMode.SHORT)
+ButtonPress buttonPress = new ButtonPress(ModuleType.CLIMATE, ButtonName.EJECT, ButtonPressMode.SHORT)
     .setModuleId("<#ModuleID#>");
 buttonPress.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
