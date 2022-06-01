@@ -113,21 +113,13 @@ Once you know the IP address, you need to set the websocket `endpoint` and app `
      "nicknames": ["<app name>"]
  }
 ```
-!@
 
-@![javaSE,javaEE]
+
 !!! NOTE
-The `<app name>` value in `"nicknames"` must match the `APP_NAME` value used in [Integration Basics](Getting Started/Integration Basics - Java#implementing-sdl-manager) when implementing the SDL manager.
+The `<app name>` value in `"nicknames"` must match the app name value used in !@@![javaSE,javaEE][Integration Basics](Getting Started/Integration Basics - Java#implementing-sdl-manager)!@@![javascript][Integration Basics](Getting Started/Integration Basics - JS#basic-configuration)!@@![javaSE,javaEE,javascript] when implementing the SDL manager.
 !!!
-!@
 
-@![javascript]
-!!! NOTE
-The `<app name>` value in `"nicknames"` must match the value used in [Integration Basics](Getting Started/Integration Basics - JS#basic-configuration) when calling `setAppName()` to create the SDL manager.
-!!!
-!@
 
-@![javaSE,javaEE,javascript]
 For more information about policy tables please visit the [Policy Table](https://smartdevicelink.com/en/guides/sdl-server/api-reference-documentation/policy-table/overview) guide.
 
 ### Manticore
