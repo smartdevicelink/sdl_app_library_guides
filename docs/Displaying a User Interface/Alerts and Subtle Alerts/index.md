@@ -195,6 +195,10 @@ alertView.setShowWaitIndicator(true);
 #### Text-To-Speech
 An alert can also speak a prompt or play a sound file when the alert appears on the screen. This is done by creating an @![android,javaSE,javaEE, javascript]`AlertAudioData`!@@![iOS]`SDLAlertAudioData`!@ object and setting it in the @![android,javaSE,javaEE, javascript]`AlertView`!@@![iOS]`SDLAlertView`!@
 
+!!! NOTE
+On [Manticore](https://smartdevicelink.com/resources/manticore/), using alerts with audio (Text-To-Speech or Tones) work best in Google Chrome, Mozilla Firefox, or Microsoft Edge. Alerts with audio does not work in Apple Safari at this time.
+!!!
+
 @![iOS]
 |~
 ```objc
@@ -250,9 +254,7 @@ const alertAudioData = new SDL.manager.screen.utils.AlertAudioData(null, null, s
 alertView.setAudio(alertAudioData);
 ```
 !@
-
 You can also play a combination of audio files and text-to-speech strings. The audio will be played in the order you add them to the @![android,javaSE,javaEE, javascript]`AlertAudioData`!@@![iOS]`SDLAlertAudioData`!@ object.
-
 @![iOS]
 |~
 ```objc
@@ -265,7 +267,6 @@ alertAudioData.addSpeechSynthesizerStrings(<#[String]#>)
 ```
 ~|
 !@
-
 @![android,javaSE,javaEE]
 ```java
 AlertAudioData alertAudioData = new AlertAudioData(sdlFile);
@@ -274,7 +275,6 @@ textToSpeech.add("Text to speak");
 alertAudioData.addSpeechSynthesizerStrings(textToSpeech);
 ```
 !@
-
 @![javascript]
 ```js
 const alertAudioData = new SDL.manager.screen.utils.AlertAudioData(null, null, sdlFile);
@@ -283,8 +283,6 @@ textToSpeech.push('Text to speak');
 alertAudioData.addSpeechSynthesizerStrings(textToSpeech);
 ```
 !@
-
-
 #### Play Tone
 To play a notification sound when the alert appears, set `playTone` to `true`.
 

@@ -1,6 +1,10 @@
 # Playing Audio Indications (RPC v5.0+)
 You can pass an uploaded audio file's name to @![iOS]`SDLTTSChunk`!@@![android, javaSE, javaEE, javascript]`TTSChunk`!@, allowing any API that takes a text-to-speech parameter to pass and play your audio file. A sports app, for example, could play a distinctive audio chime to notify the user of a score update alongside an `Alert` request.
 
+!!! NOTE
+On [Manticore](https://smartdevicelink.com/resources/manticore/), audio indications work best in Google Chrome, Mozilla Firefox, or Microsoft Edge. Audio indications do not work in Apple Safari at this time.
+!!!
+
 ## Uploading the Audio File
 The first step is to make sure the audio file is available on the remote system. To upload the file use the @![iOS]`SDLFileManager`!@@![android, javaSE, javaEE, javascript]`FileManager`!@.
 

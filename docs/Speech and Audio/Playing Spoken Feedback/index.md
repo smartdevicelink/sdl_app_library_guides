@@ -3,6 +3,10 @@ Since your user will be driving while interacting with your SDL app, speech phra
 
 When using the @![iOS]`SDLSpeak`!@@![android,javaSE,javaEE,javascript]`Speak`!@ RPC, you will receive a response from the head unit once the operation has completed. From the response you will be able to tell if the speech was completed, interrupted, rejected or aborted. It is important to keep in mind that a speech request can interrupt another ongoing speech request. If you want to chain speech requests you must wait for the current speech request to finish before sending the next speech request. 
 
+!!! NOTE
+On [Manticore](https://smartdevicelink.com/resources/manticore/), spoken feedback works best in Google Chrome, Mozilla Firefox, or Microsoft Edge. Spoken feedback does not work in Apple Safari at this time.
+!!!
+
 ## Creating the Speak Request
 The speech request you send can simply be a text phrase, which will be played back in accordance with the user's current language settings, or it can consist of phoneme specifications to direct SDL’s TTS engine to speak a language-independent, speech-sculpted phrase. It is also possible to play a pre-recorded sound file (such as an MP3) using the speech request. For more information on how to play a sound file please refer to [Playing Audio Indications](Speech and Audio/Playing Audio Indications). 
 
