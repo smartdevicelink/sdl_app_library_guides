@@ -29,6 +29,10 @@ For more examples checkout the [SmartDeviceLink-Examples](https://github.com/Sma
 The [example weather app](https://github.com/SmartDeviceLink-Examples/example_weather_app_ios) uses the OpenWeather API to display a basic connected weather app with SDL UI. In addition, the [example navigation app](https://github.com/SmartDeviceLink-Examples/example_navigation_app_ios) uses the MapBox API to create a basic navigation app.
 @!
 
+@![android]
+The [example weather app](https://github.com/SmartDeviceLink-Examples/example_weather_app_android) uses the OpenWeather API to display a basic connected weather app with SDL UI. In addition, the [example navigation app](https://github.com/SmartDeviceLink-Examples/example_navigation_app_android) uses the MapBox API to create a basic navigation app. Their is also the [SDL Capabilities app](https://github.com/SmartDeviceLink-Examples/SDL-Capabilities-Android) which a TCP SDL application showing off the display capabilities of SDL.
+@!
+
 !!! NOTE
 For these examples follow the setup instructions as outlined in their **README.md**.
 !!!
