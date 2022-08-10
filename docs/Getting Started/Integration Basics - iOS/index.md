@@ -545,4 +545,4 @@ extension ProxyManager: SDLManagerDelegate {
 ~|
 
 ## Where to Go From Here
-You should now be able to connect to a head unit or emulator. From here, [learn about designing your main interface](Displaying a User Interface/Main Screen Templates). For further details on connecting, see [Connecting to a SDL Core](Getting Started/Connecting to an Infotainment System). Also, checkout the [Best Practices](https://smartdevicelink.com/en/guides/sdl-overview-guides/best-practices/display-information/) guide to make sure your following optimal design patterns.
+You should now be able to connect to a head unit or emulator. From here, [learn about designing your main interface](Displaying a User Interface/Main Screen Templates). For further details on connecting, see [Connecting to a SDL Core](Getting Started/Connecting to an Infotainment System). To learn optimal design patterns for SDL checkout the [Best Practices guide](https://smartdevicelink.com/en/guides/sdl-overview-guides/best-practices/display-information/).
