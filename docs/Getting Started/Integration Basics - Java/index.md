@@ -371,7 +371,7 @@ builder.setRPCNotificationListeners(onRPCNotificationListenerMap);
 ```
 
 @![android]
-You can also use `setRPCNotificationListeners` when creating an `SdlManagerListener` object. The following example shows how to set up the listener in the `onStart()` method of an `SdlManagerListener` object.
+You can also use `addOnRPCNotificationListener` when creating an `SdlManagerListener` object. The following example shows how to set up the listener in the `onStart()` method of an `SdlManagerListener` object.
 
 ```java
 @Override
@@ -385,7 +385,7 @@ public void onStart() {
                 return;
             }
             if (onHMIStatus.getHmiLevel() == HMILevel.HMI_FULL && onHMIStatus.getFirstRun()) {
-                    // first time in HMI Full
+                // first time in HMI Full
             }
         }
     });
@@ -393,7 +393,7 @@ public void onStart() {
 ```
 !@
 
-##### Hash Resumption
+##### Hash Resumptions
 Set a `hashID` for your application that can be used over connection cycles (i.e. loss of connection, ignition cycles, etc.).
 
 ```java
