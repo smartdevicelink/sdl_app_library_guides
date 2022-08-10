@@ -23,8 +23,8 @@ To get the example app, download or clone the [sdl_java_suite](https://github.co
 The [JavaScript Suite repository on GitHub](https://github.com/smartdevicelink/sdl_javascript_suite/tree/master/examples) provides example apps for both the browser and for NodeJS. This includes a WebEngine app, a WebSocket client app, a WebSocket server app, and a TCP client app. The examples in the folders already come with their own SDL library build files. Check each example app's `readme.md` file for more information on how to run the respective app.
 !@
 
-## SDL Examples Page
-For more examples go to [Smart Device Link Examples](https://github.com/SmartDeviceLink-Examples) GitHub organization. Download or clone any of these projects. Some useful examples include the example weather and navigation applications for learning how to design your application.
+## Additional Examples
+For more examples go to the [Smart Device Link Examples](https://github.com/SmartDeviceLink-Examples) GitHub organization. Download or clone any of these projects.
 
 @![iOS]
 The [example weather app](https://github.com/SmartDeviceLink-Examples/example_weather_app_ios) uses the OpenWeather API to implement a basic connected weather app with SDL UI. This example showcases the use of different screens for different types of weather forecasts. In addition, the [example navigation app](https://github.com/SmartDeviceLink-Examples/example_navigation_app_ios) utilizes the MapBox API to create a basic navigation app. This navigation app can by developers who want to build a SDL navigation app.
