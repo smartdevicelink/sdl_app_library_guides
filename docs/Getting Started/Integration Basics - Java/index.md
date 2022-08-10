@@ -370,7 +370,28 @@ onRPCNotificationListenerMap.put(FunctionID.ON_HMI_STATUS, new OnRPCNotification
 builder.setRPCNotificationListeners(onRPCNotificationListenerMap);
 ```
 
-##### Hash Resumption
+You can also use `addOnRPCNotificationListener` when creating an `SdlManagerListener` object. The following example shows how to set up the listener in the `onStart()` method of an `SdlManagerListener` object.
+
+```java
+@Override
+public void onStart() {
+    // HMI Status Listener
+    sdlManager.addOnRPCNotificationListener(FunctionID.ON_HMI_STATUS, new OnRPCNotificationListener() {
+        @Override
+        public void onNotified(RPCNotification notification) {
+            OnHMIStatus onHMIStatus = (OnHMIStatus) notification;
+            if (onHMIStatus.getWindowID() != null && onHMIStatus.getWindowID() != PredefinedWindows.DEFAULT_WINDOW.getValue()) {
+                return;
+            }
+            if (onHMIStatus.getHmiLevel() == HMILevel.HMI_FULL && onHMIStatus.getFirstRun()) {
+                // first time in HMI Full
+            }
+        }
+    });
+}
+```
+
+##### Hash Resumptions
 Set a `hashID` for your application that can be used over connection cycles (i.e. loss of connection, ignition cycles, etc.).
 
 ```java
