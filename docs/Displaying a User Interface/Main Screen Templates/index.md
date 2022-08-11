@@ -153,8 +153,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)initWithManager:(SDL Manager *)manager;
 
 - (void)showHomeScreen();
-- (void)showButtonScreenWithButtons:(NSArray<SDLSoftButtonObject *> *)buttons;
-- (void)showDataScreenWithData:(CustomDataModel *)data;
+- (void)showScreenWithButtons:(NSArray<SDLSoftButtonObject *> *)buttons;
+- (void)showScreenWithData:(CustomDataModel *)data;
 
 @end
 
@@ -194,7 +194,7 @@ NS_ASSUME_NONNULL_END
     [self.sdlManager.screenManager endUpdates()];
 }
 
-- (void)showButtonScreenWithButtons:(NSArray<SDLSoftButtonObject *> *)buttons {
+- (void)showScreenWithButtons:(NSArray<SDLSoftButtonObject *> *)buttons {
     [self.sdlManager.screenManger beginUpdates()];
     [self.sdlManager.screenManager changeLayout:[[SDLTemplateConfiguration alloc] initWithTemplate:SDLPredefinedLayoutTilesOnly] withCompletionHandler:nil]; 
     self.sdlManager.screenManager.textField1 = "Button Screen";
@@ -205,7 +205,7 @@ NS_ASSUME_NONNULL_END
     [self.sdlManager.screenManager endUpdates()];
 }
 
-- (void)showDataScreenWithData:(CustomDataModel *)data {
+- (void)showScreenWithData:(CustomDataModel *)data {
     [self.sdlManager.screenManger beginUpdates()];
     [self.sdlManager.screenManager changeLayout:[[SDLTemplateConfiguration alloc] initWithTemplate:SDLPredefinedLayoutTextWithGraphic] withCompletionHandler:nil]; 
     self.sdlManager.screenManager.textField1 = data.text1;
