@@ -134,8 +134,8 @@ if (success) {
 ```
 
 @![iOS]
-
 When changing screen layouts or template fields, it is highly recommended to encapsulate these updates into a class or method. Doing so is a good way to keep SDL UI changes organized. An example of this can be seen in the [example weather app](https://github.com/SmartDeviceLink-Examples/example_weather_app_ios). See below for another example:
+
 |~
 ```objc
 // ChangeScreenManager.h
