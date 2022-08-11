@@ -173,13 +173,6 @@ NS_ASSUME_NONNULL_END
 #import "HomeDataModel.h"
 #import "SmartDeviceLink.h"
 
-struct HomeDataModel {
-    NSString *text1;
-    NSString *text2;
-    NSString *text3;
-    NSString *text4;
-};
-
 @interface HomeSDLScreen()
 
 @property (strong, nonatomic) SDLManager *sdlManager;
@@ -203,6 +196,106 @@ struct HomeDataModel {
     self.sdlManager.screenManager.textField4 = self.homeDataModel.text4;
     self.sdlManager.screenManager.softButtonObjects = @[];
     self.sdlManager.screenManager.primaryGraphic = <#SDLArtwork#>;
+    [self.sdlManager.screenManager endUpdates];
+}
+
+@end
+
+// ButtonSDLScreen.h
+#import <Foundation/Foundation.h>
+#import "CustomSDLScreen.h"
+
+@class ButtonDataModel;
+@class SDLManager;
+@class SDLScreenManager;
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface ButtonSDLScreen : NSObject<CustomSDLScreen>
+
+@end
+
+NS_ASSUME_NONNULL_END
+
+// ButtonSDLScreen.m
+#import "ButtonSDLScreen.h"
+
+#import "ButtonDataModel.h"
+#import "CustomSDLScreen.h"
+#import "SmartDeviceLink.h"
+
+@interface ButtonSDLScreen()
+
+@property (strong, nonatomic) SDLManager *sdlManager;
+@property (assign, nonatomic) ButtonDataModel *buttonDataModel;
+
+@end
+
+@implementation ButtonSDLScreen
+
+- (instancetype)initWithManager:(SDLManager *)sdlManager {
+    _sdlManager = sdlManager;
+    _buttonDataModel = ButtonDataModel();
+}
+
+- (void)showScreen {
+    [self.sdlManager.screenManager beginUpdates];
+    [self.sdlManager.screenManager changeLayout:[[SDLTemplateConfiguration alloc] initWithTemplate:SDLPredefinedLayoutTilesOnly] withCompletionHandler:nil];
+    self.sdlManager.screenManager.textField1 = self.buttonDataModel.text1;
+    self.sdlManager.screenManager.textField2 = self.buttonDataModel.text2;
+    self.sdlManager.screenManager.textField3 = self.buttonDataModel.text3;
+    self.sdlManager.screenManager.textField4 = self.buttonDataModel.text4;
+    self.sdlManager.screenManager.softButtonObjects = self.buttonDataModel.buttons;
+    [self.sdlManager.screenManager endUpdates];
+}
+
+@end
+
+// DataSDLScreen.h
+#import <Foundation/Foundation.h>
+#import "CustomSDLScreen.h"
+
+@class DataModel;
+@class SDLManager;
+@class SDLScreenManager;
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface DataSDLScreen : NSObject<CustomSDLScreen>
+
+@end
+
+NS_ASSUME_NONNULL_END
+
+// DataSDLScreen.m
+#import "DataSDLScreen.h"
+
+#import "DataModel.h"
+#import "CustomSDLScreen.h"
+#import "SmartDeviceLink.h"
+
+@interface DataSDLScreen()
+
+@property (strong, nonatomic) SDLManager *sdlManager;
+@property (assign, nonatomic) DataModel *dataModel;
+
+@end
+
+@implementation ButtonSDLScreen
+
+- (instancetype)initWithManager:(SDLManager *)sdlManager {
+    _sdlManager = sdlManager;
+    _buttonDataModel = DataModel();
+}
+
+- (void)showScreen {
+    [self.sdlManager.screenManager beginUpdates];
+    [self.sdlManager.screenManager changeLayout:[[SDLTemplateConfiguration alloc] initWithTemplate:SDLPredefinedLayoutTextWithGraphic] withCompletionHandler:nil];
+    self.sdlManager.screenManager.textField1 = self.dataModel.text1;
+    self.sdlManager.screenManager.textField2 = self.dataModel.text2;
+    self.sdlManager.screenManager.textField3 = self.dataModel.text3;
+    self.sdlManager.screenManager.textField4 = self.dataModel.text4;
+    self.sdlManager.screenManager.softButtonObjects = @[];
     [self.sdlManager.screenManager endUpdates];
 }
 
