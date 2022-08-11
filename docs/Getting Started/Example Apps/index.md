@@ -19,6 +19,18 @@ This guide takes you through the steps needed to get the sample project, _Hello 
 To get the example app, download or clone the [sdl_java_suite](https://github.com/smartdevicelink/sdl_java_suite). The _Hello Sdl Android_ app is a package within the SDL Android library. Open the `sdl_java_suite/android` project using "Open an existing Android Studio project" in [Android Studio](https://developer.android.com/studio/index.html). We will use Android Studio throughout this guide as it is the official IDE for Android development.
 !@
 
+@![javaSE]
+First, make sure you download or clone the latest release from [GitHub](https://github.com/smartdevicelink/sdl_java_suite). It is a [project](https://github.com/smartdevicelink/sdl_java_suite/tree/master/javaSE/hello_sdl_java) within the SDL Java Suite root directory. Then, open the _Hello Sdl_ project in [IntelliJ IDEA](https://www.jetbrains.com/idea/).
+!@
+
+@![javaEE]
+Make sure that you follow the steps in [Installation](Getting Started/Installation) and [Integration Basics](Getting Started/Integration Basics - Java) sections to create a new JavaEE SDL project before continuing this section.
+
+!!! NOTE
+The [Hello Sdl JavaEE](https://github.com/smartdevicelink/sdl_java_suite/tree/master/javaEE/hello_sdl_java_ee) has some code commented out and cannot be compiled. The project just includes samples for `SdlService` and `Main` classes that can be copied to the new JavaEE project that you create by following the steps in [Installation page](Getting Started/Installation).
+!!!
+!@
+
 @![javascript]
 The [JavaScript Suite repository on GitHub](https://github.com/smartdevicelink/sdl_javascript_suite/tree/master/examples) provides example apps for both the browser and for NodeJS. This includes a WebEngine app, a WebSocket client app, a WebSocket server app, and a TCP client app. The examples in the folders already come with their own SDL library build files. Check each example app's `readme.md` file for more information on how to run the respective app.
 !@
@@ -148,18 +160,6 @@ If your app compiles and but does not show up on the HMI, there are a few things
 ### WebEngine Transport
 1. Make sure that the `manifest.js` has provided all [necessary fields](https://smartdevicelink.com/en/guides/core/developer-documentation/web-engine-app-support/#webengine-apps) and that the information is correct.
 1. If you're unable to install your app from a cloud app store, make sure that the app has been compressed to a file archive that can be retrieved via the download URL you provided.
-!@
-
-@![javaSE]
-First, make sure you download or clone the latest release from [GitHub](https://github.com/smartdevicelink/sdl_java_suite). It is a [project](https://github.com/smartdevicelink/sdl_java_suite/tree/master/javaSE/hello_sdl_java) within the SDL Java Suite root directory. Then, open the _Hello Sdl_ project in [IntelliJ IDEA](https://www.jetbrains.com/idea/).
-!@
-
-@![javaEE]
-Make sure that you follow the steps in [Installation](Getting Started/Installation) and [Integration Basics](Getting Started/Integration Basics - Java) sections to create a new JavaEE SDL project before continuing this section.
-
-!!! NOTE
-The [Hello Sdl JavaEE](https://github.com/smartdevicelink/sdl_java_suite/tree/master/javaEE/hello_sdl_java_ee) has some code commented out and cannot be compiled. The project just includes samples for `SdlService` and `Main` classes that can be copied to the new JavaEE project that you create by following the steps in [Installation page](Getting Started/Installation).
-!!!
 !@
 
 @![javaSE,javaEE]
