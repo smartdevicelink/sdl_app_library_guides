@@ -182,8 +182,10 @@ appWebSocketServer.on('connection', (connection) => {
 ```
 !@
 
+@![android, iOS]
 ## Additional Examples
 For more examples go to the [SmartDeviceLink Examples](https://github.com/SmartDeviceLink-Examples) GitHub organization. Download or clone any of these projects.
+!@
 
 @![iOS]
 The examples available include an [example weather app](https://github.com/SmartDeviceLink-Examples/example_weather_app_ios) and an [example navigation app](https://github.com/SmartDeviceLink-Examples/example_navigation_app_ios). 
@@ -203,6 +205,8 @@ The [example navigation app](https://github.com/SmartDeviceLink-Examples/example
 The [SDL Capabilities app](https://github.com/SmartDeviceLink-Examples/SDL-Capabilities-Android) showcases various capabilities of SDL.
 !@
 
+@![android, iOS]
 !!! NOTE
 Some examples require obtaining API tokens from third parties for data and services. For all of thse examples follow the setup instructions as outlined in their **README.md**.
 !!!
+!@
