@@ -134,7 +134,132 @@ if (success) {
 ```
 
 @![iOS]
-When changing screen layouts or template fields, it is highly recommended to encapsulate these updates into a class or a method. Doing so is a good way to keep SDL UI changes organized. An example of this can be seen in the [example weather app](https://github.com/SmartDeviceLink-Examples/example_weather_app_ios).
+When changing screen layouts or template fields, it is highly recommended to encapsulate these updates into a class or method. Doing so is a good way to keep SDL UI changes organized. An example of this can be seen in the [example weather app](https://github.com/SmartDeviceLink-Examples/example_weather_app_ios). See below for another example:
+|~
+```objc
+// ChangeScreenManager.h
+#import <Foundation/Foundation.h>
+
+@class SDLManager;
+@class SDLSoftButtonObject;
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface ChangeScreenManager : NSObject
+
+- (instancetype)init NS_UNAVAILABLE;
+- (void)initWithManager:(SDL Manager *)manager;
+
+- (void)showHomeScreen();
+- (void)showButtonScreenWithButtons:(NSArray<SDLSoftButtonObject *> *)buttons;
+- (void)showDataScreenWithData:(CustomDataModel *)data;
+
+@end
+
+NS_ASSUME_NONNULL_END
+
+// ChangeScreenManager.m
+#import "ChangeScreenManager.h"
+
+#import <SmartDeviceLink.h>
+
+@interface ChangeScreenManager()
+
+@property (strong, nonatomic) SDLManager *sdlManager;
+
+@end
+
+@implementation ChangeScreenManager
+
+- (instancetype)initWithManager:(SDLManager *)manager {
+    self = [super init];
+    if (!self) { return nil; }
+
+    _sdlManager = manager;
+
+    return self;
+}
+
+- (void)showHomeScreen() {
+    [self.sdlManager.screenManger beginUpdates()];
+    [self.sdlManager.screenManager changeLayout:[[SDLTemplateConfiguration alloc] initWithTemplate:SDLPredefinedLayoutGraphicWithText] withCompletionHandler:nil]; 
+    self.sdlManager.screenManager.textField1 = "Home Screen";
+    self.sdlManager.screenManager.textField2 = "Graphic With Text Layout";
+    self.sdlManager.screenManager.textField3 = nil;
+    self.sdlManager.screenManager.textField4 = nil;
+    self.sdlManager.screenManager.softButtonObjects = nil;
+    self.sdlManager.screenManager.primaryGraphic = <#SDLArtwork#>;
+    [self.sdlManager.screenManager endUpdates()];
+}
+
+- (void)showButtonScreenWithButtons:(NSArray<SDLSoftButtonObject *> *)buttons {
+    [self.sdlManager.screenManger beginUpdates()];
+    [self.sdlManager.screenManager changeLayout:[[SDLTemplateConfiguration alloc] initWithTemplate:SDLPredefinedLayoutTilesOnly] withCompletionHandler:nil]; 
+    self.sdlManager.screenManager.textField1 = "Button Screen";
+    self.sdlManager.screenManager.textField2 = "Tiles Only Layout";
+    self.sdlManager.screenManager.textField3 = nil;
+    self.sdlManager.screenManager.textField4 = nil;
+    self.sdlManager.screenManager.softButtonObjects = buttons;
+    [self.sdlManager.screenManager endUpdates()];
+}
+
+- (void)showDataScreenWithData:(CustomDataModel *)data {
+    [self.sdlManager.screenManger beginUpdates()];
+    [self.sdlManager.screenManager changeLayout:[[SDLTemplateConfiguration alloc] initWithTemplate:SDLPredefinedLayoutTextWithGraphic] withCompletionHandler:nil]; 
+    self.sdlManager.screenManager.textField1 = data.text1;
+    self.sdlManager.screenManager.textField2 = data.text2;
+    self.sdlManager.screenManager.textField3 = data.text3;
+    self.sdlManager.screenManager.textField4 = data.text4;
+    self.sdlManager.screenManager.softButtonObjects = nil;
+    [self.sdlManager.screenManager endUpdates()];
+}
+
+NS_ASSUME_NONNULL_BEGIN
+```
+```swift
+class ChangeScreenManager {
+    private let sdlManager: SDLManager
+
+    init(sdlManager: SDLManager) {
+        self.sdlManager = sdlManager
+    }
+
+    func showHomeScreen() {
+        self.sdlManager.screenManager.beginUpdates()
+        self.sdlManager.screenManager.changeLayout(SDLTemplateConfiguration(predefinedLayout: .graphicWithText))
+        self.sdlManager.screenManager.textField1 = "Home Screen"
+        self.sdlManager.screenManager.textField2 = nil
+        self.sdlManager.screenManager.textField3 = nil
+        self.sdlManager.screenManager.textField4 = nil
+        self.sdlManager.screenManager.softButtonObjects = nil
+        self.sdlManager.screenManager.primaryGraphic = <#SDLArtwork#>
+        self.sdlManager.screenManager.endUpdates()
+    }
+
+    func showButtonScreen(buttons: [SDLSoftButtonObject]) {
+        self.sdlManager.screenManager.beginUpdates()
+        self.sdlManager.screenManager.changeLayout(SDLTemplateConfiguration(predefinedLayout: .tilesOnly))
+        self.sdlManager.screenManager.textField1 = "Buttons Screen"
+        self.sdlManager.screenManager.textField2 = "Tiles Only Layout"
+        self.sdlManager.screenManager.textField3 = nil
+        self.sdlManager.screenManager.textField4 = nil
+        self.sdlManager.screenManager.softButtonObjects = buttons
+        self.sdlManager.screenManager.endUpdates()
+    }
+
+    func showDataScreen(data: CustomDataModel) {
+        self.sdlManager.screenManager.beginUpdates()
+        self.sdlManager.screenManager.changeLayout(SDLTemplateConfiguration(predefinedLayout: .textWithGraphic))
+        self.sdlManager.screenManager.textField1 = data.text1
+        self.sdlManager.screenManager.textField2 = data.text2
+        self.sdlManager.screenManager.textField3 = data.text3
+        self.sdlManager.screenManager.textField4 = data.text4
+        self.sdlManager.screenManager.softButtonObjects = nil
+        self.sdlManager.screenManager.endUpdates()
+    }
+}
+```
+~|
 !@
 
 @![android]
