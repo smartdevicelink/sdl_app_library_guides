@@ -281,7 +281,7 @@ NS_ASSUME_NONNULL_END
 
 @end
 
-@implementation ButtonSDLScreen
+@implementation DataSDLScreen
 
 - (instancetype)initWithManager:(SDLManager *)sdlManager {
     _sdlManager = sdlManager;
