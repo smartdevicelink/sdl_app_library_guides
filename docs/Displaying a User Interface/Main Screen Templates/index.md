@@ -142,6 +142,7 @@ All screens will need to have access to the ```SDLScreenManager``` object and a 
 
 |~
 ```objc
+// CustomSDLScreen.h
 @class SDLManager;
 
 @protocol CustomSDLScreen <NSObject>
@@ -159,8 +160,11 @@ protocol CustomSDLScreen {
 }
 ```
 ~|
+
 ### Screen Classes
-The screens for this example will inherit from the previously created ```CustomSDLScreen``` protocol and will be required to implement the initialization and show screen method. A good practice for screen classes is to keep screen data in a view model to add a layer of abstraction for exposing public properties and commands. For example, the ```HomeScreen``` object will implement the protocol and inside will have a property of ```HomeDataViewModel``` where it will access public properties and set these to the SDL screen manager fields. The Home Screen will also create a navigation button to open the ```SDLButtonScreen```.
+As previously mentioned most screens should all follow a shared protocol, such as the ```CustomSDLScreen``` protocol above, since the screens will most likely operate in a similar fashion. Another good practice for screen classes is to keep screen data in a view model. Doing so will add a layer of abstraction for exposing public properties and commands to the screen. 
+
+For the example below, the ```HomeScreen``` class will inherit the ```CustomSDLScreen``` protocol and will have a property of ```HomeDataViewModel```. The screen manager change its fields based on the view model's data. In addition, the home screen will also create a navigation button to open the ```SDLButtonScreen``` when pressed.
 
 |~
 ```objc
@@ -215,7 +219,7 @@ NS_ASSUME_NONNULL_END
     }];
     _homeDataViewModel = HomeDataViewModel();
 
-    return self
+    return self;
 }
 
 - (void)showScreen {
@@ -273,7 +277,7 @@ struct HomeSDLScreen: CustomSDLScreen {
 ```
 ~|
 
-The ```ButtonSDLScreen``` follows the same patterns as the ```HomeSDLScreen``` but has minor implementation differences. It has a view model of ```ButtondataViewModel``` that contains properties unique to the ```ButtonSDLScreen``` such as an array of buttons. It also changes the template configuration to tiles only.
+The ```ButtonSDLScreen``` follows the same patterns as the ```HomeSDLScreen``` but has minor implementation differences. It has a view model of ```ButtonDataViewModel``` that contains properties unique to the ```ButtonSDLScreen``` such as an array of soft button objects. It also changes the template configuration to tiles only.
 
 |~
 ```objc
