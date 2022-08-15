@@ -162,9 +162,9 @@ protocol CustomSDLScreen {
 ~|
 
 ### Screen Classes
-As previously mentioned most screens should all follow a shared protocol, such as the ```CustomSDLScreen``` protocol above, since the screens will most likely operate in a similar fashion. Another good practice for screen classes is to keep screen data in a view model. Doing so will add a layer of abstraction for exposing public properties and commands to the screen. 
+As previously mentioned most screens should all follow a shared protocol, such as the ```CustomSDLScreen``` protocol above, since screens will likely operate in a similar fashion. Another good practice for screen classes is to keep screen data in a view model. Doing so will add a layer of abstraction for exposing public properties and commands to the screen. 
 
-For the example below, the ```HomeScreen``` class will inherit the ```CustomSDLScreen``` protocol and will have a property of ```HomeDataViewModel```. The screen manager change its fields based on the view model's data. In addition, the home screen will also create a navigation button to open the ```SDLButtonScreen``` when pressed.
+For the example below, the ```HomeScreen``` class will inherit the ```CustomSDLScreen``` protocol and will have a property of ```HomeDataViewModel```. The screen manager will change its text fields based on the view model's data. In addition, the home screen will also create a navigation button to open the ```SDLButtonScreen``` when pressed.
 
 |~
 ```objc
@@ -265,10 +265,10 @@ struct HomeSDLScreen: CustomSDLScreen {
         // Change template to Graphics With Text
         self.sdlManager.screenManager.changeLayout(SDLTemplateConfiguration(predefinedLayout: .graphicWithText))
         // Assign text fields to view model data
-        self.sdlManager.screenManager.textField1 = homeDataViewModel.text1
-        self.sdlManager.screenManager.textField2 = homeDataViewModel.text2
-        self.sdlManager.screenManager.textField3 = homeDataViewModel.text3
-        self.sdlManager.screenManager.textField4 = homeDataViewModel.text4
+        self.sdlManager.screenManager.textField1 = self.homeDataViewModel.text1
+        self.sdlManager.screenManager.textField2 = self.homeDataViewModel.text2
+        self.sdlManager.screenManager.textField3 = self.homeDataViewModel.text3
+        self.sdlManager.screenManager.textField4 = self.homeDataViewModel.text4
         // Assign to navigation button property
         self.sdlManager.screenManager.softButtonObjects = [self.navigationButton]
         self.sdlManager.screenManager.endUpdates()
@@ -277,7 +277,7 @@ struct HomeSDLScreen: CustomSDLScreen {
 ```
 ~|
 
-The ```ButtonSDLScreen``` follows the same patterns as the ```HomeSDLScreen``` but has minor implementation differences. It has a view model of ```ButtonDataViewModel``` that contains properties unique to the ```ButtonSDLScreen``` such as an array of soft button objects. It also changes the template configuration to tiles only.
+The ```ButtonSDLScreen``` follows the same patterns as the ```HomeSDLScreen``` but has minor implementation differences. The screen's view model ```ButtonDataViewModel``` contains properties unique to the ```ButtonSDLScreen``` such as text fields and an array of soft button objects. It also changes the template configuration to tiles only.
 
 |~
 ```objc
@@ -358,10 +358,10 @@ struct ButtonSDLScreen: CustomSDLScreen {
         // Change template to Tiles Only
         self.sdlManager.screenManager.changeLayout(SDLTemplateConfiguration(predefinedLayout: .tilesOnly))
         // Assign text fields to view model data
-        self.sdlManager.screenManager.textField1 = buttonDataViewModel.text1
-        self.sdlManager.screenManager.textField2 = buttonDataViewModel.text2
-        self.sdlManager.screenManager.textField3 = buttonDataViewModel.text3
-        self.sdlManager.screenManager.textField4 = buttonDataViewModel.text4
+        self.sdlManager.screenManager.textField1 = self.buttonDataViewModel.text1
+        self.sdlManager.screenManager.textField2 = self.buttonDataViewModel.text2
+        self.sdlManager.screenManager.textField3 = self.buttonDataViewModel.text3
+        self.sdlManager.screenManager.textField4 = self.buttonDataViewModel.text4
         // Assign soft button objects to view model buttons array
         self.sdlManager.screenManager.softButtonObjects = buttonDataViewModel.buttons
         self.sdlManager.screenManager.endUpdates()
