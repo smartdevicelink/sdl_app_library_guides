@@ -135,11 +135,11 @@ if (success) {
 !@
 
 @![iOS]
-When changing screen layouts or template fields, it is highly recommended to encapsulate these updates into a class or method. Doing so is a good way to keep SDL UI changes organized. An example of this can be seen in the [example weather app](https://github.com/SmartDeviceLink-Examples/example_weather_app_ios). See below for another example:
+When changing screen layouts and template data (for example, to show a weather hourly data screen vs. a daily weather screen), it is recommended to encapsulate these updates into a class or method. Doing so is a good way to keep SDL UI changes organized. A fully-formed example of this can be seen in the [example weather app](https://github.com/SmartDeviceLink-Examples/example_weather_app_ios). Below is a generic example:
 
 |~
 ```objc
-// CustomSDLScreen.h - Protcol
+// CustomSDLScreen.h - Protocol
 @class SDLManager;
 
 @protocol CustomSDLScreen <NSObject>
@@ -166,6 +166,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 NS_ASSUME_NONNULL_END
 
+/************************************************************************/
 // HomeSDLScreen.m
 #import "HomeSDLScreen.h"
 
@@ -176,7 +177,8 @@ NS_ASSUME_NONNULL_END
 @interface HomeSDLScreen()
 
 @property (strong, nonatomic) SDLManager *sdlManager;
-@property (assign, nonatomic) HomeDataModel *homeDataModel;
+// An example of your data model that will feed data to the SDL screen's UI
+@property (strong, nonatomic) HomeDataViewModel *homeDataViewModel;
 
 @end
 
