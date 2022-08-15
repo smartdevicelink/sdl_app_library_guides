@@ -136,10 +136,20 @@ if (success) {
 
 @![iOS]
 When changing screen layouts and template data (for example, to show a weather hourly data screen vs. a daily weather screen), it is recommended to encapsulate these updates into a class or method. Doing so is a good way to keep SDL UI changes organized. A fully-formed example of this can be seen in the [example weather app](https://github.com/SmartDeviceLink-Examples/example_weather_app_ios). Below is a generic example:
+!@
+
+@![android,javaEE,javaSE]
+When changing screen layouts and template data (for example, to show a weather hourly data screen vs. a daily weather screen), it is recommended to encapsulate these updates into a class or method. Doing so is a good way to keep SDL UI changes organized. A fully-formed example of this can be seen in the [example weather app](https://github.com/SmartDeviceLink-Examples/example_weather_app_android). Below is a generic example:
+!@
+
+@![javascript]
+When changing screen layouts and template data (for example, to show a weather hourly data screen vs. a daily weather screen), it is recommended to encapsulate these updates into a class or method. Doing so is a good way to keep SDL UI changes organized. Below is a generic example:
+!@
 
 ### Screen Change Protocol
 All screens will need to have access to the ```SDLScreenManager``` object and a function to display the screen. Therefore, it is recommened to create a protocol for all screens to follow. For the example below, the ```CustomSDLScreen``` protocol requires an initializer with the parameters ```SDLManager``` and a ```showScreen``` method.
 
+@![iOS]
 |~
 ```objc
 // CustomSDLScreen.h
@@ -160,12 +170,26 @@ protocol CustomSDLScreen {
 }
 ```
 ~|
+!@
+
+@![android,javaSE,javaEE]
+```java
+    // TODO
+```
+!@
+
+@![javascript]
+```js
+    // TODO
+```
+!@
 
 ### Screen Classes
 As previously mentioned most screens should all follow a shared protocol, such as the ```CustomSDLScreen``` protocol above, since screens will likely operate in a similar fashion. Another good practice for screen classes is to keep screen data in a view model. Doing so will add a layer of abstraction for exposing public properties and commands to the screen. 
 
 For the example below, the ```HomeScreen``` class will inherit the ```CustomSDLScreen``` protocol and will have a property of ```HomeDataViewModel```. The screen manager will change its text fields based on the view model's data. In addition, the home screen will also create a navigation button to open the ```SDLButtonScreen``` when pressed.
 
+@![iOS]
 |~
 ```objc
 // HomeSDLScreen.h
@@ -211,6 +235,7 @@ NS_ASSUME_NONNULL_END
     if (!self) { return nil; }
 
     _sdlManager = sdlManager;
+    // Set navigation button to an SDLSoftButtonObject that will display the Button SDL Screen
     _navigationButton = [[SDLSoftButtonObject alloc] initWithName:@"ButtonSDLScreen" text:@"Button Screen" artwork:nil handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
         if (buttonPress == nil) { return; }
 
@@ -276,9 +301,23 @@ struct HomeSDLScreen: CustomSDLScreen {
 }
 ```
 ~|
+!@
+
+@![android,javaSE,javaEE]
+```java
+    // TODO
+```
+!@
+
+@![javascript]
+```js
+    // TODO
+```
+!@
 
 The ```ButtonSDLScreen``` follows the same patterns as the ```HomeSDLScreen``` but has minor implementation differences. The screen's view model ```ButtonDataViewModel``` contains properties unique to the ```ButtonSDLScreen``` such as text fields and an array of soft button objects. It also changes the template configuration to tiles only.
 
+@![iOS]
 |~
 ```objc
 // ButtonSDLScreen.h
@@ -371,12 +410,16 @@ struct ButtonSDLScreen: CustomSDLScreen {
 ~|
 !@
 
-@![android]
-When changing screen layouts or template fields, it is highly recommended to encapsulate these updates into a class or a method. Doing so is a good way to keep SDL UI changes organized. An example of this can be seen in the [example weather app](https://github.com/SmartDeviceLink-Examples/example_weather_app_android).
+@![android,javaSE,javaEE]
+```java
+    // TODO
+```
 !@
 
-@![javaEE,javaSE,javascript]
-When changing screen layouts or template fields, it is highly recommended to encapsulate these updates into a class or a method. Doing so is a good way to keep SDL UI changes organized.
+@![javascript]
+```js
+    // TODO
+```
 !@
 
 ## Available Templates
