@@ -434,7 +434,8 @@ After you subscribe to the `InteriorVehicleDataNotification` you must also subsc
 ```js
 // sdl_javascript_suite v1.1+
 const getInteriorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
-    .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE).setSubscribe(true);
+    .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE)
+    .setSubscribe(true);
 const response = await sdlManager.sendRpcResolve(getInteriorVehicleData);
 // This can now be used to retrieve data
 // Code
