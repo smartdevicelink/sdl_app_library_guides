@@ -136,7 +136,9 @@ For remote control to work, the head unit must support SDL RPC v4.4+. In additio
 Each module type can have multiple modules in RPC v6.0+. In previous versions, only one module was available for each module type. A specific module is controlled using the unique id assigned to the module. When sending remote control RPCs to a RPC v6.0+ head unit, the `moduleInfo.moduleId` must be stored and provided to control the desired module. If no `moduleId` is set, the HMI will use the default module of that module type. When connected to <6.0 systems, the `moduleInfo` struct will be @![iOS]`nil`!@@![android, javaSE, javaEE,javascript]`null`!@, and only the default module will be available for control.
 
 ### Getting Remote Control Module Information
-Prior to using any remote control RPCs, you must check that the head unit has the remote control capability. As you will encounter head units that do *not* support remote control, or head units that do not give your application permission to read and write remote control data, this check is important.@![android, javaSE, javaEE] This check can be performed once your SDL app has left the HMI state of `NONE`. More information on how to monitor the HMI status can be found in the [Understanding Permissions](Userstanding Permissions#monitoring-the-hmi-level) guide.!@
+Prior to using any remote control RPCs, you must check that the head unit has the remote control capability. As you will encounter head units that do *not* support remote control, or head units that do not give your application permission to read and write remote control data, this check is important.
+
+@![android, javaSE, javaEE] This check can be performed once your SDL app has left the HMI state of `NONE`. More information on how to monitor the HMI status can be found in the [Understanding Permissions](Getting Started/Userstanding Permissions#monitoring-the-hmi-level) guide.!@
 
 When connected to head units supporting RPC v6.0+, you should save this information for future use. The `moduleId` contained within the `moduleInfo` struct on each capability is necessary to control that module.
 

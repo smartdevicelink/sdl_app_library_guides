@@ -3,7 +3,7 @@ The media clock is used by media apps to present the current timing information 
 
 The media clock consists of three parts: the progress bar, a current position label and a remaining time label. In addition, you may want to [update the play/pause button icon](#setting-the-play-pause-button-style-rpc-v50) to reflect the current state of the audio [or the media forward / back buttons](#setting-the-media-forward-back-button-style-rpc-v71) to reflect if it will skip tracks or time.
 
-@![android, javaEE, javaSE]Media clock operations require the HMI status to be `FULL`. More information on how to monitor the HMI status can be found in the [Understanding Permissions](Userstanding Permissions#monitoring-the-hmi-level) guide.!@
+@![android, javaEE, javaSE]Media clock operations require the HMI status to be `FULL`. More information on how to monitor the HMI status can be found in the [Understanding Permissions](Getting Started/Userstanding Permissions#monitoring-the-hmi-level) guide.!@
 
 !!! NOTE
 Ensure your app has an `appType` of media and you are using the media template before implementing this feature.
