@@ -43,6 +43,8 @@ NS_ASSUME_NONNULL_BEGIN
     if (!self) {
       return nil;
     }
+    
+    return self;
 }
 
 @end
