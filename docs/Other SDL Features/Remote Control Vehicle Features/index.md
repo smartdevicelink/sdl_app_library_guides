@@ -455,7 +455,8 @@ const response = await sdlManager.sendRpc(getInteriorVehicleData).catch(error =>
 // sdl_javascript_suite v1.1+
 const getInteriorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
     .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE)
-    .setModuleId(moduleId).setSubscribe(true);
+    .setModuleId(moduleId)
+    .setSubscribe(true);
 const response = await sdlManager.sendRpcResolve(getInteriorVehicleData);
 // This can now be used to retrieve data
 // Code
