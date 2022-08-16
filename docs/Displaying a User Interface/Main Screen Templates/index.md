@@ -146,8 +146,11 @@ When changing screen layouts and template data (for example, to show a weather h
 When changing screen layouts and template data (for example, to show a weather hourly data screen vs. a daily weather screen), it is recommended to encapsulate these updates into a class or method. Doing so is a good way to keep SDL UI changes organized. Below is a generic example:
 !@
 
-### Screen Change Protocol
-All screens will need to have access to the ```SDLScreenManager``` object and a function to display the screen. Therefore, it is recommened to create a protocol for all screens to follow. For the example below, the ```CustomSDLScreen``` protocol requires an initializer with the parameters ```SDLManager``` and a ```showScreen``` method.
+## Screen Change Example Code
+This example code creates an interface that can be implemented by various "screens" of your SDL app. This is a recommended design pattern so that you can separate your code to only involve the data models you need. This is just a simple example and your own needs may be different.
+
+### Screen Change Example Interface
+All screens will need to have access to the @![iOS]`SDLScreenManager`!@@![android, javaEE, javaSE, javascript]`ScreenManager`!@ object and a function to display the screen. Therefore, it is recommended to create a generic interface for all screens to follow. For the example below, the `CustomSDLScreen` protocol requires an initializer with the parameters `SDLManager` and a `showScreen` method.
 
 @![iOS]
 |~
@@ -184,10 +187,10 @@ protocol CustomSDLScreen {
 ```
 !@
 
-### Screen Classes
-As previously mentioned most screens should all follow a shared protocol, such as the ```CustomSDLScreen``` protocol above, since screens will likely operate in a similar fashion. Another good practice for screen classes is to keep screen data in a view model. Doing so will add a layer of abstraction for exposing public properties and commands to the screen. 
+### Screen Change Example Implementations
+The following example code shows a few implementations of the example screen changing protocol. It is good practice for screen classes is to keep screen data in a view model. Doing so will add a layer of abstraction for exposing public properties and commands to the screen.
 
-For the example below, the ```HomeScreen``` class will inherit the ```CustomSDLScreen``` protocol and will have a property of ```HomeDataViewModel```. The screen manager will change its text fields based on the view model's data. In addition, the home screen will also create a navigation button to open the ```SDLButtonScreen``` when pressed.
+For the example below, the `HomeScreen` class will inherit the `CustomSDLScreen` interface and will have a property of type `HomeDataViewModel`. The screen manager will change its text fields based on the view model's data. In addition, the home screen will also create a navigation button to open the `ButtonSDLScreen` when pressed.
 
 @![iOS]
 |~
@@ -220,7 +223,7 @@ NS_ASSUME_NONNULL_END
 
 @interface HomeSDLScreen()
 
-@property (strong, nonatomic) SDLManager *sdlManager;
+@property (weak, nonatomic) SDLManager *sdlManager;
 // A button to navigate to the ButtonSDLScreen
 @property (strong, nonatomic) SDLSoftButtonObject *navigationButton;
 // An example of your data model that will feed data to the SDL screen's UI
@@ -315,7 +318,7 @@ struct HomeSDLScreen: CustomSDLScreen {
 ```
 !@
 
-The ```ButtonSDLScreen``` follows the same patterns as the ```HomeSDLScreen``` but has minor implementation differences. The screen's view model ```ButtonDataViewModel``` contains properties unique to the ```ButtonSDLScreen``` such as text fields and an array of soft button objects. It also changes the template configuration to tiles only.
+The `ButtonSDLScreen` follows the same patterns as the `HomeSDLScreen` but has minor implementation differences. The screen's view model `ButtonDataViewModel` contains properties unique to the `ButtonSDLScreen` such as text fields and an array of soft button objects. It also changes the template configuration to tiles only.
 
 @![iOS]
 |~
