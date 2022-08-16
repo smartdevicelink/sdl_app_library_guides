@@ -138,7 +138,8 @@ Each module type can have multiple modules in RPC v6.0+. In previous versions, o
 ### Getting Remote Control Module Information
 Prior to using any remote control RPCs, you must check that the head unit has the remote control capability. As you will encounter head units that do *not* support remote control, or head units that do not give your application permission to read and write remote control data, this check is important.
 
-@![android, javaSE, javaEE] This check can be performed once your SDL app has left the HMI state of `NONE`. More information on how to monitor the HMI status can be found in the [Understanding Permissions](Getting Started/Userstanding Permissions#monitoring-the-hmi-level) guide.!@
+@![android, javaSE, javaEE]This check can be performed once your SDL app has left the HMI state of `NONE`. More information on how to monitor the HMI status can be found in the [Understanding Permissions](Getting Started/Userstanding Permissions) guide.!@
+
 
 When connected to head units supporting RPC v6.0+, you should save this information for future use. The `moduleId` contained within the `moduleInfo` struct on each capability is necessary to control that module.
 
