@@ -404,7 +404,8 @@ sdlManager.sendRPC(getInteriorVehicleData);
 ###### RPC v6.0+
 ```java
 GetInteriorVehicleData getInteriorVehicleData = new GetInteriorVehicleData(ModuleType.CLIMATE)
-    .setModuleId(moduleID).setSubscribe(true);
+    .setModuleId(moduleID)
+    .setSubscribe(true);
 getInteriorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
