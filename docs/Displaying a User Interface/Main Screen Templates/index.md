@@ -225,7 +225,7 @@ NS_ASSUME_NONNULL_END
 
 @property (weak, nonatomic) SDLManager *sdlManager;
 // A button to navigate to the ButtonSDLScreen
-@property (strong, nonatomic) SDLSoftButtonObject *navigationButton;
+@property (strong, nonatomic) ButtonSDLScreen *buttonScreen;
 // An example of your data model that will feed data to the SDL screen's UI
 @property (strong, nonatomic) HomeDataViewModel *homeDataViewModel;
 
@@ -238,14 +238,8 @@ NS_ASSUME_NONNULL_END
     if (!self) { return nil; }
 
     _sdlManager = sdlManager;
-    // Set navigation button to an SDLSoftButtonObject that will display the Button SDL Screen
-    _navigationButton = [[SDLSoftButtonObject alloc] initWithName:@"ButtonSDLScreen" text:@"Button Screen" artwork:nil handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
-        if (buttonPress == nil) { return; }
-
-        ButtonSDLScreen *buttonScreen = [[ButtonSDLScreen alloc] initWithManager:sdlManager];
-        buttonScreen.showScreen();
-    }];
-    _homeDataViewModel = HomeDataViewModel();
+    _buttonScreen = [[ButtonSDLScreen alloc] initWithManager:sdlManager];
+    _homeDataViewModel = [[HomeDataViewModel alloc] init];
 
     return self;
 }
@@ -260,8 +254,12 @@ NS_ASSUME_NONNULL_END
     self.sdlManager.screenManager.textField2 = self.homeDataViewModel.text2;
     self.sdlManager.screenManager.textField3 = self.homeDataViewModel.text3;
     self.sdlManager.screenManager.textField4 = self.homeDataViewModel.text4;
-    // Assign to navigation button property
-    self.sdlManager.screenManager.softButtonObjects = @[self.navigationButton];
+    // Create and assign a button to navigate to the ButtonSDLScreen
+    SDLSoftButtonObject *navigationButton = [[SDLSoftButtonObject alloc] initWithName:@"ButtonSDLScreen" text:@"Button Screen" artwork:nil handler:^(SDLOnButtonPress * _Nullable buttonPress,        SDLOnButtonEvent * _Nullable buttonEvent) {
+        if (buttonPress == nil) { return; }
+        [self.buttonScreen showScreen];
+    }];
+    self.sdlManager.screenManager.softButtonObjects = @[navigationButton];
     // Change Primary Graphic
     self.sdlManager.screenManager.primaryGraphic = <#SDLArtwork#>;
     [self.sdlManager.screenManager endUpdates];
@@ -272,19 +270,13 @@ NS_ASSUME_NONNULL_END
 ```swift
 struct HomeSDLScreen: CustomSDLScreen {
     let sdlManager: SDLManager
-    // A button to navigate to the ButtonSDLScreen
-    let navigationButton: SDLSoftButtonObject
+    let buttonScreen: ButtonSDLScreen
     // An example of your data model that will feed data to the SDL screen's UI
     let homeDataViewModel = HomeDataViewModel()
 
     init(sdlManager: SDLManager) {
         self.sdlManager = sdlManager
-        self.navigationButton = SDLSoftButtonObject(name: "ButtonSDLScreen", text: "Button Screen", artwork: nil) { (buttonPress, buttonEvent) in
-            guard let buttonPress = buttonPress else { return }
-            
-            let buttonSDLScreen = ButtonSDLScreen(sdlManager)
-            buttonSDLScreen.showScreen()
-        }
+        self.buttonScreen = ButtonSDLScreen(sdlManager: sdlManager)
     }
 
     func showScreen() {
@@ -297,8 +289,12 @@ struct HomeSDLScreen: CustomSDLScreen {
         self.sdlManager.screenManager.textField2 = self.homeDataViewModel.text2
         self.sdlManager.screenManager.textField3 = self.homeDataViewModel.text3
         self.sdlManager.screenManager.textField4 = self.homeDataViewModel.text4
-        // Assign to navigation button property
-        self.sdlManager.screenManager.softButtonObjects = [self.navigationButton]
+        // Create and assign a button to navigate to the ButtonSDLScreen
+        let navigationButton = SDLSoftButtonObject(name: "ButtonSDLScreen", text: "Button Screen", artwork: nil) { (buttonPress, buttonEvent) in
+            guard buttonPress != nil else { return }
+            self.buttonScreen.showScreen()
+        }
+        self.sdlManager.screenManager.softButtonObjects = [navigationButton]
         self.sdlManager.screenManager.endUpdates()
     }
 }
@@ -362,7 +358,7 @@ NS_ASSUME_NONNULL_END
     if (!self) { return nil; }
 
     _sdlManager = sdlManager;
-    _buttonDataViewModel = ButtonDataViewModel();
+    _buttonDataViewModel = [[ButtonDataViewModel alloc] init];
 
     return self;
 }
