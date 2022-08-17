@@ -53,8 +53,24 @@ sdlManager.screenManager.endUpdates { (error) in
 
 @![android, javaSE, javaEE]
 ```java
-SoftButtonState textState = new SoftButtonState("<#State Name#>", "<#Button Label Text#>", null);
-SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Collections.singletonList(textState), textState.getName(), new SoftButtonObject.OnEventListener() {
+SoftButtonState textState1 = new SoftButtonState("<#State Name1#>", "<#Button Label Text1#>", null);
+SoftButtonState textState2 = new SoftButtonState("<#State Name2#>", "<#Button Label Text2#>", null);
+List<SoftButtonState> stateList1 = Arrays.asList(textState1, textState2);
+SoftButtonObject softButtonObject1 = new SoftButtonObject("softButtonObject1", stateList1, textState1.getName(), new SoftButtonObject.OnEventListener() {
+    @Override
+    public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
+    }
+
+    @Override
+    public void onEvent(SoftButtonObject softButtonObject, OnButtonEvent onButtonEvent) {
+
+    }
+});
+
+SoftButtonState textState3 = new SoftButtonState("<#State Name3#>", "<#Button Label Text3#>", null);
+SoftButtonState textState4 = new SoftButtonState("<#State Name4#>", "<#Button Label Text4#>", null);
+List<SoftButtonState> stateList2 = Arrays.asList(textState3, textState4);
+SoftButtonObject softButtonObject2 = new SoftButtonObject("softButtonObject2", stateList2, textState1.getName(), new SoftButtonObject.OnEventListener() {
     @Override
     public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
     }
@@ -66,12 +82,12 @@ SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Col
 });
 
 sdlManager.getScreenManager().beginTransaction();
-sdlManager.getScreenManager().setSoftButtonObjects(Collections.singletonList(softButtonObject));
+sdlManager.getScreenManager().setSoftButtonObjects(Arrays.asList(softButtonObject1, softButtonObject2));
 sdlManager.getScreenManager().commit(new CompletionListener() {
-	@Override
-	public void onComplete(boolean success) {
-		DebugTool.logInfo(TAG, "ScreenManager update complete: " + success);
-	}
+    @Override
+    public void onComplete(boolean success) {
+        DebugTool.logInfo(TAG, "ScreenManager update complete: " + success);
+    }
 });
 ```
 !@
@@ -172,8 +188,21 @@ sdlManager.screenManager.endUpdates { (error) in
 
 @![android, javaSE, javaEE]
 ```java
-SoftButtonState imageState = new SoftButtonState("<#State Name#>", null, sdlArtwork);
-SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Collections.singletonList(imageState), imageState.getName(), new SoftButtonObject.OnEventListener() {
+SoftButtonState imageState1 = new SoftButtonState("<#State Name1#>", null, sdlArtwork1);
+SoftButtonState imageState2 = new SoftButtonState("<#State Name2#>", null, sdlArtwork2);
+SoftButtonObject softButtonObject1 = new SoftButtonObject("softButtonObject1", Arrays.asList(imageState1, imageState2), imageState1.getName(), new SoftButtonObject.OnEventListener() {
+    @Override
+    public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
+    }
+
+    @Override
+    public void onEvent(SoftButtonObject softButtonObject, OnButtonEvent onButtonEvent) {
+    }
+});
+
+SoftButtonState imageState3 = new SoftButtonState("<#State Name3#>", null, sdlArtwork3);
+SoftButtonState imageState4 = new SoftButtonState("<#State Name4#>", null, sdlArtwork4);
+SoftButtonObject softButtonObject2 = new SoftButtonObject("softButtonObject2", Arrays.asList(imageState3, imageState4), imageState3.getName(), new SoftButtonObject.OnEventListener() {
     @Override
     public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
     }
@@ -184,12 +213,12 @@ SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Col
 });
 
 sdlManager.getScreenManager().beginTransaction();
-sdlManager.getScreenManager().setSoftButtonObjects(Collections.singletonList(softButtonObject));
+sdlManager.getScreenManager().setSoftButtonObjects(Arrays.asList(softButtonObject1, softButtonObject2));
 sdlManager.getScreenManager().commit(new CompletionListener() {
-	@Override
-	public void onComplete(boolean success) {
-		DebugTool.logInfo(TAG, "ScreenManager update complete: " + success);
-	}
+    @Override
+    public void onComplete(boolean success) {
+        DebugTool.logInfo(TAG, "ScreenManager update complete: " + success);
+    }
 });
 ```
 !@
@@ -260,8 +289,21 @@ sdlManager.screenManager.endUpdates { (error) in
 
 @![android, javaSE, javaEE]
 ```java
-SoftButtonState textAndImageState = new SoftButtonState("<#State Name#>", "<#Button Label Text#>", sdlArtwork);
-SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Collections.singletonList(textAndImageState), textAndImageState.getName(), new SoftButtonObject.OnEventListener() {
+SoftButtonState textAndImageState1 = new SoftButtonState("<#State Name1#>", "<#Button Label Text1#>", sdlArtwork1);
+SoftButtonState textAndImageState2 = new SoftButtonState("<#State Name2#>", "<#Button Label Text2#>", sdlArtwork2);
+SoftButtonObject softButtonObject1 = new SoftButtonObject("softButtonObject1", Arrays.asList(textAndImageState1, textAndImageState2), textAndImageState1.getName(), new SoftButtonObject.OnEventListener() {
+    @Override
+    public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
+    }
+
+    @Override
+    public void onEvent(SoftButtonObject softButtonObject, OnButtonEvent onButtonEvent) {
+    }
+});
+
+SoftButtonState textAndImageState3 = new SoftButtonState("<#State Name3#>", "<#Button Label Text3#>", sdlArtwork3);
+SoftButtonState textAndImageState4 = new SoftButtonState("<#State Name4#>", "<#Button Label Text4#>", sdlArtwork4);
+SoftButtonObject softButtonObject2 = new SoftButtonObject("softButtonObject2", Arrays.asList(textAndImageState3, textAndImageState4), textAndImageState3.getName(), new SoftButtonObject.OnEventListener() {
     @Override
     public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
     }
@@ -272,12 +314,12 @@ SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Col
 });
 
 sdlManager.getScreenManager().beginTransaction();
-sdlManager.getScreenManager().setSoftButtonObjects(Collections.singletonList(softButtonObject));
+sdlManager.getScreenManager().setSoftButtonObjects(Arrays.asList(softButtonObject1, softButtonObject2));
 sdlManager.getScreenManager().commit(new CompletionListener() {
-	@Override
-	public void onComplete(boolean success) {
-		DebugTool.logInfo(TAG, "ScreenManager update complete: " + success);
-	}
+    @Override
+    public void onComplete(boolean success) {
+        DebugTool.logInfo(TAG, "ScreenManager update complete: " + success);
+    }
 });
 ```
 !@
