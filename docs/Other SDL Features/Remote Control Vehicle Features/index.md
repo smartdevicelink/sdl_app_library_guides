@@ -390,7 +390,8 @@ After you subscribe to the `InteriorVehicleDataNotification` you must also subsc
 
 ###### RPC < v6.0
 ```java
-GetInteriorVehicleData getInteriorVehicleData = new GetInteriorVehicleData(ModuleType.CLIMATE).setSubscribe(true);
+GetInteriorVehicleData getInteriorVehicleData = new GetInteriorVehicleData(ModuleType.CLIMATE)
+	.setSubscribe(true);
 getInteriorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
