@@ -181,3 +181,32 @@ appWebSocketServer.on('connection', (connection) => {
 });
 ```
 !@
+
+@![android, iOS]
+## Additional Examples
+For more examples go to the [SmartDeviceLink Examples](https://github.com/SmartDeviceLink-Examples) GitHub organization. Download or clone any of these projects.
+!@
+
+@![iOS]
+The examples available include an [example weather app](https://github.com/SmartDeviceLink-Examples/example_weather_app_ios) and an [example navigation app](https://github.com/SmartDeviceLink-Examples/example_navigation_app_ios). 
+
+The [example weather app](https://github.com/SmartDeviceLink-Examples/example_weather_app_ios) uses the OpenWeather API to implement a basic connected weather app with SDL UI. This example showcases changing screen template items for certain weather forecasts, displaying hourly and daily weather in popup menus, and showing weather alerts with SDL Alerts. 
+
+The [example navigation app](https://github.com/SmartDeviceLink-Examples/example_navigation_app_ios) utilizes the MapBox API to create a basic video streaming map app. The example navigation app can be used as a reference for developers who want to create their own navigation app.
+!@
+
+@![android]
+The examples available include the [example weather app](https://github.com/SmartDeviceLink-Examples/example_weather_app_android), [example navigation app](https://github.com/SmartDeviceLink-Examples/example_navigation_app_android), and the [SDL Capabilities app](https://github.com/SmartDeviceLink-Examples/SDL-Capabilities-Android). 
+
+The [example weather app](https://github.com/SmartDeviceLink-Examples/example_weather_app_android) uses the OpenWeather API to implement a basic connected weather app with SDL UI. This example showcases multiple screens for different weather forecast types, displaying hourly and daily weather in popup menus, and showing weather alerts with SDL Alerts. 
+
+The [example navigation app](https://github.com/SmartDeviceLink-Examples/example_navigation_app_android) uses the MapBox API to create a basic video streaming map app. The example navigation app can be used as a reference for developers who want to create their own navigation app.
+
+The [SDL Capabilities app](https://github.com/SmartDeviceLink-Examples/SDL-Capabilities-Android) showcases various capabilities of SDL.
+!@
+
+@![android, iOS]
+!!! NOTE
+Some examples require obtaining API tokens from third parties for data and services. For all of thse examples follow the setup instructions as outlined in their **README.md**.
+!!!
+!@
