@@ -183,7 +183,14 @@ protocol CustomSDLScreen {
 
 @![javascript]
 ```js
-    // TODO
+class CustomSdlScreen {
+    constructor (sdlManager) {
+        this.sdlManager = sdlManager;
+    }
+    showScreen () {
+        // stub
+    }
+}
 ```
 !@
 
@@ -310,7 +317,40 @@ struct HomeSDLScreen: CustomSDLScreen {
 
 @![javascript]
 ```js
-    // TODO
+class HomeSdlScreen extends CustomSdlScreen {
+    constructor (sdlManager) {
+        super(sdlManager);
+        this.buttonScreen = new ButtonSdlScreen(sdlManager);
+        this.homeDataViewModel = {
+            text1: 'Text 1',
+            text2: 'Text 2',
+            text3: 'Text 3',
+            text4: 'Text 4',
+        };
+    }
+
+    showScreen () {
+        const screenManager = this.sdlManager.getScreenManager();
+        // Batch Updates
+        screenManager.beginTransaction();
+        // Change template to Graphics With Text and Soft Buttons
+        screenManager.changeLayout(new SDL.rpc.structs.TemplateConfiguration()
+            .setTemplate(SDL.rpc.enums.PredefinedLayout.GRAPHIC_WITH_TEXT_AND_SOFTBUTTONS));
+        // Assign text fields to view model data
+        screenManager.setTextField1(this.homeDataViewModel.text1);
+        screenManager.setTextField2(this.homeDataViewModel.text2);
+        screenManager.setTextField3(this.homeDataViewModel.text3);
+        screenManager.setTextField4(this.homeDataViewModel.text4);
+        // Create and assign a button to navigate to the ButtonSdlScreen
+        const navigationButton = new SDL.manager.screen.utils.SoftButtonObject('ButtonSdlScreen', [new SDL.manager.screen.utils.SoftButtonState('ButtonSdlScreen', 'Button Screen')], 'ButtonSdlScreen', (id, rpc) => {
+            if (rpc instanceof SDL.rpc.messages.OnButtonPress) {
+                this.buttonScreen.showScreen();
+            }
+        });
+        screenManager.setSoftButtonObjects([navigationButton]);
+        screenManager.commit();
+    }
+}
 ```
 !@
 
@@ -417,7 +457,25 @@ struct ButtonSDLScreen: CustomSDLScreen {
 
 @![javascript]
 ```js
-    // TODO
+class ButtonSdlScreen extends CustomSdlScreen {
+    constructor (sdlManager) {
+        super(sdlManager);
+        this.buttonDataViewModel = {
+            buttons: [new SDL.manager.screen.utils.SoftButtonObject('button', [new SDL.manager.screen.utils.SoftButtonState('hello', 'hello')], 'hello')],
+        };
+    }
+    showScreen () {
+        const screenManager = this.sdlManager.getScreenManager();
+        // Batch Updates
+        screenManager.beginTransaction();
+        // Change template to Tiles Only
+        screenManager.changeLayout(new SDL.rpc.structs.TemplateConfiguration()
+            .setTemplate(SDL.rpc.enums.PredefinedLayout.TILES_ONLY));
+        // Assign soft button objects to view model buttons array
+        screenManager.setSoftButtonObjects(this.buttonDataViewModel.buttons);
+        screenManager.commit();
+    }
+}
 ```
 !@
 
