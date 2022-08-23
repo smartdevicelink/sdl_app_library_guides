@@ -135,15 +135,15 @@ if (success) {
 !@
 
 @![iOS]
-When changing screen layouts and template data (for example, to show a weather hourly data screen vs. a daily weather screen), it is recommended to encapsulate these updates into a class or method. Doing so is a good way to keep SDL UI changes organized. A fully-formed example of this can be seen in the [example weather app](https://github.com/SmartDeviceLink-Examples/example_weather_app_ios). Below is a generic example:
+When changing screen layouts and template data (for example, to show a weather hourly data screen vs. a daily weather screen), it is recommended to encapsulate these updates into a class or method. Doing so is a good way to keep SDL UI changes organized. A fully-formed example of this can be seen in the [example weather app](https://github.com/SmartDeviceLink-Examples/example_weather_app_ios). Below is a generic example.
 !@
 
 @![android,javaEE,javaSE]
-When changing screen layouts and template data (for example, to show a weather hourly data screen vs. a daily weather screen), it is recommended to encapsulate these updates into a class or method. Doing so is a good way to keep SDL UI changes organized. A fully-formed example of this can be seen in the [example weather app](https://github.com/SmartDeviceLink-Examples/example_weather_app_android). Below is a generic example:
+When changing screen layouts and template data (for example, to show a weather hourly data screen vs. a daily weather screen), it is recommended to encapsulate these updates into a class or method. Doing so is a good way to keep SDL UI changes organized. A fully-formed example of this can be seen in the [example weather app](https://github.com/SmartDeviceLink-Examples/example_weather_app_android). Below is a generic example.
 !@
 
 @![javascript]
-When changing screen layouts and template data (for example, to show a weather hourly data screen vs. a daily weather screen), it is recommended to encapsulate these updates into a class or method. Doing so is a good way to keep SDL UI changes organized. Below is a generic example:
+When changing screen layouts and template data (for example, to show a weather hourly data screen vs. a daily weather screen), it is recommended to encapsulate these updates into a class or method. Doing so is a good way to keep SDL UI changes organized. Below is a generic example.
 !@
 
 ## Screen Change Example Code
@@ -254,8 +254,8 @@ NS_ASSUME_NONNULL_END
 - (void)showScreen {
     // Batch updates
     [self.sdlManager.screenManager beginUpdates];
-    // Change template to Graphics With Text
-    [self.sdlManager.screenManager changeLayout:[[SDLTemplateConfiguration alloc] initWithTemplate:SDLPredefinedLayoutGraphicWithText] withCompletionHandler:nil];
+    // Change template to Graphics With Text and SoftButtons
+    [self.sdlManager.screenManager changeLayout:[[SDLTemplateConfiguration alloc] initWithTemplate:SDLPredefinedLayoutGraphicWithTextAndSoftButtons] withCompletionHandler:nil];
     // Assign text fields to view model data
     self.sdlManager.screenManager.textField1 = self.homeDataViewModel.text1;
     self.sdlManager.screenManager.textField2 = self.homeDataViewModel.text2;
@@ -289,8 +289,8 @@ struct HomeSDLScreen: CustomSDLScreen {
     func showScreen() {
         // Batch updates
         self.sdlManager.screenManager.beginUpdates()
-        // Change template to Graphics With Text
-        self.sdlManager.screenManager.changeLayout(SDLTemplateConfiguration(predefinedLayout: .graphicWithText))
+        // Change template to Graphics With Text and Soft Buttons
+        self.sdlManager.screenManager.changeLayout(SDLTemplateConfiguration(predefinedLayout: .graphicWithTextAndSoftButtons))
         // Assign text fields to view model data
         self.sdlManager.screenManager.textField1 = self.homeDataViewModel.text1
         self.sdlManager.screenManager.textField2 = self.homeDataViewModel.text2
@@ -408,11 +408,6 @@ NS_ASSUME_NONNULL_END
     [self.sdlManager.screenManager beginUpdates];
     // Change template to Tiles Only
     [self.sdlManager.screenManager changeLayout:[[SDLTemplateConfiguration alloc] initWithTemplate:SDLPredefinedLayoutTilesOnly] withCompletionHandler:nil];
-    // Assign text fields to view model data
-    self.sdlManager.screenManager.textField1 = self.buttonDataViewModel.text1;
-    self.sdlManager.screenManager.textField2 = self.buttonDataViewModel.text2;
-    self.sdlManager.screenManager.textField3 = self.buttonDataViewModel.text3;
-    self.sdlManager.screenManager.textField4 = self.buttonDataViewModel.text4;
     // Assign soft button objects to view model buttons array
     self.sdlManager.screenManager.softButtonObjects = self.buttonDataViewModel.buttons;
     [self.sdlManager.screenManager endUpdates];
@@ -435,11 +430,6 @@ struct ButtonSDLScreen: CustomSDLScreen {
         self.sdlManager.screenManager.beginUpdates()
         // Change template to Tiles Only
         self.sdlManager.screenManager.changeLayout(SDLTemplateConfiguration(predefinedLayout: .tilesOnly))
-        // Assign text fields to view model data
-        self.sdlManager.screenManager.textField1 = self.buttonDataViewModel.text1
-        self.sdlManager.screenManager.textField2 = self.buttonDataViewModel.text2
-        self.sdlManager.screenManager.textField3 = self.buttonDataViewModel.text3
-        self.sdlManager.screenManager.textField4 = self.buttonDataViewModel.text4
         // Assign soft button objects to view model buttons array
         self.sdlManager.screenManager.softButtonObjects = buttonDataViewModel.buttons
         self.sdlManager.screenManager.endUpdates()
