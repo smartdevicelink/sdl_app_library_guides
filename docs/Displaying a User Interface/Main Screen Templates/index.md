@@ -195,7 +195,7 @@ class CustomSdlScreen {
 !@
 
 ### Screen Change Example Implementations
-The following example code shows a few implementations of the example screen changing protocol. It is good practice for screen classes is to keep screen data in a view model. Doing so will add a layer of abstraction for exposing public properties and commands to the screen.
+The following example code shows a few implementations of the example screen changing protocol. A good practice for screen classes is to keep screen data in a view model. Doing so will add a layer of abstraction for exposing public properties and commands to the screen.
 
 For the example below, the `HomeScreen` class will inherit the `CustomSDLScreen` interface and will have a property of type `HomeDataViewModel`. The screen manager will change its text fields based on the view model's data. In addition, the home screen will also create a navigation button to open the `ButtonSDLScreen` when pressed.
 
