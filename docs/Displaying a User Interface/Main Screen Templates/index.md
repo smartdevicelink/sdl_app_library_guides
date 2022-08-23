@@ -262,7 +262,7 @@ NS_ASSUME_NONNULL_END
     self.sdlManager.screenManager.textField3 = self.homeDataViewModel.text3;
     self.sdlManager.screenManager.textField4 = self.homeDataViewModel.text4;
     // Create and assign a button to navigate to the ButtonSDLScreen
-    SDLSoftButtonObject *navigationButton = [[SDLSoftButtonObject alloc] initWithName:@"ButtonSDLScreen" text:@"Button Screen" artwork:nil handler:^(SDLOnButtonPress * _Nullable buttonPress,        SDLOnButtonEvent * _Nullable buttonEvent) {
+    SDLSoftButtonObject *navigationButton = [[SDLSoftButtonObject alloc] initWithName:@"ButtonSDLScreen" text:@"Button Screen" artwork:nil handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
         if (buttonPress == nil) { return; }
         [self.buttonScreen showScreen];
     }];
