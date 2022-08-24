@@ -390,7 +390,8 @@ After you subscribe to the `InteriorVehicleDataNotification` you must also subsc
 
 ###### RPC < v6.0
 ```java
-GetInteriorVehicleData getInteriorVehicleData = new GetInteriorVehicleData(ModuleType.CLIMATE);
+GetInteriorVehicleData getInteriorVehicleData = new GetInteriorVehicleData(ModuleType.CLIMATE)
+	.setSubscribe(true);
 getInteriorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
@@ -404,7 +405,8 @@ sdlManager.sendRPC(getInteriorVehicleData);
 ###### RPC v6.0+
 ```java
 GetInteriorVehicleData getInteriorVehicleData = new GetInteriorVehicleData(ModuleType.CLIMATE)
-    .setModuleId(moduleID);
+    .setModuleId(moduleID)
+    .setSubscribe(true);
 getInteriorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
@@ -433,7 +435,8 @@ After you subscribe to the `InteriorVehicleDataNotification` you must also subsc
 ```js
 // sdl_javascript_suite v1.1+
 const getInteriorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
-    .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE);
+    .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE)
+    .setSubscribe(true);
 const response = await sdlManager.sendRpcResolve(getInteriorVehicleData);
 // This can now be used to retrieve data
 // Code
@@ -441,7 +444,8 @@ const response = await sdlManager.sendRpcResolve(getInteriorVehicleData);
 
 // Pre sdl_javascript_suite v1.1
 const getInteriorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
-    .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE);
+    .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE)
+    .setSubscribe(true);
 const response = await sdlManager.sendRpc(getInteriorVehicleData).catch(error => error);
 // This can now be used to retrieve data
 // Code
@@ -452,7 +456,8 @@ const response = await sdlManager.sendRpc(getInteriorVehicleData).catch(error =>
 // sdl_javascript_suite v1.1+
 const getInteriorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
     .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE)
-    .setModuleId(moduleId);
+    .setModuleId(moduleId)
+    .setSubscribe(true);
 const response = await sdlManager.sendRpcResolve(getInteriorVehicleData);
 // This can now be used to retrieve data
 // Code
@@ -461,7 +466,8 @@ const response = await sdlManager.sendRpcResolve(getInteriorVehicleData);
 // Pre sdl_javascript_suite v1.1
 const getInteriorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
     .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE)
-    .setModuleId(moduleId);
+    .setModuleId(moduleId)
+    .setSubscribe(true);
 const response = await sdlManager.sendRpc(getInteriorVehicleData).catch(error => error);
 // This can now be used to retrieve data
 // Code
