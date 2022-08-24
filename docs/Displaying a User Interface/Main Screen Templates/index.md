@@ -321,12 +321,7 @@ class HomeSdlScreen extends CustomSdlScreen {
     constructor (sdlManager) {
         super(sdlManager);
         this.buttonScreen = new ButtonSdlScreen(sdlManager);
-        this.homeDataViewModel = {
-            text1: 'Text 1',
-            text2: 'Text 2',
-            text3: 'Text 3',
-            text4: 'Text 4',
-        };
+        this.homeDataViewModel = new HomeDataViewModel(); // holds plain object data
     }
 
     showScreen () {
@@ -450,9 +445,7 @@ struct ButtonSDLScreen: CustomSDLScreen {
 class ButtonSdlScreen extends CustomSdlScreen {
     constructor (sdlManager) {
         super(sdlManager);
-        this.buttonDataViewModel = {
-            buttons: [new SDL.manager.screen.utils.SoftButtonObject('button', [new SDL.manager.screen.utils.SoftButtonState('hello', 'hello')], 'hello')],
-        };
+        this.buttonDataViewModel = new ButtonDataViewModel(); // holds plain object data
     }
     showScreen () {
         const screenManager = this.sdlManager.getScreenManager();
