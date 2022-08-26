@@ -138,6 +138,10 @@ Each module type can have multiple modules in RPC v6.0+. In previous versions, o
 ### Getting Remote Control Module Information
 Prior to using any remote control RPCs, you must check that the head unit has the remote control capability. As you will encounter head units that do *not* support remote control, or head units that do not give your application permission to read and write remote control data, this check is important.
 
+!!! NOTE
+This check can be performed once your SDL app has left the HMI state of `NONE`. More information on how to monitor the HMI status can be found in the [Understanding Permissions](Getting Started/Understanding Permissions#hmi-levels) guide.
+!!!
+
 When connected to head units supporting RPC v6.0+, you should save this information for future use. The `moduleId` contained within the `moduleInfo` struct on each capability is necessary to control that module.
 
 @![iOS]
@@ -390,7 +394,8 @@ After you subscribe to the `InteriorVehicleDataNotification` you must also subsc
 
 ###### RPC < v6.0
 ```java
-GetInteriorVehicleData getInteriorVehicleData = new GetInteriorVehicleData(ModuleType.CLIMATE);
+GetInteriorVehicleData getInteriorVehicleData = new GetInteriorVehicleData(ModuleType.CLIMATE)
+	.setSubscribe(true);
 getInteriorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
@@ -404,7 +409,8 @@ sdlManager.sendRPC(getInteriorVehicleData);
 ###### RPC v6.0+
 ```java
 GetInteriorVehicleData getInteriorVehicleData = new GetInteriorVehicleData(ModuleType.CLIMATE)
-    .setModuleId(moduleID);
+    .setModuleId(moduleID)
+    .setSubscribe(true);
 getInteriorVehicleData.setOnRPCResponseListener(new OnRPCResponseListener() {
     @Override
     public void onResponse(int correlationId, RPCResponse response) {
@@ -433,7 +439,8 @@ After you subscribe to the `InteriorVehicleDataNotification` you must also subsc
 ```js
 // sdl_javascript_suite v1.1+
 const getInteriorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
-    .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE);
+    .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE)
+    .setSubscribe(true);
 const response = await sdlManager.sendRpcResolve(getInteriorVehicleData);
 // This can now be used to retrieve data
 // Code
@@ -441,7 +448,8 @@ const response = await sdlManager.sendRpcResolve(getInteriorVehicleData);
 
 // Pre sdl_javascript_suite v1.1
 const getInteriorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
-    .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE);
+    .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE)
+    .setSubscribe(true);
 const response = await sdlManager.sendRpc(getInteriorVehicleData).catch(error => error);
 // This can now be used to retrieve data
 // Code
@@ -452,7 +460,8 @@ const response = await sdlManager.sendRpc(getInteriorVehicleData).catch(error =>
 // sdl_javascript_suite v1.1+
 const getInteriorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
     .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE)
-    .setModuleId(moduleId);
+    .setModuleId(moduleId)
+    .setSubscribe(true);
 const response = await sdlManager.sendRpcResolve(getInteriorVehicleData);
 // This can now be used to retrieve data
 // Code
@@ -461,7 +470,8 @@ const response = await sdlManager.sendRpcResolve(getInteriorVehicleData);
 // Pre sdl_javascript_suite v1.1
 const getInteriorVehicleData = new SDL.rpc.messages.GetInteriorVehicleData()
     .setModuleType(SDL.rpc.enums.ModuleType.CLIMATE)
-    .setModuleId(moduleId);
+    .setModuleId(moduleId)
+    .setSubscribe(true);
 const response = await sdlManager.sendRpc(getInteriorVehicleData).catch(error => error);
 // This can now be used to retrieve data
 // Code

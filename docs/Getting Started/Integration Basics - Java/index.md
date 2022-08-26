@@ -785,3 +785,6 @@ The `SDLSessionBean` should be inside a Java package other than the default pack
 * Create Manifest. Apply + OK.
 * Run Build -> Build Artifacts to get a .war file in the /out folder.
 !@
+
+## Where to Go From Here
+You should now be able to connect to a head unit or emulator. For more guidance on connecting, see [Connecting to an Infotainment System](Getting Started/Connecting to an Infotainment System). To start building your app, [learn about designing your interface](Displaying a User Interface/Main Screen Templates). Please also review the [best practices](https://smartdevicelink.com/en/guides/sdl-overview-guides/best-practices/display-information/) for building an SDL app.
