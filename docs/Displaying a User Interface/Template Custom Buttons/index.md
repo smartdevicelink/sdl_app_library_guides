@@ -59,25 +59,22 @@ List<SoftButtonState> stateList1 = Arrays.asList(textState1, textState2);
 SoftButtonObject softButtonObject1 = new SoftButtonObject("softButtonObject1", stateList1, textState1.getName(), new SoftButtonObject.OnEventListener() {
     @Override
     public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
+              softButtonObject.transitionToNextState();
     }
 
     @Override
     public void onEvent(SoftButtonObject softButtonObject, OnButtonEvent onButtonEvent) {
-
     }
 });
 
 SoftButtonState textState3 = new SoftButtonState("<#State Name3#>", "<#Button Label Text3#>", null);
-SoftButtonState textState4 = new SoftButtonState("<#State Name4#>", "<#Button Label Text4#>", null);
-List<SoftButtonState> stateList2 = Arrays.asList(textState3, textState4);
-SoftButtonObject softButtonObject2 = new SoftButtonObject("softButtonObject2", stateList2, textState1.getName(), new SoftButtonObject.OnEventListener() {
+SoftButtonObject softButtonObject2 = new SoftButtonObject("softButtonObject2", Collections.singletonList(textState3), textState1.getName(), new SoftButtonObject.OnEventListener() {
     @Override
     public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
     }
 
     @Override
     public void onEvent(SoftButtonObject softButtonObject, OnButtonEvent onButtonEvent) {
-
     }
 });
 
@@ -193,6 +190,7 @@ SoftButtonState imageState2 = new SoftButtonState("<#State Name2#>", null, sdlAr
 SoftButtonObject softButtonObject1 = new SoftButtonObject("softButtonObject1", Arrays.asList(imageState1, imageState2), imageState1.getName(), new SoftButtonObject.OnEventListener() {
     @Override
     public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
+              softButtonObject1.transitionToNextState();
     }
 
     @Override
@@ -201,8 +199,7 @@ SoftButtonObject softButtonObject1 = new SoftButtonObject("softButtonObject1", A
 });
 
 SoftButtonState imageState3 = new SoftButtonState("<#State Name3#>", null, sdlArtwork3);
-SoftButtonState imageState4 = new SoftButtonState("<#State Name4#>", null, sdlArtwork4);
-SoftButtonObject softButtonObject2 = new SoftButtonObject("softButtonObject2", Arrays.asList(imageState3, imageState4), imageState3.getName(), new SoftButtonObject.OnEventListener() {
+SoftButtonObject softButtonObject2 = new SoftButtonObject("softButtonObject2", Collections.singletonList(imageState3), imageState3.getName(), new SoftButtonObject.OnEventListener() {
     @Override
     public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
     }
@@ -294,6 +291,7 @@ SoftButtonState textAndImageState2 = new SoftButtonState("<#State Name2#>", "<#B
 SoftButtonObject softButtonObject1 = new SoftButtonObject("softButtonObject1", Arrays.asList(textAndImageState1, textAndImageState2), textAndImageState1.getName(), new SoftButtonObject.OnEventListener() {
     @Override
     public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
+              softButtonObject1.transitionToNextState();
     }
 
     @Override
@@ -302,8 +300,7 @@ SoftButtonObject softButtonObject1 = new SoftButtonObject("softButtonObject1", A
 });
 
 SoftButtonState textAndImageState3 = new SoftButtonState("<#State Name3#>", "<#Button Label Text3#>", sdlArtwork3);
-SoftButtonState textAndImageState4 = new SoftButtonState("<#State Name4#>", "<#Button Label Text4#>", sdlArtwork4);
-SoftButtonObject softButtonObject2 = new SoftButtonObject("softButtonObject2", Arrays.asList(textAndImageState3, textAndImageState4), textAndImageState3.getName(), new SoftButtonObject.OnEventListener() {
+SoftButtonObject softButtonObject2 = new SoftButtonObject("softButtonObject2", Collections.singletonList(textAndImageState3), textAndImageState3.getName(), new SoftButtonObject.OnEventListener() {
     @Override
     public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
     }
