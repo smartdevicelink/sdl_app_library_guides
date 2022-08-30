@@ -59,7 +59,7 @@ List<SoftButtonState> stateList1 = Arrays.asList(textState1, textState2);
 SoftButtonObject softButtonObject1 = new SoftButtonObject("softButtonObject1", stateList1, textState1.getName(), new SoftButtonObject.OnEventListener() {
     @Override
     public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
-              softButtonObject.transitionToNextState();
+        softButtonObject.transitionToNextState();
     }
 
     @Override
@@ -190,7 +190,7 @@ SoftButtonState imageState2 = new SoftButtonState("<#State Name2#>", null, sdlAr
 SoftButtonObject softButtonObject1 = new SoftButtonObject("softButtonObject1", Arrays.asList(imageState1, imageState2), imageState1.getName(), new SoftButtonObject.OnEventListener() {
     @Override
     public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
-              softButtonObject1.transitionToNextState();
+        softButtonObject.transitionToNextState();
     }
 
     @Override
@@ -291,7 +291,7 @@ SoftButtonState textAndImageState2 = new SoftButtonState("<#State Name2#>", "<#B
 SoftButtonObject softButtonObject1 = new SoftButtonObject("softButtonObject1", Arrays.asList(textAndImageState1, textAndImageState2), textAndImageState1.getName(), new SoftButtonObject.OnEventListener() {
     @Override
     public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
-              softButtonObject1.transitionToNextState();
+        softButtonObject.transitionToNextState();
     }
 
     @Override
@@ -394,7 +394,7 @@ softButtonState2.setHighlighted(false);
 SoftButtonObject softButtonObject = new SoftButtonObject("softButtonObject", Arrays.asList(softButtonState1, softButtonState2), softButtonState1.getName(), new SoftButtonObject.OnEventListener() {
      @Override
      public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
-          softButtonObject.transitionToNextState();
+         softButtonObject.transitionToNextState();
      }
 
      @Override
