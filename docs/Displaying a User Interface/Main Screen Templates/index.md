@@ -177,7 +177,17 @@ protocol CustomSDLScreen {
 
 @![android,javaSE,javaEE]
 ```java
-    // TODO
+public class CustomSdlScreen {
+    protected SdlManager sdlManager;
+
+    public CustomSdlScreen(SdlManager sdlManager) {
+        this.sdlManager = sdlManager;
+    }
+
+    public void showScreen() {
+        // stub
+    }
+}
 ```
 !@
 
@@ -311,7 +321,52 @@ struct HomeSDLScreen: CustomSDLScreen {
 
 @![android,javaSE,javaEE]
 ```java
-    // TODO
+public class HomeSdlScreen extends CustomSdlScreen {
+    private ButtonSdlScreen buttonScreen;
+    // An example of your data model that will feed data to the SDL screen's UI
+    private HomeDataViewModel homeDataViewModel;
+
+    public HomeSdlScreen(SdlManager sdlManager) {
+        super(sdlManager);
+
+        buttonScreen = new ButtonSdlScreen(sdlManager);
+        homeDataViewModel = new HomeDataViewModel();
+    }
+
+    public void showScreen() {
+        // Batch Updates
+        sdlManager.getScreenManager().beginTransaction();
+        // Change template to Graphics With Text and Soft Buttons
+        TemplateConfiguration templateConfiguration = new TemplateConfiguration().setTemplate(PredefinedLayout.GRAPHIC_WITH_TEXT.toString());
+        sdlManager.getScreenManager().changeLayout(templateConfiguration, new CompletionListener() {
+            @Override
+            public void onComplete(boolean success) {}
+        });
+
+        // Assign text fields to view model data
+        sdlManager.getScreenManager().setTextField1(homeDataViewModel.getText1());
+        sdlManager.getScreenManager().setTextField2(homeDataViewModel.getText2());
+        sdlManager.getScreenManager().setTextField3(homeDataViewModel.getText3());
+        sdlManager.getScreenManager().setTextField4(homeDataViewModel.getText4());
+        // Create and assign a button to navigate to the ButtonSdlScreen
+        SoftButtonState textState = new SoftButtonState("ButtonSdlScreenState", "Button Screen", null);
+        SoftButtonObject navigationButton = new SoftButtonObject("ButtonSdlScreen", Collections.singletonList(textState), textState.getName(), new SoftButtonObject.OnEventListener() {
+            @Override
+            public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
+                buttonScreen.showScreen();
+            }
+
+            @Override
+            public void onEvent(SoftButtonObject softButtonObject, OnButtonEvent onButtonEvent) {
+            }
+        });
+        sdlManager.getScreenManager().setSoftButtonObjects(Collections.singletonList(navigationButton));
+        sdlManager.getScreenManager().commit(new CompletionListener() {
+            @Override
+            public void onComplete(boolean success) {}
+        });
+    }
+}
 ```
 !@
 
@@ -436,7 +491,29 @@ struct ButtonSDLScreen: CustomSDLScreen {
 
 @![android,javaSE,javaEE]
 ```java
-    // TODO
+public class ButtonSdlScreen extends CustomSdlScreen {
+    private ButtonDataViewModel buttonDataViewModel;
+
+    public ButtonSdlScreen(SdlManager sdlManager) {
+        super(sdlManager);
+
+
+    }
+
+    public void showScreen() {
+        sdlManager.getScreenManager().beginTransaction();
+        TemplateConfiguration templateConfiguration = new TemplateConfiguration().setTemplate(PredefinedLayout.TILES_ONLY.toString());
+        sdlManager.getScreenManager().changeLayout(templateConfiguration, new CompletionListener() {
+            @Override
+            public void onComplete(boolean success) {}
+        });
+        sdlManager.getScreenManager().setSoftButtonObjects(buttonDataViewModel.getButtonObjects());
+        sdlManager.getScreenManager().commit(new CompletionListener() {
+            @Override
+            public void onComplete(boolean success) {}
+        });
+    }
+}
 ```
 !@
 
