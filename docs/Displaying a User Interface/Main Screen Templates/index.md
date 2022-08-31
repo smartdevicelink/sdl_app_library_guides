@@ -497,7 +497,7 @@ public class ButtonSdlScreen extends CustomSdlScreen {
     public ButtonSdlScreen(SdlManager sdlManager) {
         super(sdlManager);
 
-
+        buttonDataViewModel = new ButtonDataViewModel();
     }
 
     public void showScreen() {
