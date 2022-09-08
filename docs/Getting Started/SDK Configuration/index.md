@@ -89,7 +89,7 @@ This permission is a runtime permission and will require the user to grant the p
 !!!
 
 !!! NOTE
-If the app is targeting Android TIRAMISU (API Level 33) or higher, the Android Manifest file also needs to include the following permission to allow the app to display notifications
+If the app is targeting Android TIRAMISU (API Level 33) or higher, the Android Manifest file also needs to include the following permission to allow the app to display notifications.
 
 This permission is a runtime permission and will require the user to grant the permission.
 
