@@ -18,7 +18,7 @@ This means the permission will need to be listed in the `AndroidManifest.xml` fi
         tools:targetApi="33"/>
 ```
 
-The developer will also need to request this permission from the user as it is a runtime permission, given that apps need to request the BLUETOOTH_CONNECT permission with Andoid S API 31 and above, below is an example on how to request both at the same time.
+The developer will also need to request this permission from the user as it is a runtime permission. Given that apps need to request the BLUETOOTH_CONNECT permission with Android S (API Level 31) and above, below is an example of how to request both at the same time.
 
 ```java
 //MainActivity.java
