@@ -1,4 +1,4 @@
-# Upgrading to 5.4
+# Updating to 5.4
 
 ## Overview
 
