@@ -88,6 +88,17 @@ This permission is a runtime permission and will require the user to grant the p
 ```
 !!!
 
+!!! NOTE
+If the app is targeting Android TIRAMISU (API Level 33) or higher, the Android Manifest file also needs to include the following permission to allow the app to display notifications
+
+This permission is a runtime permission and will require the user to grant the permission.
+
+```xml
+<uses-permission android:name="android.permission.POST_NOTIFICATIONS"
+        tools:targetApi="33"/>
+```
+!!!
+
 ## 3. Add Required SDL Queries
 
 If targeting Android R (API Level 30) or higher, it is required to add the SDL specific entries into the app's `queries` tag in the `AndroidManifest.xml`. If the tag already exists, just the intents need to be added. If the tag does not yet exist in the manifest, they can be added after the permissions are declared but before the `application` tag is opened.
