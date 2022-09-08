@@ -1,4 +1,4 @@
-# Upgrading to 5.6
+# Updating to 5.6
 
 ## Overview
 
