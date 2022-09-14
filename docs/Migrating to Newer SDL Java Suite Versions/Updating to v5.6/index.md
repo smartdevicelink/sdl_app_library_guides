@@ -9,7 +9,8 @@ The full release notes are published [here](https://github.com/smartdevicelink/s
 SDL Java Suite library version 5.6.0 adds support for Android 13.
 
 ## POST_NOTIFICATIONS Runtime Permissions
-Starting in Android 13, for the library and app to display notifications, app developers will need to request the new `POST_NOTIFICATIONS` runtime permission.
+
+Starting in Android 13, app developers will need to request the new `POST_NOTIFICATIONS` runtime permission in order for the SDL library and their app to display notifications.
 
 This means the permission will need to be listed in the `AndroidManifest.xml` file.
 
