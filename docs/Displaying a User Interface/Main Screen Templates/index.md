@@ -134,6 +134,411 @@ if (success) {
 ```
 !@
 
+@![iOS]
+When changing screen layouts and template data (for example, to show a weather hourly data screen vs. a daily weather screen), it is recommended to encapsulate these updates into a class or method. Doing so is a good way to keep SDL UI changes organized. A fully-formed example of this can be seen in the [example weather app](https://github.com/SmartDeviceLink-Examples/example_weather_app_ios). Below is a generic example.
+!@
+
+@![android,javaEE,javaSE]
+When changing screen layouts and template data (for example, to show a weather hourly data screen vs. a daily weather screen), it is recommended to encapsulate these updates into a class or method. Doing so is a good way to keep SDL UI changes organized. A fully-formed example of this can be seen in the [example weather app](https://github.com/SmartDeviceLink-Examples/example_weather_app_android). Below is a generic example.
+!@
+
+@![javascript]
+When changing screen layouts and template data (for example, to show a weather hourly data screen vs. a daily weather screen), it is recommended to encapsulate these updates into a class or method. Doing so is a good way to keep SDL UI changes organized. Below is a generic example.
+!@
+
+## Screen Change Example Code
+This example code creates an interface that can be implemented by various "screens" of your SDL app. This is a recommended design pattern so that you can separate your code to only involve the data models you need. This is just a simple example and your own needs may be different.
+
+### Screen Change Example Interface
+All screens will need to have access to the @![iOS]`SDLScreenManager`!@@![android, javaEE, javaSE, javascript]`ScreenManager`!@ object and a function to display the screen. Therefore, it is recommended to create a generic interface for all screens to follow. For the example below, the `CustomSDLScreen` protocol requires an initializer with the parameters `SDLManager` and a `showScreen` method.
+
+@![iOS]
+|~
+```objc
+// CustomSDLScreen.h
+@class SDLManager;
+
+@protocol CustomSDLScreen <NSObject>
+
+@required
+- (instancetype)initWithManager:(SDLManager *)sdlManager;
+- (void)showScreen;
+
+@end
+```
+```swift
+protocol CustomSDLScreen {
+    init(sdlManager: SDLManager)
+    func showScreen()
+}
+```
+~|
+!@
+
+@![android,javaSE,javaEE]
+```java
+public class CustomSdlScreen {
+    protected SdlManager sdlManager;
+
+    public CustomSdlScreen(SdlManager sdlManager) {
+        this.sdlManager = sdlManager;
+    }
+
+    public void showScreen() {
+        // stub
+    }
+}
+```
+!@
+
+@![javascript]
+```js
+class CustomSdlScreen {
+    constructor (sdlManager) {
+        this.sdlManager = sdlManager;
+    }
+    showScreen () {
+        // stub
+    }
+}
+```
+!@
+
+### Screen Change Example Implementations
+The following example code shows a few implementations of the example screen changing protocol. A good practice for screen classes is to keep screen data in a view model. Doing so will add a layer of abstraction for exposing public properties and commands to the screen.
+
+For the example below, the `HomeScreen` class will inherit the `CustomSDLScreen` interface and will have a property of type `HomeDataViewModel`. The screen manager will change its text fields based on the view model's data. In addition, the home screen will also create a navigation button to open the `ButtonSDLScreen` when pressed.
+
+@![iOS]
+|~
+```objc
+// HomeSDLScreen.h
+#import <Foundation/Foundation.h>
+#import "CustomSDLScreen.h"
+
+@class HomeDataViewModel;
+@class SDLManager;
+@class SDLScreenManager;
+@class SDLSoftButtonObject;
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface HomeSDLScreen : NSObject<CustomSDLScreen>
+
+@end
+
+NS_ASSUME_NONNULL_END
+
+/************************************************************************/
+// HomeSDLScreen.m
+#import "HomeSDLScreen.h"
+
+#import "ButtonSDLScreen.h"
+#import "CustomSDLScreen.h"
+#import "HomeDataViewModel.h"
+#import "SmartDeviceLink.h"
+
+@interface HomeSDLScreen()
+
+@property (weak, nonatomic) SDLManager *sdlManager;
+// A button to navigate to the ButtonSDLScreen
+@property (strong, nonatomic) ButtonSDLScreen *buttonScreen;
+// An example of your data model that will feed data to the SDL screen's UI
+@property (strong, nonatomic) HomeDataViewModel *homeDataViewModel;
+
+@end
+
+@implementation HomeSDLScreen
+
+- (instancetype)initWithManager:(SDLManager *)sdlManager {
+    self = [super init];
+    if (!self) { return nil; }
+
+    _sdlManager = sdlManager;
+    _buttonScreen = [[ButtonSDLScreen alloc] initWithManager:sdlManager];
+    _homeDataViewModel = [[HomeDataViewModel alloc] init];
+
+    return self;
+}
+
+- (void)showScreen {
+    // Batch updates
+    [self.sdlManager.screenManager beginUpdates];
+    // Change template to Graphics With Text and SoftButtons
+    [self.sdlManager.screenManager changeLayout:[[SDLTemplateConfiguration alloc] initWithTemplate:SDLPredefinedLayoutGraphicWithTextAndSoftButtons] withCompletionHandler:nil];
+    // Assign text fields to view model data
+    self.sdlManager.screenManager.textField1 = self.homeDataViewModel.text1;
+    self.sdlManager.screenManager.textField2 = self.homeDataViewModel.text2;
+    self.sdlManager.screenManager.textField3 = self.homeDataViewModel.text3;
+    self.sdlManager.screenManager.textField4 = self.homeDataViewModel.text4;
+    // Create and assign a button to navigate to the ButtonSDLScreen
+    SDLSoftButtonObject *navigationButton = [[SDLSoftButtonObject alloc] initWithName:@"ButtonSDLScreen" text:@"Button Screen" artwork:nil handler:^(SDLOnButtonPress * _Nullable buttonPress, SDLOnButtonEvent * _Nullable buttonEvent) {
+        if (buttonPress == nil) { return; }
+        [self.buttonScreen showScreen];
+    }];
+    self.sdlManager.screenManager.softButtonObjects = @[navigationButton];
+    // Change Primary Graphic
+    self.sdlManager.screenManager.primaryGraphic = <#SDLArtwork#>;
+    [self.sdlManager.screenManager endUpdates];
+}
+
+@end
+```
+```swift
+struct HomeSDLScreen: CustomSDLScreen {
+    let sdlManager: SDLManager
+    let buttonScreen: ButtonSDLScreen
+    // An example of your data model that will feed data to the SDL screen's UI
+    let homeDataViewModel = HomeDataViewModel()
+
+    init(sdlManager: SDLManager) {
+        self.sdlManager = sdlManager
+        self.buttonScreen = ButtonSDLScreen(sdlManager: sdlManager)
+    }
+
+    func showScreen() {
+        // Batch updates
+        self.sdlManager.screenManager.beginUpdates()
+        // Change template to Graphics With Text and Soft Buttons
+        self.sdlManager.screenManager.changeLayout(SDLTemplateConfiguration(predefinedLayout: .graphicWithTextAndSoftButtons))
+        // Assign text fields to view model data
+        self.sdlManager.screenManager.textField1 = self.homeDataViewModel.text1
+        self.sdlManager.screenManager.textField2 = self.homeDataViewModel.text2
+        self.sdlManager.screenManager.textField3 = self.homeDataViewModel.text3
+        self.sdlManager.screenManager.textField4 = self.homeDataViewModel.text4
+        // Create and assign a button to navigate to the ButtonSDLScreen
+        let navigationButton = SDLSoftButtonObject(name: "ButtonSDLScreen", text: "Button Screen", artwork: nil) { (buttonPress, buttonEvent) in
+            guard buttonPress != nil else { return }
+            self.buttonScreen.showScreen()
+        }
+        self.sdlManager.screenManager.softButtonObjects = [navigationButton]
+        self.sdlManager.screenManager.endUpdates()
+    }
+}
+```
+~|
+!@
+
+@![android,javaSE,javaEE]
+```java
+public class HomeSdlScreen extends CustomSdlScreen {
+    private ButtonSdlScreen buttonScreen;
+    // An example of your data model that will feed data to the SDL screen's UI
+    private HomeDataViewModel homeDataViewModel;
+
+    public HomeSdlScreen(SdlManager sdlManager) {
+        super(sdlManager);
+
+        buttonScreen = new ButtonSdlScreen(sdlManager);
+        homeDataViewModel = new HomeDataViewModel();
+    }
+
+    public void showScreen() {
+        // Batch Updates
+        sdlManager.getScreenManager().beginTransaction();
+        // Change template to Graphics With Text and Soft Buttons
+        TemplateConfiguration templateConfiguration = new TemplateConfiguration().setTemplate(PredefinedLayout.GRAPHIC_WITH_TEXT.toString());
+        sdlManager.getScreenManager().changeLayout(templateConfiguration, new CompletionListener() {
+            @Override
+            public void onComplete(boolean success) {}
+        });
+
+        // Assign text fields to view model data
+        sdlManager.getScreenManager().setTextField1(homeDataViewModel.getText1());
+        sdlManager.getScreenManager().setTextField2(homeDataViewModel.getText2());
+        sdlManager.getScreenManager().setTextField3(homeDataViewModel.getText3());
+        sdlManager.getScreenManager().setTextField4(homeDataViewModel.getText4());
+        // Create and assign a button to navigate to the ButtonSdlScreen
+        SoftButtonState textState = new SoftButtonState("ButtonSdlScreenState", "Button Screen", null);
+        SoftButtonObject navigationButton = new SoftButtonObject("ButtonSdlScreen", Collections.singletonList(textState), textState.getName(), new SoftButtonObject.OnEventListener() {
+            @Override
+            public void onPress(SoftButtonObject softButtonObject, OnButtonPress onButtonPress) {
+                buttonScreen.showScreen();
+            }
+
+            @Override
+            public void onEvent(SoftButtonObject softButtonObject, OnButtonEvent onButtonEvent) {
+            }
+        });
+        sdlManager.getScreenManager().setSoftButtonObjects(Collections.singletonList(navigationButton));
+        sdlManager.getScreenManager().commit(new CompletionListener() {
+            @Override
+            public void onComplete(boolean success) {}
+        });
+    }
+}
+```
+!@
+
+@![javascript]
+```js
+class HomeSdlScreen extends CustomSdlScreen {
+    constructor (sdlManager) {
+        super(sdlManager);
+        this.buttonScreen = new ButtonSdlScreen(sdlManager);
+        this.homeDataViewModel = new HomeDataViewModel(); // holds plain object data
+    }
+
+    showScreen () {
+        const screenManager = this.sdlManager.getScreenManager();
+        // Batch Updates
+        screenManager.beginTransaction();
+        // Change template to Graphics With Text and Soft Buttons
+        screenManager.changeLayout(new SDL.rpc.structs.TemplateConfiguration()
+            .setTemplate(SDL.rpc.enums.PredefinedLayout.GRAPHIC_WITH_TEXT_AND_SOFTBUTTONS));
+        // Assign text fields to view model data
+        screenManager.setTextField1(this.homeDataViewModel.text1);
+        screenManager.setTextField2(this.homeDataViewModel.text2);
+        screenManager.setTextField3(this.homeDataViewModel.text3);
+        screenManager.setTextField4(this.homeDataViewModel.text4);
+        // Create and assign a button to navigate to the ButtonSdlScreen
+        const navigationButton = new SDL.manager.screen.utils.SoftButtonObject('ButtonSdlScreen', [new SDL.manager.screen.utils.SoftButtonState('ButtonSdlScreen', 'Button Screen')], 'ButtonSdlScreen', (id, rpc) => {
+            if (rpc instanceof SDL.rpc.messages.OnButtonPress) {
+                this.buttonScreen.showScreen();
+            }
+        });
+        screenManager.setSoftButtonObjects([navigationButton]);
+        screenManager.commit();
+    }
+}
+```
+!@
+
+The `ButtonSDLScreen` follows the same patterns as the `HomeSDLScreen` but has minor implementation differences. The screen's view model `ButtonDataViewModel` contains properties unique to the `ButtonSDLScreen` such as text fields and an array of soft button objects. It also changes the template configuration to tiles only.
+
+@![iOS]
+|~
+```objc
+// ButtonSDLScreen.h
+#import <Foundation/Foundation.h>
+#import "CustomSDLScreen.h"
+
+@class ButtonDataViewModel;
+@class SDLManager;
+@class SDLScreenManager;
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface ButtonSDLScreen : NSObject<CustomSDLScreen>
+
+@end
+
+NS_ASSUME_NONNULL_END
+
+/************************************************************************/
+// ButtonSDLScreen.m
+#import "ButtonSDLScreen.h"
+
+#import "ButtonDataViewModel.h"
+#import "CustomSDLScreen.h"
+#import "SmartDeviceLink.h"
+
+@interface ButtonSDLScreen()
+
+@property (strong, nonatomic) SDLManager *sdlManager;
+// An example of your data model that will feed data to the SDL screen's UI
+@property (strong, nonatomic) ButtonDataViewModel *buttonDataViewModel;
+
+@end
+
+@implementation ButtonSDLScreen
+
+- (instancetype)initWithManager:(SDLManager *)sdlManager {
+    self = [super init];
+    if (!self) { return nil; }
+
+    _sdlManager = sdlManager;
+    _buttonDataViewModel = [[ButtonDataViewModel alloc] init];
+
+    return self;
+}
+
+- (void)showScreen {
+    // Batch Updates
+    [self.sdlManager.screenManager beginUpdates];
+    // Change template to Tiles Only
+    [self.sdlManager.screenManager changeLayout:[[SDLTemplateConfiguration alloc] initWithTemplate:SDLPredefinedLayoutTilesOnly] withCompletionHandler:nil];
+    // Assign soft button objects to view model buttons array
+    self.sdlManager.screenManager.softButtonObjects = self.buttonDataViewModel.buttons;
+    [self.sdlManager.screenManager endUpdates];
+}
+
+@end
+```
+```swift
+struct ButtonSDLScreen: CustomSDLScreen {
+    let sdlManager: SDLManager
+    // An example of your data model that will feed data to the SDL screen's UI
+    let buttonDataViewModel = ButtonDataViewModel()
+
+    init(sdlManager: SDLManager) {
+        self.sdlManager = sdlManager
+    }
+
+    func showScreen() {
+        // Batch Updates
+        self.sdlManager.screenManager.beginUpdates()
+        // Change template to Tiles Only
+        self.sdlManager.screenManager.changeLayout(SDLTemplateConfiguration(predefinedLayout: .tilesOnly))
+        // Assign soft button objects to view model buttons array
+        self.sdlManager.screenManager.softButtonObjects = buttonDataViewModel.buttons
+        self.sdlManager.screenManager.endUpdates()
+    }
+}
+```
+~|
+!@
+
+@![android,javaSE,javaEE]
+```java
+public class ButtonSdlScreen extends CustomSdlScreen {
+    private ButtonDataViewModel buttonDataViewModel;
+
+    public ButtonSdlScreen(SdlManager sdlManager) {
+        super(sdlManager);
+
+        buttonDataViewModel = new ButtonDataViewModel();
+    }
+
+    public void showScreen() {
+        sdlManager.getScreenManager().beginTransaction();
+        TemplateConfiguration templateConfiguration = new TemplateConfiguration().setTemplate(PredefinedLayout.TILES_ONLY.toString());
+        sdlManager.getScreenManager().changeLayout(templateConfiguration, new CompletionListener() {
+            @Override
+            public void onComplete(boolean success) {}
+        });
+        sdlManager.getScreenManager().setSoftButtonObjects(buttonDataViewModel.getButtonObjects());
+        sdlManager.getScreenManager().commit(new CompletionListener() {
+            @Override
+            public void onComplete(boolean success) {}
+        });
+    }
+}
+```
+!@
+
+@![javascript]
+```js
+class ButtonSdlScreen extends CustomSdlScreen {
+    constructor (sdlManager) {
+        super(sdlManager);
+        this.buttonDataViewModel = new ButtonDataViewModel(); // holds plain object data
+    }
+    showScreen () {
+        const screenManager = this.sdlManager.getScreenManager();
+        // Batch Updates
+        screenManager.beginTransaction();
+        // Change template to Tiles Only
+        screenManager.changeLayout(new SDL.rpc.structs.TemplateConfiguration()
+            .setTemplate(SDL.rpc.enums.PredefinedLayout.TILES_ONLY));
+        // Assign soft button objects to view model buttons array
+        screenManager.setSoftButtonObjects(this.buttonDataViewModel.buttons);
+        screenManager.commit();
+    }
+}
+```
+!@
+
 ## Available Templates
 There are fifteen standard templates to choose from, however some head units may only support a subset of these templates. The following examples show how templates will appear on the [Generic HMI](https://github.com/smartdevicelink/generic_hmi) and [Ford's SYNC® 3 HMI](https://developer.ford.com).
 

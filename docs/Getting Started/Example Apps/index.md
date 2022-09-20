@@ -207,6 +207,6 @@ The [SDL Capabilities app](https://github.com/SmartDeviceLink-Examples/SDL-Capab
 
 @![android, iOS]
 !!! NOTE
-Some examples require obtaining API tokens from third parties for data and services. For all of thse examples follow the setup instructions as outlined in their **README.md**.
+Some examples require obtaining API tokens from third parties for data and services. For all of these examples follow the setup instructions as outlined in their **README.md**.
 !!!
 !@
