@@ -64,6 +64,7 @@ Some permissions are required to be granted to the SDL app in order for it to wo
 * [Internet](https://developer.android.com/reference/android/Manifest.permission.html#INTERNET) - Used by the mobile library to communicate with a SDL Server
 * [Bluetooth](https://developer.android.com/reference/android/Manifest.permission.html#BLUETOOTH) - Primary transport for SDL communication between the device and the vehicle's head-unit
 * [Access Network State](https://developer.android.com/reference/android/Manifest.permission.html#ACCESS_NETWORK_STATE) - Required to check if WiFi is enabled on the device
+* [Foreground Service ](https://developer.android.com/reference/android/Manifest.permission.html#FOREGROUND_SERVICE) - Required for SDL to run services in the foreground for applications targeting Android P (API Level 28) or higher
 
 ```xml
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
