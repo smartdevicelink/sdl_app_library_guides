@@ -54,7 +54,7 @@ sdlManager.send([subscribeButtonLeft, subscribeButtonRight], progressHandler: { 
 ```java
 SubscribeButton subscribeButtonLeft = new SubscribeButton(ButtonName.SEEKLEFT);
 SubscribeButton subscribeButtonRight = new SubscribeButton(ButtonName.SEEKRIGHT);
-sdlManager.sendRPCs(Arrays.asList(subscribeButtonLeft, subscribeButtonLeft), new OnMultipleRequestListener() {
+sdlManager.sendRPCs(Arrays.asList(subscribeButtonLeft, subscribeButtonRight), new OnMultipleRequestListener() {
     @Override
     public void onUpdate(int remainingRequests) {
 
