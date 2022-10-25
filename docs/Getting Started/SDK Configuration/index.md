@@ -65,6 +65,7 @@ Some permissions are required to be granted to the SDL app in order for it to wo
 * [Bluetooth](https://developer.android.com/reference/android/Manifest.permission.html#BLUETOOTH) - Primary transport for SDL communication between the device and the vehicle's head-unit
 * [Access Network State](https://developer.android.com/reference/android/Manifest.permission.html#ACCESS_NETWORK_STATE) - Required to check if WiFi is enabled on the device
 * [Bluetooth Connect](https://developer.android.com/reference/android/Manifest.permission#BLUETOOTH_CONNECT) - Required to allow SDL to be notified of Bluetooth Connections on Android S (API Level 31) or higher.
+* [Foreground Service ](https://developer.android.com/reference/android/Manifest.permission.html#FOREGROUND_SERVICE) - Required for SDL to run services in the foreground for applications targeting Android P (API Level 28) or higher
 * [Post Notifications](https://developer.android.com/reference/android/Manifest.permission#POST_NOTIFICATIONS) - Needed to allow SDL notifications on Android TIRAMISU (API Level 33) or higher.
 
 ```xml
