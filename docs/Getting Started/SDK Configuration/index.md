@@ -65,6 +65,8 @@ Some permissions are required to be granted to the SDL app in order for it to wo
 * [Bluetooth](https://developer.android.com/reference/android/Manifest.permission.html#BLUETOOTH) - Primary transport for SDL communication between the device and the vehicle's head-unit
 * [Access Network State](https://developer.android.com/reference/android/Manifest.permission.html#ACCESS_NETWORK_STATE) - Required to check if WiFi is enabled on the device
 * [Foreground Service ](https://developer.android.com/reference/android/Manifest.permission.html#FOREGROUND_SERVICE) - Required for SDL to run services in the foreground for applications targeting Android P (API Level 28) or higher
+* [Bluetooth Connect](https://developer.android.com/reference/android/Manifest.permission#BLUETOOTH_CONNECT) - Required to allow SDL to be notified of Bluetooth Connections on Android S (API Level 31) or higher.
+* [Post Notifications](https://developer.android.com/reference/android/Manifest.permission#POST_NOTIFICATIONS) - Needed to allow SDL notifications on Android TIRAMISU (API Level 33) or higher.
 
 ```xml
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
@@ -74,18 +76,24 @@ Some permissions are required to be granted to the SDL app in order for it to wo
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!--If targeting API level 31 or higher -->
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"
+        tools:targetApi="31"/>
+    <!--If targeting API level 33 or higher -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"
+        tools:targetApi="33"/>
 
 </manifest>
 ```
 
 !!! NOTE
-If the app is targeting Android S (API Level 31) or higher, the Android Manifest file also needs to include the following permission to allow the app to be notified of Bluetooth Connections:
-
-This permission is a runtime permission and will require the user to grant the permission.
+The following required permissions are runtime permissions, and the developer must request them from the user when targeting their respective API levels.
 
 ```xml
 <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"
     tools:targetApi="31"/>
+<uses-permission android:name="android.permission.POST_NOTIFICATIONS"
+        tools:targetApi="33"/>
 ```
 !!!
 

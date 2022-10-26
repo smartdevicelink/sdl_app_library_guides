@@ -1,4 +1,4 @@
-# Upgrading to 5.1
+# Updating to 5.1
 
 ## Overview
 

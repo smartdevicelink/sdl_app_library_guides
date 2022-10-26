@@ -1,4 +1,4 @@
-# Upgrading to 5.0
+# Updating to 5.0
 
 ## Overview
 

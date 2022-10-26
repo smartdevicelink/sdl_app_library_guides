@@ -1,4 +1,4 @@
-# Upgrading to 4.9
+# Updating to 4.9
 
 ## Overview
 
