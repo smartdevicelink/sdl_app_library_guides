@@ -109,11 +109,11 @@ dependencies {
 and replace `{version}` with the desired release version in format of `x.x.x`. The list of releases can be found [here](https://github.com/smartdevicelink/sdl_java_suite/releases). 
 
 ### Examples
-To compile release 5.5.0, use the following line:
+To compile release 5.6.0, use the following line:
 
 ```
 dependencies {
-    implementation 'com.smartdevicelink:sdl_android:5.5.0'
+    implementation 'com.smartdevicelink:sdl_android:5.6.0'
 }
 ```
 
@@ -150,11 +150,11 @@ dependencies {
 and replace `{version}` with the desired release version in format of `x.x.x`. The list of releases can be found [here](https://github.com/smartdevicelink/sdl_java_suite/releases). 
 
 ### Examples
-To compile release 5.5.0, use the following line:
+To compile release 5.6.0, use the following line:
 
 ```
 dependencies {
-    implementation 'com.smartdevicelink:sdl_java_se:5.5.0'
+    implementation 'com.smartdevicelink:sdl_java_se:5.6.0'
 }
 ```
 
