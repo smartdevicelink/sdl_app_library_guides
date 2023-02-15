@@ -54,6 +54,7 @@ If you created the service using the Android Studio template then the service sh
 
         <service
         android:name=".SdlService"
+        android:exported="true"
         android:enabled="true"
         android:foregroundServiceType='connectedDevice'/>
 
