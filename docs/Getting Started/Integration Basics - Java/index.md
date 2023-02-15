@@ -617,14 +617,6 @@ All versions less than Android O
 context.startService(intent);
 ```
 
-!!! MUST
-Apps must start their service in the foreground as of Android API 26 and as of Android API 31 the service must be started from a foreground context.
-
-Either you will need to ensure the app is in the foreground when you start the SdlService or you will need to start the SdlService from a foreground context.
-
-The intent received in onSdlEnabled will have a PendingIntent extra that will allow you start the SdlService from the context of the active SdlRouterService.
-!!!
-
 The example below shows logic for starting your service that supports all Android versions:
 
 ```java
@@ -665,6 +657,15 @@ public class SdlReceiver extends SdlBroadcastReceiver {
 	}
 }
 ```
+
+!!! MUST
+Apps must start their service in the foreground as of Android API 26 and as of Android API 31 the service must be started from a foreground context.
+
+Either you will need to ensure the app is in the foreground when you start the SdlService or you will need to start the SdlService from a foreground context.
+
+The intent received in onSdlEnabled will have a PendingIntent extra that will allow you start the SdlService from the context of the active SdlRouterService.
+!!!
+
 !!! IMPORTANT
 The `onSdlEnabled` method will be the main start point for our SDL connection session. We define exactly what we want to happen when we find out we are connected to SDL enabled hardware.
 !!!
