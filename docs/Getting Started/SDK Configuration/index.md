@@ -65,8 +65,8 @@ Some permissions are required to be granted to the SDL app in order for it to wo
 * [Bluetooth](https://developer.android.com/reference/android/Manifest.permission.html#BLUETOOTH) - Primary transport for SDL communication between the device and the vehicle's head-unit
 * [Access Network State](https://developer.android.com/reference/android/Manifest.permission.html#ACCESS_NETWORK_STATE) - Required to check if WiFi is enabled on the device
 * [Foreground Service ](https://developer.android.com/reference/android/Manifest.permission.html#FOREGROUND_SERVICE) - Required for SDL to run services in the foreground for applications targeting Android P (API Level 28) or higher
-* [Bluetooth Connect](https://developer.android.com/reference/android/Manifest.permission#BLUETOOTH_CONNECT) - Required to allow SDL to be notified of Bluetooth Connections on Android S (API Level 31) or higher.
-* [Post Notifications](https://developer.android.com/reference/android/Manifest.permission#POST_NOTIFICATIONS) - Needed to allow SDL notifications on Android TIRAMISU (API Level 33) or higher.
+* [Bluetooth Connect](https://developer.android.com/reference/android/Manifest.permission#BLUETOOTH_CONNECT) - Required to allow SDL to be notified of Bluetooth Connections
+* [Post Notifications](https://developer.android.com/reference/android/Manifest.permission#POST_NOTIFICATIONS) - Needed to allow SDL notifications
 
 ```xml
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
@@ -76,10 +76,8 @@ Some permissions are required to be granted to the SDL app in order for it to wo
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <!--If targeting API level 31 or higher -->
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"
         tools:targetApi="31"/>
-    <!--If targeting API level 33 or higher -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"
         tools:targetApi="33"/>
 
@@ -87,7 +85,7 @@ Some permissions are required to be granted to the SDL app in order for it to wo
 ```
 
 !!! NOTE
-The following required permissions are runtime permissions, and the developer must request them from the user when targeting their respective API levels.
+The following required permissions are runtime permissions, and the developer must request them from the user.
 
 ```xml
 <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"
@@ -98,8 +96,7 @@ The following required permissions are runtime permissions, and the developer mu
 !!!
 
 ## 3. Add Required SDL Queries
-
-If targeting Android R (API Level 30) or higher, it is required to add the SDL specific entries into the app's `queries` tag in the `AndroidManifest.xml`. If the tag already exists, just the intents need to be added. If the tag does not yet exist in the manifest, they can be added after the permissions are declared but before the `application` tag is opened.
+It is required to add the SDL specific entries into the app's `queries` tag in the `AndroidManifest.xml`. If the tag already exists, just the intents need to be added. If the tag does not yet exist in the manifest, they can be added after the permissions are declared but before the `application` tag is opened.
 
 ```xml
 <queries>
