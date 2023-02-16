@@ -96,7 +96,7 @@ The following required permissions are runtime permissions, and the developer mu
 !!!
 
 ## 3. Add Required SDL Queries
-It is required to add the SDL specific entries into the app's `queries` tag in the `AndroidManifest.xml`. If the tag already exists, just the intents need to be added. If the tag does not yet exist in the manifest, they can be added after the permissions are declared but before the `application` tag is opened.
+It is required to add the SDL specific entries into the app's `queries` tag in the `AndroidManifest.xml`. If the tag already exists, just the intents need to be added. If the tag does not yet exist in the manifest, the tag can be added after the permissions are declared but before the `application` tag is opened.
 
 ```xml
 <queries>
