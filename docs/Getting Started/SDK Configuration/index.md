@@ -67,6 +67,7 @@ Some permissions are required to be granted to the SDL app in order for it to wo
 * [Foreground Service ](https://developer.android.com/reference/android/Manifest.permission.html#FOREGROUND_SERVICE) - Required for SDL to run services in the foreground for applications targeting Android P (API Level 28) or higher
 * [Bluetooth Connect](https://developer.android.com/reference/android/Manifest.permission#BLUETOOTH_CONNECT) - Required to allow SDL to be notified of Bluetooth Connections
 * [Post Notifications](https://developer.android.com/reference/android/Manifest.permission#POST_NOTIFICATIONS) - Needed to allow SDL notifications
+* [Foreground Service Connected Device](https://developer.android.com/reference/android/Manifest.permission#FOREGROUND_SERVICE_CONNECTED_DEVICE) - Required to allow service to enter foreground
 
 ```xml
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
@@ -80,6 +81,8 @@ Some permissions are required to be granted to the SDL app in order for it to wo
         tools:targetApi="31"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"
         tools:targetApi="33"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE"
+        tools:targetApi="34"/>
 
 </manifest>
 ```
