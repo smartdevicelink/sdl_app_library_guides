@@ -13,7 +13,8 @@ SDL Java Suite library version 5.7.0 adds support for Android 14.
 Starting in Android 14, we are required to specify a foreground service type of `connectedDevice` in your app's `AndroidManifest.xml` to be able to enter the foreground. 
 
 ```xml
- <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE"
+        tools:targetApi="34"/>
 ```
 With a foreground service type of `connectedDevice`, your app must either have the `BLUETOOTH_CONNECT` permission or have been the app selected to receive the USB intent.
 
