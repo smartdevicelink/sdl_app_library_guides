@@ -15,9 +15,9 @@ Starting in Android 14, we are required to specify a foreground service type of 
 ```xml
  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
 ```
-With a foreground service type of `connectedDevice`, it requires your app to have the `BLUETOOTH_CONNECT` permission or have been the app selected to receive the USB intent.
+With a foreground service type of `connectedDevice`, your app must either have the `BLUETOOTH_CONNECT` permission or have been the app selected to receive the USB intent.
 
-To prevent SdlService from crashing and allow you to test via a TCP connection, we recommend adding a try catch statement when entering the foreground.
+To prevent SdlService from crashing and to allow you to test via a TCP connection, we recommend adding a try catch statement when entering the foreground.
 
 ```java
 //SdlService.java
@@ -54,7 +54,7 @@ To prevent SdlService from crashing and allow you to test via a TCP connection, 
 
 ```
 
-In your SdlReceiver onSdlEnable method before you start your service when on Android 14 you must check to make sure you have permission to enter the foreground before you can start. We added a helper method `AndroidTools.ServicePermissionUtil.hasForegroundServiceTypePermission` where you just need to pass the context to check if your app has the `BLUETOOTH_CONNECT` permission or has USB accessory permission so that your app can enter the foreground. You should at minimum check fore theses permission before you start your service:
+In your SdlReceiver onSdlEnable method before you start your service when on Android 14 you must check to make sure you have permission to enter the foreground before you can start. We added a helper method `AndroidTools.ServicePermissionUtil.hasForegroundServiceTypePermission` where you just need to pass the context to check if your app has the `BLUETOOTH_CONNECT` permission or has USB accessory permission so that your app can enter the foreground. You should at minimum check for these permissions before you start your service:
 
 ```java
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
