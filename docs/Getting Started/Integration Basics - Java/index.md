@@ -597,7 +597,7 @@ public class SdlReceiver extends SdlBroadcastReceiver {
 
 #### Starting SdlService
 
-We want to start your `SdlService` when an SDL connection is made via the `SdlRouterService`. We do this by taking action in the `onSdlEnabled` method. Depending on which API levels your application supports, there are up to three ways that you may need to add logic for starting your service:
+We want to start your `SdlService` when an SDL connection is made via the `SdlRouterService`. We do this by taking action in the `onSdlEnabled` method. Depending on which API levels your application supports, there are up to four ways that you may need to add logic for starting your service:
 
 Android UPSIDE_DOWN_CAKE and greater
 
@@ -605,7 +605,7 @@ Android UPSIDE_DOWN_CAKE and greater
 PendingIntent pendingIntent = (PendingIntent) intent.getParcelableExtra(TransportConstants.PENDING_INTENT_EXTRA);
 if (pendingIntent != null) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-        if (!AndroidTools.ServicePermissionUtil.hasForegroundServiceTypePermission(context)) {
+        if (!AndroidTools.hasForegroundServiceTypePermission(context)) {
             DebugTool.logInfo(TAG, "Permission missing for ForegroundServiceType connected device." + context);
             return;
         }
@@ -660,7 +660,7 @@ public class SdlReceiver extends SdlBroadcastReceiver {
             PendingIntent pendingIntent = (PendingIntent) intent.getParcelableExtra(TransportConstants.PENDING_INTENT_EXTRA);
             if (pendingIntent != null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                    if (!AndroidTools.ServicePermissionUtil.hasForegroundServiceTypePermission(context)) {
+                    if (!AndroidTools.hasForegroundServiceTypePermission(context)) {
                         DebugTool.logInfo(TAG, "Permission missing for ForegroundServiceType connected device." + context);
                         return;
                     }
