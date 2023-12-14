@@ -16,7 +16,7 @@ Starting in Android 14, we are required to specify a foreground service type of 
 <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE"
         tools:targetApi="34"/>
 ```
-With a foreground service type of `connectedDevice`, your app must either have the `BLUETOOTH_CONNECT` permission or have been the app selected to receive the USB intent. In your SdlReceiver onSdlEnable method before you start your service when on Android 14 you must check to make sure you have permission to enter the foreground before you can start. We added a helper method `AndroidTools.hasForegroundServiceTypePermission` where you just need to pass the context to check if your app has the `BLUETOOTH_CONNECT` permission or has USB accessory permission so that your app can enter the foreground. You should at minimum check for these permissions before you start your service:
+With a foreground service type of `connectedDevice`, your app must either have the `BLUETOOTH_CONNECT` permission or have been the app selected to receive the USB Intent. To check to see if your app has been granted either of these permissions by the user, in your `SdlReceiver.onSdlEnable` method before you start your service you must check to make sure you have permission to enter the foreground before you can start. We added a helper method `AndroidTools.hasForegroundServiceTypePermission` to check for both permissions.
 
 ```java
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
