@@ -10,13 +10,13 @@ SDL Java Suite library version 5.7.0 adds support for Android 14.
 
 ## FOREGROUND_SERVICE_CONNECTED_DEVICE Permissions
 
-Starting in Android 14, we are required to specify a foreground service type of `connectedDevice` in your app's `AndroidManifest.xml` to be able to enter the foreground. 
+Starting in Android 14, it is required to specify a foreground service type of `connectedDevice` in your app's `AndroidManifest.xml` to be able to enter the foreground. 
 
 ```xml
 <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE"
         tools:targetApi="34"/>
 ```
-With a foreground service type of `connectedDevice`, your app must either have the `BLUETOOTH_CONNECT` permission or have been the app selected to receive the USB Intent. To check to see if your app has been granted either of these permissions by the user, in your `SdlReceiver.onSdlEnable` method before you start your service you must check to make sure you have permission to enter the foreground before you can start. We added a helper method `AndroidTools.hasForegroundServiceTypePermission` to check for both permissions.
+With a foreground service type of `connectedDevice`, your app must either have the `BLUETOOTH_CONNECT` permission or have been the app selected to receive the USB Intent. You must now check to see if your app has been granted either of these permissions by the user in the `SdlReceiver.onSdlEnabled` callback before you start your service to ensure your SdlService can enter the foreground. We added a helper method, `AndroidTools.hasForegroundServiceTypePermission`, to check for both permissions that can be used at that time.
 
 ```java
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
@@ -27,9 +27,9 @@ With a foreground service type of `connectedDevice`, your app must either have t
                 }
 ````
 
-### Alternative way to request USB accessory permission
+### Alternative way to satisfy `connectedDevice` requirement for foreground service
 
-If your app does not have the `BLUETOOTH_CONNECT` permission, and was not selected to receive the USB accessory intent, you can optionaly request when you your about to start `SdlService`.
+If your app does not have the `BLUETOOTH_CONNECT` permission, and was not selected to receive the USB accessory intent, it is still possible to request access to a connected device (USB) so that your app's SDL related services can start in the foreground. This can be accomplished during the the `onSdlEnabled` callback in your `SdlBroadcastReceiver` as follows:
 
 ```java
 //SdlReceiver.java
