@@ -25,7 +25,7 @@ With a foreground service type of `connectedDevice`, your app must either have t
                         return;
                     }
                 }
-````
+```
 
 ### Alternative way to satisfy `connectedDevice` requirement for foreground service
 
