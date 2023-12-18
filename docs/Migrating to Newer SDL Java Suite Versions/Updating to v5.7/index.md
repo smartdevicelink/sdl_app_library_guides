@@ -29,7 +29,7 @@ With a foreground service type of `connectedDevice`, your app must either have t
 
 ### Alternative way to satisfy `connectedDevice` requirement for foreground service
 
-If your app does not have the `BLUETOOTH_CONNECT` permission, and was not selected to receive the USB accessory intent, it is still possible to request access to a connected device (USB) so that your app's SDL related services can start in the foreground. This can be accomplished during the the `onSdlEnabled` callback in your `SdlBroadcastReceiver` as follows:
+If your app does not have the `BLUETOOTH_CONNECT` permission, and was not selected to receive the USB accessory intent, it is still possible to request access to a connected device (USB) so that your app's SDL related services can start in the foreground. This can be accomplished during the `onSdlEnabled` callback in your `SdlBroadcastReceiver` as follows:
 
 ```java
 //SdlReceiver.java
