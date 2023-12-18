@@ -79,17 +79,24 @@ public void onCreate() {
     super.onCreate();
     //...
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        NotificationChannel channel = new NotificationChannel("channelId", "channelName", NotificationManager.IMPORTANCE_DEFAULT);
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        if (notificationManager != null) {
-            notificationManager.createNotificationChannel(channel);
-            Notification serviceNotification = new Notification.Builder(this, channel.getId())
-                    .setContentTitle(...)
-                    .setSmallIcon(...)
-                    .setContentText(...)
-                    .setChannelId(channel.getId())
-                    .build();
-            startForeground(FOREGROUND_SERVICE_ID, serviceNotification);
+        try {
+            NotificationChannel channel = new NotificationChannel("channelId", "channelName", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
+                Notification serviceNotification = new Notification.Builder(this, channel.getId())
+                        .setContentTitle(...)
+                        .setSmallIcon(...)
+                        .setContentText(...)
+                        .setChannelId(channel.getId())
+                        .build();
+                startForeground(FOREGROUND_SERVICE_ID, serviceNotification);
+            }
+        } catch (Exception e) {
+            // This should only occur when using TCP connections on Android 14+ due to needing
+            // specific connected devices for permissions regarding ForegroundServiceType 
+            // ConnectedDevice where a TCP connection doesn't apply
+            DebugTool.logError(TAG, "Unable to start service in foreground", e);
         }
     }
 }
@@ -590,13 +597,32 @@ public class SdlReceiver extends SdlBroadcastReceiver {
 
 #### Starting SdlService
 
-We want to start your `SdlService` when an SDL connection is made via the `SdlRouterService`. We do this by taking action in the `onSdlEnabled` method. Depending on which API levels your application supports, there are up to three ways that you may need to add logic for starting your service:
+We want to start your `SdlService` when an SDL connection is made via the `SdlRouterService`. We do this by taking action in the `onSdlEnabled` method. Depending on which API levels your application supports, there are up to four ways that you may need to add logic for starting your service:
+
+Android UPSIDE_DOWN_CAKE and greater
+
+```java
+PendingIntent pendingIntent = (PendingIntent) intent.getParcelableExtra(TransportConstants.PENDING_INTENT_EXTRA);
+if (pendingIntent != null) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+        if (!AndroidTools.hasForegroundServiceTypePermission(context)) {
+            DebugTool.logInfo(TAG, "Permission missing for ForegroundServiceType connected device." + context);
+            return;
+        }
+    }
+    try {
+        pendingIntent.send(context, 0, intent);
+    } catch (PendingIntent.CanceledException e) {
+        e.printStackTrace();
+    }
+}
+```
 
 Android S and greater
 
 ```java
 if (intent.getParcelableExtra(TransportConstants.PENDING_INTENT_EXTRA) != null) {
-                PendingIntent pendingIntent = (PendingIntent) intent.getParcelableExtra(TransportConstants.PENDING_INTENT_EXTRA);
+    PendingIntent pendingIntent = (PendingIntent) intent.getParcelableExtra(TransportConstants.PENDING_INTENT_EXTRA);
     try {
         pendingIntent.send(context, 0, intent);
     } catch (PendingIntent.CanceledException e) {
@@ -631,22 +657,29 @@ public class SdlReceiver extends SdlBroadcastReceiver {
         // We will check the intent for a pendingIntent parcelable extra
         // This pendingIntent allows us to start the SdlService from the context of the active router service which is in the foreground
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            if (intent.getParcelableExtra(TransportConstants.PENDING_INTENT_EXTRA) != null) {
-                PendingIntent pendingIntent = (PendingIntent) intent.getParcelableExtra(TransportConstants.PENDING_INTENT_EXTRA);
+            PendingIntent pendingIntent = (PendingIntent) intent.getParcelableExtra(TransportConstants.PENDING_INTENT_EXTRA);
+            if (pendingIntent != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                    if (!AndroidTools.hasForegroundServiceTypePermission(context)) {
+                        DebugTool.logInfo(TAG, "Permission missing for ForegroundServiceType connected device." + context);
+                        return;
+                    }
+                }
                 try {
                     pendingIntent.send(context, 0, intent);
                 } catch (PendingIntent.CanceledException e) {
                     e.printStackTrace();
                 }
             }
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        } else {
             // SdlService needs to be foregrounded in Android O and above
             // This will prevent apps in the background from crashing when they try to start SdlService
             // Because Android O doesn't allow background apps to start background services
-            
-            context.startForegroundService(intent);
-        } else {
-            context.startService(intent);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                context.startForegroundService(intent);
+            } else {
+                context.startService(intent);
+            }
         }
 	}
 

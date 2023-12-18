@@ -297,6 +297,10 @@
                 {
                     "name": "Updating to v5.6",
                     "platforms": ["Android"]
+                },
+                {
+                    "name": "Updating to v5.7",
+                    "platforms": ["Android"]
                 }
             ]
         },
