@@ -95,7 +95,7 @@ public void onCreate() {
         } catch (Exception e) {
             // This should only occur when using TCP connections on Android 14+ due to needing
             // specific connected devices for permissions regarding ForegroundServiceType 
-            // ConnectedDevice that where a TCP connection doesn't apply
+            // ConnectedDevice where a TCP connection doesn't apply
             DebugTool.logError(TAG, "Unable to start service in foreground", e);
         }
     }
