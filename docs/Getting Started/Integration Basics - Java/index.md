@@ -3,7 +3,7 @@
 In this guide, we exclusively use Android Studio. We are going to set-up a bare-bones application so you get started using SDL.
 
 !!! NOTE
-The SDL Mobile library supports [Android 4.1 (API Level 16)](https://developer.android.com/about/versions/android-4.1) or higher.
+The SDL Mobile library supports [Android 5.0 (API Level 21)](https://developer.android.com/about/versions/lollipop/android-5.0) or higher.
 !!!
 !@
 
